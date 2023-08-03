@@ -14,6 +14,7 @@ export class PlayerDetailsComponent implements OnInit {
   winRate = 0;
   looseRate = 0;
   drawRate = 0;
+  averageGoals = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +39,9 @@ export class PlayerDetailsComponent implements OnInit {
       );
       this.drawRate = parseFloat(
         ((this.player.draws * 100) / this.player.matchPlayed).toFixed(2)
+      );
+      this.averageGoals = parseFloat(
+        (this.player.totalGoals / this.player.matchPlayed).toFixed(2)
       );
     });
   }
