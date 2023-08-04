@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -13,6 +13,24 @@ import { HttpClientModule } from "@angular/common/http";
 import { GamesPlayedComponent } from "./home/components/games-played/games-played.component";
 import { FormsModule } from "@angular/forms";
 import { PlayerDetailsComponent } from "./home/components/players/details/player-details.component";
+import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { environment } from "src/environments/environment";
+
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init({
+      config: {
+        url: environment.keycloak.url,
+        realm: environment.keycloak.realm,
+        clientId: environment.keycloak.clientId,
+      },
+      initOptions: {
+        onLoad: "check-sso",
+        silentCheckSsoRedirectUri:
+          window.location.origin + "/assets/silent-check-sso.html",
+      },
+    });
+}
 
 @NgModule({
   declarations: [
@@ -31,8 +49,16 @@ import { PlayerDetailsComponent } from "./home/components/players/details/player
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    KeycloakAngularModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
