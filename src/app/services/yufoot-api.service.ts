@@ -28,4 +28,16 @@ export class YuFootApiService {
   getCurrentUser(): Observable<Player> {
     return this.client.get<Player>(environment.yuFootApiUrl + "/player/me");
   }
+
+  updateUser(
+    fullName: any,
+    nickname: any,
+    profilePicUrl: any
+  ): Observable<Player> {
+    return this.client.patch<Player>(environment.yuFootApiUrl + "/player/me", {
+      FullName: fullName,
+      Nickname: nickname,
+      ProfilePictureUrl: profilePicUrl,
+    });
+  }
 }
