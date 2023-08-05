@@ -1,7 +1,10 @@
 import { formatDate } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCalendarAlt,
+  faArrowAltCircleLeft,
+} from "@fortawesome/free-regular-svg-icons";
 import { YuFootApiService } from "src/app/services/yufoot-api.service";
 
 @Component({
@@ -19,6 +22,7 @@ export class PlayerDetailsComponent implements OnInit {
   averageGoals = 0;
   calendarIcon = faCalendarAlt;
   date: string = "";
+  backIcon = faArrowAltCircleLeft;
 
   constructor(
     private route: ActivatedRoute,
