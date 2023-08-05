@@ -32,18 +32,18 @@
     </button>
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul
-        class="flex flex-col md:items-center mt-4 border border-gray-100 rounded-lg bg-gray-50 md:bg-primary md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
+        class="flex flex-col md:items-center mt-4 border border-gray-100 rounded-lg bg-secondary md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
         <li>
           <button
             *ngIf="isLoggedIn == false"
             (click)="login()"
-            class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:bg-secondary md:p-3">
+            class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:p-3">
             Connexion
           </button>
           <button
             *ngIf="isLoggedIn == true"
             (click)="logout()"
-            class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:bg-secondary md:p-3">
+            class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:p-3">
             Déconnexion
           </button>
         </li>
