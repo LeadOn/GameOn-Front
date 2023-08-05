@@ -1,5 +1,7 @@
+import { formatDate } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
 import { YuFootApiService } from "src/app/services/yufoot-api.service";
 
 @Component({
@@ -15,6 +17,8 @@ export class PlayerDetailsComponent implements OnInit {
   looseRate = 0;
   drawRate = 0;
   averageGoals = 0;
+  calendarIcon = faCalendarAlt;
+  date: string = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -29,6 +33,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   getPlayer(id: number) {
     this.yuFootApi.getPlayer(id).subscribe((data) => {
+      this.date = formatDate(data.createdOn.toString(), "medium", "en-US");
       this.player = data;
       this.loading = false;
       this.winRate = parseFloat(

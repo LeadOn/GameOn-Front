@@ -1,7 +1,7 @@
 <nav
   class="bg-primary/80 px-2 sm:px-4 py-2.5 absolute w-full border-b-4 border-primary">
   <div class="container flex flex-wrap items-center justify-between mx-auto">
-    <div class="flex items-center">
+    <a href="" class="flex items-center">
       <span
         class="ml-2 self-center font-semibold text-xl whitespace-nowrap text-white">
         Yu
@@ -10,7 +10,7 @@
         class="text-secondary self-center font-semibold text-xl whitespace-nowrap">
         Foot
       </span>
-    </div>
+    </a>
     <button
       data-collapse-toggle="navbar-default"
       type="button"
@@ -32,7 +32,7 @@
     </button>
     <div class="hidden w-full md:block md:w-auto" id="navbar-default">
       <ul
-        class="flex flex-col md:items-center mt-4 border border-gray-100 rounded-lg bg-secondary md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
+        class="flex flex-col md:items-center mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
         <li>
           <button
             *ngIf="isLoggedIn == false"
@@ -40,11 +40,15 @@
             class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:p-3">
             Connexion
           </button>
-          <button
-            *ngIf="isLoggedIn == true"
-            (click)="logout()"
-            class="block py-2 pl-3 pr-4 text-white bg-secondary rounded md:p-3">
-            Déconnexion
+          <a *ngIf="isLoggedIn == true" [routerLink]="['/player', 'me']">
+            <fa-icon
+              [icon]="userIcon"
+              class="inline-block py-2 pl-3 pr-4 text-white bg-secondary rounded-full md:p-3"></fa-icon>
+          </a>
+          <button class="ml-2" *ngIf="isLoggedIn == true" (click)="logout()">
+            <fa-icon
+              [icon]="logoutIcon"
+              class="inline-block py-2 pl-3 pr-4 text-white bg-red-500 rounded-full md:p-3"></fa-icon>
           </button>
         </li>
       </ul>

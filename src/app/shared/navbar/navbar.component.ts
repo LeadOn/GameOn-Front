@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { faUser, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 import { KeycloakService } from "keycloak-angular";
 import { environment } from "src/environments/environment";
 
@@ -9,6 +10,8 @@ import { environment } from "src/environments/environment";
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
+  userIcon = faUser;
+  logoutIcon = faXmarkCircle;
 
   constructor(private keycloak: KeycloakService) {
     this.keycloak.isLoggedIn().then((x) => (this.isLoggedIn = x));
