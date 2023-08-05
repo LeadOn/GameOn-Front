@@ -18,6 +18,7 @@ import { environment } from "src/environments/environment";
 import { MyDashboardComponent } from "./players/me/my-dashboard.component";
 import { PlayerDetailsCardComponent } from "./shared/player/details-card/player-details-card.component";
 import { UpdatePlayerComponent } from "./players/me/components/update-player/update-player.component";
+import { CreateGameComponent } from "./games/create/create-game.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -48,6 +49,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     MyDashboardComponent,
     PlayerDetailsCardComponent,
     UpdatePlayerComponent,
+    CreateGameComponent,
   ],
   imports: [
     BrowserModule,
