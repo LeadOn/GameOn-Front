@@ -9,11 +9,6 @@ const routes: Routes = [
     path: "player/:id",
     component: PlayerDetailsComponent,
   },
-  // {
-  //   path: "**",
-  //   component: HomeComponent,
-  //   canActivate: [AuthGuard],
-  // },
   {
     path: "**",
     component: HomeComponent,

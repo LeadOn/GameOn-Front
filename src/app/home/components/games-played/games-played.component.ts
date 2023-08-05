@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { GamePlayed } from "src/app/classes/GamePlayed";
 import { YuFootApiService } from "src/app/services/yufoot-api.service";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-games-played",
@@ -9,8 +10,9 @@ import { YuFootApiService } from "src/app/services/yufoot-api.service";
 })
 export class GamesPlayedComponent {
   games: GamePlayed[] = [];
-  numberOfGames = 5;
+  numberOfGames = 10;
   loading = true;
+  externalIcon = faExternalLinkAlt;
 
   constructor(private yuFootApi: YuFootApiService) {}
 
