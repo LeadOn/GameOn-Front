@@ -8,13 +8,17 @@ import { HomeComponent } from "./home/home.component";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { HomePlayersComponent } from "./home/components/players/home-players.component";
-import { PlayerCardComponent } from "./home/components/player-card/player-card.component";
+import { PlayerCardComponent } from "./shared/player/card/player-card.component";
 import { HttpClientModule } from "@angular/common/http";
 import { GamesPlayedComponent } from "./home/components/games-played/games-played.component";
-import { FormsModule } from "@angular/forms";
-import { PlayerDetailsComponent } from "./home/components/players/details/player-details.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PlayerDetailsComponent } from "./players/details/player-details.component";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { environment } from "src/environments/environment";
+import { MyDashboardComponent } from "./players/me/my-dashboard.component";
+import { PlayerDetailsCardComponent } from "./shared/player/details-card/player-details-card.component";
+import { UpdatePlayerComponent } from "./players/me/components/update-player/update-player.component";
+import { CreateGameComponent } from "./games/create/create-game.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -42,6 +46,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PlayerCardComponent,
     GamesPlayedComponent,
     PlayerDetailsComponent,
+    MyDashboardComponent,
+    PlayerDetailsCardComponent,
+    UpdatePlayerComponent,
+    CreateGameComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +58,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HttpClientModule,
     FormsModule,
     KeycloakAngularModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
