@@ -3,6 +3,7 @@ import { KeycloakService } from "keycloak-angular";
 import { YuFootApiService } from "../services/yufoot-api.service";
 import { Player } from "../classes/Player";
 import { environment } from "src/environments/environment";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-home",
@@ -13,11 +14,14 @@ export class HomeComponent implements OnInit {
   isLoggedIn = false;
   player: Player = new Player();
   token = "";
+  isProduction = false;
+  externalIcon = faExternalLinkAlt;
 
   constructor(
     private keycloak: KeycloakService,
     private yufootApi: YuFootApiService
   ) {
+    this.isProduction = environment.production;
     this.keycloak.isLoggedIn().then((x) => (this.isLoggedIn = x));
   }
 

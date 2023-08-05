@@ -11,7 +11,7 @@ module.exports = {
     colors: {
       primary: "#424549",
       primaryDarker: "#282b30",
-      primaryDarkerer: "#111111",
+      primaryDarkerer: "#1a1a1c",
       secondary: "#00B9FF",
       secondaryDarker: "#003C5A",
       csharp: "#4e1268",
