@@ -37,6 +37,29 @@
         Joueurs
       </a>
     </div>
+
+    <div
+      class="mt-6 lg:mt-10 flex flex-col space-x-4 lg:space-x-0 lg:w-full lg:justify-evenly">
+      <span class="inline-block">
+        <u>Note :</u>
+        ce qui suit apparait uniquement en mode dev.
+      </span>
+      <hr class="my-2" />
+      <div *ngIf="isLoggedIn == true">
+        <label
+          for="access_token"
+          class="block mb-2 text-sm font-medium text-white">
+          Access token
+        </label>
+        <input
+          type="text"
+          id="access_token"
+          readonly
+          [(ngModel)]="token"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Bearer abcdef" />
+      </div>
+    </div>
   </div>
 
   <div class="home-nav-btn flex w-full justify-center mt-32">

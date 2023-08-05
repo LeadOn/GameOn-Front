@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { KeycloakService } from "keycloak-angular";
 import { YuFootApiService } from "../services/yufoot-api.service";
 import { Player } from "../classes/Player";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-home",
@@ -11,6 +12,7 @@ import { Player } from "../classes/Player";
 export class HomeComponent implements OnInit {
   isLoggedIn = false;
   player: Player = new Player();
+  token = "";
 
   constructor(
     private keycloak: KeycloakService,
@@ -24,6 +26,10 @@ export class HomeComponent implements OnInit {
       this.yufootApi.getCurrentUser().subscribe((data) => {
         this.player = data;
       });
+    }
+
+    if (environment.production == false && this.isLoggedIn == true) {
+      this.keycloak.getToken().then((x) => (this.token = x));
     }
   }
 }
