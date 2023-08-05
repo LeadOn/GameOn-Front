@@ -1,8 +1,8 @@
 export const environment = {
   production: false,
-  yuFootApiUrl: "https://yufoot-api.valentinvirot.fr",
+  yuFootApiUrl: "http://localhost:5184",
   keycloak: {
-    url: "http://192.168.1.42:2323/",
+    url: "https://auth.valentinvirot.fr/",
     realm: "yufoot",
     clientId: "yufoot-front",
   },

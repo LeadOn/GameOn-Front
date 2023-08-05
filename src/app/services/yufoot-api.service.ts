@@ -24,4 +24,8 @@ export class YuFootApiService {
   getPlayer(id: number): Observable<Player> {
     return this.client.get<Player>(environment.yuFootApiUrl + "/player/" + id);
   }
+
+  getCurrentUser(): Observable<Player> {
+    return this.client.get<Player>(environment.yuFootApiUrl + "/player/me");
+  }
 }
