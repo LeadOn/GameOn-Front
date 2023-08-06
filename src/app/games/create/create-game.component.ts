@@ -3,7 +3,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Platform } from "src/app/classes/Platform";
 import { Player } from "src/app/classes/Player";
-import { YuFootApiService } from "src/app/services/yufoot-api.service";
+import { YuFootGameService } from "src/app/services/yufoot-game.service";
+import { YuFootPlatformService } from "src/app/services/yufoot-platform.service";
+import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
   selector: "app-create-game",
@@ -32,12 +34,16 @@ export class CreateGameComponent implements OnInit {
     date: new FormControl("", Validators.required),
   });
 
-  constructor(private yuFootApi: YuFootApiService) {}
+  constructor(
+    private playerService: YuFootPlayerService,
+    private platformService: YuFootPlatformService,
+    private gameService: YuFootGameService
+  ) {}
 
   ngOnInit(): void {
-    this.yuFootApi.getPlayers().subscribe((data) => {
+    this.playerService.getAll().subscribe((data) => {
       this.players = data;
-      this.yuFootApi.getPlatforms().subscribe((data2) => {
+      this.platformService.getAll().subscribe((data2) => {
         this.platforms = data2;
         this.createGameForm.controls["platform"].setValue(
           data2[0].id.toString()
@@ -75,7 +81,7 @@ export class CreateGameComponent implements OnInit {
       body.Team2.length > 0 &&
       body.CreatedOn != null
     ) {
-      this.yuFootApi.createGame(body).subscribe(
+      this.gameService.create(body).subscribe(
         (data) => {
           alert("Match créé !");
           this.isLoading = false;

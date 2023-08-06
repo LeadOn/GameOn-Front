@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { GamePlayed } from "src/app/classes/GamePlayed";
-import { YuFootApiService } from "src/app/services/yufoot-api.service";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { YuFootGameService } from "src/app/services/yufoot-game.service";
 
 @Component({
   selector: "app-games-played",
@@ -14,7 +14,7 @@ export class GamesPlayedComponent {
   loading = true;
   externalIcon = faExternalLinkAlt;
 
-  constructor(private yuFootApi: YuFootApiService) {}
+  constructor(private gameService: YuFootGameService) {}
 
   ngOnInit(): void {
     this.getGames();
@@ -22,7 +22,7 @@ export class GamesPlayedComponent {
 
   getGames() {
     this.loading = true;
-    this.yuFootApi.getLastGamesPlayed(this.numberOfGames).subscribe((data) => {
+    this.gameService.getLast(this.numberOfGames).subscribe((data) => {
       this.games = data;
       this.loading = false;
     });

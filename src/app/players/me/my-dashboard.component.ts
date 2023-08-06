@@ -4,7 +4,7 @@ import {
   faCalendarAlt,
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
-import { YuFootApiService } from "src/app/services/yufoot-api.service";
+import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
   selector: "app-my-dashboard",
@@ -23,11 +23,11 @@ export class MyDashboardComponent implements OnInit {
   date: string = "";
   backIcon = faArrowAltCircleLeft;
 
-  constructor(private yuFootApi: YuFootApiService) {}
+  constructor(private playerService: YuFootPlayerService) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.yuFootApi.getCurrentUser().subscribe((data) => {
+    this.playerService.getCurrent().subscribe((data) => {
       this.date = formatDate(data.createdOn.toString(), "medium", "en-US");
       this.player = data;
       this.loading = false;

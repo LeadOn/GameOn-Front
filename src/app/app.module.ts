@@ -19,6 +19,10 @@ import { MyDashboardComponent } from "./players/me/my-dashboard.component";
 import { PlayerDetailsCardComponent } from "./shared/player/details-card/player-details-card.component";
 import { UpdatePlayerComponent } from "./players/me/components/update-player/update-player.component";
 import { CreateGameComponent } from "./games/create/create-game.component";
+import { ArrowBtnComponent } from "./shared/arrow-btn/arrow-btn.component";
+import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
+import { ClipboardModule } from "@angular/cdk/clipboard";
+import { GamePlayedCardRowComponent } from "./shared/game-played-card-row/game-played-card-row.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -50,6 +54,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     PlayerDetailsCardComponent,
     UpdatePlayerComponent,
     CreateGameComponent,
+    ArrowBtnComponent,
+    LoadingSpinnerComponent,
+    GamePlayedCardRowComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +66,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     FormsModule,
     KeycloakAngularModule,
     ReactiveFormsModule,
+    ClipboardModule,
   ],
   providers: [
     {

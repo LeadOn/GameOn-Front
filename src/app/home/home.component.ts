@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { KeycloakService } from "keycloak-angular";
-import { YuFootApiService } from "../services/yufoot-api.service";
 import { Player } from "../classes/Player";
 import { environment } from "src/environments/environment";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { YuFootPlayerService } from "../services/yufoot-player.service";
 
 @Component({
   selector: "app-home",
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private keycloak: KeycloakService,
-    private yufootApi: YuFootApiService
+    private playerService: YuFootPlayerService
   ) {
     this.isProduction = environment.production;
     this.keycloak.isLoggedIn().then((x) => (this.isLoggedIn = x));
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.isLoggedIn == true) {
-      this.yufootApi.getCurrentUser().subscribe((data) => {
+      this.playerService.getCurrent().subscribe((data) => {
         this.player = data;
       });
     }
