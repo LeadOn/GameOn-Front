@@ -1,0 +1,20 @@
+<div class="flex flex-row items-center text-xs md:text-sm lg:text-lg">
+  <div
+    class="border-r-2 mr-2 text-center"
+    [class.border-green-400]="score1 > score2"
+    [class.border-red-400]="score1 < score2"
+    [class.border-yellow-400]="score1 == score2">
+    <span class="inline-block mx-2 w-8 md:w-16">
+      {{ team.code }}
+    </span>
+  </div>
+  <div class="flex-grow py-2 md:ml-2">
+    <p *ngFor="let player of team.players">
+      {{ player.fullName }}
+    </p>
+  </div>
+
+  <div class="px-2 w-8 md:w-12 lg:w-16 text-center">
+    <span class="inline-block">{{ score1 }}</span>
+  </div>
+</div>
