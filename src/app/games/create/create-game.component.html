@@ -27,6 +27,7 @@
           type="text"
           id="teamCode1"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          formControlName="teamCode1"
           required />
         <label
           for="teamCode1"
@@ -41,6 +42,7 @@
           type="number"
           id="teamScore1"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          formControlName="teamScore1"
           required />
         <label
           for="teamScore1"
@@ -55,6 +57,7 @@
           type="text"
           id="teamCode2"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          formControlName="teamCode2"
           required />
         <label
           for="teamCode2"
@@ -66,9 +69,10 @@
 
       <div class="relative z-0 w-full mb-6 group">
         <input
-          type="text"
+          type="number"
           id="teamScore2"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          formControlName="teamScore2"
           required />
         <label
           for="teamScore2"
@@ -87,10 +91,11 @@
 
         <select
           id="platform"
+          formControlName="platform"
           class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-          <option>Xbox One</option>
-          <option>PC</option>
-          <option>Five</option>
+          <option *ngFor="let platform of platforms" value="{{ platform.id }}">
+            {{ platform.name }}
+          </option>
         </select>
       </div>
 
@@ -116,6 +121,7 @@
         <select
           multiple
           id="team2"
+          formControlName="team2"
           class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option *ngFor="let player of players" value="{{ player.id }}">
             {{ player.fullName }}
