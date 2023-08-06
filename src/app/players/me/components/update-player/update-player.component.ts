@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Player } from "src/app/classes/Player";
-import { YuFootApiService } from "src/app/services/yufoot-api.service";
+import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
   selector: "app-update-player",
@@ -18,7 +18,9 @@ export class UpdatePlayerComponent implements OnInit, OnChanges {
   @Input()
   player: Player = new Player();
 
-  constructor(private yuFootApi: YuFootApiService) {}
+  isLoading = false;
+
+  constructor(private playerService: YuFootPlayerService) {}
 
   updatePlayerForm = new FormGroup({
     fullName: new FormControl("", [Validators.maxLength(100)]),
@@ -45,18 +47,24 @@ export class UpdatePlayerComponent implements OnInit, OnChanges {
   }
 
   updateUser() {
-    this.yuFootApi
-      .updateUser(
-        this.updatePlayerForm.controls["fullName"].value,
-        this.updatePlayerForm.controls["nickname"].value,
-        this.updatePlayerForm.controls["profilePictureUrl"].value
-      )
-      .subscribe(
-        (data) => {
-          alert("Mise à jour réussie !");
-        },
-        (err) =>
-          alert("Une erreur est survenue lors de la mise à jour du compte !")
-      );
+    if (this.isLoading == false) {
+      this.isLoading = true;
+      this.playerService
+        .update(
+          this.updatePlayerForm.controls["fullName"].value,
+          this.updatePlayerForm.controls["nickname"].value,
+          this.updatePlayerForm.controls["profilePictureUrl"].value
+        )
+        .subscribe(
+          (data) => {
+            alert("Mise à jour réussie !");
+            this.isLoading = false;
+          },
+          (err) => {
+            this.isLoading = false;
+            alert("Une erreur est survenue lors de la mise à jour du compte !");
+          }
+        );
+    }
   }
 }

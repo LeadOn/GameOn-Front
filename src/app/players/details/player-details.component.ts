@@ -5,7 +5,7 @@ import {
   faCalendarAlt,
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
-import { YuFootApiService } from "src/app/services/yufoot-api.service";
+import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
   selector: "app-player-details",
@@ -26,7 +26,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private yuFootApi: YuFootApiService
+    private playerService: YuFootPlayerService
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   getPlayer(id: number) {
-    this.yuFootApi.getPlayer(id).subscribe((data) => {
+    this.playerService.get(id).subscribe((data) => {
       this.date = formatDate(data.createdOn.toString(), "medium", "en-US");
       this.player = data;
       this.loading = false;

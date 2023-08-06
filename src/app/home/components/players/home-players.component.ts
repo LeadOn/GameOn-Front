@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Player } from "src/app/classes/Player";
-import { YuFootApiService } from "src/app/services/yufoot-api.service";
+import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
   selector: "app-home-players",
@@ -10,10 +10,10 @@ import { YuFootApiService } from "src/app/services/yufoot-api.service";
 export class HomePlayersComponent implements OnInit {
   players: Player[] = [];
 
-  constructor(private yuFootApi: YuFootApiService) {}
+  constructor(private playerService: YuFootPlayerService) {}
 
   ngOnInit(): void {
-    this.yuFootApi.getPlayers().subscribe((data) => {
+    this.playerService.getAll().subscribe((data) => {
       this.players = data;
     });
   }
