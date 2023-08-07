@@ -4,6 +4,7 @@ import {
   faCalendarAlt,
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
+import { PlatformStats } from "src/app/classes/PlatformStats";
 import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
@@ -15,33 +16,26 @@ export class MyDashboardComponent implements OnInit {
   playerId: any;
   loading = true;
   player: any = null;
-  winRate = 0;
-  looseRate = 0;
-  drawRate = 0;
-  averageGoals = 0;
   calendarIcon = faCalendarAlt;
   date: string = "";
   backIcon = faArrowAltCircleLeft;
+  stats: PlatformStats[] = [];
 
   constructor(private playerService: YuFootPlayerService) {}
 
   ngOnInit(): void {
     this.loading = true;
     this.playerService.getCurrent().subscribe((data) => {
-      this.date = formatDate(data.createdOn.toString(), "medium", "en-US");
       this.player = data;
-      this.loading = false;
-      this.winRate = parseFloat(
-        ((this.player.wins * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.looseRate = parseFloat(
-        ((this.player.losses * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.drawRate = parseFloat(
-        ((this.player.draws * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.averageGoals = parseFloat(
-        (this.player.totalGoals / this.player.matchPlayed).toFixed(2)
+      this.playerService.getStats(data.id).subscribe(
+        (data2) => {
+          this.stats = data2;
+          this.loading = false;
+        },
+        (err) => {
+          alert("Erreur lors de la récupération des statistiques !");
+          console.error(err);
+        }
       );
     });
   }

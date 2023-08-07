@@ -5,6 +5,10 @@ import {
   faCalendarAlt,
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { GamePlayed } from "src/app/classes/GamePlayed";
+import { PlatformStats } from "src/app/classes/PlatformStats";
+import { YuFootGameService } from "src/app/services/yufoot-game.service";
 import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
@@ -16,17 +20,16 @@ export class PlayerDetailsComponent implements OnInit {
   playerId: any;
   loading = true;
   player: any = null;
-  winRate = 0;
-  looseRate = 0;
-  drawRate = 0;
-  averageGoals = 0;
   calendarIcon = faCalendarAlt;
-  date: string = "";
   backIcon = faArrowAltCircleLeft;
+  stats: PlatformStats[] = [];
+  externalIcon = faExternalLinkAlt;
+  games: GamePlayed[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: YuFootPlayerService
+    private playerService: YuFootPlayerService,
+    private gameService: YuFootGameService
   ) {}
 
   ngOnInit(): void {
@@ -37,20 +40,45 @@ export class PlayerDetailsComponent implements OnInit {
 
   getPlayer(id: number) {
     this.playerService.get(id).subscribe((data) => {
-      this.date = formatDate(data.createdOn.toString(), "medium", "en-US");
-      this.player = data;
-      this.loading = false;
-      this.winRate = parseFloat(
-        ((this.player.wins * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.looseRate = parseFloat(
-        ((this.player.losses * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.drawRate = parseFloat(
-        ((this.player.draws * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.averageGoals = parseFloat(
-        (this.player.totalGoals / this.player.matchPlayed).toFixed(2)
+      // Getting stats
+      this.playerService.getStats(id).subscribe(
+        (data2) => {
+          this.stats = data2;
+
+          this.stats.forEach((stat) => {
+            let gamesPlayed = stat.wins + stat.losses + stat.draws;
+            stat.winRate = parseFloat(
+              ((stat.wins * 100) / gamesPlayed).toFixed(2)
+            );
+            stat.looseRate = parseFloat(
+              ((stat.losses * 100) / gamesPlayed).toFixed(2)
+            );
+            stat.drawRate = parseFloat(
+              ((stat.draws * 100) / gamesPlayed).toFixed(2)
+            );
+          });
+
+          // Getting last games played
+          this.gameService.getLastByPlayer(id, 20).subscribe(
+            (data3) => {
+              this.games = data3;
+              this.player = data;
+              this.loading = false;
+            },
+            (err) => {
+              alert(
+                "Erreur lors de la récupération des dernières parties jouées."
+              );
+              console.error(err);
+            }
+          );
+        },
+        (err) => {
+          alert(
+            "Une erreur est survenue lors de la récupération des statistiques."
+          );
+          console.error(err);
+        }
       );
     });
   }
