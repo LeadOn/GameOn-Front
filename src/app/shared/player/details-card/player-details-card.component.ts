@@ -38,7 +38,6 @@ export class PlayerDetailsCardComponent implements OnInit, OnChanges {
   playerId: any;
   loading = true;
 
-  averageGoals = 0;
   calendarIcon = faCalendarAlt;
 
   constructor() {}
@@ -46,10 +45,6 @@ export class PlayerDetailsCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.date = formatDate(this.player.createdOn.toString(), "medium", "en-US");
     this.loading = false;
-
-    this.averageGoals = parseFloat(
-      (this.player.totalGoals / this.player.matchPlayed).toFixed(2)
-    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {
