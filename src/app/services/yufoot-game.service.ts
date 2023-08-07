@@ -16,6 +16,12 @@ export class YuFootGameService {
     );
   }
 
+  getLastByPlayer(playerId: number, limit: number): Observable<GamePlayed[]> {
+    return this.client.get<GamePlayed[]>(
+      environment.yuFootApiUrl + "/game/last/" + limit + "/player/" + playerId
+    );
+  }
+
   create(body: any): Observable<GamePlayed> {
     return this.client.post<GamePlayed>(
       environment.yuFootApiUrl + "/game/create",

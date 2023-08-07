@@ -5,7 +5,10 @@ import {
   faCalendarAlt,
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { GamePlayed } from "src/app/classes/GamePlayed";
 import { PlatformStats } from "src/app/classes/PlatformStats";
+import { YuFootGameService } from "src/app/services/yufoot-game.service";
 import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
@@ -20,10 +23,13 @@ export class PlayerDetailsComponent implements OnInit {
   calendarIcon = faCalendarAlt;
   backIcon = faArrowAltCircleLeft;
   stats: PlatformStats[] = [];
+  externalIcon = faExternalLinkAlt;
+  games: GamePlayed[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: YuFootPlayerService
+    private playerService: YuFootPlayerService,
+    private gameService: YuFootGameService
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +42,8 @@ export class PlayerDetailsComponent implements OnInit {
     this.playerService.get(id).subscribe((data) => {
       // Getting stats
       this.playerService.getStats(id).subscribe(
-        (data) => {
-          this.stats = data;
+        (data2) => {
+          this.stats = data2;
 
           this.stats.forEach((stat) => {
             let gamesPlayed = stat.wins + stat.losses + stat.draws;
@@ -51,17 +57,29 @@ export class PlayerDetailsComponent implements OnInit {
               ((stat.draws * 100) / gamesPlayed).toFixed(2)
             );
           });
+
+          // Getting last games played
+          this.gameService.getLastByPlayer(id, 20).subscribe(
+            (data3) => {
+              this.games = data3;
+              this.player = data;
+              this.loading = false;
+            },
+            (err) => {
+              alert(
+                "Erreur lors de la récupération des dernières parties jouées."
+              );
+              console.error(err);
+            }
+          );
         },
         (err) => {
           alert(
             "Une erreur est survenue lors de la récupération des statistiques."
           );
-          console.log(err);
+          console.error(err);
         }
       );
-
-      this.player = data;
-      this.loading = false;
     });
   }
 }
