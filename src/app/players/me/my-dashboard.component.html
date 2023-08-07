@@ -8,7 +8,9 @@
   <div
     class="flex flex-col items-center lg:items-start bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg"
     *ngIf="loading == false && player != null">
-    <app-player-details-card [player]="player"></app-player-details-card>
+    <app-player-details-card
+      [player]="player"
+      [stats]="stats"></app-player-details-card>
   </div>
 
   <div class="home-nav-btn flex w-full justify-center mt-4">
