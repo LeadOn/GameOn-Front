@@ -1,5 +1,5 @@
 <div
-  id="home"
+  id="player-details-top"
   class="flex flex-col items-center lg:items-start justify-center text-white h-screen p-8">
   <div class="mt-4" role="status" *ngIf="loading == true">
     <app-loading-spinner></app-loading-spinner>
@@ -9,13 +9,59 @@
     class="flex flex-col md:flex-row justify-center align-center self-center items-center md:items-start text-white p-8 bg-primaryDarker/80 rounded-lg"
     id="player-details"
     *ngIf="loading == false">
-    <app-player-details-card [player]="player"></app-player-details-card>
+    <app-player-details-card
+      [player]="player"
+      [stats]="stats"></app-player-details-card>
   </section>
-
-  <a
-    routerLink="/"
-    class="flex flex-col md:flex-row justify-center align-center self-center items-center md:items-start text-white mt-4 p-2 bg-primaryDarker/80 rounded-lg">
-    <fa-icon [icon]="backIcon" class="mr-2"></fa-icon>
-    Retour
-  </a>
 </div>
+
+<section
+  class="w-full flex flex-col md:flex-row items-center justify-center text-white p-8 md:px-6 lg:px-32 md:space-x-4 space-y-4 md:space-y-0"
+  id="stats">
+  <div
+    *ngFor="let stat of stats"
+    class="flex flex-col bg-primary w-full rounded-lg items-center drop-shadow-xl p-4">
+    <div class="text-center">
+      <span class="block text-xl font-bold">
+        Statistiques {{ stat.platform.name }}
+      </span>
+      <hr class="my-4 border-dashed" />
+    </div>
+
+    <ul>
+      <li>Matchs joués : {{ stat.wins + stat.losses + stat.draws }}</li>
+      <li>Buts mis en moyenne : {{ stat.averageGoalGiven }}</li>
+      <li>Buts pris en moyenne : {{ stat.averageGoalTaken }}</li>
+      <li>Différence de buts : {{ stat.goalDifference }}</li>
+    </ul>
+
+    <span class="block mt-4">Victoires : {{ stat.wins }}</span>
+
+    <div class="w-full bg-white rounded-full h-4 mb-4">
+      <div
+        class="bg-secondary text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
+        style="width: {{ stat.winRate }}%">
+        {{ stat.winRate }}%
+      </div>
+    </div>
+
+    <span class="block">Défaites : {{ stat.losses }}</span>
+
+    <div class="w-full bg-white rounded-full h-4 mb-4">
+      <div
+        class="bg-csharp text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
+        style="width: {{ stat.looseRate }}%">
+        {{ stat.looseRate }}%
+      </div>
+    </div>
+
+    <span class="block">Matchs nuls : {{ stat.draws }}</span>
+    <div class="w-full bg-white rounded-full h-4 mb-4">
+      <div
+        class="bg-azure text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
+        style="width: {{ stat.drawRate }}%">
+        {{ stat.drawRate }}%
+      </div>
+    </div>
+  </div>
+</section>

@@ -28,40 +28,55 @@
         <fa-icon [icon]="calendarIcon"></fa-icon>
         : {{ date }}
       </li>
-      <li>Buts moyens : {{ averageGoals }}</li>
-      <li>
-        Différence globale :
-        {{ player.totalGoalDifference }}
-      </li>
     </ul>
 
+    <hr class="my-4 border-dashed" />
+
     <div class="mt-4">
-      <span class="block">Victoires : {{ player.wins }}</span>
+      <h2 class="w-full text-center underline">Stats totales :</h2>
+
+      <ul class="mt-4">
+        <li>Matchs joués : {{ totalGamePlayed }}</li>
+        <li>
+          Buts mis en moyenne :
+          {{ totalAverageGoalsGiven }}
+        </li>
+        <li>
+          Buts pris en moyenne :
+          {{ totalAverageGoalsTaken }}
+        </li>
+        <li>
+          Différence de buts :
+          {{ totalGoalDifference }}
+        </li>
+      </ul>
+
+      <span class="block mt-4">Victoires : {{ totalWins }}</span>
 
       <div class="w-full bg-white rounded-full h-4 mb-4">
         <div
           class="bg-secondary text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ winRate }}%">
-          {{ winRate }}%
+          style="width: {{ totalWinRate }}%">
+          {{ totalWinRate }}%
         </div>
       </div>
 
-      <span class="block">Défaites : {{ player.losses }}</span>
+      <span class="block">Défaites : {{ totalLosses }}</span>
 
       <div class="w-full bg-white rounded-full h-4 mb-4">
         <div
           class="bg-csharp text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ looseRate }}%">
-          {{ looseRate }}%
+          style="width: {{ totalLooseRate }}%">
+          {{ totalLooseRate }}%
         </div>
       </div>
 
-      <span class="block">Matchs nuls : {{ player.draws }}</span>
+      <span class="block">Matchs nuls : {{ totalDraws }}</span>
       <div class="w-full bg-white rounded-full h-4 mb-4">
         <div
           class="bg-azure text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ drawRate }}%">
-          {{ drawRate }}%
+          style="width: {{ totalDrawRate }}%">
+          {{ totalDrawRate }}%
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import {
   faCalendarAlt,
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
+import { PlatformStats } from "src/app/classes/PlatformStats";
 import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
 
 @Component({
@@ -16,13 +17,9 @@ export class PlayerDetailsComponent implements OnInit {
   playerId: any;
   loading = true;
   player: any = null;
-  winRate = 0;
-  looseRate = 0;
-  drawRate = 0;
-  averageGoals = 0;
   calendarIcon = faCalendarAlt;
-  date: string = "";
   backIcon = faArrowAltCircleLeft;
+  stats: PlatformStats[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -37,21 +34,34 @@ export class PlayerDetailsComponent implements OnInit {
 
   getPlayer(id: number) {
     this.playerService.get(id).subscribe((data) => {
-      this.date = formatDate(data.createdOn.toString(), "medium", "en-US");
+      // Getting stats
+      this.playerService.getStats(id).subscribe(
+        (data) => {
+          this.stats = data;
+
+          this.stats.forEach((stat) => {
+            let gamesPlayed = stat.wins + stat.losses + stat.draws;
+            stat.winRate = parseFloat(
+              ((stat.wins * 100) / gamesPlayed).toFixed(2)
+            );
+            stat.looseRate = parseFloat(
+              ((stat.losses * 100) / gamesPlayed).toFixed(2)
+            );
+            stat.drawRate = parseFloat(
+              ((stat.draws * 100) / gamesPlayed).toFixed(2)
+            );
+          });
+        },
+        (err) => {
+          alert(
+            "Une erreur est survenue lors de la récupération des statistiques."
+          );
+          console.log(err);
+        }
+      );
+
       this.player = data;
       this.loading = false;
-      this.winRate = parseFloat(
-        ((this.player.wins * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.looseRate = parseFloat(
-        ((this.player.losses * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.drawRate = parseFloat(
-        ((this.player.draws * 100) / this.player.matchPlayed).toFixed(2)
-      );
-      this.averageGoals = parseFloat(
-        (this.player.totalGoals / this.player.matchPlayed).toFixed(2)
-      );
     });
   }
 }
