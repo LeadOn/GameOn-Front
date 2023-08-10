@@ -24,7 +24,7 @@ export class YuFootGameService {
 
   create(body: any): Observable<GamePlayed> {
     return this.client.post<GamePlayed>(
-      environment.yuFootApiUrl + "/game/create",
+      environment.yuFootApiUrl + "/game",
       body
     );
   }

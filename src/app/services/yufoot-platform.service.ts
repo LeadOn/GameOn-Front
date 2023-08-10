@@ -11,6 +11,8 @@ export class YuFootPlatformService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<Platform[]> {
-    return this.client.get<Platform[]>(environment.yuFootApiUrl + "/platform");
+    return this.client.get<Platform[]>(
+      environment.yuFootApiUrl + "/platform/all"
+    );
   }
 }
