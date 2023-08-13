@@ -1,12 +1,16 @@
 <div class="flex flex-row items-center text-xs md:text-sm lg:text-lg">
   <div
-    class="border-r-2 mr-2 text-center"
+    class="border-r-2 mr-2 flex flex-col w-16 items-center"
     [class.border-green-400]="score1 > score2"
     [class.border-red-400]="score1 < score2"
-    [class.border-yellow-400]="score1 == score2">
-    <span class="inline-block mx-2 w-8 md:w-16">
-      {{ team.code }}
-    </span>
+    [class.border-yellow-400]="score1 == score2"
+  >
+    <img
+      *ngIf="team.fifaTeamId != null && team.fifaTeamId != 0"
+      class="w-8 mt-2"
+      src="../../../assets/img/teams/{{ team.fifaTeamId }}.png"
+    />
+    <p class="text-xs mb-2">{{ team.code }}</p>
   </div>
   <div class="flex-grow py-2 md:ml-2">
     <p *ngFor="let player of team.players">

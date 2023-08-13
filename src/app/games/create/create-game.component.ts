@@ -1,8 +1,10 @@
 import { formatDate } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FifaTeam } from "src/app/classes/FifaTeam";
 import { Platform } from "src/app/classes/Platform";
 import { Player } from "src/app/classes/Player";
+import { YuFootFifaTeamService } from "src/app/services/yufoot-fifateam.service";
 import { YuFootGameService } from "src/app/services/yufoot-game.service";
 import { YuFootPlatformService } from "src/app/services/yufoot-platform.service";
 import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
@@ -16,17 +18,20 @@ export class CreateGameComponent implements OnInit {
   isLoading = true;
   players: Player[] = [];
   platforms: Platform[] = [];
+  fifaTeams: FifaTeam[] = [];
 
   createGameForm = new FormGroup({
     teamCode1: new FormControl("", [
       Validators.required,
       Validators.maxLength(5),
     ]),
+    teamFifa1: new FormControl(0),
     teamScore1: new FormControl(0, Validators.required),
     teamCode2: new FormControl("", [
       Validators.required,
       Validators.maxLength(5),
     ]),
+    teamFifa2: new FormControl(0),
     teamScore2: new FormControl(0, Validators.required),
     platform: new FormControl("", Validators.required),
     team1: new FormControl([], Validators.required),
@@ -37,7 +42,8 @@ export class CreateGameComponent implements OnInit {
   constructor(
     private playerService: YuFootPlayerService,
     private platformService: YuFootPlatformService,
-    private gameService: YuFootGameService
+    private gameService: YuFootGameService,
+    private fifaTeamService: YuFootFifaTeamService
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +55,11 @@ export class CreateGameComponent implements OnInit {
           data2[0].id.toString()
         );
 
-        this.isLoading = false;
+        this.fifaTeamService.getAll().subscribe((data3) => {
+          this.fifaTeams = data3;
+
+          this.isLoading = false;
+        });
       });
     });
   }
@@ -64,8 +74,19 @@ export class CreateGameComponent implements OnInit {
       PlatformId: this.createGameForm.controls["platform"].value,
       Team1: this.createGameForm.controls["team1"].value,
       Team2: this.createGameForm.controls["team2"].value,
+      FifaTeam1: 0,
+      FifaTeam2: 0,
       CreatedOn: formatDate(new Date(), "yyyy-MM-ddTHH:mm:ss", "en-US"),
     };
+
+    let fifaTeam1 = this.createGameForm.controls["teamFifa1"].value;
+    if (fifaTeam1 != null && fifaTeam1 != 0) {
+      body.FifaTeam1 = fifaTeam1;
+    }
+    let fifaTeam2 = this.createGameForm.controls["teamFifa2"].value;
+    if (fifaTeam2 != null && fifaTeam2 != 0) {
+      body.FifaTeam2 = fifaTeam2;
+    }
 
     if (
       body.TeamCode1 != null &&
