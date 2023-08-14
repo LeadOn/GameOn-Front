@@ -22,6 +22,12 @@ export class YuFootGameService {
     );
   }
 
+  getById(gameId: number): Observable<GamePlayed> {
+    return this.client.get<GamePlayed>(
+      environment.yuFootApiUrl + "/game/" + gameId
+    );
+  }
+
   create(body: any): Observable<GamePlayed> {
     return this.client.post<GamePlayed>(
       environment.yuFootApiUrl + "/game",
