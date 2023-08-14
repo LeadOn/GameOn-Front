@@ -19,5 +19,5 @@ module.exports = {
       agile: "#e6c00f",
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require("flowbite/plugin"), require("@tailwindcss/aspect-ratio")],
 };

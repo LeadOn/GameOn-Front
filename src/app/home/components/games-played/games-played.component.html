@@ -67,7 +67,9 @@
         class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"
       ></div>
       <div class="px-3">
-        <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>
+        <a [routerLink]="['/games', game.id]">
+          <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>
+        </a>
       </div>
     </div>
   </div>

@@ -23,6 +23,7 @@ import { ArrowBtnComponent } from "./shared/arrow-btn/arrow-btn.component";
 import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { GamePlayedCardRowComponent } from "./shared/game-played-card-row/game-played-card-row.component";
+import { GameDetailsComponent } from "./games/details/game-details.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -57,6 +58,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ArrowBtnComponent,
     LoadingSpinnerComponent,
     GamePlayedCardRowComponent,
+    GameDetailsComponent,
   ],
   imports: [
     BrowserModule,
