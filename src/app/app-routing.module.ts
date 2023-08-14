@@ -5,6 +5,7 @@ import { PlayerDetailsComponent } from "./players/details/player-details.compone
 import { AuthGuard } from "./guard/auth.guard";
 import { MyDashboardComponent } from "./players/me/my-dashboard.component";
 import { CreateGameComponent } from "./games/create/create-game.component";
+import { GameDetailsComponent } from "./games/details/game-details.component";
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: "games/create",
     component: CreateGameComponent,
+  },
+  {
+    path: "games/:id",
+    component: GameDetailsComponent,
   },
   {
     path: "**",

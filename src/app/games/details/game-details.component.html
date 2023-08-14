@@ -1,0 +1,92 @@
+<div
+  id="game-details-top"
+  class="flex flex-col items-center self-center justify-center text-white h-screen p-8"
+>
+  <div class="mt-4" role="status" *ngIf="loading == true">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <section
+    class="flex flex-col items-center p-8 md:w-3/6 bg-primaryDarker/80 rounded-lg"
+    *ngIf="loading == false && game != null"
+  >
+    <div class="flex flex-row items-center space-x-8">
+      <div class="flex flex-col items-center">
+        <img
+          *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
+          src="../../../assets/img/teams/{{ game.team1.fifaTeamId }}.png"
+          class="w-16"
+        />
+        <p class="mt-2">{{ game.team1.code }}</p>
+      </div>
+      <div>
+        <h2 class="text-secondary">
+          {{ game.team1.score }} - {{ game.team2.score }}
+        </h2>
+      </div>
+      <div class="flex flex-col justify-center items-center">
+        <img
+          *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
+          src="../../../assets/img/teams/{{ game.team2.fifaTeamId }}.png"
+          class="w-16"
+        />
+        <p class="mt-2">{{ game.team2.code }}</p>
+      </div>
+    </div>
+
+    <hr class="border-white border-dashed w-full my-4" />
+
+    <div class="text-center">
+      <p class="text-xs">
+        Joué le {{ game.playedOn | date : "medium" }} - {{ game.platform }}
+      </p>
+    </div>
+
+    <hr class="border-white border-dashed w-full my-4" />
+
+    <div class="flex flex-row w-full">
+      <div class="w-full text-center border-r-2 border-dashed">
+        <p *ngFor="let player of game.team1.players">
+          <a [routerLink]="['/player', player.id]">{{ player.fullName }}</a>
+        </p>
+      </div>
+      <div class="w-full text-center">
+        <p *ngFor="let player of game.team2.players">
+          <a [routerLink]="['/player', player.id]">{{ player.fullName }}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="w-full mt-4" id="stats">
+  <div class="w-full flex flex-col items-center">
+    <div class="text-center text-white">
+      <span class="block text-xl font-bold">Temps forts</span>
+      <span
+        class="block mt-4"
+        *ngIf="game.highlights != null && game.highlights.length > 0"
+      >
+        Voici la liste complète des temps forts disponibles sur ce match.
+      </span>
+      <span
+        class="block mt-4"
+        *ngIf="game.highlights == null || game.highlights.length == 0"
+      >
+        Aucun temps fort n'est disponible pour ce match.
+      </span>
+    </div>
+  </div>
+
+  <div class="flex flex-col space-y-4 m-4 p-4">
+    <div
+      class="flex flex-row p-4 bg-primary rounded-lg items-center drop-shadow-xl text-white"
+      *ngFor="let highlight of game.highlights"
+    >
+      <a href="{{ highlight.externalUrl }}" target="_blank"
+        >{{ highlight.name }}
+        <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon
+      ></a>
+    </div>
+  </div>
+</section>
