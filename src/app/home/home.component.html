@@ -14,7 +14,7 @@
       <span
         *ngIf="isLoggedIn == false || (isLoggedIn == true && player.id == 0)"
         class="typed-out text-center block font-semibold text-2xl lg:text-5xl mt-3 lg:mt-10 pr-2">
-        Bienvenue dans l'aventure YuFoot !
+        Bienvenue dans l'aventure YuGames !
       </span>
       <span
         *ngIf="isLoggedIn == true && player.id != 0"
@@ -52,14 +52,21 @@
         <button
           type="button"
           class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
-          Utilisateur connecté
+          Connecté
+        </button>
+
+        <button
+          *ngIf="isAdmin == true"
+          type="button"
+          class="text-white bg-secondary hover:bg-secondary-800 focus:outline-none focus:ring-4 focus:ring-secondary-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
+          Admin
         </button>
 
         <button
           type="button"
           [cdkCopyToClipboard]="token"
           class="text-white bg-secondaryDarker hover:bg-secondaryDarker-800 focus:outline-none focus:ring-4 focus:ring-secondaryDarker-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
-          Cliquer pour copier le Token
+          Token
         </button>
       </div>
     </div>

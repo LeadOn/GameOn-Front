@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   token = "";
   isProduction = false;
   externalIcon = faExternalLinkAlt;
+  isAdmin = false;
 
   constructor(
     private keycloak: KeycloakService,
@@ -30,6 +31,8 @@ export class HomeComponent implements OnInit {
       this.playerService.getCurrent().subscribe((data) => {
         this.player = data;
       });
+
+      this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
     }
 
     if (environment.production == false && this.isLoggedIn == true) {
