@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { AdminDashboard } from "../classes/AdminDashboard";
 import { Platform } from "src/app/shared/classes/Platform";
+import { UpdateGame } from "../classes/UpdateGame";
 
 @Injectable({
   providedIn: "root",
@@ -28,5 +29,9 @@ export class YuGamesAdminService {
     return this.client.delete<any>(
       environment.yuFootApiUrl + "/game/" + gameId
     );
+  }
+
+  updateGame(game: UpdateGame): Observable<any> {
+    return this.client.patch<any>(environment.yuFootApiUrl + "/game", game);
   }
 }
