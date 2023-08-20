@@ -25,6 +25,8 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 import { GamePlayedCardRowComponent } from "./shared/components/game-played-card-row/game-played-card-row.component";
 import { GameDetailsComponent } from "./games/details/game-details.component";
 import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
+import { AdminModule } from "./admin/admin.module";
+import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -61,6 +63,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     GamePlayedCardRowComponent,
     GameDetailsComponent,
     NotFoundComponent,
+    CommonLayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     KeycloakAngularModule,
     ReactiveFormsModule,
     ClipboardModule,
+    AdminModule,
   ],
   providers: [
     {

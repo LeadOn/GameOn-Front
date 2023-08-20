@@ -7,32 +7,44 @@ import { MyDashboardComponent } from "./players/me/my-dashboard.component";
 import { CreateGameComponent } from "./games/create/create-game.component";
 import { GameDetailsComponent } from "./games/details/game-details.component";
 import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
+import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: HomeComponent,
+    component: CommonLayoutComponent,
+    children: [
+      {
+        path: "",
+        component: HomeComponent,
+      },
+      {
+        path: "home",
+        component: HomeComponent,
+      },
+      {
+        path: "player/me",
+        component: MyDashboardComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: "player/:id",
+        component: PlayerDetailsComponent,
+      },
+      {
+        path: "games/create",
+        component: CreateGameComponent,
+      },
+      {
+        path: "games/:id",
+        component: GameDetailsComponent,
+      },
+    ],
   },
   {
-    path: "home",
-    component: HomeComponent,
-  },
-  {
-    path: "player/me",
-    component: MyDashboardComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: "player/:id",
-    component: PlayerDetailsComponent,
-  },
-  {
-    path: "games/create",
-    component: CreateGameComponent,
-  },
-  {
-    path: "games/:id",
-    component: GameDetailsComponent,
+    path: "admin",
+    loadChildren: () =>
+      import("./admin/admin.module").then((m) => m.AdminModule),
   },
   {
     path: "**",

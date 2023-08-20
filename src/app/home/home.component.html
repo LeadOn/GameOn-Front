@@ -55,12 +55,12 @@
           Connecté
         </button>
 
-        <button
+        <a
           *ngIf="isAdmin == true"
-          type="button"
+          routerLink="admin"
           class="text-white bg-secondary hover:bg-secondary-800 focus:outline-none focus:ring-4 focus:ring-secondary-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
           Admin
-        </button>
+        </a>
 
         <button
           type="button"
