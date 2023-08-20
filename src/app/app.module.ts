@@ -24,6 +24,7 @@ import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinne
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { GamePlayedCardRowComponent } from "./shared/game-played-card-row/game-played-card-row.component";
 import { GameDetailsComponent } from "./games/details/game-details.component";
+import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -59,6 +60,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     LoadingSpinnerComponent,
     GamePlayedCardRowComponent,
     GameDetailsComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

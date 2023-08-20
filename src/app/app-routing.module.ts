@@ -6,8 +6,17 @@ import { AuthGuard } from "./guard/auth.guard";
 import { MyDashboardComponent } from "./players/me/my-dashboard.component";
 import { CreateGameComponent } from "./games/create/create-game.component";
 import { GameDetailsComponent } from "./games/details/game-details.component";
+import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
 
 const routes: Routes = [
+  {
+    path: "",
+    component: HomeComponent,
+  },
+  {
+    path: "home",
+    component: HomeComponent,
+  },
   {
     path: "player/me",
     component: MyDashboardComponent,
@@ -27,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: "**",
-    component: HomeComponent,
+    component: NotFoundComponent,
   },
 ];
 
