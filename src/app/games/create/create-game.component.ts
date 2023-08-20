@@ -1,13 +1,13 @@
 import { formatDate } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { FifaTeam } from "src/app/classes/FifaTeam";
-import { Platform } from "src/app/classes/Platform";
-import { Player } from "src/app/classes/Player";
-import { YuFootFifaTeamService } from "src/app/services/yufoot-fifateam.service";
-import { YuFootGameService } from "src/app/services/yufoot-game.service";
-import { YuFootPlatformService } from "src/app/services/yufoot-platform.service";
-import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
+import { FifaTeam } from "src/app/shared/classes/FifaTeam";
+import { Platform } from "src/app/shared/classes/Platform";
+import { Player } from "src/app/shared/classes/Player";
+import { YuFootFifaTeamService } from "src/app/shared/services/yufoot-fifateam.service";
+import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
+import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.service";
+import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
 
 @Component({
   selector: "app-create-game",

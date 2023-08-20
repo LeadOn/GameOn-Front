@@ -5,10 +5,10 @@ import {
   OnInit,
   SimpleChanges,
 } from "@angular/core";
-import { Player } from "src/app/classes/Player";
+import { Player } from "src/app/shared/classes/Player";
 import { faCalendarAlt } from "@fortawesome/free-regular-svg-icons";
 import { formatDate } from "@angular/common";
-import { PlatformStats } from "src/app/classes/PlatformStats";
+import { PlatformStats } from "src/app/shared/classes/PlatformStats";
 
 @Component({
   selector: "app-player-details-card",

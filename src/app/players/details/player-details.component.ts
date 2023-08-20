@@ -6,11 +6,11 @@ import {
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { GamePlayed } from "src/app/classes/GamePlayed";
-import { PlatformStats } from "src/app/classes/PlatformStats";
-import { Player } from "src/app/classes/Player";
-import { YuFootGameService } from "src/app/services/yufoot-game.service";
-import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
+import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { PlatformStats } from "src/app/shared/classes/PlatformStats";
+import { Player } from "src/app/shared/classes/Player";
+import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
+import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
 
 @Component({
   selector: "app-player-details",

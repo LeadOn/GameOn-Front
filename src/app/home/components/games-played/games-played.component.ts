@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { GamePlayed } from "src/app/classes/GamePlayed";
+import { GamePlayed } from "src/app/shared/classes/GamePlayed";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { YuFootGameService } from "src/app/services/yufoot-game.service";
+import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
 
 @Component({
   selector: "app-games-played",

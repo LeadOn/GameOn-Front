@@ -4,8 +4,8 @@ import {
   faCalendarAlt,
   faArrowAltCircleLeft,
 } from "@fortawesome/free-regular-svg-icons";
-import { PlatformStats } from "src/app/classes/PlatformStats";
-import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
+import { PlatformStats } from "src/app/shared/classes/PlatformStats";
+import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
 
 @Component({
   selector: "app-my-dashboard",
