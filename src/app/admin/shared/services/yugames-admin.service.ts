@@ -23,4 +23,10 @@ export class YuGamesAdminService {
       platform
     );
   }
+
+  deleteGame(gameId: number): Observable<any> {
+    return this.client.delete<any>(
+      environment.yuFootApiUrl + "/game/" + gameId
+    );
+  }
 }

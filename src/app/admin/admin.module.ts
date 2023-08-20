@@ -7,6 +7,7 @@ import { AdminPlatformsComponent } from "./platforms/admin-platforms.component";
 import { SharedModule } from "../shared/modules/shared.module";
 import { AdminPlatformEditComponent } from "./platforms/edit/admin-platform-edit.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AdminFifaGamesComponent } from "./fifa-games/admin-fifa-games.component";
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     AdminHomeComponent,
     AdminPlatformsComponent,
     AdminPlatformEditComponent,
+    AdminFifaGamesComponent,
   ],
   imports: [
     CommonModule,

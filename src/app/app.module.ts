@@ -59,7 +59,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     UpdatePlayerComponent,
     CreateGameComponent,
     ArrowBtnComponent,
-    GamePlayedCardRowComponent,
     GameDetailsComponent,
     NotFoundComponent,
     CommonLayoutComponent,
