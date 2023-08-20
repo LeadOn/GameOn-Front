@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { GamePlayed } from "src/app/classes/GamePlayed";
-import { Team } from "src/app/classes/Team";
+import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { Team } from "src/app/shared/classes/Team";
 
 @Component({
   selector: "app-game-played-card-row",

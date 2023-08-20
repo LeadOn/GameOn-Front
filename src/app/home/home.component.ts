@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { KeycloakService } from "keycloak-angular";
-import { Player } from "../classes/Player";
+import { Player } from "../shared/classes/Player";
 import { environment } from "src/environments/environment";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { YuFootPlayerService } from "../services/yufoot-player.service";
+import { YuFootPlayerService } from "../shared/services/yufoot-player.service";
 
 @Component({
   selector: "app-home",
@@ -23,20 +23,25 @@ export class HomeComponent implements OnInit {
     private playerService: YuFootPlayerService
   ) {
     this.isProduction = environment.production;
-    this.keycloak.isLoggedIn().then((x) => (this.isLoggedIn = x));
   }
 
   ngOnInit(): void {
-    if (this.isLoggedIn == true) {
-      this.playerService.getCurrent().subscribe((data) => {
-        this.player = data;
-      });
+    this.keycloak.isLoggedIn().then((x) => {
+      this.isLoggedIn = x;
 
-      this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
-    }
+      if (this.isLoggedIn == true) {
+        this.playerService.getCurrent().subscribe((data) => {
+          this.player = data;
+        });
 
-    if (environment.production == false && this.isLoggedIn == true) {
-      this.keycloak.getToken().then((x) => (this.token = x));
-    }
+        this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
+      }
+
+      if (environment.production == false && this.isLoggedIn == true) {
+        this.keycloak.getToken().then((x) => {
+          this.token = x;
+        });
+      }
+    });
   }
 }
