@@ -20,13 +20,13 @@ import { PlayerDetailsCardComponent } from "./shared/components/player-details-c
 import { UpdatePlayerComponent } from "./players/me/components/update-player/update-player.component";
 import { CreateGameComponent } from "./games/create/create-game.component";
 import { ArrowBtnComponent } from "./shared/components/arrow-btn/arrow-btn.component";
-import { LoadingSpinnerComponent } from "./shared/components/loading-spinner/loading-spinner.component";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 import { GamePlayedCardRowComponent } from "./shared/components/game-played-card-row/game-played-card-row.component";
 import { GameDetailsComponent } from "./games/details/game-details.component";
 import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
 import { AdminModule } from "./admin/admin.module";
 import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
+import { SharedModule } from "./shared/modules/shared.module";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -59,7 +59,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     UpdatePlayerComponent,
     CreateGameComponent,
     ArrowBtnComponent,
-    LoadingSpinnerComponent,
     GamePlayedCardRowComponent,
     GameDetailsComponent,
     NotFoundComponent,
@@ -75,6 +74,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ReactiveFormsModule,
     ClipboardModule,
     AdminModule,
+    SharedModule,
   ],
   providers: [
     {

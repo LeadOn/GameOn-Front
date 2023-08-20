@@ -1,5 +1,74 @@
 <div class="flex flex-row justify-center mt-8">
-  <div class="p-4 rounded-lg bg-primary">
-    <span class="text-white">Bienvenue {{ player.fullName }} !</span>
+  <div
+    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+    *ngIf="loading == true">
+    <app-loading-spinner></app-loading-spinner>
+    <span class="text-white">Chargement...</span>
+  </div>
+
+  <div
+    class="p-4 rounded-lg bg-primary"
+    *ngIf="loading == false && stats.currentUser.id != 0">
+    <a routerLink="/player/me" class="text-white">
+      Bienvenue
+      <span class="font-bold">{{ stats.currentUser.fullName }}</span>
+      !
+    </a>
+  </div>
+</div>
+
+<div
+  class="flex flex-row justify-center mt-8"
+  *ngIf="loading == false && stats.currentUser.id != 0">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <a
+      class="bg-primary text-white p-4 rounded-lg bg-primary flex flex-row"
+      routerLink="/admin/platforms">
+      <div class="flex flex-col w-64">
+        <span class="text-xl">Plateformes</span>
+        <span class="font-bold text-secondary">{{ stats.platforms }}</span>
+      </div>
+
+      <div
+        class="rounded-full bg-red-500 w-12 flex flex-col items-center justify-center">
+        <img src="../../../assets/img/platform.svg" class="w-8" />
+      </div>
+    </a>
+
+    <a class="bg-primary text-white p-4 rounded-lg bg-primary flex flex-row">
+      <div class="flex flex-col w-64">
+        <span class="text-xl">Joueurs</span>
+        <span class="font-bold text-secondary">{{ stats.players }}</span>
+      </div>
+
+      <div
+        class="rounded-full bg-red-500 w-12 flex flex-col items-center justify-center">
+        <img src="../../../assets/img/player.svg" class="w-8" />
+      </div>
+    </a>
+
+    <a class="bg-primary text-white p-4 rounded-lg bg-primary flex flex-row">
+      <div class="flex flex-col w-64">
+        <span class="text-xl">Matchs joués (FIFA)</span>
+        <span class="font-bold text-secondary">{{ stats.fifaGames }}</span>
+      </div>
+
+      <div
+        class="rounded-full bg-red-500 w-12 flex flex-col items-center justify-center">
+        <img src="../../../assets/img/fifagame.svg" class="w-8" />
+      </div>
+    </a>
+
+    <a class="bg-primary text-white p-4 rounded-lg bg-primary flex flex-row">
+      <div class="flex flex-col w-64">
+        <span class="text-xl">Temps forts</span>
+        <span class="font-bold text-secondary">{{ stats.highlights }}</span>
+      </div>
+
+      <div
+        class="rounded-full bg-red-500 w-12 flex flex-col items-center justify-center">
+        <img src="../../../assets/img/highlight.svg" class="w-8" />
+      </div>
+    </a>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { Player } from "src/app/shared/classes/Player";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { YuGamesAdminService } from "../shared/services/yugames-admin.service";
+import { AdminDashboard } from "../shared/classes/AdminDashboard";
 
 @Component({
   selector: "app-admin-home",
@@ -8,17 +8,23 @@ import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.servi
   styleUrls: ["./admin-home.component.scss"],
 })
 export class AdminHomeComponent implements OnInit {
-  player: Player = new Player();
+  loading = true;
 
-  constructor(private playerService: YuFootPlayerService) {}
+  stats: AdminDashboard = new AdminDashboard();
+
+  constructor(private adminService: YuGamesAdminService) {}
 
   ngOnInit(): void {
-    this.playerService.getCurrent().subscribe(
+    this.adminService.getDashboardStats().subscribe(
       (data) => {
-        this.player = data;
+        this.loading = false;
+        this.stats = data;
       },
       (err) => {
-        alert("Une erreur est survenue lors de la récupération du profile.");
+        this.loading = false;
+        alert(
+          "Une erreur est survenue lors de la récupération des statistiques."
+        );
         console.error(err);
       }
     );

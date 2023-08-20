@@ -9,6 +9,7 @@ import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.s
 })
 export class AdminPlatformsComponent implements OnInit {
   platforms: Platform[] = [];
+  loading = true;
 
   constructor(private platformService: YuFootPlatformService) {}
 
@@ -16,12 +17,14 @@ export class AdminPlatformsComponent implements OnInit {
     this.platformService.getAll().subscribe(
       (data) => {
         this.platforms = data;
+        this.loading = false;
       },
       (err) => {
         alert(
           "Une erreur est survenue lors de la récupération des plateformes."
         );
         console.error(err);
+        this.loading = false;
       }
     );
   }

@@ -15,4 +15,10 @@ export class YuFootPlatformService {
       environment.yuFootApiUrl + "/platform/all"
     );
   }
+
+  getById(id: number): Observable<Platform> {
+    return this.client.get<Platform>(
+      environment.yuFootApiUrl + "/platform/" + id
+    );
+  }
 }
