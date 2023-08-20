@@ -1,0 +1,22 @@
+<div class="relative overflow-x-auto">
+  <table class="w-full text-sm text-left text-gray-400">
+    <thead class="text-xs uppercase bg-gray-700 text-white">
+      <tr>
+        <th scope="col" class="px-6 py-3">#</th>
+        <th scope="col" class="px-6 py-3">Nom</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="border-b bg-gray-800 border-gray-700"
+        *ngFor="let platform of platforms">
+        <th
+          scope="row"
+          class="px-6 py-4 font-medium whitespace-nowrap text-white">
+          {{ platform.id }}
+        </th>
+        <td class="px-6 py-4">{{ platform.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
