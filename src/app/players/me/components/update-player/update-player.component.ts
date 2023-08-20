@@ -6,8 +6,8 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Player } from "src/app/classes/Player";
-import { YuFootPlayerService } from "src/app/services/yufoot-player.service";
+import { Player } from "src/app/shared/classes/Player";
+import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
 
 @Component({
   selector: "app-update-player",

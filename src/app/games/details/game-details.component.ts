@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { GamePlayed } from "src/app/classes/GamePlayed";
-import { YuFootGameService } from "src/app/services/yufoot-game.service";
+import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
 
 @Component({
   selector: "app-game-details",

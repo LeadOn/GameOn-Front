@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { KeycloakService } from "keycloak-angular";
-import { Player } from "../classes/Player";
+import { Player } from "../shared/classes/Player";
 import { environment } from "src/environments/environment";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { YuFootPlayerService } from "../services/yufoot-player.service";
+import { YuFootPlayerService } from "../shared/services/yufoot-player.service";
 
 @Component({
   selector: "app-home",
