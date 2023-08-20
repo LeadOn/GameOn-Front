@@ -1,7 +1,6 @@
 <section
   class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
-  id="games-played"
->
+  id="games-played">
   <div class="text-center">
     <span class="block text-xl font-bold">Matchs joués</span>
     <span class="block mt-4">
@@ -15,8 +14,7 @@
 
   <div class="mt-4 flex flex-col w-full text-white">
     <div
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl"
-    >
+      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
       <div class="flex flex-col flex-grow">
         <div class="flex flex-row items-center text-xs md:text-sm lg:text-lg">
           <div class="border-r-2 mr-2 text-center border-white">
@@ -40,22 +38,19 @@
   <div class="mt-8 flex flex-col w-full text-white space-y-4">
     <div
       *ngFor="let game of games"
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl"
-    >
+      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
       <div class="flex flex-col flex-grow">
         <app-game-played-card-row
           [team]="game.team1"
           [score1]="game.team1.score"
-          [score2]="game.team2.score"
-        ></app-game-played-card-row>
+          [score2]="game.team2.score"></app-game-played-card-row>
 
         <hr class="border-secondary" />
 
         <app-game-played-card-row
           [team]="game.team2"
           [score1]="game.team2.score"
-          [score2]="game.team1.score"
-        ></app-game-played-card-row>
+          [score2]="game.team1.score"></app-game-played-card-row>
 
         <hr class="border-secondary" />
 
@@ -64,8 +59,7 @@
         </div>
       </div>
       <div
-        class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"
-      ></div>
+        class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"></div>
       <div class="px-3">
         <a [routerLink]="['/games', game.id]">
           <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>

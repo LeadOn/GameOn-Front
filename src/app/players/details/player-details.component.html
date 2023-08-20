@@ -1,7 +1,6 @@
 <div
   id="player-details-top"
-  class="flex flex-col items-center lg:items-start justify-center text-white h-screen p-8"
->
+  class="flex flex-col items-center lg:items-start justify-center text-white h-screen p-8">
   <div class="mt-4" role="status" *ngIf="loading == true">
     <app-loading-spinner></app-loading-spinner>
   </div>
@@ -9,23 +8,19 @@
   <section
     class="flex flex-col md:flex-row justify-center align-center self-center items-center md:items-start text-white p-8 bg-primaryDarker/80 rounded-lg"
     id="player-details"
-    *ngIf="loading == false"
-  >
+    *ngIf="loading == false">
     <app-player-details-card
       [player]="player"
-      [stats]="stats"
-    ></app-player-details-card>
+      [stats]="stats"></app-player-details-card>
   </section>
 </div>
 
 <section class="w-full" id="stats">
   <div
-    class="flex flex-col md:flex-row items-center justify-center text-white p-8 md:px-6 lg:px-32 md:space-x-4 space-y-4 md:space-y-0"
-  >
+    class="flex flex-col md:flex-row items-center justify-center text-white p-8 md:px-6 lg:px-32 md:space-x-4 space-y-4 md:space-y-0">
     <div
       *ngFor="let stat of stats"
-      class="flex flex-col bg-primary w-full rounded-lg items-center drop-shadow-xl p-4"
-    >
+      class="flex flex-col bg-primary w-full rounded-lg items-center drop-shadow-xl p-4">
       <div class="text-center">
         <span class="block text-xl font-bold">
           Statistiques {{ stat.platform.name }}
@@ -45,8 +40,7 @@
       <div class="w-full bg-white rounded-full h-4 mb-4">
         <div
           class="bg-secondary text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ stat.winRate }}%"
-        >
+          style="width: {{ stat.winRate }}%">
           {{ stat.winRate }}%
         </div>
       </div>
@@ -56,8 +50,7 @@
       <div class="w-full bg-white rounded-full h-4 mb-4">
         <div
           class="bg-csharp text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ stat.looseRate }}%"
-        >
+          style="width: {{ stat.looseRate }}%">
           {{ stat.looseRate }}%
         </div>
       </div>
@@ -66,8 +59,7 @@
       <div class="w-full bg-white rounded-full h-4 mb-4">
         <div
           class="bg-azure text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ stat.drawRate }}%"
-        >
+          style="width: {{ stat.drawRate }}%">
           {{ stat.drawRate }}%
         </div>
       </div>
@@ -83,14 +75,12 @@
     </div>
 
     <div
-      class="w-96 mt-4 p-4 bg-primary rounded-lg items-center drop-shadow-xl"
-    >
+      class="w-96 mt-4 p-4 bg-primary rounded-lg items-center drop-shadow-xl">
       <select
         (change)="onChangeEnemy($event.target)"
         [ngModel]="selectedEnemy"
         id="enemies"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         <option value="0">Sélectionne un joueur</option>
         <option *ngFor="let player of players" value="{{ player.id }}">
           {{ player.fullName }} ({{ player.nickname }})
@@ -101,19 +91,16 @@
     <div
       class="mt-4"
       role="status"
-      *ngIf="loading == true && selectedEnemy != 0"
-    >
+      *ngIf="loading == true && selectedEnemy != 0">
       <app-loading-spinner></app-loading-spinner>
     </div>
 
     <div
       *ngIf="loading == false && enemyStatsLoaded == true"
-      class="w-full flex flex-col md:flex-row items-center justify-center text-white p-8 md:px-6 lg:px-32 md:space-x-4 space-y-4 md:space-y-0"
-    >
+      class="w-full flex flex-col md:flex-row items-center justify-center text-white p-8 md:px-6 lg:px-32 md:space-x-4 space-y-4 md:space-y-0">
       <div
         *ngFor="let stat of enemyStats"
-        class="flex flex-col bg-primary w-full rounded-lg items-center drop-shadow-xl p-4"
-      >
+        class="flex flex-col bg-primary w-full rounded-lg items-center drop-shadow-xl p-4">
         <div class="text-center">
           <span class="block text-xl font-bold">
             Statistiques {{ stat.platform.name }}
@@ -133,8 +120,7 @@
         <div class="w-full bg-white rounded-full h-4 mb-4">
           <div
             class="bg-secondary text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-            style="width: {{ stat.winRate }}%"
-          >
+            style="width: {{ stat.winRate }}%">
             {{ stat.winRate }}%
           </div>
         </div>
@@ -144,8 +130,7 @@
         <div class="w-full bg-white rounded-full h-4 mb-4">
           <div
             class="bg-csharp text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-            style="width: {{ stat.looseRate }}%"
-          >
+            style="width: {{ stat.looseRate }}%">
             {{ stat.looseRate }}%
           </div>
         </div>
@@ -154,8 +139,7 @@
         <div class="w-full bg-white rounded-full h-4 mb-4">
           <div
             class="bg-azure text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-            style="width: {{ stat.drawRate }}%"
-          >
+            style="width: {{ stat.drawRate }}%">
             {{ stat.drawRate }}%
           </div>
         </div>
@@ -170,8 +154,7 @@
 
 <section
   class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
-  id="games-played"
->
+  id="games-played">
   <div class="text-center">
     <span class="block text-xl font-bold">Matchs joués</span>
     <span class="block mt-4">
@@ -185,8 +168,7 @@
 
   <div class="mt-4 flex flex-col w-full text-white">
     <div
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl"
-    >
+      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
       <div class="flex flex-col flex-grow">
         <div class="flex flex-row items-center text-xs md:text-sm lg:text-lg">
           <div class="border-r-2 mr-2 text-center border-white">
@@ -210,22 +192,19 @@
   <div class="mt-8 flex flex-col w-full text-white space-y-4">
     <div
       *ngFor="let game of games"
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl"
-    >
+      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
       <div class="flex flex-col flex-grow">
         <app-game-played-card-row
           [team]="game.team1"
           [score1]="game.team1.score"
-          [score2]="game.team2.score"
-        ></app-game-played-card-row>
+          [score2]="game.team2.score"></app-game-played-card-row>
 
         <hr class="border-secondary" />
 
         <app-game-played-card-row
           [team]="game.team2"
           [score1]="game.team2.score"
-          [score2]="game.team1.score"
-        ></app-game-played-card-row>
+          [score2]="game.team1.score"></app-game-played-card-row>
 
         <hr class="border-secondary" />
 
@@ -234,8 +213,7 @@
         </div>
       </div>
       <div
-        class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"
-      ></div>
+        class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"></div>
       <div class="px-3">
         <a [routerLink]="['/games', game.id]">
           <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>

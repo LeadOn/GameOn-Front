@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PlayerDetailsCardComponent } from './player-details-card.component';
+import { PlayerDetailsCardComponent } from "./player-details-card.component";
 
-describe('PlayerDetailsCardComponent', () => {
+describe("PlayerDetailsCardComponent", () => {
   let component: PlayerDetailsCardComponent;
   let fixture: ComponentFixture<PlayerDetailsCardComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PlayerDetailsCardComponent]
+      declarations: [PlayerDetailsCardComponent],
     });
     fixture = TestBed.createComponent(PlayerDetailsCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
