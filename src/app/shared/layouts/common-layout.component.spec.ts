@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CommonLayoutComponent } from './common-layout.component';
+import { CommonLayoutComponent } from "./common-layout.component";
 
-describe('CommonLayoutComponent', () => {
+describe("CommonLayoutComponent", () => {
   let component: CommonLayoutComponent;
   let fixture: ComponentFixture<CommonLayoutComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CommonLayoutComponent]
+      declarations: [CommonLayoutComponent],
     });
     fixture = TestBed.createComponent(CommonLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

@@ -1,10 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Highlight } from "src/app/shared/classes/Highlight";
-import { Platform } from "src/app/shared/classes/Platform";
-import { Player } from "src/app/shared/classes/Player";
 import { YuFootHighlightService } from "src/app/shared/services/yufoot-highlight.service";
-import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.service";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
 
 @Component({
   selector: "app-admin-highlights",

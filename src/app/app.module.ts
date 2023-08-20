@@ -21,7 +21,6 @@ import { UpdatePlayerComponent } from "./players/me/components/update-player/upd
 import { CreateGameComponent } from "./games/create/create-game.component";
 import { ArrowBtnComponent } from "./shared/components/arrow-btn/arrow-btn.component";
 import { ClipboardModule } from "@angular/cdk/clipboard";
-import { GamePlayedCardRowComponent } from "./shared/components/game-played-card-row/game-played-card-row.component";
 import { GameDetailsComponent } from "./games/details/game-details.component";
 import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
 import { AdminModule } from "./admin/admin.module";

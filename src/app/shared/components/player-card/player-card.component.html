@@ -12,9 +12,7 @@
     <span class="inline-block text-lg">{{ player.fullName }}</span>
     <br />
     <span class="inline-block italic text-lg" *ngIf="player.nickname != null">
-      <span *ngIf="player.fullName == 'Valentin VIROT'">👑</span>
       {{ player.nickname }}
-      <span *ngIf="player.fullName == 'Valentin VIROT'">👑</span>
     </span>
     <span class="inline-block italic text-lg" *ngIf="player.nickname == null">
       Pseudo inconnu

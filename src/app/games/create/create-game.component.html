@@ -1,14 +1,12 @@
 <section
   class="flex flex-col items-center md:px-6 lg:px-32 xl:px-64 justify-center text-white py-32"
-  id="home"
->
+  id="home">
   <div class="mt-4" role="status" *ngIf="isLoading == true">
     <app-loading-spinner></app-loading-spinner>
   </div>
 
   <div
-    class="flex flex-col w-2/3 mx-4 items-center bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg"
-  >
+    class="flex flex-col w-2/3 mx-4 items-center bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg">
     <p>Création match</p>
     <form [formGroup]="createGameForm" class="w-full mt-6">
       <div class="relative z-0 w-full mb-6 group">
@@ -17,12 +15,10 @@
           id="teamCode1"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
           formControlName="teamCode1"
-          required
-        />
+          required />
         <label
           for="teamCode1"
-          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Code équipe 1
           <span class="text-red-500">*</span>
         </label>
@@ -31,16 +27,14 @@
       <div class="relative z-0 w-full mb-6 group">
         <label
           for="fifateam1"
-          class="block mb-2 text-sm font-medium text-white scale-100"
-        >
+          class="block mb-2 text-sm font-medium text-white scale-100">
           Équipe FIFA 1
         </label>
 
         <select
           id="fifateam1"
           formControlName="teamFifa1"
-          class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
+          class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option value="0" selected>--- Sélectionnez une équipe ---</option>
           <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
             {{ fifaTeam.name }}
@@ -52,14 +46,13 @@
         <input
           type="number"
           id="teamScore1"
+          min="0"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
           formControlName="teamScore1"
-          required
-        />
+          required />
         <label
           for="teamScore1"
-          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Score équipe 1
           <span class="text-red-500">*</span>
         </label>
@@ -71,12 +64,10 @@
           id="teamCode2"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
           formControlName="teamCode2"
-          required
-        />
+          required />
         <label
           for="teamCode2"
-          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Code équipe 2
           <span class="text-red-500">*</span>
         </label>
@@ -85,16 +76,14 @@
       <div class="relative z-0 w-full mb-6 group">
         <label
           for="fifateam2"
-          class="block mb-2 text-sm font-medium text-white scale-100"
-        >
+          class="block mb-2 text-sm font-medium text-white scale-100">
           Équipe FIFA 2
         </label>
 
         <select
           id="fifateam2"
           formControlName="teamFifa2"
-          class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
+          class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option value="0" selected>--- Sélectionnez une équipe ---</option>
           <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
             {{ fifaTeam.name }}
@@ -106,14 +95,13 @@
         <input
           type="number"
           id="teamScore2"
+          min="0"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
           formControlName="teamScore2"
-          required
-        />
+          required />
         <label
           for="teamScore2"
-          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Score équipe 2
           <span class="text-red-500">*</span>
         </label>
@@ -122,16 +110,14 @@
       <div class="relative z-0 w-full mb-6 group">
         <label
           for="platform"
-          class="block mb-2 text-sm font-medium text-white scale-100"
-        >
+          class="block mb-2 text-sm font-medium text-white scale-100">
           Plateforme
         </label>
 
         <select
           id="platform"
           formControlName="platform"
-          class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
+          class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option *ngFor="let platform of platforms" value="{{ platform.id }}">
             {{ platform.name }}
           </option>
@@ -146,8 +132,7 @@
           multiple
           id="team1"
           formControlName="team1"
-          class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
+          class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option *ngFor="let player of players" value="{{ player.id }}">
             {{ player.fullName }}
           </option>
@@ -162,8 +147,7 @@
           multiple
           id="team2"
           formControlName="team2"
-          class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
+          class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
           <option *ngFor="let player of players" value="{{ player.id }}">
             {{ player.fullName }}
           </option>
@@ -172,8 +156,7 @@
 
       <button
         (click)="createGame()"
-        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-      >
+        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
         Créer le match
       </button>
     </form>

@@ -1,22 +1,19 @@
 <div
   id="game-details-top"
-  class="flex flex-col items-center self-center justify-center text-white h-screen p-8"
->
+  class="flex flex-col items-center self-center justify-center text-white h-screen p-8">
   <div class="mt-4" role="status" *ngIf="loading == true">
     <app-loading-spinner></app-loading-spinner>
   </div>
 
   <section
     class="flex flex-col items-center p-8 md:w-3/6 bg-primaryDarker/80 rounded-lg"
-    *ngIf="loading == false && game != null"
-  >
+    *ngIf="loading == false && game != null">
     <div class="flex flex-row items-center space-x-8">
       <div class="flex flex-col items-center">
         <img
           *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
           src="../../../assets/img/teams/{{ game.team1.fifaTeamId }}.png"
-          class="w-16"
-        />
+          class="w-16" />
         <p class="mt-2">{{ game.team1.code }}</p>
       </div>
       <div>
@@ -28,8 +25,7 @@
         <img
           *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
           src="../../../assets/img/teams/{{ game.team2.fifaTeamId }}.png"
-          class="w-16"
-        />
+          class="w-16" />
         <p class="mt-2">{{ game.team2.code }}</p>
       </div>
     </div>
@@ -65,14 +61,12 @@
       <span class="block text-xl font-bold">Temps forts</span>
       <span
         class="block mt-4"
-        *ngIf="game.highlights != null && game.highlights.length > 0"
-      >
+        *ngIf="game.highlights != null && game.highlights.length > 0">
         Voici la liste complète des temps forts disponibles sur ce match.
       </span>
       <span
         class="block mt-4"
-        *ngIf="game.highlights == null || game.highlights.length == 0"
-      >
+        *ngIf="game.highlights == null || game.highlights.length == 0">
         Aucun temps fort n'est disponible pour ce match.
       </span>
     </div>
@@ -81,12 +75,11 @@
   <div class="flex flex-col space-y-4 m-4 p-4">
     <div
       class="flex flex-row p-4 bg-primary rounded-lg items-center drop-shadow-xl text-white"
-      *ngFor="let highlight of game.highlights"
-    >
-      <a href="{{ highlight.externalUrl }}" target="_blank"
-        >{{ highlight.name }}
-        <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon
-      ></a>
+      *ngFor="let highlight of game.highlights">
+      <a href="{{ highlight.externalUrl }}" target="_blank">
+        {{ highlight.name }}
+        <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>
+      </a>
     </div>
   </div>
 </section>

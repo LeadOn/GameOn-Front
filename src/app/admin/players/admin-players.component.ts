@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Platform } from "src/app/shared/classes/Platform";
 import { Player } from "src/app/shared/classes/Player";
-import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.service";
 import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
 
 @Component({

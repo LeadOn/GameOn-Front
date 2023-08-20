@@ -1,9 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Player } from "../classes/Player";
 import { environment } from "src/environments/environment";
-import { PlatformStats } from "../classes/PlatformStats";
 import { Highlight } from "../classes/Highlight";
 
 @Injectable({
