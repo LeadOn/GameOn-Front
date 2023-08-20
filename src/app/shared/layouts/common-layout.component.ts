@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { initFlowbite } from "flowbite";
 
 @Component({
-  selector: 'app-common-layout',
-  templateUrl: './common-layout.component.html',
-  styleUrls: ['./common-layout.component.scss']
+  selector: "app-common-layout",
+  templateUrl: "./common-layout.component.html",
+  styleUrls: ["./common-layout.component.scss"],
 })
-export class CommonLayoutComponent {
-
+export class CommonLayoutComponent implements OnInit {
+  ngOnInit(): void {
+    initFlowbite();
+  }
 }

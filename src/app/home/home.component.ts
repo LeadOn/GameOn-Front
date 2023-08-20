@@ -23,20 +23,25 @@ export class HomeComponent implements OnInit {
     private playerService: YuFootPlayerService
   ) {
     this.isProduction = environment.production;
-    this.keycloak.isLoggedIn().then((x) => (this.isLoggedIn = x));
   }
 
   ngOnInit(): void {
-    if (this.isLoggedIn == true) {
-      this.playerService.getCurrent().subscribe((data) => {
-        this.player = data;
-      });
+    this.keycloak.isLoggedIn().then((x) => {
+      this.isLoggedIn = x;
 
-      this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
-    }
+      if (this.isLoggedIn == true) {
+        this.playerService.getCurrent().subscribe((data) => {
+          this.player = data;
+        });
 
-    if (environment.production == false && this.isLoggedIn == true) {
-      this.keycloak.getToken().then((x) => (this.token = x));
-    }
+        this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
+      }
+
+      if (environment.production == false && this.isLoggedIn == true) {
+        this.keycloak.getToken().then((x) => {
+          this.token = x;
+        });
+      }
+    });
   }
 }
