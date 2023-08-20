@@ -48,7 +48,13 @@ const routes: Routes = [
   },
   {
     path: "**",
-    component: NotFoundComponent,
+    component: CommonLayoutComponent,
+    children: [
+      {
+        path: "**",
+        component: NotFoundComponent,
+      },
+    ],
   },
 ];
 
