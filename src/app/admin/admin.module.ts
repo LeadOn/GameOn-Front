@@ -9,6 +9,8 @@ import { AdminPlatformEditComponent } from "./platforms/edit/admin-platform-edit
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AdminFifaGamesComponent } from "./fifa-games/admin-fifa-games.component";
 import { AdminFifaGameEditComponent } from "./fifa-games/edit/admin-fifa-game-edit.component";
+import { AdminPlayersComponent } from "./players/admin-players.component";
+import { AdminHighlightsComponent } from "./highlights/admin-highlights.component";
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { AdminFifaGameEditComponent } from "./fifa-games/edit/admin-fifa-game-ed
     AdminPlatformEditComponent,
     AdminFifaGamesComponent,
     AdminFifaGameEditComponent,
+    AdminPlayersComponent,
+    AdminHighlightsComponent,
   ],
   imports: [
     CommonModule,
