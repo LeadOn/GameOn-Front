@@ -7,6 +7,7 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
 
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
+import { StoreModule } from "@ngrx/store";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -23,6 +24,7 @@ import { GameDetailsComponent } from "./games/details/game-details.component";
 import { AdminModule } from "./admin/admin.module";
 import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
 import { SharedModule } from "./shared/modules/shared.module";
+import { playerReducer } from "./store/reducers/player.reducer";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -66,6 +68,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ClipboardModule,
     AdminModule,
     SharedModule,
+    StoreModule.forRoot({
+      player: playerReducer,
+    }),
   ],
   providers: [
     {

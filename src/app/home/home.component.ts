@@ -4,6 +4,9 @@ import { Player } from "../shared/classes/Player";
 import { environment } from "src/environments/environment";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { YuFootPlayerService } from "../shared/services/yufoot-player.service";
+import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
+import { setPlayer } from "../store/actions/player.actions";
 
 @Component({
   selector: "app-home",
@@ -11,18 +14,20 @@ import { YuFootPlayerService } from "../shared/services/yufoot-player.service";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  player$: Observable<Player>;
+
   isLoggedIn = false;
-  player: Player = new Player();
-  token = "";
+  isAdmin = false;
   isProduction = false;
   externalIcon = faExternalLinkAlt;
-  isAdmin = false;
+  token = "";
 
   constructor(
     private keycloak: KeycloakService,
-    private playerService: YuFootPlayerService
+    private store: Store<{ player: Player }>
   ) {
     this.isProduction = environment.production;
+    this.player$ = store.select("player");
   }
 
   ngOnInit(): void {
@@ -30,10 +35,6 @@ export class HomeComponent implements OnInit {
       this.isLoggedIn = x;
 
       if (this.isLoggedIn == true) {
-        this.playerService.getCurrent().subscribe((data) => {
-          this.player = data;
-        });
-
         this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
       }
 
