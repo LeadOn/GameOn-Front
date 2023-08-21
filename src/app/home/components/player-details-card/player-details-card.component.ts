@@ -48,7 +48,7 @@ export class PlayerDetailsCardComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["stats"] != null) {
+    if (changes["stats"] != null && this.totalGamePlayed == 0) {
       let avgGoalsGiven: number[] = [];
       let avgGoalsTaken: number[] = [];
 

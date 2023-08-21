@@ -7,19 +7,17 @@
       <span
         class="block border border-2 border-secondary rounded-lg px-6 py-3 lg:text-xl">
         Saison 2023
+        <span *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
+          <span *ngIf="currentPlayer.id != 0"></span>
+          - {{ currentPlayer.fullName }}
+        </span>
       </span>
     </div>
 
     <div>
       <span
-        *ngIf="isLoggedIn == false || (isLoggedIn == true && player.id == 0)"
         class="typed-out text-center block font-semibold text-2xl lg:text-5xl mt-3 lg:mt-10 pr-2">
         Bienvenue dans l'aventure YuGames !
-      </span>
-      <span
-        *ngIf="isLoggedIn == true && player.id != 0"
-        class="typed-out text-center block font-semibold text-2xl lg:text-5xl mt-3 lg:mt-10 pr-2">
-        Bonjour {{ player.fullName }} !
       </span>
     </div>
 
@@ -77,9 +75,15 @@
   </div>
 </section>
 
+<div class="flex justify-center mt-8">
+  <a
+    href="#games-played"
+    class="w-px h-20 border-r border-dashed border-secondary"></a>
+</div>
+
 <app-home-players></app-home-players>
 
-<div class="flex justify-center">
+<div class="flex justify-center mt-4">
   <a
     href="#games-played"
     class="w-px h-20 border-r border-dashed border-secondary"></a>
