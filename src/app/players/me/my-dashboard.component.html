@@ -21,3 +21,18 @@
 <app-update-player
   *ngIf="loading == false"
   [player]="player"></app-update-player>
+
+<section
+  class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
+  id="update-profile">
+  <div class="text-center">
+    <span class="block text-xl font-bold">Déconnexion</span>
+    <span class="block mt-4">
+      Vous pouvez vous déconnecter en cliquant sur le bouton ci-dessous.
+    </span>
+  </div>
+
+  <button class="mt-4 p-4 rounded-lg bg-red-500 w-full" (click)="logout()">
+    Déconnextion
+  </button>
+</section>

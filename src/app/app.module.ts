@@ -5,7 +5,6 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { HomeComponent } from "./home/home.component";
-import { NavbarComponent } from "./shared/components/navbar/navbar.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
 import { HomePlayersComponent } from "./home/components/players/home-players.component";
 import { PlayerCardComponent } from "./shared/components/player-card/player-card.component";
@@ -47,7 +46,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     HomeComponent,
-    NavbarComponent,
     FooterComponent,
     HomePlayersComponent,
     PlayerCardComponent,

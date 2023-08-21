@@ -5,6 +5,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { PlatformStats } from "src/app/shared/classes/PlatformStats";
 import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-my-dashboard",
@@ -37,5 +38,11 @@ export class MyDashboardComponent implements OnInit {
         }
       );
     });
+  }
+
+  logout() {
+    window.location.replace(
+      environment.keycloak.url + "realms/yufoot/protocol/openid-connect/logout"
+    );
   }
 }
