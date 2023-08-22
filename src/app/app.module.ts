@@ -25,6 +25,7 @@ import { AdminModule } from "./admin/admin.module";
 import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
 import { SharedModule } from "./shared/modules/shared.module";
 import { playerReducer } from "./store/reducers/player.reducer";
+import { FifaStatComponent } from "./shared/components/fifa-stat/fifa-stat.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -56,6 +57,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     CreateGameComponent,
     GameDetailsComponent,
     CommonLayoutComponent,
+    FifaStatComponent,
   ],
   imports: [
     BrowserModule,

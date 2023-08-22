@@ -1,0 +1,64 @@
+<div class="flex flex-row space-x-2 justify-center items-center align-center">
+  <img
+    class="w-10"
+    src="../../../assets/img/windows.svg"
+    *ngIf="stat.platform.id == 1" />
+  <img
+    class="w-10"
+    src="../../../assets/img/xbox.svg"
+    *ngIf="stat.platform.id == 2" />
+  <img
+    class="w-10"
+    src="../../../assets/img/stadium.svg"
+    *ngIf="stat.platform.id == 3" />
+  <img
+    class="w-10"
+    src="../../../assets/img/playstation.svg"
+    *ngIf="stat.platform.id == 4" />
+
+  <div class="grow">
+    <div class="w-full bg-white rounded-full h-4">
+      <div
+        class="bg-green-500 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full h-4"
+        style="width: {{ stat.winRate }}%">
+        {{ stat.winRate }}%
+      </div>
+    </div>
+    <div class="w-full bg-white rounded-full h-4 mt-1">
+      <div
+        class="bg-red-500 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full h-4"
+        style="width: {{ stat.looseRate }}%">
+        {{ stat.looseRate }}%
+      </div>
+    </div>
+    <div class="w-full bg-white rounded-full h-4 mt-1">
+      <div
+        class="bg-yellow-500 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full h-4"
+        style="width: {{ stat.drawRate }}%">
+        {{ stat.drawRate }}%
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-xs text-center mt-2">
+  <span>
+    <span class="text-green-500">{{ stat.wins }}W</span>
+    -
+    <span class="text-red-500">{{ stat.losses }}L</span>
+    -
+    <span class="text-yellow-500">{{ stat.draws }}D</span>
+  </span>
+</div>
+
+<div class="text-xs text-center mt-2">
+  <span class="block">
+    Moy. marqués : {{ stat.averageGoalGiven }} - total :
+    {{ stat.goalsGiven }}
+  </span>
+  <span class="block">
+    Moy. reçus : {{ stat.averageGoalTaken }} - total :
+    {{ stat.goalsTaken }}
+  </span>
+  <span class="block">Diff. globale : {{ stat.goalDifference }}</span>
+</div>

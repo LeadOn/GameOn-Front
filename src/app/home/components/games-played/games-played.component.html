@@ -55,8 +55,33 @@
 
         <hr class="border-secondary" />
 
-        <div class="flex flex-col p-2 items-center text-xs text-gray-300">
-          Joué le {{ game.playedOn | date : "medium" }} - {{ game.platform }}
+        <div
+          class="flex flex-row p-2 justify-center space-x-1 text-xs text-gray-300">
+          <span class="inline-block">
+            Joué le {{ game.playedOn | date : "medium" }} -
+          </span>
+          <img
+            src="../../../../assets/img/windows.svg"
+            *ngIf="game.platformId == 1"
+            class="w-4" />
+          <img
+            src="../../../../assets/img/xbox.svg"
+            *ngIf="game.platformId == 2"
+            class="w-4" />
+          <img
+            src="../../../../assets/img/stadium.svg"
+            *ngIf="game.platformId == 3"
+            class="w-4" />
+          <img
+            src="../../../../assets/img/playstation.svg"
+            *ngIf="game.platformId == 4"
+            class="w-4" />
+          <span
+            src="../../../../assets/img/playstation.svg"
+            *ngIf="game.platformId > 4"
+            class="w-4">
+            {{ game.platform }}
+          </span>
         </div>
       </div>
       <div

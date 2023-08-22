@@ -8,8 +8,9 @@
         class="block border border-2 border-secondary rounded-lg px-6 py-3 lg:text-xl">
         Saison 2023
         <span *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
-          <span *ngIf="currentPlayer.id != 0"></span>
-          - {{ currentPlayer.fullName }}
+          <span *ngIf="currentPlayer.id != 0">
+            - {{ currentPlayer.fullName }}
+          </span>
         </span>
       </span>
     </div>
