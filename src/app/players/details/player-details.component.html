@@ -1,246 +1,179 @@
 <div
-  id="player-details-top"
-  class="flex flex-col items-center lg:items-start justify-center text-white h-screen p-8"
->
-  <div class="mt-4" role="status" *ngIf="loading == true">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
-
-  <section
-    class="flex flex-col md:flex-row justify-center align-center self-center items-center md:items-start text-white p-8 bg-primaryDarker/80 rounded-lg"
-    id="player-details"
-    *ngIf="loading == false"
-  >
-    <app-player-details-card
-      [player]="player"
-      [stats]="stats"
-    ></app-player-details-card>
-  </section>
-</div>
-
-<section class="w-full" id="stats">
-  <div
-    class="flex flex-col md:flex-row items-center justify-center text-white p-8 md:px-6 lg:px-32 md:space-x-4 space-y-4 md:space-y-0"
-  >
+  id="player-details"
+  class="flex flex-col md:flex-row md:space-x-8 text-white m-8 md:mx-16 lg:mx-32"
+  *ngIf="player != null && player.id != 0">
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
     <div
-      *ngFor="let stat of stats"
-      class="flex flex-col bg-primary w-full rounded-lg items-center drop-shadow-xl p-4"
-    >
-      <div class="text-center">
-        <span class="block text-xl font-bold">
-          Statistiques {{ stat.platform.name }}
-        </span>
+      class="bg-primary p-8 rounded-lg drop-shadow-xl flex flex-col items-center">
+      <img
+        class="rounded-full"
+        src="{{ player.profilePictureUrl }}"
+        width="128" />
+
+      <div class="text-center w-full">
+        <span class="block mt-4">{{ player.fullName }}</span>
+        <span class="block italic">{{ player.nickname }}</span>
+
+        <div class="mt-2">
+          <select
+            (change)="onChangeEnemy($event.target)"
+            [ngModel]="selectedEnemy"
+            id="enemies"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="0">Versus</option>
+            <option *ngFor="let player of players" value="{{ player.id }}">
+              {{ player.fullName }} ({{ player.nickname }})
+            </option>
+          </select>
+        </div>
+
         <hr class="my-4 border-dashed" />
-      </div>
 
-      <ul>
-        <li>Matchs joués : {{ stat.wins + stat.losses + stat.draws }}</li>
-        <li>Buts mis en moyenne : {{ stat.averageGoalGiven }}</li>
-        <li>Buts pris en moyenne : {{ stat.averageGoalTaken }}</li>
-        <li>Différence de buts : {{ stat.goalDifference }}</li>
-      </ul>
+        <div *ngIf="totalStats != null">
+          <div class="w-full">
+            <app-fifa-stat [stat]="totalStats"></app-fifa-stat>
+          </div>
 
-      <span class="block mt-4">Victoires : {{ stat.wins }}</span>
-
-      <div class="w-full bg-white rounded-full h-4 mb-4">
-        <div
-          class="bg-secondary text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ stat.winRate }}%"
-        >
-          {{ stat.winRate }}%
-        </div>
-      </div>
-
-      <span class="block">Défaites : {{ stat.losses }}</span>
-
-      <div class="w-full bg-white rounded-full h-4 mb-4">
-        <div
-          class="bg-csharp text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ stat.looseRate }}%"
-        >
-          {{ stat.looseRate }}%
-        </div>
-      </div>
-
-      <span class="block">Matchs nuls : {{ stat.draws }}</span>
-      <div class="w-full bg-white rounded-full h-4 mb-4">
-        <div
-          class="bg-azure text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-          style="width: {{ stat.drawRate }}%"
-        >
-          {{ stat.drawRate }}%
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="w-full flex flex-col items-center">
-    <div class="text-center text-white">
-      <span class="block text-xl font-bold">Versus</span>
-      <span class="block mt-4">
-        Sélectionne un joueur pour comparer vos résultats !
-      </span>
-    </div>
-
-    <div
-      class="w-96 mt-4 p-4 bg-primary rounded-lg items-center drop-shadow-xl"
-    >
-      <select
-        (change)="onChangeEnemy($event.target)"
-        [ngModel]="selectedEnemy"
-        id="enemies"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
-        <option value="0">Sélectionne un joueur</option>
-        <option *ngFor="let player of players" value="{{ player.id }}">
-          {{ player.fullName }} ({{ player.nickname }})
-        </option>
-      </select>
-    </div>
-
-    <div
-      class="mt-4"
-      role="status"
-      *ngIf="loading == true && selectedEnemy != 0"
-    >
-      <app-loading-spinner></app-loading-spinner>
-    </div>
-
-    <div
-      *ngIf="loading == false && enemyStatsLoaded == true"
-      class="w-full flex flex-col md:flex-row items-center justify-center text-white p-8 md:px-6 lg:px-32 md:space-x-4 space-y-4 md:space-y-0"
-    >
-      <div
-        *ngFor="let stat of enemyStats"
-        class="flex flex-col bg-primary w-full rounded-lg items-center drop-shadow-xl p-4"
-      >
-        <div class="text-center">
-          <span class="block text-xl font-bold">
-            Statistiques {{ stat.platform.name }}
-          </span>
           <hr class="my-4 border-dashed" />
         </div>
-
-        <ul>
-          <li>Matchs joués : {{ stat.wins + stat.losses + stat.draws }}</li>
-          <li>Buts mis en moyenne : {{ stat.averageGoalGiven }}</li>
-          <li>Buts pris en moyenne : {{ stat.averageGoalTaken }}</li>
-          <li>Différence de buts : {{ stat.goalDifference }}</li>
-        </ul>
-
-        <span class="block mt-4">Victoires : {{ stat.wins }}</span>
-
-        <div class="w-full bg-white rounded-full h-4 mb-4">
-          <div
-            class="bg-secondary text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-            style="width: {{ stat.winRate }}%"
-          >
-            {{ stat.winRate }}%
-          </div>
-        </div>
-
-        <span class="block">Défaites : {{ stat.losses }}</span>
-
-        <div class="w-full bg-white rounded-full h-4 mb-4">
-          <div
-            class="bg-csharp text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-            style="width: {{ stat.looseRate }}%"
-          >
-            {{ stat.looseRate }}%
-          </div>
-        </div>
-
-        <span class="block">Matchs nuls : {{ stat.draws }}</span>
-        <div class="w-full bg-white rounded-full h-4 mb-4">
-          <div
-            class="bg-azure text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full h-4"
-            style="width: {{ stat.drawRate }}%"
-          >
-            {{ stat.drawRate }}%
-          </div>
-        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<div class="flex justify-center mt-4">
-  <a class="w-px h-20 border-r border-dashed border-secondary"></a>
-</div>
+      <div class="w-full" *ngFor="let stat of stats">
+        <app-fifa-stat [stat]="stat"></app-fifa-stat>
 
-<section
-  class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
-  id="games-played"
->
-  <div class="text-center">
-    <span class="block text-xl font-bold">Matchs joués</span>
-    <span class="block mt-4">
-      Voici l'historique des derniers matchs joués dans la YuChampion's League.
-    </span>
-  </div>
-
-  <div class="mt-4" role="status" *ngIf="loading == true">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
-
-  <div class="mt-4 flex flex-col w-full text-white">
-    <div
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl"
-    >
-      <div class="flex flex-col flex-grow">
-        <div class="flex flex-row items-center text-xs md:text-sm lg:text-lg">
-          <div class="border-r-2 mr-2 text-center border-white">
-            <span class="inline-block mx-2 w-8 md:w-16">Team</span>
-          </div>
-          <div class="flex-grow py-2 md:ml-2">
-            <p>Joueurs</p>
-          </div>
-          <div class="px-2">
-            <span class="inline-block">Score</span>
-          </div>
-        </div>
-      </div>
-      <div class="border-l-2 border-secondary h-full"></div>
-      <div class="px-3">
-        <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>
+        <hr class="my-4 border-dashed" />
       </div>
     </div>
   </div>
 
-  <div class="mt-8 flex flex-col w-full text-white space-y-4">
+  <div class="w-full flex flex-col w-full mt-8 md:mt-0">
     <div
-      *ngFor="let game of games"
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl"
-    >
-      <div class="flex flex-col flex-grow">
-        <app-game-played-card-row
-          [team]="game.team1"
-          [score1]="game.team1.score"
-          [score2]="game.team2.score"
-        ></app-game-played-card-row>
+      *ngIf="loading == true"
+      class="flex flex-row items-center bg-primary p-4 rounded-lg drop-shadow-xl"
+      role="status">
+      <app-loading-spinner></app-loading-spinner>
+      Chargement des données...
+    </div>
 
-        <hr class="border-secondary" />
+    <div
+      *ngIf="loading == false && selectedEnemy != 0 && enemy.id != 0"
+      class="flex flex-col lg:flex-row justify-around bg-primary p-4 rounded-lg drop-shadow-xl mb-4">
+      <div class="flex flex-col items-center space-y-4">
+        <div class="flex flex-row items-center space-x-4">
+          <img
+            class="rounded-full"
+            src="{{ player.profilePictureUrl }}"
+            width="128" />
 
-        <app-game-played-card-row
-          [team]="game.team2"
-          [score1]="game.team2.score"
-          [score2]="game.team1.score"
-        ></app-game-played-card-row>
-
-        <hr class="border-secondary" />
-
-        <div class="flex flex-col p-2 items-center text-xs text-gray-300">
-          Joué le {{ game.playedOn | date : "medium" }} - {{ game.platform }}
+          <div>
+            <p>{{ player.fullName }}</p>
+            <p class="italic">{{ player.nickname }}</p>
+          </div>
         </div>
+
+        <app-fifa-stat [stat]="totalStats" class="w-full"></app-fifa-stat>
       </div>
+
+      <hr class="my-4 md:hidden" />
+
+      <div class="flex flex-col items-center space-y-4">
+        <div class="flex flex-row items-center space-x-4">
+          <img
+            class="rounded-full"
+            src="{{ enemy.profilePictureUrl }}"
+            width="128" />
+
+          <div>
+            <p>{{ enemy.fullName }}</p>
+            <p class="italic">{{ enemy.nickname }}</p>
+          </div>
+        </div>
+
+        <app-fifa-stat [stat]="totalEnemyStats" class="w-full"></app-fifa-stat>
+      </div>
+    </div>
+
+    <div class="flex flex-col text-white" *ngIf="loading == false">
       <div
-        class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"
-      ></div>
-      <div class="px-3">
-        <a [routerLink]="['/games', game.id]">
+        class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
+        <div class="flex flex-col flex-grow">
+          <div class="flex flex-row items-center text-xs md:text-sm lg:text-lg">
+            <div class="border-r-2 mr-2 text-center border-white">
+              <span class="inline-block mx-2 w-8 md:w-16">Team</span>
+            </div>
+            <div class="flex-grow py-2 md:ml-2">
+              <p>Joueurs</p>
+            </div>
+            <div class="px-2">
+              <span class="inline-block">Score</span>
+            </div>
+          </div>
+        </div>
+        <div class="border-l-2 border-secondary h-full"></div>
+        <div class="px-3">
           <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>
-        </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="mt-4 flex flex-col w-full text-white space-y-4"
+      *ngIf="loading == false">
+      <div
+        *ngFor="let game of games"
+        class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
+        <div class="flex flex-col flex-grow">
+          <app-game-played-card-row
+            [team]="game.team1"
+            [score1]="game.team1.score"
+            [score2]="game.team2.score"></app-game-played-card-row>
+
+          <hr class="border-secondary" />
+
+          <app-game-played-card-row
+            [team]="game.team2"
+            [score1]="game.team2.score"
+            [score2]="game.team1.score"></app-game-played-card-row>
+
+          <hr class="border-secondary" />
+
+          <div
+            class="flex flex-row p-2 justify-center space-x-1 text-xs text-gray-300">
+            <span class="inline-block">
+              Joué le {{ game.playedOn | date : "medium" }} -
+            </span>
+            <img
+              src="../../../../assets/img/windows.svg"
+              *ngIf="game.platformId == 1"
+              class="w-4" />
+            <img
+              src="../../../../assets/img/xbox.svg"
+              *ngIf="game.platformId == 2"
+              class="w-4" />
+            <img
+              src="../../../../assets/img/stadium.svg"
+              *ngIf="game.platformId == 3"
+              class="w-4" />
+            <img
+              src="../../../../assets/img/playstation.svg"
+              *ngIf="game.platformId == 4"
+              class="w-4" />
+            <span
+              src="../../../../assets/img/playstation.svg"
+              *ngIf="game.platformId > 4"
+              class="w-4">
+              {{ game.platform }}
+            </span>
+          </div>
+        </div>
+        <div
+          class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"></div>
+        <div class="px-3">
+          <a [routerLink]="['/games', game.id]">
+            <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>

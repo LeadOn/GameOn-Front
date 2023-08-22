@@ -7,9 +7,10 @@
 
   <div
     class="flex flex-col items-center lg:items-start bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg"
-    *ngIf="loading == false && player != null">
+    *ngIf="loading == false && (player$ | async) as currentPlayer">
     <app-player-details-card
-      [player]="player"
+      *ngIf="currentPlayer != null && currentPlayer.id != 0"
+      [player]="currentPlayer"
       [stats]="stats"></app-player-details-card>
   </div>
 
@@ -19,5 +20,20 @@
 </section>
 
 <app-update-player
-  *ngIf="loading == false"
-  [player]="player"></app-update-player>
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+  [player]="currentPlayer"></app-update-player>
+
+<section
+  class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
+  id="update-profile">
+  <div class="text-center">
+    <span class="block text-xl font-bold">Déconnexion</span>
+    <span class="block mt-4">
+      Vous pouvez vous déconnecter en cliquant sur le bouton ci-dessous.
+    </span>
+  </div>
+
+  <button class="mt-4 p-4 rounded-lg bg-red-500 w-full" (click)="logout()">
+    Déconnextion
+  </button>
+</section>

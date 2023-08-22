@@ -6,8 +6,10 @@ import {
   SimpleChanges,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Store } from "@ngrx/store";
 import { Player } from "src/app/shared/classes/Player";
 import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { setPlayer } from "src/app/store/actions/player.actions";
 
 @Component({
   selector: "app-update-player",
@@ -20,7 +22,10 @@ export class UpdatePlayerComponent implements OnInit, OnChanges {
 
   isLoading = false;
 
-  constructor(private playerService: YuFootPlayerService) {}
+  constructor(
+    private playerService: YuFootPlayerService,
+    private store: Store<{ player: Player }>
+  ) {}
 
   updatePlayerForm = new FormGroup({
     fullName: new FormControl("", [Validators.maxLength(100)]),
@@ -57,7 +62,9 @@ export class UpdatePlayerComponent implements OnInit, OnChanges {
         )
         .subscribe(
           (data) => {
-            alert("Mise à jour réussie !");
+            alert("Mise à jour réussie !"); // Getting its account, and setting it into store
+            this.store.dispatch(setPlayer({ player: data }));
+            console.log("[UpdatePlayer]", "Player stored.");
             this.isLoading = false;
           },
           (err) => {

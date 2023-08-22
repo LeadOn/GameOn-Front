@@ -1,5 +1,4 @@
 import { Component, Input } from "@angular/core";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
 import { Team } from "src/app/shared/classes/Team";
 
 @Component({

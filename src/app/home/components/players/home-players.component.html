@@ -1,19 +1,19 @@
 <section
   class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
-  id="players"
->
+  id="players">
   <div class="text-center">
     <span class="block text-xl font-bold">Joueurs</span>
-    <span class="block mt-4"
-      >Voici la liste des joueurs actuellement enregistrés.</span
-    >
+    <span class="block mt-4">
+      Découvrez nos joueurs actuellement en compétition, ainsi que leurs
+      statistiques.
+    </span>
   </div>
 
-  <div class="mt-4 grid md:grid-cols-4 auto-rows-auto gap-5">
+  <div
+    class="mt-8 flex flex-col space-y-4 md:space-y-0 md:grid md:grid-cols-3 lg:grid-cols-4 md:auto-rows-auto md:gap-5">
     <app-player-card
       ng-if="players.length > 0"
       *ngFor="let player of players"
-      [player]="player"
-    ></app-player-card>
+      [player]="player"></app-player-card>
   </div>
 </section>
