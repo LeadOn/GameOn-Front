@@ -24,16 +24,7 @@ export class PlayerDetailsCardComponent implements OnInit, OnChanges {
 
   date: string = "";
 
-  totalGamePlayed: number = 0;
-  totalWins: number = 0;
-  totalLosses: number = 0;
-  totalDraws: number = 0;
-  totalWinRate: number = 0;
-  totalLooseRate: number = 0;
-  totalDrawRate: number = 0;
-  totalAverageGoalsGiven: number = 0;
-  totalAverageGoalsTaken: number = 0;
-  totalGoalDifference: number = 0;
+  totalStats = new PlatformStats();
 
   playerId: any;
   loading = true;
@@ -48,35 +39,38 @@ export class PlayerDetailsCardComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["stats"] != null && this.totalGamePlayed == 0) {
+    if (changes["stats"] != null) {
+      this.totalStats = new PlatformStats();
       let avgGoalsGiven: number[] = [];
       let avgGoalsTaken: number[] = [];
 
       this.stats.forEach((stat) => {
-        this.totalGamePlayed += stat.wins + stat.losses + stat.draws;
-        this.totalWins += stat.wins;
-        this.totalLosses += stat.losses;
-        this.totalDraws += stat.draws;
-        this.totalGoalDifference += stat.goalDifference;
+        this.totalStats.wins += stat.wins;
+        this.totalStats.losses += stat.losses;
+        this.totalStats.draws += stat.draws;
+        this.totalStats.goalDifference += stat.goalDifference;
         avgGoalsGiven.push(stat.averageGoalGiven);
         avgGoalsTaken.push(stat.averageGoalTaken);
       });
 
-      this.totalWinRate = parseFloat(
-        ((this.totalWins * 100) / this.totalGamePlayed).toFixed(2)
+      let totalGamePlayed =
+        this.totalStats.wins + this.totalStats.losses + this.totalStats.draws;
+
+      this.totalStats.winRate = parseFloat(
+        ((this.totalStats.wins * 100) / totalGamePlayed).toFixed(2)
       );
-      this.totalLooseRate = parseFloat(
-        ((this.totalLosses * 100) / this.totalGamePlayed).toFixed(2)
+      this.totalStats.looseRate = parseFloat(
+        ((this.totalStats.losses * 100) / totalGamePlayed).toFixed(2)
       );
-      this.totalDrawRate = parseFloat(
-        ((this.totalDraws * 100) / this.totalGamePlayed).toFixed(2)
+      this.totalStats.drawRate = parseFloat(
+        ((this.totalStats.draws * 100) / totalGamePlayed).toFixed(2)
       );
-      this.totalAverageGoalsGiven = parseFloat(
+      this.totalStats.averageGoalGiven = parseFloat(
         (
           avgGoalsGiven.reduce((a, b) => a + b, 0) / avgGoalsGiven.length
         ).toFixed(2)
       );
-      this.totalAverageGoalsTaken = parseFloat(
+      this.totalStats.averageGoalTaken = parseFloat(
         (
           avgGoalsTaken.reduce((a, b) => a + b, 0) / avgGoalsTaken.length
         ).toFixed(2)

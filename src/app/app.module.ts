@@ -17,7 +17,6 @@ import { HomePlayersComponent } from "./home/components/players/home-players.com
 import { GamesPlayedComponent } from "./home/components/games-played/games-played.component";
 import { PlayerDetailsComponent } from "./players/details/player-details.component";
 import { MyDashboardComponent } from "./players/me/my-dashboard.component";
-import { PlayerDetailsCardComponent } from "./home/components/player-details-card/player-details-card.component";
 import { UpdatePlayerComponent } from "./players/me/components/update-player/update-player.component";
 import { CreateGameComponent } from "./games/create/create-game.component";
 import { GameDetailsComponent } from "./games/details/game-details.component";
@@ -26,6 +25,7 @@ import { CommonLayoutComponent } from "./shared/layouts/common-layout.component"
 import { SharedModule } from "./shared/modules/shared.module";
 import { playerReducer } from "./store/reducers/player.reducer";
 import { FifaStatComponent } from "./shared/components/fifa-stat/fifa-stat.component";
+import { PlayerDetailsCardComponent } from "./players/me/components/player-details-card/player-details-card.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
