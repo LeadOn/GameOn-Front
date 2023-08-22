@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Platform } from "src/app/shared/classes/Platform";
-import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.service";
+import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
 
 @Component({
   selector: "app-admin-platforms",
@@ -11,7 +11,7 @@ export class AdminPlatformsComponent implements OnInit {
   platforms: Platform[] = [];
   loading = true;
 
-  constructor(private platformService: YuFootPlatformService) {}
+  constructor(private platformService: YuGamesPlatformService) {}
 
   ngOnInit(): void {
     this.platformService.getAll().subscribe(

@@ -8,7 +8,7 @@ import {
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { Player } from "src/app/shared/classes/Player";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 import { setPlayer } from "src/app/store/actions/player.actions";
 
 @Component({
@@ -23,7 +23,7 @@ export class UpdatePlayerComponent implements OnInit, OnChanges {
   isLoading = false;
 
   constructor(
-    private playerService: YuFootPlayerService,
+    private playerService: YuGamesPlayerService,
     private store: Store<{ player: Player }>
   ) {}
 

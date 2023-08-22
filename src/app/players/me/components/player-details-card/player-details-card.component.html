@@ -1,0 +1,41 @@
+<div
+  class="flex flex-col md:flex-row justify-around grow items-center md:space-x-8">
+  <div class="h-full text-center">
+    <img class="rounded-full max-h-64" src="{{ player.profilePictureUrl }}" />
+  </div>
+
+  <div class="md:w-96 mt-4 md:mt-0">
+    <div class="text-center" *ngIf="player.nickname != null">
+      <span class="block text-xl font-bold">
+        {{ player.nickname }}
+      </span>
+
+      <span class="block">
+        {{ player.fullName }}
+      </span>
+    </div>
+
+    <div class="text-center" *ngIf="player.nickname == null">
+      <span class="block text-xl font-bold">
+        {{ player.fullName }}
+      </span>
+    </div>
+
+    <hr class="my-4 border-dashed hidden md:block" />
+
+    <ul class="mt-4 hidden md:block">
+      <li>
+        <fa-icon [icon]="calendarIcon"></fa-icon>
+        : {{ date }}
+      </li>
+    </ul>
+
+    <hr class="my-4 border-dashed" />
+
+    <div class="mt-4">
+      <h2 class="w-full text-center underline mb-8">Stats totales :</h2>
+
+      <app-fifa-stat [stat]="totalStats"></app-fifa-stat>
+    </div>
+  </div>
+</div>
