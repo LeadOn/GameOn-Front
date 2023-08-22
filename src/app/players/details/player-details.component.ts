@@ -150,9 +150,7 @@ export class PlayerDetailsComponent implements OnInit {
             let avgGoalsGiven: number[] = [];
             let avgGoalsTaken: number[] = [];
 
-            this.stats = data2;
-
-            this.stats.forEach((stat) => {
+            data2.forEach((stat) => {
               let gamesPlayed = stat.wins + stat.losses + stat.draws;
               stat.winRate = parseFloat(
                 ((stat.wins * 100) / gamesPlayed).toFixed(2)
