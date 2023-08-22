@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { PlatformStats } from "src/app/shared/classes/PlatformStats";
 import { Player } from "src/app/shared/classes/Player";
-import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
+import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 
 @Component({
   selector: "app-player-details",
@@ -25,13 +25,13 @@ export class PlayerDetailsComponent implements OnInit {
   loading = true;
   stats: PlatformStats[] = [];
   enemyStats: PlatformStats[] = [];
-  games: GamePlayed[] = [];
+  games: FifaGamePlayed[] = [];
   externalIcon = faExternalLinkAlt;
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: YuFootPlayerService,
-    private gameService: YuFootGameService
+    private playerService: YuGamesPlayerService,
+    private gameService: YuGamesGameService
   ) {}
 
   ngOnInit(): void {

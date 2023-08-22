@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { environment } from "src/environments/environment";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 
-import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { StoreModule } from "@ngrx/store";
 
@@ -14,18 +13,18 @@ import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 import { FooterComponent } from "./shared/layouts/components/footer/footer.component";
 import { HomePlayersComponent } from "./home/components/players/home-players.component";
-import { GamesPlayedComponent } from "./home/components/games-played/games-played.component";
 import { PlayerDetailsComponent } from "./players/details/player-details.component";
 import { MyDashboardComponent } from "./players/me/my-dashboard.component";
-import { PlayerDetailsCardComponent } from "./home/components/player-details-card/player-details-card.component";
 import { UpdatePlayerComponent } from "./players/me/components/update-player/update-player.component";
-import { CreateGameComponent } from "./games/create/create-game.component";
-import { GameDetailsComponent } from "./games/details/game-details.component";
 import { AdminModule } from "./admin/admin.module";
 import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
 import { SharedModule } from "./shared/modules/shared.module";
 import { playerReducer } from "./store/reducers/player.reducer";
 import { FifaStatComponent } from "./shared/components/fifa-stat/fifa-stat.component";
+import { PlayerDetailsCardComponent } from "./players/me/components/player-details-card/player-details-card.component";
+import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
+import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
+import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -49,20 +48,19 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     FooterComponent,
     HomePlayersComponent,
-    GamesPlayedComponent,
     PlayerDetailsComponent,
     MyDashboardComponent,
     PlayerDetailsCardComponent,
     UpdatePlayerComponent,
-    CreateGameComponent,
-    GameDetailsComponent,
+    FifaCreateGameComponent,
+    FifaGameDetailsComponent,
     CommonLayoutComponent,
     FifaStatComponent,
+    FifaHistoryComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule,
     HttpClientModule,
     FormsModule,
     KeycloakAngularModule,

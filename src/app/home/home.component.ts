@@ -3,10 +3,8 @@ import { KeycloakService } from "keycloak-angular";
 import { Player } from "../shared/classes/Player";
 import { environment } from "src/environments/environment";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { YuFootPlayerService } from "../shared/services/yufoot-player.service";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
-import { setPlayer } from "../store/actions/player.actions";
 
 @Component({
   selector: "app-home",

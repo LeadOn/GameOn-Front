@@ -4,10 +4,11 @@ import { HomeComponent } from "./home/home.component";
 import { PlayerDetailsComponent } from "./players/details/player-details.component";
 import { AuthGuard } from "./shared/guards/auth.guard";
 import { MyDashboardComponent } from "./players/me/my-dashboard.component";
-import { CreateGameComponent } from "./games/create/create-game.component";
-import { GameDetailsComponent } from "./games/details/game-details.component";
 import { NotFoundComponent } from "./shared/components/not-found/not-found.component";
 import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
+import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
+import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
+import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
 
 const routes: Routes = [
   {
@@ -32,12 +33,16 @@ const routes: Routes = [
         component: PlayerDetailsComponent,
       },
       {
-        path: "games/create",
-        component: CreateGameComponent,
+        path: "fifa/history",
+        component: FifaHistoryComponent,
       },
       {
-        path: "games/:id",
-        component: GameDetailsComponent,
+        path: "fifa/create",
+        component: FifaCreateGameComponent,
+      },
+      {
+        path: "fifa/details/:id",
+        component: FifaGameDetailsComponent,
       },
     ],
   },
