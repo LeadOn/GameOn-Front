@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { Team } from "src/app/shared/classes/Team";
+import { FifaTeamDto } from "src/app/shared/classes/FifaTeamDto";
 
 @Component({
   selector: "app-fifa-game-history-card-row",
@@ -8,7 +8,7 @@ import { Team } from "src/app/shared/classes/Team";
 })
 export class FifaGameHistoryCardRowComponent {
   @Input()
-  team: Team = new Team();
+  team: FifaTeamDto = new FifaTeamDto();
 
   @Input()
   score1: number = 0;

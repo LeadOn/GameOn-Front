@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { GamePlayed } from "../classes/GamePlayed";
+import { FifaGamePlayed } from "../classes/FifaGamePlayed";
 import { environment } from "src/environments/environment";
 
 @Injectable({
@@ -10,26 +10,29 @@ import { environment } from "src/environments/environment";
 export class YuGamesGameService {
   constructor(private client: HttpClient) {}
 
-  getLast(limit: number): Observable<GamePlayed[]> {
-    return this.client.get<GamePlayed[]>(
+  getLast(limit: number): Observable<FifaGamePlayed[]> {
+    return this.client.get<FifaGamePlayed[]>(
       environment.yuFootApiUrl + "/game/last/" + limit
     );
   }
 
-  getLastByPlayer(playerId: number, limit: number): Observable<GamePlayed[]> {
-    return this.client.get<GamePlayed[]>(
+  getLastByPlayer(
+    playerId: number,
+    limit: number
+  ): Observable<FifaGamePlayed[]> {
+    return this.client.get<FifaGamePlayed[]>(
       environment.yuFootApiUrl + "/game/last/" + limit + "/player/" + playerId
     );
   }
 
-  getById(gameId: number): Observable<GamePlayed> {
-    return this.client.get<GamePlayed>(
+  getById(gameId: number): Observable<FifaGamePlayed> {
+    return this.client.get<FifaGamePlayed>(
       environment.yuFootApiUrl + "/game/" + gameId
     );
   }
 
-  create(body: any): Observable<GamePlayed> {
-    return this.client.post<GamePlayed>(
+  create(body: any): Observable<FifaGamePlayed> {
+    return this.client.post<FifaGamePlayed>(
       environment.yuFootApiUrl + "/game",
       body
     );

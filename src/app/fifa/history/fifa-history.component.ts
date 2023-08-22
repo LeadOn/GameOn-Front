@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { KeycloakService } from "keycloak-angular";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 
 @Component({
@@ -11,7 +11,7 @@ import { YuGamesGameService } from "src/app/shared/services/yugames-game.service
 })
 export class FifaHistoryComponent implements OnInit {
   loading = true;
-  games: GamePlayed[] = [];
+  games: FifaGamePlayed[] = [];
   isLoggedIn = false;
 
   externalIcon = faExternalLinkAlt;

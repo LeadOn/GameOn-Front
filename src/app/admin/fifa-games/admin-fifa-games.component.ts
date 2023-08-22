@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 
 @Component({
@@ -8,7 +8,7 @@ import { YuGamesGameService } from "src/app/shared/services/yugames-game.service
   styleUrls: ["./admin-fifa-games.component.scss"],
 })
 export class AdminFifaGamesComponent implements OnInit {
-  games: GamePlayed[] = [];
+  games: FifaGamePlayed[] = [];
   loading = true;
   isAdmin = true;
 

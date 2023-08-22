@@ -1,12 +1,12 @@
 import { Highlight } from "./Highlight";
-import { Team } from "./Team";
+import { FifaTeamDto } from "./FifaTeamDto";
 
-export class GamePlayed {
+export class FifaGamePlayed {
   id: number = 0;
   playedOn: Date = new Date();
   platform: string = "";
   platformId: number = 0;
-  team1: Team = new Team();
-  team2: Team = new Team();
+  team1: FifaTeamDto = new FifaTeamDto();
+  team2: FifaTeamDto = new FifaTeamDto();
   highlights: Highlight[] = [];
 }

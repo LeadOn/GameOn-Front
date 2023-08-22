@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Platform } from "src/app/shared/classes/Platform";
 import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
 import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { FifaTeam } from "src/app/shared/classes/FifaTeam";
 import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
@@ -17,7 +17,7 @@ import { UpdateGame } from "../../shared/classes/UpdateGame";
 })
 export class AdminFifaGameEditComponent implements OnInit {
   gameId: any;
-  game: GamePlayed = new GamePlayed();
+  game: FifaGamePlayed = new FifaGamePlayed();
   platforms: Platform[] = [];
   fifaTeams: FifaTeam[] = [];
   loading = true;

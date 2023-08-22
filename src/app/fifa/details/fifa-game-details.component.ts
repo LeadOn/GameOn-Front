@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 
 @Component({
@@ -12,7 +12,7 @@ import { YuGamesGameService } from "src/app/shared/services/yugames-game.service
 export class FifaGameDetailsComponent implements OnInit {
   gameId: any;
   loading = true;
-  game: GamePlayed = new GamePlayed();
+  game: FifaGamePlayed = new FifaGamePlayed();
   externalIcon = faExternalLinkAlt;
 
   constructor(

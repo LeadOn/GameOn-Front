@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { PlatformStats } from "src/app/shared/classes/PlatformStats";
 import { Player } from "src/app/shared/classes/Player";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
@@ -25,7 +25,7 @@ export class PlayerDetailsComponent implements OnInit {
   loading = true;
   stats: PlatformStats[] = [];
   enemyStats: PlatformStats[] = [];
-  games: GamePlayed[] = [];
+  games: FifaGamePlayed[] = [];
   externalIcon = faExternalLinkAlt;
 
   constructor(

@@ -6,7 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { KeycloakService } from "keycloak-angular";
 import { YuGamesAdminService } from "src/app/admin/shared/services/yugames-admin.service";
-import { GamePlayed } from "src/app/shared/classes/GamePlayed";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 
 @Component({
   selector: "app-fifa-game-history-card",
@@ -15,7 +15,7 @@ import { GamePlayed } from "src/app/shared/classes/GamePlayed";
 })
 export class FifaGameHistoryCardComponent {
   @Input()
-  game: GamePlayed = new GamePlayed();
+  game: FifaGamePlayed = new FifaGamePlayed();
 
   @Input()
   admin = false;
@@ -29,7 +29,7 @@ export class FifaGameHistoryCardComponent {
     private keycloakService: KeycloakService
   ) {}
 
-  deleteGame(game: GamePlayed) {
+  deleteGame(game: FifaGamePlayed) {
     if (
       this.keycloakService.isUserInRole("yugames_admin") &&
       confirm(

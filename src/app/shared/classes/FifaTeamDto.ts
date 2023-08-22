@@ -1,6 +1,6 @@
 import { Player } from "./Player";
 
-export class Team {
+export class FifaTeamDto {
   id: number = 0;
   fifaTeamId: number = 0;
   code: string = "";
