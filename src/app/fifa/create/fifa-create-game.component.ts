@@ -4,17 +4,17 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { FifaTeam } from "src/app/shared/classes/FifaTeam";
 import { Platform } from "src/app/shared/classes/Platform";
 import { Player } from "src/app/shared/classes/Player";
-import { YuFootFifaTeamService } from "src/app/shared/services/yufoot-fifateam.service";
-import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
-import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.service";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
+import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
+import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
+import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 
 @Component({
-  selector: "app-create-game",
-  templateUrl: "./create-game.component.html",
-  styleUrls: ["./create-game.component.scss"],
+  selector: "app-fifa-create-game",
+  templateUrl: "./fifa-create-game.component.html",
+  styleUrls: ["./fifa-create-game.component.scss"],
 })
-export class CreateGameComponent implements OnInit {
+export class FifaCreateGameComponent implements OnInit {
   isLoading = true;
   players: Player[] = [];
   platforms: Platform[] = [];
@@ -40,10 +40,10 @@ export class CreateGameComponent implements OnInit {
   });
 
   constructor(
-    private playerService: YuFootPlayerService,
-    private platformService: YuFootPlatformService,
-    private gameService: YuFootGameService,
-    private fifaTeamService: YuFootFifaTeamService
+    private playerService: YuGamesPlayerService,
+    private platformService: YuGamesPlatformService,
+    private gameService: YuGamesGameService,
+    private fifaTeamService: YuGamesFifaTeamService
   ) {}
 
   ngOnInit(): void {

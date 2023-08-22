@@ -7,7 +7,7 @@ import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { PlatformStats } from "src/app/shared/classes/PlatformStats";
 import { Player } from "src/app/shared/classes/Player";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -25,7 +25,7 @@ export class MyDashboardComponent implements OnInit {
   backIcon = faArrowAltCircleLeft;
 
   constructor(
-    private playerService: YuFootPlayerService,
+    private playerService: YuGamesPlayerService,
     private store: Store<{ player: Player }>
   ) {
     this.player$ = store.select("player");

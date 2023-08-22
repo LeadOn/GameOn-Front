@@ -5,8 +5,8 @@ import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { GamePlayed } from "src/app/shared/classes/GamePlayed";
 import { PlatformStats } from "src/app/shared/classes/PlatformStats";
 import { Player } from "src/app/shared/classes/Player";
-import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
+import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 
 @Component({
   selector: "app-player-details",
@@ -30,8 +30,8 @@ export class PlayerDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: YuFootPlayerService,
-    private gameService: YuFootGameService
+    private playerService: YuGamesPlayerService,
+    private gameService: YuGamesGameService
   ) {}
 
   ngOnInit(): void {

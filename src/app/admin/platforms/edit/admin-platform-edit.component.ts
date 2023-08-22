@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Platform } from "src/app/shared/classes/Platform";
-import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.service";
+import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
 import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
 
 @Component({
@@ -21,7 +21,7 @@ export class AdminPlatformEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private platformService: YuFootPlatformService,
+    private platformService: YuGamesPlatformService,
     private adminService: YuGamesAdminService,
     private router: Router
   ) {}

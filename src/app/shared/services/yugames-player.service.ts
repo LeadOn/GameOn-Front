@@ -8,7 +8,7 @@ import { PlatformStats } from "../classes/PlatformStats";
 @Injectable({
   providedIn: "root",
 })
-export class YuFootPlayerService {
+export class YuGamesPlayerService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<Player[]> {

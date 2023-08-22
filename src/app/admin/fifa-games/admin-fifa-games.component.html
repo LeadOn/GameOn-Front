@@ -7,7 +7,7 @@
   </div>
 
   <div
-    class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
+    class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary mb-4"
     *ngIf="loading == false">
     <div
       class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center">
@@ -16,62 +16,15 @@
     <span class="text-white">Matchs joués (FIFA)</span>
   </div>
 
-  <div class="mt-8 flex flex-col w-full text-white">
-    <div
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
-      <div class="flex flex-col flex-grow">
-        <div class="flex flex-row items-center text-xs md:text-sm lg:text-lg">
-          <div class="border-r-2 mr-2 text-center border-white">
-            <span class="inline-block mx-2 w-16 md:w-16">Team</span>
-          </div>
-          <div class="flex-grow py-2 md:ml-2">
-            <p>Joueurs</p>
-          </div>
-          <div class="px-2">
-            <span class="inline-block">Score</span>
-          </div>
-        </div>
-      </div>
-      <div
-        class="border-l-2 border-white h-full px-2 text-xs md:text-sm lg:text-lg">
-        <span class="inline-block">Actions</span>
-      </div>
-    </div>
-  </div>
+  <app-fifa-game-list-header
+    *ngIf="loading == false"></app-fifa-game-list-header>
 
-  <div class="mt-4 flex flex-col w-full text-white space-y-4">
-    <div
+  <div
+    class="mt-4 flex flex-col w-full text-white space-y-4"
+    *ngIf="loading == false">
+    <app-fifa-game-history-card
       *ngFor="let game of games"
-      class="flex flex-row w-full bg-primary rounded-lg items-center drop-shadow-xl">
-      <div class="flex flex-col flex-grow">
-        <app-game-played-card-row
-          [team]="game.team1"
-          [score1]="game.team1.score"
-          [score2]="game.team2.score"></app-game-played-card-row>
-
-        <hr class="border-secondary" />
-
-        <app-game-played-card-row
-          [team]="game.team2"
-          [score1]="game.team2.score"
-          [score2]="game.team1.score"></app-game-played-card-row>
-
-        <hr class="border-secondary" />
-
-        <div class="flex flex-col p-2 items-center text-xs text-gray-300">
-          Joué le {{ game.playedOn | date : "medium" }} - {{ game.platform }}
-        </div>
-      </div>
-      <div
-        class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"></div>
-      <div class="px-3 flex flex-row space-x-2">
-        <a [routerLink]="['/admin/fifa-games/edit', game.id]">
-          <img src="../../../assets/img/edit.svg" class="w-4" />
-        </a>
-        <button (click)="deleteGame(game)">
-          <img src="../../../assets/img/trash.svg" class="w-4" />
-        </button>
-      </div>
-    </div>
+      [game]="game"
+      [admin]="isAdmin"></app-fifa-game-history-card>
   </div>
 </div>

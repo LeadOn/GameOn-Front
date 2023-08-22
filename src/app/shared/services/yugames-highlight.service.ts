@@ -7,7 +7,7 @@ import { Highlight } from "../classes/Highlight";
 @Injectable({
   providedIn: "root",
 })
-export class YuFootHighlightService {
+export class YuGamesHighlightService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<Highlight[]> {

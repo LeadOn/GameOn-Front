@@ -2,12 +2,12 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Platform } from "src/app/shared/classes/Platform";
-import { YuFootPlatformService } from "src/app/shared/services/yufoot-platform.service";
+import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
 import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
 import { GamePlayed } from "src/app/shared/classes/GamePlayed";
-import { YuFootGameService } from "src/app/shared/services/yufoot-game.service";
+import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { FifaTeam } from "src/app/shared/classes/FifaTeam";
-import { YuFootFifaTeamService } from "src/app/shared/services/yufoot-fifateam.service";
+import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
 import { UpdateGame } from "../../shared/classes/UpdateGame";
 
 @Component({
@@ -40,9 +40,9 @@ export class AdminFifaGameEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private gameService: YuFootGameService,
-    private platformService: YuFootPlatformService,
-    private fifaTeamService: YuFootFifaTeamService,
+    private gameService: YuGamesGameService,
+    private platformService: YuGamesPlatformService,
+    private fifaTeamService: YuGamesFifaTeamService,
     private adminService: YuGamesAdminService,
     private router: Router
   ) {}

@@ -7,7 +7,7 @@ import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: "root",
 })
-export class YuFootPlatformService {
+export class YuGamesPlatformService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<Platform[]> {

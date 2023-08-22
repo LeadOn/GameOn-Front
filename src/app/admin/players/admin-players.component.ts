@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Player } from "src/app/shared/classes/Player";
-import { YuFootPlayerService } from "src/app/shared/services/yufoot-player.service";
+import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 
 @Component({
   selector: "app-admin-players",
@@ -11,7 +11,7 @@ export class AdminPlayersComponent implements OnInit {
   players: Player[] = [];
   loading = true;
 
-  constructor(private playerService: YuFootPlayerService) {}
+  constructor(private playerService: YuGamesPlayerService) {}
 
   ngOnInit(): void {
     this.playerService.getAll().subscribe(

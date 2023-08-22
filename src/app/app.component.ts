@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { initFlowbite } from "flowbite";
 import { KeycloakService } from "keycloak-angular";
-import { YuFootPlayerService } from "./shared/services/yufoot-player.service";
+import { YuGamesPlayerService } from "./shared/services/yugames-player.service";
 import { Store } from "@ngrx/store";
 import { Player } from "./shared/classes/Player";
 import { setPlayer } from "./store/actions/player.actions";
@@ -14,7 +14,7 @@ import { setPlayer } from "./store/actions/player.actions";
 export class AppComponent implements OnInit {
   constructor(
     private keycloak: KeycloakService,
-    private playerService: YuFootPlayerService,
+    private playerService: YuGamesPlayerService,
     private store: Store<{ player: Player }>
   ) {}
 

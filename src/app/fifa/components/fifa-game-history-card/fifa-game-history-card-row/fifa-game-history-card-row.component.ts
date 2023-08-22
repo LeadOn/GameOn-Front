@@ -2,11 +2,11 @@ import { Component, Input } from "@angular/core";
 import { Team } from "src/app/shared/classes/Team";
 
 @Component({
-  selector: "app-game-played-card-row",
-  templateUrl: "./game-played-card-row.component.html",
-  styleUrls: ["./game-played-card-row.component.scss"],
+  selector: "app-fifa-game-history-card-row",
+  templateUrl: "./fifa-game-history-card-row.component.html",
+  styleUrls: ["./fifa-game-history-card-row.component.scss"],
 })
-export class GamePlayedCardRowComponent {
+export class FifaGameHistoryCardRowComponent {
   @Input()
   team: Team = new Team();
 

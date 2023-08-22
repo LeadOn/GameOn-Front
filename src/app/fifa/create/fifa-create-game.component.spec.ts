@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreateGameComponent } from "./create-game.component";
+import { CreateGameComponent } from "./fifa-create-game.component";
 
 describe("CreateGameComponent", () => {
   let component: CreateGameComponent;

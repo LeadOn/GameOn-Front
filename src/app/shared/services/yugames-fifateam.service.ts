@@ -7,7 +7,7 @@ import { FifaTeam } from "../classes/FifaTeam";
 @Injectable({
   providedIn: "root",
 })
-export class YuFootFifaTeamService {
+export class YuGamesFifaTeamService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<FifaTeam[]> {
