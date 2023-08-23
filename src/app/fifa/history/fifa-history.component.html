@@ -21,6 +21,62 @@
       </div>
       <span class="text-white">Créer un match</span>
     </div>
+
+    <div
+      class="flex flex-col justify-center p-4 rounded-lg bg-primary mt-4"
+      *ngIf="loading == false">
+      <div class="flex flex-row space-x-2 justify-center rounded-lg bg-primary">
+        <div
+          class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center">
+          <fa-icon [icon]="filterIcon" class="text-sm"></fa-icon>
+        </div>
+        <span class="text-white">Filtres</span>
+      </div>
+
+      <hr class="border-dashed my-2" />
+
+      <div class="">
+        <span class="text-sm">Nombre de matchs</span>
+        <select
+          [(ngModel)]="numberOfGames"
+          class="rounded-lg w-full bg-primary border-secondary">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+
+      <div class="mt-2">
+        <span class="text-sm">Platforme</span>
+        <select
+          [(ngModel)]="platformId"
+          class="rounded-lg w-full bg-primary border-secondary">
+          <option value="0">--- Plateforme ---</option>
+          <option *ngFor="let platform of platforms" value="{{ platform.id }}">
+            {{ platform.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="mt-2">
+        <span class="text-sm block">Entre le :</span>
+        <input [(ngModel)]="startDate" type="date" class="w-full text-black" />
+      </div>
+
+      <div class="mt-2">
+        <span class="text-sm block">et le :</span>
+        <input [(ngModel)]="endDate" type="date" class="w-full text-black" />
+      </div>
+
+      <button
+        (click)="searchGame()"
+        class="w-full mt-4 rounded-lg bg-secondary px-4 py-2">
+        Filtrer
+      </button>
+    </div>
   </div>
 
   <div class="w-full flex flex-col w-full mt-4 md:mt-0">

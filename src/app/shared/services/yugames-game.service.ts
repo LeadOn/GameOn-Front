@@ -16,6 +16,29 @@ export class YuGamesGameService {
     );
   }
 
+  search(
+    limit: number,
+    platformId?: number,
+    startDate?: string,
+    endDate?: string
+  ): Observable<FifaGamePlayed[]> {
+    let url = environment.yuFootApiUrl + "/game?limit=" + limit;
+
+    if (platformId != null && platformId != 0) {
+      url += "&platformId=" + platformId;
+    }
+
+    if (startDate != null && startDate != "") {
+      url += "&startDate=" + startDate + "T00:00:00";
+    }
+
+    if (endDate != null && endDate != "") {
+      url += "&endDate=" + endDate + "T00:00:00";
+    }
+
+    return this.client.get<FifaGamePlayed[]>(url);
+  }
+
   getLastByPlayer(
     playerId: number,
     limit: number
