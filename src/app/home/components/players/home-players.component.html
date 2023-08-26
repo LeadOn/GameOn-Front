@@ -10,6 +10,15 @@
   </div>
 
   <div
+    *ngIf="loading == true"
+    class="flex flex-row items-center bg-primary p-4 rounded-lg drop-shadow-xl mt-8"
+    role="status">
+    <app-loading-spinner></app-loading-spinner>
+    Chargement des données...
+  </div>
+
+  <div
+    *ngIf="loading == false"
     class="mt-8 flex flex-col space-y-4 md:space-y-0 md:grid md:grid-cols-3 lg:grid-cols-4 md:auto-rows-auto md:gap-5">
     <app-player-card
       ng-if="players.length > 0"
