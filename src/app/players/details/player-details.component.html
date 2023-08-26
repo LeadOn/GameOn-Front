@@ -1,4 +1,12 @@
 <div
+  class="flex flex-row items-center bg-primary p-4 rounded-lg drop-shadow-xl m-8 md:mx-16 lg:mx-32 text-white"
+  role="status"
+  *ngIf="loading == true">
+  <app-loading-spinner></app-loading-spinner>
+  Chargement des données...
+</div>
+
+<div
   id="player-details"
   class="flex flex-col md:flex-row md:space-x-8 text-white m-8 md:mx-16 lg:mx-32"
   *ngIf="player != null && player.id != 0">
@@ -47,14 +55,6 @@
   </div>
 
   <div class="w-full flex flex-col w-full mt-8 md:mt-0">
-    <div
-      *ngIf="loading == true"
-      class="flex flex-row items-center bg-primary p-4 rounded-lg drop-shadow-xl"
-      role="status">
-      <app-loading-spinner></app-loading-spinner>
-      Chargement des données...
-    </div>
-
     <div
       *ngIf="loading == false && selectedEnemy != 0 && enemy.id != 0"
       class="flex flex-col lg:flex-row justify-around bg-primary p-4 rounded-lg drop-shadow-xl mb-4">
