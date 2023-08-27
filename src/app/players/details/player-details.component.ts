@@ -14,6 +14,9 @@ import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.ser
   styleUrls: ["./player-details.component.scss"],
 })
 export class PlayerDetailsComponent implements OnInit {
+  selectedStats = "global";
+  calculatedStats = new PlatformStats();
+
   playerId: any;
   player: any = null;
   enemy: Player = new Player();
@@ -39,6 +42,36 @@ export class PlayerDetailsComponent implements OnInit {
     this.playerId = this.route.snapshot.paramMap.get("id");
     this.getPlayer(this.playerId);
     this.getPlayers();
+  }
+
+  calculateStats() {
+    if (this.selectedStats == "global") {
+      this.calculatedStats = this.totalStats;
+    }
+
+    if (this.selectedStats == "windows") {
+      this.stats.forEach((x) => {
+        if (x.platform.id == 1) {
+          this.calculatedStats = x;
+        }
+      });
+    }
+
+    if (this.selectedStats == "xbox") {
+      this.stats.forEach((x) => {
+        if (x.platform.id == 2) {
+          this.calculatedStats = x;
+        }
+      });
+    }
+
+    if (this.selectedStats == "five") {
+      this.stats.forEach((x) => {
+        if (x.platform.id == 3) {
+          this.calculatedStats = x;
+        }
+      });
+    }
   }
 
   getPlayer(id: number) {
@@ -99,6 +132,7 @@ export class PlayerDetailsComponent implements OnInit {
             );
 
             this.totalStats = totalStats;
+            this.calculatedStats = totalStats;
 
             // Getting last games played
             this.gameService.getLastByPlayer(id, 20).subscribe(
