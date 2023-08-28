@@ -11,9 +11,12 @@
     <p class="text-xs mb-2">{{ team.code }}</p>
   </div>
   <div class="flex-grow py-2 md:ml-2">
-    <p *ngFor="let player of team.players">
+    <a
+      class="block"
+      [routerLink]="['/player', player.id]"
+      *ngFor="let player of team.players">
       {{ player.fullName }}
-    </p>
+    </a>
   </div>
 
   <div class="px-2 w-8 md:w-12 lg:w-16 text-center">

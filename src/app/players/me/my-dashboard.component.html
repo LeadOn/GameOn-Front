@@ -1,8 +1,11 @@
 <section
   class="flex flex-col items-center md:px-6 lg:px-32 xl:px-64 justify-center text-white h-screen"
   id="my-dashboard">
-  <div class="mt-4" role="status" *ngIf="loading == true">
+  <div
+    *ngIf="loading == true"
+    class="w-full flex flex-row items-center p-4 rounded-lg bg-primary">
     <app-loading-spinner></app-loading-spinner>
+    <span class="text-white">Chargement...</span>
   </div>
 
   <div

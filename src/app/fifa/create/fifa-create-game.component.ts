@@ -1,6 +1,7 @@
 import { formatDate } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { FifaTeam } from "src/app/shared/classes/FifaTeam";
 import { Platform } from "src/app/shared/classes/Platform";
 import { Player } from "src/app/shared/classes/Player";
@@ -43,7 +44,8 @@ export class FifaCreateGameComponent implements OnInit {
     private playerService: YuGamesPlayerService,
     private platformService: YuGamesPlatformService,
     private gameService: YuGamesGameService,
-    private fifaTeamService: YuGamesFifaTeamService
+    private fifaTeamService: YuGamesFifaTeamService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -104,11 +106,11 @@ export class FifaCreateGameComponent implements OnInit {
     ) {
       this.gameService.create(body).subscribe(
         (data) => {
-          alert("Match créé !");
+          this.router.navigate(["/fifa/history"]);
           this.isLoading = false;
         },
         (err) => {
-          alert("Erreur lors de la création du match ! Erreur : " + err);
+          alert("Erreur lors de la création du match !");
           this.isLoading = false;
         }
       );

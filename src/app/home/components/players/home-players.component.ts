@@ -9,12 +9,19 @@ import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.ser
 })
 export class HomePlayersComponent implements OnInit {
   players: Player[] = [];
+  loading = true;
 
   constructor(private playerService: YuGamesPlayerService) {}
 
   ngOnInit(): void {
-    this.playerService.getAll().subscribe((data) => {
-      this.players = data;
-    });
+    this.playerService.getAll().subscribe(
+      (data) => {
+        this.players = data;
+        this.loading = false;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 }
