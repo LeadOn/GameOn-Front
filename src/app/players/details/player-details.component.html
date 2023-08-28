@@ -40,64 +40,110 @@
 
         <div *ngIf="totalStats != null">
           <div
-            class="flex flex-row justify-evenly mt-2 text-white w-full items-center mb-4">
-            <input
-              id="global-stats"
-              type="radio"
-              value="global"
-              [(ngModel)]="selectedStats"
-              (change)="calculateStats()"
-              name="default-radio"
-              class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-            <label
-              for="five-stats"
-              class="text-sm font-medium text-white dark:text-gray-300">
-              Global
-            </label>
+            class="flex flex-row justify-around mt-2 text-white w-full items-center mb-4">
+            <div class="flex flex-col space-y-4">
+              <div class="flex flex-row">
+                <input
+                  id="global-stats"
+                  type="radio"
+                  value="global"
+                  [(ngModel)]="selectedStats"
+                  (change)="calculateStats()"
+                  name="default-radio"
+                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
+                <label
+                  for="five-stats"
+                  class="text-sm font-medium text-white dark:text-gray-300 ml-2">
+                  Global
+                </label>
+              </div>
 
-            <input
-              id="windows-stats"
-              type="radio"
-              value="windows"
-              name="default-radio"
-              [(ngModel)]="selectedStats"
-              (change)="calculateStats()"
-              class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-            <label
-              for="windows-stats"
-              class="text-sm font-medium text-gray-900 dark:text-gray-300">
-              <img src="../../../assets/img/windows.svg" class="w-6" />
-            </label>
+              <div class="flex flex-row">
+                <input
+                  id="windows-stats"
+                  type="radio"
+                  value="windows"
+                  name="default-radio"
+                  [(ngModel)]="selectedStats"
+                  (change)="calculateStats()"
+                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
+                <label
+                  for="windows-stats"
+                  class="text-sm font-medium text-gray-900 dark:text-gray-300">
+                  <img src="../../../assets/img/windows.svg" class="w-6 ml-2" />
+                </label>
+              </div>
+            </div>
 
-            <input
-              id="xbox-stats"
-              type="radio"
-              value="xbox"
-              name="default-radio"
-              [(ngModel)]="selectedStats"
-              (change)="calculateStats()"
-              class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-            <label for="xbox-stats" class="text-sm font-medium">
-              <img src="../../../assets/img/xbox.svg" class="w-6" />
-            </label>
+            <div class="flex flex-col space-y-4">
+              <div class="flex flex-row">
+                <input
+                  id="xbox-stats"
+                  type="radio"
+                  value="xbox"
+                  name="default-radio"
+                  [(ngModel)]="selectedStats"
+                  (change)="calculateStats()"
+                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
+                <label for="xbox-stats" class="text-sm font-medium">
+                  <img src="../../../assets/img/xbox.svg" class="w-6 ml-2" />
+                </label>
+              </div>
 
-            <input
-              id="five-stats"
-              type="radio"
-              value="five"
-              [(ngModel)]="selectedStats"
-              (change)="calculateStats()"
-              name="default-radio"
-              class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-            <label for="five-stats" class="text-sm font-medium">
-              <img src="../../../assets/img/stadium.svg" class="w-6" />
-            </label>
+              <div class="flex flex-row">
+                <input
+                  id="five-stats"
+                  type="radio"
+                  value="five"
+                  [(ngModel)]="selectedStats"
+                  (change)="calculateStats()"
+                  name="default-radio"
+                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
+                <label for="five-stats" class="text-sm font-medium">
+                  <img src="../../../assets/img/stadium.svg" class="w-6 ml-2" />
+                </label>
+              </div>
+            </div>
           </div>
 
           <hr class="my-4 border-dashed" />
 
           <div class="w-full">
             <app-fifa-stat [stat]="calculatedStats"></app-fifa-stat>
+          </div>
+        </div>
+
+        <hr class="my-4 border-dashed" *ngIf="topTeamsPlayed.length > 0" />
+
+        <p class="text-sm underline" *ngIf="topTeamsPlayed.length > 0">
+          Top équipes
+        </p>
+
+        <div
+          class="flex flex-col w-full mt-2 space-y-4"
+          *ngIf="topTeamsPlayed.length > 0">
+          <div
+            *ngFor="let topTeam of topTeamsPlayed"
+            class="flex flex-row items-center space-x-1">
+            <span class="w-6">{{ topTeamsPlayed.indexOf(topTeam) + 1 }}.</span>
+            <img
+              class="w-8"
+              *ngIf="topTeam.fifaTeam != null && topTeam.fifaTeam != undefined"
+              src="../../../assets/img/teams/{{ topTeam.fifaTeam?.id }}.png" />
+            <span
+              *ngIf="topTeam.fifaTeam == undefined || topTeam.fifaTeam == null">
+              Inconnu
+            </span>
+
+            <span class="text-sm">
+              <span
+                *ngIf="
+                  topTeam.fifaTeam != undefined && topTeam.fifaTeam != null
+                ">
+                {{ topTeam.fifaTeam.name }}
+              </span>
+              ({{ topTeam.numberOfGames }})
+            </span>
           </div>
         </div>
       </div>

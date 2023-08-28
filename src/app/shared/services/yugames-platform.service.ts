@@ -12,13 +12,13 @@ export class YuGamesPlatformService {
 
   getAll(): Observable<Platform[]> {
     return this.client.get<Platform[]>(
-      environment.yuFootApiUrl + "/platform/all"
+      environment.yuGamesApiUrl + "/platform/all"
     );
   }
 
   getById(id: number): Observable<Platform> {
     return this.client.get<Platform>(
-      environment.yuFootApiUrl + "/platform/" + id
+      environment.yuGamesApiUrl + "/platform/" + id
     );
   }
 }
