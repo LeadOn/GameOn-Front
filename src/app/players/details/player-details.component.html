@@ -116,7 +116,7 @@
         <hr class="my-4 border-dashed" *ngIf="topTeamsPlayed.length > 0" />
 
         <p class="text-sm underline" *ngIf="topTeamsPlayed.length > 0">
-          Top équipes
+          Les plus jouées
         </p>
 
         <div
@@ -129,7 +129,7 @@
             <img
               class="w-8"
               *ngIf="topTeam.fifaTeam != null && topTeam.fifaTeam != undefined"
-              src="../../../assets/img/teams/{{ topTeam.fifaTeam?.id }}.png" />
+              src="../../../assets/img/teams/{{ topTeam.fifaTeam.id }}.png" />
             <span
               *ngIf="topTeam.fifaTeam == undefined || topTeam.fifaTeam == null">
               Inconnu
