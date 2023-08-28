@@ -25,6 +25,10 @@ import { PlayerDetailsCardComponent } from "./players/me/components/player-detai
 import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
 import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
 import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
+import { NgChartsModule } from "ng2-charts";
+import { Chart } from "chart.js";
+
+Chart.defaults.color = "#fff";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -71,6 +75,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     StoreModule.forRoot({
       player: playerReducer,
     }),
+    NgChartsModule,
   ],
   providers: [
     {

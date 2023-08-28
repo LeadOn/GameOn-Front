@@ -5,6 +5,7 @@ import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { PlatformStats } from "src/app/shared/classes/PlatformStats";
 import { Player } from "src/app/shared/classes/Player";
+import { TopTeamStatDto } from "src/app/shared/classes/TopTeamStatDto";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 
@@ -14,6 +15,11 @@ import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.ser
   styleUrls: ["./player-details.component.scss"],
 })
 export class PlayerDetailsComponent implements OnInit {
+  selectedStats = "global";
+  calculatedStats = new PlatformStats();
+
+  topTeamsPlayed: TopTeamStatDto[] = [];
+
   playerId: any;
   player: any = null;
   enemy: Player = new Player();
@@ -41,6 +47,36 @@ export class PlayerDetailsComponent implements OnInit {
     this.getPlayers();
   }
 
+  calculateStats() {
+    if (this.selectedStats == "global") {
+      this.calculatedStats = this.totalStats;
+    }
+
+    if (this.selectedStats == "windows") {
+      this.stats.forEach((x) => {
+        if (x.platform.id == 1) {
+          this.calculatedStats = x;
+        }
+      });
+    }
+
+    if (this.selectedStats == "xbox") {
+      this.stats.forEach((x) => {
+        if (x.platform.id == 2) {
+          this.calculatedStats = x;
+        }
+      });
+    }
+
+    if (this.selectedStats == "five") {
+      this.stats.forEach((x) => {
+        if (x.platform.id == 3) {
+          this.calculatedStats = x;
+        }
+      });
+    }
+  }
+
   getPlayer(id: number) {
     this.loading = true;
     this.playerService.get(id).subscribe(
@@ -52,6 +88,8 @@ export class PlayerDetailsComponent implements OnInit {
 
             let avgGoalsGiven: number[] = [];
             let avgGoalsTaken: number[] = [];
+            let totalGoalsGiven = 0,
+              totalGoalsTaken = 0;
 
             this.stats = data2;
 
@@ -71,6 +109,8 @@ export class PlayerDetailsComponent implements OnInit {
               totalStats.losses += stat.losses;
               totalStats.draws += stat.draws;
               totalStats.goalDifference += stat.goalDifference;
+              totalGoalsGiven += stat.goalsGiven;
+              totalGoalsTaken += stat.goalsTaken;
               avgGoalsGiven.push(stat.averageGoalGiven);
               avgGoalsTaken.push(stat.averageGoalTaken);
             });
@@ -99,19 +139,35 @@ export class PlayerDetailsComponent implements OnInit {
             );
 
             this.totalStats = totalStats;
+            this.totalStats.goalsGiven = totalGoalsGiven;
+            this.totalStats.goalsTaken = totalGoalsTaken;
+            this.calculatedStats = totalStats;
 
-            // Getting last games played
-            this.gameService.getLastByPlayer(id, 20).subscribe(
-              (data3) => {
-                this.games = data3;
-                this.player = data;
-                this.loading = false;
+            this.playerService.getMostPlayedTeams(id, 3).subscribe(
+              (data4) => {
+                console.log(data4);
+                this.topTeamsPlayed = data4;
+
+                // Getting last games played
+                this.gameService.getLastByPlayer(id, 20).subscribe(
+                  (data3) => {
+                    this.games = data3;
+                    this.player = data;
+                    this.loading = false;
+                  },
+                  (err) => {
+                    alert(
+                      "Erreur lors de la récupération des dernières parties jouées."
+                    );
+                    console.error(err);
+                  }
+                );
               },
               (err) => {
-                alert(
-                  "Erreur lors de la récupération des dernières parties jouées."
-                );
                 console.error(err);
+                alert(
+                  "Erreur lors de la récupération du top des équipes jouées."
+                );
               }
             );
           },

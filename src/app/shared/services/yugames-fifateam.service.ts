@@ -12,7 +12,7 @@ export class YuGamesFifaTeamService {
 
   getAll(): Observable<FifaTeam[]> {
     return this.client.get<FifaTeam[]>(
-      environment.yuFootApiUrl + "/fifateam/all"
+      environment.yuGamesApiUrl + "/fifateam/all"
     );
   }
 }
