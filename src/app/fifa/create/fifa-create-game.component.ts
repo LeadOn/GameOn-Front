@@ -9,11 +9,24 @@ import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
+import { trigger, style, animate, transition } from "@angular/animations";
 
 @Component({
   selector: "app-fifa-create-game",
   templateUrl: "./fifa-create-game.component.html",
   styleUrls: ["./fifa-create-game.component.scss"],
+  animations: [
+    trigger("inOutAnimation", [
+      transition(":enter", [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(":leave", [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class FifaCreateGameComponent implements OnInit {
   isLoading = true;
