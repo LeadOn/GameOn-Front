@@ -8,11 +8,24 @@ import { PlatformStatsDto } from "src/app/shared/classes/PlatformStatsDto";
 import { Player } from "src/app/shared/classes/Player";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
+import { trigger, style, animate, transition } from "@angular/animations";
 
 @Component({
   selector: "app-player-details",
   templateUrl: "./player-details.component.html",
   styleUrls: ["./player-details.component.scss"],
+  animations: [
+    trigger("inOutAnimation", [
+      transition(":enter", [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(":leave", [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class PlayerDetailsComponent implements OnInit {
   selectedStats = "global";

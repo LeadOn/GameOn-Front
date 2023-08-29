@@ -1,8 +1,18 @@
 <div
+  [@inOutAnimation]
+  class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker-2 m-8 md:mx-16 lg:mx-32 text-white"
+  role="status"
+  *ngIf="loading == true">
+  <app-loading-spinner></app-loading-spinner>
+  Chargement des données...
+</div>
+
+<div
+  [@inOutAnimation]
   class="flex flex-col md:flex-row md:space-x-8 text-white m-8 md:mx-16 lg:mx-32">
   <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
     <div
-      class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary">
+      class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary neomorphism-primaryDarker-2">
       <div
         class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center">
         <img src="../../../assets/img/fifagame.svg" class="w-4" />
@@ -11,7 +21,7 @@
     </div>
 
     <div
-      class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg bg-green-500 hover:bg-green-800 mt-4"
+      class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg transition ease-in-out delay-50 bg-green-500 hover:bg-green-800 mt-4 neomorphism-primaryDarker-2"
       *ngIf="isLoggedIn == true"
       routerLink="/fifa/create">
       <div
@@ -22,72 +32,74 @@
     </div>
 
     <div
-      class="flex flex-col justify-center p-4 rounded-lg bg-primary mt-4"
+      class="flex flex-col justify-center p-4 rounded-lg bg-primary mt-4 neomorphism-primaryDarker-2"
       *ngIf="loading == false">
-      <div class="flex flex-row space-x-2 justify-center rounded-lg bg-primary">
-        <div
-          class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center">
-          <fa-icon [icon]="filterIcon" class="text-sm"></fa-icon>
+      <div
+        class="rounded-lg bg-primaryDarker p-2 neomorphism-inner-primaryDarker">
+        <div class="flex flex-row space-x-2 justify-center">
+          <div
+            class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center">
+            <fa-icon [icon]="filterIcon" class="text-sm"></fa-icon>
+          </div>
+          <span class="text-white">Filtres</span>
         </div>
-        <span class="text-white">Filtres</span>
       </div>
 
-      <hr class="border-dashed my-2" />
+      <div
+        class="rounded-lg bg-primaryDarker p-2 neomorphism-inner-primaryDarker mt-2">
+        <div>
+          <span class="text-sm">Nombre de matchs</span>
+          <select
+            [(ngModel)]="numberOfGames"
+            class="rounded-lg w-full bg-primary border-secondary">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select>
+        </div>
 
-      <div class="">
-        <span class="text-sm">Nombre de matchs</span>
-        <select
-          [(ngModel)]="numberOfGames"
-          class="rounded-lg w-full bg-primary border-secondary">
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="30">30</option>
-          <option value="40">40</option>
-          <option value="50">50</option>
-        </select>
-      </div>
+        <div class="mt-2">
+          <span class="text-sm">Platforme</span>
+          <select
+            [(ngModel)]="platformId"
+            class="rounded-lg w-full bg-primary border-secondary">
+            <option value="0">--- Plateforme ---</option>
+            <option
+              *ngFor="let platform of platforms"
+              value="{{ platform.id }}">
+              {{ platform.name }}
+            </option>
+          </select>
+        </div>
 
-      <div class="mt-2">
-        <span class="text-sm">Platforme</span>
-        <select
-          [(ngModel)]="platformId"
-          class="rounded-lg w-full bg-primary border-secondary">
-          <option value="0">--- Plateforme ---</option>
-          <option *ngFor="let platform of platforms" value="{{ platform.id }}">
-            {{ platform.name }}
-          </option>
-        </select>
-      </div>
+        <div class="mt-2">
+          <span class="text-sm block">Entre le :</span>
+          <input
+            [(ngModel)]="startDate"
+            type="date"
+            class="w-full text-black" />
+        </div>
 
-      <div class="mt-2">
-        <span class="text-sm block">Entre le :</span>
-        <input [(ngModel)]="startDate" type="date" class="w-full text-black" />
-      </div>
-
-      <div class="mt-2">
-        <span class="text-sm block">et le :</span>
-        <input [(ngModel)]="endDate" type="date" class="w-full text-black" />
+        <div class="mt-2">
+          <span class="text-sm block">et le :</span>
+          <input [(ngModel)]="endDate" type="date" class="w-full text-black" />
+        </div>
       </div>
 
       <button
         (click)="searchGame()"
-        class="w-full mt-4 rounded-lg bg-secondary px-4 py-2">
+        class="w-full mt-4 rounded-lg bg-secondaryDarker hover:bg-secondary transition ease-in-out delay-50 px-4 py-2">
         Filtrer
       </button>
     </div>
   </div>
 
-  <div class="w-full flex flex-col w-full mt-4 md:mt-0">
-    <app-fifa-game-list-header></app-fifa-game-list-header>
-
-    <div
-      *ngIf="loading == true"
-      class="flex flex-row items-center bg-primary mt-4 p-4 rounded-lg drop-shadow-xl"
-      role="status">
-      <app-loading-spinner></app-loading-spinner>
-      Chargement des données...
-    </div>
+  <div class="w-full flex flex-col w-full mt-8 md:mt-0">
+    <app-fifa-game-list-header
+      *ngIf="loading == false"></app-fifa-game-list-header>
 
     <div
       class="mt-4 flex flex-col w-full text-white space-y-4"
