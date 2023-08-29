@@ -1,6 +1,6 @@
 import { Platform } from "./Platform";
 
-export class PlatformStats {
+export class PlatformStatsDto {
   platform: Platform = new Platform();
   wins: number = 0;
   losses: number = 0;
@@ -10,7 +10,6 @@ export class PlatformStats {
   goalsGiven: number = 0;
   goalsTaken: number = 0;
   goalDifference: number = 0;
-
   winRate: number = 0;
   looseRate: number = 0;
   drawRate: number = 0;

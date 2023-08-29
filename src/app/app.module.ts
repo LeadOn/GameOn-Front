@@ -27,6 +27,7 @@ import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.componen
 import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
 import { NgChartsModule } from "ng2-charts";
 import { Chart } from "chart.js";
+import { PlayerTeamListComponent } from "./shared/components/player-team-list/player-team-list.component";
 
 Chart.defaults.color = "#fff";
 
@@ -61,6 +62,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     CommonLayoutComponent,
     FifaStatComponent,
     FifaHistoryComponent,
+    PlayerTeamListComponent,
   ],
   imports: [
     BrowserModule,
