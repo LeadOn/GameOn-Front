@@ -3,9 +3,9 @@ import { ActivatedRoute } from "@angular/router";
 
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
-import { PlatformStats } from "src/app/shared/classes/PlatformStats";
+import { FifaPlayerStatsDto } from "src/app/shared/classes/FifaPlayerStatsDto";
+import { PlatformStatsDto } from "src/app/shared/classes/PlatformStatsDto";
 import { Player } from "src/app/shared/classes/Player";
-import { TopTeamStatDto } from "src/app/shared/classes/TopTeamStatDto";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 
@@ -16,23 +16,18 @@ import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.ser
 })
 export class PlayerDetailsComponent implements OnInit {
   selectedStats = "global";
-  calculatedStats = new PlatformStats();
-
-  topTeamsPlayed: TopTeamStatDto[] = [];
+  selectedEnemy = 0;
+  calculatedStats = new PlatformStatsDto();
+  loading = true;
+  externalIcon = faExternalLinkAlt;
 
   playerId: any;
-  player: any = null;
-  enemy: Player = new Player();
-  selectedEnemy = 0;
+  fifaPlayerStats?: FifaPlayerStatsDto;
+  player?: Player;
+  enemy?: Player;
+  enemyStats?: FifaPlayerStatsDto;
   players: Player[] = [];
-  totalStats: any = null;
-  totalEnemyStats: any = null;
-
-  loading = true;
-  stats: PlatformStats[] = [];
-  enemyStats: PlatformStats[] = [];
   games: FifaGamePlayed[] = [];
-  externalIcon = faExternalLinkAlt;
 
   constructor(
     private route: ActivatedRoute,
@@ -49,11 +44,15 @@ export class PlayerDetailsComponent implements OnInit {
 
   calculateStats() {
     if (this.selectedStats == "global") {
-      this.calculatedStats = this.totalStats;
+      this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
+        if (x.platform.id == 0) {
+          this.calculatedStats = x;
+        }
+      });
     }
 
     if (this.selectedStats == "windows") {
-      this.stats.forEach((x) => {
+      this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
         if (x.platform.id == 1) {
           this.calculatedStats = x;
         }
@@ -61,7 +60,7 @@ export class PlayerDetailsComponent implements OnInit {
     }
 
     if (this.selectedStats == "xbox") {
-      this.stats.forEach((x) => {
+      this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
         if (x.platform.id == 2) {
           this.calculatedStats = x;
         }
@@ -69,7 +68,7 @@ export class PlayerDetailsComponent implements OnInit {
     }
 
     if (this.selectedStats == "five") {
-      this.stats.forEach((x) => {
+      this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
         if (x.platform.id == 3) {
           this.calculatedStats = x;
         }
@@ -84,90 +83,21 @@ export class PlayerDetailsComponent implements OnInit {
         // Getting stats
         this.playerService.getStats(id).subscribe(
           (data2) => {
-            let totalStats = new PlatformStats();
+            this.fifaPlayerStats = data2;
+            this.calculatedStats = data2.statsPerPlatform[0];
 
-            let avgGoalsGiven: number[] = [];
-            let avgGoalsTaken: number[] = [];
-            let totalGoalsGiven = 0,
-              totalGoalsTaken = 0;
-
-            this.stats = data2;
-
-            this.stats.forEach((stat) => {
-              let gamesPlayed = stat.wins + stat.losses + stat.draws;
-              stat.winRate = parseFloat(
-                ((stat.wins * 100) / gamesPlayed).toFixed(2)
-              );
-              stat.looseRate = parseFloat(
-                ((stat.losses * 100) / gamesPlayed).toFixed(2)
-              );
-              stat.drawRate = parseFloat(
-                ((stat.draws * 100) / gamesPlayed).toFixed(2)
-              );
-
-              totalStats.wins += stat.wins;
-              totalStats.losses += stat.losses;
-              totalStats.draws += stat.draws;
-              totalStats.goalDifference += stat.goalDifference;
-              totalGoalsGiven += stat.goalsGiven;
-              totalGoalsTaken += stat.goalsTaken;
-              avgGoalsGiven.push(stat.averageGoalGiven);
-              avgGoalsTaken.push(stat.averageGoalTaken);
-            });
-
-            let totalGamePlayed =
-              totalStats.wins + totalStats.losses + totalStats.draws;
-
-            totalStats.winRate = parseFloat(
-              ((totalStats.wins * 100) / totalGamePlayed).toFixed(2)
-            );
-            totalStats.looseRate = parseFloat(
-              ((totalStats.losses * 100) / totalGamePlayed).toFixed(2)
-            );
-            totalStats.drawRate = parseFloat(
-              ((totalStats.draws * 100) / totalGamePlayed).toFixed(2)
-            );
-            totalStats.averageGoalGiven = parseFloat(
-              (
-                avgGoalsGiven.reduce((a, b) => a + b, 0) / avgGoalsGiven.length
-              ).toFixed(2)
-            );
-            totalStats.averageGoalTaken = parseFloat(
-              (
-                avgGoalsTaken.reduce((a, b) => a + b, 0) / avgGoalsTaken.length
-              ).toFixed(2)
-            );
-
-            this.totalStats = totalStats;
-            this.totalStats.goalsGiven = totalGoalsGiven;
-            this.totalStats.goalsTaken = totalGoalsTaken;
-            this.calculatedStats = totalStats;
-
-            this.playerService.getMostPlayedTeams(id, 3).subscribe(
-              (data4) => {
-                console.log(data4);
-                this.topTeamsPlayed = data4;
-
-                // Getting last games played
-                this.gameService.getLastByPlayer(id, 20).subscribe(
-                  (data3) => {
-                    this.games = data3;
-                    this.player = data;
-                    this.loading = false;
-                  },
-                  (err) => {
-                    alert(
-                      "Erreur lors de la récupération des dernières parties jouées."
-                    );
-                    console.error(err);
-                  }
-                );
+            // Getting last games played
+            this.gameService.getLastByPlayer(id, 20).subscribe(
+              (data3) => {
+                this.games = data3;
+                this.player = data;
+                this.loading = false;
               },
               (err) => {
-                console.error(err);
                 alert(
-                  "Erreur lors de la récupération du top des équipes jouées."
+                  "Erreur lors de la récupération des dernières parties jouées."
                 );
+                console.error(err);
               }
             );
           },
@@ -211,7 +141,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   onChangeEnemy(newValue: any) {
     this.selectedEnemy = parseInt(newValue.value);
-    this.enemyStats.length = 0;
+    this.enemyStats = undefined;
 
     if (newValue.value != "0") {
       this.loading = true;
@@ -222,57 +152,7 @@ export class PlayerDetailsComponent implements OnInit {
           // Getting stats
           this.playerService.getStats(newValue.value).subscribe(
             (data2) => {
-              let totalStats = new PlatformStats();
-
-              let avgGoalsGiven: number[] = [];
-              let avgGoalsTaken: number[] = [];
-
-              data2.forEach((stat) => {
-                let gamesPlayed = stat.wins + stat.losses + stat.draws;
-                stat.winRate = parseFloat(
-                  ((stat.wins * 100) / gamesPlayed).toFixed(2)
-                );
-                stat.looseRate = parseFloat(
-                  ((stat.losses * 100) / gamesPlayed).toFixed(2)
-                );
-                stat.drawRate = parseFloat(
-                  ((stat.draws * 100) / gamesPlayed).toFixed(2)
-                );
-
-                totalStats.wins += stat.wins;
-                totalStats.losses += stat.losses;
-                totalStats.draws += stat.draws;
-                totalStats.goalDifference += stat.goalDifference;
-                avgGoalsGiven.push(stat.averageGoalGiven);
-                avgGoalsTaken.push(stat.averageGoalTaken);
-              });
-
-              let totalGamePlayed =
-                totalStats.wins + totalStats.losses + totalStats.draws;
-
-              totalStats.winRate = parseFloat(
-                ((totalStats.wins * 100) / totalGamePlayed).toFixed(2)
-              );
-              totalStats.looseRate = parseFloat(
-                ((totalStats.losses * 100) / totalGamePlayed).toFixed(2)
-              );
-              totalStats.drawRate = parseFloat(
-                ((totalStats.draws * 100) / totalGamePlayed).toFixed(2)
-              );
-              totalStats.averageGoalGiven = parseFloat(
-                (
-                  avgGoalsGiven.reduce((a, b) => a + b, 0) /
-                  avgGoalsGiven.length
-                ).toFixed(2)
-              );
-              totalStats.averageGoalTaken = parseFloat(
-                (
-                  avgGoalsTaken.reduce((a, b) => a + b, 0) /
-                  avgGoalsTaken.length
-                ).toFixed(2)
-              );
-
-              this.totalEnemyStats = totalStats;
+              this.enemyStats = data2;
               this.loading = false;
             },
             (err) => {

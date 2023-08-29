@@ -3,8 +3,9 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Player } from "../classes/Player";
 import { environment } from "src/environments/environment";
-import { PlatformStats } from "../classes/PlatformStats";
+import { PlatformStatsDto } from "../classes/PlatformStatsDto";
 import { TopTeamStatDto } from "../classes/TopTeamStatDto";
+import { FifaPlayerStatsDto } from "../classes/FifaPlayerStatsDto";
 
 @Injectable({
   providedIn: "root",
@@ -24,8 +25,8 @@ export class YuGamesPlayerService {
     return this.client.get<Player>(environment.yuGamesApiUrl + "/player/me");
   }
 
-  getStats(playerId: number): Observable<PlatformStats[]> {
-    return this.client.get<PlatformStats[]>(
+  getStats(playerId: number): Observable<FifaPlayerStatsDto> {
+    return this.client.get<FifaPlayerStatsDto>(
       environment.yuGamesApiUrl + "/player/" + playerId + "/stats"
     );
   }
@@ -36,18 +37,5 @@ export class YuGamesPlayerService {
       Nickname: nickname,
       ProfilePictureUrl: profilePicUrl,
     });
-  }
-
-  getMostPlayedTeams(
-    playerId: number,
-    numberOfTeams: number
-  ): Observable<TopTeamStatDto[]> {
-    return this.client.get<TopTeamStatDto[]>(
-      environment.yuGamesApiUrl +
-        "/player/" +
-        playerId +
-        "/mostplayedteams?numberOfTeams=" +
-        numberOfTeams
-    );
   }
 }

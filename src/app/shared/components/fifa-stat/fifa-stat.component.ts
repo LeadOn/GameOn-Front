@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { PlatformStats } from "../../classes/PlatformStats";
+import { PlatformStatsDto } from "../../classes/PlatformStatsDto";
 
 @Component({
   selector: "app-fifa-stat",
@@ -8,7 +8,7 @@ import { PlatformStats } from "../../classes/PlatformStats";
 })
 export class FifaStatComponent implements OnInit {
   @Input()
-  stat: PlatformStats = new PlatformStats();
+  stat: PlatformStatsDto = new PlatformStatsDto();
 
   ngOnInit(): void {
     let gamesPlayed = this.stat.wins + this.stat.losses + this.stat.draws;

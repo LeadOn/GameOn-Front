@@ -5,7 +5,8 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { PlatformStats } from "src/app/shared/classes/PlatformStats";
+import { FifaPlayerStatsDto } from "src/app/shared/classes/FifaPlayerStatsDto";
+import { PlatformStatsDto } from "src/app/shared/classes/PlatformStatsDto";
 import { Player } from "src/app/shared/classes/Player";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 import { environment } from "src/environments/environment";
@@ -19,7 +20,7 @@ export class MyDashboardComponent implements OnInit {
   player$: Observable<Player>;
 
   loading = true;
-  stats: PlatformStats[] = [];
+  stats?: FifaPlayerStatsDto;
 
   calendarIcon = faCalendarAlt;
   backIcon = faArrowAltCircleLeft;

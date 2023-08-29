@@ -36,9 +36,11 @@
           </select>
         </div>
 
-        <hr class="my-4 border-dashed" />
+        <hr
+          class="my-4 border-dashed"
+          *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null" />
 
-        <div *ngIf="totalStats != null">
+        <div *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null">
           <div
             class="flex flex-row justify-around mt-2 text-white w-full items-center mb-4">
             <div class="flex flex-col space-y-4">
@@ -113,46 +115,41 @@
           </div>
         </div>
 
-        <hr class="my-4 border-dashed" *ngIf="topTeamsPlayed.length > 0" />
+        <app-player-team-list
+          *ngIf="
+            fifaPlayerStats != undefined &&
+            fifaPlayerStats != null &&
+            fifaPlayerStats.mostPlayedTeams.length > 0
+          "
+          [teamList]="fifaPlayerStats.mostPlayedTeams"
+          [title]="'Les plus jouées'"></app-player-team-list>
 
-        <p class="text-sm underline" *ngIf="topTeamsPlayed.length > 0">
-          Les plus jouées
-        </p>
+        <app-player-team-list
+          *ngIf="
+            fifaPlayerStats != undefined &&
+            fifaPlayerStats != null &&
+            fifaPlayerStats.mostWinsTeams.length > 0
+          "
+          [teamList]="fifaPlayerStats.mostWinsTeams"
+          [title]="'Les plus victorieuses'"></app-player-team-list>
 
-        <div
-          class="flex flex-col w-full mt-2 space-y-4"
-          *ngIf="topTeamsPlayed.length > 0">
-          <div
-            *ngFor="let topTeam of topTeamsPlayed"
-            class="flex flex-row items-center space-x-1">
-            <span class="w-6">{{ topTeamsPlayed.indexOf(topTeam) + 1 }}.</span>
-            <img
-              class="w-8"
-              *ngIf="topTeam.fifaTeam != null && topTeam.fifaTeam != undefined"
-              src="../../../assets/img/teams/{{ topTeam.fifaTeam.id }}.png" />
-            <span
-              *ngIf="topTeam.fifaTeam == undefined || topTeam.fifaTeam == null">
-              Inconnu
-            </span>
-
-            <span class="text-sm">
-              <span
-                *ngIf="
-                  topTeam.fifaTeam != undefined && topTeam.fifaTeam != null
-                ">
-                {{ topTeam.fifaTeam.name }}
-              </span>
-              ({{ topTeam.numberOfGames }})
-            </span>
-          </div>
-        </div>
+        <app-player-team-list
+          *ngIf="
+            fifaPlayerStats != undefined &&
+            fifaPlayerStats != null &&
+            fifaPlayerStats.mostPlayedTeams.length > 0
+          "
+          [teamList]="fifaPlayerStats.mostLossesTeams"
+          [title]="'Les plus terribles'"></app-player-team-list>
       </div>
     </div>
   </div>
 
   <div class="w-full flex flex-col w-full mt-8 md:mt-0">
     <div
-      *ngIf="loading == false && selectedEnemy != 0 && enemy.id != 0"
+      *ngIf="
+        loading == false && selectedEnemy != 0 && enemy != null && enemy.id != 0
+      "
       class="flex flex-col lg:flex-row justify-around bg-secondaryDarker p-4 border border-red-500 rounded-lg drop-shadow-xl mb-4">
       <div class="flex flex-col items-center space-y-4">
         <div class="flex flex-row items-center space-x-4">
@@ -167,7 +164,13 @@
           </div>
         </div>
 
-        <app-fifa-stat [stat]="totalStats" class="w-full"></app-fifa-stat>
+        <app-fifa-stat
+          *ngIf="
+            fifaPlayerStats != null &&
+            fifaPlayerStats.statsPerPlatform[0] != null
+          "
+          [stat]="fifaPlayerStats.statsPerPlatform[0]"
+          class="w-full"></app-fifa-stat>
       </div>
 
       <hr class="my-4 md:hidden" />
@@ -185,7 +188,10 @@
           </div>
         </div>
 
-        <app-fifa-stat [stat]="totalEnemyStats" class="w-full"></app-fifa-stat>
+        <app-fifa-stat
+          *ngIf="enemyStats != null"
+          [stat]="enemyStats.statsPerPlatform[0]"
+          class="w-full"></app-fifa-stat>
       </div>
     </div>
 
