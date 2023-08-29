@@ -1,30 +1,31 @@
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
-import { environment } from "src/environments/environment";
 import { ClipboardModule } from "@angular/cdk/clipboard";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
 import { StoreModule } from "@ngrx/store";
 
+import { environment } from "src/environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { SharedModule } from "./shared/modules/shared.module";
+import { AdminModule } from "./admin/admin.module";
+import { playerReducer } from "./store/reducers/player.reducer";
+import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
+
 import { HomeComponent } from "./home/home.component";
 import { HomePlayersComponent } from "./home/components/players/home-players.component";
-import { PlayerDetailsComponent } from "./players/details/player-details.component";
-import { MyDashboardComponent } from "./players/me/my-dashboard.component";
-import { UpdatePlayerTabComponent } from "./players/me/components/update-player-tab/update-player-tab.component";
-import { AdminModule } from "./admin/admin.module";
-import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
-import { SharedModule } from "./shared/modules/shared.module";
-import { playerReducer } from "./store/reducers/player.reducer";
-import { NgChartsModule } from "ng2-charts";
-import { Chart } from "chart.js";
-import { PlayerTeamListComponent } from "./shared/components/player-team-list/player-team-list.component";
-import { ProfileTabComponent } from "./players/me/components/profile-tab/profile-tab.component";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-Chart.defaults.color = "#fff";
+import { ProfilePageComponent } from "./players/me/profile.component";
+import { UpdatePlayerTabComponent } from "./players/me/components/update-player-tab/update-player-tab.component";
+import { ProfileTabComponent } from "./players/me/components/profile-tab/profile-tab.component";
+
+import { PlayerDetailsComponent } from "./players/details/player-details.component";
+import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
+import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
+import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -44,29 +45,37 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
 @NgModule({
   declarations: [
+    /* Global */
     AppComponent,
-    HomeComponent,
     CommonLayoutComponent,
+
+    /* Home page */
+    HomeComponent,
     HomePlayersComponent,
+
+    /* Player details */
     PlayerDetailsComponent,
-    PlayerTeamListComponent,
-    UpdatePlayerTabComponent,
-    MyDashboardComponent,
+    FifaHistoryComponent,
+    FifaCreateGameComponent,
+    FifaGameDetailsComponent,
+
+    /* Profile page */
+    ProfilePageComponent,
     ProfileTabComponent,
+    UpdatePlayerTabComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    KeycloakAngularModule,
+    BrowserAnimationsModule,
     ClipboardModule,
+    KeycloakAngularModule,
     AdminModule,
     SharedModule,
     StoreModule.forRoot({
       player: playerReducer,
     }),
-    NgChartsModule,
-    BrowserAnimationsModule,
   ],
   providers: [
     {

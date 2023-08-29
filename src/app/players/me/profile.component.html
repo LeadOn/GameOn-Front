@@ -1,7 +1,7 @@
 <div
-  *ngIf="loading == true"
   [@inOutAnimation]
-  class="flex flex-row items-center p-4 rounded-lg bg-primary m-8 md:mx-16 lg:mx-32 text-white neomorphism-container">
+  *ngIf="loading == true"
+  class="flex flex-row items-center p-4 rounded-lg bg-primary m-8 md:mx-16 lg:mx-32 text-white neomorphism-primaryDarker">
   <app-loading-spinner></app-loading-spinner>
   <span class="text-white">Chargement...</span>
 </div>
@@ -15,8 +15,9 @@
 <div
   *ngIf="loading == false && (player$ | async) as currentPlayer"
   [@inOutAnimation]
-  class="flex flex-col items-center bg-primary p-4 rounded-lg neomorphism-container m-8 md:mx-16 lg:mx-32 text-white">
-  <div class="flex flex-col md:flex-row items-center w-full">
+  class="flex flex-col items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white">
+  <div
+    class="flex flex-col md:flex-row items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primary">
     <img
       class="rounded-full w-32"
       src="{{ currentPlayer.profilePictureUrl }}" />
@@ -83,7 +84,7 @@
   </div>
 
   <div
-    class="bg-primaryDarker w-full mt-4 rounded-lg p-4 flex flex-col items-center neomorphism-tab">
+    class="bg-primaryDarker w-full mt-4 rounded-lg p-4 flex flex-col items-center neomorphism-inner-primary">
     <app-profile-tab
       class="w-full"
       *ngIf="
@@ -103,11 +104,4 @@
       [(successMessage)]="showSuccess"
       [player]="currentPlayer"></app-update-player-tab>
   </div>
-
-  <div
-    *ngIf="
-      currentTab == 'update' &&
-      loading == false &&
-      (player$ | async) as currentPlayer
-    "></div>
 </div>

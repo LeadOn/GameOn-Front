@@ -4,12 +4,12 @@ import { Observable } from "rxjs";
 import { FifaPlayerStatsDto } from "src/app/shared/classes/FifaPlayerStatsDto";
 import { Player } from "src/app/shared/classes/Player";
 import { trigger, style, animate, transition } from "@angular/animations";
-import { faCheckCircle, faClose } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: "app-my-dashboard",
-  templateUrl: "./my-dashboard.component.html",
-  styleUrls: ["./my-dashboard.component.scss"],
+  selector: "app-profile-page",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
   animations: [
     trigger("inOutAnimation", [
       transition(":enter", [
@@ -23,7 +23,7 @@ import { faCheckCircle, faClose } from "@fortawesome/free-solid-svg-icons";
     ]),
   ],
 })
-export class MyDashboardComponent implements OnInit {
+export class ProfilePageComponent implements OnInit {
   player$: Observable<Player>;
   stats?: FifaPlayerStatsDto;
   loading = true;
