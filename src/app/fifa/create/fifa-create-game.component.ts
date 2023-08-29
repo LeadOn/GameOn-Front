@@ -34,6 +34,9 @@ export class FifaCreateGameComponent implements OnInit {
   platforms: Platform[] = [];
   fifaTeams: FifaTeam[] = [];
 
+  fifaTeam1 = 0;
+  fifaTeam2 = 0;
+
   createGameForm = new FormGroup({
     teamCode1: new FormControl("", [
       Validators.required,
@@ -129,6 +132,7 @@ export class FifaCreateGameComponent implements OnInit {
       );
     } else {
       alert("Certaines informations sont manquantes !");
+      this.isLoading = false;
     }
   }
 }
