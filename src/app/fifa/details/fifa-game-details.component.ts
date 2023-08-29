@@ -7,6 +7,7 @@ import { trigger, style, animate, transition } from "@angular/animations";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { YuGamesHighlightService } from "src/app/shared/services/yugames-highlight.service";
 import { CreateHighlightDto } from "src/app/shared/classes/CreateHighlightDto";
+import { KeycloakService } from "keycloak-angular";
 
 @Component({
   selector: "app-fifa-game-details",
@@ -31,6 +32,7 @@ export class FifaGameDetailsComponent implements OnInit {
   game: FifaGamePlayed = new FifaGamePlayed();
   externalIcon = faExternalLinkAlt;
   successMessage = false;
+  isLoggedIn = false;
 
   createHighlightForm = new FormGroup({
     name: new FormControl("", [Validators.maxLength(50), Validators.required]),
@@ -41,11 +43,16 @@ export class FifaGameDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private gameService: YuGamesGameService,
-    private highlightService: YuGamesHighlightService
+    private highlightService: YuGamesHighlightService,
+    private keycloak: KeycloakService
   ) {}
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get("id");
+
+    this.keycloak.isLoggedIn().then((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+    });
 
     this.getGame();
   }
