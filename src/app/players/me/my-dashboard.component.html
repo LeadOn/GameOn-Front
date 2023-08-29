@@ -12,7 +12,7 @@
     class="flex flex-col items-center lg:items-start bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg"
     *ngIf="loading == false && (player$ | async) as currentPlayer">
     <app-player-details-card
-      *ngIf="currentPlayer != null && currentPlayer.id != 0"
+      *ngIf="currentPlayer != null && currentPlayer.id != 0 && stats != null"
       [player]="currentPlayer"
       [stats]="stats"></app-player-details-card>
   </div>
