@@ -46,14 +46,14 @@
           <li>
             <a
               routerLink="/fifa/history"
-              class="cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-secondary lg:hover:bg-transparent lg:border-0 lg:hover:text-secondary lg:p-0">
+              class="transition ease-in-out delay-50 cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-secondary lg:hover:bg-transparent lg:border-0 lg:hover:text-secondary lg:p-0">
               Matchs joués (FIFA)
             </a>
           </li>
           <li *ngIf="isLoggedIn == true">
             <a
               routerLink="/fifa/create"
-              class="cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-secondary lg:hover:bg-transparent lg:border-0 lg:hover:text-secondary lg:p-0">
+              class="transition ease-in-out delay-50 cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-secondary lg:hover:bg-transparent lg:border-0 lg:hover:text-secondary lg:p-0">
               Ajouter un match
             </a>
           </li>
@@ -61,7 +61,7 @@
           <li *ngIf="isLoggedIn == true">
             <a
               routerLink="/player/me"
-              class="cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-green-500 lg:hover:bg-transparent lg:border-0 lg:hover:text-green-500 lg:p-0">
+              class="transition ease-in-out delay-50 cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-green-500 lg:hover:bg-transparent lg:border-0 lg:hover:text-green-500 lg:p-0">
               Mon compte
             </a>
           </li>
@@ -69,7 +69,7 @@
           <li *ngIf="isLoggedIn == false">
             <a
               (click)="login()"
-              class="cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-secondary lg:hover:bg-transparent lg:border-0 lg:hover:text-secondary lg:p-0">
+              class="transition ease-in-out delay-50 cursor-pointer block py-2 pr-4 pl-3 text-white rounded-lg hover:bg-secondary lg:hover:bg-transparent lg:border-0 lg:hover:text-secondary lg:p-0">
               Connexion
             </a>
           </li>

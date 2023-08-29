@@ -1,0 +1,10 @@
+<div
+  class="flex flex-row items-center p-4 rounded-lg bg-green-500 m-8 md:mx-16 lg:mx-32 text-white neomorphism-primaryDarker">
+  <div class="flex flex-row items-center grow">
+    <fa-icon [icon]="firstIcon" class="text-2xl"></fa-icon>
+    <span class="text-white ml-2">{{ text }}</span>
+  </div>
+  <div class="flex flex-row items-center cursor-pointer">
+    <fa-icon (click)="close()" [icon]="closeIcon"></fa-icon>
+  </div>
+</div>

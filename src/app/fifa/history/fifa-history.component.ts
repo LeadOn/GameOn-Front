@@ -5,11 +5,24 @@ import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 import { Platform } from "src/app/shared/classes/Platform";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
+import { trigger, style, animate, transition } from "@angular/animations";
 
 @Component({
   selector: "app-fifa-history",
   templateUrl: "./fifa-history.component.html",
   styleUrls: ["./fifa-history.component.scss"],
+  animations: [
+    trigger("inOutAnimation", [
+      transition(":enter", [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(":leave", [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class FifaHistoryComponent implements OnInit {
   loading = true;

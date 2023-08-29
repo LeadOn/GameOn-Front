@@ -6,7 +6,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { initFlowbite } from "flowbite";
 import { KeycloakService } from "keycloak-angular";
-import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-common-layout",

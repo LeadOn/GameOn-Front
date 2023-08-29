@@ -1,25 +1,26 @@
-<hr class="my-4 border-dashed" *ngIf="teamList.length > 0" />
+<div
+  class="mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4">
+  <p class="text-sm underline" *ngIf="teamList.length > 0">{{ title }}</p>
 
-<p class="text-sm underline" *ngIf="teamList.length > 0">{{ title }}</p>
-
-<div class="flex flex-col w-full mt-2 space-y-4" *ngIf="teamList.length > 0">
-  <div
-    *ngFor="let team of teamList"
-    class="flex flex-row items-center space-x-1">
-    <span class="w-6">{{ teamList.indexOf(team) + 1 }}.</span>
-    <img
-      class="w-8"
-      *ngIf="team.fifaTeam != null && team.fifaTeam != undefined"
-      src="../../../../assets/img/teams/{{ team.fifaTeam.id }}.png" />
-    <span *ngIf="team.fifaTeam == undefined || team.fifaTeam == null">
-      Inconnu
-    </span>
-
-    <span class="text-sm">
-      <span *ngIf="team.fifaTeam != undefined && team.fifaTeam != null">
-        {{ team.fifaTeam.name }}
+  <div class="flex flex-col w-full mt-4 space-y-4" *ngIf="teamList.length > 0">
+    <div
+      *ngFor="let team of teamList"
+      class="flex flex-row items-center space-x-1">
+      <span class="w-6">{{ teamList.indexOf(team) + 1 }}.</span>
+      <img
+        class="w-8"
+        *ngIf="team.fifaTeam != null && team.fifaTeam != undefined"
+        src="../../../../assets/img/teams/{{ team.fifaTeam.id }}.png" />
+      <span *ngIf="team.fifaTeam == undefined || team.fifaTeam == null">
+        Inconnu
       </span>
-      ({{ team.numberOfGames }})
-    </span>
+
+      <span class="text-sm">
+        <span *ngIf="team.fifaTeam != undefined && team.fifaTeam != null">
+          {{ team.fifaTeam.name }}
+        </span>
+        ({{ team.numberOfGames }})
+      </span>
+    </div>
   </div>
 </div>
