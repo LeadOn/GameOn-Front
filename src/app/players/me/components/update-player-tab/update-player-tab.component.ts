@@ -1,8 +1,10 @@
 import {
   Component,
   Input,
+  Output,
   OnChanges,
   OnInit,
+  EventEmitter,
   SimpleChanges,
 } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -10,15 +12,32 @@ import { Store } from "@ngrx/store";
 import { Player } from "src/app/shared/classes/Player";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 import { setPlayer } from "src/app/store/actions/player.actions";
+import { trigger, style, animate, transition } from "@angular/animations";
 
 @Component({
-  selector: "app-update-player",
-  templateUrl: "./update-player.component.html",
-  styleUrls: ["./update-player.component.scss"],
+  selector: "app-update-player-tab",
+  templateUrl: "./update-player-tab.component.html",
+  styleUrls: ["./update-player-tab.component.scss"],
+  animations: [
+    trigger("inOutAnimation", [
+      transition(":enter", [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(":leave", [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
-export class UpdatePlayerComponent implements OnInit, OnChanges {
+export class UpdatePlayerTabComponent implements OnInit, OnChanges {
   @Input()
   player: Player = new Player();
+
+  @Input()
+  successMessage: boolean = false;
+  @Output() successMessageChange = new EventEmitter<boolean>();
 
   isLoading = false;
 
@@ -62,7 +81,8 @@ export class UpdatePlayerComponent implements OnInit, OnChanges {
         )
         .subscribe(
           (data) => {
-            alert("Mise à jour réussie !"); // Getting its account, and setting it into store
+            this.successMessage = true; // Getting its account, and setting it into store
+            this.successMessageChange.emit(true);
             this.store.dispatch(setPlayer({ player: data }));
             console.log("[UpdatePlayer]", "Player stored.");
             this.isLoading = false;

@@ -1,12 +1,9 @@
-<section
-  class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
-  id="update-profile">
-  <div class="text-center">
-    <span class="block text-xl font-bold">Profil joueur</span>
-    <span class="block mt-4">
-      Vous pouvez mettre à jour votre profil via le formulaire suivant.
-    </span>
-  </div>
+<div
+  class="flex flex-col items-center justify-center text-white"
+  [@inOutAnimation]>
+  <span class="text-sm">
+    Vous pouvez mettre à jour votre profil via le formulaire suivant.
+  </span>
 
   <div
     class="mt-4 flex flex-col bg-primaryDarkerer drop-shadow-xl p-4 rounded-lg w-full">
@@ -29,12 +26,12 @@
       <div class="relative z-0 w-full mb-6 group">
         <input
           type="text"
-          id="fullname"
+          id="nickname"
           class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
           required
           formControlName="nickname" />
         <label
-          for="fullname"
+          for="nickname"
           class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
           Pseudo
           <span class="text-red-500">*</span>
@@ -58,9 +55,9 @@
 
       <button
         (click)="updateUser()"
-        class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+        class="text-white transition ease-in-out delay-50 bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
         Mettre à jour
       </button>
     </form>
   </div>
-</section>
+</div>

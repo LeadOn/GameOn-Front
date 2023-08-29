@@ -9,18 +9,38 @@ import { FifaGameHistoryCardRowComponent } from "src/app/fifa/components/fifa-ga
 import { FifaGameHistoryCardComponent } from "src/app/fifa/components/fifa-game-history-card/fifa-game-history-card.component";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { FifaGameListHeaderComponent } from "src/app/fifa/components/fifa-game-list-header/fifa-game-list-header.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FooterComponent } from "../layouts/components/footer/footer.component";
+import { FifaCreateGameComponent } from "src/app/fifa/create/fifa-create-game.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FifaGameDetailsComponent } from "src/app/fifa/details/fifa-game-details.component";
+import { FifaStatComponent } from "../components/fifa-stat/fifa-stat.component";
+import { FifaHistoryComponent } from "src/app/fifa/history/fifa-history.component";
+import { SuccessAlertComponent } from "../components/success-alert/success-alert.component";
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
+    ArrowBtnComponent,
     FifaGameListHeaderComponent,
     FifaGameHistoryCardComponent,
     FifaGameHistoryCardRowComponent,
+    FifaCreateGameComponent,
+    FifaGameDetailsComponent,
     PlayerCardComponent,
     NotFoundComponent,
-    ArrowBtnComponent,
+    FooterComponent,
+    FifaStatComponent,
+    FifaHistoryComponent,
+    SuccessAlertComponent,
   ],
-  imports: [CommonModule, RouterModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   exports: [
     LoadingSpinnerComponent,
     FifaGameListHeaderComponent,
@@ -29,7 +49,15 @@ import { FifaGameListHeaderComponent } from "src/app/fifa/components/fifa-game-l
     PlayerCardComponent,
     NotFoundComponent,
     ArrowBtnComponent,
+    FooterComponent,
     FontAwesomeModule,
+    FifaCreateGameComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    FifaGameDetailsComponent,
+    FifaStatComponent,
+    FifaHistoryComponent,
+    SuccessAlertComponent,
   ],
 })
 export class SharedModule {}

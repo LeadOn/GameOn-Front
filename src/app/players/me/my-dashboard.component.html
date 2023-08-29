@@ -1,42 +1,113 @@
-<section
-  class="flex flex-col items-center md:px-6 lg:px-32 xl:px-64 justify-center text-white h-screen"
-  id="my-dashboard">
-  <div
-    *ngIf="loading == true"
-    class="w-full flex flex-row items-center p-4 rounded-lg bg-primary">
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
+<div
+  *ngIf="loading == true"
+  [@inOutAnimation]
+  class="flex flex-row items-center p-4 rounded-lg bg-primary m-8 md:mx-16 lg:mx-32 text-white neomorphism-container">
+  <app-loading-spinner></app-loading-spinner>
+  <span class="text-white">Chargement...</span>
+</div>
 
-  <div
-    class="flex flex-col items-center lg:items-start bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg"
-    *ngIf="loading == false && (player$ | async) as currentPlayer">
-    <app-player-details-card
-      *ngIf="currentPlayer != null && currentPlayer.id != 0 && stats != null"
-      [player]="currentPlayer"
-      [stats]="stats"></app-player-details-card>
-  </div>
+<app-success-alert
+  *ngIf="showSuccess == true"
+  [text]="'Mise à jour réussie !'"
+  [(show)]="showSuccess"
+  [@inOutAnimation]></app-success-alert>
 
-  <div class="home-nav-btn flex w-full justify-center mt-4">
-    <app-arrow-btn link="/player/me#update-profile"></app-arrow-btn>
-  </div>
-</section>
-
-<app-update-player
+<div
   *ngIf="loading == false && (player$ | async) as currentPlayer"
-  [player]="currentPlayer"></app-update-player>
+  [@inOutAnimation]
+  class="flex flex-col items-center bg-primary p-4 rounded-lg neomorphism-container m-8 md:mx-16 lg:mx-32 text-white">
+  <div class="flex flex-col md:flex-row items-center w-full">
+    <img
+      class="rounded-full w-32"
+      src="{{ currentPlayer.profilePictureUrl }}" />
 
-<section
-  class="flex flex-col items-center justify-center text-white p-8 md:px-6 lg:px-32"
-  id="update-profile">
-  <div class="text-center">
-    <span class="block text-xl font-bold">Déconnexion</span>
-    <span class="block mt-4">
-      Vous pouvez vous déconnecter en cliquant sur le bouton ci-dessous.
-    </span>
+    <div class="flex flex-col w-full ml-4 mt-6">
+      <div class="flex flex-col">
+        <div class="flex flex-row">
+          <span>{{ currentPlayer.fullName }}</span>
+          <a
+            [routerLink]="['/admin']"
+            class="text-xs py-1 px-2 ml-2 transition ease-in-out delay-50 bg-yellow-500 rounded-full hover:bg-yellow-800">
+            Administrateur
+          </a>
+        </div>
+
+        <span class="italic">{{ currentPlayer.nickname }}</span>
+      </div>
+      <div
+        class="w-full text-sm font-medium text-center text-white border-b border-white">
+        <ul class="flex flex-wrap -mb-px">
+          <li class="mr-2">
+            <button
+              (click)="currentTab = 'profile'"
+              [classList]="
+                currentTab == 'profile'
+                  ? 'inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active'
+                  : 'transition ease-in-out delay-50 inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-secondary hover:border-secondary'
+              "
+              class="inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active">
+              Résumé
+            </button>
+          </li>
+
+          <li class="mr-2">
+            <button
+              (click)="currentTab = 'update'"
+              [classList]="
+                currentTab == 'update'
+                  ? 'inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active'
+                  : 'transition ease-in-out delay-50 inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-secondary hover:border-secondary'
+              "
+              class="inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active">
+              Mettre à jour
+            </button>
+          </li>
+
+          <!-- <li class="mr-2">
+          <a
+            href="#"
+            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+            Settings
+          </a>
+        </li>
+
+        <li>
+          <a
+            class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">
+            Disabled
+          </a>
+        </li> -->
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <button class="mt-4 p-4 rounded-lg bg-red-500 w-full" (click)="logout()">
-    Déconnexion
-  </button>
-</section>
+  <div
+    class="bg-primaryDarker w-full mt-4 rounded-lg p-4 flex flex-col items-center neomorphism-tab">
+    <app-profile-tab
+      class="w-full"
+      *ngIf="
+        currentTab == 'profile' &&
+        loading == false &&
+        (player$ | async) as currentPlayer
+      "
+      [player]="currentPlayer"></app-profile-tab>
+
+    <app-update-player-tab
+      class="w-full"
+      *ngIf="
+        currentTab == 'update' &&
+        loading == false &&
+        (player$ | async) as currentPlayer
+      "
+      [(successMessage)]="showSuccess"
+      [player]="currentPlayer"></app-update-player-tab>
+  </div>
+
+  <div
+    *ngIf="
+      currentTab == 'update' &&
+      loading == false &&
+      (player$ | async) as currentPlayer
+    "></div>
+</div>

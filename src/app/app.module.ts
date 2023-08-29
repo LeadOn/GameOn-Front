@@ -1,7 +1,6 @@
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { environment } from "src/environments/environment";
 import { ClipboardModule } from "@angular/cdk/clipboard";
 
@@ -11,23 +10,19 @@ import { StoreModule } from "@ngrx/store";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
-import { FooterComponent } from "./shared/layouts/components/footer/footer.component";
 import { HomePlayersComponent } from "./home/components/players/home-players.component";
 import { PlayerDetailsComponent } from "./players/details/player-details.component";
 import { MyDashboardComponent } from "./players/me/my-dashboard.component";
-import { UpdatePlayerComponent } from "./players/me/components/update-player/update-player.component";
+import { UpdatePlayerTabComponent } from "./players/me/components/update-player-tab/update-player-tab.component";
 import { AdminModule } from "./admin/admin.module";
 import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
 import { SharedModule } from "./shared/modules/shared.module";
 import { playerReducer } from "./store/reducers/player.reducer";
-import { FifaStatComponent } from "./shared/components/fifa-stat/fifa-stat.component";
-import { PlayerDetailsCardComponent } from "./players/me/components/player-details-card/player-details-card.component";
-import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
-import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
-import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
 import { NgChartsModule } from "ng2-charts";
 import { Chart } from "chart.js";
 import { PlayerTeamListComponent } from "./shared/components/player-team-list/player-team-list.component";
+import { ProfileTabComponent } from "./players/me/components/profile-tab/profile-tab.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 Chart.defaults.color = "#fff";
 
@@ -51,26 +46,19 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     HomeComponent,
-    FooterComponent,
+    CommonLayoutComponent,
     HomePlayersComponent,
     PlayerDetailsComponent,
-    MyDashboardComponent,
-    PlayerDetailsCardComponent,
-    UpdatePlayerComponent,
-    FifaCreateGameComponent,
-    FifaGameDetailsComponent,
-    CommonLayoutComponent,
-    FifaStatComponent,
-    FifaHistoryComponent,
     PlayerTeamListComponent,
+    UpdatePlayerTabComponent,
+    MyDashboardComponent,
+    ProfileTabComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
     KeycloakAngularModule,
-    ReactiveFormsModule,
     ClipboardModule,
     AdminModule,
     SharedModule,
@@ -78,6 +66,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       player: playerReducer,
     }),
     NgChartsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

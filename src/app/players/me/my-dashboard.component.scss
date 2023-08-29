@@ -1,6 +1,13 @@
-#my-dashboard {
-  background-image: url("../../../assets/img/background.webp");
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-sizing: border-box;
+.neomorphism-img {
+  background: #424549;
+  box-shadow: inset 16px 16px 32px #373a3d, inset -16px -16px 32px #4d5055;
+}
+
+.neomorphism-container {
+  box-shadow: 16px 16px 32px #222428, -16px -16px 32px #2e3238;
+}
+
+.neomorphism-tab {
+  background: #282b30;
+  box-shadow: inset 20px 20px 60px #222529, inset -20px -20px 60px #2e3137;
 }

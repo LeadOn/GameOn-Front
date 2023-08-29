@@ -35,40 +35,6 @@
         Matchs joués
       </a>
     </div>
-
-    <div
-      *ngIf="isProduction == false"
-      class="w-full mt-6 lg:mt-10 flex flex-col grow items-center lg:w-full lg:justify-evenly">
-      <hr class="my-2" />
-      <div *ngIf="isLoggedIn == false">
-        <button
-          type="button"
-          class="w-full text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
-          Utilisateur non connecté
-        </button>
-      </div>
-      <div *ngIf="isLoggedIn == true">
-        <button
-          type="button"
-          class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
-          Connecté
-        </button>
-
-        <a
-          *ngIf="isAdmin == true"
-          routerLink="admin"
-          class="text-white bg-secondary hover:bg-secondary-800 focus:outline-none focus:ring-4 focus:ring-secondary-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
-          Admin
-        </a>
-
-        <button
-          type="button"
-          [cdkCopyToClipboard]="token"
-          class="text-white bg-secondaryDarker hover:bg-secondaryDarker-800 focus:outline-none focus:ring-4 focus:ring-secondaryDarker-300 font-medium rounded-full text-xs px-5 py-2.5 text-center mr-2 mb-2">
-          Token
-        </button>
-      </div>
-    </div>
   </div>
 
   <div class="mt-32">
