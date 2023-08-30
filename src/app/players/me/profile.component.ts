@@ -5,6 +5,8 @@ import { FifaPlayerStatsDto } from "src/app/shared/classes/FifaPlayerStatsDto";
 import { Player } from "src/app/shared/classes/Player";
 import { trigger, style, animate, transition } from "@angular/animations";
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { KeycloakService } from "keycloak-angular";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-profile-page",
@@ -30,9 +32,14 @@ export class ProfilePageComponent implements OnInit {
   currentTab = "profile";
   showSuccess = false;
   successIcon = faCheckCircle;
+  isAdmin = false;
 
-  constructor(private store: Store<{ player: Player }>) {
+  constructor(
+    private store: Store<{ player: Player }>,
+    private keycloak: KeycloakService
+  ) {
     this.player$ = store.select("player");
+    this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
   }
 
   ngOnInit(): void {

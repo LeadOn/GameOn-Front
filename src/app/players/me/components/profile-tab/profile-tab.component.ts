@@ -27,7 +27,7 @@ export class ProfileTabComponent implements OnInit {
   player: Player = new Player();
 
   calendarIcon = faCalendar;
-  isProduction = true;
+  isProduction = false;
   token: string = "";
 
   constructor(private keycloak: KeycloakService) {

@@ -60,24 +60,32 @@
           </div>
         </div>
 
-        <div class="relative z-0 w-full mb-6 group">
-          <label
-            for="fifateam1"
-            class="block mb-2 text-sm font-medium text-white scale-100">
-            Équipe FIFA (si disponible)
-          </label>
+        <div class="relative z-0 w-full mb-6 group flex flex-row">
+          <div class="w-full">
+            <input
+              type="text"
+              id="fifaTeam1"
+              class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+              formControlName="teamFifa1"
+              list="fifaTeam1List" />
 
-          <select
-            id="fifateam1"
-            formControlName="teamFifa1"
-            class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-            <option value="0" selected>--- Sélectionnez une équipe ---</option>
-            <option
-              *ngFor="let fifaTeam of fifaTeams"
-              value="{{ fifaTeam.id }}">
-              {{ fifaTeam.name }}
-            </option>
-          </select>
+            <datalist id="fifaTeam1List">
+              <option
+                *ngFor="let team of fifaTeams"
+                value="{{ team.name }}"></option>
+            </datalist>
+
+            <label
+              for="fifaTeam1"
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Équipe FIFA (si disponible)
+            </label>
+          </div>
+
+          <img
+            *ngIf="fifaTeam1 != 0"
+            class="w-20"
+            src="../../../assets/img/teams/{{ fifaTeam1 }}.png" />
         </div>
 
         <div class="relative z-0 w-full mb-6 group">
@@ -133,24 +141,32 @@
           </div>
         </div>
 
-        <div class="relative z-0 w-full mb-6 group">
-          <label
-            for="fifateam2"
-            class="block mb-2 text-sm font-medium text-white scale-100">
-            Équipe FIFA (si disponible)
-          </label>
+        <div class="relative z-0 w-full mb-6 group flex flex-row">
+          <div class="w-full">
+            <input
+              type="text"
+              id="fifaTeam2"
+              class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+              formControlName="teamFifa2"
+              list="fifaTeam2List" />
 
-          <select
-            id="fifateam2"
-            formControlName="teamFifa2"
-            class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-            <option value="0" selected>--- Sélectionnez une équipe ---</option>
-            <option
-              *ngFor="let fifaTeam of fifaTeams"
-              value="{{ fifaTeam.id }}">
-              {{ fifaTeam.name }}
-            </option>
-          </select>
+            <datalist id="fifaTeam2List">
+              <option
+                *ngFor="let team of fifaTeams"
+                value="{{ team.name }}"></option>
+            </datalist>
+
+            <label
+              for="fifaTeam2"
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Équipe FIFA (si disponible)
+            </label>
+          </div>
+
+          <img
+            *ngIf="fifaTeam2 != 0"
+            class="w-20"
+            src="../../../assets/img/teams/{{ fifaTeam2 }}.png" />
         </div>
 
         <div class="relative z-0 w-full mb-6 group">

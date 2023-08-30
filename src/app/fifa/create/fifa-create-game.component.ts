@@ -34,18 +34,21 @@ export class FifaCreateGameComponent implements OnInit {
   platforms: Platform[] = [];
   fifaTeams: FifaTeam[] = [];
 
+  fifaTeam1 = 0;
+  fifaTeam2 = 0;
+
   createGameForm = new FormGroup({
     teamCode1: new FormControl("", [
       Validators.required,
       Validators.maxLength(5),
     ]),
-    teamFifa1: new FormControl(0),
+    teamFifa1: new FormControl(""),
     teamScore1: new FormControl(0, [Validators.required, Validators.min(0)]),
     teamCode2: new FormControl("", [
       Validators.required,
       Validators.maxLength(5),
     ]),
-    teamFifa2: new FormControl(0),
+    teamFifa2: new FormControl(""),
     teamScore2: new FormControl(0, [Validators.required, Validators.min(0)]),
     platform: new FormControl("", Validators.required),
     team1: new FormControl([], Validators.required),
@@ -95,12 +98,29 @@ export class FifaCreateGameComponent implements OnInit {
     };
 
     let fifaTeam1 = this.createGameForm.controls["teamFifa1"].value;
-    if (fifaTeam1 != null && fifaTeam1 != 0) {
-      body.FifaTeam1 = fifaTeam1;
+    let fifaTeam1Id = 0;
+
+    this.fifaTeams.forEach((team) => {
+      if (team.name == fifaTeam1) {
+        fifaTeam1Id = team.id;
+      }
+    });
+
+    if (fifaTeam1Id != 0) {
+      body.FifaTeam1 = fifaTeam1Id;
     }
+
     let fifaTeam2 = this.createGameForm.controls["teamFifa2"].value;
-    if (fifaTeam2 != null && fifaTeam2 != 0) {
-      body.FifaTeam2 = fifaTeam2;
+    let fifaTeam2Id = 0;
+
+    this.fifaTeams.forEach((team) => {
+      if (team.name == fifaTeam2) {
+        fifaTeam2Id = team.id;
+      }
+    });
+
+    if (fifaTeam2Id != 0) {
+      body.FifaTeam2 = fifaTeam2Id;
     }
 
     if (
@@ -129,6 +149,7 @@ export class FifaCreateGameComponent implements OnInit {
       );
     } else {
       alert("Certaines informations sont manquantes !");
+      this.isLoading = false;
     }
   }
 }
