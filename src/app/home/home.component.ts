@@ -4,6 +4,8 @@ import { Player } from "../shared/classes/Player";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
+import { YuGamesGameService } from "../shared/services/yugames-game.service";
+import { Season } from "../shared/classes/Season";
 
 @Component({
   selector: "app-home",
@@ -17,14 +19,27 @@ export class HomeComponent implements OnInit {
   isAdmin = false;
   externalIcon = faExternalLinkAlt;
 
+  currentSeason?: Season;
+
   constructor(
     private keycloak: KeycloakService,
-    private store: Store<{ player: Player }>
+    private store: Store<{ player: Player }>,
+    private gameService: YuGamesGameService
   ) {
     this.player$ = store.select("player");
   }
 
   ngOnInit(): void {
+    this.gameService.getCurrentSeason().subscribe(
+      (x) => {
+        this.currentSeason = x;
+      },
+      (err) => {
+        console.error(err);
+        alert("Erreur lors de la récupération de la saison en cours.");
+      }
+    );
+
     this.keycloak.isLoggedIn().then((x) => {
       this.isLoggedIn = x;
 
