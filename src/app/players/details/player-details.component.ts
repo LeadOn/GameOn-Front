@@ -182,18 +182,20 @@ export class PlayerDetailsComponent implements OnInit {
         (data) => {
           this.enemy = data;
           // Getting stats
-          this.playerService.getStats(newValue.value).subscribe(
-            (data2) => {
-              this.enemyStats = data2;
-              this.loading = false;
-            },
-            (err) => {
-              alert(
-                "Une erreur est survenue lors de la récupération des statistiques de l'adversaire."
-              );
-              console.error(err);
-            }
-          );
+          this.playerService
+            .getStats(newValue.value, this.selectedSeason)
+            .subscribe(
+              (data2) => {
+                this.enemyStats = data2;
+                this.loading = false;
+              },
+              (err) => {
+                alert(
+                  "Une erreur est survenue lors de la récupération des statistiques de l'adversaire."
+                );
+                console.error(err);
+              }
+            );
         },
         (err) => {
           alert(
