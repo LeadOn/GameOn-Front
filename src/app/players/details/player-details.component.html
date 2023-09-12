@@ -34,6 +34,16 @@
           </option>
         </select>
 
+        <select
+          (change)="onChangeSeason($event.target)"
+          [ngModel]="selectedSeason"
+          id="seasons"
+          class="mt-2 neomorphism-primary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <option *ngFor="let season of seasons" value="{{ season.id }}">
+            {{ season.name }}
+          </option>
+        </select>
+
         <div
           class="mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4"
           *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null">
@@ -191,8 +201,7 @@
       </div>
     </div>
 
-    <app-fifa-game-list-header
-      *ngIf="loading == false"></app-fifa-game-list-header>
+    <app-fifa-game-list-header></app-fifa-game-list-header>
 
     <div
       class="mt-4 flex flex-col w-full text-white space-y-4"
