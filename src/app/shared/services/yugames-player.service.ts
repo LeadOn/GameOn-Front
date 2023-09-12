@@ -3,8 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Player } from "../classes/Player";
 import { environment } from "src/environments/environment";
-import { PlatformStatsDto } from "../classes/PlatformStatsDto";
-import { TopTeamStatDto } from "../classes/TopTeamStatDto";
 import { FifaPlayerStatsDto } from "../classes/FifaPlayerStatsDto";
 
 @Injectable({
@@ -25,10 +23,17 @@ export class YuGamesPlayerService {
     return this.client.get<Player>(environment.yuGamesApiUrl + "/player/me");
   }
 
-  getStats(playerId: number): Observable<FifaPlayerStatsDto> {
-    return this.client.get<FifaPlayerStatsDto>(
-      environment.yuGamesApiUrl + "/player/" + playerId + "/stats"
-    );
+  getStats(
+    playerId: number,
+    seasonId?: number
+  ): Observable<FifaPlayerStatsDto> {
+    let url = environment.yuGamesApiUrl + "/player/" + playerId + "/stats";
+
+    if (seasonId != undefined && seasonId != null) {
+      url += "?seasonId=" + seasonId;
+    }
+
+    return this.client.get<FifaPlayerStatsDto>(url);
   }
 
   update(fullName: any, nickname: any, profilePicUrl: any): Observable<Player> {

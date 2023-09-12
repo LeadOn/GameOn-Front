@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { FifaGamePlayed } from "../classes/FifaGamePlayed";
 import { environment } from "src/environments/environment";
-import { Season } from "../classes/Season";
 
 @Injectable({
   providedIn: "root",
@@ -15,10 +14,6 @@ export class YuGamesGameService {
     return this.client.get<FifaGamePlayed[]>(
       environment.yuGamesApiUrl + "/game/last/" + limit
     );
-  }
-
-  getCurrentSeason(): Observable<Season> {
-    return this.client.get<Season>(environment.yuGamesApiUrl + "/game/season");
   }
 
   search(

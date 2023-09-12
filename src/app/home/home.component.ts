@@ -4,8 +4,8 @@ import { Player } from "../shared/classes/Player";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";
-import { YuGamesGameService } from "../shared/services/yugames-game.service";
 import { Season } from "../shared/classes/Season";
+import { YuGamesSeasonService } from "../shared/services/yugames-season.service";
 
 @Component({
   selector: "app-home",
@@ -24,13 +24,13 @@ export class HomeComponent implements OnInit {
   constructor(
     private keycloak: KeycloakService,
     private store: Store<{ player: Player }>,
-    private gameService: YuGamesGameService
+    private seasonService: YuGamesSeasonService
   ) {
     this.player$ = store.select("player");
   }
 
   ngOnInit(): void {
-    this.gameService.getCurrentSeason().subscribe(
+    this.seasonService.getCurrent().subscribe(
       (x) => {
         this.currentSeason = x;
       },
