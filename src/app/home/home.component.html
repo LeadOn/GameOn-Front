@@ -1,37 +1,50 @@
 <section
   class="flex flex-col items-center lg:px-6 lg:px-32 xl:px-64 justify-center text-white h-screen p-8"
-  id="home">
+  id="home"
+>
   <div
-    class="custom-margin flex flex-col items-center lg:items-start bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg">
+    class="custom-margin flex flex-col items-center lg:items-start bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg"
+  >
     <div>
       <span
-        class="block border border-2 border-secondary rounded-lg px-6 py-3 lg:text-xl">
-        Saison 2023
-        <span *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
-          <span *ngIf="currentPlayer.id != 0">
-            - {{ currentPlayer.fullName }}
-          </span>
-        </span>
+        class="block border border-2 border-secondary rounded-lg px-6 py-3 lg:text-xl"
+      >
+        <span *ngIf="currentSeason == undefined || currentSeason == null"
+          >Chargement...</span
+        >
+        <span *ngIf="currentSeason != undefined && currentSeason != null">{{
+          currentSeason.name
+        }}</span>
       </span>
     </div>
 
     <div>
       <span
-        class="typed-out text-center block font-semibold text-2xl lg:text-5xl mt-3 lg:mt-10 pr-2">
-        Bienvenue dans l'aventure YuGames !
+        class="typed-out text-center block font-semibold text-2xl lg:text-5xl mt-3 lg:mt-10 pr-2"
+      >
+        Bienvenue dans l'aventure YuGames
+        <span *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
+          <span *ngIf="currentPlayer.id != 0">
+            {{ currentPlayer.nickname }}
+          </span>
+        </span>
+        !
       </span>
     </div>
 
     <div
-      class="mt-6 lg:mt-10 flex flex-row space-x-4 lg:space-x-0 lg:w-full lg:justify-evenly">
+      class="mt-6 lg:mt-10 flex flex-row space-x-4 lg:space-x-0 lg:w-full lg:justify-evenly"
+    >
       <a
         href="#players"
-        class="block bg-gray-800/40 border p-4 rounded-lg w-36 lg:w-48 text-center">
+        class="block bg-gray-800/40 border p-4 rounded-lg w-36 lg:w-48 text-center"
+      >
         Joueurs
       </a>
       <a
         routerLink="/fifa/history"
-        class="block bg-secondary p-4 rounded-lg w-36 lg:w-48 text-center">
+        class="block bg-secondary p-4 rounded-lg w-36 lg:w-48 text-center"
+      >
         Matchs joués
       </a>
     </div>
@@ -45,7 +58,8 @@
 <div class="flex justify-center text-white m-8 md:mx-16 lg:mx-32">
   <a
     href="#games-played"
-    class="w-px h-20 border-r border-dashed border-secondary"></a>
+    class="w-px h-20 border-r border-dashed border-secondary"
+  ></a>
 </div>
 
 <app-home-players></app-home-players>
