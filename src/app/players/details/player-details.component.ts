@@ -9,6 +9,8 @@ import { Player } from "src/app/shared/classes/Player";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 import { trigger, style, animate, transition } from "@angular/animations";
+import { YuGamesSeasonService } from "src/app/shared/services/yugames-season.service";
+import { Season } from "src/app/shared/classes/Season";
 
 @Component({
   selector: "app-player-details",
@@ -30,6 +32,7 @@ import { trigger, style, animate, transition } from "@angular/animations";
 export class PlayerDetailsComponent implements OnInit {
   selectedStats = "global";
   selectedEnemy = 0;
+  selectedSeason = 0;
   calculatedStats = new PlatformStatsDto();
   loading = true;
   externalIcon = faExternalLinkAlt;
@@ -42,10 +45,13 @@ export class PlayerDetailsComponent implements OnInit {
   players: Player[] = [];
   games: FifaGamePlayed[] = [];
 
+  seasons?: Season[];
+
   constructor(
     private route: ActivatedRoute,
     private playerService: YuGamesPlayerService,
-    private gameService: YuGamesGameService
+    private gameService: YuGamesGameService,
+    private seasonService: YuGamesSeasonService
   ) {}
 
   ngOnInit(): void {
@@ -93,22 +99,35 @@ export class PlayerDetailsComponent implements OnInit {
     this.loading = true;
     this.playerService.get(id).subscribe(
       (data) => {
-        // Getting stats
-        this.playerService.getStats(id).subscribe(
-          (data2) => {
-            this.fifaPlayerStats = data2;
-            this.calculatedStats = data2.statsPerPlatform[0];
+        this.seasonService.getAll().subscribe(
+          (data3) => {
+            this.seasons = data3;
+            this.selectedSeason = data3[data3.length - 1].id;
 
-            // Getting last games played
-            this.gameService.getLastByPlayer(id, 20).subscribe(
-              (data3) => {
-                this.games = data3;
-                this.player = data;
-                this.loading = false;
+            // Getting stats
+            this.playerService.getStats(id).subscribe(
+              (data2) => {
+                this.fifaPlayerStats = data2;
+                this.calculatedStats = data2.statsPerPlatform[0];
+
+                // Getting last games played
+                this.gameService.getLastByPlayer(id, 20).subscribe(
+                  (data3) => {
+                    this.games = data3;
+                    this.player = data;
+                    this.loading = false;
+                  },
+                  (err) => {
+                    alert(
+                      "Erreur lors de la récupération des dernières parties jouées."
+                    );
+                    console.error(err);
+                  }
+                );
               },
               (err) => {
                 alert(
-                  "Erreur lors de la récupération des dernières parties jouées."
+                  "Une erreur est survenue lors de la récupération des statistiques de l'utilisateur."
                 );
                 console.error(err);
               }
@@ -116,7 +135,7 @@ export class PlayerDetailsComponent implements OnInit {
           },
           (err) => {
             alert(
-              "Une erreur est survenue lors de la récupération des statistiques de l'utilisateur."
+              "Une erreur est survenue lors de la récupération des saisons."
             );
             console.error(err);
           }
@@ -163,22 +182,47 @@ export class PlayerDetailsComponent implements OnInit {
         (data) => {
           this.enemy = data;
           // Getting stats
-          this.playerService.getStats(newValue.value).subscribe(
-            (data2) => {
-              this.enemyStats = data2;
-              this.loading = false;
-            },
-            (err) => {
-              alert(
-                "Une erreur est survenue lors de la récupération des statistiques de l'adversaire."
-              );
-              console.error(err);
-            }
-          );
+          this.playerService
+            .getStats(newValue.value, this.selectedSeason)
+            .subscribe(
+              (data2) => {
+                this.enemyStats = data2;
+                this.loading = false;
+              },
+              (err) => {
+                alert(
+                  "Une erreur est survenue lors de la récupération des statistiques de l'adversaire."
+                );
+                console.error(err);
+              }
+            );
         },
         (err) => {
           alert(
             "Une erreur est survenue lors de la récupération du profil de l'adversaire."
+          );
+          console.error(err);
+        }
+      );
+    }
+  }
+
+  onChangeSeason(newValue: any) {
+    this.selectedSeason = parseInt(newValue.value);
+
+    if (newValue.value != "0") {
+      this.loading = true;
+
+      // Getting stats
+      this.playerService.getStats(this.playerId, newValue.value).subscribe(
+        (data2) => {
+          this.fifaPlayerStats = data2;
+          this.calculatedStats = data2.statsPerPlatform[0];
+          this.loading = false;
+        },
+        (err) => {
+          alert(
+            "Une erreur est survenue lors de la récupération des statistiques de la saison."
           );
           console.error(err);
         }
