@@ -9,9 +9,12 @@ import { Tournament } from "../shared/classes/Tournament";
 })
 export class TournamentsHomeComponent implements OnInit {
   loading = false;
+  states: any[] = [];
   tournaments: Tournament[] = [];
 
-  constructor(private tournamentService: YuGamesTournamentService) {}
+  constructor(private tournamentService: YuGamesTournamentService) {
+    this.states = tournamentService.getStates();
+  }
 
   ngOnInit(): void {
     this.tournamentService.getAll().subscribe(
@@ -23,5 +26,16 @@ export class TournamentsHomeComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  getState(stateId: number): string {
+    let label = "Inconnu";
+    this.states.forEach((x) => {
+      if (x.value == stateId) {
+        label = x.label;
+      }
+    });
+
+    return label;
   }
 }

@@ -15,4 +15,23 @@ export class YuGamesTournamentService {
       environment.yuGamesApiUrl + "/tournament"
     );
   }
+
+  getById(id: number): Observable<Tournament> {
+    return this.client.get<Tournament>(
+      environment.yuGamesApiUrl + "/tournament/" + id
+    );
+  }
+
+  getStates(): any[] {
+    return [
+      {
+        value: 0,
+        label: "Brouillon",
+      },
+      {
+        value: 1,
+        label: "Planifié",
+      },
+    ];
+  }
 }

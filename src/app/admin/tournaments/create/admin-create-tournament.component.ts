@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
-import { Player } from "src/app/shared/classes/Player";
-import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
+import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
 
 @Component({
   selector: "app-admin-create-tournament-edit",
@@ -12,6 +11,7 @@ import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.ser
 })
 export class AdminCreateTournamentComponent implements OnInit {
   loading = false;
+  states: any[] = [];
 
   createTournamentForm = new FormGroup({
     name: new FormControl("", [Validators.maxLength(100), Validators.required]),
@@ -23,11 +23,12 @@ export class AdminCreateTournamentComponent implements OnInit {
   });
 
   constructor(
-    private route: ActivatedRoute,
-    private playerService: YuGamesPlayerService,
     private adminService: YuGamesAdminService,
+    private tournamentService: YuGamesTournamentService,
     private router: Router
-  ) {}
+  ) {
+    this.states = this.tournamentService.getStates();
+  }
 
   ngOnInit(): void {}
 

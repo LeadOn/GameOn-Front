@@ -89,4 +89,34 @@ export class YuGamesAdminService {
       body
     );
   }
+
+  editTournament(
+    id: number,
+    name: string,
+    state: number,
+    plannedFrom: string,
+    plannedTo: string,
+    description?: string,
+    logoUrl?: string
+  ): Observable<Tournament> {
+    let body: any = {
+      name: name,
+      state: state,
+      plannedFrom: plannedFrom,
+      plannedTo: plannedTo,
+    };
+
+    if (description != null) {
+      body.description = description;
+    }
+
+    if (logoUrl != null) {
+      body.logoUrl = logoUrl;
+    }
+
+    return this.client.patch<Tournament>(
+      environment.yuGamesApiUrl + "/tournament/" + id,
+      body
+    );
+  }
 }

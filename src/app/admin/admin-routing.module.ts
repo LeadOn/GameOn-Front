@@ -13,6 +13,7 @@ import { AdminTournamentsComponent } from "./tournaments/admin-tournaments.compo
 import { AdminSeasonsComponent } from "./seasons/admin-seasons.component";
 import { AdminPlayerEditComponent } from "./players/edit/admin-player-edit.component";
 import { AdminCreateTournamentComponent } from "./tournaments/create/admin-create-tournament.component";
+import { AdminEditTournamentComponent } from "./tournaments/edit/admin-edit-tournament.component";
 
 const routes: Routes = [
   {
@@ -64,6 +65,10 @@ const routes: Routes = [
       {
         path: "tournaments/create",
         component: AdminCreateTournamentComponent,
+      },
+      {
+        path: "tournaments/edit/:id",
+        component: AdminEditTournamentComponent,
       },
     ],
   },

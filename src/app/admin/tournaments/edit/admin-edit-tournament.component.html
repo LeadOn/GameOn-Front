@@ -8,18 +8,20 @@
 
   <div
     class="flex flex-row space-x-2 align-center items-center justify-center p-4 rounded-lg bg-primary w-2/3"
-    *ngIf="loading == false">
+    *ngIf="loading == false && tournament != null">
     <div
-      class="rounded-full bg-green-500 p-4 flex flex-col align-center items-center justify-center">
+      class="rounded-full bg-yellow-500 p-4 flex flex-col align-center items-center justify-center">
       <img src="../../../../assets/img/trophee.svg" class="w-8" />
     </div>
-    <span class="text-white">Créer un tournoi</span>
+    <span class="text-white">Éditer {{ tournament.name }}</span>
   </div>
 </div>
 
-<div class="flex flex-col items-center mt-4">
+<div
+  class="flex flex-col items-center mt-4"
+  *ngIf="loading == false && tournament != null">
   <form
-    [formGroup]="createTournamentForm"
+    [formGroup]="editTournamentForm"
     class="mt-6 bg-primary p-8 rounded-lg w-2/3">
     <div class="relative z-0 w-full mb-6 group">
       <input
@@ -109,9 +111,9 @@
     </div>
 
     <button
-      (click)="createTournament()"
-      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
-      Créer
+      (click)="editTournament()"
+      class="text-white bg-yellow-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+      Modifier
     </button>
   </form>
 </div>
