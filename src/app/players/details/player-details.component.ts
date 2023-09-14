@@ -107,7 +107,6 @@ export class PlayerDetailsComponent implements OnInit {
             // Getting stats
             this.playerService.getStats(id).subscribe(
               (data2) => {
-                console.log(data2);
                 this.fifaPlayerStats = data2;
                 this.calculatedStats = data2.statsPerPlatform[0];
 
