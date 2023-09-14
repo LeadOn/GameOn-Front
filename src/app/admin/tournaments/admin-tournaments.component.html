@@ -59,6 +59,10 @@
           <a [routerLink]="['/admin/tournaments/edit', tournament.id]">
             <img src="../../../assets/img/edit.svg" class="w-8" />
           </a>
+
+          <button (click)="delete(tournament.id)">
+            <img src="../../../assets/img/trash.svg" class="w-8" />
+          </button>
         </td>
       </tr>
     </tbody>

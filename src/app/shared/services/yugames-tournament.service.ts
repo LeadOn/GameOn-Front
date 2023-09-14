@@ -22,6 +22,23 @@ export class YuGamesTournamentService {
     );
   }
 
+  checkPlayerSubscription(id: number): Observable<Tournament> {
+    return this.client.get<Tournament>(
+      environment.yuGamesApiUrl + "/tournament/" + id + "/subscription"
+    );
+  }
+
+  subscribe(id: number, fifaTeamId: number): Observable<any> {
+    return this.client.post<any>(
+      environment.yuGamesApiUrl +
+        "/tournament/" +
+        id +
+        "/subscription?fifaTeamId=" +
+        fifaTeamId,
+      null
+    );
+  }
+
   getStates(): any[] {
     return [
       {

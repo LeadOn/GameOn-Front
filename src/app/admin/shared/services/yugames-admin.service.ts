@@ -33,6 +33,12 @@ export class YuGamesAdminService {
     );
   }
 
+  deleteTournament(tournamentId: number): Observable<any> {
+    return this.client.delete<any>(
+      environment.yuGamesApiUrl + "/tournament/" + tournamentId
+    );
+  }
+
   updateGame(game: UpdateGame): Observable<any> {
     return this.client.patch<any>(environment.yuGamesApiUrl + "/game", game);
   }

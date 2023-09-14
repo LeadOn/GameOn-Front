@@ -3,6 +3,7 @@ import { Player } from "src/app/shared/classes/Player";
 import { Tournament } from "src/app/shared/classes/Tournament";
 import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
 import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
+import { YuGamesAdminService } from "../shared/services/yugames-admin.service";
 
 @Component({
   selector: "app-admin-tournaments",
@@ -14,7 +15,10 @@ export class AdminTournamentsComponent implements OnInit {
   states: any[] = [];
   loading = true;
 
-  constructor(private tournamentService: YuGamesTournamentService) {
+  constructor(
+    private tournamentService: YuGamesTournamentService,
+    private adminService: YuGamesAdminService
+  ) {
     this.states = this.tournamentService.getStates();
   }
 
@@ -41,5 +45,26 @@ export class AdminTournamentsComponent implements OnInit {
     });
 
     return label;
+  }
+
+  delete(id: number) {
+    if (
+      confirm(
+        "Êtes-vous sûr de bien vouloir supprimer le tournoi " +
+          id +
+          " ? ATTENTION : Cette action est irrévesible !"
+      )
+    ) {
+      this.adminService.deleteTournament(id).subscribe(
+        (data) => {
+          alert("Suppression réussie !");
+          window.location.reload();
+        },
+        (err) => {
+          console.error(err);
+          alert("Une erreur est survenue lors de la suppresion du tournoi.");
+        }
+      );
+    }
   }
 }

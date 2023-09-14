@@ -3,6 +3,9 @@ import { Tournament } from "src/app/shared/classes/Tournament";
 import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
 import { trigger, style, animate, transition } from "@angular/animations";
 import { ActivatedRoute } from "@angular/router";
+import { KeycloakService } from "keycloak-angular";
+import { FifaTeam } from "src/app/shared/classes/FifaTeam";
+import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
 
 @Component({
   selector: "app-tournaments-details",
@@ -23,19 +26,53 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class TournamentsDetailsComponent implements OnInit {
   loading = true;
+  isLoggedIn = false;
+  isSubscribed?: boolean;
   states: any[] = [];
   tournament?: Tournament;
   tournamentId: any;
+  selectedTeam?: number;
+  fifaTeams: FifaTeam[] = [];
 
   constructor(
     private tournamentService: YuGamesTournamentService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private keycloak: KeycloakService,
+    private fifaTeamService: YuGamesFifaTeamService
   ) {
     this.states = tournamentService.getStates();
     this.tournamentId = this.route.snapshot.paramMap.get("id");
   }
 
   ngOnInit(): void {
+    this.keycloak.isLoggedIn().then((x) => {
+      this.isLoggedIn = x;
+
+      if (this.isLoggedIn == true) {
+        this.tournamentService
+          .checkPlayerSubscription(this.tournamentId)
+          .subscribe(
+            (x) => {
+              this.isSubscribed = true;
+            },
+            (err) => {
+              this.isSubscribed = false;
+
+              this.fifaTeamService.getAll().subscribe(
+                (data) => {
+                  this.fifaTeams = data;
+                  this.selectedTeam = data[0].id;
+                },
+                (err) => {
+                  alert("Erreur lors de la récupération des équipes FIFA.");
+                  console.error(err);
+                }
+              );
+            }
+          );
+      }
+    });
+
     this.tournamentService.getById(this.tournamentId).subscribe(
       (data) => {
         this.tournament = data;
@@ -57,5 +94,29 @@ export class TournamentsDetailsComponent implements OnInit {
     });
 
     return label;
+  }
+
+  subscribe() {
+    if (
+      this.selectedTeam != undefined &&
+      confirm(
+        "Êtes vous sûr de vouloir vous inscrire à ce tournoi avec l'équipe " +
+          this.selectedTeam +
+          " ?"
+      )
+    ) {
+      this.tournamentService
+        .subscribe(this.tournamentId, this.selectedTeam)
+        .subscribe(
+          (x) => {
+            alert("Inscription réussie !");
+            window.location.reload();
+          },
+          (err) => {
+            alert("Erreur lors de l'inscription !");
+            console.error(err);
+          }
+        );
+    }
   }
 }

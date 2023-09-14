@@ -39,6 +39,28 @@
   <div
     *ngIf="loading == false && tournament != null"
     class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker">
+    <div class="flex flex-row items-center space-x-2 m-4">
+      <div
+        *ngIf="isSubscribed != undefined && isSubscribed == false"
+        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+        ❌ Vous n'êtes pas inscrit à ce tournoi.
+
+        <select class="bg-primaryDarker" [(ngModel)]="selectedTeam">
+          <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
+            {{ fifaTeam.name }}
+          </option>
+        </select>
+
+        <button (click)="subscribe()">S'inscrire !</button>
+      </div>
+
+      <div
+        *ngIf="isSubscribed != undefined && isSubscribed == true"
+        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+        ✅ Vous êtes inscrit à ce tournoi.
+      </div>
+    </div>
+
     <div class="flex flex-row items-center space-x-2">
       <div
         class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
