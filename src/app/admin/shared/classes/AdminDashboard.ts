@@ -6,4 +6,6 @@ export class AdminDashboard {
   players: number = 0;
   highlights: number = 0;
   fifaGames: number = 0;
+  tournaments: number = 0;
+  seasons: number = 0;
 }

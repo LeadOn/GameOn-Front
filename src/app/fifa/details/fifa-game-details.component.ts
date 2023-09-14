@@ -65,7 +65,7 @@ export class FifaGameDetailsComponent implements OnInit {
       },
       (err) => {
         alert("Une erreur est survenue lors de la récupération du match.");
-        console.log(err);
+        console.error(err);
       }
     );
   }

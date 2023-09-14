@@ -9,6 +9,9 @@ import { AdminFifaGamesComponent } from "./fifa-games/admin-fifa-games.component
 import { AdminFifaGameEditComponent } from "./fifa-games/edit/admin-fifa-game-edit.component";
 import { AdminPlayersComponent } from "./players/admin-players.component";
 import { AdminHighlightsComponent } from "./highlights/admin-highlights.component";
+import { AdminTournamentsComponent } from "./tournaments/admin-tournaments.component";
+import { AdminSeasonsComponent } from "./seasons/admin-seasons.component";
+import { AdminPlayerEditComponent } from "./players/edit/admin-player-edit.component";
 
 const routes: Routes = [
   {
@@ -42,8 +45,20 @@ const routes: Routes = [
         component: AdminPlayersComponent,
       },
       {
+        path: "players/edit/:id",
+        component: AdminPlayerEditComponent,
+      },
+      {
         path: "highlights",
         component: AdminHighlightsComponent,
+      },
+      {
+        path: "seasons",
+        component: AdminSeasonsComponent,
+      },
+      {
+        path: "tournaments",
+        component: AdminTournamentsComponent,
       },
     ],
   },

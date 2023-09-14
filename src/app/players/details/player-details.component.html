@@ -2,22 +2,26 @@
   [@inOutAnimation]
   class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
   role="status"
-  *ngIf="loading == true">
+  *ngIf="loading == true"
+>
   <app-loading-spinner></app-loading-spinner>
   Chargement des données...
 </div>
 
 <div
   class="flex flex-col md:flex-row md:space-x-8 text-white m-8 md:mx-16 lg:mx-32"
-  [@inOutAnimation]>
+  [@inOutAnimation]
+>
   <div
     class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
-    *ngIf="player != null && player.id != 0">
+    *ngIf="player != null && player.id != 0"
+  >
     <div class="bg-primary p-4 rounded-lg flex flex-col items-center">
       <img
         class="rounded-full neomorphism-primary mt-4"
         src="{{ player.profilePictureUrl }}"
-        width="128" />
+        width="128"
+      />
 
       <div class="text-center w-full">
         <span class="block mt-2">{{ player.fullName }}</span>
@@ -27,7 +31,8 @@
           (change)="onChangeEnemy($event.target)"
           [ngModel]="selectedEnemy"
           id="enemies"
-          class="mt-2 neomorphism-primary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          class="mt-2 neomorphism-primary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
           <option value="0">Versus</option>
           <option *ngFor="let player of players" value="{{ player.id }}">
             {{ player.fullName }} ({{ player.nickname }})
@@ -38,7 +43,8 @@
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
           id="seasons"
-          class="mt-2 neomorphism-primary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          class="mt-2 neomorphism-primary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        >
           <option *ngFor="let season of seasons" value="{{ season.id }}">
             {{ season.name }}
           </option>
@@ -46,73 +52,21 @@
 
         <div
           class="mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4"
-          *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null">
-          <div
-            class="flex flex-row justify-around mt-2 text-white w-full items-center mb-4">
-            <div class="flex flex-col space-y-4">
-              <div class="flex flex-row">
-                <input
-                  id="global-stats"
-                  type="radio"
-                  value="global"
-                  [(ngModel)]="selectedStats"
-                  (change)="calculateStats()"
-                  name="default-radio"
-                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-                <label
-                  for="five-stats"
-                  class="text-sm font-medium text-white dark:text-gray-300 ml-2">
-                  Global
-                </label>
-              </div>
-
-              <div class="flex flex-row">
-                <input
-                  id="windows-stats"
-                  type="radio"
-                  value="windows"
-                  name="default-radio"
-                  [(ngModel)]="selectedStats"
-                  (change)="calculateStats()"
-                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-                <label
-                  for="windows-stats"
-                  class="text-sm font-medium text-gray-900 dark:text-gray-300">
-                  <img src="../../../assets/img/windows.svg" class="w-6 ml-2" />
-                </label>
-              </div>
-            </div>
-
-            <div class="flex flex-col space-y-4">
-              <div class="flex flex-row">
-                <input
-                  id="xbox-stats"
-                  type="radio"
-                  value="xbox"
-                  name="default-radio"
-                  [(ngModel)]="selectedStats"
-                  (change)="calculateStats()"
-                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-                <label for="xbox-stats" class="text-sm font-medium">
-                  <img src="../../../assets/img/xbox.svg" class="w-6 ml-2" />
-                </label>
-              </div>
-
-              <div class="flex flex-row">
-                <input
-                  id="five-stats"
-                  type="radio"
-                  value="five"
-                  [(ngModel)]="selectedStats"
-                  (change)="calculateStats()"
-                  name="default-radio"
-                  class="w-4 h-4 bg-white border-secondaryDarker focus:ring-secondary focus:ring-2" />
-                <label for="five-stats" class="text-sm font-medium">
-                  <img src="../../../assets/img/stadium.svg" class="w-6 ml-2" />
-                </label>
-              </div>
-            </div>
-          </div>
+          *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null"
+        >
+          <select
+            [(ngModel)]="selectedStats"
+            (change)="calculateStats()"
+            id="stats"
+            class="mb-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          >
+            <option
+              *ngFor="let platform of fifaPlayerStats.statsPerPlatform"
+              value="{{ platform.platform.id }}"
+            >
+              {{ platform.platform.name }}
+            </option>
+          </select>
 
           <div class="w-full">
             <app-fifa-stat [stat]="calculatedStats"></app-fifa-stat>
@@ -126,7 +80,8 @@
             fifaPlayerStats.mostPlayedTeams.length > 0
           "
           [teamList]="fifaPlayerStats.mostPlayedTeams"
-          [title]="'Plus jouées'"></app-player-team-list>
+          [title]="'Plus jouées'"
+        ></app-player-team-list>
 
         <app-player-team-list
           *ngIf="
@@ -135,7 +90,8 @@
             fifaPlayerStats.mostWinsTeams.length > 0
           "
           [teamList]="fifaPlayerStats.mostWinsTeams"
-          [title]="'Meilleures équipes'"></app-player-team-list>
+          [title]="'Meilleures équipes'"
+        ></app-player-team-list>
 
         <app-player-team-list
           *ngIf="
@@ -144,25 +100,29 @@
             fifaPlayerStats.mostPlayedTeams.length > 0
           "
           [teamList]="fifaPlayerStats.mostLossesTeams"
-          [title]="'Pires équipes'"></app-player-team-list>
+          [title]="'Pires équipes'"
+        ></app-player-team-list>
       </div>
     </div>
   </div>
 
   <div
     class="w-full flex flex-col w-full mt-8 md:mt-0"
-    *ngIf="player != null && player.id != 0">
+    *ngIf="player != null && player.id != 0"
+  >
     <div
       *ngIf="
         loading == false && selectedEnemy != 0 && enemy != null && enemy.id != 0
       "
-      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker neomorphism-primaryDarker p-4 border border-red-500 rounded-lg mb-4">
+      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker neomorphism-primaryDarker p-4 border border-red-500 rounded-lg mb-4"
+    >
       <div class="flex flex-col items-center space-y-4">
         <div class="flex flex-row items-center space-x-4">
           <img
             class="rounded-full"
             src="{{ player.profilePictureUrl }}"
-            width="128" />
+            width="128"
+          />
 
           <div>
             <p>{{ player.fullName }}</p>
@@ -176,7 +136,8 @@
             fifaPlayerStats.statsPerPlatform[0] != null
           "
           [stat]="fifaPlayerStats.statsPerPlatform[0]"
-          class="w-full"></app-fifa-stat>
+          class="w-full"
+        ></app-fifa-stat>
       </div>
 
       <hr class="my-4 md:hidden" />
@@ -186,7 +147,8 @@
           <img
             class="rounded-full"
             src="{{ enemy.profilePictureUrl }}"
-            width="128" />
+            width="128"
+          />
 
           <div>
             <p>{{ enemy.fullName }}</p>
@@ -197,7 +159,8 @@
         <app-fifa-stat
           *ngIf="enemyStats != null"
           [stat]="enemyStats.statsPerPlatform[0]"
-          class="w-full"></app-fifa-stat>
+          class="w-full"
+        ></app-fifa-stat>
       </div>
     </div>
 
@@ -205,10 +168,12 @@
 
     <div
       class="mt-4 flex flex-col w-full text-white space-y-4"
-      *ngIf="loading == false">
+      *ngIf="loading == false"
+    >
       <app-fifa-game-history-card
         *ngFor="let game of games"
-        [game]="game"></app-fifa-game-history-card>
+        [game]="game"
+      ></app-fifa-game-history-card>
     </div>
   </div>
 </div>
