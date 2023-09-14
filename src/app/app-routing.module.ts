@@ -9,6 +9,7 @@ import { CommonLayoutComponent } from "./shared/layouts/common-layout.component"
 import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
 import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
 import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
+import { TournamentsHomeComponent } from "./tournaments/tournaments-home.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: "home",
         component: HomeComponent,
+      },
+      {
+        path: "tournaments",
+        component: TournamentsHomeComponent,
       },
       {
         path: "player/me",
