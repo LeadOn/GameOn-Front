@@ -14,6 +14,8 @@ import { AdminHighlightsComponent } from "./highlights/admin-highlights.componen
 import { AdminTournamentsComponent } from "./tournaments/admin-tournaments.component";
 import { AdminSeasonsComponent } from "./seasons/admin-seasons.component";
 import { AdminPlayerEditComponent } from "./players/edit/admin-player-edit.component";
+import { AdminCreateTournamentComponent } from "./tournaments/create/admin-create-tournament.component";
+import { AdminEditTournamentComponent } from "./tournaments/edit/admin-edit-tournament.component";
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { AdminPlayerEditComponent } from "./players/edit/admin-player-edit.compo
     AdminTournamentsComponent,
     AdminSeasonsComponent,
     AdminPlayerEditComponent,
+    AdminCreateTournamentComponent,
+    AdminEditTournamentComponent,
   ],
   imports: [
     CommonModule,
