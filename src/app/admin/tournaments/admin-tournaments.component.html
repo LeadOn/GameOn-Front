@@ -40,6 +40,9 @@
       <tr>
         <th scope="col" class="px-6 py-3">#</th>
         <th scope="col" class="px-6 py-3">Nom</th>
+        <th scope="col" class="px-6 py-3">Du</th>
+        <th scope="col" class="px-6 py-3">Au</th>
+        <th scope="col" class="px-6 py-3">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -51,6 +54,9 @@
           {{ tournament.id }}
         </th>
         <td class="px-6 py-4">{{ tournament.name }}</td>
+        <td class="px-6 py-4">{{ tournament.plannedFrom }}</td>
+        <td class="px-6 py-4">{{ tournament.plannedTo }}</td>
+        <td class="px-6 py-4"></td>
       </tr>
     </tbody>
   </table>

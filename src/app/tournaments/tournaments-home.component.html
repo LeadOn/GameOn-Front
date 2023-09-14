@@ -119,6 +119,7 @@
 </div>
 
 <div
+  *ngIf="tournaments.length == 0"
   class="flex flex-col space-y-2 justify-center items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white"
 >
   <div
@@ -132,8 +133,62 @@
       </div>
 
       <span class="text-white"
-        >Le premier tournoi sera bientôt disponible !</span
+        >Aucun tournoi n'est actuellement disponible à la consultation.</span
       >
     </div>
   </div>
+</div>
+
+<div
+  *ngIf="loading == false"
+  class="text-white mt-8 flex flex-col space-y-4 md:space-y-0 md:grid md:grid-cols-3 lg:grid-cols-4 md:auto-rows-auto md:gap-5 m-8 md:mx-16 lg:mx-32"
+>
+  <a
+    *ngFor="let tournament of tournaments"
+    class="hidden md:flex drop-shadow-xl flex-col h-72 items-center bg-secondaryDarker p-6 rounded-lg transition transition-all ease-in-out duration-200 hover:bg-secondary"
+  >
+    <div class="mt-4">
+      <img
+        *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
+        class="rounded-full"
+        src="{{ tournament.logoUrl }}"
+        width="128"
+      />
+
+      <img
+        *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
+        class="rounded-full"
+        src="../../assets/img/yugames-logo.png"
+        width="128"
+      />
+    </div>
+
+    <div class="mt-2 text-center">
+      <span class="inline-block text-lg">{{ tournament.name }}</span>
+      <br />
+      <span class="inline-block italic"
+        >📅 Du {{ tournament.plannedFrom }} au {{ tournament.plannedTo }}
+      </span>
+    </div>
+  </a>
+
+  <a
+    *ngFor="let tournament of tournaments"
+    class="md:hidden bg-secondaryDarker p-4 rounded-lg drop-shadow-xl flex flex-row space-x-4 transition transition-all ease-in-out duration-200 hover:bg-secondary"
+  >
+    <img
+      class="w-16 rounded-full"
+      *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
+      src="{{ tournament.logoUrl }}"
+    />
+    <img
+      class="w-16 rounded-full"
+      *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
+      src="../../assets/img/yugames-logo.png"
+    />
+
+    <div class="flex flex-col justify-center">
+      <span class="text-lg">{{ tournament.name }}</span>
+    </div>
+  </a>
 </div>

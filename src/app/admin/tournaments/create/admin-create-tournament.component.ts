@@ -14,19 +14,12 @@ export class AdminCreateTournamentComponent implements OnInit {
   loading = false;
 
   createTournamentForm = new FormGroup({
-    keycloakId: new FormControl("", [Validators.maxLength(50)]),
-    fullName: new FormControl("", [
-      Validators.required,
-      Validators.maxLength(100),
-    ]),
-    nickname: new FormControl("", [
-      Validators.required,
-      Validators.maxLength(50),
-    ]),
-    profilePicUrl: new FormControl("", [
-      Validators.required,
-      Validators.maxLength(500),
-    ]),
+    name: new FormControl("", [Validators.maxLength(100), Validators.required]),
+    description: new FormControl("", [Validators.maxLength(5000)]),
+    state: new FormControl(0, [Validators.required]),
+    logoUrl: new FormControl("", [Validators.maxLength(3000)]),
+    plannedFrom: new FormControl("", [Validators.required]),
+    plannedTo: new FormControl("", [Validators.required]),
   });
 
   constructor(
@@ -38,45 +31,57 @@ export class AdminCreateTournamentComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  updatePlayer() {
-    // if (
-    //   this.updatePlayerForm.controls["fullName"].value != null &&
-    //   this.updatePlayerForm.controls["fullName"].value != "" &&
-    //   this.updatePlayerForm.controls["nickname"].value != null &&
-    //   this.updatePlayerForm.controls["nickname"].value != "" &&
-    //   this.updatePlayerForm.controls["profilePicUrl"].value != null &&
-    //   this.updatePlayerForm.controls["profilePicUrl"].value != ""
-    // ) {
-    //   this.loading = true;
-    //   let keycloakId: any = null;
-    //   if (
-    //     this.updatePlayerForm.controls["keycloakId"].value != null &&
-    //     this.updatePlayerForm.controls["keycloakId"].value != ""
-    //   ) {
-    //     keycloakId = this.updatePlayerForm.controls["keycloakId"].value;
-    //   }
-    //   this.adminService
-    //     .updatePlayer(
-    //       this.playerId,
-    //       this.updatePlayerForm.controls["fullName"].value,
-    //       this.updatePlayerForm.controls["nickname"].value,
-    //       this.updatePlayerForm.controls["profilePicUrl"].value,
-    //       keycloakId
-    //     )
-    //     .subscribe(
-    //       (data) => {
-    //         alert("Joueur mis à jour !");
-    //         this.loading = false;
-    //         this.router.navigate(["/admin/players"]);
-    //       },
-    //       (err) => {
-    //         alert("Erreur lors de la mise à jour du joueur !");
-    //         console.error(err);
-    //         this.loading = false;
-    //       }
-    //     );
-    // } else {
-    //   alert("Certaines informations sont manquantes !");
-    // }
+  createTournament() {
+    if (
+      this.createTournamentForm.controls["name"].value != null &&
+      this.createTournamentForm.controls["name"].value != "" &&
+      this.createTournamentForm.controls["state"].value != null &&
+      this.createTournamentForm.controls["plannedFrom"].value != null &&
+      this.createTournamentForm.controls["plannedFrom"].value != "" &&
+      this.createTournamentForm.controls["plannedTo"].value != null &&
+      this.createTournamentForm.controls["plannedTo"].value != ""
+    ) {
+      this.loading = true;
+
+      let description: any = null;
+      if (
+        this.createTournamentForm.controls["description"].value != null &&
+        this.createTournamentForm.controls["description"].value != ""
+      ) {
+        description = this.createTournamentForm.controls["description"].value;
+      }
+
+      let logoUrl: any = null;
+      if (
+        this.createTournamentForm.controls["logoUrl"].value != null &&
+        this.createTournamentForm.controls["logoUrl"].value != ""
+      ) {
+        logoUrl = this.createTournamentForm.controls["logoUrl"].value;
+      }
+
+      this.adminService
+        .createTournament(
+          this.createTournamentForm.controls["name"].value,
+          this.createTournamentForm.controls["state"].value,
+          this.createTournamentForm.controls["plannedFrom"].value,
+          this.createTournamentForm.controls["plannedTo"].value,
+          description,
+          logoUrl
+        )
+        .subscribe(
+          (data) => {
+            alert("Tournoi créé !");
+            this.loading = false;
+            this.router.navigate(["/admin/tournaments"]);
+          },
+          (err) => {
+            alert("Erreur lors de la création du tournoi !");
+            console.error(err);
+            this.loading = false;
+          }
+        );
+    } else {
+      alert("Certaines informations sont manquantes !");
+    }
   }
 }

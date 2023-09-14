@@ -6,6 +6,7 @@ import { AdminDashboard } from "../classes/AdminDashboard";
 import { Platform } from "src/app/shared/classes/Platform";
 import { UpdateGame } from "../classes/UpdateGame";
 import { Player } from "src/app/shared/classes/Player";
+import { Tournament } from "src/app/shared/classes/Tournament";
 
 @Injectable({
   providedIn: "root",
@@ -56,6 +57,35 @@ export class YuGamesAdminService {
 
     return this.client.patch<Player>(
       environment.yuGamesApiUrl + "/player",
+      body
+    );
+  }
+
+  createTournament(
+    name: string,
+    state: number,
+    plannedFrom: string,
+    plannedTo: string,
+    description?: string,
+    logoUrl?: string
+  ): Observable<Tournament> {
+    let body: any = {
+      name: name,
+      state: state,
+      plannedFrom: plannedFrom,
+      plannedTo: plannedTo,
+    };
+
+    if (description != null) {
+      body.description = description;
+    }
+
+    if (logoUrl != null) {
+      body.logoUrl = logoUrl;
+    }
+
+    return this.client.post<Tournament>(
+      environment.yuGamesApiUrl + "/tournament",
       body
     );
   }

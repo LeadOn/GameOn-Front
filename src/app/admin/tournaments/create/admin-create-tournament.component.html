@@ -43,64 +43,89 @@
     </div>
 
     <div class="relative z-0 w-full mb-6 group">
+      <textarea
+        type="text"
+        id="description"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="description"
+        maxlength="5000"
+        required
+      ></textarea>
+      <label
+        for="description"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Description
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <label for="team1" class="block mb-2 text-sm font-medium text-white">
+        État
+      </label>
+      <select
+        id="state"
+        formControlName="state"
+        class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
+        <option value="0" selected>Planifié</option>
+      </select>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
       <input
         type="text"
-        id="fullName"
+        id="logoUrl"
         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
-        formControlName="fullName"
-        maxlength="100"
+        formControlName="logoUrl"
+        maxlength="3000"
         required
       />
       <label
-        for="fullName"
+        for="logoUrl"
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
-        Nom complet
+        URL du logo
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="date"
+        id="plannedFrom"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="plannedFrom"
+      />
+      <label
+        for="plannedFrom"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Planifié du
         <span class="text-red-500">*</span>
       </label>
     </div>
 
     <div class="relative z-0 w-full mb-6 group">
       <input
-        type="text"
-        id="nickname"
+        type="date"
+        id="plannedTo"
         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
-        formControlName="nickname"
-        maxlength="50"
-        required
+        formControlName="plannedTo"
       />
       <label
-        for="nickname"
+        for="plannedTo"
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
-        Pseudo
-        <span class="text-red-500">*</span>
-      </label>
-    </div>
-
-    <div class="relative z-0 w-full mb-6 group">
-      <input
-        type="text"
-        id="profilePicUrl"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
-        formControlName="profilePicUrl"
-        maxlength="500"
-        required
-      />
-      <label
-        for="profilePicUrl"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-      >
-        URL de photo de profil
+        Au
         <span class="text-red-500">*</span>
       </label>
     </div>
 
     <button
-      (click)="updatePlayer()"
+      (click)="createTournament()"
       class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
     >
-      Mettre à jour
+      Créer
     </button>
   </form>
 </div>
