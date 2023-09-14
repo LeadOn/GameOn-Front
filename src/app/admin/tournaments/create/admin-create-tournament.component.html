@@ -1,0 +1,106 @@
+<div class="flex flex-row justify-center mt-8">
+  <div
+    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+    *ngIf="loading == true"
+  >
+    <app-loading-spinner></app-loading-spinner>
+    <span class="text-white">Chargement...</span>
+  </div>
+
+  <div
+    class="flex flex-row space-x-2 align-center items-center justify-center p-4 rounded-lg bg-primary w-2/3"
+    *ngIf="loading == false"
+  >
+    <div
+      class="rounded-full bg-green-500 p-4 flex flex-col align-center items-center justify-center"
+    >
+      <img src="../../../../assets/img/trophee.svg" class="w-8" />
+    </div>
+    <span class="text-white">Créer un tournoi</span>
+  </div>
+</div>
+
+<div class="flex flex-col items-center mt-4">
+  <form
+    [formGroup]="createTournamentForm"
+    class="mt-6 bg-primary p-8 rounded-lg w-2/3"
+  >
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="text"
+        id="name"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="name"
+        maxlength="100"
+      />
+      <label
+        for="name"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Nom
+        <span class="text-red-500">*</span>
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="text"
+        id="fullName"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="fullName"
+        maxlength="100"
+        required
+      />
+      <label
+        for="fullName"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Nom complet
+        <span class="text-red-500">*</span>
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="text"
+        id="nickname"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="nickname"
+        maxlength="50"
+        required
+      />
+      <label
+        for="nickname"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Pseudo
+        <span class="text-red-500">*</span>
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="text"
+        id="profilePicUrl"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="profilePicUrl"
+        maxlength="500"
+        required
+      />
+      <label
+        for="profilePicUrl"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        URL de photo de profil
+        <span class="text-red-500">*</span>
+      </label>
+    </div>
+
+    <button
+      (click)="updatePlayer()"
+      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+    >
+      Mettre à jour
+    </button>
+  </form>
+</div>

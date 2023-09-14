@@ -19,6 +19,19 @@
     <span class="text-white">Tournois</span>
   </div>
 
+  <a
+    class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg transition ease-in-out delay-50 bg-green-500 hover:bg-green-800 mt-4 neomorphism-primaryDarker-2"
+    *ngIf="loading == false"
+    routerLink="/admin/tournaments/create"
+  >
+    <div
+      class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center"
+    >
+      +
+    </div>
+    <span class="text-white">Créer un tournoi</span>
+  </a>
+
   <table
     class="w-full text-sm text-left text-gray-400 mt-4"
     *ngIf="loading == false"
