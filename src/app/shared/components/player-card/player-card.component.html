@@ -4,8 +4,16 @@
 >
   <div class="mt-4">
     <img
+      *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
       class="rounded-full"
       src="{{ player.profilePictureUrl }}"
+      width="128"
+    />
+
+    <img
+      *ngIf="player.profilePictureUrl == null || player.profilePictureUrl == ''"
+      class="rounded-full"
+      src="../../../../assets/img/yugames-logo.png"
       width="128"
     />
   </div>

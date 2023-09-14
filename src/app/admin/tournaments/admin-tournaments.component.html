@@ -1,43 +1,69 @@
 <div class="m-4 overflow-x-auto mt-8">
   <div
     class="flex flex-row items-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == true"
-  >
+    *ngIf="loading == true">
     <app-loading-spinner></app-loading-spinner>
     <span class="text-white">Chargement...</span>
   </div>
 
   <div
     class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == false"
-  >
+    *ngIf="loading == false">
     <div
-      class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center"
-    >
+      class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center">
       <img src="../../../assets/img/player.svg" class="w-4" />
     </div>
     <span class="text-white">Tournois</span>
   </div>
 
+  <a
+    class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg transition ease-in-out delay-50 bg-green-500 hover:bg-green-800 mt-4 neomorphism-primaryDarker-2"
+    *ngIf="loading == false"
+    routerLink="/admin/tournaments/create">
+    <div
+      class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center">
+      +
+    </div>
+    <span class="text-white">Créer un tournoi</span>
+  </a>
+
   <table
     class="w-full text-sm text-left text-gray-400 mt-4"
-    *ngIf="loading == false"
-  >
+    *ngIf="loading == false">
     <thead class="text-xs uppercase bg-primary text-white">
       <tr>
         <th scope="col" class="px-6 py-3">#</th>
         <th scope="col" class="px-6 py-3">Nom</th>
+        <th scope="col" class="px-6 py-3">Du</th>
+        <th scope="col" class="px-6 py-3">Au</th>
+        <th scope="col" class="px-6 py-3">État</th>
+        <th scope="col" class="px-6 py-3">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr
         class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let tournament of tournaments"
-      >
+        *ngFor="let tournament of tournaments">
         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
           {{ tournament.id }}
         </th>
         <td class="px-6 py-4">{{ tournament.name }}</td>
+        <td class="px-6 py-4">
+          {{ tournament.plannedFrom.toString().split("T")[0] }}
+        </td>
+        <td class="px-6 py-4">
+          {{ tournament.plannedTo.toString().split("T")[0] }}
+        </td>
+        <td class="px-6 py-4">{{ getState(tournament.state) }}</td>
+        <td class="px-6 py-4">
+          <a [routerLink]="['/admin/tournaments/edit', tournament.id]">
+            <img src="../../../assets/img/edit.svg" class="w-8" />
+          </a>
+
+          <button (click)="delete(tournament.id)">
+            <img src="../../../assets/img/trash.svg" class="w-8" />
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

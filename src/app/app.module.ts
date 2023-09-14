@@ -27,6 +27,7 @@ import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.componen
 import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
 import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
 import { TournamentsHomeComponent } from "./tournaments/tournaments-home.component";
+import { TournamentsDetailsComponent } from "./tournaments/details/tournaments-details.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -64,7 +65,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     ProfilePageComponent,
     ProfileTabComponent,
     UpdatePlayerTabComponent,
+
+    /* Tournament pages */
     TournamentsHomeComponent,
+    TournamentsDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,5 @@
+import { TournamentPlayerDto } from "./TournamentPlayerDto";
+
 export class Tournament {
   id: number = 0;
   name: string = "UNKNOWN";
@@ -6,4 +8,5 @@ export class Tournament {
   logoUrl?: string;
   plannedFrom: Date = new Date();
   plannedTo: Date = new Date();
+  players: TournamentPlayerDto[] = [];
 }

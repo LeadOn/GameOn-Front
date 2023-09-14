@@ -1,0 +1,83 @@
+<div
+  [@inOutAnimation]
+  class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
+  role="status"
+  *ngIf="loading == true">
+  <app-loading-spinner></app-loading-spinner>
+  Chargement des données...
+</div>
+
+<div
+  *ngIf="loading == false && tournament != null"
+  [@inOutAnimation]
+  class="flex flex-row justify-center items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white space-x-2">
+  <div
+    class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+    <img src="../../assets/img/trophee.svg" class="w-8" />
+  </div>
+
+  <span class="text-white">
+    Tournoi {{ tournament.name }} - {{ getState(tournament.state) }}
+  </span>
+</div>
+
+<div
+  [@inOutAnimation]
+  class="flex flex-col space-y-2 justify-center items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white">
+  <div
+    class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker">
+    <div class="flex flex-row items-center space-x-2">
+      <div
+        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+        <img src="../../../assets/img/trophee.svg" class="w-8" />
+      </div>
+
+      <span class="text-white">Cette page est en cours de construction.</span>
+    </div>
+  </div>
+
+  <div
+    *ngIf="loading == false && tournament != null"
+    class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker">
+    <div class="flex flex-row items-center space-x-2 m-4">
+      <div
+        *ngIf="isSubscribed != undefined && isSubscribed == false"
+        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+        ❌ Vous n'êtes pas inscrit à ce tournoi.
+
+        <select class="bg-primaryDarker" [(ngModel)]="selectedTeam">
+          <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
+            {{ fifaTeam.name }}
+          </option>
+        </select>
+
+        <button (click)="subscribe()">S'inscrire !</button>
+      </div>
+
+      <div
+        *ngIf="isSubscribed != undefined && isSubscribed == true"
+        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+        ✅ Vous êtes inscrit à ce tournoi.
+      </div>
+    </div>
+
+    <div class="flex flex-row items-center space-x-2">
+      <div
+        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+        <img src="../../../assets/img/player.svg" class="w-8" />
+      </div>
+
+      <span class="text-white">Participants</span>
+    </div>
+
+    <div class="mt-4" *ngIf="tournament.players.length == 0">
+      Aucun joueur n'est inscrit pour le moment.
+    </div>
+
+    <div class="mt-4" *ngIf="tournament.players.length > 0">
+      <div *ngFor="let player of tournament.players">
+        {{ player.player.fullName }}
+      </div>
+    </div>
+  </div>
+</div>
