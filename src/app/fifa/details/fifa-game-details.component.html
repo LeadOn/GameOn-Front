@@ -98,24 +98,26 @@
     *ngIf="loading == false && game != null"
   >
     <div class="flex flex-col items-center space-y-4 bir">
-      <div
+      <a
         *ngFor="let player of game.team1.players"
         class="flex flex-col items-center"
+        [routerLink]="['/player', player.id]"
       >
         <img src="{{ player.profilePictureUrl }}" class="w-20 rounded-full" />
         <span class="text-sm">{{ player.fullName }}</span>
         <span class="text-sm italic">{{ player.nickname }}</span>
-      </div>
+      </a>
     </div>
     <div class="flex flex-col items-center space-y-4">
-      <div
+      <a
         *ngFor="let player of game.team2.players"
         class="flex flex-col items-center"
+        [routerLink]="['/player', player.id]"
       >
         <img src="{{ player.profilePictureUrl }}" class="w-20 rounded-full" />
         <span class="text-sm">{{ player.fullName }}</span>
         <span class="text-sm italic">{{ player.nickname }}</span>
-      </div>
+      </a>
     </div>
   </div>
 </div>
