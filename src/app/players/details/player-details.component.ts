@@ -30,7 +30,7 @@ import { Season } from "src/app/shared/classes/Season";
   ],
 })
 export class PlayerDetailsComponent implements OnInit {
-  selectedStats = "global";
+  selectedStats = 0;
   selectedEnemy = 0;
   selectedSeason = 0;
   calculatedStats = new PlatformStatsDto();
@@ -62,7 +62,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
 
   calculateStats() {
-    if (this.selectedStats == "global") {
+    if (this.selectedStats == 0) {
       this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
         if (x.platform.id == 0) {
           this.calculatedStats = x;
@@ -70,7 +70,7 @@ export class PlayerDetailsComponent implements OnInit {
       });
     }
 
-    if (this.selectedStats == "windows") {
+    if (this.selectedStats == 1) {
       this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
         if (x.platform.id == 1) {
           this.calculatedStats = x;
@@ -78,7 +78,7 @@ export class PlayerDetailsComponent implements OnInit {
       });
     }
 
-    if (this.selectedStats == "xbox") {
+    if (this.selectedStats == 2) {
       this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
         if (x.platform.id == 2) {
           this.calculatedStats = x;
@@ -86,7 +86,7 @@ export class PlayerDetailsComponent implements OnInit {
       });
     }
 
-    if (this.selectedStats == "five") {
+    if (this.selectedStats == 3) {
       this.fifaPlayerStats?.statsPerPlatform.forEach((x) => {
         if (x.platform.id == 3) {
           this.calculatedStats = x;
@@ -107,6 +107,7 @@ export class PlayerDetailsComponent implements OnInit {
             // Getting stats
             this.playerService.getStats(id).subscribe(
               (data2) => {
+                console.log(data2);
                 this.fifaPlayerStats = data2;
                 this.calculatedStats = data2.statsPerPlatform[0];
 
@@ -228,5 +229,12 @@ export class PlayerDetailsComponent implements OnInit {
         }
       );
     }
+  }
+
+  onChangeStats(newValue: any) {
+    this.selectedStats = parseInt(newValue.value);
+
+    // Getting stats
+    this.calculateStats();
   }
 }
