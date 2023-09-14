@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { AdminDashboard } from "../classes/AdminDashboard";
 import { Platform } from "src/app/shared/classes/Platform";
 import { UpdateGame } from "../classes/UpdateGame";
+import { Player } from "src/app/shared/classes/Player";
 
 @Injectable({
   providedIn: "root",
@@ -33,5 +34,29 @@ export class YuGamesAdminService {
 
   updateGame(game: UpdateGame): Observable<any> {
     return this.client.patch<any>(environment.yuGamesApiUrl + "/game", game);
+  }
+
+  updatePlayer(
+    id: number,
+    fullName: any,
+    nickname: any,
+    profilePicUrl: any,
+    keycloakId?: string
+  ): Observable<Player> {
+    let body: any = {
+      FullName: fullName,
+      Nickname: nickname,
+      ProfilePictureUrl: profilePicUrl,
+      Id: id,
+    };
+
+    if (keycloakId != null) {
+      body.KeycloakId = keycloakId;
+    }
+
+    return this.client.patch<Player>(
+      environment.yuGamesApiUrl + "/player",
+      body
+    );
   }
 }

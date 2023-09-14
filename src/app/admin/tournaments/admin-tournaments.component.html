@@ -16,7 +16,7 @@
     >
       <img src="../../../assets/img/player.svg" class="w-4" />
     </div>
-    <span class="text-white">Joueurs</span>
+    <span class="text-white">Tournois</span>
   </div>
 
   <table
@@ -25,25 +25,19 @@
   >
     <thead class="text-xs uppercase bg-primary text-white">
       <tr>
-        <th scope="col" class="px-6 py-3">Nom complet</th>
-        <th scope="col" class="px-6 py-3">Surnom</th>
-        <th scope="col" class="px-6 py-3">Actions</th>
+        <th scope="col" class="px-6 py-3">#</th>
+        <th scope="col" class="px-6 py-3">Nom</th>
       </tr>
     </thead>
     <tbody>
       <tr
         class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let player of players"
+        *ngFor="let tournament of tournaments"
       >
         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-          {{ player.fullName }}
+          {{ tournament.id }}
         </th>
-        <td class="px-6 py-4">{{ player.nickname }}</td>
-        <td class="px-6 py-4">
-          <a [routerLink]="['/admin/players/edit', player.id]"
-            ><img src="../../../assets/img/edit.svg" class="w-8"
-          /></a>
-        </td>
+        <td class="px-6 py-4">{{ tournament.name }}</td>
       </tr>
     </tbody>
   </table>
