@@ -100,15 +100,15 @@ export class TournamentsDetailsComponent implements OnInit {
     if (
       this.selectedTeam != undefined &&
       confirm(
-        "Êtes vous sûr de vouloir vous inscrire à ce tournoi avec l'équipe " +
-          this.selectedTeam +
-          " ?"
+        "Êtes vous sûr de vouloir vous inscrire à ce tournoi cette équipe ?"
       )
     ) {
+      this.loading = true;
       this.tournamentService
         .subscribe(this.tournamentId, this.selectedTeam)
         .subscribe(
           (x) => {
+            this.loading = false;
             alert("Inscription réussie !");
             window.location.reload();
           },
