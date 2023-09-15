@@ -103,7 +103,18 @@
         class="flex flex-col items-center"
         [routerLink]="['/player', player.id]"
       >
-        <img src="{{ player.profilePictureUrl }}" class="w-20 rounded-full" />
+        <img
+          src="{{ player.profilePictureUrl }}"
+          *ngIf="player.profilePictureUrl != null"
+          class="w-20 rounded-full"
+        />
+
+        <img
+          src="../../../assets/img/yugames-logo.png"
+          *ngIf="player.profilePictureUrl == null"
+          class="w-20 rounded-full"
+        />
+
         <span class="text-sm">{{ player.fullName }}</span>
         <span class="text-sm italic">{{ player.nickname }}</span>
       </a>
@@ -114,7 +125,17 @@
         class="flex flex-col items-center"
         [routerLink]="['/player', player.id]"
       >
-        <img src="{{ player.profilePictureUrl }}" class="w-20 rounded-full" />
+        <img
+          src="{{ player.profilePictureUrl }}"
+          *ngIf="player.profilePictureUrl != null"
+          class="w-20 rounded-full"
+        />
+
+        <img
+          src="../../../assets/img/yugames-logo.png"
+          *ngIf="player.profilePictureUrl == null"
+          class="w-20 rounded-full"
+        />
         <span class="text-sm">{{ player.fullName }}</span>
         <span class="text-sm italic">{{ player.nickname }}</span>
       </a>

@@ -52,6 +52,7 @@
 
         <div
           class="flex flex-col mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4"
+          *ngIf="isLoggedIn == true"
         >
           <div
             class="p-2 flex flex-col items-center justify-center text-sm"
@@ -137,7 +138,7 @@
       </div>
 
       <div
-        class="flex flex-row items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm"
+        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
       >
         <div
           *ngFor="let player of tournament.players"
