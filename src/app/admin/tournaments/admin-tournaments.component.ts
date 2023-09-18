@@ -47,6 +47,25 @@ export class AdminTournamentsComponent implements OnInit {
     return label;
   }
 
+  goToPhase1(id: number) {
+    if (
+      confirm(
+        "Voulez-vous passer ce tournoi en phase 1 ? Cette action va générer les matchs concernés !"
+      )
+    ) {
+      this.adminService.goToPhase1(id).subscribe(
+        (data) => {
+          alert("Phase 1 confirmée !");
+          window.location.reload();
+        },
+        (err) => {
+          console.error(err);
+          alert("Une erreur est survenue lors du passage en phase 1.");
+        }
+      );
+    }
+  }
+
   delete(id: number) {
     if (
       confirm(

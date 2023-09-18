@@ -125,4 +125,11 @@ export class YuGamesAdminService {
       body
     );
   }
+
+  goToPhase1(tournamentId: number): Observable<any> {
+    return this.client.post<any>(
+      environment.yuGamesApiUrl + "/tournament/" + tournamentId + "/phase1",
+      null
+    );
+  }
 }

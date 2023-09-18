@@ -12,4 +12,5 @@ export class FifaGamePlayed {
   highlights: Highlight[] = [];
   season: Season = new Season();
   isPlayed = false;
+  tournamentId?: number;
 }
