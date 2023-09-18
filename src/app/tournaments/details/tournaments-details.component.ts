@@ -6,6 +6,8 @@ import { ActivatedRoute } from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
 import { FifaTeam } from "src/app/shared/classes/FifaTeam";
 import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
+import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
+import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 
 @Component({
   selector: "app-tournaments-details",
@@ -33,12 +35,14 @@ export class TournamentsDetailsComponent implements OnInit {
   tournamentId: any;
   selectedTeam?: number;
   fifaTeams: FifaTeam[] = [];
+  games: FifaGamePlayed[] = [];
 
   constructor(
     private tournamentService: YuGamesTournamentService,
     private route: ActivatedRoute,
     private keycloak: KeycloakService,
-    private fifaTeamService: YuGamesFifaTeamService
+    private fifaTeamService: YuGamesFifaTeamService,
+    private gameService: YuGamesGameService
   ) {
     this.states = tournamentService.getStates();
     this.tournamentId = this.route.snapshot.paramMap.get("id");
@@ -81,6 +85,16 @@ export class TournamentsDetailsComponent implements OnInit {
       (err) => {
         alert("Erreur lors de la récupération du tournoi.");
         console.error(err);
+      }
+    );
+
+    this.gameService.getByTournament(this.tournamentId).subscribe(
+      (data) => {
+        this.games = data;
+      },
+      (err) => {
+        console.error(err);
+        alert("Erreur lors de la récupération des matchs.");
       }
     );
   }

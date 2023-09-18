@@ -11,4 +11,6 @@ export class FifaGamePlayed {
   team2: FifaTeamDto = new FifaTeamDto();
   highlights: Highlight[] = [];
   season: Season = new Season();
+  isPlayed = false;
+  tournamentId?: number;
 }

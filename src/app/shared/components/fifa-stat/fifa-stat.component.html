@@ -3,36 +3,33 @@
     <div class="w-full bg-white rounded-full h-4">
       <div
         class="bg-green-500 text-xs font-medium text-black text-center p-0.5 leading-none rounded-full h-4"
-        style="width: {{ stat.winRate }}%"
-      >
+        style="width: {{ stat.winRate }}%">
         {{ stat.winRate }}%
       </div>
     </div>
-    <span class="ml-2 text-xs text-green-500 w-6">{{ stat.wins }}W</span>
+    <span class="ml-2 text-xs text-green-500 w-6">{{ stat.wins }}V</span>
   </div>
 
   <div class="w-full mt-1 flex flex-row">
     <div class="w-full bg-white rounded-full h-4">
       <div
         class="bg-red-500 text-xs font-medium text-black text-center p-0.5 leading-none rounded-full h-4"
-        style="width: {{ stat.looseRate }}%"
-      >
+        style="width: {{ stat.looseRate }}%">
         {{ stat.looseRate }}%
       </div>
     </div>
-    <span class="ml-2 text-xs text-red-500 w-6">{{ stat.losses }}L</span>
+    <span class="ml-2 text-xs text-red-500 w-6">{{ stat.losses }}D</span>
   </div>
 
   <div class="w-full mt-1 flex flex-row">
     <div class="w-full bg-white rounded-full h-4">
       <div
         class="bg-yellow-500 text-xs font-medium text-black text-center p-0.5 leading-none rounded-full h-4"
-        style="width: {{ stat.drawRate }}%"
-      >
+        style="width: {{ stat.drawRate }}%">
         {{ stat.drawRate }}%
       </div>
     </div>
-    <span class="ml-2 text-xs text-yellow-500 w-6">{{ stat.draws }}D</span>
+    <span class="ml-2 text-xs text-yellow-500 w-6">{{ stat.draws }}N</span>
   </div>
 </div>
 

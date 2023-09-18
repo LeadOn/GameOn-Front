@@ -1,16 +1,19 @@
 <div class="flex flex-row justify-center mt-8">
   <div
     class="flex flex-row items-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == true">
+    *ngIf="loading == true"
+  >
     <app-loading-spinner></app-loading-spinner>
     <span class="text-white">Chargement...</span>
   </div>
 
   <div
     class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary w-2/3"
-    *ngIf="loading == false && game.id != 0">
+    *ngIf="loading == false && game.id != 0"
+  >
     <div
-      class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center">
+      class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center"
+    >
       <img src="../../../../assets/img/fifagame.svg" class="w-4" />
     </div>
     <span class="text-white">Match {{ game.id }}</span>
@@ -20,17 +23,20 @@
 <div class="flex flex-col items-center mt-4">
   <form
     [formGroup]="updateGameForm"
-    class="mt-6 bg-primary p-8 rounded-lg w-2/3">
+    class="mt-6 bg-primary p-8 rounded-lg w-2/3"
+  >
     <div class="relative z-0 w-full mb-6 group">
       <input
         type="text"
         id="teamCode1"
         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
         formControlName="teamCode1"
-        required />
+        required
+      />
       <label
         for="teamCode1"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
         Code équipe 1
         <span class="text-red-500">*</span>
       </label>
@@ -39,14 +45,16 @@
     <div class="relative z-0 w-full mb-6 group">
       <label
         for="fifateam1"
-        class="block mb-2 text-sm font-medium text-white scale-100">
+        class="block mb-2 text-sm font-medium text-white scale-100"
+      >
         Équipe FIFA 1
       </label>
 
       <select
         id="fifateam1"
         formControlName="teamFifa1"
-        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
         <option value="0" selected>--- Sélectionnez une équipe ---</option>
         <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
           {{ fifaTeam.name }}
@@ -61,10 +69,12 @@
         id="teamScore1"
         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
         formControlName="teamScore1"
-        required />
+        required
+      />
       <label
         for="teamScore1"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
         Score équipe 1
         <span class="text-red-500">*</span>
       </label>
@@ -78,10 +88,12 @@
         id="teamCode2"
         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
         formControlName="teamCode2"
-        required />
+        required
+      />
       <label
         for="teamCode2"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
         Code équipe 2
         <span class="text-red-500">*</span>
       </label>
@@ -94,10 +106,12 @@
         id="teamScore2"
         class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
         formControlName="teamScore2"
-        required />
+        required
+      />
       <label
         for="teamScore2"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
         Score équipe 2
         <span class="text-red-500">*</span>
       </label>
@@ -106,14 +120,16 @@
     <div class="relative z-0 w-full mb-6 group">
       <label
         for="fifateam2"
-        class="block mb-2 text-sm font-medium text-white scale-100">
+        class="block mb-2 text-sm font-medium text-white scale-100"
+      >
         Équipe FIFA 2
       </label>
 
       <select
         id="fifateam2"
         formControlName="teamFifa2"
-        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
         <option value="0" selected>--- Sélectionnez une équipe ---</option>
         <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
           {{ fifaTeam.name }}
@@ -126,14 +142,16 @@
     <div class="relative z-0 w-full mt-6 mb-6 group">
       <label
         for="platform"
-        class="block mb-2 text-sm font-medium text-white scale-100">
+        class="block mb-2 text-sm font-medium text-white scale-100"
+      >
         Plateforme
       </label>
 
       <select
         id="platform"
         formControlName="platform"
-        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
         <option value="0" selected>--- Sélectionnez une plateforme ---</option>
         <option *ngFor="let platform of platforms" value="{{ platform.id }}">
           {{ platform.name }}
@@ -141,9 +159,21 @@
       </select>
     </div>
 
+    <div class="relative z-0 w-full mt-6 mb-6 group">
+      <label
+        for="platform"
+        class="block mb-2 text-sm font-medium text-white scale-100"
+      >
+        Match joué ?
+      </label>
+
+      <input type="checkbox" formControlName="isPlayed" />
+    </div>
+
     <button
       (click)="updateGame()"
-      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+    >
       Mettre à jour
     </button>
   </form>

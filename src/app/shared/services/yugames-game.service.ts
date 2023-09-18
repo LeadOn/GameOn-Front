@@ -60,4 +60,10 @@ export class YuGamesGameService {
       body
     );
   }
+
+  getByTournament(tournamentId: number): Observable<FifaGamePlayed[]> {
+    return this.client.get<FifaGamePlayed[]>(
+      environment.yuGamesApiUrl + "/game/tournament/" + tournamentId
+    );
+  }
 }
