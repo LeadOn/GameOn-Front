@@ -15,4 +15,7 @@ export class FifaGameHistoryCardRowComponent {
 
   @Input()
   score2: number = 0;
+
+  @Input()
+  isPlayed = false;
 }

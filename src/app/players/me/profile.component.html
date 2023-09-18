@@ -24,7 +24,14 @@
   >
     <img
       class="rounded-full w-32"
+      *ngIf="currentPlayer.profilePictureUrl != null"
       src="{{ currentPlayer.profilePictureUrl }}"
+    />
+
+    <img
+      class="rounded-full w-32"
+      *ngIf="currentPlayer.profilePictureUrl == null"
+      src="../../../assets/img/yugames-logo.png"
     />
 
     <div class="flex flex-col w-full ml-4 mt-6">

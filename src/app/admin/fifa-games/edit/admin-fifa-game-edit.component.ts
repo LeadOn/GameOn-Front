@@ -36,6 +36,7 @@ export class AdminFifaGameEditComponent implements OnInit {
     platform: new FormControl(0),
     teamScore1: new FormControl(0, [Validators.min(0)]),
     teamScore2: new FormControl(0, [Validators.min(0)]),
+    isPlayed: new FormControl(false, [Validators.required]),
   });
 
   constructor(
@@ -74,6 +75,7 @@ export class AdminFifaGameEditComponent implements OnInit {
         this.updateGameForm.controls["teamScore2"].setValue(
           this.game.team2.score
         );
+        this.updateGameForm.controls["isPlayed"].setValue(this.game.isPlayed);
         this.updateGameForm.controls["platform"].setValue(this.game.platformId);
         this.loading = false;
       },
@@ -145,6 +147,10 @@ export class AdminFifaGameEditComponent implements OnInit {
     }
     if (this.updateGameForm.controls["teamScore2"].value != null) {
       updateGame.TeamScore2 = this.updateGameForm.controls["teamScore2"].value;
+    }
+
+    if (this.updateGameForm.controls["isPlayed"].value != null) {
+      updateGame.isPlayed = this.updateGameForm.controls["isPlayed"].value;
     }
 
     if (
