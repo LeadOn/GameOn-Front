@@ -1,9 +1,10 @@
 <div class="flex flex-row items-center text-xs md:text-sm">
   <div
     class="border-r-2 mr-2 flex flex-col w-16 md:w-20 items-center"
-    [class.border-green-500]="score1 > score2"
-    [class.border-red-500]="score1 < score2"
-    [class.border-yellow-500]="score1 == score2"
+    [class.border-green-500]="score1 > score2 && isPlayed == true"
+    [class.border-red-500]="score1 < score2 && isPlayed == true"
+    [class.border-yellow-500]="score1 == score2 && isPlayed == true"
+    [class.border-white]="isPlayed == false"
   >
     <img
       *ngIf="team.fifaTeamId != null && team.fifaTeamId != 0"
@@ -23,6 +24,6 @@
   </div>
 
   <div class="px-2 w-8 md:w-12 lg:w-16 text-center">
-    <span class="inline-block">{{ score1 }}</span>
+    <span class="inline-block" *ngIf="isPlayed">{{ score1 }}</span>
   </div>
 </div>

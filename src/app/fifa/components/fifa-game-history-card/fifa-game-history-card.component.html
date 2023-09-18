@@ -6,22 +6,30 @@
       [team]="game.team1"
       [score1]="game.team1.score"
       [score2]="game.team2.score"
+      [isPlayed]="game.isPlayed"
     ></app-fifa-game-history-card-row>
 
-    <hr class="border-secondary" />
+    <hr
+      class="border-secondary"
+      [class.border-white]="game.isPlayed == false"
+    />
 
     <app-fifa-game-history-card-row
       [team]="game.team2"
       [score1]="game.team2.score"
       [score2]="game.team1.score"
+      [isPlayed]="game.isPlayed"
     ></app-fifa-game-history-card-row>
 
-    <hr class="border-secondary" />
+    <hr
+      class="border-secondary"
+      [class.border-white]="game.isPlayed == false"
+    />
 
     <div
       class="flex flex-row p-2 justify-center space-x-1 text-xs text-gray-300"
     >
-      <span class="inline-block">
+      <span class="inline-block" *ngIf="game.isPlayed != false">
         Joué le {{ game.playedOn | date : "medium" }} -
       </span>
       <img
@@ -53,7 +61,7 @@
       </span>
     </div>
 
-    <div class="flex flex-col justify-center mb-2 items-center">
+    <div class="flex flex-row space-x-2 justify-center mb-2 items-center">
       <span
         class="block bg-secondary text-xs rounded-xl px-2"
         *ngIf="game.season.id != 0"
@@ -62,6 +70,13 @@
         [class.bg-red-500]="game.season.id == 2"
       >
         {{ game.season.name }}
+      </span>
+
+      <span
+        class="block bg-white text-black text-xs rounded-xl px-2"
+        *ngIf="game.isPlayed == false"
+      >
+        Planifié
       </span>
     </div>
   </div>

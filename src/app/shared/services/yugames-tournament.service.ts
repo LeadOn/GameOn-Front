@@ -49,6 +49,10 @@ export class YuGamesTournamentService {
         value: 1,
         label: "Planifié",
       },
+      {
+        value: 2,
+        label: "Phase 1",
+      },
     ];
   }
 }
