@@ -5,4 +5,5 @@ export class TournamentPlayerDto {
   player: Player = new Player();
   team: FifaTeam = new FifaTeam();
   joinedAt: Date = new Date();
+  score: number = 0;
 }
