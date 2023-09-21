@@ -12,7 +12,7 @@
     *ngIf="loading == false && player.id != 0"
   >
     <div
-      class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center"
+      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
     >
       <img src="../../../assets/img/platform.svg" class="w-4" />
     </div>
@@ -55,7 +55,7 @@
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Nom complet
-        <span class="text-red-500">*</span>
+        <span class="text-customRed">*</span>
       </label>
     </div>
 
@@ -73,7 +73,7 @@
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Pseudo
-        <span class="text-red-500">*</span>
+        <span class="text-customRed">*</span>
       </label>
     </div>
 
@@ -91,13 +91,13 @@
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         URL de photo de profil
-        <span class="text-red-500">*</span>
+        <span class="text-customRed">*</span>
       </label>
     </div>
 
     <button
       (click)="updatePlayer()"
-      class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-bg-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
     >
       Mettre à jour
     </button>

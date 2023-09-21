@@ -35,9 +35,9 @@
           class="flex flex-col justify-center align-center items-center mt-2"
         >
           <span
-            class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl bg-red-500"
-            [class.bg-red-500]="tournament.state == 0"
-            [class.bg-yellow-500]="tournament.state == 1"
+            class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl bg-customRed"
+            [class.bg-customRed]="tournament.state == 0"
+            [class.bg-customYellow]="tournament.state == 1"
             [class.bg-white]="tournament.state == 2"
             [class.text-black]="tournament.state == 2"
           >
@@ -92,7 +92,7 @@
             </select>
 
             <button
-              class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+              class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
               (click)="subscribe()"
             >
               S'inscrire !
@@ -128,7 +128,7 @@
 
     <div
       *ngIf="tournament.players.length == 0"
-      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker p-4 border border-red-500 rounded-lg mb-4"
+      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker p-4 border border-customRed rounded-lg mb-4"
     >
       Aucun joueur n'est inscrit pour le moment.
     </div>
@@ -171,7 +171,7 @@
               <span
                 class="text-gray-500"
                 *ngIf="tournament.state >= 2"
-                [class.text-yellow-500]="
+                [class.text-customYellow]="
                   tournament.players.indexOf(player) == 0
                 "
                 [class.text-secondary]="tournament.players.indexOf(player) == 1"

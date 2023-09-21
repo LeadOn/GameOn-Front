@@ -1,27 +1,32 @@
 <div class="m-4 overflow-x-auto mt-8">
   <div
     class="flex flex-row items-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == true">
+    *ngIf="loading == true"
+  >
     <app-loading-spinner></app-loading-spinner>
     <span class="text-white">Chargement...</span>
   </div>
 
   <div
     class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == false">
+    *ngIf="loading == false"
+  >
     <div
-      class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center">
+      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
+    >
       <img src="../../../assets/img/player.svg" class="w-4" />
     </div>
     <span class="text-white">Tournois</span>
   </div>
 
   <a
-    class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg transition ease-in-out delay-50 bg-green-500 hover:bg-green-800 mt-4 neomorphism-primaryDarker-2"
+    class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg transition ease-in-out delay-50 bg-customGreen hover:bg-green-800 mt-4 neomorphism-primaryDarker-2"
     *ngIf="loading == false"
-    routerLink="/admin/tournaments/create">
+    routerLink="/admin/tournaments/create"
+  >
     <div
-      class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center">
+      class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center"
+    >
       +
     </div>
     <span class="text-white">Créer un tournoi</span>
@@ -29,7 +34,8 @@
 
   <table
     class="w-full text-sm text-left text-gray-400 mt-4"
-    *ngIf="loading == false">
+    *ngIf="loading == false"
+  >
     <thead class="text-xs uppercase bg-primary text-white">
       <tr>
         <th scope="col" class="px-6 py-3">#</th>
@@ -43,7 +49,8 @@
     <tbody>
       <tr
         class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let tournament of tournaments">
+        *ngFor="let tournament of tournaments"
+      >
         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
           {{ tournament.id }}
         </th>
@@ -66,7 +73,8 @@
 
           <button
             *ngIf="tournament.state < 2"
-            (click)="goToPhase1(tournament.id)">
+            (click)="goToPhase1(tournament.id)"
+          >
             Phase 1
           </button>
         </td>
