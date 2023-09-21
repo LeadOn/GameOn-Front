@@ -12,7 +12,7 @@ export class YuGamesPlayerService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<Player[]> {
-    return this.client.get<Player[]>(environment.yuGamesApiUrl + "/player/all");
+    return this.client.get<Player[]>(environment.yuGamesApiUrl + "/player");
   }
 
   get(id: number): Observable<Player> {
