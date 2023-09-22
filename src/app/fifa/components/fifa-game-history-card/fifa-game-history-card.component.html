@@ -1,53 +1,64 @@
 <div
   class="flex flex-row w-full bg-primary rounded-lg items-center neomorphism-primaryDarker-2"
   [class.border-2]="game.tournamentId != null"
-  [class.border-yellow-500]="game.tournamentId != null">
+  [class.border-secondary]="game.tournamentId != null"
+>
   <div class="flex flex-col flex-grow">
     <app-fifa-game-history-card-row
       [team]="game.team1"
       [score1]="game.team1.score"
       [score2]="game.team2.score"
-      [isPlayed]="game.isPlayed"></app-fifa-game-history-card-row>
+      [isPlayed]="game.isPlayed"
+    ></app-fifa-game-history-card-row>
 
     <hr
       class="border-secondary"
-      [class.border-white]="game.isPlayed == false" />
+      [class.border-white]="game.isPlayed == false"
+    />
 
     <app-fifa-game-history-card-row
       [team]="game.team2"
       [score1]="game.team2.score"
       [score2]="game.team1.score"
-      [isPlayed]="game.isPlayed"></app-fifa-game-history-card-row>
+      [isPlayed]="game.isPlayed"
+    ></app-fifa-game-history-card-row>
 
     <hr
       class="border-secondary"
-      [class.border-white]="game.isPlayed == false" />
+      [class.border-white]="game.isPlayed == false"
+    />
 
     <div
-      class="flex flex-row p-2 justify-center space-x-1 text-xs text-gray-300">
+      class="flex flex-row p-2 justify-center space-x-1 text-xs text-gray-300"
+    >
       <span class="inline-block" *ngIf="game.isPlayed != false">
         Joué le {{ game.playedOn | date : "medium" }} -
       </span>
       <img
         src="../../../../assets/img/windows.svg"
         *ngIf="game.platformId == 1"
-        class="w-4" />
+        class="w-4"
+      />
       <img
         src="../../../../assets/img/xbox.svg"
         *ngIf="game.platformId == 2"
-        class="w-4" />
+        class="w-4"
+      />
       <img
         src="../../../../assets/img/stadium.svg"
         *ngIf="game.platformId == 3"
-        class="w-4" />
+        class="w-4"
+      />
       <img
         src="../../../../assets/img/playstation.svg"
         *ngIf="game.platformId == 4"
-        class="w-4" />
+        class="w-4"
+      />
       <span
         src="../../../../assets/img/playstation.svg"
         *ngIf="game.platformId > 4"
-        class="w-4">
+        class="w-4"
+      >
         {{ game.platform }}
       </span>
     </div>
@@ -58,25 +69,29 @@
         *ngIf="game.season.id != 0"
         [class.bg-secondary]="game.season.id != 1 && game.season.id != 2"
         [class.bg-secondaryDarker]="game.season.id == 1"
-        [class.bg-red-500]="game.season.id == 2">
+        [class.bg-customRed]="game.season.id == 2"
+      >
         {{ game.season.name }}
       </span>
 
       <span
         class="block bg-white text-black text-xs rounded-xl px-2"
-        *ngIf="game.isPlayed == false">
+        *ngIf="game.isPlayed == false"
+      >
         Planifié
       </span>
 
       <span
-        class="block bg-yellow-500 text-white text-xs rounded-xl px-2"
-        *ngIf="game.tournamentId != null">
+        class="block bg-secondary text-white text-xs rounded-xl px-2"
+        *ngIf="game.tournamentId != null"
+      >
         Tournoi
       </span>
     </div>
   </div>
   <div
-    class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"></div>
+    class="inline-block h-100% w-px self-stretch bg-secondary opacity-100"
+  ></div>
   <div class="px-3">
     <a [routerLink]="['/fifa/details', game.id]" *ngIf="admin == false">
       <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>

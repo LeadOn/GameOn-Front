@@ -5,15 +5,18 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Poppins", ...defaultTheme.fontFamily.sans],
+        sans: ["Chillax-Regular", ...defaultTheme.fontFamily.sans],
       },
     },
     colors: {
-      primary: "#424549",
+      primary: "#36393e",
       primaryDarker: "#282b30",
-      primaryDarkerer: "#1a1a1c",
-      secondary: "#00B9FF",
-      secondaryDarker: "#003C5A",
+      primaryDarkerer: "#1e2124",
+      secondary: "#B86F52",
+      secondaryDarker: "#775448",
+      customRed: "#C82D44",
+      customGreen: "#1B998B",
+      customYellow: "#D4AC0C",
     },
   },
   plugins: [require("flowbite/plugin"), require("@tailwindcss/aspect-ratio")],

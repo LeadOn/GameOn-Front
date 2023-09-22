@@ -33,6 +33,7 @@ export class FifaGameDetailsComponent implements OnInit {
   externalIcon = faExternalLinkAlt;
   successMessage = false;
   isLoggedIn = false;
+  isAdmin = false;
 
   createHighlightForm = new FormGroup({
     name: new FormControl("", [Validators.maxLength(50), Validators.required]),
@@ -52,6 +53,7 @@ export class FifaGameDetailsComponent implements OnInit {
 
     this.keycloak.isLoggedIn().then((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
+      this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
     });
 
     this.getGame();
