@@ -13,7 +13,7 @@ export class YuGamesHighlightService {
 
   getAll(): Observable<Highlight[]> {
     return this.client.get<Highlight[]>(
-      environment.yuGamesApiUrl + "/highlight"
+      environment.yuGamesApiUrl + "/highlight/all"
     );
   }
 

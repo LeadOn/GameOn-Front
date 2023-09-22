@@ -11,7 +11,9 @@ export class YuGamesPlatformService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<Platform[]> {
-    return this.client.get<Platform[]>(environment.yuGamesApiUrl + "/platform");
+    return this.client.get<Platform[]>(
+      environment.yuGamesApiUrl + "/platform/all"
+    );
   }
 
   getById(id: number): Observable<Platform> {
