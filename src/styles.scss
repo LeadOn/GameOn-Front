@@ -1,3 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/**
+ * @license
+ *
+ * Font Family: Chillax
+ * Designed by: Manushi Parikh
+ * URL: https://www.fontshare.com/fonts/chillax
+ * © 2023 Indian Type Foundry
+ *
+ * Font Styles:
+ * Chillax Regular
+ *
+*/
+
+@font-face {
+  font-family: "Chillax-Regular";
+  src: url("./assets/fonts/Chillax-Regular.ttf") format("woff2"),
+    url("./assets/fonts/Chillax-Regular.woff") format("woff"),
+    url("./assets/fonts/Chillax-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}

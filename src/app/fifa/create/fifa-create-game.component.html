@@ -2,16 +2,19 @@
   [@inOutAnimation]
   class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
   role="status"
-  *ngIf="isLoading == true">
+  *ngIf="isLoading == true"
+>
   <app-loading-spinner></app-loading-spinner>
   Chargement des données...
 </div>
 
 <div
   [@inOutAnimation]
-  class="flex flex-row justify-center text-white m-8 md:mx-16 lg:mx-32 bg-primary p-4 rounded-lg neomorphism-primaryDarker">
+  class="flex flex-row justify-center text-white m-8 md:mx-16 lg:mx-32 bg-primary p-4 rounded-lg neomorphism-primaryDarker"
+>
   <div
-    class="rounded-full bg-green-500 w-8 flex flex-col items-center justify-center">
+    class="rounded-full bg-customGreen w-8 flex flex-col items-center justify-center"
+  >
     <img src="../../../assets/img/fifagame.svg" class="w-4" />
   </div>
   <span class="ml-1 text-white">Ajouter un match</span>
@@ -19,12 +22,15 @@
 
 <div
   [@inOutAnimation]
-  class="flex flex-row justify-center text-white m-8 md:mx-16 lg:mx-32 bg-primary p-4 rounded-lg neomorphism-primaryDarker-2">
+  class="flex flex-row justify-center text-white m-8 md:mx-16 lg:mx-32 bg-primary p-4 rounded-lg neomorphism-primaryDarker-2"
+>
   <form [formGroup]="createGameForm" class="w-full flex flex-col">
     <div
-      class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-around">
+      class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-around"
+    >
       <div
-        class="flex flex-col md:w-full space-y-4 bg-primaryDarker p-4 neomorphism-inner-primaryDarker rounded-lg">
+        class="flex flex-col md:w-full space-y-4 bg-primaryDarker p-4 neomorphism-inner-primaryDarker rounded-lg"
+      >
         <p class="underline w-full text-center mb-4">Équipe 1</p>
 
         <div class="flex flex-col md:flex-row md:space-x-4">
@@ -34,12 +40,14 @@
               id="teamCode1"
               class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
               formControlName="teamCode1"
-              required />
+              required
+            />
             <label
               for="teamCode1"
-              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
               Code
-              <span class="text-red-500">*</span>
+              <span class="text-customRed">*</span>
             </label>
           </div>
 
@@ -50,12 +58,14 @@
               min="0"
               class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
               formControlName="teamScore1"
-              required />
+              required
+            />
             <label
               for="teamScore1"
-              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
               Score
-              <span class="text-red-500">*</span>
+              <span class="text-customRed">*</span>
             </label>
           </div>
         </div>
@@ -67,17 +77,20 @@
               id="fifaTeam1"
               class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
               formControlName="teamFifa1"
-              list="fifaTeam1List" />
+              list="fifaTeam1List"
+            />
 
             <datalist id="fifaTeam1List">
               <option
                 *ngFor="let team of fifaTeams"
-                value="{{ team.name }}"></option>
+                value="{{ team.name }}"
+              ></option>
             </datalist>
 
             <label
               for="fifaTeam1"
-              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
               Équipe FIFA (si disponible)
             </label>
           </div>
@@ -85,7 +98,8 @@
           <img
             *ngIf="fifaTeam1 != 0"
             class="w-20"
-            src="../../../assets/img/teams/{{ fifaTeam1 }}.png" />
+            src="../../../assets/img/teams/{{ fifaTeam1 }}.png"
+          />
         </div>
 
         <div class="relative z-0 w-full mb-6 group">
@@ -96,7 +110,8 @@
             multiple
             id="team1"
             formControlName="team1"
-            class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          >
             <option *ngFor="let player of players" value="{{ player.id }}">
               {{ player.fullName }}
             </option>
@@ -105,7 +120,8 @@
       </div>
 
       <div
-        class="flex flex-col md:w-full space-y-4 bg-primaryDarker p-4 neomorphism-inner-primaryDarker rounded-lg">
+        class="flex flex-col md:w-full space-y-4 bg-primaryDarker p-4 neomorphism-inner-primaryDarker rounded-lg"
+      >
         <p class="underline w-full text-center mb-4">Équipe 2</p>
 
         <div class="flex flex-col md:flex-row md:space-x-4">
@@ -115,12 +131,14 @@
               id="teamCode2"
               class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
               formControlName="teamCode2"
-              required />
+              required
+            />
             <label
               for="teamCode2"
-              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
               Code
-              <span class="text-red-500">*</span>
+              <span class="text-customRed">*</span>
             </label>
           </div>
 
@@ -131,12 +149,14 @@
               min="0"
               class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
               formControlName="teamScore2"
-              required />
+              required
+            />
             <label
               for="teamScore2"
-              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
               Score
-              <span class="text-red-500">*</span>
+              <span class="text-customRed">*</span>
             </label>
           </div>
         </div>
@@ -148,17 +168,20 @@
               id="fifaTeam2"
               class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
               formControlName="teamFifa2"
-              list="fifaTeam2List" />
+              list="fifaTeam2List"
+            />
 
             <datalist id="fifaTeam2List">
               <option
                 *ngFor="let team of fifaTeams"
-                value="{{ team.name }}"></option>
+                value="{{ team.name }}"
+              ></option>
             </datalist>
 
             <label
               for="fifaTeam2"
-              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
               Équipe FIFA (si disponible)
             </label>
           </div>
@@ -166,7 +189,8 @@
           <img
             *ngIf="fifaTeam2 != 0"
             class="w-20"
-            src="../../../assets/img/teams/{{ fifaTeam2 }}.png" />
+            src="../../../assets/img/teams/{{ fifaTeam2 }}.png"
+          />
         </div>
 
         <div class="relative z-0 w-full mb-6 group">
@@ -177,7 +201,8 @@
             multiple
             id="team2"
             formControlName="team2"
-            class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+            class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          >
             <option *ngFor="let player of players" value="{{ player.id }}">
               {{ player.fullName }}
             </option>
@@ -187,17 +212,20 @@
     </div>
 
     <div
-      class="mt-4 relative z-0 w-full mb-6 group bg-primaryDarker p-4 neomorphism-inner-primaryDarker rounded-lg">
+      class="mt-4 relative z-0 w-full mb-6 group bg-primaryDarker p-4 neomorphism-inner-primaryDarker rounded-lg"
+    >
       <label
         for="platform"
-        class="block mb-2 text-sm font-medium text-white scale-100">
+        class="block mb-2 text-sm font-medium text-white scale-100"
+      >
         Plateforme
       </label>
 
       <select
         id="platform"
         formControlName="platform"
-        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      >
         <option *ngFor="let platform of platforms" value="{{ platform.id }}">
           {{ platform.name }}
         </option>
@@ -206,7 +234,8 @@
 
     <button
       (click)="createGame()"
-      class="text-white mt-4 bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+      class="text-white mt-4 bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+    >
       Créer le match
     </button>
   </form>

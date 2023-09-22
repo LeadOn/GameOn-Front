@@ -18,14 +18,14 @@
   >
     <div class="bg-primary p-4 rounded-lg flex flex-col items-center">
       <img
-        class="rounded-full neomorphism-primary mt-4"
+        class="rounded-full neomorphism-inner-primary mt-4"
         *ngIf="player.profilePictureUrl != null"
         src="{{ player.profilePictureUrl }}"
         width="128"
       />
 
       <img
-        class="rounded-full neomorphism-primary mt-4"
+        class="rounded-full neomorphism-inner-primary mt-4"
         *ngIf="player.profilePictureUrl == null"
         src="../../../assets/img/yugames-logo.png"
         width="128"
@@ -39,7 +39,7 @@
           (change)="onChangeEnemy($event.target)"
           [ngModel]="selectedEnemy"
           id="enemies"
-          class="mt-2 neomorphism-primary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          class="mt-2 focus:ring-secondary focus:border-secondary neomorphism-inner-primaryDarker bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
           <option value="0">Versus</option>
           <option *ngFor="let player of players" value="{{ player.id }}">
@@ -51,7 +51,7 @@
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
           id="seasons"
-          class="mt-2 neomorphism-primary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          class="mt-2 focus:ring-secondary focus:border-secondary neomorphism-inner-primaryDarker bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
           <option *ngFor="let season of seasons" value="{{ season.id }}">
             {{ season.name }}
@@ -66,7 +66,7 @@
             [(ngModel)]="selectedStats"
             (change)="calculateStats()"
             id="stats"
-            class="mb-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            class="mb-4 focus:ring-secondary focus:border-secondary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option
               *ngFor="let platform of fifaPlayerStats.statsPerPlatform"
@@ -122,7 +122,7 @@
       *ngIf="
         loading == false && selectedEnemy != 0 && enemy != null && enemy.id != 0
       "
-      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker neomorphism-primaryDarker p-4 border border-red-500 rounded-lg mb-4"
+      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker neomorphism-primaryDarker p-4 border border-customRed rounded-lg mb-4"
     >
       <div class="flex flex-col items-center space-y-4">
         <div class="flex flex-row items-center space-x-4">

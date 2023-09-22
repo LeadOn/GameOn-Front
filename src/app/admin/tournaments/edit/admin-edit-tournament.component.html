@@ -12,7 +12,7 @@
     *ngIf="loading == false && tournament != null"
   >
     <div
-      class="rounded-full bg-yellow-500 p-4 flex flex-col align-center items-center justify-center"
+      class="rounded-full bg-customYellow p-4 flex flex-col align-center items-center justify-center"
     >
       <img src="../../../../assets/img/trophee.svg" class="w-8" />
     </div>
@@ -41,7 +41,7 @@
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Nom
-        <span class="text-red-500">*</span>
+        <span class="text-customRed">*</span>
       </label>
     </div>
 
@@ -106,7 +106,7 @@
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Planifié du
-        <span class="text-red-500">*</span>
+        <span class="text-customRed">*</span>
       </label>
     </div>
 
@@ -122,13 +122,13 @@
         class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Au
-        <span class="text-red-500">*</span>
+        <span class="text-customRed">*</span>
       </label>
     </div>
 
     <button
       (click)="editTournament()"
-      class="text-white bg-yellow-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-customYellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
     >
       Modifier
     </button>

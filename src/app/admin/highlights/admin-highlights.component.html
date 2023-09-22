@@ -1,16 +1,19 @@
 <div class="m-4 overflow-x-auto mt-8">
   <div
     class="flex flex-row items-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == true">
+    *ngIf="loading == true"
+  >
     <app-loading-spinner></app-loading-spinner>
     <span class="text-white">Chargement...</span>
   </div>
 
   <div
     class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == false">
+    *ngIf="loading == false"
+  >
     <div
-      class="rounded-full bg-red-500 w-8 flex flex-col items-center justify-center">
+      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
+    >
       <img src="../../../assets/img/highlight.svg" class="w-4" />
     </div>
     <span class="text-white">Temps forts</span>
@@ -18,7 +21,8 @@
 
   <table
     class="w-full text-sm text-left text-gray-400 mt-4"
-    *ngIf="loading == false">
+    *ngIf="loading == false"
+  >
     <thead class="text-xs uppercase bg-primary text-white">
       <tr>
         <th scope="col" class="px-6 py-3">Titre</th>
@@ -28,7 +32,8 @@
     <tbody>
       <tr
         class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let highlight of highlights">
+        *ngFor="let highlight of highlights"
+      >
         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
           {{ highlight.name }}
         </th>
@@ -36,7 +41,8 @@
           <a
             href="{{ highlight.externalUrl }}"
             target="_blank"
-            class="underline">
+            class="underline"
+          >
             Lien
           </a>
         </td>
