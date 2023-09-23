@@ -12,7 +12,7 @@ export class YuGamesGameService {
 
   getLast(limit: number): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
-      environment.yuGamesApiUrl + "/game/last/" + limit
+      environment.yuGamesApiUrl + "/fifagame/last/" + limit
     );
   }
 
@@ -22,7 +22,7 @@ export class YuGamesGameService {
     startDate?: string,
     endDate?: string
   ): Observable<FifaGamePlayed[]> {
-    let url = environment.yuGamesApiUrl + "/game?limit=" + limit;
+    let url = environment.yuGamesApiUrl + "/fifagame?limit=" + limit;
 
     if (platformId != null && platformId != 0) {
       url += "&platformId=" + platformId;
@@ -44,26 +44,30 @@ export class YuGamesGameService {
     limit: number
   ): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
-      environment.yuGamesApiUrl + "/game/last/" + limit + "/player/" + playerId
+      environment.yuGamesApiUrl +
+        "/fifagame/last/" +
+        limit +
+        "/player/" +
+        playerId
     );
   }
 
   getById(gameId: number): Observable<FifaGamePlayed> {
     return this.client.get<FifaGamePlayed>(
-      environment.yuGamesApiUrl + "/game/" + gameId
+      environment.yuGamesApiUrl + "/fifagame/" + gameId
     );
   }
 
   create(body: any): Observable<FifaGamePlayed> {
     return this.client.post<FifaGamePlayed>(
-      environment.yuGamesApiUrl + "/game",
+      environment.yuGamesApiUrl + "/fifagame",
       body
     );
   }
 
   getByTournament(tournamentId: number): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
-      environment.yuGamesApiUrl + "/game/tournament/" + tournamentId
+      environment.yuGamesApiUrl + "/fifagame/tournament/" + tournamentId
     );
   }
 }

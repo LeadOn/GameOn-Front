@@ -17,6 +17,8 @@ module.exports = {
       customRed: "#C82D44",
       customGreen: "#1B998B",
       customYellow: "#D4AC0C",
+      frenchBlue: "#071d90",
+      frenchRed: "#ED2939",
     },
   },
   plugins: [require("flowbite/plugin"), require("@tailwindcss/aspect-ratio")],

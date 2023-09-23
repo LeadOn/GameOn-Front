@@ -11,8 +11,6 @@ export class YuGamesFifaTeamService {
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<FifaTeam[]> {
-    return this.client.get<FifaTeam[]>(
-      environment.yuGamesApiUrl + "/fifateam/all"
-    );
+    return this.client.get<FifaTeam[]>(environment.yuGamesApiUrl + "/fifateam");
   }
 }
