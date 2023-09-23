@@ -2,18 +2,15 @@
   [@inOutAnimation]
   class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
   role="status"
-  *ngIf="loading == true"
->
+  *ngIf="loading == true">
   <app-loading-spinner></app-loading-spinner>
   Chargement des données...
 </div>
 
 <div
-  class="flex flex-row justify-center items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white space-x-2"
->
+  class="flex flex-row justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white space-x-2 m-8 md:mx-16 lg:mx-32">
   <div
-    class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center"
-  >
+    class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
     <img src="../../assets/img/trophee.svg" class="w-8" />
   </div>
 
@@ -21,222 +18,199 @@
 </div>
 
 <div
-  class="flex flex-col space-y-2 justify-center items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white"
->
-  <div
-    class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker"
-  >
-    <div class="flex flex-row items-center space-x-2">
+  class="flex flex-col md:flex-row md:space-x-8 text-white m-8 md:mx-16 lg:mx-32"
+  [@inOutAnimation]>
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+    <div
+      class="flex flex-col space-y-2 justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white">
       <div
-        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center"
-      >
-        <img src="../../assets/img/rules.svg" class="w-8" />
+        class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker">
+        <div class="flex flex-row items-center space-x-2">
+          <div
+            class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+            <img src="../../assets/img/rules.svg" class="w-8" />
+          </div>
+
+          <span class="text-white">Règlement</span>
+        </div>
       </div>
 
-      <span class="text-white">Règles</span>
-    </div>
-  </div>
-
-  <div
-    class="flex flex-col justify-around items-center align-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker"
-  >
-    <span class="mt-4">
-      Bienvenue à tous dans la section tournois de YuGames ! Ici, vous trouverez
-      l'intégralité des tournois passés et à venir ayant eu lieu au sein de
-      notre petit groupe de joueurs ! Comme toute compétition, celle-ci inclus
-      quelques règles élémentaires à respecter.
-    </span>
-
-    <span class="text-customRed mt-4">
-      Si vous ne les appliquez pas, vous risquez un ban définitif de nos
-      compétitions et de la plateforme.
-    </span>
-
-    <span class="underline mt-6">
-      Voici les règles en vigueur pour les tournois (mise à jour le 14/09/2023 à
-      15h) :
-    </span>
-
-    <ul class="w-full px-8 mt-4 list-decimal">
-      <li>
-        Les phases de poule vont être jouées en matchs aller-retour (
-        <span class="text-customGreen">Victoire</span>
-        = 3 points,
-        <span class="text-customRed">Défaite</span>
-        = 0 points,
-        <span class="text-customYellow">Nul</span>
-        = 1 points)
-      </li>
-      <li>
-        Vous devrez sélectionner une équipe, et ne jouer que celle-ci durant
-        toute la durée du tournoi.
-        <span class="text-customYellow">
-          Remarque : seules les équipes
-          <img
-            src="../../assets/img/star-yellow.svg"
-            class="w-4 inline-block"
-          />
-          <img
-            src="../../assets/img/star-yellow.svg"
-            class="w-4 inline-block"
-          />
-          <img
-            src="../../assets/img/star-yellow.svg"
-            class="w-4 inline-block"
-          />
-          <img
-            src="../../assets/img/star-yellow.svg"
-            class="w-4 inline-block"
-          />
-          <img src="../../assets/img/star-gray.svg" class="w-4 inline-block" />
-          sont autorisées.
-        </span>
-      </li>
-      <li>
-        Les phases finales se joueront comme ceci : 8ème / quart / demi / finale
-      </li>
-      <li>
-        2 groupes seront déterminés par les phases de poule, il y aura donc 2
-        phases finales
-      </li>
-      <li>Les doublons d'équipe sont autorisés (exemple : PSG vs PSG)</li>
-      <li>
-        Un match lancé doit être joué.
+      <div
+        class="flex flex-col justify-around items-center align-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker text-justify">
         <span class="text-customRed">
-          Rage Quit / Bug / toute situation malencontreuse (bagarres, ...)
-          donneront victorieux la personne ayant le meilleur score à l'instant
-          T. Si la situation est provoquée par l'un des joueurs, celui-ci perdra
-          3-0 automatiquement
+          Si vous ne les appliquez pas, vous risquez un ban définitif de nos
+          compétitions et de la plateforme.
         </span>
-      </li>
-      <li>
-        Si un joueur extérieur perturbe le match en cours, il se verra
-        automatiquement
-        <span class="text-customRed">perdre son prochain match</span>
-        , et si récidive,
-        <span class="text-customRed">discalification immédiate</span>
-      </li>
-      <li>Aucun match ne peux être rejoué.</li>
-      <li>
-        Si un joueur souhaite mettre pause pour toute raison (changements,
-        démangeaison, ...), celui-ci doit avertir verbalement son adversaire
-        avant d'appuyer sur pause
-      </li>
-      <li class="text-customRed">
-        Tout comportement injurieux provoquera une sanction ainsi qu'une
-        discalification
-      </li>
-    </ul>
-  </div>
-</div>
 
-<div
-  *ngIf="tournaments.length == 0"
-  class="flex flex-col space-y-2 justify-center items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white"
->
-  <div
-    class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker"
-  >
-    <div class="flex flex-row items-center space-x-2">
+        <ul class="w-full px-4 mt-4 list-decimal">
+          <li>
+            Les phases de poule vont être jouées en matchs aller-retour (
+            <span class="text-customGreen">Victoire</span>
+            = 3 points,
+            <span class="text-customRed">Défaite</span>
+            = 0 points,
+            <span class="text-customYellow">Nul</span>
+            = 1 points)
+          </li>
+          <li>
+            Vous devrez sélectionner une équipe, et ne jouer que celle-ci durant
+            toute la durée du tournoi.
+            <span class="text-customYellow">
+              Remarque : seules les équipes
+              <img
+                src="../../assets/img/star-yellow.svg"
+                class="w-4 inline-block" />
+              <img
+                src="../../assets/img/star-yellow.svg"
+                class="w-4 inline-block" />
+              <img
+                src="../../assets/img/star-yellow.svg"
+                class="w-4 inline-block" />
+              <img
+                src="../../assets/img/star-yellow.svg"
+                class="w-4 inline-block" />
+              <img
+                src="../../assets/img/star-gray.svg"
+                class="w-4 inline-block" />
+              sont autorisées.
+            </span>
+          </li>
+          <li>
+            Les phases finales se joueront comme ceci : 8ème / quart / demi /
+            finale
+          </li>
+          <li>
+            2 groupes seront déterminés par les phases de poule, il y aura donc
+            2 phases finales
+          </li>
+          <li>Les doublons d'équipe sont autorisés (exemple : PSG vs PSG)</li>
+          <li>
+            Un match lancé doit être joué.
+            <span class="text-customRed">
+              Rage Quit / Bug / toute situation malencontreuse (bagarres, ...)
+              donneront victorieux la personne ayant le meilleur score à
+              l'instant T. Si la situation est provoquée par l'un des joueurs,
+              celui-ci perdra 3-0 automatiquement
+            </span>
+          </li>
+          <li>
+            Si un joueur extérieur perturbe le match en cours, il se verra
+            automatiquement
+            <span class="text-customRed">perdre son prochain match</span>
+            , et si récidive,
+            <span class="text-customRed">discalification immédiate</span>
+          </li>
+          <li>Aucun match ne peux être rejoué.</li>
+          <li>
+            Si un joueur souhaite mettre pause pour toute raison (changements,
+            démangeaison, ...), celui-ci doit avertir verbalement son adversaire
+            avant d'appuyer sur pause
+          </li>
+          <li class="text-customRed">
+            Tout comportement injurieux provoquera une sanction ainsi qu'une
+            discalification
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full flex flex-col w-full mt-8 md:mt-0">
+    <div
+      *ngIf="tournaments.length == 0"
+      class="flex flex-col space-y-2 justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white">
       <div
-        class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center"
-      >
-        <img src="../../assets/img/trophee.svg" class="w-8" />
-      </div>
+        class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker">
+        <div class="flex flex-row items-center space-x-2">
+          <div
+            class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
+            <img src="../../assets/img/trophee.svg" class="w-8" />
+          </div>
 
-      <span class="text-white">
-        Aucun tournoi n'est actuellement disponible à la consultation.
-      </span>
+          <span class="text-white">
+            Aucun tournoi n'est actuellement disponible à la consultation.
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="loading == false"
+      class="text-white flex flex-col space-y-4 md:space-y-0 md:grid md:grid-cols-3 lg:grid-cols-4 md:auto-rows-auto md:gap-5">
+      <a
+        *ngFor="let tournament of tournaments"
+        [routerLink]="['/tournaments', tournament.id]"
+        class="hidden md:flex drop-shadow-xl flex-col h-72 items-center neomorphism-primaryDarker-2 bg-secondaryDarker p-6 rounded-lg transition transition-all ease-in-out duration-200 hover:bg-secondary">
+        <div class="mt-4">
+          <img
+            *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
+            class="rounded-full"
+            src="{{ tournament.logoUrl }}"
+            width="128" />
+
+          <img
+            *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
+            class="rounded-full"
+            src="../../assets/img/yugames-logo.png"
+            width="128" />
+        </div>
+
+        <div
+          class="mt-2 text-center flex flex-col justify-center align-center items-center space-y-2">
+          <span class="inline-block text-lg">{{ tournament.name }}</span>
+
+          <span class="inline-block italic text-xs">
+            📅 Du {{ tournament.plannedFrom.toString().split("T")[0] }} au
+            {{ tournament.plannedTo.toString().split("T")[0] }}
+          </span>
+
+          <span
+            class="text-xs px-4 rounded-xl bg-customRed"
+            [class.bg-customRed]="tournament.state == 0"
+            [class.bg-customYellow]="tournament.state == 1"
+            [class.bg-white]="tournament.state == 2"
+            [class.text-black]="tournament.state == 2">
+            {{ getState(tournament.state) }}
+          </span>
+        </div>
+      </a>
+
+      <a
+        *ngFor="let tournament of tournaments"
+        [routerLink]="['/tournaments', tournament.id]"
+        class="md:hidden bg-secondaryDarker neomorphism-primaryDarker-2 p-4 rounded-lg drop-shadow-xl flex flex-row space-x-4 transition transition-all ease-in-out duration-200 hover:bg-secondary">
+        <img
+          class="w-16 rounded-full"
+          *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
+          src="{{ tournament.logoUrl }}" />
+        <img
+          class="w-16 rounded-full"
+          *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
+          src="../../assets/img/yugames-logo.png" />
+
+        <div
+          class="flex flex-col justify-center align-center justify-center space-y-2">
+          <div class="flex flex-row space-x-2">
+            <span class="text-lg">
+              {{ tournament.name }}
+            </span>
+
+            <span
+              class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl bg-customRed"
+              [class.bg-customRed]="tournament.state == 0"
+              [class.bg-customYellow]="tournament.state == 1"
+              [class.bg-white]="tournament.state == 2"
+              [class.text-black]="tournament.state == 2">
+              {{ getState(tournament.state) }}
+            </span>
+          </div>
+
+          <span class="text-xs">
+            📅 Du {{ tournament.plannedFrom.toString().split("T")[0] }} au
+            {{ tournament.plannedTo.toString().split("T")[0] }}
+          </span>
+        </div>
+      </a>
     </div>
   </div>
-</div>
-
-<div
-  *ngIf="loading == false"
-  class="text-white mt-8 flex flex-col space-y-4 md:space-y-0 md:grid md:grid-cols-3 lg:grid-cols-4 md:auto-rows-auto md:gap-5 m-8 md:mx-16 lg:mx-32"
->
-  <a
-    *ngFor="let tournament of tournaments"
-    [routerLink]="['/tournaments', tournament.id]"
-    class="hidden md:flex drop-shadow-xl flex-col h-72 items-center bg-secondaryDarker p-6 rounded-lg transition transition-all ease-in-out duration-200 hover:bg-secondary"
-  >
-    <div class="mt-4">
-      <img
-        *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
-        class="rounded-full"
-        src="{{ tournament.logoUrl }}"
-        width="128"
-      />
-
-      <img
-        *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
-        class="rounded-full"
-        src="../../assets/img/yugames-logo.png"
-        width="128"
-      />
-    </div>
-
-    <div
-      class="mt-2 text-center flex flex-col justify-center align-center items-center space-y-2"
-    >
-      <span class="inline-block text-lg">{{ tournament.name }}</span>
-
-      <span class="inline-block italic text-xs">
-        📅 Du {{ tournament.plannedFrom.toString().split("T")[0] }} au
-        {{ tournament.plannedTo.toString().split("T")[0] }}
-      </span>
-
-      <span
-        class="text-xs px-4 rounded-xl bg-customRed"
-        [class.bg-customRed]="tournament.state == 0"
-        [class.bg-customYellow]="tournament.state == 1"
-        [class.bg-white]="tournament.state == 2"
-        [class.text-black]="tournament.state == 2"
-      >
-        {{ getState(tournament.state) }}
-      </span>
-    </div>
-  </a>
-
-  <a
-    *ngFor="let tournament of tournaments"
-    [routerLink]="['/tournaments', tournament.id]"
-    class="md:hidden bg-secondaryDarker p-4 rounded-lg drop-shadow-xl flex flex-row space-x-4 transition transition-all ease-in-out duration-200 hover:bg-secondary"
-  >
-    <img
-      class="w-16 rounded-full"
-      *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
-      src="{{ tournament.logoUrl }}"
-    />
-    <img
-      class="w-16 rounded-full"
-      *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
-      src="../../assets/img/yugames-logo.png"
-    />
-
-    <div
-      class="flex flex-col justify-center align-center justify-center space-y-2"
-    >
-      <div class="flex flex-row space-x-2">
-        <span class="text-lg">
-          {{ tournament.name }}
-        </span>
-
-        <span
-          class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl bg-customRed"
-          [class.bg-customRed]="tournament.state == 0"
-          [class.bg-customYellow]="tournament.state == 1"
-          [class.bg-white]="tournament.state == 2"
-          [class.text-black]="tournament.state == 2"
-        >
-          {{ getState(tournament.state) }}
-        </span>
-      </div>
-
-      <span class="text-xs">
-        📅 Du {{ tournament.plannedFrom.toString().split("T")[0] }} au
-        {{ tournament.plannedTo.toString().split("T")[0] }}
-      </span>
-    </div>
-  </a>
 </div>
