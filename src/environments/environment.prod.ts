@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  yuGamesApiUrl: "https://yugames-api.valentinvirot.fr/v1",
+  yuGamesApiUrl: "https://yugames-api.valentinvirot.fr",
   keycloak: {
     url: "https://auth.valentinvirot.fr/",
     realm: "yufoot",

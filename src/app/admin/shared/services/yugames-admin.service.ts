@@ -29,7 +29,7 @@ export class YuGamesAdminService {
 
   deleteGame(gameId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.yuGamesApiUrl + "/game/" + gameId
+      environment.yuGamesApiUrl + "/fifagame/" + gameId
     );
   }
 
@@ -40,7 +40,10 @@ export class YuGamesAdminService {
   }
 
   updateGame(game: UpdateGame): Observable<any> {
-    return this.client.patch<any>(environment.yuGamesApiUrl + "/game", game);
+    return this.client.patch<any>(
+      environment.yuGamesApiUrl + "/fifagame",
+      game
+    );
   }
 
   updatePlayer(
