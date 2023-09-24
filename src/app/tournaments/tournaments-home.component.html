@@ -1,6 +1,6 @@
 <div
   [@inOutAnimation]
-  class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
+  class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 lg:mx-32 text-white"
   role="status"
   *ngIf="loading == true">
   <app-loading-spinner></app-loading-spinner>
@@ -8,7 +8,7 @@
 </div>
 
 <div
-  class="flex flex-row justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white space-x-2 m-8 md:mx-16 lg:mx-32">
+  class="flex flex-row justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white space-x-2 m-8 lg:mx-32">
   <div
     class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center">
     <img src="../../assets/img/trophee.svg" class="w-8" />
@@ -18,9 +18,9 @@
 </div>
 
 <div
-  class="flex flex-col md:flex-row md:space-x-8 text-white m-8 md:mx-16 lg:mx-32"
+  class="flex flex-col lg:flex-row lg:space-x-8 text-white m-8 lg:mx-32"
   [@inOutAnimation]>
-  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
+  <div class="w-full lg:w-1/3 xl:w-1/4">
     <div
       class="flex flex-col space-y-2 justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white">
       <div
@@ -115,7 +115,7 @@
     </div>
   </div>
 
-  <div class="w-full flex flex-col w-full mt-8 md:mt-0">
+  <div class="w-full flex flex-col w-full mt-8 lg:mt-0">
     <div
       *ngIf="tournaments.length == 0"
       class="flex flex-col space-y-2 justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white">
@@ -136,12 +136,12 @@
 
     <div
       *ngIf="loading == false"
-      class="text-white flex flex-col space-y-4 md:space-y-0 md:grid md:grid-cols-3 lg:grid-cols-4 md:auto-rows-auto md:gap-5">
+      class="text-white flex flex-col space-y-4 lg:space-y-0 lg:grid lg:grid-cols-3 lg:auto-rows-auto lg:gap-5">
       <a
         *ngFor="let tournament of tournaments"
         [routerLink]="['/tournaments', tournament.id]"
-        class="hidden md:flex drop-shadow-xl flex-col h-72 items-center neomorphism-primaryDarker-2 bg-secondaryDarker p-6 rounded-lg transition transition-all ease-in-out duration-200 hover:bg-secondary">
-        <div class="mt-4">
+        class="hidden lg:flex drop-shadow-xl flex-col h-72 items-center neomorphism-primaryDarker-2 bg-secondaryDarker p-6 rounded-lg transition transition-all ease-in-out duration-200 hover:bg-secondary">
+        <div class="mt-2">
           <img
             *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
             class="rounded-full"
@@ -157,10 +157,10 @@
 
         <div
           class="mt-2 text-center flex flex-col justify-center align-center items-center space-y-2">
-          <span class="inline-block text-lg">{{ tournament.name }}</span>
+          <span class="inline-block">{{ tournament.name }}</span>
 
           <span class="inline-block italic text-xs">
-            📅 Du {{ tournament.plannedFrom.toString().split("T")[0] }} au
+            📅 {{ tournament.plannedFrom.toString().split("T")[0] }} -
             {{ tournament.plannedTo.toString().split("T")[0] }}
           </span>
 
@@ -178,7 +178,7 @@
       <a
         *ngFor="let tournament of tournaments"
         [routerLink]="['/tournaments', tournament.id]"
-        class="md:hidden bg-secondaryDarker neomorphism-primaryDarker-2 p-4 rounded-lg drop-shadow-xl flex flex-row space-x-4 transition transition-all ease-in-out duration-200 hover:bg-secondary">
+        class="lg:hidden bg-secondaryDarker neomorphism-primaryDarker-2 p-4 rounded-lg drop-shadow-xl flex flex-row space-x-4 transition transition-all ease-in-out duration-200 hover:bg-secondary">
         <img
           class="w-16 rounded-full"
           *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
@@ -188,26 +188,25 @@
           *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
           src="../../assets/img/yugames-logo.png" />
 
-        <div
-          class="flex flex-col justify-center align-center justify-center space-y-2">
+        <div class="flex flex-col justify-center align-center justify-center">
           <div class="flex flex-row space-x-2">
             <span class="text-lg">
               {{ tournament.name }}
             </span>
-
-            <span
-              class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl bg-customRed"
-              [class.bg-customRed]="tournament.state == 0"
-              [class.bg-customYellow]="tournament.state == 1"
-              [class.bg-white]="tournament.state == 2"
-              [class.text-black]="tournament.state == 2">
-              {{ getState(tournament.state) }}
-            </span>
           </div>
 
           <span class="text-xs">
-            📅 Du {{ tournament.plannedFrom.toString().split("T")[0] }} au
+            📅 {{ tournament.plannedFrom.toString().split("T")[0] }} -
             {{ tournament.plannedTo.toString().split("T")[0] }}
+          </span>
+
+          <span
+            class="flex flex-row justify-center items-center text-xs px-4 rounded-xl bg-customRed"
+            [class.bg-customRed]="tournament.state == 0"
+            [class.bg-customYellow]="tournament.state == 1"
+            [class.bg-white]="tournament.state == 2"
+            [class.text-black]="tournament.state == 2">
+            {{ getState(tournament.state) }}
           </span>
         </div>
       </a>
