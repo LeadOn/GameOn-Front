@@ -35,7 +35,8 @@ export class TournamentsDetailsComponent implements OnInit {
   tournamentId: any;
   selectedTeam?: number;
   fifaTeams: FifaTeam[] = [];
-  games: FifaGamePlayed[] = [];
+  gamesPlayed: FifaGamePlayed[] = [];
+  gamesToPlay: FifaGamePlayed[] = [];
 
   constructor(
     private tournamentService: YuGamesTournamentService,
@@ -88,9 +89,18 @@ export class TournamentsDetailsComponent implements OnInit {
       }
     );
 
-    this.gameService.getByTournament(this.tournamentId).subscribe(
+    this.gameService.getByTournament(this.tournamentId, false).subscribe(
       (data) => {
-        this.games = data;
+        this.gamesToPlay = data;
+        this.gameService.getByTournament(this.tournamentId, true).subscribe(
+          (data) => {
+            this.gamesPlayed = data;
+          },
+          (err) => {
+            console.error(err);
+            alert("Erreur lors de la récupération des matchs.");
+          }
+        );
       },
       (err) => {
         console.error(err);
