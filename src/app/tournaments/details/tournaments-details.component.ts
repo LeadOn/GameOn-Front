@@ -8,6 +8,7 @@ import { FifaTeam } from "src/app/shared/classes/FifaTeam";
 import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
 import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
 import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
+import { TournamentPlayerDto } from "src/app/shared/classes/TournamentPlayerDto";
 
 @Component({
   selector: "app-tournaments-details",
@@ -29,7 +30,7 @@ import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
 export class TournamentsDetailsComponent implements OnInit {
   loading = true;
   isLoggedIn = false;
-  isSubscribed?: boolean;
+  isSubscribed?: TournamentPlayerDto;
   states: any[] = [];
   tournament?: Tournament;
   tournamentId: any;
@@ -58,23 +59,25 @@ export class TournamentsDetailsComponent implements OnInit {
           .checkPlayerSubscription(this.tournamentId)
           .subscribe(
             (x) => {
-              this.isSubscribed = true;
+              this.isSubscribed = x;
             },
             (err) => {
-              this.isSubscribed = false;
-
-              this.fifaTeamService.getAll().subscribe(
-                (data) => {
-                  this.fifaTeams = data;
-                  this.selectedTeam = data[0].id;
-                },
-                (err) => {
-                  alert("Erreur lors de la récupération des équipes FIFA.");
-                  console.error(err);
-                }
+              console.log(
+                "[TournamentDetailsComponent] Player is not subscribe to tournament.]"
               );
             }
           );
+
+        this.fifaTeamService.getAll().subscribe(
+          (data) => {
+            this.fifaTeams = data;
+            this.selectedTeam = data[0].id;
+          },
+          (err) => {
+            alert("Erreur lors de la récupération des équipes FIFA.");
+            console.error(err);
+          }
+        );
       }
     });
 
@@ -138,6 +141,30 @@ export class TournamentsDetailsComponent implements OnInit {
           },
           (err) => {
             alert("Erreur lors de l'inscription !");
+            console.error(err);
+          }
+        );
+    }
+  }
+
+  updateSubscription() {
+    if (
+      this.selectedTeam != undefined &&
+      confirm(
+        "Êtes vous sûr de vouloir modifier votre inscription à ce tournoi avec cette nouvelle équipe ?"
+      )
+    ) {
+      this.loading = true;
+      this.tournamentService
+        .updateSubscription(this.tournamentId, this.selectedTeam)
+        .subscribe(
+          (x) => {
+            this.loading = false;
+            alert("Inscription modifiée !");
+            window.location.reload();
+          },
+          (err) => {
+            alert("Erreur lors de la modification de l'inscription !");
             console.error(err);
           }
         );
