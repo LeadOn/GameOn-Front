@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Tournament } from "../classes/Tournament";
+import { TournamentPlayerDto } from "../classes/TournamentPlayerDto";
 
 @Injectable({
   providedIn: "root",
@@ -22,14 +23,28 @@ export class YuGamesTournamentService {
     );
   }
 
-  checkPlayerSubscription(id: number): Observable<Tournament> {
-    return this.client.get<Tournament>(
+  checkPlayerSubscription(id: number): Observable<TournamentPlayerDto> {
+    return this.client.get<TournamentPlayerDto>(
       environment.yuGamesApiUrl + "/tournament/" + id + "/subscription"
     );
   }
 
   subscribe(id: number, fifaTeamId: number): Observable<any> {
     return this.client.post<any>(
+      environment.yuGamesApiUrl +
+        "/tournament/" +
+        id +
+        "/subscription?fifaTeamId=" +
+        fifaTeamId,
+      null
+    );
+  }
+
+  updateSubscription(
+    id: number,
+    fifaTeamId: number
+  ): Observable<TournamentPlayerDto> {
+    return this.client.patch<TournamentPlayerDto>(
       environment.yuGamesApiUrl +
         "/tournament/" +
         id +
