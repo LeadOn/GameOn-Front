@@ -66,7 +66,15 @@ export class YuGamesTournamentService {
       },
       {
         value: 2,
-        label: "Phase 1",
+        label: "Qualifications",
+      },
+      {
+        value: 3,
+        label: "Tournoi en cours",
+      },
+      {
+        value: 4,
+        label: "Clôturé",
       },
     ];
   }

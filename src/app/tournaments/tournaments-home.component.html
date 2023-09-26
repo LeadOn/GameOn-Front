@@ -186,11 +186,12 @@
           </span>
 
           <span
-            class="text-xs px-4 rounded-xl bg-customRed"
-            [class.bg-customRed]="tournament.state == 0"
-            [class.bg-customYellow]="tournament.state == 1"
-            [class.bg-white]="tournament.state == 2"
-            [class.text-black]="tournament.state == 2"
+            class="text-xs px-4 rounded-xl"
+            [class.bg-gray-600]="tournament.state == 0"
+            [class.bg-customGreen]="tournament.state == 1"
+            [class.bg-secondary]="tournament.state == 2"
+            [class.bg-customYellow]="tournament.state == 3"
+            [class.bg-green-800]="tournament.state == 4"
           >
             {{ getState(tournament.state) }}
           </span>
@@ -228,11 +229,12 @@
           </span>
 
           <span
-            class="flex flex-row justify-center items-center text-xs px-4 rounded-xl bg-customRed mt-2 w-full"
-            [class.bg-customRed]="tournament.state == 0"
-            [class.bg-customYellow]="tournament.state == 1"
-            [class.bg-white]="tournament.state == 2"
-            [class.text-black]="tournament.state == 2"
+            class="flex flex-row justify-center items-center text-xs px-4 rounded-xl mt-2 w-full"
+            [class.bg-gray-600]="tournament.state == 0"
+            [class.bg-customGreen]="tournament.state == 1"
+            [class.bg-secondary]="tournament.state == 2"
+            [class.bg-customYellow]="tournament.state == 3"
+            [class.bg-green-800]="tournament.state == 4"
           >
             {{ getState(tournament.state) }}
           </span>
