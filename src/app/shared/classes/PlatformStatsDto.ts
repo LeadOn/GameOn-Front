@@ -13,4 +13,8 @@ export class PlatformStatsDto {
   winRate: number = 0;
   looseRate: number = 0;
   drawRate: number = 0;
+  matchPlayed?: number;
+  matchNotPlayed?: number;
+  progression?: number;
+  totalMatch?: number;
 }

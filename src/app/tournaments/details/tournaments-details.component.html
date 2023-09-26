@@ -35,11 +35,12 @@
           class="flex flex-col justify-center align-center items-center mt-2"
         >
           <span
-            class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl bg-customRed"
-            [class.bg-customRed]="tournament.state == 0"
-            [class.bg-customYellow]="tournament.state == 1"
-            [class.bg-white]="tournament.state == 2"
-            [class.text-black]="tournament.state == 2"
+            class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl"
+            [class.bg-gray-600]="tournament.state == 0"
+            [class.bg-customGreen]="tournament.state == 1"
+            [class.bg-secondary]="tournament.state == 2"
+            [class.bg-customYellow]="tournament.state == 3"
+            [class.bg-green-800]="tournament.state == 4"
           >
             {{ getState(tournament.state) }}
           </span>
@@ -176,6 +177,13 @@
           <tr>
             <th scope="col" class="px-6 py-3">Joueur</th>
             <th scope="col" class="px-6 py-3">Équipe</th>
+            <th
+              scope="col"
+              class="px-6 py-3 hidden md:table-cell"
+              *ngIf="tournament.state >= 2"
+            >
+              Matchs
+            </th>
             <th scope="col" class="px-6 py-3" *ngIf="tournament.state >= 2">
               Score
             </th>
@@ -229,6 +237,25 @@
                 <span class="text-xs hidden md:block">
                   {{ player.team.name }}
                 </span>
+              </div>
+            </td>
+            <td
+              class="px-6 py-4 hidden md:table-cell"
+              *ngIf="tournament.state >= 2"
+            >
+              <div
+                class="hidden md:flex md:flex-row md:justify-center"
+                *ngIf="player.stats.progression != null"
+              >
+                <div class="w-full bg-gray-200 rounded-full">
+                  <div
+                    class="bg-frenchBlue text-xs font-medium text-white text-center p-0.5 leading-none rounded-full"
+                    style="width: {{ player.stats.progression }}%"
+                  >
+                    {{ player.stats.matchPlayed }} /
+                    {{ player.stats.totalMatch }}
+                  </div>
+                </div>
               </div>
             </td>
             <td class="px-6 py-4 text-center" *ngIf="tournament.state >= 2">
