@@ -39,6 +39,10 @@ export class TournamentsDetailsComponent implements OnInit {
   gamesPlayed: FifaGamePlayed[] = [];
   gamesToPlay: FifaGamePlayed[] = [];
 
+  playersShown = true;
+  plannedMatchsShown = false;
+  matchsPlayedShown = false;
+
   constructor(
     private tournamentService: YuGamesTournamentService,
     private route: ActivatedRoute,
@@ -110,6 +114,18 @@ export class TournamentsDetailsComponent implements OnInit {
         alert("Erreur lors de la récupération des matchs.");
       }
     );
+  }
+
+  showPlayers() {
+    this.playersShown = !this.playersShown;
+  }
+
+  showMatchsPlanned() {
+    this.plannedMatchsShown = !this.plannedMatchsShown;
+  }
+
+  showMatchsPlayed() {
+    this.matchsPlayedShown = !this.matchsPlayedShown;
   }
 
   getState(stateId: number): string {
