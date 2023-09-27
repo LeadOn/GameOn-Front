@@ -2,7 +2,8 @@
   [@inOutAnimation]
   class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 lg:mx-32 text-white"
   role="status"
-  *ngIf="loading == true">
+  *ngIf="loading == true"
+>
   <app-loading-spinner></app-loading-spinner>
   Chargement des données...
 </div>
@@ -10,32 +11,37 @@
 <div
   class="flex flex-col lg:flex-row lg:space-x-8 text-white m-8 lg:mx-32"
   [@inOutAnimation]
-  *ngIf="loading == false && tournament != null">
+  *ngIf="loading == false && tournament != null"
+>
   <div class="w-full lg:w-1/3 xl:w-1/4">
     <div class="bg-primary p-4 rounded-lg flex flex-col items-center">
       <img
         class="rounded-full neomorphism-primary mt-4"
         *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
         src="{{ tournament.logoUrl }}"
-        width="128" />
+        width="128"
+      />
 
       <img
         class="rounded-full neomorphism-primary mt-4"
         *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
         src="../../../assets/img/yugames-logo.png"
-        width="128" />
+        width="128"
+      />
 
       <div class="text-center w-full">
         <span class="block mt-2">{{ tournament.name }}</span>
         <div
-          class="flex flex-col justify-center align-center items-center mt-2">
+          class="flex flex-col justify-center align-center items-center mt-2"
+        >
           <span
             class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl"
             [class.bg-gray-600]="tournament.state == 0"
             [class.bg-customGreen]="tournament.state == 1"
             [class.bg-secondary]="tournament.state == 2"
             [class.bg-customYellow]="tournament.state == 3"
-            [class.bg-green-800]="tournament.state == 4">
+            [class.bg-green-800]="tournament.state == 4"
+          >
             {{ getState(tournament.state) }}
           </span>
         </div>
@@ -46,32 +52,39 @@
 
         <div
           class="flex flex-col mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4"
-          *ngIf="isLoggedIn == true">
+          *ngIf="isLoggedIn == true"
+        >
           <div
             class="p-2 flex flex-col items-center justify-center text-sm"
-            *ngIf="isSubscribed != null">
+            *ngIf="isSubscribed != null"
+          >
             <span>✅ Vous êtes inscrit(e).</span>
 
             <div
               class="bg-primary mt-4 w-full rounded-lg p-4"
-              *ngIf="isSubscribed != null && tournament.state < 2">
+              *ngIf="isSubscribed != null && tournament.state < 2"
+            >
               <span>Modifier mon inscription</span>
 
               <div
-                class="flex flex-col justify-center align-center items-center">
+                class="flex flex-col justify-center align-center items-center"
+              >
                 <select
                   class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  [(ngModel)]="selectedTeam">
+                  [(ngModel)]="selectedTeam"
+                >
                   <option
                     *ngFor="let fifaTeam of fifaTeams"
-                    value="{{ fifaTeam.id }}">
+                    value="{{ fifaTeam.id }}"
+                  >
                     {{ fifaTeam.name }}
                   </option>
                 </select>
 
                 <button
                   class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-                  (click)="updateSubscription()">
+                  (click)="updateSubscription()"
+                >
                   Modifier
                 </button>
               </div>
@@ -80,26 +93,31 @@
 
           <span
             class="underline"
-            *ngIf="isSubscribed == null && tournament.state < 2">
+            *ngIf="isSubscribed == null && tournament.state < 2"
+          >
             Inscription
           </span>
 
           <div
             *ngIf="isSubscribed == null && tournament.state < 2"
-            class="flex flex-col justify-center align-center items-center">
+            class="flex flex-col justify-center align-center items-center"
+          >
             <select
               class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              [(ngModel)]="selectedTeam">
+              [(ngModel)]="selectedTeam"
+            >
               <option
                 *ngFor="let fifaTeam of fifaTeams"
-                value="{{ fifaTeam.id }}">
+                value="{{ fifaTeam.id }}"
+              >
                 {{ fifaTeam.name }}
               </option>
             </select>
 
             <button
               class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-              (click)="subscribe()">
+              (click)="subscribe()"
+            >
               S'inscrire !
             </button>
           </div>
@@ -109,16 +127,19 @@
 
     <div
       *ngIf="tournament.description != null"
-      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4">
+      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4"
+    >
       <div class="flex flex-row space-x-2 items-center justify-center">
         <img
           src="../../../assets/img/trophee.svg"
-          class="w-8 rounded-full bg-secondary p-2" />
+          class="w-8 rounded-full bg-secondary p-2"
+        />
         <span class="text">Détails</span>
       </div>
 
       <div
-        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-xs text-justift">
+        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-xs text-justift"
+      >
         {{ tournament.description }}
       </div>
     </div>
@@ -126,38 +147,46 @@
 
   <div
     class="w-full flex flex-col w-full mt-8 lg:mt-0"
-    *ngIf="loading == false && tournament != null">
+    *ngIf="loading == false && tournament != null"
+  >
     <div
       *ngIf="tournament.players.length == 0"
-      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker p-4 border border-customRed rounded-lg mb-4">
+      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker p-4 border border-customRed rounded-lg mb-4"
+    >
       Aucun joueur n'est inscrit pour le moment.
     </div>
 
     <div
       *ngIf="tournament.players.length > 0"
-      class="flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mb-4">
+      (click)="showPlayers()"
+      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mb-4"
+    >
       <div class="grow flex flex-row space-x-2 items-center justify-left">
         <img
           src="../../../assets/img/player.svg"
-          class="w-12 rounded-full bg-secondary p-2" />
+          class="w-12 rounded-full bg-secondary p-2"
+        />
         <span class="text-lg">Participants</span>
       </div>
 
-      <div (click)="showPlayers()">
+      <div>
         <img
           class="w-16"
           src="../../../assets/img/chevron-down.svg"
-          *ngIf="playersShown" />
+          *ngIf="playersShown"
+        />
         <img
           class="w-16"
           src="../../../assets/img/chevron-up.svg"
-          *ngIf="!playersShown" />
+          *ngIf="!playersShown"
+        />
       </div>
     </div>
 
     <div
       *ngIf="playersShown"
-      class="relative overflow-x-auto neomorphism-primaryDarker-2 rounded-lg">
+      class="relative overflow-x-auto neomorphism-primaryDarker-2 rounded-lg"
+    >
       <table class="w-full text-sm text-white">
         <thead class="text-xs uppercase bg-primaryDarkerer text-white">
           <tr>
@@ -166,7 +195,8 @@
             <th
               scope="col"
               class="px-6 py-3 hidden md:table-cell"
-              *ngIf="tournament.state >= 2">
+              *ngIf="tournament.state >= 2"
+            >
               Matchs
             </th>
             <th scope="col" class="px-6 py-3" *ngIf="tournament.state >= 2">
@@ -175,28 +205,38 @@
             <th
               scope="col"
               class="px-6 py-3 hidden md:inline-block md:w-full"
-              *ngIf="tournament.state >= 2">
+              *ngIf="tournament.state >= 2"
+            >
               Statistiques
             </th>
           </tr>
         </thead>
         <tbody>
           <tr
-            class="border-b bg-primary border-gray-700"
-            *ngFor="let player of tournament.players">
+            class="border-2 bg-primary border-gray-700"
+            [class.border-customYellow]="
+              tournament.players.indexOf(player) == 0
+            "
+            [class.border-gray-400]="tournament.players.indexOf(player) == 1"
+            [class.border-secondary]="tournament.players.indexOf(player) == 2"
+            *ngFor="let player of tournament.players"
+          >
             <th scope="row" class="font-normal px-6 py-4">
               <div
                 [routerLink]="['/player', player.player.id]"
-                class="cursor-pointer flex flex-row justify-center space-x-2">
+                class="cursor-pointer flex flex-row justify-center space-x-2"
+              >
                 <div>
                   <img
                     *ngIf="player.player.profilePictureUrl != null"
                     src="{{ player.player.profilePictureUrl }}"
-                    class="w-8 rounded-full" />
+                    class="w-8 rounded-full"
+                  />
                   <img
                     *ngIf="player.player.profilePictureUrl == null"
                     src="../../../assets/img/yugames-logo.png"
-                    class="w-8 rounded-full" />
+                    class="w-8 rounded-full"
+                  />
                 </div>
 
                 <div class="hidden md:flex md:flex-col text-left">
@@ -209,11 +249,13 @@
             </th>
             <td class="px-6 py-4">
               <div
-                class="flex flex-col justify-center align-center items-center">
+                class="flex flex-col justify-center align-center items-center"
+              >
                 <img
                   src="../../../assets/img/teams/{{ player.team.id }}.png"
                   class="w-8"
-                  alt="{{ player.team.name }}" />
+                  alt="{{ player.team.name }}"
+                />
 
                 <span class="text-xs hidden md:block">
                   {{ player.team.name }}
@@ -222,14 +264,17 @@
             </td>
             <td
               class="px-6 py-4 hidden md:table-cell"
-              *ngIf="tournament.state >= 2">
+              *ngIf="tournament.state >= 2"
+            >
               <div
                 class="hidden md:flex md:flex-row md:justify-center"
-                *ngIf="player.stats.progression != null">
+                *ngIf="player.stats.progression != null"
+              >
                 <div class="w-full bg-gray-200 rounded-full">
                   <div
                     class="bg-frenchBlue text-xs font-medium text-white text-center p-0.5 leading-none rounded-full"
-                    style="width: {{ player.stats.progression }}%">
+                    style="width: {{ player.stats.progression }}%"
+                  >
                     {{ player.stats.matchPlayed }} /
                     {{ player.stats.totalMatch }}
                   </div>
@@ -241,7 +286,8 @@
             </td>
             <td
               class="px-6 py-4 hidden md:flex md:flex-row md:justify-center"
-              *ngIf="tournament.state >= 2">
+              *ngIf="tournament.state >= 2"
+            >
               <app-fifa-stat [stat]="player.stats"></app-fifa-stat>
             </td>
           </tr>
@@ -250,83 +296,97 @@
     </div>
 
     <div
-      class="flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4">
+      (click)="showMatchsPlayed()"
+      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4"
+    >
       <div class="grow flex flex-row space-x-2 items-center justify-left">
         <img
           src="../../../assets/img/fifagame.svg"
-          class="w-12 rounded-full bg-green-500 p-2" />
-        <span class="text-lg">Matchs planifiés</span>
-      </div>
-
-      <div (click)="showMatchsPlanned()">
-        <img
-          class="w-16"
-          src="../../../assets/img/chevron-down.svg"
-          *ngIf="plannedMatchsShown" />
-        <img
-          class="w-16"
-          src="../../../assets/img/chevron-up.svg"
-          *ngIf="!plannedMatchsShown" />
-      </div>
-
-      <div
-        *ngIf="gamesToPlay.length == 0"
-        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4">
-        <p>Aucun match n'est planifié dans ce tournoi.</p>
-      </div>
-    </div>
-
-    <app-fifa-game-list-header
-      *ngIf="
-        gamesToPlay.length > 0 && plannedMatchsShown
-      "></app-fifa-game-list-header>
-
-    <div
-      class="mt-4 flex flex-col w-full text-white space-y-4"
-      *ngIf="gamesToPlay.length > 0 && plannedMatchsShown">
-      <app-fifa-game-history-card
-        *ngFor="let game of gamesToPlay"
-        [game]="game"></app-fifa-game-history-card>
-    </div>
-
-    <div
-      class="flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4">
-      <div class="grow flex flex-row space-x-2 items-center justify-left">
-        <img
-          src="../../../assets/img/fifagame.svg"
-          class="w-12 rounded-full bg-secondary p-2" />
+          class="w-12 rounded-full bg-secondary p-2"
+        />
         <span class="text-lg">Matchs joués</span>
       </div>
 
-      <div (click)="showMatchsPlayed()">
+      <div>
         <img
           class="w-16"
           src="../../../assets/img/chevron-down.svg"
-          *ngIf="matchsPlayedShown" />
+          *ngIf="matchsPlayedShown"
+        />
         <img
           class="w-16"
           src="../../../assets/img/chevron-up.svg"
-          *ngIf="!matchsPlayedShown" />
+          *ngIf="!matchsPlayedShown"
+        />
       </div>
 
       <div
         *ngIf="gamesPlayed.length == 0"
-        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4">
+        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
+      >
         <p>Aucun match n'as été joué dans ce tournoi.</p>
       </div>
     </div>
 
     <app-fifa-game-list-header
-      *ngIf="
-        gamesPlayed.length > 0 && matchsPlayedShown
-      "></app-fifa-game-list-header>
+      *ngIf="gamesPlayed.length > 0 && matchsPlayedShown"
+    ></app-fifa-game-list-header>
 
     <div
       class="mt-4 flex flex-col w-full text-white space-y-4"
-      *ngIf="gamesPlayed.length > 0 && matchsPlayedShown">
+      *ngIf="gamesPlayed.length > 0 && matchsPlayedShown"
+    >
       <app-fifa-game-history-card
         *ngFor="let game of gamesPlayed"
-        [game]="game"></app-fifa-game-history-card>
+        [game]="game"
+      ></app-fifa-game-history-card>
+    </div>
+
+    <div
+      (click)="showMatchsPlanned()"
+      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4"
+    >
+      <div class="grow flex flex-row space-x-2 items-center justify-left">
+        <img
+          src="../../../assets/img/fifagame.svg"
+          class="w-12 rounded-full bg-green-500 p-2"
+        />
+        <span class="text-lg">Matchs planifiés</span>
+      </div>
+
+      <div>
+        <img
+          class="w-16"
+          src="../../../assets/img/chevron-down.svg"
+          *ngIf="plannedMatchsShown"
+        />
+        <img
+          class="w-16"
+          src="../../../assets/img/chevron-up.svg"
+          *ngIf="!plannedMatchsShown"
+        />
+      </div>
+
+      <div
+        *ngIf="gamesToPlay.length == 0"
+        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
+      >
+        <p>Aucun match n'est planifié dans ce tournoi.</p>
+      </div>
+    </div>
+
+    <app-fifa-game-list-header
+      *ngIf="gamesToPlay.length > 0 && plannedMatchsShown"
+    ></app-fifa-game-list-header>
+
+    <div
+      class="mt-4 flex flex-col w-full text-white space-y-4"
+      *ngIf="gamesToPlay.length > 0 && plannedMatchsShown"
+    >
+      <app-fifa-game-history-card
+        *ngFor="let game of gamesToPlay"
+        [game]="game"
+      ></app-fifa-game-history-card>
     </div>
   </div>
 </div>
