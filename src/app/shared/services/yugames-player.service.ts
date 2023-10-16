@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { Player } from "../classes/Player";
 import { environment } from "src/environments/environment";
 import { FifaPlayerStatsDto } from "../classes/FifaPlayerStatsDto";
+import { GlobalStatsDto } from "../classes/GlobalStatsDto";
 
 @Injectable({
   providedIn: "root",
@@ -34,6 +35,12 @@ export class YuGamesPlayerService {
     }
 
     return this.client.get<FifaPlayerStatsDto>(url);
+  }
+
+  getGlobalStats(): Observable<GlobalStatsDto> {
+    return this.client.get<GlobalStatsDto>(
+      environment.yuGamesApiUrl + "/player/global/stats"
+    );
   }
 
   update(fullName: any, nickname: any, profilePicUrl: any): Observable<Player> {
