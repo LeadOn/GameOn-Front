@@ -157,6 +157,37 @@
     </div>
 
     <div
+      *ngIf="loading == false && tournament.state >= 3"
+      (click)="showPlayers()"
+      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mb-4"
+    >
+      <div class="grow flex flex-row space-x-2 items-center justify-left">
+        <img
+          src="../../../assets/img/fifagame.svg"
+          class="w-12 rounded-full bg-secondary p-2"
+        />
+        <span class="text-lg">Tournoi</span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        loading == false &&
+        tournament.state >= 3 &&
+        tournament.phase2ChallongeUrl != null
+      "
+    >
+      <iframe
+        [src]="tournament.phase2ChallongeUrl | safe"
+        width="100%"
+        height="500"
+        frameborder="0"
+        scrolling="auto"
+        allowtransparency="true"
+      ></iframe>
+    </div>
+
+    <div
       *ngIf="tournament.players.length > 0"
       (click)="showPlayers()"
       class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mb-4"
@@ -213,18 +244,16 @@
         </thead>
         <tbody>
           <tr
-            class="border-2 bg-primary border-gray-700"
-            [class.border-customYellow]="
-              tournament.players.indexOf(player) == 0
-            "
-            [class.border-gray-400]="tournament.players.indexOf(player) == 1"
-            [class.border-secondary]="tournament.players.indexOf(player) == 2"
+            class="border-2 bg-primary border-primary"
+            [class.bg-yellow-500]="tournament.players.indexOf(player) == 0"
+            [class.bg-gray-400]="tournament.players.indexOf(player) == 1"
+            [class.bg-secondary]="tournament.players.indexOf(player) == 2"
             *ngFor="let player of tournament.players"
           >
             <th scope="row" class="font-normal px-6 py-4">
               <div
                 [routerLink]="['/player', player.player.id]"
-                class="cursor-pointer flex flex-row justify-center space-x-2"
+                class="cursor-pointer flex flex-row justify-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
               >
                 <div>
                   <img
@@ -249,7 +278,7 @@
             </th>
             <td class="px-6 py-4">
               <div
-                class="flex flex-col justify-center align-center items-center"
+                class="flex flex-col justify-center align-center items-center p-2 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
               >
                 <img
                   src="../../../assets/img/teams/{{ player.team.id }}.png"
@@ -288,7 +317,11 @@
               class="px-6 py-4 hidden md:flex md:flex-row md:justify-center"
               *ngIf="tournament.state >= 2"
             >
-              <app-fifa-stat [stat]="player.stats"></app-fifa-stat>
+              <div
+                class="p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
+              >
+                <app-fifa-stat [stat]="player.stats"></app-fifa-stat>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -366,13 +399,13 @@
           *ngIf="!plannedMatchsShown"
         />
       </div>
+    </div>
 
-      <div
-        *ngIf="gamesToPlay.length == 0"
-        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
-      >
-        <p>Aucun match n'est planifié dans ce tournoi.</p>
-      </div>
+    <div
+      *ngIf="gamesToPlay.length == 0"
+      class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
+    >
+      <p>Aucun match n'est planifié dans ce tournoi.</p>
     </div>
 
     <app-fifa-game-list-header

@@ -3,6 +3,7 @@
     <div class="w-full bg-white rounded-full h-4">
       <div
         class="bg-customGreen text-xs font-medium text-black text-center p-0.5 leading-none rounded-full h-4"
+        [class.bg-transparent]="stat.winRate == 0"
         style="width: {{ stat.winRate }}%"
       >
         {{ stat.winRate }}%
@@ -15,6 +16,7 @@
     <div class="w-full bg-white rounded-full h-4">
       <div
         class="bg-customRed text-xs font-medium text-black text-center p-0.5 leading-none rounded-full h-4"
+        [class.bg-transparent]="stat.looseRate == 0"
         style="width: {{ stat.looseRate }}%"
       >
         {{ stat.looseRate }}%
@@ -27,6 +29,7 @@
     <div class="w-full bg-white rounded-full h-4">
       <div
         class="bg-customYellow text-xs font-medium text-black text-center p-0.5 leading-none rounded-full h-4"
+        [class.bg-transparent]="stat.drawRate == 0"
         style="width: {{ stat.drawRate }}%"
       >
         {{ stat.drawRate }}%

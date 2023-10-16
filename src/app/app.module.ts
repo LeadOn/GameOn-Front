@@ -28,6 +28,8 @@ import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.compo
 import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
 import { TournamentsHomeComponent } from "./tournaments/tournaments-home.component";
 import { TournamentsDetailsComponent } from "./tournaments/details/tournaments-details.component";
+
+import { SafePipe } from "./shared/pipes/safe.pipe";
 import { StatsHomeComponent } from "./stats/stats-home.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
@@ -70,9 +72,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
     /* Tournament pages */
     TournamentsHomeComponent,
     TournamentsDetailsComponent,
-
+    
     /* Global stats page */
     StatsHomeComponent,
+    
+    /* Other */
+    SafePipe,
   ],
   imports: [
     BrowserModule,

@@ -8,4 +8,6 @@ export class UpdateGame {
   FifaTeam2: number = 0;
   TeamScore2: number = 0;
   isPlayed = false;
+  tournamentId?: number;
+  phase?: number;
 }

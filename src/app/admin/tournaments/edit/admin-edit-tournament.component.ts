@@ -21,6 +21,7 @@ export class AdminEditTournamentComponent implements OnInit {
     description: new FormControl("", [Validators.maxLength(5000)]),
     state: new FormControl(0, [Validators.required]),
     logoUrl: new FormControl("", [Validators.maxLength(3000)]),
+    phase2ChallongeUrl: new FormControl("", [Validators.maxLength(3000)]),
     plannedFrom: new FormControl("", [Validators.required]),
     plannedTo: new FormControl("", [Validators.required]),
   });
@@ -57,6 +58,12 @@ export class AdminEditTournamentComponent implements OnInit {
 
         if (data.logoUrl != null) {
           this.editTournamentForm.controls["logoUrl"].setValue(data.logoUrl);
+        }
+
+        if (data.phase2ChallongeUrl != null) {
+          this.editTournamentForm.controls["phase2ChallongeUrl"].setValue(
+            data.phase2ChallongeUrl
+          );
         }
 
         this.loading = false;
@@ -96,6 +103,15 @@ export class AdminEditTournamentComponent implements OnInit {
         logoUrl = this.editTournamentForm.controls["logoUrl"].value;
       }
 
+      let phase2ChallongeUrl: any = null;
+      if (
+        this.editTournamentForm.controls["phase2ChallongeUrl"].value != null &&
+        this.editTournamentForm.controls["phase2ChallongeUrl"].value != ""
+      ) {
+        phase2ChallongeUrl =
+          this.editTournamentForm.controls["phase2ChallongeUrl"].value;
+      }
+
       this.adminService
         .editTournament(
           this.tournamentId,
@@ -104,7 +120,8 @@ export class AdminEditTournamentComponent implements OnInit {
           this.editTournamentForm.controls["plannedFrom"].value,
           this.editTournamentForm.controls["plannedTo"].value,
           description,
-          logoUrl
+          logoUrl,
+          phase2ChallongeUrl
         )
         .subscribe(
           (data) => {
