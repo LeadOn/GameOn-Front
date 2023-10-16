@@ -11,6 +11,7 @@ import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.componen
 import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
 import { TournamentsHomeComponent } from "./tournaments/tournaments-home.component";
 import { TournamentsDetailsComponent } from "./tournaments/details/tournaments-details.component";
+import { StatsHomeComponent } from "./stats/stats-home.component";
 
 const routes: Routes = [
   {

@@ -156,9 +156,29 @@
       Aucun joueur n'est inscrit pour le moment.
     </div>
 
-    <div *ngIf="loading == false && tournamentId == 6">
+    <div
+      *ngIf="loading == false && tournament.state >= 3"
+      (click)="showPlayers()"
+      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mb-4"
+    >
+      <div class="grow flex flex-row space-x-2 items-center justify-left">
+        <img
+          src="../../../assets/img/fifagame.svg"
+          class="w-12 rounded-full bg-secondary p-2"
+        />
+        <span class="text-lg">Tournoi</span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        loading == false &&
+        tournament.state >= 3 &&
+        tournament.phase2ChallongeUrl != null
+      "
+    >
       <iframe
-        src="https://challonge.com/fr/b4zy5ts4/module"
+        [src]="tournament.phase2ChallongeUrl | safe"
         width="100%"
         height="500"
         frameborder="0"
@@ -379,13 +399,13 @@
           *ngIf="!plannedMatchsShown"
         />
       </div>
+    </div>
 
-      <div
-        *ngIf="gamesToPlay.length == 0"
-        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
-      >
-        <p>Aucun match n'est planifié dans ce tournoi.</p>
-      </div>
+    <div
+      *ngIf="gamesToPlay.length == 0"
+      class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
+    >
+      <p>Aucun match n'est planifié dans ce tournoi.</p>
     </div>
 
     <app-fifa-game-list-header
