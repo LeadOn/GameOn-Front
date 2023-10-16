@@ -13,4 +13,5 @@ export class FifaGamePlayed {
   season: Season = new Season();
   isPlayed = false;
   tournamentId?: number;
+  phase?: number;
 }

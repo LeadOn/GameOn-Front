@@ -106,7 +106,8 @@ export class YuGamesAdminService {
     plannedFrom: string,
     plannedTo: string,
     description?: string,
-    logoUrl?: string
+    logoUrl?: string,
+    phase2ChallongeUrl?: string
   ): Observable<Tournament> {
     let body: any = {
       name: name,
@@ -121,6 +122,10 @@ export class YuGamesAdminService {
 
     if (logoUrl != null) {
       body.logoUrl = logoUrl;
+    }
+
+    if (phase2ChallongeUrl != null) {
+      body.phase2ChallongeUrl = phase2ChallongeUrl;
     }
 
     return this.client.patch<Tournament>(

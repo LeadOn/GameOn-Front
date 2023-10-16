@@ -85,7 +85,7 @@
         class="block bg-secondary text-white text-xs rounded-xl px-2"
         *ngIf="game.tournamentId != null"
       >
-        Tournoi
+        Tournoi <span *ngIf="game.phase != null">Phase {{ game.phase }}</span>
       </span>
     </div>
   </div>
