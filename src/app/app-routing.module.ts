@@ -23,10 +23,6 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path: "stats",
-        component: StatsHomeComponent,
-      },
-      {
         path: "home",
         component: HomeComponent,
       },
