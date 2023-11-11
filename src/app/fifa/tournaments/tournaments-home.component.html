@@ -14,7 +14,7 @@
   <div
     class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center"
   >
-    <img src="../../assets/img/trophee.svg" class="w-8" />
+    <img src="../../assets/img/svg/trophee.svg" class="w-8" />
   </div>
 
   <span class="text-white">Tournois</span>
@@ -35,7 +35,7 @@
           <div
             class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center"
           >
-            <img src="../../assets/img/rules.svg" class="w-8" />
+            <img src="../../assets/img/svg/rules.svg" class="w-8" />
           </div>
 
           <span class="text-white">Règlement</span>
@@ -66,23 +66,23 @@
             <span class="text-customYellow">
               Remarque : seules les équipes
               <img
-                src="../../assets/img/star-yellow.svg"
+                src="../../assets/img/svg/star-yellow.svg"
                 class="w-4 inline-block"
               />
               <img
-                src="../../assets/img/star-yellow.svg"
+                src="../../assets/img/svg/star-yellow.svg"
                 class="w-4 inline-block"
               />
               <img
-                src="../../assets/img/star-yellow.svg"
+                src="../../assets/img/svg/star-yellow.svg"
                 class="w-4 inline-block"
               />
               <img
-                src="../../assets/img/star-yellow.svg"
+                src="../../assets/img/svg/star-yellow.svg"
                 class="w-4 inline-block"
               />
               <img
-                src="../../assets/img/star-gray.svg"
+                src="../../assets/img/svg/star-gray.svg"
                 class="w-4 inline-block"
               />
               sont autorisées.
@@ -140,7 +140,7 @@
           <div
             class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center"
           >
-            <img src="../../assets/img/trophee.svg" class="w-8" />
+            <img src="../../assets/img/svg/trophee.svg" class="w-8" />
           </div>
 
           <span class="text-white">
@@ -156,7 +156,7 @@
     >
       <a
         *ngFor="let tournament of tournaments"
-        [routerLink]="['/tournaments', tournament.id]"
+        [routerLink]="['/fifa/tournaments', tournament.id]"
         class="hidden lg:flex drop-shadow-xl flex-col h-72 items-center neomorphism-primaryDarker-2 bg-secondaryDarker p-6 rounded-lg transition transition-all ease-in-out duration-200 hover:bg-secondary"
       >
         <div class="mt-2">
@@ -170,7 +170,7 @@
           <img
             *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
             class="rounded-full"
-            src="../../assets/img/yugames-logo.png"
+            src="../../assets/img/yugames-logo.webp"
             width="128"
           />
         </div>
@@ -211,7 +211,7 @@
         <img
           class="w-16 rounded-full"
           *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
-          src="../../assets/img/yugames-logo.png"
+          src="../../assets/img/yugames-logo.webp"
         />
 
         <div
