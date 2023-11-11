@@ -25,12 +25,11 @@ import { ProfileTabComponent } from "./players/me/components/profile-tab/profile
 import { PlayerDetailsComponent } from "./players/details/player-details.component";
 import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
 import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
-import { FifaHistoryComponent } from "./fifa/history/fifa-history.component";
-import { TournamentsHomeComponent } from "./tournaments/tournaments-home.component";
-import { TournamentsDetailsComponent } from "./tournaments/details/tournaments-details.component";
+import { FifaHomeComponent } from "./fifa/fifa-home.component";
+import { TournamentsHomeComponent } from "./fifa/tournaments/tournaments-home.component";
+import { TournamentsDetailsComponent } from "./fifa/tournaments/details/tournaments-details.component";
 
 import { SafePipe } from "./shared/pipes/safe.pipe";
-import { StatsHomeComponent } from "./stats/stats-home.component";
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -60,7 +59,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
     /* Player details */
     PlayerDetailsComponent,
-    FifaHistoryComponent,
+    FifaHomeComponent,
     FifaCreateGameComponent,
     FifaGameDetailsComponent,
 
@@ -72,10 +71,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     /* Tournament pages */
     TournamentsHomeComponent,
     TournamentsDetailsComponent,
-    
-    /* Global stats page */
-    StatsHomeComponent,
-    
+
     /* Other */
     SafePipe,
   ],
