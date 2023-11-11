@@ -139,7 +139,7 @@ export class FifaCreateGameComponent implements OnInit {
     ) {
       this.gameService.create(body).subscribe(
         (data) => {
-          this.router.navigate(["/fifa/history"]);
+          this.router.navigate(["/fifa"]);
           this.isLoading = false;
         },
         (err) => {

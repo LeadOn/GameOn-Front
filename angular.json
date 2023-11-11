@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "yugames-front:build:production"
+              "buildTarget": "yugames-front:build:production"
             },
             "development": {
-              "browserTarget": "yugames-front:build:development"
+              "buildTarget": "yugames-front:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "yugames-front:build"
+            "buildTarget": "yugames-front:build"
           }
         },
         "test": {
