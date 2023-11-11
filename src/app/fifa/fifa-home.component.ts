@@ -8,9 +8,9 @@ import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform
 import { trigger, style, animate, transition } from "@angular/animations";
 
 @Component({
-  selector: "app-fifa-history",
-  templateUrl: "./fifa-history.component.html",
-  styleUrls: ["./fifa-history.component.scss"],
+  selector: "app-fifa-home",
+  templateUrl: "./fifa-home.component.html",
+  styleUrls: ["./fifa-home.component.scss"],
   animations: [
     trigger("inOutAnimation", [
       transition(":enter", [
@@ -24,7 +24,7 @@ import { trigger, style, animate, transition } from "@angular/animations";
     ]),
   ],
 })
-export class FifaHistoryComponent implements OnInit {
+export class FifaHomeComponent implements OnInit {
   loading = true;
   games: FifaGamePlayed[] = [];
   platforms: Platform[] = [];

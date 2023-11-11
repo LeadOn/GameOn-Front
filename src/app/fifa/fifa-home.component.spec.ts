@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { StatsHomeComponent } from "./stats-home.component";
+import { FifaHomeComponent } from "./fifa-home.component";
 
-describe("StatsHomeComponent", () => {
-  let component: StatsHomeComponent;
-  let fixture: ComponentFixture<StatsHomeComponent>;
+describe("FifaHomeComponent", () => {
+  let component: FifaHomeComponent;
+  let fixture: ComponentFixture<FifaHomeComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [StatsHomeComponent],
+      declarations: [FifaHomeComponent],
     });
-    fixture = TestBed.createComponent(StatsHomeComponent);
+    fixture = TestBed.createComponent(FifaHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

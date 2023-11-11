@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { YuGamesTournamentService } from "../shared/services/yugames-tournament.service";
-import { Tournament } from "../shared/classes/Tournament";
 import { trigger, style, animate, transition } from "@angular/animations";
+import { Tournament } from "src/app/shared/classes/Tournament";
+import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
 
 @Component({
   selector: "app-tournaments-home",
