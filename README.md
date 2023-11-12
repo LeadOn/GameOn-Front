@@ -6,7 +6,7 @@
 
 # Description
 
-This project is a front-end for the YuGames API, done using Angular 16 / Tailwind CSS, and will be running live on [this site](https://yugames.valentinvirot.fr/).
+This project is a front-end for the YuGames API, done using Angular 17 / Tailwind CSS, and will be running live on [this site](https://yugames.valentinvirot.fr/).
 
 Currently, this front-end uses multiple concepts, such as :
 
