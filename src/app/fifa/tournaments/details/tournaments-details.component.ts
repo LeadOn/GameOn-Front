@@ -55,35 +55,33 @@ export class TournamentsDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.keycloak.isLoggedIn().then((x) => {
-      this.isLoggedIn = x;
+    this.isLoggedIn = this.keycloak.isLoggedIn();
 
-      if (this.isLoggedIn == true) {
-        this.tournamentService
-          .checkPlayerSubscription(this.tournamentId)
-          .subscribe(
-            (x) => {
-              this.isSubscribed = x;
-            },
-            (err) => {
-              console.log(
-                "[TournamentDetailsComponent] Player is not subscribe to tournament.]"
-              );
-            }
-          );
-
-        this.fifaTeamService.getAll().subscribe(
-          (data) => {
-            this.fifaTeams = data;
-            this.selectedTeam = data[0].id;
+    if (this.isLoggedIn == true) {
+      this.tournamentService
+        .checkPlayerSubscription(this.tournamentId)
+        .subscribe(
+          (x) => {
+            this.isSubscribed = x;
           },
           (err) => {
-            alert("Erreur lors de la récupération des équipes FIFA.");
-            console.error(err);
+            console.log(
+              "[TournamentDetailsComponent] Player is not subscribe to tournament.]"
+            );
           }
         );
-      }
-    });
+
+      this.fifaTeamService.getAll().subscribe(
+        (data) => {
+          this.fifaTeams = data;
+          this.selectedTeam = data[0].id;
+        },
+        (err) => {
+          alert("Erreur lors de la récupération des équipes FIFA.");
+          console.error(err);
+        }
+      );
+    }
 
     this.tournamentService.getById(this.tournamentId).subscribe(
       (data) => {

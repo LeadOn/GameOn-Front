@@ -21,20 +21,17 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
 
-    this.keycloak.isLoggedIn().then((x) => {
-      // If user is logged in
-      if (x == true) {
-        // Getting its account, and setting it into store
-        this.playerService.getCurrent().subscribe(
-          (data) => {
-            this.store.dispatch(setPlayer({ player: data }));
-            console.log("[AppComponent]", "Player stored.");
-          },
-          (err) => {
-            console.error("[AppComponent]", err);
-          }
-        );
-      }
-    });
+    if (this.keycloak.isLoggedIn()) {
+      // Getting its account, and setting it into store
+      this.playerService.getCurrent().subscribe(
+        (data) => {
+          this.store.dispatch(setPlayer({ player: data }));
+          console.log("[AppComponent]", "Player stored.");
+        },
+        (err) => {
+          console.error("[AppComponent]", err);
+        }
+      );
+    }
   }
 }

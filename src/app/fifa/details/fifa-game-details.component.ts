@@ -51,10 +51,8 @@ export class FifaGameDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get("id");
 
-    this.keycloak.isLoggedIn().then((isLoggedIn) => {
-      this.isLoggedIn = isLoggedIn;
-      this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
-    });
+    this.isLoggedIn = this.keycloak.isLoggedIn();
+    this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
 
     this.getGame();
   }

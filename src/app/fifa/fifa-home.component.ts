@@ -44,7 +44,7 @@ export class FifaHomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.keycloak.isLoggedIn().then((x) => (this.isLoggedIn = x));
+    this.isLoggedIn = this.keycloak.isLoggedIn();
     this.loading = true;
     this.getPlatforms();
     this.getGames();

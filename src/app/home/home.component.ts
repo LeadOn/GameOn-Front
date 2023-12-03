@@ -40,12 +40,10 @@ export class HomeComponent implements OnInit {
       }
     );
 
-    this.keycloak.isLoggedIn().then((x) => {
-      this.isLoggedIn = x;
+    this.isLoggedIn = this.keycloak.isLoggedIn();
 
-      if (this.isLoggedIn == true) {
-        this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
-      }
-    });
+    if (this.isLoggedIn == true) {
+      this.isAdmin = this.keycloak.isUserInRole("yugames_admin");
+    }
   }
 }

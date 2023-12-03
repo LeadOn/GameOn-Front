@@ -19,7 +19,7 @@ export class CommonLayoutComponent implements OnInit {
   createMatch = faPlusSquare;
 
   constructor(private keycloak: KeycloakService) {
-    this.keycloak.isLoggedIn().then((x) => (this.isLoggedIn = x));
+    this.isLoggedIn = this.keycloak.isLoggedIn();
   }
 
   ngOnInit(): void {
