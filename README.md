@@ -1,7 +1,6 @@
 <h1 align="center">YuGames's Front-end</h1>
 
-<hr>
-<p align="center"><img src="screenshot.png" height="400" alt="LeaderOS's logo" /></p>
+<p align="center"><img src="./images/screenshot.png" height="400" alt="LeaderOS's logo" /></p>
 <hr>
 
 # Description
