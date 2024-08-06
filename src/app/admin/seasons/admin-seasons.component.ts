@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { Season } from "src/app/shared/classes/Season";
-import { YuGamesSeasonService } from "src/app/shared/services/yugames-season.service";
+import {Component, OnInit} from "@angular/core";
+import {Season} from "src/app/shared/classes/Season";
+import {GameOnSeasonService} from "src/app/shared/services/gameon-season.service";
 
 @Component({
   selector: "app-admin-seasons",
@@ -11,7 +11,7 @@ export class AdminSeasonsComponent implements OnInit {
   seasons: Season[] = [];
   loading = true;
 
-  constructor(private seasonService: YuGamesSeasonService) {}
+  constructor(private seasonService: GameOnSeasonService) {}
 
   ngOnInit(): void {
     this.seasonService.getAll().subscribe(

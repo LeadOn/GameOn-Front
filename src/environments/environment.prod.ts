@@ -1,9 +1,9 @@
 export const environment = {
   production: true,
-  yuGamesApiUrl: "https://yugames-api.valentinvirot.fr",
+  gameOnApiUrl: 'https://gameon-api.valentinvirot.fr',
   keycloak: {
-    url: "https://auth.valentinvirot.fr/",
-    realm: "yufoot",
-    clientId: "yufoot-front",
+    url: 'https://auth.valentinvirot.fr/',
+    realm: 'gameon',
+    clientId: 'gameon-front',
   },
 };

@@ -1,6 +1,6 @@
-import { createReducer, on } from "@ngrx/store";
-import { setPlayer } from "../actions/player.actions";
-import { Player } from "src/app/shared/classes/Player";
+import { createReducer, on } from '@ngrx/store';
+import { setPlayer } from '../actions/player.actions';
+import { Player } from '../../shared/classes/Player';
 
 export const initialState: Player = new Player();
 

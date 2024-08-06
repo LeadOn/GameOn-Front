@@ -1,4 +1,4 @@
-import { Player } from "src/app/shared/classes/Player";
+import { Player } from '../../../shared/classes/Player';
 
 export class AdminDashboard {
   currentUser: Player = new Player();

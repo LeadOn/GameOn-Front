@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
-import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
+import {Component, OnInit} from "@angular/core";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {GameOnAdminService} from "../../shared/services/gameon-admin.service";
+import {GameOnTournamentService} from "src/app/shared/services/gameon-tournament.service";
 
 @Component({
   selector: "app-admin-create-tournament-edit",
@@ -23,8 +23,8 @@ export class AdminCreateTournamentComponent implements OnInit {
   });
 
   constructor(
-    private adminService: YuGamesAdminService,
-    private tournamentService: YuGamesTournamentService,
+    private adminService: GameOnAdminService,
+    private tournamentService: GameOnTournamentService,
     private router: Router
   ) {
     this.states = this.tournamentService.getStates();

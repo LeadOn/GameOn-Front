@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { Player } from "src/app/shared/classes/Player";
-import { Tournament } from "src/app/shared/classes/Tournament";
-import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
-import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
-import { YuGamesAdminService } from "../shared/services/yugames-admin.service";
+import {Component, OnInit} from "@angular/core";
+import {Player} from "src/app/shared/classes/Player";
+import {Tournament} from "src/app/shared/classes/Tournament";
+import {GameOnPlayerService} from "src/app/shared/services/gameon-player.service";
+import {GameOnTournamentService} from "src/app/shared/services/gameon-tournament.service";
+import {GameOnAdminService} from "../shared/services/gameon-admin.service";
 
 @Component({
   selector: "app-admin-tournaments",
@@ -16,8 +16,8 @@ export class AdminTournamentsComponent implements OnInit {
   loading = true;
 
   constructor(
-    private tournamentService: YuGamesTournamentService,
-    private adminService: YuGamesAdminService
+    private tournamentService: GameOnTournamentService,
+    private adminService: GameOnAdminService
   ) {
     this.states = this.tournamentService.getStates();
   }

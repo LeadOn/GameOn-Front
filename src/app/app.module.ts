@@ -1,35 +1,33 @@
-import { APP_INITIALIZER, NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { HttpClientModule } from "@angular/common/http";
-import { ClipboardModule } from "@angular/cdk/clipboard";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
-import { KeycloakAngularModule, KeycloakService } from "keycloak-angular";
-import { StoreModule } from "@ngrx/store";
-
-import { environment } from "src/environments/environment";
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { SharedModule } from "./shared/modules/shared.module";
-import { AdminModule } from "./admin/admin.module";
-import { playerReducer } from "./store/reducers/player.reducer";
-import { CommonLayoutComponent } from "./shared/layouts/common-layout.component";
-
-import { HomeComponent } from "./home/home.component";
-import { HomePlayersComponent } from "./home/components/players/home-players.component";
-
-import { ProfilePageComponent } from "./players/me/profile.component";
-import { UpdatePlayerTabComponent } from "./players/me/components/update-player-tab/update-player-tab.component";
-import { ProfileTabComponent } from "./players/me/components/profile-tab/profile-tab.component";
-
-import { PlayerDetailsComponent } from "./players/details/player-details.component";
-import { FifaCreateGameComponent } from "./fifa/create/fifa-create-game.component";
-import { FifaGameDetailsComponent } from "./fifa/details/fifa-game-details.component";
-import { FifaHomeComponent } from "./fifa/fifa-home.component";
-import { TournamentsHomeComponent } from "./fifa/tournaments/tournaments-home.component";
-import { TournamentsDetailsComponent } from "./fifa/tournaments/details/tournaments-details.component";
-
-import { SafePipe } from "./shared/pipes/safe.pipe";
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
+import { SharedModule } from './shared/modules/shared.module';
+import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './home/home.component';
+import { HomePlayersComponent } from './home/components/players/home-players.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { playerReducer } from './store/reducers/player.reducer';
+import { ProfilePageComponent } from './players/me/profile.component';
+import { ProfileTabComponent } from './players/me/components/profile-tab/profile-tab.component';
+import { UpdatePlayerTabComponent } from './players/me/components/update-player-tab/update-player-tab.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { FifaHomeComponent } from './fifa/fifa-home.component';
+import { FifaGameHistoryCardComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card.component';
+import { FifaGameListHeaderComponent } from './fifa/components/fifa-game-list-header/fifa-game-list-header.component';
+import { FifaGameHistoryCardRowComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card-row/fifa-game-history-card-row.component';
+import { FifaCreateGameComponent } from './fifa/create/fifa-create-game.component';
+import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.component';
+import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
+import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
+import { SafePipe } from './shared/pipes/safe.pipe';
+import { PlayerDetailsComponent } from './players/details/player-details.component';
+import { AdminModule } from './admin/admin.module';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -40,16 +38,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
         clientId: environment.keycloak.clientId,
       },
       initOptions: {
-        onLoad: "check-sso",
+        onLoad: 'check-sso',
         silentCheckSsoRedirectUri:
-          window.location.origin + "/assets/silent-check-sso.html",
+          window.location.origin + '/assets/silent-check-sso.html',
       },
     });
 }
 
 @NgModule({
   declarations: [
-    /* Global */
     AppComponent,
     CommonLayoutComponent,
 
@@ -57,16 +54,14 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     HomePlayersComponent,
 
-    /* Player details */
-    PlayerDetailsComponent,
-    FifaHomeComponent,
-    FifaCreateGameComponent,
-    FifaGameDetailsComponent,
-
-    /* Profile page */
+    /* Player pages */
     ProfilePageComponent,
     ProfileTabComponent,
     UpdatePlayerTabComponent,
+    PlayerDetailsComponent,
+
+    /* FIFA related */
+    FifaHomeComponent,
 
     /* Tournament pages */
     TournamentsHomeComponent,
@@ -78,15 +73,16 @@ function initializeKeycloak(keycloak: KeycloakService) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ClipboardModule,
     KeycloakAngularModule,
-    AdminModule,
     SharedModule,
+    FontAwesomeModule,
+    BrowserAnimationsModule,
     StoreModule.forRoot({
       player: playerReducer,
     }),
+    HttpClientModule,
+    ClipboardModule,
+    AdminModule,
   ],
   providers: [
     {

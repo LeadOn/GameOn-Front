@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { Highlight } from "src/app/shared/classes/Highlight";
-import { YuGamesHighlightService } from "src/app/shared/services/yugames-highlight.service";
+import {Component, OnInit} from "@angular/core";
+import {Highlight} from "src/app/shared/classes/Highlight";
+import {GameOnHighlightService} from "src/app/shared/services/gameon-highlight.service";
 
 @Component({
   selector: "app-admin-highlights",
@@ -11,7 +11,7 @@ export class AdminHighlightsComponent implements OnInit {
   highlights: Highlight[] = [];
   loading = true;
 
-  constructor(private highlightService: YuGamesHighlightService) {}
+  constructor(private highlightService: GameOnHighlightService) {}
 
   ngOnInit(): void {
     this.highlightService.getAll().subscribe(

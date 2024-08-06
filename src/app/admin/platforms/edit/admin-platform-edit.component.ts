@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Platform } from "src/app/shared/classes/Platform";
-import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
-import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
+import {Component, OnInit} from "@angular/core";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Platform} from "src/app/shared/classes/Platform";
+import {GameOnPlatformService} from "src/app/shared/services/gameon-platform.service";
+import {GameOnAdminService} from "../../shared/services/gameon-admin.service";
 
 @Component({
   selector: "app-admin-platform-edit",
@@ -21,8 +21,8 @@ export class AdminPlatformEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private platformService: YuGamesPlatformService,
-    private adminService: YuGamesAdminService,
+    private platformService: GameOnPlatformService,
+    private adminService: GameOnAdminService,
     private router: Router
   ) {}
 

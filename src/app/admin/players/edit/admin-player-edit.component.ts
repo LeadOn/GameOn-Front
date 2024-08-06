@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
-import { Player } from "src/app/shared/classes/Player";
-import { YuGamesPlayerService } from "src/app/shared/services/yugames-player.service";
+import {Component, OnInit} from "@angular/core";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {GameOnAdminService} from "../../shared/services/gameon-admin.service";
+import {Player} from "src/app/shared/classes/Player";
+import {GameOnPlayerService} from "src/app/shared/services/gameon-player.service";
 
 @Component({
   selector: "app-admin-player-edit",
@@ -33,8 +33,8 @@ export class AdminPlayerEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: YuGamesPlayerService,
-    private adminService: YuGamesAdminService,
+    private playerService: GameOnPlayerService,
+    private adminService: GameOnAdminService,
     private router: Router
   ) {}
 

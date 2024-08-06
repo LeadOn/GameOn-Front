@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Platform } from "src/app/shared/classes/Platform";
-import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
-import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
-import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
-import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
-import { FifaTeam } from "src/app/shared/classes/FifaTeam";
-import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
-import { UpdateGame } from "../../shared/classes/UpdateGame";
+import {Component, OnInit} from "@angular/core";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Platform} from "src/app/shared/classes/Platform";
+import {GameOnPlatformService} from "src/app/shared/services/gameon-platform.service";
+import {GameOnAdminService} from "../../shared/services/gameon-admin.service";
+import {FifaGamePlayed} from "src/app/shared/classes/FifaGamePlayed";
+import {GameOnGameService} from "src/app/shared/services/gameon-game.service";
+import {FifaTeam} from "src/app/shared/classes/FifaTeam";
+import {GameOnFifaTeamService} from "src/app/shared/services/gameon-fifateam.service";
+import {UpdateGame} from "../../shared/classes/UpdateGame";
 
 @Component({
   selector: "app-admin-fifa-game-edit",
@@ -43,10 +43,10 @@ export class AdminFifaGameEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private gameService: YuGamesGameService,
-    private platformService: YuGamesPlatformService,
-    private fifaTeamService: YuGamesFifaTeamService,
-    private adminService: YuGamesAdminService,
+    private gameService: GameOnGameService,
+    private platformService: GameOnPlatformService,
+    private fifaTeamService: GameOnFifaTeamService,
+    private adminService: GameOnAdminService,
     private router: Router
   ) {}
 

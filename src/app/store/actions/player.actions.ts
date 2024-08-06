@@ -1,7 +1,7 @@
-import { createAction, props } from "@ngrx/store";
-import { Player } from "src/app/shared/classes/Player";
+import { createAction, props } from '@ngrx/store';
+import { Player } from '../../shared/classes/Player';
 
 export const setPlayer = createAction(
-  "Set Player",
+  'Set Player',
   props<{ player: Player }>()
 );

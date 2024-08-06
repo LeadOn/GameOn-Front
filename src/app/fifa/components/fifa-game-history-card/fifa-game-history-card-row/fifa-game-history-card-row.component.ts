@@ -1,10 +1,10 @@
-import { Component, Input } from "@angular/core";
-import { FifaTeamDto } from "src/app/shared/classes/FifaTeamDto";
+import { Component, Input } from '@angular/core';
+import { FifaTeamDto } from '../../../../shared/classes/FifaTeamDto';
 
 @Component({
-  selector: "app-fifa-game-history-card-row",
-  templateUrl: "./fifa-game-history-card-row.component.html",
-  styleUrls: ["./fifa-game-history-card-row.component.scss"],
+  selector: 'app-fifa-game-history-card-row',
+  templateUrl: './fifa-game-history-card-row.component.html',
+  styleUrls: ['./fifa-game-history-card-row.component.scss'],
 })
 export class FifaGameHistoryCardRowComponent {
   @Input()

@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { YuGamesAdminService } from "../../shared/services/yugames-admin.service";
-import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
-import { Tournament } from "src/app/shared/classes/Tournament";
+import {Component, OnInit} from "@angular/core";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {GameOnAdminService} from "../../shared/services/gameon-admin.service";
+import {GameOnTournamentService} from "src/app/shared/services/gameon-tournament.service";
+import {Tournament} from "src/app/shared/classes/Tournament";
 
 @Component({
   selector: "app-admin-edit-tournament-edit",
@@ -27,8 +27,8 @@ export class AdminEditTournamentComponent implements OnInit {
   });
 
   constructor(
-    private adminService: YuGamesAdminService,
-    private tournamentService: YuGamesTournamentService,
+    private adminService: GameOnAdminService,
+    private tournamentService: GameOnTournamentService,
     private router: Router,
     private route: ActivatedRoute
   ) {
