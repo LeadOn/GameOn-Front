@@ -15,6 +15,7 @@ import { FifaGameHistoryCardRowComponent } from '../../fifa/components/fifa-game
 import { FifaCreateGameComponent } from '../../fifa/create/fifa-create-game.component';
 import { FifaGameDetailsComponent } from '../../fifa/details/fifa-game-details.component';
 import { FifaStatComponent } from '../components/fifa-stat/fifa-stat.component';
+import { PlayerTeamListComponent } from '../components/player-team-list/player-team-list.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FifaStatComponent } from '../components/fifa-stat/fifa-stat.component';
     FifaCreateGameComponent,
     FifaGameDetailsComponent,
     FifaStatComponent,
+    PlayerTeamListComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { FifaStatComponent } from '../components/fifa-stat/fifa-stat.component';
     FifaCreateGameComponent,
     FifaGameDetailsComponent,
     FifaStatComponent,
+    PlayerTeamListComponent,
   ],
 })
 export class SharedModule {}

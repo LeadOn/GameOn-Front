@@ -10,6 +10,7 @@ import { FifaCreateGameComponent } from './fifa/create/fifa-create-game.componen
 import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.component';
 import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
 import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
+import { PlayerDetailsComponent } from './players/details/player-details.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
         path: 'player/me',
         component: ProfilePageComponent,
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'player/:id',
+        component: PlayerDetailsComponent,
       },
       {
         path: 'fifa',
@@ -50,10 +55,6 @@ const routes: Routes = [
         path: 'fifa/tournaments/:id',
         component: TournamentsDetailsComponent,
       },
-      // {
-      //   path: 'player/:id',
-      //   component: PlayerDetailsComponent,
-      // },
     ],
   },
   {
