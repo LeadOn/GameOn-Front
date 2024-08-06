@@ -8,6 +8,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { FifaHomeComponent } from './fifa/fifa-home.component';
 import { FifaCreateGameComponent } from './fifa/create/fifa-create-game.component';
 import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.component';
+import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
+import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
 
 const routes: Routes = [
   {
@@ -39,6 +41,14 @@ const routes: Routes = [
       {
         path: 'fifa/details/:id',
         component: FifaGameDetailsComponent,
+      },
+      {
+        path: 'fifa/tournaments',
+        component: TournamentsHomeComponent,
+      },
+      {
+        path: 'fifa/tournaments/:id',
+        component: TournamentsDetailsComponent,
       },
       // {
       //   path: 'player/:id',

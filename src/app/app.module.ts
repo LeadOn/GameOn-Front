@@ -23,6 +23,9 @@ import { FifaGameListHeaderComponent } from './fifa/components/fifa-game-list-he
 import { FifaGameHistoryCardRowComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card-row/fifa-game-history-card-row.component';
 import { FifaCreateGameComponent } from './fifa/create/fifa-create-game.component';
 import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.component';
+import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
+import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
+import { SafePipe } from './shared/pipes/safe.pipe';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -57,6 +60,13 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
     /* FIFA related */
     FifaHomeComponent,
+
+    /* Tournament pages */
+    TournamentsHomeComponent,
+    TournamentsDetailsComponent,
+
+    /* Other */
+    SafePipe,
   ],
   imports: [
     BrowserModule,
