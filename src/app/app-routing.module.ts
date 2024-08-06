@@ -7,6 +7,7 @@ import { ProfilePageComponent } from './players/me/profile.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { FifaHomeComponent } from './fifa/fifa-home.component';
 import { FifaCreateGameComponent } from './fifa/create/fifa-create-game.component';
+import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
         path: 'fifa/create',
         component: FifaCreateGameComponent,
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'fifa/details/:id',
+        component: FifaGameDetailsComponent,
       },
       // {
       //   path: 'player/:id',

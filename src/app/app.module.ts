@@ -22,6 +22,7 @@ import { FifaGameHistoryCardComponent } from './fifa/components/fifa-game-histor
 import { FifaGameListHeaderComponent } from './fifa/components/fifa-game-list-header/fifa-game-list-header.component';
 import { FifaGameHistoryCardRowComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card-row/fifa-game-history-card-row.component';
 import { FifaCreateGameComponent } from './fifa/create/fifa-create-game.component';
+import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -56,10 +57,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
     /* FIFA related */
     FifaHomeComponent,
-    FifaGameHistoryCardComponent,
-    FifaGameListHeaderComponent,
-    FifaGameHistoryCardRowComponent,
-    FifaCreateGameComponent,
   ],
   imports: [
     BrowserModule,
