@@ -1,30 +1,30 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import {faExternalLinkAlt} from "@fortawesome/free-solid-svg-icons";
-import {FifaGamePlayed} from "src/app/shared/classes/FifaGamePlayed";
-import {FifaPlayerStatsDto} from "src/app/shared/classes/FifaPlayerStatsDto";
-import {PlatformStatsDto} from "src/app/shared/classes/PlatformStatsDto";
-import {Player} from "src/app/shared/classes/Player";
-import {GameOnGameService} from "src/app/shared/services/gameon-game.service";
-import {GameOnPlayerService} from "src/app/shared/services/gameon-player.service";
-import {trigger, style, animate, transition} from "@angular/animations";
-import {GameOnSeasonService} from "src/app/shared/services/gameon-season.service";
-import {Season} from "src/app/shared/classes/Season";
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
+import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
+import { PlatformStatsDto } from '../../shared/classes/PlatformStatsDto';
+import { Player } from '../../shared/classes/Player';
+import { GameOnGameService } from '../../shared/services/gameon-game.service';
+import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
+import { trigger, style, animate, transition } from '@angular/animations';
+import { GameOnSeasonService } from '../../shared/services/gameon-season.service';
+import { Season } from '../../shared/classes/Season';
 
 @Component({
-  selector: "app-player-details",
-  templateUrl: "./player-details.component.html",
-  styleUrls: ["./player-details.component.scss"],
+  selector: 'app-player-details',
+  templateUrl: './player-details.component.html',
+  styleUrls: ['./player-details.component.scss'],
   animations: [
-    trigger("inOutAnimation", [
-      transition(":enter", [
-        style({opacity: 0}),
-        animate(200, style({opacity: 1})),
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
       ]),
-      transition(":leave", [
-        style({opacity: 1}),
-        animate(200, style({opacity: 0})),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
       ]),
     ]),
   ],
@@ -56,7 +56,7 @@ export class PlayerDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.playerId = this.route.snapshot.paramMap.get("id");
+    this.playerId = this.route.snapshot.paramMap.get('id');
     this.getPlayer(this.playerId);
     this.getPlayers();
   }
@@ -119,7 +119,7 @@ export class PlayerDetailsComponent implements OnInit {
                   },
                   (err) => {
                     alert(
-                      "Erreur lors de la récupération des dernières parties jouées."
+                      'Erreur lors de la récupération des dernières parties jouées.'
                     );
                     console.error(err);
                   }
@@ -135,7 +135,7 @@ export class PlayerDetailsComponent implements OnInit {
           },
           (err) => {
             alert(
-              "Une erreur est survenue lors de la récupération des saisons."
+              'Une erreur est survenue lors de la récupération des saisons.'
             );
             console.error(err);
           }
@@ -164,7 +164,7 @@ export class PlayerDetailsComponent implements OnInit {
       },
       (err) => {
         alert(
-          "Une erreur est survenue lors de la récupération de la liste des utilisateurs."
+          'Une erreur est survenue lors de la récupération de la liste des utilisateurs.'
         );
         console.error(err);
       }
@@ -175,7 +175,7 @@ export class PlayerDetailsComponent implements OnInit {
     this.selectedEnemy = parseInt(newValue.value);
     this.enemyStats = undefined;
 
-    if (newValue.value != "0") {
+    if (newValue.value != '0') {
       this.loading = true;
 
       this.playerService.get(newValue.value).subscribe(
@@ -210,7 +210,7 @@ export class PlayerDetailsComponent implements OnInit {
   onChangeSeason(newValue: any) {
     this.selectedSeason = parseInt(newValue.value);
 
-    if (newValue.value != "0") {
+    if (newValue.value != '0') {
       this.loading = true;
 
       // Getting stats
@@ -222,7 +222,7 @@ export class PlayerDetailsComponent implements OnInit {
         },
         (err) => {
           alert(
-            "Une erreur est survenue lors de la récupération des statistiques de la saison."
+            'Une erreur est survenue lors de la récupération des statistiques de la saison.'
           );
           console.error(err);
         }

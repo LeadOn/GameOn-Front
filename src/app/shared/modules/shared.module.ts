@@ -8,6 +8,7 @@ import { PlayerCardComponent } from '../components/player-card/player-card.compo
 import { LoadingSpinnerComponent } from '../components/loading-spinner/loading-spinner.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SuccessAlertComponent } from '../components/success-alert/success-alert.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ArrowBtnComponent,
     PlayerCardComponent,
     LoadingSpinnerComponent,
+    SuccessAlertComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ArrowBtnComponent,
     PlayerCardComponent,
     LoadingSpinnerComponent,
+    SuccessAlertComponent,
   ],
 })
 export class SharedModule {}

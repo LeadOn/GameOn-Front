@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
+import { ProfilePageComponent } from './players/me/profile.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -17,6 +19,15 @@ const routes: Routes = [
         path: 'home',
         component: HomeComponent,
       },
+      {
+        path: 'player/me',
+        component: ProfilePageComponent,
+        canActivate: [AuthGuard],
+      },
+      // {
+      //   path: 'player/:id',
+      //   component: PlayerDetailsComponent,
+      // },
     ],
   },
   {

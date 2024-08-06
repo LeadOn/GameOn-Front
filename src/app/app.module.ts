@@ -6,14 +6,17 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/modules/shared.module';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { HomePlayersComponent } from './home/components/players/home-players.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { playerReducer } from './store/reducers/player.reducer';
+import { ProfilePageComponent } from './players/me/profile.component';
+import { ProfileTabComponent } from './players/me/components/profile-tab/profile-tab.component';
+import { UpdatePlayerTabComponent } from './players/me/components/update-player-tab/update-player-tab.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -37,6 +40,10 @@ function initializeKeycloak(keycloak: KeycloakService) {
     CommonLayoutComponent,
     HomeComponent,
     HomePlayersComponent,
+    ProfilePageComponent,
+    ProfileTabComponent,
+    UpdatePlayerTabComponent,
+    // PlayerDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +56,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       player: playerReducer,
     }),
     HttpClientModule,
+    ClipboardModule,
   ],
   providers: [
     {
