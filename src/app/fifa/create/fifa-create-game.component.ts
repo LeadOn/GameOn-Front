@@ -1,29 +1,29 @@
-import {formatDate} from "@angular/common";
-import {Component, OnInit} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {FifaTeam} from "src/app/shared/classes/FifaTeam";
-import {Platform} from "src/app/shared/classes/Platform";
-import {Player} from "src/app/shared/classes/Player";
-import {GameOnFifaTeamService} from "src/app/shared/services/gameon-fifateam.service";
-import {GameOnGameService} from "src/app/shared/services/gameon-game.service";
-import {GameOnPlatformService} from "src/app/shared/services/gameon-platform.service";
-import {GameOnPlayerService} from "src/app/shared/services/gameon-player.service";
-import {trigger, style, animate, transition} from "@angular/animations";
+import { formatDate } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FifaTeam } from '../../shared/classes/FifaTeam';
+import { Platform } from '../../shared/classes/Platform';
+import { Player } from '../../shared/classes/Player';
+import { GameOnFifaTeamService } from '../../shared/services/gameon-fifateam.service';
+import { GameOnGameService } from '../../shared/services/gameon-game.service';
+import { GameOnPlatformService } from '../../shared/services/gameon-platform.service';
+import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
-  selector: "app-fifa-create-game",
-  templateUrl: "./fifa-create-game.component.html",
-  styleUrls: ["./fifa-create-game.component.scss"],
+  selector: 'app-fifa-create-game',
+  templateUrl: './fifa-create-game.component.html',
+  styleUrls: ['./fifa-create-game.component.scss'],
   animations: [
-    trigger("inOutAnimation", [
-      transition(":enter", [
-        style({opacity: 0}),
-        animate(200, style({opacity: 1})),
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
       ]),
-      transition(":leave", [
-        style({opacity: 1}),
-        animate(200, style({opacity: 0})),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
       ]),
     ]),
   ],
@@ -38,22 +38,22 @@ export class FifaCreateGameComponent implements OnInit {
   fifaTeam2 = 0;
 
   createGameForm = new FormGroup({
-    teamCode1: new FormControl("", [
+    teamCode1: new FormControl('', [
       Validators.required,
       Validators.maxLength(5),
     ]),
-    teamFifa1: new FormControl(""),
+    teamFifa1: new FormControl(''),
     teamScore1: new FormControl(0, [Validators.required, Validators.min(0)]),
-    teamCode2: new FormControl("", [
+    teamCode2: new FormControl('', [
       Validators.required,
       Validators.maxLength(5),
     ]),
-    teamFifa2: new FormControl(""),
+    teamFifa2: new FormControl(''),
     teamScore2: new FormControl(0, [Validators.required, Validators.min(0)]),
-    platform: new FormControl("", Validators.required),
+    platform: new FormControl('', Validators.required),
     team1: new FormControl([], Validators.required),
     team2: new FormControl([], Validators.required),
-    date: new FormControl("", Validators.required),
+    date: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -69,7 +69,7 @@ export class FifaCreateGameComponent implements OnInit {
       this.players = data;
       this.platformService.getAll().subscribe((data2) => {
         this.platforms = data2;
-        this.createGameForm.controls["platform"].setValue(
+        this.createGameForm.controls['platform'].setValue(
           data2[0].id.toString()
         );
 
@@ -85,19 +85,19 @@ export class FifaCreateGameComponent implements OnInit {
   createGame() {
     this.isLoading = true;
     let body = {
-      TeamCode1: this.createGameForm.controls["teamCode1"].value,
-      TeamScore1: this.createGameForm.controls["teamScore1"].value,
-      TeamCode2: this.createGameForm.controls["teamCode2"].value,
-      TeamScore2: this.createGameForm.controls["teamScore2"].value,
-      PlatformId: this.createGameForm.controls["platform"].value,
-      Team1: this.createGameForm.controls["team1"].value,
-      Team2: this.createGameForm.controls["team2"].value,
+      TeamCode1: this.createGameForm.controls['teamCode1'].value,
+      TeamScore1: this.createGameForm.controls['teamScore1'].value,
+      TeamCode2: this.createGameForm.controls['teamCode2'].value,
+      TeamScore2: this.createGameForm.controls['teamScore2'].value,
+      PlatformId: this.createGameForm.controls['platform'].value,
+      Team1: this.createGameForm.controls['team1'].value,
+      Team2: this.createGameForm.controls['team2'].value,
       FifaTeam1: 0,
       FifaTeam2: 0,
-      CreatedOn: formatDate(new Date(), "yyyy-MM-ddTHH:mm:ss", "en-US"),
+      CreatedOn: formatDate(new Date(), 'yyyy-MM-ddTHH:mm:ss', 'en-US'),
     };
 
-    let fifaTeam1 = this.createGameForm.controls["teamFifa1"].value;
+    let fifaTeam1 = this.createGameForm.controls['teamFifa1'].value;
     let fifaTeam1Id = 0;
 
     this.fifaTeams.forEach((team) => {
@@ -110,7 +110,7 @@ export class FifaCreateGameComponent implements OnInit {
       body.FifaTeam1 = fifaTeam1Id;
     }
 
-    let fifaTeam2 = this.createGameForm.controls["teamFifa2"].value;
+    let fifaTeam2 = this.createGameForm.controls['teamFifa2'].value;
     let fifaTeam2Id = 0;
 
     this.fifaTeams.forEach((team) => {
@@ -125,10 +125,10 @@ export class FifaCreateGameComponent implements OnInit {
 
     if (
       body.TeamCode1 != null &&
-      body.TeamCode1 != "" &&
+      body.TeamCode1 != '' &&
       body.TeamScore1 != null &&
       body.TeamCode2 != null &&
-      body.TeamCode2 != "" &&
+      body.TeamCode2 != '' &&
       body.TeamScore2 != null &&
       body.PlatformId != null &&
       body.Team1 != null &&
@@ -139,16 +139,16 @@ export class FifaCreateGameComponent implements OnInit {
     ) {
       this.gameService.create(body).subscribe(
         (data) => {
-          this.router.navigate(["/fifa"]);
+          this.router.navigate(['/fifa']);
           this.isLoading = false;
         },
         (err) => {
-          alert("Erreur lors de la création du match !");
+          alert('Erreur lors de la création du match !');
           this.isLoading = false;
         }
       );
     } else {
-      alert("Certaines informations sont manquantes !");
+      alert('Certaines informations sont manquantes !');
       this.isLoading = false;
     }
   }

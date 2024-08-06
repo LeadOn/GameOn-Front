@@ -18,10 +18,6 @@ const routes: Routes = [
     component: CommonLayoutComponent,
     children: [
       {
-        path: 'fifa/create',
-        component: FifaCreateGameComponent,
-      },
-      {
         path: 'fifa/details/:id',
         component: FifaGameDetailsComponent,
       },
