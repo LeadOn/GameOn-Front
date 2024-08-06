@@ -21,5 +21,5 @@ module.exports = {
       frenchRed: "#ED2939",
     },
   },
-  plugins: [require("flowbite/plugin"), require("@tailwindcss/aspect-ratio")],
+  plugins: [require("flowbite/plugin")],
 };
