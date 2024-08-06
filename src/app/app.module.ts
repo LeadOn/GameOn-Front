@@ -27,6 +27,7 @@ import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.co
 import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
 import { SafePipe } from './shared/pipes/safe.pipe';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
+import { AdminModule } from './admin/admin.module';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -81,6 +82,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     }),
     HttpClientModule,
     ClipboardModule,
+    AdminModule,
   ],
   providers: [
     {
