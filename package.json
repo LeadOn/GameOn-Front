@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/router": "^18.1.0",
     "@fortawesome/angular-fontawesome": "^0.15.0",
+    "@ngrx/store": "^18.0.2",
     "flowbite": "^2.5.1",
     "keycloak-angular": "^16.0.1",
     "keycloak-js": "^25.0.2",
