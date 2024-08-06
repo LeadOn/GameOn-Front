@@ -1,46 +1,46 @@
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs";
-import {environment} from "src/environments/environment";
-import {AdminDashboard} from "../classes/AdminDashboard";
-import {Platform} from "src/app/shared/classes/Platform";
-import {UpdateGame} from "../classes/UpdateGame";
-import {Player} from "src/app/shared/classes/Player";
-import {Tournament} from "src/app/shared/classes/Tournament";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
+import { AdminDashboard } from '../classes/AdminDashboard';
+import { Platform } from '../../../shared/classes/Platform';
+import { UpdateGame } from '../classes/UpdateGame';
+import { Player } from '../../../shared/classes/Player';
+import { Tournament } from '../../../shared/classes/Tournament';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class GameOnAdminService {
   constructor(private client: HttpClient) {}
 
   getDashboardStats(): Observable<AdminDashboard> {
     return this.client.get<AdminDashboard>(
-      environment.gameOnApiUrl + "/admin/dashboard"
+      environment.gameOnApiUrl + '/admin/dashboard'
     );
   }
 
   updatePlatform(platform: Platform): Observable<Platform> {
     return this.client.patch<Platform>(
-      environment.gameOnApiUrl + "/platform",
+      environment.gameOnApiUrl + '/platform',
       platform
     );
   }
 
   deleteGame(gameId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.gameOnApiUrl + "/fifagame/" + gameId
+      environment.gameOnApiUrl + '/fifagame/' + gameId
     );
   }
 
   deleteTournament(tournamentId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.gameOnApiUrl + "/tournament/" + tournamentId
+      environment.gameOnApiUrl + '/tournament/' + tournamentId
     );
   }
 
   updateGame(game: UpdateGame): Observable<any> {
-    return this.client.patch<any>(environment.gameOnApiUrl + "/fifagame", game);
+    return this.client.patch<any>(environment.gameOnApiUrl + '/fifagame', game);
   }
 
   updatePlayer(
@@ -62,7 +62,7 @@ export class GameOnAdminService {
     }
 
     return this.client.patch<Player>(
-      environment.gameOnApiUrl + "/player",
+      environment.gameOnApiUrl + '/player',
       body
     );
   }
@@ -91,7 +91,7 @@ export class GameOnAdminService {
     }
 
     return this.client.post<Tournament>(
-      environment.gameOnApiUrl + "/tournament",
+      environment.gameOnApiUrl + '/tournament',
       body
     );
   }
@@ -126,14 +126,14 @@ export class GameOnAdminService {
     }
 
     return this.client.patch<Tournament>(
-      environment.gameOnApiUrl + "/tournament/" + id,
+      environment.gameOnApiUrl + '/tournament/' + id,
       body
     );
   }
 
   goToPhase1(tournamentId: number): Observable<any> {
     return this.client.post<any>(
-      environment.gameOnApiUrl + "/tournament/" + tournamentId + "/phase1",
+      environment.gameOnApiUrl + '/tournament/' + tournamentId + '/phase1',
       null
     );
   }

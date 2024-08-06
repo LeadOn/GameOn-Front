@@ -5,6 +5,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ProfilePageComponent } from './players/me/profile.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { FifaHomeComponent } from './fifa/fifa-home.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
         path: 'player/me',
         component: ProfilePageComponent,
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'fifa',
+        component: FifaHomeComponent,
       },
       // {
       //   path: 'player/:id',

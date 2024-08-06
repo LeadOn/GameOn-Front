@@ -17,6 +17,10 @@ import { ProfilePageComponent } from './players/me/profile.component';
 import { ProfileTabComponent } from './players/me/components/profile-tab/profile-tab.component';
 import { UpdatePlayerTabComponent } from './players/me/components/update-player-tab/update-player-tab.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { FifaHomeComponent } from './fifa/fifa-home.component';
+import { FifaGameHistoryCardComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card.component';
+import { FifaGameListHeaderComponent } from './fifa/components/fifa-game-list-header/fifa-game-list-header.component';
+import { FifaGameHistoryCardRowComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card-row/fifa-game-history-card-row.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -38,12 +42,22 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     CommonLayoutComponent,
+
+    /* Home page */
     HomeComponent,
     HomePlayersComponent,
+
+    /* Player pages */
     ProfilePageComponent,
     ProfileTabComponent,
     UpdatePlayerTabComponent,
     // PlayerDetailsComponent,
+
+    /* FIFA related */
+    FifaHomeComponent,
+    FifaGameHistoryCardComponent,
+    FifaGameListHeaderComponent,
+    FifaGameHistoryCardRowComponent,
   ],
   imports: [
     BrowserModule,
