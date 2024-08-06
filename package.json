@@ -1,5 +1,5 @@
 {
-  "name": "yugames-front",
+  "name": "gameon-front",
   "version": "2.2.1",
   "scripts": {
     "ng": "ng",

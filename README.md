@@ -1,11 +1,16 @@
-<h1 align="center">YuGames's Front-end</h1>
+<p align="center">
+    <img src="./images/gameon-logo.png" width="128" />
+</p>
+
+<h1 align="center">GameOn! Front-end</h1>
 
 <p align="center"><img src="./images/screenshot.png" height="400" alt="LeaderOS's logo" /></p>
+
 <hr>
 
 # Description
 
-This project is a front-end for the YuGames API, done using Angular 17 / Tailwind CSS, and will be running live on [this site](https://yugames.valentinvirot.fr/).
+This project is a front-end for the GameOn! Front-End, done using Angular 17 / Tailwind CSS, and will be running live on [this site](https://gameon.valentinvirot.fr/).
 
 Currently, this front-end uses multiple concepts, such as :
 
@@ -18,7 +23,7 @@ Currently, this front-end uses multiple concepts, such as :
 - Lazy loading
 - ...
 
-Data is directly coming from the [YuGames API](https://yugames-api.valentinvirot.fr/swagger).
+Data is directly coming from the [GameOn! API](https://gameon-api.valentinvirot.fr/swagger).
 
 ## How to run it?
 
