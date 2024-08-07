@@ -1,73 +1,73 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { AdminHomeComponent } from "./home/admin-home.component";
-import { AuthGuard } from "../shared/guards/auth.guard";
-import { AdminLayoutComponent } from "./admin-layout.component";
-import { AdminPlatformsComponent } from "./platforms/admin-platforms.component";
-import { AdminPlatformEditComponent } from "./platforms/edit/admin-platform-edit.component";
-import { AdminFifaGamesComponent } from "./fifa-games/admin-fifa-games.component";
-import { AdminFifaGameEditComponent } from "./fifa-games/edit/admin-fifa-game-edit.component";
-import { AdminPlayersComponent } from "./players/admin-players.component";
-import { AdminHighlightsComponent } from "./highlights/admin-highlights.component";
-import { AdminTournamentsComponent } from "./tournaments/admin-tournaments.component";
-import { AdminSeasonsComponent } from "./seasons/admin-seasons.component";
-import { AdminPlayerEditComponent } from "./players/edit/admin-player-edit.component";
-import { AdminCreateTournamentComponent } from "./tournaments/create/admin-create-tournament.component";
-import { AdminEditTournamentComponent } from "./tournaments/edit/admin-edit-tournament.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AdminHomeComponent } from './home/admin-home.component';
+import { AuthGuard } from '../shared/guards/auth.guard';
+import { AdminLayoutComponent } from './admin-layout.component';
+import { AdminPlatformsComponent } from './platforms/admin-platforms.component';
+import { AdminPlatformEditComponent } from './platforms/edit/admin-platform-edit.component';
+import { AdminFifaGamesComponent } from './fifa-games/admin-fifa-games.component';
+import { AdminFifaGameEditComponent } from './fifa-games/edit/admin-fifa-game-edit.component';
+import { AdminPlayersComponent } from './players/admin-players.component';
+import { AdminPlayerEditComponent } from './players/edit/admin-player-edit.component';
+import { AdminHighlightsComponent } from './highlights/admin-highlights.component';
+import { AdminSeasonsComponent } from './seasons/admin-seasons.component';
+import { AdminEditTournamentComponent } from './tournaments/edit/admin-edit-tournament.component';
+import { AdminCreateTournamentComponent } from './tournaments/create/admin-create-tournament.component';
+import { AdminTournamentsComponent } from './tournaments/admin-tournaments.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: AdminLayoutComponent,
     canActivate: [AuthGuard],
-    data: { roles: ["yugames_admin"] },
+    data: { roles: ['gameon_admin'] },
     children: [
       {
-        path: "",
+        path: '',
         component: AdminHomeComponent,
       },
       {
-        path: "platforms",
+        path: 'platforms',
         component: AdminPlatformsComponent,
       },
       {
-        path: "platforms/edit/:id",
+        path: 'platforms/edit/:id',
         component: AdminPlatformEditComponent,
       },
       {
-        path: "fifa-games",
+        path: 'fifa-games',
         component: AdminFifaGamesComponent,
       },
       {
-        path: "fifa-games/edit/:id",
+        path: 'fifa-games/edit/:id',
         component: AdminFifaGameEditComponent,
       },
       {
-        path: "players",
+        path: 'players',
         component: AdminPlayersComponent,
       },
       {
-        path: "players/edit/:id",
+        path: 'players/edit/:id',
         component: AdminPlayerEditComponent,
       },
       {
-        path: "highlights",
+        path: 'highlights',
         component: AdminHighlightsComponent,
       },
       {
-        path: "seasons",
+        path: 'seasons',
         component: AdminSeasonsComponent,
       },
       {
-        path: "tournaments",
+        path: 'tournaments',
         component: AdminTournamentsComponent,
       },
       {
-        path: "tournaments/create",
+        path: 'tournaments/create',
         component: AdminCreateTournamentComponent,
       },
       {
-        path: "tournaments/edit/:id",
+        path: 'tournaments/edit/:id',
         component: AdminEditTournamentComponent,
       },
     ],

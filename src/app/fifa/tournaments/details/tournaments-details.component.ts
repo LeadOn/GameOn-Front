@@ -1,26 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { Tournament } from "src/app/shared/classes/Tournament";
-import { YuGamesTournamentService } from "src/app/shared/services/yugames-tournament.service";
-import { trigger, style, animate, transition } from "@angular/animations";
-import { ActivatedRoute } from "@angular/router";
-import { KeycloakService } from "keycloak-angular";
-import { FifaTeam } from "src/app/shared/classes/FifaTeam";
-import { YuGamesFifaTeamService } from "src/app/shared/services/yugames-fifateam.service";
-import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
-import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
-import { TournamentPlayerDto } from "src/app/shared/classes/TournamentPlayerDto";
+import { Component, OnInit } from '@angular/core';
+import { Tournament } from '../../../shared/classes/Tournament';
+import { GameOnTournamentService } from '../../../shared/services/gameon-tournament.service';
+import { trigger, style, animate, transition } from '@angular/animations';
+import { ActivatedRoute } from '@angular/router';
+import { KeycloakService } from 'keycloak-angular';
+import { FifaTeam } from '../../../shared/classes/FifaTeam';
+import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.service';
+import { GameOnGameService } from '../../../shared/services/gameon-game.service';
+import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
+import { TournamentPlayerDto } from '../../../shared/classes/TournamentPlayerDto';
 
 @Component({
-  selector: "app-tournaments-details",
-  templateUrl: "./tournaments-details.component.html",
-  styleUrls: ["./tournaments-details.component.scss"],
+  selector: 'app-tournaments-details',
+  templateUrl: './tournaments-details.component.html',
+  styleUrls: ['./tournaments-details.component.scss'],
   animations: [
-    trigger("inOutAnimation", [
-      transition(":enter", [
+    trigger('inOutAnimation', [
+      transition(':enter', [
         style({ opacity: 0 }),
         animate(200, style({ opacity: 1 })),
       ]),
-      transition(":leave", [
+      transition(':leave', [
         style({ opacity: 1 }),
         animate(200, style({ opacity: 0 })),
       ]),
@@ -44,14 +44,14 @@ export class TournamentsDetailsComponent implements OnInit {
   matchsPlayedShown = false;
 
   constructor(
-    private tournamentService: YuGamesTournamentService,
+    private tournamentService: GameOnTournamentService,
     private route: ActivatedRoute,
     private keycloak: KeycloakService,
-    private fifaTeamService: YuGamesFifaTeamService,
-    private gameService: YuGamesGameService
+    private fifaTeamService: GameOnFifaTeamService,
+    private gameService: GameOnGameService
   ) {
     this.states = tournamentService.getStates();
-    this.tournamentId = this.route.snapshot.paramMap.get("id");
+    this.tournamentId = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
@@ -66,7 +66,7 @@ export class TournamentsDetailsComponent implements OnInit {
           },
           (err) => {
             console.log(
-              "[TournamentDetailsComponent] Player is not subscribe to tournament.]"
+              '[TournamentDetailsComponent] Player is not subscribe to tournament.]'
             );
           }
         );
@@ -77,7 +77,7 @@ export class TournamentsDetailsComponent implements OnInit {
           this.selectedTeam = data[0].id;
         },
         (err) => {
-          alert("Erreur lors de la récupération des équipes FIFA.");
+          alert('Erreur lors de la récupération des équipes FIFA.');
           console.error(err);
         }
       );
@@ -89,7 +89,7 @@ export class TournamentsDetailsComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        alert("Erreur lors de la récupération du tournoi.");
+        alert('Erreur lors de la récupération du tournoi.');
         console.error(err);
       }
     );
@@ -103,13 +103,13 @@ export class TournamentsDetailsComponent implements OnInit {
           },
           (err) => {
             console.error(err);
-            alert("Erreur lors de la récupération des matchs.");
+            alert('Erreur lors de la récupération des matchs.');
           }
         );
       },
       (err) => {
         console.error(err);
-        alert("Erreur lors de la récupération des matchs.");
+        alert('Erreur lors de la récupération des matchs.');
       }
     );
   }
@@ -127,7 +127,7 @@ export class TournamentsDetailsComponent implements OnInit {
   }
 
   getState(stateId: number): string {
-    let label = "Inconnu";
+    let label = 'Inconnu';
     this.states.forEach((x) => {
       if (x.value == stateId) {
         label = x.label;
@@ -141,7 +141,7 @@ export class TournamentsDetailsComponent implements OnInit {
     if (
       this.selectedTeam != undefined &&
       confirm(
-        "Êtes vous sûr de vouloir vous inscrire à ce tournoi cette équipe ?"
+        'Êtes vous sûr de vouloir vous inscrire à ce tournoi cette équipe ?'
       )
     ) {
       this.loading = true;
@@ -150,7 +150,7 @@ export class TournamentsDetailsComponent implements OnInit {
         .subscribe(
           (x) => {
             this.loading = false;
-            alert("Inscription réussie !");
+            alert('Inscription réussie !');
             window.location.reload();
           },
           (err) => {
@@ -165,7 +165,7 @@ export class TournamentsDetailsComponent implements OnInit {
     if (
       this.selectedTeam != undefined &&
       confirm(
-        "Êtes vous sûr de vouloir modifier votre inscription à ce tournoi avec cette nouvelle équipe ?"
+        'Êtes vous sûr de vouloir modifier votre inscription à ce tournoi avec cette nouvelle équipe ?'
       )
     ) {
       this.loading = true;
@@ -174,7 +174,7 @@ export class TournamentsDetailsComponent implements OnInit {
         .subscribe(
           (x) => {
             this.loading = false;
-            alert("Inscription modifiée !");
+            alert('Inscription modifiée !');
             window.location.reload();
           },
           (err) => {

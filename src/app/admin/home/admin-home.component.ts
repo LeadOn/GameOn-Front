@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { YuGamesAdminService } from "../shared/services/yugames-admin.service";
-import { AdminDashboard } from "../shared/classes/AdminDashboard";
+import {Component, OnInit} from "@angular/core";
+import {GameOnAdminService} from "../shared/services/gameon-admin.service";
+import {AdminDashboard} from "../shared/classes/AdminDashboard";
 
 @Component({
   selector: "app-admin-home",
@@ -12,7 +12,7 @@ export class AdminHomeComponent implements OnInit {
 
   stats: AdminDashboard = new AdminDashboard();
 
-  constructor(private adminService: YuGamesAdminService) {}
+  constructor(private adminService: GameOnAdminService) {}
 
   ngOnInit(): void {
     this.adminService.getDashboardStats().subscribe(

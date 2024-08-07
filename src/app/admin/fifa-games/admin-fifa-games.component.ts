@@ -1,18 +1,18 @@
-import { Component, OnInit } from "@angular/core";
-import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
-import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
+import { Component, OnInit } from '@angular/core';
+import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
+import { GameOnGameService } from '../../shared/services/gameon-game.service';
 
 @Component({
-  selector: "app-admin-fifa-games",
-  templateUrl: "./admin-fifa-games.component.html",
-  styleUrls: ["./admin-fifa-games.component.scss"],
+  selector: 'app-admin-fifa-games',
+  templateUrl: './admin-fifa-games.component.html',
+  styleUrls: ['./admin-fifa-games.component.scss'],
 })
 export class AdminFifaGamesComponent implements OnInit {
   games: FifaGamePlayed[] = [];
   loading = true;
   isAdmin = true;
 
-  constructor(private gameService: YuGamesGameService) {}
+  constructor(private gameService: GameOnGameService) {}
 
   ngOnInit(): void {
     this.getGames();
@@ -26,7 +26,7 @@ export class AdminFifaGamesComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        alert("Une erreur est survenue lors de la récupération des matchs.");
+        alert('Une erreur est survenue lors de la récupération des matchs.');
         console.error(err);
         this.loading = false;
       }

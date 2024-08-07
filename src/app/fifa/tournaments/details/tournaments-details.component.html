@@ -25,7 +25,7 @@
       <img
         class="rounded-full neomorphism-primary mt-4"
         *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
-        src="../../../assets/img/yugames-logo.webp"
+        src="assets/img/gameon-logo.webp"
         width="128"
       />
 
@@ -131,7 +131,7 @@
     >
       <div class="flex flex-row space-x-2 items-center justify-center">
         <img
-          src="../../../assets/img/svg/trophee.svg"
+          src="assets/img/svg/trophee.svg"
           class="w-8 rounded-full bg-secondary p-2"
         />
         <span class="text">Détails</span>
@@ -166,7 +166,7 @@
     >
       <div class="grow flex flex-row space-x-2 items-center justify-left">
         <img
-          src="../../../assets/img/svg/fifagame.svg"
+          src="assets/img/svg/fifagame.svg"
           class="w-12 rounded-full bg-secondary p-2"
         />
         <span class="text-lg">Tournoi</span>
@@ -197,7 +197,7 @@
     >
       <div class="grow flex flex-row space-x-2 items-center justify-left">
         <img
-          src="../../../assets/img/svg/player.svg"
+          src="assets/img/svg/player.svg"
           class="w-12 rounded-full bg-secondary p-2"
         />
         <span class="text-lg">Participants</span>
@@ -206,12 +206,12 @@
       <div>
         <img
           class="w-16"
-          src="../../../assets/img/svg/chevron-down.svg"
+          src="assets/img/svg/chevron-down.svg"
           *ngIf="playersShown"
         />
         <img
           class="w-16"
-          src="../../../assets/img/svg/chevron-up.svg"
+          src="assets/img/svg/chevron-up.svg"
           *ngIf="!playersShown"
         />
       </div>
@@ -272,7 +272,7 @@
                   />
                   <img
                     *ngIf="player.player.profilePictureUrl == null"
-                    src="../../../assets/img/yugames-logo.webp"
+                    src="assets/img/gameon-logo.webp"
                     class="w-8 rounded-full"
                   />
                 </div>
@@ -290,7 +290,7 @@
                 class="flex flex-col justify-center align-center items-center p-2 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
               >
                 <img
-                  src="../../../assets/img/fifa/teams/{{ player.team.id }}.webp"
+                  src="assets/img/fifa/teams/{{ player.team.id }}.webp"
                   class="w-8"
                   alt="{{ player.team.name }}"
                 />
@@ -343,7 +343,7 @@
     >
       <div class="grow flex flex-row space-x-2 items-center justify-left">
         <img
-          src="../../../assets/img/svg/fifagame.svg"
+          src="assets/img/svg/fifagame.svg"
           class="w-12 rounded-full bg-secondary p-2"
         />
         <span class="text-lg">Matchs joués</span>
@@ -352,12 +352,12 @@
       <div *ngIf="gamesPlayed.length > 0">
         <img
           class="w-16"
-          src="../../../assets/img/svg/chevron-down.svg"
+          src="assets/img/svg/chevron-down.svg"
           *ngIf="matchsPlayedShown"
         />
         <img
           class="w-16"
-          src="../../../assets/img/svg/chevron-up.svg"
+          src="assets/img/svg/chevron-up.svg"
           *ngIf="!matchsPlayedShown"
         />
       </div>
@@ -390,7 +390,7 @@
     >
       <div class="grow flex flex-row space-x-2 items-center justify-left">
         <img
-          src="../../../assets/img/svg/fifagame.svg"
+          src="assets/img/svg/fifagame.svg"
           class="w-12 rounded-full bg-green-500 p-2"
         />
         <span class="text-lg">Matchs planifiés</span>
@@ -399,12 +399,12 @@
       <div *ngIf="gamesToPlay.length > 0">
         <img
           class="w-16"
-          src="../../../assets/img/svg/chevron-down.svg"
+          src="assets/img/svg/chevron-down.svg"
           *ngIf="plannedMatchsShown"
         />
         <img
           class="w-16"
-          src="../../../assets/img/svg/chevron-up.svg"
+          src="assets/img/svg/chevron-up.svg"
           *ngIf="!plannedMatchsShown"
         />
       </div>

@@ -1,23 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { faExternalLinkAlt, faFilter } from "@fortawesome/free-solid-svg-icons";
-import { KeycloakService } from "keycloak-angular";
-import { FifaGamePlayed } from "src/app/shared/classes/FifaGamePlayed";
-import { Platform } from "src/app/shared/classes/Platform";
-import { YuGamesGameService } from "src/app/shared/services/yugames-game.service";
-import { YuGamesPlatformService } from "src/app/shared/services/yugames-platform.service";
-import { trigger, style, animate, transition } from "@angular/animations";
+import { Component, OnInit } from '@angular/core';
+import { faExternalLinkAlt, faFilter } from '@fortawesome/free-solid-svg-icons';
+import { KeycloakService } from 'keycloak-angular';
+import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
+import { Platform } from '../shared/classes/Platform';
+import { GameOnGameService } from '../shared/services/gameon-game.service';
+import { GameOnPlatformService } from '../shared/services/gameon-platform.service';
+import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
-  selector: "app-fifa-home",
-  templateUrl: "./fifa-home.component.html",
-  styleUrls: ["./fifa-home.component.scss"],
+  selector: 'app-fifa-home',
+  templateUrl: './fifa-home.component.html',
+  styleUrls: ['./fifa-home.component.scss'],
   animations: [
-    trigger("inOutAnimation", [
-      transition(":enter", [
+    trigger('inOutAnimation', [
+      transition(':enter', [
         style({ opacity: 0 }),
         animate(200, style({ opacity: 1 })),
       ]),
-      transition(":leave", [
+      transition(':leave', [
         style({ opacity: 1 }),
         animate(200, style({ opacity: 0 })),
       ]),
@@ -38,8 +38,8 @@ export class FifaHomeComponent implements OnInit {
   filterIcon = faFilter;
 
   constructor(
-    private gameService: YuGamesGameService,
-    private platformService: YuGamesPlatformService,
+    private gameService: GameOnGameService,
+    private platformService: GameOnPlatformService,
     private keycloak: KeycloakService
   ) {}
 
@@ -56,7 +56,7 @@ export class FifaHomeComponent implements OnInit {
         this.platforms = data;
       },
       (err) => {
-        alert("Erreur lors de la récupération des plateformes.");
+        alert('Erreur lors de la récupération des plateformes.');
         console.error(err);
       }
     );
@@ -71,9 +71,9 @@ export class FifaHomeComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        console.error("[FifaHistory]", err);
+        console.error('[FifaHistory]', err);
         alert(
-          "Une erreur est survenue lors de la récupération des matchs joués."
+          'Une erreur est survenue lors de la récupération des matchs joués.'
         );
       }
     );
@@ -90,9 +90,9 @@ export class FifaHomeComponent implements OnInit {
           this.loading = false;
         },
         (err) => {
-          console.error("[FifaHistory]", err);
+          console.error('[FifaHistory]', err);
           alert(
-            "Une erreur est survenue lors de la récupération des matchs joués."
+            'Une erreur est survenue lors de la récupération des matchs joués.'
           );
         }
       );

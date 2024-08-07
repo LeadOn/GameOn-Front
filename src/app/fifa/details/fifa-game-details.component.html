@@ -28,7 +28,7 @@
       <img
         *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
         class="w-24"
-        src="../../../assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.webp"
+        src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.webp"
       />
       <span>{{ game.team1.code }}</span>
     </div>
@@ -43,7 +43,7 @@
       <img
         *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
         class="w-24"
-        src="../../../assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.webp"
+        src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.webp"
       />
       <span>{{ game.team2.code }}</span>
     </div>
@@ -66,27 +66,27 @@
         Match planifié dans un tournoi -
       </span>
       <img
-        src="../../../../assets/img/svg/windows.svg"
+        src="assets/img/svg/windows.svg"
         *ngIf="game.platformId == 1"
         class="w-4"
       />
       <img
-        src="../../../../assets/img/svg/xbox.svg"
+        src="assets/img/svg/xbox.svg"
         *ngIf="game.platformId == 2"
         class="w-4"
       />
       <img
-        src="../../../../assets/img/svg/stadium.svg"
+        src="assets/img/svg/stadium.svg"
         *ngIf="game.platformId == 3"
         class="w-4"
       />
       <img
-        src="../../../../assets/img/svg/playstation.svg"
+        src="assets/img/svg/playstation.svg"
         *ngIf="game.platformId == 4"
         class="w-4"
       />
       <span
-        src="../../../../assets/img/svg/playstation.svg"
+        src="assets/img/svg/playstation.svg"
         *ngIf="game.platformId > 4"
         class="w-4"
       >
@@ -126,7 +126,7 @@
         />
 
         <img
-          src="../../../assets/img/yugames-logo.webp"
+          src="assets/img/gameon-logo.webp"
           *ngIf="player.profilePictureUrl == null"
           class="w-20 rounded-full"
         />
@@ -148,7 +148,7 @@
         />
 
         <img
-          src="../../../assets/img/yugames-logo.webp"
+          src="assets/img/gameon-logo.webp"
           *ngIf="player.profilePictureUrl == null"
           class="w-20 rounded-full"
         />
@@ -170,7 +170,7 @@
     <div
       class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
     >
-      <img src="../../../assets/img/svg/highlight.svg" class="w-4" />
+      <img src="assets/img/svg/highlight.svg" class="w-4" />
     </div>
     <span class="ml-1 text-white">Temps forts</span>
   </div>
@@ -244,7 +244,7 @@
       <div
         class="rounded-full bg-customGreen w-8 flex flex-col items-center justify-center"
       >
-        <img src="../../../assets/img/svg/highlight.svg" class="w-4" />
+        <img src="assets/img/svg/highlight.svg" class="w-4" />
       </div>
       <span class="ml-1 text-white">Ajouter un temps fort</span>
     </div>

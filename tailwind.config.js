@@ -12,8 +12,8 @@ module.exports = {
       primary: "#36393e",
       primaryDarker: "#282b30",
       primaryDarkerer: "#1e2124",
-      secondary: "#B86F52",
-      secondaryDarker: "#775448",
+      secondary: "#79C15B",
+      secondaryDarker: "#6C7B3B",
       customRed: "#C82D44",
       customGreen: "#1B998B",
       customYellow: "#D4AC0C",
@@ -21,5 +21,5 @@ module.exports = {
       frenchRed: "#ED2939",
     },
   },
-  plugins: [require("flowbite/plugin"), require("@tailwindcss/aspect-ratio")],
+  plugins: [require("flowbite/plugin")],
 };
