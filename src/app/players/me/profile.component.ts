@@ -38,7 +38,7 @@ export class ProfilePageComponent implements OnInit {
     private keycloak: KeycloakService
   ) {
     this.player$ = store.select('player');
-    this.isAdmin = this.keycloak.isUserInRole('GameOn_admin');
+    this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
   }
 
   ngOnInit(): void {
