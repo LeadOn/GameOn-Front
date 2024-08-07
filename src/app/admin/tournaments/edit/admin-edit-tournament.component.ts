@@ -1,14 +1,14 @@
-import {Component, OnInit} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {GameOnAdminService} from "../../shared/services/gameon-admin.service";
-import {GameOnTournamentService} from "src/app/shared/services/gameon-tournament.service";
-import {Tournament} from "src/app/shared/classes/Tournament";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
+import { GameOnTournamentService } from '../../../shared/services/gameon-tournament.service';
+import { Tournament } from '../../../shared/classes/Tournament';
 
 @Component({
-  selector: "app-admin-edit-tournament-edit",
-  templateUrl: "./admin-edit-tournament.component.html",
-  styleUrls: ["./admin-edit-tournament.component.scss"],
+  selector: 'app-admin-edit-tournament-edit',
+  templateUrl: './admin-edit-tournament.component.html',
+  styleUrls: ['./admin-edit-tournament.component.scss'],
 })
 export class AdminEditTournamentComponent implements OnInit {
   loading = true;
@@ -17,13 +17,13 @@ export class AdminEditTournamentComponent implements OnInit {
   states: any[] = [];
 
   editTournamentForm = new FormGroup({
-    name: new FormControl("", [Validators.maxLength(100), Validators.required]),
-    description: new FormControl("", [Validators.maxLength(5000)]),
+    name: new FormControl('', [Validators.maxLength(100), Validators.required]),
+    description: new FormControl('', [Validators.maxLength(5000)]),
     state: new FormControl(0, [Validators.required]),
-    logoUrl: new FormControl("", [Validators.maxLength(3000)]),
-    phase2ChallongeUrl: new FormControl("", [Validators.maxLength(3000)]),
-    plannedFrom: new FormControl("", [Validators.required]),
-    plannedTo: new FormControl("", [Validators.required]),
+    logoUrl: new FormControl('', [Validators.maxLength(3000)]),
+    phase2ChallongeUrl: new FormControl('', [Validators.maxLength(3000)]),
+    plannedFrom: new FormControl('', [Validators.required]),
+    plannedTo: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -33,7 +33,7 @@ export class AdminEditTournamentComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.states = this.tournamentService.getStates();
-    this.tournamentId = this.route.snapshot.paramMap.get("id");
+    this.tournamentId = this.route.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
@@ -41,27 +41,27 @@ export class AdminEditTournamentComponent implements OnInit {
       (data) => {
         this.tournament = data;
 
-        this.editTournamentForm.controls["name"].setValue(data.name);
-        this.editTournamentForm.controls["state"].setValue(data.state);
-        this.editTournamentForm.controls["plannedFrom"].setValue(
+        this.editTournamentForm.controls['name'].setValue(data.name);
+        this.editTournamentForm.controls['state'].setValue(data.state);
+        this.editTournamentForm.controls['plannedFrom'].setValue(
           data.plannedFrom.toString()
         );
-        this.editTournamentForm.controls["plannedTo"].setValue(
+        this.editTournamentForm.controls['plannedTo'].setValue(
           data.plannedTo.toString()
         );
 
         if (data.description != null) {
-          this.editTournamentForm.controls["description"].setValue(
+          this.editTournamentForm.controls['description'].setValue(
             data.description
           );
         }
 
         if (data.logoUrl != null) {
-          this.editTournamentForm.controls["logoUrl"].setValue(data.logoUrl);
+          this.editTournamentForm.controls['logoUrl'].setValue(data.logoUrl);
         }
 
         if (data.phase2ChallongeUrl != null) {
-          this.editTournamentForm.controls["phase2ChallongeUrl"].setValue(
+          this.editTournamentForm.controls['phase2ChallongeUrl'].setValue(
             data.phase2ChallongeUrl
           );
         }
@@ -69,7 +69,7 @@ export class AdminEditTournamentComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        alert("Une erreur est survenue lors de la récupération du tournoi.");
+        alert('Une erreur est survenue lors de la récupération du tournoi.');
         console.error(err);
       }
     );
@@ -77,66 +77,66 @@ export class AdminEditTournamentComponent implements OnInit {
 
   editTournament() {
     if (
-      this.editTournamentForm.controls["name"].value != null &&
-      this.editTournamentForm.controls["name"].value != "" &&
-      this.editTournamentForm.controls["state"].value != null &&
-      this.editTournamentForm.controls["plannedFrom"].value != null &&
-      this.editTournamentForm.controls["plannedFrom"].value != "" &&
-      this.editTournamentForm.controls["plannedTo"].value != null &&
-      this.editTournamentForm.controls["plannedTo"].value != ""
+      this.editTournamentForm.controls['name'].value != null &&
+      this.editTournamentForm.controls['name'].value != '' &&
+      this.editTournamentForm.controls['state'].value != null &&
+      this.editTournamentForm.controls['plannedFrom'].value != null &&
+      this.editTournamentForm.controls['plannedFrom'].value != '' &&
+      this.editTournamentForm.controls['plannedTo'].value != null &&
+      this.editTournamentForm.controls['plannedTo'].value != ''
     ) {
       this.loading = true;
 
       let description: any = null;
       if (
-        this.editTournamentForm.controls["description"].value != null &&
-        this.editTournamentForm.controls["description"].value != ""
+        this.editTournamentForm.controls['description'].value != null &&
+        this.editTournamentForm.controls['description'].value != ''
       ) {
-        description = this.editTournamentForm.controls["description"].value;
+        description = this.editTournamentForm.controls['description'].value;
       }
 
       let logoUrl: any = null;
       if (
-        this.editTournamentForm.controls["logoUrl"].value != null &&
-        this.editTournamentForm.controls["logoUrl"].value != ""
+        this.editTournamentForm.controls['logoUrl'].value != null &&
+        this.editTournamentForm.controls['logoUrl'].value != ''
       ) {
-        logoUrl = this.editTournamentForm.controls["logoUrl"].value;
+        logoUrl = this.editTournamentForm.controls['logoUrl'].value;
       }
 
       let phase2ChallongeUrl: any = null;
       if (
-        this.editTournamentForm.controls["phase2ChallongeUrl"].value != null &&
-        this.editTournamentForm.controls["phase2ChallongeUrl"].value != ""
+        this.editTournamentForm.controls['phase2ChallongeUrl'].value != null &&
+        this.editTournamentForm.controls['phase2ChallongeUrl'].value != ''
       ) {
         phase2ChallongeUrl =
-          this.editTournamentForm.controls["phase2ChallongeUrl"].value;
+          this.editTournamentForm.controls['phase2ChallongeUrl'].value;
       }
 
       this.adminService
         .editTournament(
           this.tournamentId,
-          this.editTournamentForm.controls["name"].value,
-          this.editTournamentForm.controls["state"].value,
-          this.editTournamentForm.controls["plannedFrom"].value,
-          this.editTournamentForm.controls["plannedTo"].value,
+          this.editTournamentForm.controls['name'].value,
+          this.editTournamentForm.controls['state'].value,
+          this.editTournamentForm.controls['plannedFrom'].value,
+          this.editTournamentForm.controls['plannedTo'].value,
           description,
           logoUrl,
           phase2ChallongeUrl
         )
         .subscribe(
           (data) => {
-            alert("Tournoi mis à jour !");
+            alert('Tournoi mis à jour !');
             this.loading = false;
-            this.router.navigate(["/admin/tournaments"]);
+            this.router.navigate(['/admin/tournaments']);
           },
           (err) => {
-            alert("Erreur lors de la mise à jour du tournoi !");
+            alert('Erreur lors de la mise à jour du tournoi !');
             console.error(err);
             this.loading = false;
           }
         );
     } else {
-      alert("Certaines informations sont manquantes !");
+      alert('Certaines informations sont manquantes !');
     }
   }
 }

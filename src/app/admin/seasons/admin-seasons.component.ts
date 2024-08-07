@@ -1,11 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {Season} from "src/app/shared/classes/Season";
-import {GameOnSeasonService} from "src/app/shared/services/gameon-season.service";
+import { Component, OnInit } from '@angular/core';
+import { Season } from '../../shared/classes/Season';
+import { GameOnSeasonService } from '../../shared/services/gameon-season.service';
 
 @Component({
-  selector: "app-admin-seasons",
-  templateUrl: "./admin-seasons.component.html",
-  styleUrls: ["./admin-seasons.component.scss"],
+  selector: 'app-admin-seasons',
+  templateUrl: './admin-seasons.component.html',
+  styleUrls: ['./admin-seasons.component.scss'],
 })
 export class AdminSeasonsComponent implements OnInit {
   seasons: Season[] = [];
@@ -20,7 +20,7 @@ export class AdminSeasonsComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        alert("Une erreur est survenue lors de la récupération des saisons.");
+        alert('Une erreur est survenue lors de la récupération des saisons.');
         console.error(err);
         this.loading = false;
       }

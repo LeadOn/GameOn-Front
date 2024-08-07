@@ -1,11 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {Platform} from "src/app/shared/classes/Platform";
-import {GameOnPlatformService} from "src/app/shared/services/gameon-platform.service";
+import { Component, OnInit } from '@angular/core';
+import { Platform } from '../../shared/classes/Platform';
+import { GameOnPlatformService } from '../../shared/services/gameon-platform.service';
 
 @Component({
-  selector: "app-admin-platforms",
-  templateUrl: "./admin-platforms.component.html",
-  styleUrls: ["./admin-platforms.component.scss"],
+  selector: 'app-admin-platforms',
+  templateUrl: './admin-platforms.component.html',
+  styleUrls: ['./admin-platforms.component.scss'],
 })
 export class AdminPlatformsComponent implements OnInit {
   platforms: Platform[] = [];
@@ -21,7 +21,7 @@ export class AdminPlatformsComponent implements OnInit {
       },
       (err) => {
         alert(
-          "Une erreur est survenue lors de la récupération des plateformes."
+          'Une erreur est survenue lors de la récupération des plateformes.'
         );
         console.error(err);
         this.loading = false;
