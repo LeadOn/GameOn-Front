@@ -14,7 +14,7 @@
     <div
       class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
     >
-      <img src="../../../assets/img/svg/player.svg" class="w-4" />
+      <img src="assets/img/svg/player.svg" class="w-4" />
     </div>
     <span class="text-white">Tournois</span>
   </div>
@@ -64,11 +64,11 @@
         <td class="px-6 py-4">{{ getState(tournament.state) }}</td>
         <td class="px-6 py-4 flex flex-row">
           <a [routerLink]="['/admin/tournaments/edit', tournament.id]">
-            <img src="../../../assets/img/svg/edit.svg" class="w-8" />
+            <img src="assets/img/svg/edit.svg" class="w-8" />
           </a>
 
           <button (click)="delete(tournament.id)">
-            <img src="../../../assets/img/svg/trash.svg" class="w-8" />
+            <img src="assets/img/svg/trash.svg" class="w-8" />
           </button>
 
           <button

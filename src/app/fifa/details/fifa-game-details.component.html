@@ -2,7 +2,8 @@
   [@inOutAnimation]
   class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
   role="status"
-  *ngIf="loading == true">
+  *ngIf="loading == true"
+>
   <app-loading-spinner></app-loading-spinner>
   Chargement des données...
 </div>
@@ -11,20 +12,24 @@
   *ngIf="successMessage == true"
   [text]="'Mise à jour réussie !'"
   [(show)]="successMessage"
-  [@inOutAnimation]></app-success-alert>
+  [@inOutAnimation]
+></app-success-alert>
 
 <div
   [@inOutAnimation]
-  class="flex flex-col text-white m-8 md:mx-16 lg:mx-32 bg-primary p-4 rounded-lg neomorphism-primaryDarker">
+  class="flex flex-col text-white m-8 md:mx-16 lg:mx-32 bg-primary p-4 rounded-lg neomorphism-primaryDarker"
+>
   <div
     [@inOutAnimation]
     class="flex flex-row items-center justify-around"
-    *ngIf="loading == false && game != null">
+    *ngIf="loading == false && game != null"
+  >
     <div class="flex flex-col items-center">
       <img
         *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
         class="w-24"
-        src="../../../assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.webp" />
+        src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.webp"
+      />
       <span>{{ game.team1.code }}</span>
     </div>
 
@@ -38,14 +43,16 @@
       <img
         *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
         class="w-24"
-        src="../../../assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.webp" />
+        src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.webp"
+      />
       <span>{{ game.team2.code }}</span>
     </div>
   </div>
 
   <div
     class="mt-4 w-full flex flex-col space-y-2"
-    *ngIf="loading == false && game != null">
+    *ngIf="loading == false && game != null"
+  >
     <div>
       <hr />
     </div>
@@ -59,25 +66,30 @@
         Match planifié dans un tournoi -
       </span>
       <img
-        src="../../../../assets/img/svg/windows.svg"
+        src="assets/img/svg/windows.svg"
         *ngIf="game.platformId == 1"
-        class="w-4" />
+        class="w-4"
+      />
       <img
-        src="../../../../assets/img/svg/xbox.svg"
+        src="assets/img/svg/xbox.svg"
         *ngIf="game.platformId == 2"
-        class="w-4" />
+        class="w-4"
+      />
       <img
-        src="../../../../assets/img/svg/stadium.svg"
+        src="assets/img/svg/stadium.svg"
         *ngIf="game.platformId == 3"
-        class="w-4" />
+        class="w-4"
+      />
       <img
-        src="../../../../assets/img/svg/playstation.svg"
+        src="assets/img/svg/playstation.svg"
         *ngIf="game.platformId == 4"
-        class="w-4" />
+        class="w-4"
+      />
       <span
-        src="../../../../assets/img/svg/playstation.svg"
+        src="assets/img/svg/playstation.svg"
         *ngIf="game.platformId > 4"
-        class="w-4">
+        class="w-4"
+      >
         {{ game.platform }}
       </span>
     </div>
@@ -86,7 +98,8 @@
       <a
         [routerLink]="['/admin/fifa-games/edit', gameId]"
         *ngIf="isAdmin == true"
-        class="text-xs bg-customRed rounded-lg px-2">
+        class="text-xs bg-customRed rounded-lg px-2"
+      >
         Modifier
       </a>
     </div>
@@ -98,21 +111,25 @@
 
   <div
     class="flex flex-row justify-around mt-4"
-    *ngIf="loading == false && game != null">
+    *ngIf="loading == false && game != null"
+  >
     <div class="flex flex-col items-center space-y-4 bir">
       <a
         *ngFor="let player of game.team1.players"
         class="flex flex-col items-center"
-        [routerLink]="['/player', player.id]">
+        [routerLink]="['/player', player.id]"
+      >
         <img
           src="{{ player.profilePictureUrl }}"
           *ngIf="player.profilePictureUrl != null"
-          class="w-20 rounded-full" />
+          class="w-20 rounded-full"
+        />
 
         <img
-          src="../../../assets/img/gameon-logo.webp"
+          src="assets/img/gameon-logo.webp"
           *ngIf="player.profilePictureUrl == null"
-          class="w-20 rounded-full" />
+          class="w-20 rounded-full"
+        />
 
         <span class="text-sm">{{ player.fullName }}</span>
         <span class="text-sm italic">{{ player.nickname }}</span>
@@ -122,16 +139,19 @@
       <a
         *ngFor="let player of game.team2.players"
         class="flex flex-col items-center"
-        [routerLink]="['/player', player.id]">
+        [routerLink]="['/player', player.id]"
+      >
         <img
           src="{{ player.profilePictureUrl }}"
           *ngIf="player.profilePictureUrl != null"
-          class="w-20 rounded-full" />
+          class="w-20 rounded-full"
+        />
 
         <img
-          src="../../../assets/img/gameon-logo.webp"
+          src="assets/img/gameon-logo.webp"
           *ngIf="player.profilePictureUrl == null"
-          class="w-20 rounded-full" />
+          class="w-20 rounded-full"
+        />
         <span class="text-sm">{{ player.fullName }}</span>
         <span class="text-sm italic">{{ player.nickname }}</span>
       </a>
@@ -142,39 +162,47 @@
 <div
   [@inOutAnimation]
   class="flex flex-col text-white m-8 md:mx-16 lg:mx-32"
-  *ngIf="loading == false && game != null && game.isPlayed == true">
+  *ngIf="loading == false && game != null && game.isPlayed == true"
+>
   <div
-    class="flex flex-row w-full justify-center bg-primary p-4 rounded-lg neomorphism-primaryDarker-2">
+    class="flex flex-row w-full justify-center bg-primary p-4 rounded-lg neomorphism-primaryDarker-2"
+  >
     <div
-      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center">
-      <img src="../../../assets/img/svg/highlight.svg" class="w-4" />
+      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
+    >
+      <img src="assets/img/svg/highlight.svg" class="w-4" />
     </div>
     <span class="ml-1 text-white">Temps forts</span>
   </div>
 
   <div
     class="flex flex-row w-full justify-center bg-primary p-4 rounded-lg neomorphism-primaryDarker-2 mt-4"
-    *ngIf="game.highlights == null || game.highlights.length == 0">
+    *ngIf="game.highlights == null || game.highlights.length == 0"
+  >
     <span>Aucun temps fort n'est disponible pour ce match.</span>
   </div>
 
   <div
     class="flex flex-col w-full justify-center space-y-4 mt-4"
-    *ngIf="game.highlights != null && game.highlights.length > 0">
+    *ngIf="game.highlights != null && game.highlights.length > 0"
+  >
     <div
       *ngFor="let highlight of game.highlights"
-      class="flex flex-row bg-primary p-4 rounded-lg neomorphism-primaryDarker-2 items-center">
+      class="flex flex-row bg-primary p-4 rounded-lg neomorphism-primaryDarker-2 items-center"
+    >
       <a
         *ngIf="highlight.description == null && highlight.externalUrl != null"
         href="{{ highlight.externalUrl }}"
         target="_blank"
-        class="flex flex-col grow">
+        class="flex flex-col grow"
+      >
         {{ highlight.name }}
       </a>
       <span
         *ngIf="highlight.description == null && highlight.externalUrl == null"
         target="_blank"
-        class="flex flex-col grow">
+        class="flex flex-col grow"
+      >
         {{ highlight.name }}
       </span>
 
@@ -182,7 +210,8 @@
         *ngIf="highlight.description != null && highlight.externalUrl != null"
         href="{{ highlight.externalUrl }}"
         target="_blank"
-        class="flex flex-col grow">
+        class="flex flex-col grow"
+      >
         <span>{{ highlight.name }}</span>
         <span class="text-sm italic">{{ highlight.description }}</span>
       </a>
@@ -190,7 +219,8 @@
       <span
         *ngIf="highlight.description != null && highlight.externalUrl == null"
         target="_blank"
-        class="flex flex-col grow">
+        class="flex flex-col grow"
+      >
         <span>{{ highlight.name }}</span>
         <span class="text-sm italic">{{ highlight.description }}</span>
       </span>
@@ -198,7 +228,8 @@
       <a
         href="{{ highlight.externalUrl }}"
         *ngIf="highlight.externalUrl != null"
-        target="_blank">
+        target="_blank"
+      >
         <fa-icon class="inline-block" [icon]="externalIcon"></fa-icon>
       </a>
     </div>
@@ -207,17 +238,20 @@
   <div
     *ngIf="isLoggedIn == true"
     class="flex flex-col items-center justify-center text-white bg-primary mt-4 neomorphism-primary-2 rounded-lg p-4"
-    [@inOutAnimation]>
+    [@inOutAnimation]
+  >
     <div class="flex flex-row w-full justify-center rounded-lg">
       <div
-        class="rounded-full bg-customGreen w-8 flex flex-col items-center justify-center">
-        <img src="../../../assets/img/svg/highlight.svg" class="w-4" />
+        class="rounded-full bg-customGreen w-8 flex flex-col items-center justify-center"
+      >
+        <img src="assets/img/svg/highlight.svg" class="w-4" />
       </div>
       <span class="ml-1 text-white">Ajouter un temps fort</span>
     </div>
 
     <div
-      class="flex flex-col text-sm w-full bg-primaryDarker neomorphism-inner-primaryDarker p-4 rounded-lg mt-4">
+      class="flex flex-col text-sm w-full bg-primaryDarker neomorphism-inner-primaryDarker p-4 rounded-lg mt-4"
+    >
       <span class="text-center">
         Vous pouvez ajouter un temps fort via le formulaire suivant.
       </span>
@@ -229,10 +263,12 @@
             class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
             required
             maxlength="50"
-            formControlName="name" />
+            formControlName="name"
+          />
           <label
             for="name"
-            class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
             Nom du temps fort
             <span class="text-customRed">*</span>
           </label>
@@ -244,10 +280,12 @@
             id="description"
             class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
             maxlength="500"
-            formControlName="description" />
+            formControlName="description"
+          />
           <label
             for="description"
-            class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
             Description
           </label>
         </div>
@@ -259,17 +297,20 @@
             class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
             required
             maxlength="3000"
-            formControlName="externalUrl" />
+            formControlName="externalUrl"
+          />
           <label
             for="externalUrl"
-            class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+            class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >
             Lien externe (YouTube, ...)
           </label>
         </div>
 
         <button
           (click)="createHighlight()"
-          class="text-white transition ease-in-out delay-50 bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">
+          class="text-white transition ease-in-out delay-50 bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        >
           Ajouter
         </button>
       </form>
