@@ -31,7 +31,7 @@ export class FifaGameHistoryCardComponent {
 
   deleteGame(game: FifaGamePlayed) {
     if (
-      this.keycloakService.isUserInRole('GameOn_admin') &&
+      this.keycloakService.isUserInRole('gameon_admin') &&
       confirm(
         'Voulez-vous vraiment supprimer le match ' +
           game.id +
