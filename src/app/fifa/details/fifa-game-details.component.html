@@ -28,7 +28,7 @@
       <img
         *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
         class="w-24"
-        src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.webp"
+        src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.png"
       />
       <span>{{ game.team1.code }}</span>
     </div>
@@ -43,7 +43,7 @@
       <img
         *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
         class="w-24"
-        src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.webp"
+        src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.png"
       />
       <span>{{ game.team2.code }}</span>
     </div>
@@ -65,29 +65,46 @@
       <span class="inline-block text-xs" *ngIf="game.isPlayed == false">
         Match planifié dans un tournoi -
       </span>
+      <!-- PC -->
       <img
-        src="assets/img/svg/windows.svg"
+        src="assets/img/svg/pc.svg"
         *ngIf="game.platformId == 1"
         class="w-4"
       />
+      <!-- Work -->
       <img
-        src="assets/img/svg/xbox.svg"
+        src="assets/img/svg/work.svg"
         *ngIf="game.platformId == 2"
         class="w-4"
       />
+      <!-- Real life -->
       <img
         src="assets/img/svg/stadium.svg"
         *ngIf="game.platformId == 3"
         class="w-4"
       />
+      <!-- Cloud -->
       <img
-        src="assets/img/svg/playstation.svg"
+        src="assets/img/svg/cloud.svg"
         *ngIf="game.platformId == 4"
         class="w-4"
       />
-      <span
+      <!-- Playstation -->
+      <img
         src="assets/img/svg/playstation.svg"
-        *ngIf="game.platformId > 4"
+        *ngIf="game.platformId == 5"
+        class="w-4"
+      />
+      <!-- Xbox -->
+      <img
+        src="assets/img/svg/xbox.svg"
+        *ngIf="game.platformId == 6"
+        class="w-4"
+      />
+      <!-- Other -->
+      <span
+        src="assets/img/svg/rank.svg"
+        *ngIf="game.platformId > 6"
         class="w-4"
       >
         {{ game.platform }}
