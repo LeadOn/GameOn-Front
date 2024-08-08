@@ -34,29 +34,46 @@
       <span class="inline-block" *ngIf="game.isPlayed != false">
         Joué le {{ game.playedOn | date : "medium" }} -
       </span>
+      <!-- PC -->
       <img
-        src="assets/img/svg/windows.svg"
+        src="assets/img/svg/pc.svg"
         *ngIf="game.platformId == 1"
         class="w-4"
       />
+      <!-- Work -->
       <img
-        src="assets/img/svg/xbox.svg"
+        src="assets/img/svg/work.svg"
         *ngIf="game.platformId == 2"
         class="w-4"
       />
+      <!-- Real life -->
       <img
         src="assets/img/svg/stadium.svg"
         *ngIf="game.platformId == 3"
         class="w-4"
       />
+      <!-- Cloud -->
       <img
-        src="assets/img/svg/playstation.svg"
+        src="assets/img/svg/cloud.svg"
         *ngIf="game.platformId == 4"
         class="w-4"
       />
-      <span
+      <!-- Playstation -->
+      <img
         src="assets/img/svg/playstation.svg"
-        *ngIf="game.platformId > 4"
+        *ngIf="game.platformId == 5"
+        class="w-4"
+      />
+      <!-- Xbox -->
+      <img
+        src="assets/img/svg/xbox.svg"
+        *ngIf="game.platformId == 6"
+        class="w-4"
+      />
+      <!-- Other -->
+      <span
+        src="assets/img/svg/rank.svg"
+        *ngIf="game.platformId > 6"
         class="w-4"
       >
         {{ game.platform }}

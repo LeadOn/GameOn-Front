@@ -143,6 +143,44 @@
         {{ tournament.description }}
       </div>
     </div>
+
+    <div
+      *ngIf="tournament.winner != null"
+      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4"
+    >
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <img
+          src="assets/img/svg/trophee.svg"
+          class="w-8 rounded-full bg-secondary p-2"
+        />
+        <span class="text">Gagnant</span>
+      </div>
+
+      <div
+        [routerLink]="['/player', tournament.winner.id]"
+        class="cursor-pointer flex flex-row justify-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
+      >
+        <div>
+          <img
+            *ngIf="tournament.winner.profilePictureUrl != null"
+            src="{{ tournament.winner.profilePictureUrl }}"
+            class="w-8 rounded-full"
+          />
+          <img
+            *ngIf="tournament.winner.profilePictureUrl == null"
+            src="assets/img/gameon-logo.webp"
+            class="w-8 rounded-full"
+          />
+        </div>
+
+        <div class="hidden md:flex md:flex-col text-left">
+          <span>{{ tournament.winner.fullName }}</span>
+          <span class="text-xs italic">
+            {{ tournament.winner.nickname }}
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div

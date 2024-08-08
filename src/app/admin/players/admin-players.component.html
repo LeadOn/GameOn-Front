@@ -25,6 +25,7 @@
   >
     <thead class="text-xs uppercase bg-primary text-white">
       <tr>
+        <th scope="col" class="px-6 py-3">#</th>
         <th scope="col" class="px-6 py-3">Nom complet</th>
         <th scope="col" class="px-6 py-3">Surnom</th>
         <th scope="col" class="px-6 py-3">Archive</th>
@@ -36,6 +37,9 @@
         class="border-b border-secondary bg-secondaryDarker text-white"
         *ngFor="let player of players"
       >
+        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+          {{ player.id }}
+        </th>
         <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
           {{ player.fullName }}
         </th>

@@ -19,6 +19,12 @@
   </div>
 
   <div class="mt-2 text-center">
+    <span class="block italic" *ngIf="player.tournamentsWon != null"
+      ><span *ngFor="let tournament of player.tournamentsWon"
+        ><img
+          src="assets/img/svg/star-yellow.svg"
+          class="w-4 inline-block" /></span
+    ></span>
     <span class="inline-block text-lg">{{ player.fullName }}</span>
     <br />
     <span class="inline-block italic text-lg" *ngIf="player.nickname != null">
