@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
 import { GameOnGameService } from '../../shared/services/gameon-game.service';
+import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 
 @Component({
   selector: 'app-admin-fifa-games',
@@ -12,7 +13,10 @@ export class AdminFifaGamesComponent implements OnInit {
   loading = true;
   isAdmin = true;
 
-  constructor(private gameService: GameOnGameService) {}
+  constructor(
+    private gameService: GameOnGameService,
+    private adminService: GameOnAdminService
+  ) {}
 
   ngOnInit(): void {
     this.getGames();
