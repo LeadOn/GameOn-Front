@@ -29,6 +29,7 @@ export class AdminPlayerEditComponent implements OnInit {
       Validators.required,
       Validators.maxLength(500),
     ]),
+    archived: new FormControl(false, [Validators.required]),
   });
 
   constructor(
@@ -60,6 +61,12 @@ export class AdminPlayerEditComponent implements OnInit {
             data.profilePictureUrl
           );
         }
+
+        if (data.archived == null) {
+          this.updatePlayerForm.controls['archived'].setValue(false);
+        } else {
+          this.updatePlayerForm.controls['archived'].setValue(data.archived);
+        }
       },
       (err) => {
         console.error(err);
@@ -89,13 +96,20 @@ export class AdminPlayerEditComponent implements OnInit {
         keycloakId = this.updatePlayerForm.controls['keycloakId'].value;
       }
 
+      let archived = this.updatePlayerForm.controls['archived'].value;
+
+      if (archived == null) {
+        archived = false;
+      }
+
       this.adminService
         .updatePlayer(
           this.playerId,
           this.updatePlayerForm.controls['fullName'].value,
           this.updatePlayerForm.controls['nickname'].value,
           this.updatePlayerForm.controls['profilePicUrl'].value,
-          keycloakId
+          keycloakId,
+          archived
         )
         .subscribe(
           (data) => {

@@ -27,6 +27,7 @@
       <tr>
         <th scope="col" class="px-6 py-3">Nom complet</th>
         <th scope="col" class="px-6 py-3">Surnom</th>
+        <th scope="col" class="px-6 py-3">Archive</th>
         <th scope="col" class="px-6 py-3">Actions</th>
       </tr>
     </thead>
@@ -39,6 +40,7 @@
           {{ player.fullName }}
         </th>
         <td class="px-6 py-4">{{ player.nickname }}</td>
+        <td class="px-6 py-4">{{ player.archived }}</td>
         <td class="px-6 py-4">
           <a [routerLink]="['/admin/players/edit', player.id]"
             ><img src="assets/img/svg/edit.svg" class="w-8"

@@ -35,6 +35,15 @@
         <span class="block mt-2">{{ player.fullName }}</span>
         <span class="block italic">{{ player.nickname }}</span>
 
+        <div
+          class="mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm text-left"
+          *ngIf="player.archived == true"
+        >
+          ℹ️ Ce profil à été archivé. Cela signifie qu'il n'est plus possible
+          d'affronter ce joueur. Ces statistiques sont conservées à titre
+          informatif.
+        </div>
+
         <select
           (change)="onChangeEnemy($event.target)"
           [ngModel]="selectedEnemy"

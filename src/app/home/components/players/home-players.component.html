@@ -3,7 +3,7 @@
   id="players"
 >
   <div class="text-center">
-    <span class="block text-xl font-bold">Joueurs</span>
+    <span class="block text-xl font-bold">Joueurs actifs</span>
     <span class="block mt-4">
       Découvrez nos joueurs actuellement en compétition, ainsi que leurs
       statistiques.
@@ -26,6 +26,39 @@
     <app-player-card
       ng-if="players.length > 0"
       *ngFor="let player of players"
+      [player]="player"
+    ></app-player-card>
+  </div>
+</section>
+
+<section
+  class="flex flex-col items-center justify-center text-white m-8 md:mx-16 lg:mx-32"
+  id="players"
+>
+  <div class="text-center">
+    <span class="block text-xl font-bold">Joueurs archivés</span>
+    <span class="block mt-4">
+      Même si ils ne sont plus parmis nous, découvrez les statistiques de nos
+      joueurs passés.
+    </span>
+  </div>
+
+  <div
+    *ngIf="loading == true"
+    class="flex flex-row items-center bg-primary p-4 rounded-lg drop-shadow-xl mt-8"
+    role="status"
+  >
+    <app-loading-spinner></app-loading-spinner>
+    Chargement des données...
+  </div>
+
+  <div
+    *ngIf="loading == false"
+    class="w-full mt-8 flex flex-col space-y-4 md:space-y-0 md:grid md:grid-cols-3 lg:w-auto lg:grid-cols-4 md:auto-rows-auto md:gap-5"
+  >
+    <app-player-card
+      ng-if="players.length > 0"
+      *ngFor="let player of archivedPlayers"
       [player]="player"
     ></app-player-card>
   </div>

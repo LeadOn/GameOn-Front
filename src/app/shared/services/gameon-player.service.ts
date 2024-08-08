@@ -12,8 +12,16 @@ import { GlobalStatsDto } from '../../shared/classes/GlobalStatsDto';
 export class GameOnPlayerService {
   constructor(private client: HttpClient) {}
 
-  getAll(): Observable<Player[]> {
-    return this.client.get<Player[]>(environment.gameOnApiUrl + '/player');
+  getAll(archived?: boolean): Observable<Player[]> {
+    let archivalState = false;
+
+    if (archived != undefined && archived != null) {
+      archivalState = archived;
+    }
+
+    return this.client.get<Player[]>(
+      environment.gameOnApiUrl + '/player?archived=' + archivalState
+    );
   }
 
   get(id: number): Observable<Player> {

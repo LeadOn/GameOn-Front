@@ -2,8 +2,8 @@ export const environment = {
   production: false,
   gameOnApiUrl: 'http://localhost:5184',
   keycloak: {
-    url: 'http://192.168.1.42:8080',
+    url: 'https://auth.valentinvirot.fr',
     realm: 'gameon',
-    clientId: 'gameon-front',
+    clientId: 'gameon-front-dev',
   },
 };
