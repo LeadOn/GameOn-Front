@@ -11,6 +11,7 @@ import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.compo
 import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
 import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
+import { ChangelogComponent } from './changelog/changelog.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
+      },
+      {
+        path: 'changelog',
+        component: ChangelogComponent,
       },
       {
         path: 'player/me',

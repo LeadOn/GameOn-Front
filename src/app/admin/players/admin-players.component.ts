@@ -17,7 +17,20 @@ export class AdminPlayersComponent implements OnInit {
     this.playerService.getAll().subscribe(
       (data) => {
         this.players = data;
-        this.loading = false;
+
+        this.playerService.getAll(true).subscribe(
+          (data) => {
+            this.players = this.players.concat(data);
+            this.loading = false;
+          },
+          (err) => {
+            alert(
+              'Une erreur est survenue lors de la récupération des players.'
+            );
+            console.error(err);
+            this.loading = false;
+          }
+        );
       },
       (err) => {
         alert('Une erreur est survenue lors de la récupération des players.');

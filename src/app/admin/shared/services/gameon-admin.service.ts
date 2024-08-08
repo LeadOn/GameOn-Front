@@ -48,7 +48,8 @@ export class GameOnAdminService {
     fullName: any,
     nickname: any,
     profilePicUrl: any,
-    keycloakId?: string
+    keycloakId?: string,
+    archived?: boolean
   ): Observable<Player> {
     let body: any = {
       FullName: fullName,
@@ -59,6 +60,12 @@ export class GameOnAdminService {
 
     if (keycloakId != null) {
       body.KeycloakId = keycloakId;
+    }
+
+    if (archived != null) {
+      body.Archived = archived;
+    } else {
+      body.Archived = false;
     }
 
     return this.client.patch<Player>(
@@ -104,13 +111,15 @@ export class GameOnAdminService {
     plannedTo: string,
     description?: string,
     logoUrl?: string,
-    phase2ChallongeUrl?: string
+    phase2ChallongeUrl?: string,
+    winnerId?: number
   ): Observable<Tournament> {
     let body: any = {
       name: name,
       state: state,
       plannedFrom: plannedFrom,
       plannedTo: plannedTo,
+      winnerId: winnerId,
     };
 
     if (description != null) {

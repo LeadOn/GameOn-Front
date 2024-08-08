@@ -34,6 +34,21 @@
       <div class="text-center w-full">
         <span class="block mt-2">{{ player.fullName }}</span>
         <span class="block italic">{{ player.nickname }}</span>
+        <span class="block italic" *ngIf="player.tournamentsWon != null"
+          ><span *ngFor="let tournament of player.tournamentsWon"
+            ><img
+              src="assets/img/svg/star-yellow.svg"
+              class="w-4 inline-block" /></span
+        ></span>
+
+        <div
+          class="mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm text-left"
+          *ngIf="player.archived == true"
+        >
+          ℹ️ Ce profil à été archivé. Cela signifie qu'il n'est plus possible
+          d'affronter ce joueur. Ces statistiques sont conservées à titre
+          informatif.
+        </div>
 
         <select
           (change)="onChangeEnemy($event.target)"
@@ -110,6 +125,42 @@
           [teamList]="fifaPlayerStats.mostLossesTeams"
           [title]="'Pires équipes'"
         ></app-player-team-list>
+      </div>
+    </div>
+
+    <div
+      *ngIf="player.tournamentsWon != null"
+      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4"
+    >
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <img
+          src="assets/img/svg/trophee.svg"
+          class="w-8 rounded-full bg-secondary p-2"
+        />
+        <span class="text">Tournois gagnés</span>
+      </div>
+
+      <div
+        *ngFor="let tournament of player.tournamentsWon"
+        [routerLink]="['/fifa/tournaments', tournament.id]"
+        class="cursor-pointer flex flex-row justify-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
+      >
+        <div>
+          <img
+            *ngIf="tournament.logoUrl != null"
+            src="{{ tournament.logoUrl }}"
+            class="w-8 rounded-full"
+          />
+          <img
+            *ngIf="tournament.logoUrl == null"
+            src="assets/img/gameon-logo.webp"
+            class="w-8 rounded-full"
+          />
+        </div>
+
+        <div class="hidden md:flex md:flex-col text-left">
+          <span>{{ tournament.name }}</span>
+        </div>
       </div>
     </div>
   </div>

@@ -18,16 +18,12 @@ import { ProfileTabComponent } from './players/me/components/profile-tab/profile
 import { UpdatePlayerTabComponent } from './players/me/components/update-player-tab/update-player-tab.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FifaHomeComponent } from './fifa/fifa-home.component';
-import { FifaGameHistoryCardComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card.component';
-import { FifaGameListHeaderComponent } from './fifa/components/fifa-game-list-header/fifa-game-list-header.component';
-import { FifaGameHistoryCardRowComponent } from './fifa/components/fifa-game-history-card/fifa-game-history-card-row/fifa-game-history-card-row.component';
-import { FifaCreateGameComponent } from './fifa/create/fifa-create-game.component';
-import { FifaGameDetailsComponent } from './fifa/details/fifa-game-details.component';
 import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
 import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
 import { SafePipe } from './shared/pipes/safe.pipe';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { AdminModule } from './admin/admin.module';
+import { ChangelogComponent } from './changelog/changelog.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -69,6 +65,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
     /* Other */
     SafePipe,
+    ChangelogComponent,
   ],
   imports: [
     BrowserModule,
