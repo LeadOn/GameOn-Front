@@ -9,6 +9,7 @@ import { GameOnPlayerService } from '../../../shared/services/gameon-player.serv
 })
 export class HomePlayersComponent implements OnInit {
   players: Player[] = [];
+  archivedPlayers: Player[] = [];
   loading = true;
 
   constructor(private playerService: GameOnPlayerService) {}
@@ -17,7 +18,16 @@ export class HomePlayersComponent implements OnInit {
     this.playerService.getAll().subscribe(
       (data) => {
         this.players = data;
-        this.loading = false;
+
+        this.playerService.getAll(true).subscribe(
+          (data) => {
+            this.archivedPlayers = data;
+            this.loading = false;
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
       },
       (err) => {
         console.error(err);
