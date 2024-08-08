@@ -24,6 +24,7 @@ export class AdminEditTournamentComponent implements OnInit {
     phase2ChallongeUrl: new FormControl('', [Validators.maxLength(3000)]),
     plannedFrom: new FormControl('', [Validators.required]),
     plannedTo: new FormControl('', [Validators.required]),
+    winnerId: new FormControl(0),
   });
 
   constructor(
@@ -64,6 +65,10 @@ export class AdminEditTournamentComponent implements OnInit {
           this.editTournamentForm.controls['phase2ChallongeUrl'].setValue(
             data.phase2ChallongeUrl
           );
+        }
+
+        if (data.winnerId != null && data.winnerId != 0) {
+          this.editTournamentForm.controls['winnerId'].setValue(data.winnerId);
         }
 
         this.loading = false;
@@ -112,6 +117,17 @@ export class AdminEditTournamentComponent implements OnInit {
           this.editTournamentForm.controls['phase2ChallongeUrl'].value;
       }
 
+      var winnerId: number | undefined = 0;
+
+      if (
+        this.editTournamentForm.controls['winnerId'].value != null &&
+        this.editTournamentForm.controls['winnerId'].value != 0
+      ) {
+        winnerId = this.editTournamentForm.controls['winnerId'].value;
+      } else {
+        winnerId = undefined;
+      }
+
       this.adminService
         .editTournament(
           this.tournamentId,
@@ -121,7 +137,8 @@ export class AdminEditTournamentComponent implements OnInit {
           this.editTournamentForm.controls['plannedTo'].value,
           description,
           logoUrl,
-          phase2ChallongeUrl
+          phase2ChallongeUrl,
+          winnerId
         )
         .subscribe(
           (data) => {

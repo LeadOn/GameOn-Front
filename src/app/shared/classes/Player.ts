@@ -1,3 +1,5 @@
+import { Tournament } from './Tournament';
+
 export class Player {
   id: number = 0;
   keycloakId?: string;
@@ -6,4 +8,5 @@ export class Player {
   profilePictureUrl: string = '';
   createdOn: Date = new Date();
   archived: boolean = false;
+  tournamentsWon?: Tournament[];
 }

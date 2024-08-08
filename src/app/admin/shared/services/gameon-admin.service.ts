@@ -111,13 +111,15 @@ export class GameOnAdminService {
     plannedTo: string,
     description?: string,
     logoUrl?: string,
-    phase2ChallongeUrl?: string
+    phase2ChallongeUrl?: string,
+    winnerId?: number
   ): Observable<Tournament> {
     let body: any = {
       name: name,
       state: state,
       plannedFrom: plannedFrom,
       plannedTo: plannedTo,
+      winnerId: winnerId,
     };
 
     if (description != null) {
