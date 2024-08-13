@@ -12,6 +12,9 @@ import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.co
 import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { ChangelogComponent } from './changelog/changelog.component';
+import { FiveComponent } from './five/five.component';
+import { CreateFiveComponent } from './five/create/five-create.component';
+import { FiveDetailsComponent } from './five/details/five-details.component';
 
 const routes: Routes = [
   {
@@ -59,6 +62,19 @@ const routes: Routes = [
       {
         path: 'fifa/tournaments/:id',
         component: TournamentsDetailsComponent,
+      },
+      {
+        path: 'soccerfive',
+        component: FiveComponent,
+      },
+      {
+        path: 'soccerfive/create',
+        component: CreateFiveComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'soccerfive/:id',
+        component: FiveDetailsComponent,
       },
     ],
   },
