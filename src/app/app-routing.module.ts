@@ -14,6 +14,7 @@ import { PlayerDetailsComponent } from './players/details/player-details.compone
 import { ChangelogComponent } from './changelog/changelog.component';
 import { FiveComponent } from './five/five.component';
 import { CreateFiveComponent } from './five/create/five-create.component';
+import { FiveDetailsComponent } from './five/details/five-details.component';
 
 const routes: Routes = [
   {
@@ -70,6 +71,10 @@ const routes: Routes = [
         path: 'soccerfive/create',
         component: CreateFiveComponent,
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'soccerfive/:id',
+        component: FiveDetailsComponent,
       },
     ],
   },
