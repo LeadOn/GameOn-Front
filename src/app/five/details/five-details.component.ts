@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { SoccerFiveDto } from '../../shared/classes/SoccerFiveDto';
 import { GameOnSoccerfiveService } from '../../shared/services/gameon-soccerfive.service';
@@ -68,7 +68,8 @@ export class FiveDetailsComponent implements OnInit {
     private fiveService: GameOnSoccerfiveService,
     private route: ActivatedRoute,
     private keycloak: KeycloakService,
-    private store: Store<{ player: Player }>
+    private store: Store<{ player: Player }>,
+    private router: Router
   ) {
     this.fiveId = this.route.snapshot.paramMap.get('id');
     this.player$ = store.select('player');
@@ -245,6 +246,21 @@ export class FiveDetailsComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  deleteFive() {
+    if (confirm('Êtes-vous sûr(e) de vouloir supprimer ce five ?')) {
+      this.fiveService.delete(this.fiveId).subscribe(
+        (data) => {
+          alert('Five supprimé !');
+          this.router.navigate(['/soccerfive']);
+        },
+        (err) => {
+          alert('Erreur lors de la suppression du five.');
+          console.error(err);
+        }
+      );
+    }
   }
 
   updateFive() {

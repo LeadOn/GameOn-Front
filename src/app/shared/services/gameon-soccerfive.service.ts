@@ -95,11 +95,15 @@ export class GameOnSoccerfiveService {
       state,
     };
 
-    console.log(body);
-
     return this.client.patch<SoccerFiveDto>(
       environment.gameOnApiUrl + '/soccerfive',
       body
+    );
+  }
+
+  delete(fiveId: number) {
+    return this.client.delete(
+      environment.gameOnApiUrl + '/soccerfive/' + fiveId
     );
   }
 }
