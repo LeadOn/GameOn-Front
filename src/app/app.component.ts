@@ -22,9 +22,6 @@ export class AppComponent implements OnInit {
     initFlowbite();
 
     if (this.keycloak.isLoggedIn()) {
-      this.keycloak.getToken().then((token) => {
-        console.log('[AppComponent]', 'Token:', token);
-      });
       // Getting its account, and setting it into store
       this.playerService.getCurrent().subscribe(
         (data) => {
