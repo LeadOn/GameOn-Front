@@ -64,6 +64,104 @@
     >
       <div class="flex flex-row space-x-2 items-center justify-center">
         <fa-icon
+          [icon]="pencilIcon"
+          class="rounded-full border border-secondary px-4 py-3"
+        ></fa-icon>
+        <span class="text">Modifier Five</span>
+      </div>
+
+      <div
+        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-xs text-justift"
+      >
+        <form [formGroup]="editFiveForm" class="w-full flex flex-col pt-4">
+          <div class="relative z-0 w-full bg-primaryDarker rounded-lg">
+            <input
+              type="text"
+              id="nameLabel"
+              class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+              formControlName="name"
+            />
+            <label
+              for="nameLabel"
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Nom
+            </label>
+          </div>
+
+          <div class="relative z-0 w-full bg-primaryDarker rounded-lg mt-4">
+            <input
+              type="text"
+              id="descLabel"
+              class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+              formControlName="description"
+            />
+            <label
+              for="descLabel"
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Description
+            </label>
+          </div>
+
+          <div class="relative z-0 w-full bg-primaryDarker rounded-lg mt-4">
+            <input
+              type="date"
+              id="dateLabel"
+              class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+              formControlName="date"
+            />
+            <label
+              for="dateLabel"
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Date de planification
+            </label>
+          </div>
+
+          <div class="relative z-0 w-full bg-primaryDarker rounded-lg mt-4">
+            <input
+              type="time"
+              id="timeLabel"
+              class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+              formControlName="time"
+            />
+            <label
+              for="timeLabel"
+              class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+            >
+              Heure de planification
+            </label>
+          </div>
+
+          <div class="relative z-0 w-full bg-primaryDarker rounded-lg mt-4">
+            <select
+              id="state"
+              formControlName="state"
+              class="mt-2 bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            >
+              <option value="0">Brouillon</option>
+              <option value="1">Planifié</option>
+              <option value="2">Terminé</option>
+            </select>
+          </div>
+        </form>
+      </div>
+
+      <div
+        (click)="updateFive()"
+        class="mb-4 flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg transition ease-in-out delay-50 bg-customGreen hover:bg-green-800 mt-4 neomorphism-primaryDarker-2"
+      >
+        <span class="text-white">Modifier le five</span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="five.createdBy.id == currentUserId"
+      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4"
+    >
+      <div class="flex flex-row space-x-2 items-center justify-center">
+        <fa-icon
           [icon]="surveyIcon"
           class="rounded-full border border-secondary px-4 py-3"
         ></fa-icon>

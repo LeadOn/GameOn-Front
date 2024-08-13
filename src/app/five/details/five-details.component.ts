@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import {
   faCheckCircle,
   faCircle,
+  faPencil,
   faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -46,12 +47,21 @@ export class FiveDetailsComponent implements OnInit {
   soccerFiveVoteChoices: SoccerFiveVoteChoice[] = [];
   circleIcon = faCircle;
   checkIcon = faCheckCircle;
+  pencilIcon = faPencil;
 
   triggerSurveyForm = new FormGroup({
     questionLabel: new FormControl('', [
       Validators.required,
       Validators.maxLength(100),
     ]),
+  });
+
+  editFiveForm = new FormGroup({
+    name: new FormControl('', [Validators.maxLength(100)]),
+    description: new FormControl('', [Validators.maxLength(400)]),
+    date: new FormControl(''),
+    time: new FormControl(''),
+    state: new FormControl(0, [Validators.required]),
   });
 
   constructor(
@@ -77,6 +87,16 @@ export class FiveDetailsComponent implements OnInit {
     this.fiveService.getById(this.fiveId).subscribe(
       (data) => {
         this.five = data;
+
+        if (this.five.name != null) {
+          this.editFiveForm.controls['name'].setValue(this.five.name);
+        }
+
+        if (this.five.description != null) {
+          this.editFiveForm.controls['description'].setValue(
+            this.five.description
+          );
+        }
 
         if (this.five?.voteQuestion) {
           this.triggerSurveyForm.controls['questionLabel'].setValue(
@@ -225,5 +245,56 @@ export class FiveDetailsComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  updateFive() {
+    this.loading = true;
+
+    let name = undefined;
+    let description = undefined;
+    let state = undefined;
+    let dateTime = undefined;
+
+    if (
+      this.editFiveForm.controls['name'].value != null &&
+      this.editFiveForm.controls['name'].value != ''
+    ) {
+      name = this.editFiveForm.controls['name'].value;
+    }
+
+    if (
+      this.editFiveForm.controls['description'].value != null &&
+      this.editFiveForm.controls['description'].value != ''
+    ) {
+      description = this.editFiveForm.controls['description'].value;
+    }
+
+    if (this.editFiveForm.controls['state'].value != null) {
+      state = this.editFiveForm.controls['state'].value;
+    }
+
+    if (
+      this.editFiveForm.controls['date'].value != null &&
+      this.editFiveForm.controls['date'].value != '' &&
+      this.editFiveForm.controls['time'].value != null &&
+      this.editFiveForm.controls['time'].value != ''
+    ) {
+      dateTime =
+        this.editFiveForm.controls['date'].value.toString().split('T')[0] +
+        'T' +
+        this.editFiveForm.controls['time'].value.toString();
+    }
+
+    this.fiveService
+      .update(this.fiveId, name, description, dateTime, state)
+      .subscribe(
+        (data) => {
+          this.getFive();
+        },
+        (err) => {
+          alert('Erreur lors de la mise à jour du five.');
+          console.error(err);
+        }
+      );
   }
 }

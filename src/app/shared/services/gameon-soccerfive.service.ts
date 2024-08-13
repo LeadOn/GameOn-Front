@@ -73,9 +73,33 @@ export class GameOnSoccerfiveService {
   }
 
   vote(fiveId: number, voteDto: VoteSoccerFiveDto) {
+    console.log(voteDto);
     return this.client.post<boolean>(
       environment.gameOnApiUrl + '/soccerfive/' + fiveId + '/survey/vote',
       voteDto
+    );
+  }
+
+  update(
+    fiveId: number,
+    name?: string,
+    description?: string,
+    dateTime?: string,
+    state?: number
+  ) {
+    let body = {
+      id: fiveId,
+      name,
+      description,
+      plannedOn: dateTime,
+      state,
+    };
+
+    console.log(body);
+
+    return this.client.patch<SoccerFiveDto>(
+      environment.gameOnApiUrl + '/soccerfive',
+      body
     );
   }
 }
