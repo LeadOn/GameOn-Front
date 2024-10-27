@@ -6,5 +6,5 @@ export const environment = {
     realm: 'gameon',
     clientId: 'gameon-front',
   },
-  version: '3.1.0',
+  version: '3.1.1',
 };
