@@ -146,4 +146,17 @@ export class GameOnAdminService {
       null
     );
   }
+
+  removeTournamentSubscription(
+    tournamentId: number,
+    playerId: number
+  ): Observable<any> {
+    return this.client.delete<any>(
+      environment.gameOnApiUrl +
+        '/tournament/' +
+        tournamentId +
+        '/player/' +
+        playerId
+    );
+  }
 }

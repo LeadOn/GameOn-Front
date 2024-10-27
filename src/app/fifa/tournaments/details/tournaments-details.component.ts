@@ -65,7 +65,7 @@ export class TournamentsDetailsComponent implements OnInit {
             this.isSubscribed = x;
           },
           (err) => {
-            console.log(
+            console.error(
               '[TournamentDetailsComponent] Player is not subscribe to tournament.]'
             );
           }
