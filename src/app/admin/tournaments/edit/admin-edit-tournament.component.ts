@@ -156,4 +156,25 @@ export class AdminEditTournamentComponent implements OnInit {
       alert('Certaines informations sont manquantes !');
     }
   }
+
+  deleteUser(userId: number) {
+    if (
+      confirm('Voulez-vous vraiment supprimer cet utilisateur du tournoi ?')
+    ) {
+      this.adminService
+        .removeTournamentSubscription(this.tournamentId, userId)
+        .subscribe(
+          (data) => {
+            alert('Utilisateur supprimé !');
+            this.loading = false;
+            this.router.navigate(['/admin/tournaments']);
+          },
+          (err) => {
+            alert("Erreur lors de la suppression de l'utilisateur !");
+            console.error(err);
+            this.loading = false;
+          }
+        );
+    }
+  }
 }

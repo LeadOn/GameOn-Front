@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
       this.playerService.getCurrent().subscribe(
         (data) => {
           this.store.dispatch(setPlayer({ player: data }));
-          console.log('[AppComponent]', 'Player stored.');
         },
         (err) => {
           console.error('[AppComponent]', err);
