@@ -300,7 +300,7 @@
             <th scope="row" class="font-normal px-6 py-4">
               <div
                 [routerLink]="['/player', player.player.id]"
-                class="cursor-pointer flex flex-row justify-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
+                class="cursor-pointer flex flex-row justify-center align-center items-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
               >
                 <div>
                   <img
@@ -315,8 +315,10 @@
                   />
                 </div>
 
-                <div class="hidden md:flex md:flex-col text-left">
-                  <span>{{ player.player.fullName }}</span>
+                <div class="flex flex-col text-left">
+                  <span class="hidden md:block">{{
+                    player.player.fullName
+                  }}</span>
                   <span class="text-xs italic">
                     {{ player.player.nickname }}
                   </span>
