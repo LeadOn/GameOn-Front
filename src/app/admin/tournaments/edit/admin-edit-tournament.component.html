@@ -167,3 +167,42 @@
     </button>
   </form>
 </div>
+
+<div class="flex flex-col items-center mt-4">
+  <table
+    class="w-2/3 text-sm text-left text-gray-400 mt-4"
+    *ngIf="loading == false && tournament != null"
+  >
+    <thead class="text-xs uppercase bg-primary text-white">
+      <tr>
+        <th scope="col" class="px-6 py-3">#</th>
+        <th scope="col" class="px-6 py-3">Nom</th>
+        <th scope="col" class="px-6 py-3">Pseudo</th>
+        <th scope="col" class="px-6 py-3">Équipe</th>
+        <th scope="col" class="px-6 py-3">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        class="border-b border-secondary bg-secondaryDarker text-white"
+        *ngFor="let player of tournament.players"
+      >
+        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+          {{ player.player.id }}
+        </th>
+        <td class="px-6 py-4">{{ player.player.fullName }}</td>
+        <td class="px-6 py-4">
+          {{ player.player.nickname }}
+        </td>
+        <td class="px-6 py-4">
+          {{ player.team.name }}
+        </td>
+        <td class="px-6 py-4 flex flex-row">
+          <button (click)="deleteUser(player.player.id)">
+            <img src="assets/img/svg/trash.svg" class="w-8" />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

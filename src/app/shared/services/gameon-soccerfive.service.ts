@@ -73,7 +73,6 @@ export class GameOnSoccerfiveService {
   }
 
   vote(fiveId: number, voteDto: VoteSoccerFiveDto) {
-    console.log(voteDto);
     return this.client.post<boolean>(
       environment.gameOnApiUrl + '/soccerfive/' + fiveId + '/survey/vote',
       voteDto

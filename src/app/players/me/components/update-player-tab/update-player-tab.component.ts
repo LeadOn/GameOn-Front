@@ -84,7 +84,6 @@ export class UpdatePlayerTabComponent implements OnInit, OnChanges {
             this.successMessage = true; // Getting its account, and setting it into store
             this.successMessageChange.emit(true);
             this.store.dispatch(setPlayer({ player: data }));
-            console.log('[UpdatePlayer]', 'Player stored.');
             this.isLoading = false;
           },
           (err) => {
