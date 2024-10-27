@@ -21,7 +21,7 @@
     "@angular/router": "^18.2.9",
     "@fortawesome/angular-fontawesome": "^0.15.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
-    "@ngrx/store": "^18.0.2",
+    "@ngrx/store": "^18.1.0",
     "flowbite": "^2.5.1",
     "keycloak-angular": "^16.0.1",
     "keycloak-js": "^25.0.2",
