@@ -52,7 +52,7 @@ export class FifaGameDetailsComponent implements OnInit {
     this.gameId = this.route.snapshot.paramMap.get('id');
 
     this.isLoggedIn = this.keycloak.isLoggedIn();
-    this.isAdmin = this.keycloak.isUserInRole('GameOn_admin');
+    this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
 
     this.getGame();
   }
