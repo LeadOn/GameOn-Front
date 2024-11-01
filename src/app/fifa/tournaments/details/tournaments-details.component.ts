@@ -9,6 +9,8 @@ import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.
 import { GameOnGameService } from '../../../shared/services/gameon-game.service';
 import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 import { TournamentPlayerDto } from '../../../shared/classes/TournamentPlayerDto';
+import { Store } from '@ngrx/store';
+import { Player } from '../../../shared/classes/Player';
 
 @Component({
   selector: 'app-tournaments-details',
@@ -38,17 +40,20 @@ export class TournamentsDetailsComponent implements OnInit {
   fifaTeams: FifaTeam[] = [];
   gamesPlayed: FifaGamePlayed[] = [];
   gamesToPlay: FifaGamePlayed[] = [];
+  myGamesToPlay: FifaGamePlayed[] = [];
 
   playersShown = true;
   plannedMatchsShown = false;
   matchsPlayedShown = false;
+  myMatchsToPlayShown = false;
 
   constructor(
     private tournamentService: GameOnTournamentService,
     private route: ActivatedRoute,
     private keycloak: KeycloakService,
     private fifaTeamService: GameOnFifaTeamService,
-    private gameService: GameOnGameService
+    private gameService: GameOnGameService,
+    private store: Store<{ player: Player }>
   ) {
     this.states = tournamentService.getStates();
     this.tournamentId = this.route.snapshot.paramMap.get('id');
@@ -97,6 +102,22 @@ export class TournamentsDetailsComponent implements OnInit {
     this.gameService.getByTournament(this.tournamentId, false).subscribe(
       (data) => {
         this.gamesToPlay = data;
+
+        if (this.isLoggedIn == true) {
+          this.store.subscribe((player) => {
+            this.gamesToPlay.forEach((game) => {
+              if (
+                game.team1.players.find((x) => x.id == player.player.id) !=
+                  undefined ||
+                game.team2.players.find((x) => x.id == player.player.id) !=
+                  undefined
+              ) {
+                this.myGamesToPlay.push(game);
+              }
+            });
+          });
+        }
+
         this.gameService.getByTournament(this.tournamentId, true).subscribe(
           (data) => {
             this.gamesPlayed = data;
@@ -124,6 +145,10 @@ export class TournamentsDetailsComponent implements OnInit {
 
   showMatchsPlayed() {
     this.matchsPlayedShown = !this.matchsPlayedShown;
+  }
+
+  showMyMatchsToPlay() {
+    this.myMatchsToPlayShown = !this.myMatchsToPlayShown;
   }
 
   getState(stateId: number): string {

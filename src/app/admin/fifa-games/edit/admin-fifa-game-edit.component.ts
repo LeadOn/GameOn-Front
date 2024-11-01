@@ -59,7 +59,6 @@ export class AdminFifaGameEditComponent implements OnInit {
     this.gameService.getById(this.gameId).subscribe(
       (data) => {
         this.game = data;
-        console.log(this.game);
         this.updateGameForm.controls['teamCode1'].setValue(
           this.game.team1.code.toString()
         );
