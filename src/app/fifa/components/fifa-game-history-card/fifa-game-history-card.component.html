@@ -104,6 +104,14 @@
       >
         Tournoi <span *ngIf="game.phase != null">Phase {{ game.phase }}</span>
       </span>
+
+      <span
+        class="block bg-red-700 text-white text-xs rounded-xl px-2 cursor-pointer"
+        *ngIf="isAdmin == true"
+        [routerLink]="['/admin/fifa-games/edit', game.id]"
+      >
+        Modifier
+      </span>
     </div>
   </div>
   <div
