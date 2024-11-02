@@ -24,10 +24,16 @@ export class FifaGameHistoryCardComponent {
   editIcon = faEdit;
   deleteIcon = faTrash;
 
+  isAdmin = false;
+
   constructor(
     private adminService: GameOnAdminService,
     private keycloakService: KeycloakService
-  ) {}
+  ) {
+    if (keycloakService.isUserInRole('gameon_admin')) {
+      this.isAdmin = true;
+    }
+  }
 
   deleteGame(game: FifaGamePlayed) {
     if (

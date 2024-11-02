@@ -378,6 +378,53 @@
     </div>
 
     <div
+      (click)="showMyMatchsToPlay()"
+      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4"
+    >
+      <div class="grow flex flex-row space-x-2 items-center justify-left">
+        <img
+          src="assets/img/svg/fifagame.svg"
+          class="w-12 rounded-full bg-secondary p-2"
+        />
+        <span class="text-lg">Mes matchs à venir</span>
+      </div>
+
+      <div *ngIf="myGamesToPlay.length > 0">
+        <img
+          class="w-16"
+          src="assets/img/svg/chevron-down.svg"
+          *ngIf="myMatchsToPlayShown"
+        />
+        <img
+          class="w-16"
+          src="assets/img/svg/chevron-up.svg"
+          *ngIf="!myMatchsToPlayShown"
+        />
+      </div>
+    </div>
+
+    <div
+      *ngIf="myGamesToPlay.length == 0"
+      class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
+    >
+      <p>Vous n'avez aucun match à venir.</p>
+    </div>
+
+    <app-fifa-game-list-header
+      *ngIf="myGamesToPlay.length > 0 && myMatchsToPlayShown"
+    ></app-fifa-game-list-header>
+
+    <div
+      class="mt-4 flex flex-col w-full text-white space-y-4"
+      *ngIf="myGamesToPlay.length > 0 && myMatchsToPlayShown"
+    >
+      <app-fifa-game-history-card
+        *ngFor="let game of myGamesToPlay"
+        [game]="game"
+      ></app-fifa-game-history-card>
+    </div>
+
+    <div
       (click)="showMatchsPlayed()"
       class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4"
     >
