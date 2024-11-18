@@ -25,6 +25,10 @@ export class AdminEditTournamentComponent implements OnInit {
     plannedFrom: new FormControl('', [Validators.required]),
     plannedTo: new FormControl('', [Validators.required]),
     winnerId: new FormControl(0),
+    winPoints: new FormControl(0),
+    loosePoints: new FormControl(0),
+    drawPoints: new FormControl(0),
+    rules: new FormControl('', [Validators.maxLength(5000)]),
   });
 
   constructor(
@@ -51,10 +55,26 @@ export class AdminEditTournamentComponent implements OnInit {
           data.plannedTo.toString()
         );
 
+        this.editTournamentForm.controls['winPoints'].setValue(
+          this.tournament.winPoints
+        );
+
+        this.editTournamentForm.controls['loosePoints'].setValue(
+          this.tournament.loosePoints
+        );
+
+        this.editTournamentForm.controls['drawPoints'].setValue(
+          this.tournament.drawPoints
+        );
+
         if (data.description != null) {
           this.editTournamentForm.controls['description'].setValue(
             data.description
           );
+        }
+
+        if (data.rules != null) {
+          this.editTournamentForm.controls['rules'].setValue(data.rules);
         }
 
         if (data.logoUrl != null) {
@@ -128,6 +148,47 @@ export class AdminEditTournamentComponent implements OnInit {
         winnerId = undefined;
       }
 
+      var winPoints: number | undefined = 0;
+
+      if (
+        this.editTournamentForm.controls['winPoints'].value != null &&
+        this.editTournamentForm.controls['winPoints'].value != 0
+      ) {
+        winPoints = this.editTournamentForm.controls['winPoints'].value;
+      } else {
+        winPoints = undefined;
+      }
+
+      var loosePoints: number | undefined = 0;
+
+      if (
+        this.editTournamentForm.controls['loosePoints'].value != null &&
+        this.editTournamentForm.controls['loosePoints'].value != 0
+      ) {
+        loosePoints = this.editTournamentForm.controls['loosePoints'].value;
+      } else {
+        loosePoints = undefined;
+      }
+
+      var drawPoints: number | undefined = 0;
+
+      if (
+        this.editTournamentForm.controls['drawPoints'].value != null &&
+        this.editTournamentForm.controls['drawPoints'].value != 0
+      ) {
+        drawPoints = this.editTournamentForm.controls['drawPoints'].value;
+      } else {
+        drawPoints = undefined;
+      }
+
+      let rules: any = null;
+      if (
+        this.editTournamentForm.controls['rules'].value != null &&
+        this.editTournamentForm.controls['rules'].value != ''
+      ) {
+        rules = this.editTournamentForm.controls['rules'].value;
+      }
+
       this.adminService
         .editTournament(
           this.tournamentId,
@@ -138,7 +199,11 @@ export class AdminEditTournamentComponent implements OnInit {
           description,
           logoUrl,
           phase2ChallongeUrl,
-          winnerId
+          winnerId,
+          winPoints,
+          drawPoints,
+          loosePoints,
+          rules
         )
         .subscribe(
           (data) => {

@@ -77,6 +77,13 @@
           >
             Phase 1
           </button>
+
+          <button
+            *ngIf="tournament.state == 2"
+            (click)="savePhase1Score(tournament.id)"
+          >
+            Save Phase 1 score
+          </button>
         </td>
       </tr>
     </tbody>

@@ -13,4 +13,8 @@ export class Tournament {
   players: TournamentPlayerDto[] = [];
   winnerId?: number;
   winner?: Player;
+  rules?: string;
+  winPoints: number = 0;
+  loosePoints: number = 0;
+  drawPoints: number = 0;
 }
