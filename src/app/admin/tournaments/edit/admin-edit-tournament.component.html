@@ -159,6 +159,70 @@
       </label>
     </div>
 
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="number"
+        min="-100"
+        id="winPoints"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="winPoints"
+      />
+      <label
+        for="winPoints"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Score lors d'une victoire <span class="text-customRed">*</span>
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="number"
+        min="-100"
+        id="loosePoints"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="loosePoints"
+      />
+      <label
+        for="loosePoints"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Score lors d'une défaite <span class="text-customRed">*</span>
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="number"
+        min="-100"
+        id="drawPoints"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="drawPoints"
+      />
+      <label
+        for="drawPoints"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Score lors d'un nul <span class="text-customRed">*</span>
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="string"
+        aria-multiline="true"
+        id="rules"
+        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        formControlName="rules"
+      />
+      <label
+        for="rules"
+        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Règles <span class="text-customRed">*</span>
+      </label>
+    </div>
+
     <button
       (click)="editTournament()"
       class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-customYellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"

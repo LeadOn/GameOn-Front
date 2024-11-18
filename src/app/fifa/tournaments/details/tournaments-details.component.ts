@@ -32,6 +32,7 @@ import { Player } from '../../../shared/classes/Player';
 export class TournamentsDetailsComponent implements OnInit {
   loading = true;
   isLoggedIn = false;
+  isAdmin = false;
   isSubscribed?: TournamentPlayerDto;
   states: any[] = [];
   tournament?: Tournament;
@@ -46,6 +47,7 @@ export class TournamentsDetailsComponent implements OnInit {
   plannedMatchsShown = false;
   matchsPlayedShown = false;
   myMatchsToPlayShown = false;
+  tournamentBracketShown = false;
 
   constructor(
     private tournamentService: GameOnTournamentService,
@@ -57,6 +59,7 @@ export class TournamentsDetailsComponent implements OnInit {
   ) {
     this.states = tournamentService.getStates();
     this.tournamentId = this.route.snapshot.paramMap.get('id');
+    this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
   }
 
   ngOnInit(): void {
@@ -91,6 +94,12 @@ export class TournamentsDetailsComponent implements OnInit {
     this.tournamentService.getById(this.tournamentId).subscribe(
       (data) => {
         this.tournament = data;
+        if (
+          this.tournament.phase2ChallongeUrl != null &&
+          this.tournament.phase2ChallongeUrl != ''
+        ) {
+          this.tournamentBracketShown = true;
+        }
         this.loading = false;
       },
       (err) => {
@@ -149,6 +158,10 @@ export class TournamentsDetailsComponent implements OnInit {
 
   showMyMatchsToPlay() {
     this.myMatchsToPlayShown = !this.myMatchsToPlayShown;
+  }
+
+  showTournamentBracket() {
+    this.tournamentBracketShown = !this.tournamentBracketShown;
   }
 
   getState(stateId: number): string {

@@ -21,7 +21,7 @@ import { GameOnTournamentService } from '../../shared/services/gameon-tournament
   ],
 })
 export class TournamentsHomeComponent implements OnInit {
-  loading = false;
+  loading = true;
   states: any[] = [];
   tournaments: Tournament[] = [];
 
@@ -33,6 +33,7 @@ export class TournamentsHomeComponent implements OnInit {
     this.tournamentService.getAll().subscribe(
       (data) => {
         this.tournaments = data;
+        this.loading = false;
       },
       (err) => {
         alert('Erreur lors de la récupération des tournois.');

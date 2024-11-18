@@ -112,7 +112,11 @@ export class GameOnAdminService {
     description?: string,
     logoUrl?: string,
     phase2ChallongeUrl?: string,
-    winnerId?: number
+    winnerId?: number,
+    winPoints: number = 0,
+    drawPoints: number = 0,
+    loosePoints: number = 0,
+    rules?: string
   ): Observable<Tournament> {
     let body: any = {
       name: name,
@@ -120,6 +124,10 @@ export class GameOnAdminService {
       plannedFrom: plannedFrom,
       plannedTo: plannedTo,
       winnerId: winnerId,
+      winPoints: winPoints,
+      drawPoints: drawPoints,
+      loosePoints: loosePoints,
+      rules: rules,
     };
 
     if (description != null) {
@@ -143,6 +151,16 @@ export class GameOnAdminService {
   goToPhase1(tournamentId: number): Observable<any> {
     return this.client.post<any>(
       environment.gameOnApiUrl + '/tournament/' + tournamentId + '/phase1',
+      null
+    );
+  }
+
+  savePhase1Score(tournamentId: number): Observable<any> {
+    return this.client.post<any>(
+      environment.gameOnApiUrl +
+        '/tournament/' +
+        tournamentId +
+        '/phase1/score',
       null
     );
   }
