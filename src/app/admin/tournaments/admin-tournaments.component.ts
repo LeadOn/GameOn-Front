@@ -64,6 +64,23 @@ export class AdminTournamentsComponent implements OnInit {
     }
   }
 
+  savePhase1Score(id: number) {
+    if (confirm('Voulez-vous sauvegarder le score de la phase 1 ?')) {
+      this.adminService.savePhase1Score(id).subscribe(
+        (data) => {
+          alert('Score Phase 1 sauvegardé !');
+          window.location.reload();
+        },
+        (err) => {
+          console.error(err);
+          alert(
+            'Une erreur est survenue lors de la sauvegarde du score de la phase 1.'
+          );
+        }
+      );
+    }
+  }
+
   delete(id: number) {
     if (
       confirm(
