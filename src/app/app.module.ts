@@ -8,7 +8,6 @@ import { SharedModule } from './shared/modules/shared.module';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
-import { HomePlayersComponent } from './home/components/players/home-players.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
@@ -51,7 +50,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
     /* Home page */
     HomeComponent,
-    HomePlayersComponent,
 
     /* Player pages */
     ProfilePageComponent,
