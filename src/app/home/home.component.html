@@ -1,69 +1,60 @@
-<section
-  class="flex flex-col items-center lg:px-6 lg:px-32 xl:px-64 justify-center text-white h-screen p-8"
-  id="home"
->
-  <div
-    class="custom-margin flex flex-col items-center lg:items-start bg-gray-800/40 p-4 lg:p-8 rounded-lg backdrop-blur-lg"
-  >
-    <div>
-      <span
-        class="block border border-2 border-secondary rounded-lg px-6 py-3 lg:text-xl"
-      >
-        <span *ngIf="currentSeason == undefined || currentSeason == null">
-          Chargement...
-        </span>
-        <span *ngIf="currentSeason != undefined && currentSeason != null">
-          {{ currentSeason.name }}
-        </span>
+<section id="home-top-pills" class="px-4 mt-4" [@inOutAnimation]>
+  <div class="flex justify-between">
+    <div
+      class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm"
+    >
+      <span *ngIf="currentSeason == undefined || currentSeason == null">
+        Chargement...
       </span>
-    </div>
-
-    <div>
-      <span
-        *ngIf="isLoggedIn == false"
-        class="typed-out text-center block font-semibold text-2xl lg:text-5xl mt-3 lg:mt-10 pr-2"
-      >
-        Bienvenue dans l'aventure GameOn !
-      </span>
-
-      <span *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
-        <span
-          class="typed-out text-center block font-semibold text-2xl lg:text-5xl mt-3 lg:mt-10 pr-2"
-          *ngIf="currentPlayer.id != 0"
-        >
-          Bienvenue {{ currentPlayer.nickname }} !
-        </span>
+      <span *ngIf="currentSeason != undefined && currentSeason != null">
+        {{ currentSeason.name }}
       </span>
     </div>
 
     <div
-      class="mt-6 lg:mt-10 flex flex-row space-x-4 lg:space-x-0 lg:w-full lg:justify-evenly"
+      routerLink="/changelog"
+      class="bg-white drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary text-sm cursor-pointer"
     >
-      <a
-        href="#players"
-        class="block bg-gray-800/40 border p-4 rounded-lg w-36 lg:w-48 text-center"
-      >
-        Joueurs
-      </a>
-      <a
-        routerLink="/changelog"
-        class="block bg-secondary/40 border border-secondary p-4 rounded-lg w-36 lg:w-48 text-center"
-      >
-        Nouveautés
-      </a>
+      <span>Nouveautés</span>
     </div>
-  </div>
-
-  <div class="mt-32">
-    <app-arrow-btn link="#players"></app-arrow-btn>
   </div>
 </section>
 
-<div class="flex justify-center text-white m-8 md:mx-16 lg:mx-32">
-  <a
-    href="#games-played"
-    class="w-px h-20 border-r border-dashed border-secondary"
-  ></a>
-</div>
+<section id="home-cards" class="px-4 mt-4" [@inOutAnimation]>
+  <div
+    class="flex flex-col justify-between px-4 text-white drop-shadow-lg font-bold mt-4 h-48 welcome-card rounded-lg"
+  >
+    <span class="w-full text-left mt-2">Bienvenue dans GameOn!</span>
+    <span class="w-full text-center text-sm mb-2">Version {{ version }}</span>
+  </div>
+</section>
 
-<app-home-players></app-home-players>
+<section id="home-players" class="px-4 mt-4 py-4 bg-white" [@inOutAnimation]>
+  <div class="flex">
+    <span class="text-lg font-semibold">Joueurs actifs</span>
+  </div>
+
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+
+  <div *ngIf="loading == false" class="mt-4">
+    <app-player-card
+      ng-if="players.length > 0"
+      *ngFor="let player of players"
+      [player]="player"
+    ></app-player-card>
+  </div>
+
+  <div class="flex mt-4">
+    <span class="text-lg font-semibold">Joueurs archivés</span>
+  </div>
+
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+
+  <div *ngIf="loading == false" class="mt-4">
+    <app-player-card
+      ng-if="players.length > 0"
+      *ngFor="let player of archivedPlayers"
+      [player]="player"
+    ></app-player-card>
+  </div>
+</section>

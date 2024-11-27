@@ -1,565 +1,448 @@
-<div
-  [@inOutAnimation]
-  class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 lg:mx-32 text-white"
-  role="status"
-  *ngIf="loading == true"
->
-  <app-loading-spinner></app-loading-spinner>
-  Chargement des données...
-</div>
+<section id="top-card" class="px-4 mt-4">
+  <app-loading-spinner
+    *ngIf="loading == true"
+    [@inOutAnimation]
+  ></app-loading-spinner>
+</section>
 
-<div
-  class="flex flex-col lg:flex-row lg:space-x-8 text-white m-8 lg:mx-32"
+<section
+  id="header-pills"
+  class="p-4 overflow-x-scroll"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null"
 >
-  <div class="w-full lg:w-1/3 xl:w-1/4">
-    <div class="bg-primary p-4 rounded-lg flex flex-col items-center">
-      <img
-        class="rounded-full neomorphism-primary mt-4"
-        *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
-        src="{{ tournament.logoUrl }}"
-        width="128"
-      />
-
-      <img
-        class="rounded-full neomorphism-primary mt-4"
-        *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
-        src="assets/img/gameon-logo.webp"
-        width="128"
-      />
-
-      <div class="text-center w-full">
-        <span class="block mt-2">{{ tournament.name }}</span>
-        <div
-          class="flex flex-col justify-center align-center items-center mt-2"
-        >
-          <span
-            class="flex flex-raw justify-center items-center text-xs px-4 rounded-xl"
-            [class.bg-gray-600]="tournament.state == 0"
-            [class.bg-customGreen]="tournament.state == 1"
-            [class.bg-secondary]="tournament.state == 2"
-            [class.bg-customYellow]="tournament.state == 3"
-            [class.bg-green-800]="tournament.state == 4"
-          >
-            {{ getState(tournament.state) }}
-          </span>
-
-          <span
-            class="bg-red-700 text-white flex flex-raw justify-center items-center text-xs px-4 rounded-xl cursor-pointer mt-4"
-            *ngIf="isAdmin == true"
-            [routerLink]="['/admin/tournaments/edit', tournamentId]"
-          >
-            Modifier
-          </span>
-        </div>
-        <span class="block mt-2 text-xs mt-2">
-          📅 {{ tournament.plannedFrom.toString().split("T")[0] }} au
-          {{ tournament.plannedTo.toString().split("T")[0] }}
-        </span>
-
-        <div
-          class="flex flex-col mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4"
-          *ngIf="isLoggedIn == true"
-        >
-          <div
-            class="p-2 flex flex-col items-center justify-center text-sm"
-            *ngIf="isSubscribed != null"
-          >
-            <span>✅ Vous êtes inscrit(e).</span>
-
-            <div
-              class="bg-primary mt-4 w-full rounded-lg p-4"
-              *ngIf="isSubscribed != null && tournament.state < 2"
-            >
-              <span>Modifier mon inscription</span>
-
-              <div
-                class="flex flex-col justify-center align-center items-center"
-              >
-                <select
-                  class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  [(ngModel)]="selectedTeam"
-                >
-                  <option
-                    *ngFor="let fifaTeam of fifaTeams"
-                    value="{{ fifaTeam.id }}"
-                  >
-                    {{ fifaTeam.name }}
-                  </option>
-                </select>
-
-                <button
-                  class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-                  (click)="updateSubscription()"
-                >
-                  Modifier
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <span
-            class="underline"
-            *ngIf="isSubscribed == null && tournament.state < 2"
-          >
-            Inscription
-          </span>
-
-          <div
-            *ngIf="isSubscribed == null && tournament.state < 2"
-            class="flex flex-col justify-center align-center items-center"
-          >
-            <select
-              class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              [(ngModel)]="selectedTeam"
-            >
-              <option
-                *ngFor="let fifaTeam of fifaTeams"
-                value="{{ fifaTeam.id }}"
-              >
-                {{ fifaTeam.name }}
-              </option>
-            </select>
-
-            <button
-              class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
-              (click)="subscribe()"
-            >
-              S'inscrire !
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div
-      *ngIf="tournament.description != null"
-      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4"
+  <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
+    <span
+      class="drop-shadow-lg rounded-full px-2 border border-customGreen bg-customGreen text-white text-sm cursor-pointer"
+      *ngIf="isSubscribed != null"
+      (click)="showSubscription()"
     >
-      <div class="flex flex-row space-x-2 items-center justify-center">
-        <img
-          src="assets/img/svg/trophee.svg"
-          class="w-8 rounded-full bg-secondary p-2"
-        />
-        <span class="text">Détails</span>
-      </div>
+      <fa-icon [icon]="checkIcon"></fa-icon> Inscrit
+    </span>
 
-      <div
-        class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-xs text-justift"
-      >
-        {{ tournament.description }}
-      </div>
-    </div>
-
-    <div
-      *ngIf="tournament.winner != null"
-      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4"
+    <span
+      class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm"
+      [class.bg-gray-600]="tournament.state == 0"
+      [class.bg-customGreen]="tournament.state == 1"
+      [class.bg-secondary]="tournament.state == 2"
+      [class.bg-customYellow]="tournament.state == 3"
+      [class.bg-green-800]="tournament.state == 4"
     >
-      <div class="flex flex-row space-x-2 items-center justify-center">
-        <img
-          src="assets/img/svg/trophee.svg"
-          class="w-8 rounded-full bg-secondary p-2"
-        />
-        <span class="text">Gagnant</span>
-      </div>
+      {{ getState(tournament.state) }}
+    </span>
 
-      <div
-        [routerLink]="['/player', tournament.winner.id]"
-        class="cursor-pointer flex flex-row justify-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
-      >
-        <div>
-          <img
-            *ngIf="tournament.winner.profilePictureUrl != null"
-            src="{{ tournament.winner.profilePictureUrl }}"
-            class="w-8 rounded-full"
-          />
-          <img
-            *ngIf="tournament.winner.profilePictureUrl == null"
-            src="assets/img/gameon-logo.webp"
-            class="w-8 rounded-full"
-          />
-        </div>
-
-        <div class="hidden md:flex md:flex-col text-left">
-          <span>{{ tournament.winner.fullName }}</span>
-          <span class="text-xs italic">
-            {{ tournament.winner.nickname }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="flex flex-col space-y-2 justify-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg text-white"
+    <span
+      class="drop-shadow-lg rounded-full px-2 border border-frenchRed bg-frenchRed text-white text-sm cursor-pointer"
+      *ngIf="isAdmin == true"
+      [routerLink]="['/admin/tournaments/edit', tournamentId]"
     >
-      <div
-        class="flex flex-col items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker"
+      Modifier
+    </span>
+  </div>
+</section>
+
+<section
+  id="tournament-detail-card"
+  class="px-4 mt-4"
+  *ngIf="loading == false && tournament != null"
+  [@inOutAnimation]
+>
+  <div
+    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
+  >
+    <img
+      class="rounded-full drop-shadow-lg"
+      *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
+      src="{{ tournament.logoUrl }}"
+      width="64"
+    />
+
+    <img
+      class="rounded-full drop-shadow-lg"
+      *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
+      src="assets/img/gameon-logo.webp"
+      width="64"
+    />
+
+    <div class="flex flex-col">
+      <span class="text-xl font-semibold">{{ tournament.name }}</span>
+      <span class="text-xs text-gray-600"
+        >{{ tournament.plannedFrom.toString().split("T")[0] }} au
+        {{ tournament.plannedTo.toString().split("T")[0] }}</span
       >
-        <div class="flex flex-row items-center space-x-2">
-          <div
-            class="rounded-full bg-secondary p-2 flex flex-col items-center justify-center"
-          >
-            <img src="assets/img/svg/rules.svg" class="w-8" />
-          </div>
-
-          <span class="text-white">Règlement</span>
-        </div>
-      </div>
-
-      <div
-        class="flex flex-col justify-around items-center align-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker"
-        *ngIf="tournament.rules != null"
-        [innerHtml]="tournament.rules"
-      ></div>
     </div>
+  </div>
+</section>
+
+<div
+  class="px-4 mt-4 flex space-x-2"
+  [@inOutAnimation]
+  *ngIf="loading == false && tournament != null && tournament.winner != null"
+>
+  <span class="text-lg font-semibold">Gagnant</span>
+</div>
+
+<section
+  id="tournament-winner"
+  class="px-4 mt-4"
+  *ngIf="loading == false && tournament != null && tournament.winner != null"
+  [@inOutAnimation]
+>
+  <div class="bg-white rounded-lg">
+    <app-player-card [player]="tournament.winner"></app-player-card>
+  </div>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="
+    loading == false && tournament != null && tournament.description != null
+  "
+>
+  <span class="text-lg font-semibold">Détails</span>
+  <span class="text-lg font-semibold" (click)="showDetailsContent()">
+    <fa-icon [icon]="downChevronIcon" *ngIf="showDetails == true"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="showDetails == false"></fa-icon>
+  </span>
+</div>
+
+<section
+  id="tournament-details"
+  class="px-4 mt-4"
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    tournament.description != null &&
+    showDetails == true
+  "
+  [@inOutAnimation]
+>
+  <div
+    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
+  >
+    {{ tournament.description }}
+  </div>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && tournament != null && tournament.rules != null"
+>
+  <span class="text-lg font-semibold">Règlement</span>
+  <span class="text-lg font-semibold" (click)="showRulesContent()">
+    <fa-icon [icon]="downChevronIcon" *ngIf="showRules == true"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="showRules == false"></fa-icon>
+  </span>
+</div>
+
+<section
+  id="tournament-rules"
+  class="px-4 mt-4"
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    tournament.description != null &&
+    showRules == true
+  "
+  [@inOutAnimation]
+>
+  <div
+    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
+    [innerHtml]="tournament.rules"
+  ></div>
+</section>
+
+<div
+  class="px-4 mt-4 flex"
+  [@inOutAnimation]
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    isLoggedIn == true &&
+    subscriptionShown == true
+  "
+>
+  <span class="text-lg font-semibold">Inscription</span>
+</div>
+
+<section
+  id="tournament-subscription"
+  class="m-4 bg-white p-4 rounded-lg drop-shadow-lg"
+  [@inOutAnimation]
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    isLoggedIn == true &&
+    subscriptionShown == true
+  "
+>
+  <div
+    *ngIf="isSubscribed == null && tournament.state < 2"
+    class="flex flex-col justify-center align-center items-center"
+  >
+    <select
+      class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      [(ngModel)]="selectedTeam"
+    >
+      <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
+        {{ fifaTeam.name }}
+      </option>
+    </select>
+
+    <button
+      class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      (click)="subscribe()"
+    >
+      S'inscrire !
+    </button>
   </div>
 
   <div
-    class="w-full flex flex-col mt-8 lg:mt-0"
-    *ngIf="loading == false && tournament != null"
+    *ngIf="isSubscribed != null && tournament.state < 2"
+    class="flex flex-col justify-center align-center items-center"
   >
-    <div
-      *ngIf="tournament.players.length == 0"
-      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker p-4 border border-customRed rounded-lg mb-4"
+    <select
+      class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      [(ngModel)]="selectedTeam"
     >
-      Aucun joueur n'est inscrit pour le moment.
-    </div>
+      <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
+        {{ fifaTeam.name }}
+      </option>
+    </select>
 
-    <div
-      *ngIf="loading == false && tournament.phase2ChallongeUrl != null"
-      (click)="showTournamentBracket()"
-      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mb-4"
+    <button
+      class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      (click)="updateSubscription()"
     >
-      <div class="grow flex flex-row space-x-2 items-center justify-left">
-        <img
-          src="assets/img/svg/fifagame.svg"
-          class="w-12 rounded-full bg-secondary p-2"
-        />
-        <span class="text-lg"
-          >Tournoi<span *ngIf="tournament.state < 3"> prévisionnel</span></span
+      Modifier
+    </button>
+  </div>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    tournament.phase2ChallongeUrl != null
+  "
+>
+  <span class="text-lg font-semibold"
+    >Tournoi<span *ngIf="tournament.state < 3"> prévisionnel</span></span
+  >
+  <span class="text-lg font-semibold" (click)="showTournamentBracket()">
+    <fa-icon
+      [icon]="downChevronIcon"
+      *ngIf="tournamentBracketShown == true"
+    ></fa-icon>
+    <fa-icon
+      [icon]="rightChevronIcon"
+      *ngIf="tournamentBracketShown == false"
+    ></fa-icon>
+  </span>
+</div>
+
+<section
+  id="tournament-rules"
+  class="px-4 mt-4"
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    tournament.phase2ChallongeUrl != null &&
+    tournamentBracketShown == true
+  "
+  [@inOutAnimation]
+>
+  <iframe
+    [src]="tournament.phase2ChallongeUrl | safe"
+    width="100%"
+    height="500"
+    frameborder="0"
+    scrolling="auto"
+    allowtransparency="true"
+  ></iframe>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="
+    loading == false && tournament != null && tournament.players.length > 0
+  "
+>
+  <span class="text-lg font-semibold">Joueurs</span>
+  <span class="text-lg font-semibold" (click)="showPlayers()">
+    <fa-icon [icon]="downChevronIcon" *ngIf="playersShown == true"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="playersShown == false"></fa-icon>
+  </span>
+</div>
+
+<section
+  id="tournament-players"
+  class="px-4 mt-4"
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    tournament.players.length > 0 &&
+    playersShown == true
+  "
+  [@inOutAnimation]
+>
+  <div class="relative overflow-x-scroll drop-shadow-lg">
+    <table class="w-full text-sm text-left text-gray-500">
+      <thead class="text-xs text-gray-700 text-center">
+        <tr>
+          <th scope="col" class="px-6 py-3">Score</th>
+          <th scope="col" class="px-6 py-3">Joueur</th>
+          <th scope="col" class="px-6 py-3">Équipe</th>
+          <th scope="col" class="px-6 py-3">Résultats</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b"
+          *ngFor="let player of tournament.players"
+          [routerLink]="['/player', player.player.id]"
         >
-      </div>
-
-      <div>
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-down.svg"
-          *ngIf="tournamentBracketShown"
-        />
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-up.svg"
-          *ngIf="!tournamentBracketShown"
-        />
-      </div>
-    </div>
-
-    <div
-      *ngIf="
-        loading == false &&
-        tournament.phase2ChallongeUrl != null &&
-        tournamentBracketShown == true
-      "
-    >
-      <iframe
-        [src]="tournament.phase2ChallongeUrl | safe"
-        width="100%"
-        height="500"
-        frameborder="0"
-        scrolling="auto"
-        allowtransparency="true"
-      ></iframe>
-    </div>
-
-    <div
-      *ngIf="tournament.players.length > 0"
-      (click)="showPlayers()"
-      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mb-4"
-    >
-      <div class="grow flex flex-row space-x-2 items-center justify-left">
-        <img
-          src="assets/img/svg/player.svg"
-          class="w-12 rounded-full bg-secondary p-2"
-        />
-        <span class="text-lg">Participants</span>
-      </div>
-
-      <div>
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-down.svg"
-          *ngIf="playersShown"
-        />
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-up.svg"
-          *ngIf="!playersShown"
-        />
-      </div>
-    </div>
-
-    <div
-      *ngIf="playersShown"
-      class="relative overflow-x-auto neomorphism-primaryDarker-2 rounded-lg"
-    >
-      <table class="w-full text-sm text-white">
-        <thead class="text-xs uppercase bg-primaryDarkerer text-white">
-          <tr>
-            <th scope="col" class="px-6 py-3">Joueur</th>
-            <th scope="col" class="px-6 py-3">Équipe</th>
-            <th
-              scope="col"
-              class="px-6 py-3 hidden md:table-cell"
-              *ngIf="tournament.state >= 2"
-            >
-              Matchs
-            </th>
-            <th scope="col" class="px-6 py-3" *ngIf="tournament.state >= 2">
-              Score
-            </th>
-            <th
-              scope="col"
-              class="px-6 py-3 hidden md:inline-block md:w-full"
-              *ngIf="tournament.state >= 2"
-            >
-              Statistiques
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="border-2 bg-primary border-primary"
-            [class.bg-yellow-500]="
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+            [class.text-yellow-500]="
               tournament.players.indexOf(player) == 0 && tournament.state >= 2
             "
-            [class.bg-gray-400]="
+            [class.text-gray-400]="
               tournament.players.indexOf(player) == 1 && tournament.state >= 2
             "
-            [class.bg-secondary]="
+            [class.text-secondary]="
               tournament.players.indexOf(player) == 2 && tournament.state >= 2
             "
-            *ngFor="let player of tournament.players"
           >
-            <th scope="row" class="font-normal px-6 py-4">
-              <div
-                [routerLink]="['/player', player.player.id]"
-                class="cursor-pointer flex flex-row justify-center align-center items-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
-              >
-                <div>
-                  <img
-                    *ngIf="player.player.profilePictureUrl != null"
-                    src="{{ player.player.profilePictureUrl }}"
-                    class="w-8 rounded-full"
-                  />
-                  <img
-                    *ngIf="player.player.profilePictureUrl == null"
-                    src="assets/img/gameon-logo.webp"
-                    class="w-8 rounded-full"
-                  />
-                </div>
-
-                <div class="flex flex-col text-left">
-                  <span class="hidden md:block">{{
-                    player.player.fullName
-                  }}</span>
-                  <span class="text-xs italic">
-                    {{ player.player.nickname }}
-                  </span>
-                </div>
-              </div>
-            </th>
-            <td class="px-6 py-4">
-              <div
-                class="flex flex-col justify-center align-center items-center p-2 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
-              >
-                <img
-                  src="assets/img/fifa/teams/{{ player.team.id }}.png"
-                  class="w-8"
-                  alt="{{ player.team.name }}"
-                />
-
-                <span class="text-xs hidden md:block">
-                  {{ player.team.name }}
-                </span>
-              </div>
-            </td>
-            <td
-              class="px-6 py-4 hidden md:table-cell"
-              *ngIf="tournament.state >= 2"
-            >
-              <div
-                class="hidden md:flex md:flex-row md:justify-center"
-                *ngIf="player.stats.progression != null"
-              >
-                <div class="w-full bg-gray-200 rounded-full">
-                  <div
-                    class="bg-frenchBlue text-xs font-medium text-white text-center p-0.5 leading-none rounded-full"
-                    style="width: {{ player.stats.progression }}%"
-                  >
-                    {{ player.stats.matchPlayed }} /
-                    {{ player.stats.totalMatch }}
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td class="px-6 py-4 text-center" *ngIf="tournament.state >= 2">
-              {{ player.score }} pt(s)
-            </td>
-            <td
-              class="px-6 py-4 hidden md:flex md:flex-row md:justify-center"
-              *ngIf="tournament.state >= 2"
-            >
-              <div
-                class="p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
-              >
-                <app-fifa-stat [stat]="player.stats"></app-fifa-stat>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div
-      (click)="showMyMatchsToPlay()"
-      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4"
-    >
-      <div class="grow flex flex-row space-x-2 items-center justify-left">
-        <img
-          src="assets/img/svg/fifagame.svg"
-          class="w-12 rounded-full bg-secondary p-2"
-        />
-        <span class="text-lg">Mes matchs à venir</span>
-      </div>
-
-      <div *ngIf="myGamesToPlay.length > 0">
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-down.svg"
-          *ngIf="myMatchsToPlayShown"
-        />
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-up.svg"
-          *ngIf="!myMatchsToPlayShown"
-        />
-      </div>
-    </div>
-
-    <div
-      *ngIf="myGamesToPlay.length == 0"
-      class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
-    >
-      <p>Vous n'avez aucun match à venir.</p>
-    </div>
-
-    <app-fifa-game-list-header
-      *ngIf="myGamesToPlay.length > 0 && myMatchsToPlayShown"
-    ></app-fifa-game-list-header>
-
-    <div
-      class="mt-4 flex flex-col w-full text-white space-y-4"
-      *ngIf="myGamesToPlay.length > 0 && myMatchsToPlayShown"
-    >
-      <app-fifa-game-history-card
-        *ngFor="let game of myGamesToPlay"
-        [game]="game"
-      ></app-fifa-game-history-card>
-    </div>
-
-    <div
-      (click)="showMatchsPlayed()"
-      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4"
-    >
-      <div class="grow flex flex-row space-x-2 items-center justify-left">
-        <img
-          src="assets/img/svg/fifagame.svg"
-          class="w-12 rounded-full bg-secondary p-2"
-        />
-        <span class="text-lg">Matchs joués</span>
-      </div>
-
-      <div *ngIf="gamesPlayed.length > 0">
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-down.svg"
-          *ngIf="matchsPlayedShown"
-        />
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-up.svg"
-          *ngIf="!matchsPlayedShown"
-        />
-      </div>
-    </div>
-
-    <div
-      *ngIf="gamesPlayed.length == 0"
-      class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
-    >
-      <p>Aucun match n'as été joué dans ce tournoi.</p>
-    </div>
-
-    <app-fifa-game-list-header
-      *ngIf="gamesPlayed.length > 0 && matchsPlayedShown"
-    ></app-fifa-game-list-header>
-
-    <div
-      class="mt-4 flex flex-col w-full text-white space-y-4"
-      *ngIf="gamesPlayed.length > 0 && matchsPlayedShown"
-    >
-      <app-fifa-game-history-card
-        *ngFor="let game of gamesPlayed"
-        [game]="game"
-      ></app-fifa-game-history-card>
-    </div>
-
-    <div
-      (click)="showMatchsPlanned()"
-      class="cursor-pointer flex flex-row w-full justify-center align-center items-center bg-primary neomorphism-primaryDarker-2 p-4 rounded-lg mt-4 mb-4"
-    >
-      <div class="grow flex flex-row space-x-2 items-center justify-left">
-        <img
-          src="assets/img/svg/fifagame.svg"
-          class="w-12 rounded-full bg-green-500 p-2"
-        />
-        <span class="text-lg">Matchs planifiés</span>
-      </div>
-
-      <div *ngIf="gamesToPlay.length > 0">
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-down.svg"
-          *ngIf="plannedMatchsShown"
-        />
-        <img
-          class="w-16"
-          src="assets/img/svg/chevron-up.svg"
-          *ngIf="!plannedMatchsShown"
-        />
-      </div>
-    </div>
-
-    <div
-      *ngIf="gamesToPlay.length == 0"
-      class="flex flex-col items-center bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm space-y-4"
-    >
-      <p>Aucun match n'est planifié dans ce tournoi.</p>
-    </div>
-
-    <app-fifa-game-list-header
-      *ngIf="gamesToPlay.length > 0 && plannedMatchsShown"
-    ></app-fifa-game-list-header>
-
-    <div
-      class="mt-4 flex flex-col w-full text-white space-y-4"
-      *ngIf="gamesToPlay.length > 0 && plannedMatchsShown"
-    >
-      <app-fifa-game-history-card
-        *ngFor="let game of gamesToPlay"
-        [game]="game"
-      ></app-fifa-game-history-card>
-    </div>
+            {{ player.score }}
+          </th>
+          <td class="px-6 py-4 text-center text-xs text-primary font-semibold">
+            {{ player.player.fullName }}
+          </td>
+          <td class="px-6 py-4 text-center">
+            <img
+              src="assets/img/fifa/teams/{{ player.team.id }}.png"
+              class="rounded-full w-8 h-8 drop-shadow-lg"
+            />
+          </td>
+          <td class="px-6 py-4 text-center font-semibold">
+            <span class="text-customGreen">{{ player.stats.wins }}</span
+            >/<span class="text-customRed">{{ player.stats.losses }}</span
+            >/<span class="text-customYellow">{{ player.stats.draws }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && tournament != null && myGamesToPlay.length > 0"
+>
+  <span class="text-lg font-semibold">Mes matchs à venir</span>
+  <span class="text-lg font-semibold" (click)="showMyMatchsToPlay()">
+    <fa-icon
+      [icon]="downChevronIcon"
+      *ngIf="myMatchsToPlayShown == true"
+    ></fa-icon>
+    <fa-icon
+      [icon]="rightChevronIcon"
+      *ngIf="myMatchsToPlayShown == false"
+    ></fa-icon>
+  </span>
 </div>
+
+<section
+  id="my-matchs-planned"
+  class="px-4 mt-4 flex flex-col space-y-4"
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    myGamesToPlay.length > 0 &&
+    myMatchsToPlayShown == true
+  "
+  [@inOutAnimation]
+>
+  <app-fifa-game-history-card
+    *ngFor="let game of myGamesToPlay"
+    [game]="game"
+  ></app-fifa-game-history-card>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && tournament != null && gamesToPlay.length > 0"
+>
+  <span class="text-lg font-semibold">Matchs planifiés</span>
+  <span class="text-lg font-semibold" (click)="showMatchsPlanned()">
+    <fa-icon
+      [icon]="downChevronIcon"
+      *ngIf="plannedMatchsShown == true"
+    ></fa-icon>
+    <fa-icon
+      [icon]="rightChevronIcon"
+      *ngIf="plannedMatchsShown == false"
+    ></fa-icon>
+  </span>
+</div>
+
+<section
+  id="matchs-planned"
+  class="px-4 mt-4 flex flex-col space-y-4"
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    gamesToPlay.length > 0 &&
+    plannedMatchsShown == true
+  "
+  [@inOutAnimation]
+>
+  <app-fifa-game-history-card
+    *ngFor="let game of gamesToPlay"
+    [game]="game"
+  ></app-fifa-game-history-card>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && tournament != null && gamesPlayed.length > 0"
+>
+  <span class="text-lg font-semibold">Matchs joués</span>
+  <span class="text-lg font-semibold" (click)="showMatchsPlayed()">
+    <fa-icon
+      [icon]="downChevronIcon"
+      *ngIf="matchsPlayedShown == true"
+    ></fa-icon>
+    <fa-icon
+      [icon]="rightChevronIcon"
+      *ngIf="matchsPlayedShown == false"
+    ></fa-icon>
+  </span>
+</div>
+
+<section
+  id="my-matchs-planned"
+  class="px-4 mt-4 flex flex-col space-y-4"
+  *ngIf="
+    loading == false &&
+    tournament != null &&
+    gamesPlayed.length > 0 &&
+    matchsPlayedShown == true
+  "
+  [@inOutAnimation]
+>
+  <app-fifa-game-history-card
+    *ngFor="let game of gamesPlayed"
+    [game]="game"
+  ></app-fifa-game-history-card>
+</section>

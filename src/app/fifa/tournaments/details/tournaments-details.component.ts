@@ -11,6 +11,13 @@ import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 import { TournamentPlayerDto } from '../../../shared/classes/TournamentPlayerDto';
 import { Store } from '@ngrx/store';
 import { Player } from '../../../shared/classes/Player';
+import {
+  faCheck,
+  faChevronDown,
+  faChevronLeft,
+  faChevronRight,
+  faTrophy,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-tournaments-details',
@@ -42,12 +49,19 @@ export class TournamentsDetailsComponent implements OnInit {
   gamesPlayed: FifaGamePlayed[] = [];
   gamesToPlay: FifaGamePlayed[] = [];
   myGamesToPlay: FifaGamePlayed[] = [];
+  trophyIcon = faTrophy;
+  checkIcon = faCheck;
+  rightChevronIcon = faChevronRight;
+  downChevronIcon = faChevronDown;
 
   playersShown = true;
   plannedMatchsShown = false;
   matchsPlayedShown = false;
   myMatchsToPlayShown = false;
   tournamentBracketShown = false;
+  subscriptionShown = false;
+  showDetails = true;
+  showRules = false;
 
   constructor(
     private tournamentService: GameOnTournamentService,
@@ -71,11 +85,15 @@ export class TournamentsDetailsComponent implements OnInit {
         .subscribe(
           (x) => {
             this.isSubscribed = x;
+            if (this.isSubscribed == undefined) {
+              this.subscriptionShown = true;
+            }
           },
           (err) => {
             console.error(
               '[TournamentDetailsComponent] Player is not subscribe to tournament.]'
             );
+            this.subscriptionShown = true;
           }
         );
 
@@ -164,6 +182,18 @@ export class TournamentsDetailsComponent implements OnInit {
     this.tournamentBracketShown = !this.tournamentBracketShown;
   }
 
+  showSubscription() {
+    this.subscriptionShown = !this.subscriptionShown;
+  }
+
+  showDetailsContent() {
+    this.showDetails = !this.showDetails;
+  }
+
+  showRulesContent() {
+    this.showRules = !this.showRules;
+  }
+
   getState(stateId: number): string {
     let label = 'Inconnu';
     this.states.forEach((x) => {
@@ -176,19 +206,13 @@ export class TournamentsDetailsComponent implements OnInit {
   }
 
   subscribe() {
-    if (
-      this.selectedTeam != undefined &&
-      confirm(
-        'Êtes vous sûr de vouloir vous inscrire à ce tournoi cette équipe ?'
-      )
-    ) {
+    if (this.selectedTeam != undefined) {
       this.loading = true;
       this.tournamentService
         .subscribe(this.tournamentId, this.selectedTeam)
         .subscribe(
           (x) => {
             this.loading = false;
-            alert('Inscription réussie !');
             window.location.reload();
           },
           (err) => {
@@ -200,19 +224,13 @@ export class TournamentsDetailsComponent implements OnInit {
   }
 
   updateSubscription() {
-    if (
-      this.selectedTeam != undefined &&
-      confirm(
-        'Êtes vous sûr de vouloir modifier votre inscription à ce tournoi avec cette nouvelle équipe ?'
-      )
-    ) {
+    if (this.selectedTeam != undefined) {
       this.loading = true;
       this.tournamentService
         .updateSubscription(this.tournamentId, this.selectedTeam)
         .subscribe(
           (x) => {
             this.loading = false;
-            alert('Inscription modifiée !');
             window.location.reload();
           },
           (err) => {

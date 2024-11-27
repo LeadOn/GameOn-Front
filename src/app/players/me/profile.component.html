@@ -1,10 +1,5 @@
-<div
-  [@inOutAnimation]
-  *ngIf="loading == true"
-  class="flex flex-row items-center p-4 rounded-lg bg-primary m-8 md:mx-16 lg:mx-32 text-white neomorphism-primaryDarker"
->
+<div class="px-4 mt-4" [@inOutAnimation] *ngIf="loading == true">
   <app-loading-spinner></app-loading-spinner>
-  <span class="text-white">Chargement...</span>
 </div>
 
 <app-success-alert
