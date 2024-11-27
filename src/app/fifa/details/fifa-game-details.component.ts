@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faClock, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faClock,
+  faExternalLinkAlt,
+  faPlusCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
 import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -32,10 +36,12 @@ export class FifaGameDetailsComponent implements OnInit {
   game: FifaGamePlayed = new FifaGamePlayed();
   externalIcon = faExternalLinkAlt;
   clockIcon = faClock;
+  plusIcon = faPlusCircle;
   successMessage = false;
   isLoggedIn = false;
   isAdmin = false;
   team1GoalPercentage = 0;
+  showCreateHighlightForm = false;
 
   createHighlightForm = new FormGroup({
     name: new FormControl('', [Validators.maxLength(50), Validators.required]),
@@ -57,6 +63,10 @@ export class FifaGameDetailsComponent implements OnInit {
     this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
 
     this.getGame();
+  }
+
+  toggleCreateHighlightForm() {
+    this.showCreateHighlightForm = !this.showCreateHighlightForm;
   }
 
   getGame() {
@@ -100,7 +110,8 @@ export class FifaGameDetailsComponent implements OnInit {
 
       this.highlightService.create(createObj).subscribe(
         (data) => {
-          this.successMessage = true; // Getting its account, and setting it into store
+          this.successMessage = true;
+          this.getGame();
           this.loading = false;
         },
         (err) => {
