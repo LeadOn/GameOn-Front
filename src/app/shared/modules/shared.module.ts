@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FooterComponent } from '../layouts/components/footer/footer.component';
 import { NotFoundComponent } from '../../components/not-found/not-found.component';
 import { ArrowBtnComponent } from '../components/arrow-btn/arrow-btn.component';
 import { PlayerCardComponent } from '../components/player-card/player-card.component';
@@ -17,7 +16,6 @@ import { PlayerTeamListComponent } from '../components/player-team-list/player-t
 
 @NgModule({
   declarations: [
-    FooterComponent,
     NotFoundComponent,
     ArrowBtnComponent,
     PlayerCardComponent,
@@ -42,7 +40,6 @@ import { PlayerTeamListComponent } from '../components/player-team-list/player-t
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    FooterComponent,
     ArrowBtnComponent,
     PlayerCardComponent,
     LoadingSpinnerComponent,
