@@ -1,72 +1,80 @@
-<div
-  [@inOutAnimation]
-  class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
-  role="status"
-  *ngIf="loading == true"
->
+<div [@inOutAnimation] class="px-4 mt-4" *ngIf="loading == true">
   <app-loading-spinner></app-loading-spinner>
-  Chargement des données...
 </div>
 
-<div
-  class="flex flex-col md:flex-row md:space-x-8 text-white m-8 md:mx-16 lg:mx-32"
+<section
+  id="header-pills"
+  class="p-4 overflow-x-scroll"
+  [@inOutAnimation]
+  *ngIf="loading == false && player != null"
+>
+  <div
+    class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2"
+    *ngIf="player.archived == true"
+  >
+    <span
+      class="drop-shadow-lg rounded-full px-2 border border-gray-600 bg-gray-600 text-white text-sm cursor-pointer"
+    >
+      Archivé
+    </span>
+  </div>
+
+  <div
+    class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2"
+    *ngIf="player.tournamentsWon != null && player.tournamentsWon.length > 0"
+  >
+    <span
+      class="drop-shadow-lg rounded-full px-2 border border-customYellow bg-white text-customYellow text-sm cursor-pointer"
+      *ngFor="let tournament of player.tournamentsWon"
+      [routerLink]="['/fifa/tournaments', tournament.id]"
+    >
+      <img src="assets/img/svg/star-yellow.svg" class="w-3 inline-block" />
+      {{ tournament.name }}
+    </span>
+  </div>
+</section>
+
+<section
+  id="player-detail-card"
+  class="px-4"
+  *ngIf="loading == false && player != null"
   [@inOutAnimation]
 >
   <div
-    class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
-    *ngIf="player != null && player.id != 0"
+    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
   >
-    <div class="bg-primary p-4 rounded-lg flex flex-col items-center">
-      <img
-        class="rounded-full neomorphism-inner-primary mt-4"
-        *ngIf="player.profilePictureUrl != null"
-        src="{{ player.profilePictureUrl }}"
-        width="128"
-      />
+    <img
+      class="rounded-full drop-shadow-lg"
+      *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
+      src="{{ player.profilePictureUrl }}"
+      width="64"
+    />
 
-      <img
-        class="rounded-full neomorphism-inner-primary mt-4"
-        *ngIf="player.profilePictureUrl == null"
-        src="assets/img/gameon-logo.webp"
-        width="128"
-      />
+    <img
+      class="rounded-full drop-shadow-lg"
+      *ngIf="player.profilePictureUrl == null || player.profilePictureUrl == ''"
+      src="assets/img/gameon-logo.webp"
+      width="64"
+    />
 
+    <div class="flex flex-col">
+      <span class="text-xl font-semibold">{{ player.fullName }}</span>
+      <span class="text-xs text-gray-600">{{ player.nickname }}</span>
+    </div>
+  </div>
+</section>
+
+<div class="px-4 mt-4" [@inOutAnimation]>
+  <div class="w-full" *ngIf="player != null && player.id != 0">
+    <div
+      class="bg-white p-4 rounded-lg flex flex-col items-center drop-shadow-lg"
+    >
       <div class="text-center w-full">
-        <span class="block mt-2">{{ player.fullName }}</span>
-        <span class="block italic">{{ player.nickname }}</span>
-        <span class="block italic" *ngIf="player.tournamentsWon != null"
-          ><span *ngFor="let tournament of player.tournamentsWon"
-            ><img
-              src="assets/img/svg/star-yellow.svg"
-              class="w-4 inline-block" /></span
-        ></span>
-
-        <div
-          class="mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4 text-sm text-left"
-          *ngIf="player.archived == true"
-        >
-          ℹ️ Ce profil à été archivé. Cela signifie qu'il n'est plus possible
-          d'affronter ce joueur. Ces statistiques sont conservées à titre
-          informatif.
-        </div>
-
-        <select
-          (change)="onChangeEnemy($event.target)"
-          [ngModel]="selectedEnemy"
-          id="enemies"
-          class="mt-2 focus:ring-secondary focus:border-secondary neomorphism-inner-primaryDarker bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-        >
-          <option value="0">Versus</option>
-          <option *ngFor="let player of players" value="{{ player.id }}">
-            {{ player.fullName }} ({{ player.nickname }})
-          </option>
-        </select>
-
         <select
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
           id="seasons"
-          class="mt-2 focus:ring-secondary focus:border-secondary neomorphism-inner-primaryDarker bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          class="mt-2 border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
           <option *ngFor="let season of seasons" value="{{ season.id }}">
             {{ season.name }}
@@ -74,14 +82,14 @@
         </select>
 
         <div
-          class="mt-2 bg-primaryDarker neomorphism-inner-primaryDarker rounded-lg p-4"
+          class="mt-2 border border-secondary rounded-lg p-4"
           *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null"
         >
           <select
             [(ngModel)]="selectedStats"
             (change)="calculateStats()"
             id="stats"
-            class="mb-4 focus:ring-secondary focus:border-secondary bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            class="mb-4 border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option
               *ngFor="let platform of fifaPlayerStats.statsPerPlatform"
@@ -127,110 +135,25 @@
         ></app-player-team-list>
       </div>
     </div>
-
-    <div
-      *ngIf="player.tournamentsWon != null"
-      class="flex flex-col justify-around bg-primary neomorphism-primaryDarker-2 mt-4 p-4 rounded-lg mb-4 space-y-4"
-    >
-      <div class="flex flex-row space-x-2 items-center justify-center">
-        <img
-          src="assets/img/svg/trophee.svg"
-          class="w-8 rounded-full bg-secondary p-2"
-        />
-        <span class="text">Tournois gagnés</span>
-      </div>
-
-      <div
-        *ngFor="let tournament of player.tournamentsWon"
-        [routerLink]="['/fifa/tournaments', tournament.id]"
-        class="cursor-pointer flex flex-row justify-center space-x-2 p-4 rounded-lg bg-primaryDarker neomorphism-inner-primaryDarker"
-      >
-        <div>
-          <img
-            *ngIf="tournament.logoUrl != null"
-            src="{{ tournament.logoUrl }}"
-            class="w-8 rounded-full"
-          />
-          <img
-            *ngIf="tournament.logoUrl == null"
-            src="assets/img/gameon-logo.webp"
-            class="w-8 rounded-full"
-          />
-        </div>
-
-        <div class="hidden md:flex md:flex-col text-left">
-          <span>{{ tournament.name }}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div
-    class="w-full flex flex-col w-full mt-8 md:mt-0"
-    *ngIf="player != null && player.id != 0"
-  >
-    <div
-      *ngIf="
-        loading == false && selectedEnemy != 0 && enemy != null && enemy.id != 0
-      "
-      class="flex flex-col lg:flex-row justify-around bg-secondaryDarker neomorphism-primaryDarker p-4 border border-customRed rounded-lg mb-4"
-    >
-      <div class="flex flex-col items-center space-y-4">
-        <div class="flex flex-row items-center space-x-4">
-          <img
-            class="rounded-full"
-            src="{{ player.profilePictureUrl }}"
-            width="128"
-          />
-
-          <div>
-            <p>{{ player.fullName }}</p>
-            <p class="italic">{{ player.nickname }}</p>
-          </div>
-        </div>
-
-        <app-fifa-stat
-          *ngIf="
-            fifaPlayerStats != null &&
-            fifaPlayerStats.statsPerPlatform[0] != null
-          "
-          [stat]="fifaPlayerStats.statsPerPlatform[0]"
-          class="w-full"
-        ></app-fifa-stat>
-      </div>
-
-      <hr class="my-4 md:hidden" />
-
-      <div class="flex flex-col items-center space-y-4">
-        <div class="flex flex-row items-center space-x-4">
-          <img
-            class="rounded-full"
-            src="{{ enemy.profilePictureUrl }}"
-            width="128"
-          />
-
-          <div>
-            <p>{{ enemy.fullName }}</p>
-            <p class="italic">{{ enemy.nickname }}</p>
-          </div>
-        </div>
-
-        <app-fifa-stat
-          *ngIf="enemyStats != null"
-          [stat]="enemyStats.statsPerPlatform[0]"
-          class="w-full"
-        ></app-fifa-stat>
-      </div>
-    </div>
-
-    <div
-      class="mt-4 flex flex-col w-full text-white space-y-4"
-      *ngIf="loading == false"
-    >
-      <app-fifa-game-history-card
-        *ngFor="let game of games"
-        [game]="game"
-      ></app-fifa-game-history-card>
-    </div>
   </div>
 </div>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && games != null && games.length > 0"
+>
+  <span class="text-lg font-semibold">Matchs joués</span>
+</div>
+
+<section
+  id="my-matchs-planned"
+  class="px-4 mt-4 flex flex-col space-y-4"
+  *ngIf="loading == false && games != null && games.length > 0"
+  [@inOutAnimation]
+>
+  <app-fifa-game-history-card
+    *ngFor="let game of games"
+    [game]="game"
+  ></app-fifa-game-history-card>
+</section>

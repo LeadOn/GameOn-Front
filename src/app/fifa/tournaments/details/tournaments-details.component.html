@@ -48,17 +48,17 @@
   [@inOutAnimation]
 >
   <div
-    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle"
+    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
   >
     <img
-      class="rounded-full"
+      class="rounded-full drop-shadow-lg"
       *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
       src="{{ tournament.logoUrl }}"
       width="64"
     />
 
     <img
-      class="rounded-full"
+      class="rounded-full drop-shadow-lg"
       *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
       src="assets/img/gameon-logo.webp"
       width="64"
@@ -291,22 +291,21 @@
   "
   [@inOutAnimation]
 >
-  <div class="relative overflow-x-auto drop-shadow-lg">
+  <div class="relative overflow-x-scroll drop-shadow-lg">
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 text-center">
         <tr>
           <th scope="col" class="px-6 py-3">Score</th>
           <th scope="col" class="px-6 py-3">Joueur</th>
           <th scope="col" class="px-6 py-3">Équipe</th>
-          <th scope="col" class="px-6 py-3">V</th>
-          <th scope="col" class="px-6 py-3">D</th>
-          <th scope="col" class="px-6 py-3">N</th>
+          <th scope="col" class="px-6 py-3">Résultats</th>
         </tr>
       </thead>
       <tbody>
         <tr
           class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b"
           *ngFor="let player of tournament.players"
+          [routerLink]="['/player', player.player.id]"
         >
           <th
             scope="row"
@@ -332,14 +331,10 @@
               class="rounded-full w-8 h-8 drop-shadow-lg"
             />
           </td>
-          <td class="px-6 py-4 text-center text-customGreen font-semibold">
-            {{ player.stats.wins }}
-          </td>
-          <td class="px-6 py-4 text-center text-customRed font-semibold">
-            {{ player.stats.losses }}
-          </td>
-          <td class="px-6 py-4 text-center text-customYellow font-semibold">
-            {{ player.stats.draws }}
+          <td class="px-6 py-4 text-center font-semibold">
+            <span class="text-customGreen">{{ player.stats.wins }}</span
+            >/<span class="text-customRed">{{ player.stats.losses }}</span
+            >/<span class="text-customYellow">{{ player.stats.draws }}</span>
           </td>
         </tr>
       </tbody>
