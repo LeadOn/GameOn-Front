@@ -1,111 +1,44 @@
 <div
-  class="flex flex-row w-full bg-white rounded-lg items-center border border-gray-300 drop-shadow-lg"
-  [class.border-2]="game.tournamentId != null"
-  [class.border-yellow-500]="game.tournamentId != null"
+  class="flex w-full bg-white rounded-lg border border-gray-300 drop-shadow-lg justify-center items-center p-2 cursor-pointer"
+  [routerLink]="['/fifa/details', game.id]"
 >
-  <div class="flex flex-col flex-grow">
-    <app-fifa-game-history-card-row
-      [team]="game.team1"
-      [score1]="game.team1.score"
-      [score2]="game.team2.score"
-      [isPlayed]="game.isPlayed"
-    ></app-fifa-game-history-card-row>
+  <div class="flex justify-center items-center align-center w-1/4">
+    <img
+      *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
+      src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.png"
+      class="w-16 h-16"
+    />
 
-    <hr class="border-gray-300" [class.border-white]="game.isPlayed == false" />
+    <div *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0">
+      <span
+        *ngFor="let player of game.team1.players"
+        class="text-sm font-semibold ml-2"
+        >{{ player.nickname }}</span
+      >
+    </div>
+  </div>
 
-    <app-fifa-game-history-card-row
-      [team]="game.team2"
-      [score1]="game.team2.score"
-      [score2]="game.team1.score"
-      [isPlayed]="game.isPlayed"
-    ></app-fifa-game-history-card-row>
-
-    <hr class="border-gray-300" [class.border-white]="game.isPlayed == false" />
-
-    <div
-      class="flex flex-row p-2 justify-center space-x-1 text-xs text-primary"
+  <div class="flex flex-col justify-center items-center grow">
+    <span *ngIf="game != null" class="font-semibold"
+      >{{ game.team1.score }} - {{ game.team2.score }}</span
     >
-      <span class="inline-block" *ngIf="game.isPlayed != false">
-        Joué le {{ game.playedOn | date : "medium" }} -
-      </span>
-      <!-- PC -->
-      <img
-        src="assets/img/svg/pc.svg"
-        *ngIf="game.platformId == 1"
-        class="w-4"
-      />
-      <!-- Work -->
-      <img
-        src="assets/img/svg/work.svg"
-        *ngIf="game.platformId == 2"
-        class="w-4"
-      />
-      <!-- Real life -->
-      <img
-        src="assets/img/svg/stadium.svg"
-        *ngIf="game.platformId == 3"
-        class="w-4"
-      />
-      <!-- Cloud -->
-      <img
-        src="assets/img/svg/cloud.svg"
-        *ngIf="game.platformId == 4"
-        class="w-4"
-      />
-      <!-- Playstation -->
-      <img
-        src="assets/img/svg/playstation.svg"
-        *ngIf="game.platformId == 5"
-        class="w-4"
-      />
-      <!-- Xbox -->
-      <img
-        src="assets/img/svg/xbox.svg"
-        *ngIf="game.platformId == 6"
-        class="w-4"
-      />
-      <!-- Other -->
-      <span
-        src="assets/img/svg/rank.svg"
-        *ngIf="game.platformId > 6"
-        class="w-4"
-      >
-        {{ game.platform }}
-      </span>
-    </div>
 
-    <div class="flex flex-row space-x-2 justify-center mb-2 items-center">
-      <span
-        class="block border border-secondary text-xs rounded-full px-2 text-primary"
-        *ngIf="game.season.id != 0"
-        [class.bg-secondary]="game.season.id != 1 && game.season.id != 2"
-        [class.bg-secondaryDarker]="game.season.id == 1"
-        [class.bg-customRed]="game.season.id == 2"
-      >
-        {{ game.season.name }}
-      </span>
+    <span *ngIf="game != null" class="text-xs text-gray-500">{{
+      game.platform
+    }}</span>
+  </div>
 
-      <span
-        class="block border border-secondary text-xs rounded-full px-2 text-primary"
-        *ngIf="game.isPlayed == false"
-      >
-        Planifié
-      </span>
+  <div class="flex justify-center items-center w-1/4">
+    <span
+      *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
+      class="text-sm font-semibold mr-2"
+      >{{ game.team2.code }}</span
+    >
 
-      <span
-        class="block border border-secondary text-xs rounded-full px-2 text-primary"
-        *ngIf="game.tournamentId != null"
-      >
-        Tournoi <span *ngIf="game.phase != null">Phase {{ game.phase }}</span>
-      </span>
-
-      <span
-        class="block bg-red-700 text-white text-xs rounded-xl px-2 cursor-pointer"
-        *ngIf="isAdmin == true"
-        [routerLink]="['/admin/fifa-games/edit', game.id]"
-      >
-        Modifier
-      </span>
-    </div>
+    <img
+      *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
+      src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.png"
+      class="w-16 h-16"
+    />
   </div>
 </div>

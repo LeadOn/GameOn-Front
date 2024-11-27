@@ -4,11 +4,12 @@
   <a
     routerLink=""
     class="flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
-    >Game<img
-      class="w-6 h-6 ml"
+    ><img
+      class="w-8 h-8"
       src="assets/img/gameon-logo.webp"
       alt="GameOn!'s logo"
-    />n!</a
+    />
+    <span class="ml-2">GameOn!</span></a
   >
 
   <a *ngIf="isLoggedIn == false" class="text-2xl text-primary" (click)="login()"
