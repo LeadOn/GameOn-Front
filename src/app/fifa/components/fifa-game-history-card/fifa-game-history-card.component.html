@@ -1,24 +1,24 @@
 <div
-  class="flex w-full bg-white rounded-lg border border-gray-300 drop-shadow-lg justify-center items-center p-2 cursor-pointer"
+  class="flex w-full bg-white rounded-lg border border-gray-300 drop-shadow-lg justify-between p-2 cursor-pointer"
   [routerLink]="['/fifa/details', game.id]"
 >
-  <div class="flex justify-center items-center align-center w-1/4">
+  <div class="flex flex-col justify-center items-center align-center w-2/5">
     <img
       *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
       src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.png"
-      class="w-16 h-16"
+      class="rounded-full w-8 h-8"
     />
 
     <div *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0">
       <span
         *ngFor="let player of game.team1.players"
-        class="text-sm font-semibold ml-2"
+        class="text-xs font-semibold"
         >{{ player.nickname }}</span
       >
     </div>
   </div>
 
-  <div class="flex flex-col justify-center items-center grow">
+  <div class="flex flex-col justify-center items-center text-center">
     <span *ngIf="game != null" class="font-semibold"
       >{{ game.team1.score }} - {{ game.team2.score }}</span
     >
@@ -28,17 +28,17 @@
     }}</span>
   </div>
 
-  <div class="flex justify-center items-center w-1/4">
-    <span
-      *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
-      class="text-sm font-semibold mr-2"
-      >{{ game.team2.code }}</span
-    >
-
+  <div class="flex flex-col justify-center items-center w-2/5">
     <img
       *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
       src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.png"
-      class="w-16 h-16"
+      class="rounded-full w-8 h-8"
     />
+
+    <span
+      *ngFor="let player of game.team2.players"
+      class="text-xs font-semibold"
+      >{{ player.nickname }}</span
+    >
   </div>
 </div>

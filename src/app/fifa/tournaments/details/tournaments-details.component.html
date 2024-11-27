@@ -454,10 +454,6 @@
       <p>Vous n'avez aucun match à venir.</p>
     </div>
 
-    <app-fifa-game-list-header
-      *ngIf="myGamesToPlay.length > 0 && myMatchsToPlayShown"
-    ></app-fifa-game-list-header>
-
     <div
       class="mt-4 flex flex-col w-full text-white space-y-4"
       *ngIf="myGamesToPlay.length > 0 && myMatchsToPlayShown"
@@ -501,10 +497,6 @@
       <p>Aucun match n'as été joué dans ce tournoi.</p>
     </div>
 
-    <app-fifa-game-list-header
-      *ngIf="gamesPlayed.length > 0 && matchsPlayedShown"
-    ></app-fifa-game-list-header>
-
     <div
       class="mt-4 flex flex-col w-full text-white space-y-4"
       *ngIf="gamesPlayed.length > 0 && matchsPlayedShown"
@@ -547,10 +539,6 @@
     >
       <p>Aucun match n'est planifié dans ce tournoi.</p>
     </div>
-
-    <app-fifa-game-list-header
-      *ngIf="gamesToPlay.length > 0 && plannedMatchsShown"
-    ></app-fifa-game-list-header>
 
     <div
       class="mt-4 flex flex-col w-full text-white space-y-4"

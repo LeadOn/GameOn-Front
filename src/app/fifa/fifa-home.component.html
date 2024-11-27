@@ -78,8 +78,6 @@
   </div>
 
   <div *ngIf="loading == false" [@inOutAnimation]>
-    <app-fifa-game-list-header></app-fifa-game-list-header>
-
     <div class="mt-4 flex flex-col w-full space-y-4">
       <app-fifa-game-history-card
         *ngFor="let game of games"
