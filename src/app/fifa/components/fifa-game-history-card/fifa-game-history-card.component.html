@@ -19,13 +19,19 @@
   </div>
 
   <div class="flex flex-col justify-center items-center text-center">
-    <span *ngIf="game != null" class="font-semibold"
+    <span *ngIf="game != null && game.isPlayed == false" class="text-gray-500"
+      >Planifié</span
+    >
+
+    <span *ngIf="game != null && game.isPlayed == true" class="font-semibold"
       >{{ game.team1.score }} - {{ game.team2.score }}</span
     >
 
-    <span *ngIf="game != null" class="text-xs text-gray-500">{{
-      game.platform
-    }}</span>
+    <span
+      *ngIf="game != null && game.isPlayed == true"
+      class="text-xs text-gray-500"
+      >{{ game.platform }}</span
+    >
   </div>
 
   <div class="flex flex-col justify-center items-center w-2/5">

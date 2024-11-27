@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
 import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -31,9 +31,11 @@ export class FifaGameDetailsComponent implements OnInit {
   loading = true;
   game: FifaGamePlayed = new FifaGamePlayed();
   externalIcon = faExternalLinkAlt;
+  clockIcon = faClock;
   successMessage = false;
   isLoggedIn = false;
   isAdmin = false;
+  team1GoalPercentage = 0;
 
   createHighlightForm = new FormGroup({
     name: new FormControl('', [Validators.maxLength(50), Validators.required]),
@@ -62,6 +64,9 @@ export class FifaGameDetailsComponent implements OnInit {
       (data) => {
         this.game = data;
         this.loading = false;
+
+        let totalGoals = data.team1.score + data.team2.score;
+        this.team1GoalPercentage = (data.team1.score / totalGoals) * 100;
       },
       (err) => {
         alert('Une erreur est survenue lors de la récupération du match.');
