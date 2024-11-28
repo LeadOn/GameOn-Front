@@ -9,10 +9,10 @@ module.exports = {
       },
     },
     colors: {
-      primary: "#36393e",
+      primary: "#282b30",
       primaryDarker: "#282b30",
       primaryDarkerer: "#1e2124",
-      secondary: "#79C15B",
+      secondary: "#73c3e9",
       secondaryDarker: "#6C7B3B",
       customRed: "#C82D44",
       customGreen: "#1B998B",

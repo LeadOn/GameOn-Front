@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Tournament } from '../../shared/classes/Tournament';
 import { GameOnTournamentService } from '../../shared/services/gameon-tournament.service';
+import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-tournaments-home',
@@ -24,6 +25,7 @@ export class TournamentsHomeComponent implements OnInit {
   loading = true;
   states: any[] = [];
   tournaments: Tournament[] = [];
+  trophyIcon = faTrophy;
 
   constructor(private tournamentService: GameOnTournamentService) {
     this.states = tournamentService.getStates();

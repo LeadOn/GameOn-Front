@@ -1,30 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { Player } from '../shared/classes/Player';
-// import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Season } from '../shared/classes/Season';
 import { GameOnSeasonService } from '../shared/services/gameon-season.service';
+import { environment } from '../../environments/environment';
+import { GameOnPlayerService } from '../shared/services/gameon-player.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   player$: Observable<Player>;
 
   isLoggedIn = false;
   isAdmin = false;
-  // externalIcon = faExternalLinkAlt;
-
+  version = environment.version;
   currentSeason?: Season;
+
+  players: Player[] = [];
+  archivedPlayers: Player[] = [];
+  loading = true;
 
   constructor(
     private keycloak: KeycloakService,
     private store: Store<{ player: Player }>,
-    private seasonService: GameOnSeasonService
+    private seasonService: GameOnSeasonService,
+    private playerService: GameOnPlayerService
   ) {
     this.player$ = store.select('player');
   }
@@ -33,6 +51,25 @@ export class HomeComponent implements OnInit {
     this.seasonService.getCurrent().subscribe(
       (x) => {
         this.currentSeason = x;
+
+        this.playerService.getAll().subscribe(
+          (data) => {
+            this.players = data;
+
+            this.playerService.getAll(true).subscribe(
+              (data) => {
+                this.archivedPlayers = data;
+                this.loading = false;
+              },
+              (err) => {
+                console.error(err);
+              }
+            );
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
       },
       (err) => {
         console.error(err);

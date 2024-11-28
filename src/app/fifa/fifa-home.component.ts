@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { faExternalLinkAlt, faFilter } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExternalLinkAlt,
+  faFilter,
+  faSoccerBall,
+} from '@fortawesome/free-solid-svg-icons';
 import { KeycloakService } from 'keycloak-angular';
 import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
 import { Platform } from '../shared/classes/Platform';
@@ -35,7 +39,7 @@ export class FifaHomeComponent implements OnInit {
   endDate = undefined;
 
   externalIcon = faExternalLinkAlt;
-  filterIcon = faFilter;
+  footballIcon = faSoccerBall;
 
   constructor(
     private gameService: GameOnGameService,
