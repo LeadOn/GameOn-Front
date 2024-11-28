@@ -7,7 +7,7 @@
 
 <section
   id="header-pills"
-  class="p-4 overflow-x-scroll"
+  class="px-4 mb-4 overflow-x-scroll"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null"
 >
@@ -21,7 +21,7 @@
     </span>
 
     <span
-      class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm"
+      class="drop-shadow-lg rounded-full px-2 bg-secondary text-white text-sm"
       [class.bg-gray-600]="tournament.state == 0"
       [class.bg-customGreen]="tournament.state == 1"
       [class.bg-secondary]="tournament.state == 2"
@@ -43,7 +43,7 @@
 
 <section
   id="tournament-detail-card"
-  class="px-4 mt-4"
+  class="px-4"
   *ngIf="loading == false && tournament != null"
   [@inOutAnimation]
 >
@@ -282,7 +282,7 @@
 
 <section
   id="tournament-players"
-  class="px-4 mt-4"
+  class="mt-4 overflow-x-scroll"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -291,7 +291,7 @@
   "
   [@inOutAnimation]
 >
-  <div class="relative overflow-x-scroll drop-shadow-lg">
+  <div class="relative drop-shadow-lg">
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 text-center">
         <tr>
@@ -325,7 +325,7 @@
           <td class="px-6 py-4 text-center text-xs text-primary font-semibold">
             {{ player.player.fullName }}
           </td>
-          <td class="px-6 py-4 text-center">
+          <td class="px-6 py-4 flex justify-center items-center">
             <img
               src="assets/img/fifa/teams/{{ player.team.id }}.png"
               class="rounded-full w-8 h-8 drop-shadow-lg"
@@ -333,8 +333,8 @@
           </td>
           <td class="px-6 py-4 text-center font-semibold">
             <span class="text-customGreen">{{ player.stats.wins }}</span
-            >/<span class="text-customRed">{{ player.stats.losses }}</span
-            >/<span class="text-customYellow">{{ player.stats.draws }}</span>
+            >-<span class="text-customRed">{{ player.stats.losses }}</span
+            >-<span class="text-customYellow">{{ player.stats.draws }}</span>
           </td>
         </tr>
       </tbody>
