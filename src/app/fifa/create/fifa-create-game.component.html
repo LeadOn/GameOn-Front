@@ -1,12 +1,9 @@
-<div
-  [@inOutAnimation]
-  class="flex flex-row items-center bg-primary p-4 rounded-lg neomorphism-primaryDarker m-8 md:mx-16 lg:mx-32 text-white"
-  role="status"
-  *ngIf="isLoading == true"
->
-  <app-loading-spinner></app-loading-spinner>
-  Chargement des données...
-</div>
+<section id="top-card" class="px-4 mt-4">
+  <app-loading-spinner
+    *ngIf="isLoading == true"
+    [@inOutAnimation]
+  ></app-loading-spinner>
+</section>
 
 <div
   [@inOutAnimation]
