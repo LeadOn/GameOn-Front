@@ -1,11 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
 import { Player } from '../../shared/classes/Player';
 import { trigger, style, animate, transition } from '@angular/animations';
-// import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import { KeycloakService } from 'keycloak-angular';
+import {
+  faArrowRight,
+  faCalendar,
+  faCog,
+  faExternalLink,
+  faKey,
+  faLockOpen,
+  faSoccerBall,
+} from '@fortawesome/free-solid-svg-icons';
+import { environment } from '../../../environments/environment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
+import { setPlayer } from '../../store/actions/player.actions';
 
 @Component({
   selector: 'app-profile-page',
@@ -24,24 +44,104 @@ import { KeycloakService } from 'keycloak-angular';
     ]),
   ],
 })
-export class ProfilePageComponent implements OnInit {
+export class ProfilePageComponent implements OnInit, OnChanges {
   player$: Observable<Player>;
   stats?: FifaPlayerStatsDto;
   loading = true;
   currentTab = 'profile';
   showSuccess = false;
-  // successIcon = faCheckCircle;
   isAdmin = false;
+  adminIcon = faCog;
+  arrowRightIcon = faArrowRight;
+  keyIcon = faKey;
+  externalIcon = faExternalLink;
+  token: string = '';
+  logoutIcon = faLockOpen;
+  calendarIcon = faCalendar;
+  soccerIcon = faSoccerBall;
+
+  @Input()
+  player: Player = new Player();
+
+  @Input()
+  successMessage: boolean = false;
+  @Output() successMessageChange = new EventEmitter<boolean>();
+
+  updatePlayerForm = new FormGroup({
+    fullName: new FormControl('', [Validators.maxLength(100)]),
+    nickname: new FormControl('', [Validators.maxLength(100)]),
+    profilePictureUrl: new FormControl('', [Validators.maxLength(500)]),
+  });
 
   constructor(
     private store: Store<{ player: Player }>,
-    private keycloak: KeycloakService
+    private keycloak: KeycloakService,
+    private playerService: GameOnPlayerService
   ) {
     this.player$ = store.select('player');
+
+    this.player$.subscribe((x) => {
+      this.updatePlayerForm.controls['fullName'].setValue(x.fullName);
+      this.updatePlayerForm.controls['nickname'].setValue(x.nickname);
+      this.updatePlayerForm.controls['profilePictureUrl'].setValue(
+        x.profilePictureUrl
+      );
+    });
+
     this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
+
+    this.keycloak.getToken().then((x) => {
+      this.token = x;
+    });
   }
 
   ngOnInit(): void {
     this.loading = false;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['player'] != null) {
+      this.updatePlayerForm.controls['fullName'].setValue(
+        changes['player'].currentValue.fullName
+      );
+
+      this.updatePlayerForm.controls['nickname'].setValue(
+        changes['player'].currentValue.nickname
+      );
+
+      this.updatePlayerForm.controls['profilePictureUrl'].setValue(
+        changes['player'].currentValue.profilePictureUrl
+      );
+    }
+  }
+
+  logout() {
+    window.location.replace(
+      environment.keycloak.url + '/realms/gameon/protocol/openid-connect/logout'
+    );
+  }
+
+  updateUser() {
+    if (this.loading == false) {
+      this.loading = true;
+      this.playerService
+        .update(
+          this.updatePlayerForm.controls['fullName'].value,
+          this.updatePlayerForm.controls['nickname'].value,
+          this.updatePlayerForm.controls['profilePictureUrl'].value
+        )
+        .subscribe(
+          (data) => {
+            this.successMessage = true; // Getting its account, and setting it into store
+            this.successMessageChange.emit(true);
+            this.store.dispatch(setPlayer({ player: data }));
+            this.loading = false;
+          },
+          (err) => {
+            this.loading = false;
+            alert('Une erreur est survenue lors de la mise à jour du compte !');
+          }
+        );
+    }
   }
 }
