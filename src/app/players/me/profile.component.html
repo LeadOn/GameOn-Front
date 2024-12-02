@@ -1,122 +1,214 @@
-<div class="px-4 mt-4" [@inOutAnimation] *ngIf="loading == true">
-  <app-loading-spinner></app-loading-spinner>
-</div>
-
-<app-success-alert
-  *ngIf="showSuccess == true"
-  [text]="'Mise à jour réussie !'"
-  [(show)]="showSuccess"
+<app-loading-spinner
+  *ngIf="loading == true"
   [@inOutAnimation]
-></app-success-alert>
+></app-loading-spinner>
 
-<div
+<section id="profile-popups" class="px-4 mt-4">
+  <app-success-alert
+    *ngIf="showSuccess == true"
+    [text]="'Mise à jour réussie !'"
+    [(show)]="showSuccess"
+    [@inOutAnimation]
+  ></app-success-alert>
+</section>
+
+<section
+  id="profile-head"
+  class="px-4 mt-4"
   *ngIf="loading == false && (player$ | async) as currentPlayer"
   [@inOutAnimation]
-  class="flex flex-col items-center bg-primary p-4 rounded-lg m-8 md:mx-16 lg:mx-32 text-white"
 >
-  <div
-    class="flex flex-col md:flex-row items-center w-full bg-primaryDarker p-4 rounded-lg neomorphism-inner-primaryDarker"
-  >
+  <app-success-alert
+    *ngIf="showSuccess == true"
+    [text]="'Mise à jour réussie !'"
+    [(show)]="showSuccess"
+    [@inOutAnimation]
+  ></app-success-alert>
+
+  <div class="flex flex-col items-center w-full justify-center">
     <img
-      class="rounded-full w-32"
+      class="rounded-full w-32 drop-shadow-lg"
       *ngIf="currentPlayer.profilePictureUrl != null"
       src="{{ currentPlayer.profilePictureUrl }}"
     />
 
     <img
-      class="rounded-full w-32"
+      class="rounded-full w-32 drop-shadow-lg"
       *ngIf="currentPlayer.profilePictureUrl == null"
       src="assets/img/gameon-logo.webp"
     />
 
-    <div class="flex flex-col w-full ml-4 mt-6">
-      <div class="flex flex-col">
-        <div class="flex flex-row">
-          <span>{{ currentPlayer.fullName }}</span>
-          <a
-            *ngIf="isAdmin == true"
-            [routerLink]="['/admin']"
-            class="text-xs py-1 px-2 ml-2 transition ease-in-out delay-50 bg-customYellow rounded-full hover:bg-yellow-800"
-          >
-            Administrateur
-          </a>
-        </div>
+    <span class="text-xl font-semibold mt-2">{{ currentPlayer.nickname }}</span>
+    <span class="text-gray-500">{{ currentPlayer.fullName }}</span>
+  </div>
+</section>
 
-        <span class="italic">{{ currentPlayer.nickname }}</span>
-      </div>
-      <div
-        class="w-full text-sm font-medium text-center text-white border-b border-white"
-      >
-        <ul class="flex flex-wrap -mb-px">
-          <li class="mr-2">
-            <button
-              (click)="currentTab = 'profile'"
-              [classList]="
-                currentTab == 'profile'
-                  ? 'inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active'
-                  : 'transition ease-in-out delay-50 inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-secondary hover:border-secondary'
-              "
-              class="inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active"
-            >
-              Résumé
-            </button>
-          </li>
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="
+    loading == false && isAdmin == true && (player$ | async) as currentPlayer
+  "
+>
+  <span class="text-lg font-semibold">Administration</span>
+</div>
 
-          <li class="mr-2">
-            <button
-              (click)="currentTab = 'update'"
-              [classList]="
-                currentTab == 'update'
-                  ? 'inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active'
-                  : 'transition ease-in-out delay-50 inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-secondary hover:border-secondary'
-              "
-              class="inline-block p-4 text-secondary border-b-2 border-secondary rounded-t-lg active"
-            >
-              Mettre à jour
-            </button>
-          </li>
+<section
+  id="player-admin"
+  class="px-4 mt-4"
+  *ngIf="
+    loading == false && isAdmin == true && (player$ | async) as currentPlayer
+  "
+  [@inOutAnimation]
+>
+  <div class="bg-white p-4 rounded-lg text-sm drop-shadow-lg">
+    <div
+      class="flex flex-row justify-between text-customRed cursor-pointer"
+      [routerLink]="['/admin']"
+    >
+      <a
+        ><fa-icon [icon]="adminIcon" class="mr-2"></fa-icon> Accéder à l'espace
+        d'administration
+      </a>
 
-          <!-- <li class="mr-2">
-          <a
-            href="#"
-            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
-            Settings
-          </a>
-        </li>
+      <fa-icon [icon]="arrowRightIcon"></fa-icon>
+    </div>
 
-        <li>
-          <a
-            class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed dark:text-gray-500">
-            Disabled
-          </a>
-        </li> -->
-        </ul>
-      </div>
+    <hr class="my-4" />
+
+    <div
+      class="flex flex-row justify-between text-customYellow cursor-pointer"
+      [cdkCopyToClipboard]="token"
+    >
+      <a><fa-icon [icon]="keyIcon" class="mr-2"></fa-icon> Copier le token </a>
+
+      <fa-icon [icon]="externalIcon"></fa-icon>
     </div>
   </div>
+</section>
 
-  <div
-    class="bg-primaryDarker w-full mt-4 rounded-lg p-4 flex flex-col items-center neomorphism-inner-primaryDarker"
-  >
-    <app-profile-tab
-      class="w-full"
-      *ngIf="
-        currentTab == 'profile' &&
-        loading == false &&
-        (player$ | async) as currentPlayer
-      "
-      [player]="currentPlayer"
-    ></app-profile-tab>
-
-    <app-update-player-tab
-      class="w-full"
-      *ngIf="
-        currentTab == 'update' &&
-        loading == false &&
-        (player$ | async) as currentPlayer
-      "
-      [(successMessage)]="showSuccess"
-      [player]="currentPlayer"
-    ></app-update-player-tab>
-  </div>
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+>
+  <span class="text-lg font-semibold">FIFA</span>
 </div>
+
+<section
+  id="player-fifa"
+  class="px-4 mt-4"
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+  [@inOutAnimation]
+>
+  <div class="bg-white p-4 rounded-lg text-sm drop-shadow-lg">
+    <div
+      class="flex flex-row justify-between cursor-pointer"
+      [routerLink]="['/player', currentPlayer.id]"
+    >
+      <a
+        ><fa-icon [icon]="soccerIcon" class="mr-2"></fa-icon> Mes
+        statistiques</a
+      >
+
+      <fa-icon [icon]="arrowRightIcon"></fa-icon>
+    </div>
+  </div>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+>
+  <span class="text-lg font-semibold">Préférences</span>
+</div>
+
+<section
+  id="player-preferences"
+  class="px-4 mt-4"
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+  [@inOutAnimation]
+>
+  <div class="bg-white p-4 rounded-lg text-sm drop-shadow-lg">
+    <div class="flex flex-row justify-between cursor-pointer">
+      <span
+        ><fa-icon [icon]="calendarIcon" class="mr-2"></fa-icon>
+        {{ currentPlayer.createdOn | date : "medium" }}</span
+      >
+    </div>
+
+    <hr class="my-4" />
+
+    <form [formGroup]="updatePlayerForm">
+      <div class="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          id="fullname"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          required
+          formControlName="fullName"
+        />
+        <label
+          for="fullname"
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Nom complet
+          <span class="text-customRed">*</span>
+        </label>
+      </div>
+
+      <div class="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          id="nickname"
+          class="block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          required
+          formControlName="nickname"
+        />
+        <label
+          for="nickname"
+          class="peer-focus:font-medium absolute text-sm text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Pseudo
+          <span class="text-customRed">*</span>
+        </label>
+      </div>
+
+      <div class="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          id="profilePictureUrl"
+          class="block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          required
+          formControlName="profilePictureUrl"
+        />
+        <label
+          for="profilePictureUrl"
+          class="peer-focus:font-medium absolute text-sm text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Photo de profil (URL)
+          <span class="text-customRed">*</span>
+        </label>
+      </div>
+
+      <button
+        (click)="updateUser()"
+        class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-white hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      >
+        Mettre à jour
+      </button>
+    </form>
+
+    <hr class="my-4" />
+
+    <div
+      class="flex flex-row justify-between text-customRed cursor-pointer"
+      (click)="logout()"
+    >
+      <a><fa-icon [icon]="logoutIcon" class="mr-2"></fa-icon> Déconnexion </a>
+
+      <fa-icon [icon]="arrowRightIcon"></fa-icon>
+    </div>
+  </div>
+</section>
