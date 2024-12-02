@@ -13,8 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { playerReducer } from './store/reducers/player.reducer';
 import { ProfilePageComponent } from './players/me/profile.component';
-import { ProfileTabComponent } from './players/me/components/profile-tab/profile-tab.component';
-import { UpdatePlayerTabComponent } from './players/me/components/update-player-tab/update-player-tab.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FifaHomeComponent } from './fifa/fifa-home.component';
 import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
@@ -53,8 +51,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
 
     /* Player pages */
     ProfilePageComponent,
-    ProfileTabComponent,
-    UpdatePlayerTabComponent,
     PlayerDetailsComponent,
 
     /* FIFA related */
