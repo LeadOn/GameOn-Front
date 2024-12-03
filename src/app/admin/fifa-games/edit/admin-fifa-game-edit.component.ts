@@ -23,16 +23,8 @@ export class AdminFifaGameEditComponent implements OnInit {
   loading = true;
 
   updateGameForm = new FormGroup({
-    teamCode1: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(5),
-    ]),
-    teamFifa1: new FormControl(0),
-    teamCode2: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(5),
-    ]),
-    teamFifa2: new FormControl(0),
+    teamFifa1: new FormControl(0, Validators.required),
+    teamFifa2: new FormControl(0, Validators.required),
     platform: new FormControl(0),
     teamScore1: new FormControl(0, [Validators.min(0)]),
     teamScore2: new FormControl(0, [Validators.min(0)]),
@@ -59,17 +51,11 @@ export class AdminFifaGameEditComponent implements OnInit {
     this.gameService.getById(this.gameId).subscribe(
       (data) => {
         this.game = data;
-        this.updateGameForm.controls['teamCode1'].setValue(
-          this.game.team1.code.toString()
-        );
         this.updateGameForm.controls['teamFifa1'].setValue(
           this.game.team1.fifaTeamId
         );
         this.updateGameForm.controls['teamScore1'].setValue(
           this.game.team1.score
-        );
-        this.updateGameForm.controls['teamCode2'].setValue(
-          this.game.team2.code.toString()
         );
         this.updateGameForm.controls['teamFifa2'].setValue(
           this.game.team2.fifaTeamId
@@ -146,23 +132,11 @@ export class AdminFifaGameEditComponent implements OnInit {
     if (this.updateGameForm.controls['platform'].value != null) {
       updateGame.PlatformId = this.updateGameForm.controls['platform'].value;
     }
-    if (
-      this.updateGameForm.controls['teamCode1'].value != null &&
-      this.updateGameForm.controls['teamCode1'].value != ''
-    ) {
-      updateGame.TeamCode1 = this.updateGameForm.controls['teamCode1'].value;
-    }
     if (this.updateGameForm.controls['teamFifa1'].value != null) {
       updateGame.FifaTeam1 = this.updateGameForm.controls['teamFifa1'].value;
     }
     if (this.updateGameForm.controls['teamScore1'].value != null) {
       updateGame.TeamScore1 = this.updateGameForm.controls['teamScore1'].value;
-    }
-    if (
-      this.updateGameForm.controls['teamCode2'].value != null &&
-      this.updateGameForm.controls['teamCode2'].value != ''
-    ) {
-      updateGame.TeamCode2 = this.updateGameForm.controls['teamCode2'].value;
     }
     if (this.updateGameForm.controls['teamFifa2'].value != null) {
       updateGame.FifaTeam2 = this.updateGameForm.controls['teamFifa2'].value;
@@ -177,10 +151,6 @@ export class AdminFifaGameEditComponent implements OnInit {
 
     if (
       updateGame.Id != 0 &&
-      updateGame.TeamCode1 != null &&
-      updateGame.TeamCode1 != '' &&
-      updateGame.TeamCode2 != null &&
-      updateGame.TeamCode2 != '' &&
       updateGame.FifaTeam1 != 0 &&
       updateGame.FifaTeam2 != 0 &&
       this.loading == false
