@@ -38,17 +38,9 @@ export class FifaCreateGameComponent implements OnInit {
   fifaTeam2 = 0;
 
   createGameForm = new FormGroup({
-    teamCode1: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(5),
-    ]),
-    teamFifa1: new FormControl(''),
+    teamFifa1: new FormControl('', Validators.required),
     teamScore1: new FormControl(0, [Validators.required, Validators.min(0)]),
-    teamCode2: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(5),
-    ]),
-    teamFifa2: new FormControl(''),
+    teamFifa2: new FormControl('', Validators.required),
     teamScore2: new FormControl(0, [Validators.required, Validators.min(0)]),
     platform: new FormControl('', Validators.required),
     team1: new FormControl([], Validators.required),
@@ -85,9 +77,7 @@ export class FifaCreateGameComponent implements OnInit {
   createGame() {
     this.isLoading = true;
     let body = {
-      TeamCode1: this.createGameForm.controls['teamCode1'].value,
       TeamScore1: this.createGameForm.controls['teamScore1'].value,
-      TeamCode2: this.createGameForm.controls['teamCode2'].value,
       TeamScore2: this.createGameForm.controls['teamScore2'].value,
       PlatformId: this.createGameForm.controls['platform'].value,
       Team1: this.createGameForm.controls['team1'].value,
@@ -124,11 +114,7 @@ export class FifaCreateGameComponent implements OnInit {
     }
 
     if (
-      body.TeamCode1 != null &&
-      body.TeamCode1 != '' &&
       body.TeamScore1 != null &&
-      body.TeamCode2 != null &&
-      body.TeamCode2 != '' &&
       body.TeamScore2 != null &&
       body.PlatformId != null &&
       body.Team1 != null &&
@@ -139,7 +125,7 @@ export class FifaCreateGameComponent implements OnInit {
     ) {
       this.gameService.create(body).subscribe(
         (data) => {
-          this.router.navigate(['/fifa']);
+          this.router.navigate(['/fifa/details', data.id]);
           this.isLoading = false;
         },
         (err) => {
