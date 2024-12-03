@@ -64,9 +64,9 @@
     <fa-icon [icon]="clockIcon"></fa-icon> {{ game.playedOn | date : "medium" }}
   </span>
 
-  <hr class="mt-4" />
+  <hr class="my-4" *ngIf="game.isPlayed == true" />
 
-  <div class="flex flex-col mt-4">
+  <div class="flex flex-col" ngClass="['mt-4': game.isPlayed == true]">
     <div class="flex justify-between text-xs">
       <div class="flex flex-col">
         <span *ngFor="let player of game.team1.players">{{

@@ -10,6 +10,7 @@ import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { GameOnPlatformService } from '../../shared/services/gameon-platform.service';
 import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
 import { trigger, style, animate, transition } from '@angular/animations';
+import { faSoccerBall } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-fifa-create-game',
@@ -36,6 +37,8 @@ export class FifaCreateGameComponent implements OnInit {
 
   fifaTeam1 = 0;
   fifaTeam2 = 0;
+
+  footballIcon = faSoccerBall;
 
   createGameForm = new FormGroup({
     teamFifa1: new FormControl('', Validators.required),
