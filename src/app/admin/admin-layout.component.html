@@ -1,131 +1,178 @@
-<header class="border-b-4 border-customRed">
-  <nav class="bg-primary border-gray-200 px-4 lg:px-6 py-2.5">
+<div class="lg:flex lg:h-screen">
+  <nav
+    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/4 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-bgDark lg:bg-bgDark lg:border-r-2 lg:border-frenchRed border-4 border-l-frenchBlue border-t-white border-b-white border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
+  >
     <div
-      class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
+      class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
     >
-      <a routerLink="" class="flex items-center">
-        <span class="self-center text-xl font-semibold whitespace-nowrap">
-          <span class="text-white">Game</span>
-          <span class="text-secondary">On! (Admin)</span>
-        </span>
-      </a>
-      <div class="flex items-center lg:order-2">
-        <button
-          data-collapse-toggle="admin-mobile-menu"
-          type="button"
-          class="inline-flex items-center p-2 ml-1 text-sm text-white rounded-lg lg:hidden hover:bg-white focus:outline-none focus:ring-2 focus:ring-secondary-200"
-          aria-controls="admin-mobile-menu"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Open main menu</span>
-          <svg
-            class="w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-          <svg
-            class="hidden w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
+      <div class="hidden lg:flex lg:flex-col lg:w-full lg:justify-center">
+        <a
+          routerLink="/admin"
+          class="px-4 flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
+          ><img
+            class="w-8 h-8"
+            src="assets/img/gameon-logo.webp"
+            alt="GameOn!'s logo"
+          />
+          <span class="ml-2 text-white">GameOn!</span>
+        </a>
+
+        <div class="flex px-4">
+          <div class="w-1/3 border-0 border-b-2 border-frenchBlue h-4"></div>
+          <div class="w-1/3 border-0 border-b-2 border-white h-4"></div>
+          <div class="w-1/3 border-0 border-b-2 border-frenchRed h-4"></div>
+        </div>
+      </div>
+
+      <div
+        class="lg:hidden inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none lg:hover:bg-transparent group lg:mt-4"
+      >
+        <button routerLink="/admin" type="button" class="lg:hidden">
+          <fa-icon [icon]="homeIcon" class="text-lg text-white"></fa-icon>
         </button>
       </div>
+
       <div
-        class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-        id="admin-mobile-menu"
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
       >
-        <ul
-          class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
+        <span class="font-semibold text-gray-400">Football</span>
+      </div>
+
+      <div
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 lg:hover:bg-transparent group"
+      >
+        <button routerLink="/admin/fifa-games" type="button" class="lg:hidden">
+          <fa-icon [icon]="ballIcon" class="text-lg text-white"></fa-icon>
+        </button>
+
+        <a
+          routerLink="/admin/fifa-games"
+          class="hidden lg:text-white lg:flex lg:flex-row lg:items-center lg:space-x-2"
         >
-          <li>
-            <a
-              routerLink="/admin"
-              class="block py-2 pr-4 pl-3 text-white rounded-lg hover:text-secondary hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Accueil
-            </a>
-          </li>
+          <fa-icon [icon]="ballIcon" class="text-white"></fa-icon>
+          <span>Matchs joués</span>
+        </a>
+      </div>
 
-          <li>
-            <a
-              routerLink="/admin/platforms"
-              class="block py-2 pr-4 pl-3 text-white rounded-lg hover:text-secondary hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Plateformes
-            </a>
-          </li>
+      <div
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none lg:hover:bg-transparent group"
+      >
+        <button
+          type="button"
+          [routerLink]=""
+          class="lg:hidden inline-flex items-center justify-center w-10 h-10 font-medium bg-frenchBlue rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+        >
+          <fa-icon [icon]="homeIcon" class="text-lg text-white"></fa-icon>
+        </button>
 
-          <li>
-            <a
-              routerLink="/admin/players"
-              class="block py-2 pr-4 pl-3 text-white rounded-lg hover:text-secondary hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Joueurs
-            </a>
-          </li>
+        <a
+          [routerLink]=""
+          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+        >
+          <fa-icon [icon]="homeIcon" class="text-white"></fa-icon>
+          <span class="text-white">Retour au site</span>
+        </a>
+      </div>
 
-          <li>
-            <a
-              routerLink="/admin/fifa-games"
-              class="block py-2 pr-4 pl-3 text-white rounded-lg hover:text-secondary hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Matchs joués (FIFA)
-            </a>
-          </li>
+      <div
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none lg:hover:bg-transparent group"
+      >
+        <button routerLink="/admin/tournaments" type="button" class="lg:hidden">
+          <fa-icon [icon]="trophyIcon" class="text-lg text-white"></fa-icon>
+        </button>
 
-          <li>
-            <a
-              routerLink="/admin/highlights"
-              class="block py-2 pr-4 pl-3 text-white rounded-lg hover:text-secondary hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Temps forts
-            </a>
-          </li>
+        <a
+          routerLink="/admin/tournaments"
+          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+        >
+          <fa-icon [icon]="trophyIcon" class="text-white"></fa-icon>
+          <span class="text-white">Tournois</span>
+        </a>
+      </div>
 
-          <li>
-            <a
-              routerLink="/admin/seasons"
-              class="block py-2 pr-4 pl-3 text-white rounded-lg hover:text-secondary hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Saisons
-            </a>
-          </li>
+      <div
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
+      >
+        <span class="font-semibold text-gray-400">Général</span>
+      </div>
 
-          <li>
-            <a
-              routerLink="/admin/tournaments"
-              class="block py-2 pr-4 pl-3 text-white rounded-lg hover:text-secondary hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Tournois
-            </a>
-          </li>
+      <div
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none lg:hover:bg-transparent group"
+      >
+        <button
+          routerLink="/admin/players"
+          type="button"
+          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full group"
+        >
+          <fa-icon [icon]="userIcon" class="text-lg text-white"></fa-icon>
+        </button>
 
-          <li>
-            <a
-              (click)="logout()"
-              class="cursor-pointer block py-2 pr-4 pl-3 text-customRed rounded-lg hover:text-white hover:bg-customRed lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0"
-            >
-              Déconnexion
-            </a>
-          </li>
-        </ul>
+        <div class="hidden lg:flex lg:flex-col lg:space-y-2">
+          <a
+            routerLink="/admin/players"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <fa-icon [icon]="userIcon" class="text-white"></fa-icon>
+            <span class="text-white">Joueurs</span>
+          </a>
+
+          <a
+            routerLink="/admin/seasons"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <img src="assets/img/svg/rank.svg" class="w-4" />
+            <span class="text-white">Saisons</span>
+          </a>
+
+          <a
+            routerLink="/admin/platforms"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <img src="assets/img/svg/platform.svg" class="w-4" />
+            <span class="text-white">Plateformes</span>
+          </a>
+
+          <a
+            routerLink="/admin/highlights"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <img src="assets/img/svg/highlight.svg" class="w-4" />
+            <span class="text-white">Temps forts</span>
+          </a>
+        </div>
       </div>
     </div>
   </nav>
-</header>
 
-<router-outlet></router-outlet>
+  <div class="lg:flex lg:flex-col lg:w-full">
+    <header
+      class="flex items-center justify-between self-center h-16 px-4 bg-bgDark lg:w-full"
+    >
+      <a
+        routerLink="/admin"
+        class="flex self-center items-center justify-center text-xl font-bold text-primaryDarker lg:hidden"
+        ><img
+          class="w-8 h-8"
+          src="assets/img/gameon-logo.webp"
+          alt="GameOn!'s logo"
+        />
+        <span class="ml-2 text-white"
+          >GameOn!
+          <div
+            class="drop-shadow-lg rounded-full px-2 border border-frenchRed bg-frenchRed text-white text-xs text-center"
+          >
+            Admin
+          </div></span
+        ></a
+      >
+
+      <a class="text-2xl text-white" routerLink=""
+        ><fa-icon [icon]="homeIcon"></fa-icon
+      ></a>
+    </header>
+
+    <div class="bg-bgDarker pb-24 lg:mb-0 lg:overflow-scroll">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

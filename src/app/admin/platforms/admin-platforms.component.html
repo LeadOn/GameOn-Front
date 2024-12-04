@@ -1,50 +1,49 @@
-<div class="m-4 overflow-x-auto mt-8">
-  <div
-    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+<section class="h-screen bg-bgDarker px-4 pt-4">
+  <app-loading-spinner
     *ngIf="loading == true"
-  >
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
+    [@inOutAnimation]
+  ></app-loading-spinner>
 
-  <div
-    class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == false"
-  >
+  <div class="m-4 overflow-x-auto mt-8">
     <div
-      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
+      class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
+      *ngIf="loading == false"
     >
-      <img src="assets/img/svg/platform.svg" class="w-4" />
-    </div>
-    <span class="text-white">Platformes</span>
-  </div>
-
-  <table
-    class="w-full text-sm text-left text-gray-400 mt-4"
-    *ngIf="loading == false"
-  >
-    <thead class="text-xs uppercase bg-primary text-white">
-      <tr>
-        <th scope="col" class="px-6 py-3">#</th>
-        <th scope="col" class="px-6 py-3">Nom</th>
-        <th scope="col" class="px-6 py-3">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let platform of platforms"
+      <div
+        class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
       >
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-          {{ platform.id }}
-        </th>
-        <td class="px-6 py-4">{{ platform.name }}</td>
-        <td class="px-6 py-4">
-          <a [routerLink]="['/admin/platforms/edit', platform.id]">
-            <img src="assets/img/svg/edit.svg" class="w-4" />
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+        <img src="assets/img/svg/platform.svg" class="w-4" />
+      </div>
+      <span class="text-white">Platformes</span>
+    </div>
+
+    <table
+      class="w-full text-sm text-left text-gray-400 mt-4"
+      *ngIf="loading == false"
+    >
+      <thead class="text-xs uppercase bg-primary text-white">
+        <tr>
+          <th scope="col" class="px-6 py-3">#</th>
+          <th scope="col" class="px-6 py-3">Nom</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="border-b border-secondary bg-secondaryDarker text-white"
+          *ngFor="let platform of platforms"
+        >
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+            {{ platform.id }}
+          </th>
+          <td class="px-6 py-4">{{ platform.name }}</td>
+          <td class="px-6 py-4">
+            <a [routerLink]="['/admin/platforms/edit', platform.id]">
+              <img src="assets/img/svg/edit.svg" class="w-4" />
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
