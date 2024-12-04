@@ -291,7 +291,7 @@
   "
   [@inOutAnimation]
 >
-  <div class="relative drop-shadow-lg">
+  <div class="relative drop-shadow-lg lg:px-4">
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 text-center">
         <tr>
@@ -346,9 +346,10 @@
   class="px-4 mt-4 flex justify-between"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && myGamesToPlay.length > 0"
+  (click)="showMyMatchsToPlay()"
 >
   <span class="text-lg font-semibold">Mes matchs à venir</span>
-  <span class="text-lg font-semibold" (click)="showMyMatchsToPlay()">
+  <span class="text-lg font-semibold">
     <fa-icon
       [icon]="downChevronIcon"
       *ngIf="myMatchsToPlayShown == true"
@@ -381,9 +382,10 @@
   class="px-4 mt-4 flex justify-between"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && gamesToPlay.length > 0"
+  (click)="showMatchsPlanned()"
 >
   <span class="text-lg font-semibold">Matchs planifiés</span>
-  <span class="text-lg font-semibold" (click)="showMatchsPlanned()">
+  <span class="text-lg font-semibold">
     <fa-icon
       [icon]="downChevronIcon"
       *ngIf="plannedMatchsShown == true"
@@ -416,9 +418,10 @@
   class="px-4 mt-4 flex justify-between"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && gamesPlayed.length > 0"
+  (click)="showMatchsPlayed()"
 >
   <span class="text-lg font-semibold">Matchs joués</span>
-  <span class="text-lg font-semibold" (click)="showMatchsPlayed()">
+  <span class="text-lg font-semibold">
     <fa-icon
       [icon]="downChevronIcon"
       *ngIf="matchsPlayedShown == true"

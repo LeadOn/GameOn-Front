@@ -9,13 +9,11 @@
       class="rounded-full w-8 h-8"
     />
 
-    <div *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0">
-      <span
-        *ngFor="let player of game.team1.players"
-        class="text-xs font-semibold"
-        >{{ player.nickname }}</span
-      >
-    </div>
+    <span
+      *ngFor="let player of game.team1.players"
+      class="text-xs font-semibold"
+      >{{ player.nickname }}</span
+    >
   </div>
 
   <div class="flex flex-col justify-center items-center text-center">

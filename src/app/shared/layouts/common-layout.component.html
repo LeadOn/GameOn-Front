@@ -1,87 +1,186 @@
-<header
-  class="flex items-center justify-between self-center h-16 px-4 bg-white"
->
-  <a
-    routerLink=""
-    class="flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
-    ><img
-      class="w-8 h-8"
-      src="assets/img/gameon-logo.webp"
-      alt="GameOn!'s logo"
-    />
-    <span class="ml-2">GameOn!</span></a
+<div class="lg:flex lg:h-screen">
+  <nav
+    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/4 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white lg:bg-gray-200 border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
   >
-
-  <a *ngIf="isLoggedIn == false" class="text-2xl text-primary" (click)="login()"
-    ><fa-icon [icon]="userIcon"></fa-icon
-  ></a>
-
-  <a
-    *ngIf="isLoggedIn == true"
-    class="text-2xl text-secondary"
-    routerLink="/player/me"
-    ><fa-icon [icon]="userIcon"></fa-icon
-  ></a>
-</header>
-
-<div class="mb-24">
-  <router-outlet></router-outlet>
-</div>
-
-<nav
-  class="fixed z-50 w-11/12 h-16 max-w-lg -translate-x-1/2 bg-white border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed rounded-full bottom-4 left-1/2 drop-shadow-xl"
->
-  <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
-    <button
-      routerLink=""
-      type="button"
-      class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 group"
+    <div
+      class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
     >
-      <fa-icon [icon]="homeIcon" class="text-lg text-primary"></fa-icon>
-    </button>
+      <div class="hidden lg:flex lg:flex-col lg:w-full lg:justify-center">
+        <a
+          routerLink=""
+          class="px-4 flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
+          ><img
+            class="w-8 h-8"
+            src="assets/img/gameon-logo.webp"
+            alt="GameOn!'s logo"
+          />
+          <span class="ml-2">GameOn!</span></a
+        >
 
-    <button
-      routerLink="/fifa"
-      type="button"
-      class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group"
-    >
-      <fa-icon [icon]="ballIcon" class="text-lg text-primary"></fa-icon>
-    </button>
+        <div class="flex px-4">
+          <div class="w-1/3 border-0 border-b-2 border-frenchBlue h-4"></div>
+          <div class="w-1/3 border-0 border-b-2 border-white h-4"></div>
+          <div class="w-1/3 border-0 border-b-2 border-frenchRed h-4"></div>
+        </div>
+      </div>
 
-    <div class="flex items-center justify-center">
-      <button
-        (click)="createMatch()"
-        type="button"
-        class="inline-flex items-center justify-center w-10 h-10 font-medium bg-frenchBlue rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+      <div
+        class="lg:hidden inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group lg:mt-4"
       >
-        <fa-icon [icon]="plusIcon" class="text-lg text-white"></fa-icon>
-      </button>
+        <button routerLink="" type="button" class="lg:hidden">
+          <fa-icon [icon]="homeIcon" class="text-lg text-primary"></fa-icon>
+        </button>
+      </div>
+
+      <div
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
+      >
+        <span class="font-semibold">Football</span>
+      </div>
+
+      <div
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+      >
+        <button routerLink="/fifa" type="button" class="lg:hidden">
+          <fa-icon [icon]="ballIcon" class="text-lg text-primary"></fa-icon>
+        </button>
+
+        <a
+          routerLink="/fifa"
+          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+        >
+          <fa-icon [icon]="ballIcon" class="text-primary"></fa-icon>
+          <span>Matchs joués</span>
+        </a>
+      </div>
+
+      <div
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+      >
+        <button
+          (click)="createMatch()"
+          type="button"
+          class="lg:hidden inline-flex items-center justify-center w-10 h-10 font-medium bg-frenchBlue rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+        >
+          <fa-icon [icon]="plusIcon" class="text-lg text-white"></fa-icon>
+        </button>
+
+        <a
+          (click)="createMatch()"
+          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+        >
+          <fa-icon [icon]="plusIcon" class="text-primary"></fa-icon>
+          <span>Ajouter un match</span>
+        </a>
+      </div>
+
+      <div
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+      >
+        <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
+          <fa-icon [icon]="trophyIcon" class="text-lg text-primary"></fa-icon>
+        </button>
+
+        <a
+          routerLink="/fifa/tournaments"
+          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+        >
+          <fa-icon [icon]="trophyIcon" class="text-primary"></fa-icon>
+          <span>Tournois</span>
+        </a>
+      </div>
+
+      <div
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
+      >
+        <span class="font-semibold">Compte</span>
+      </div>
+
+      <div
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+      >
+        <button
+          *ngIf="isLoggedIn == true"
+          routerLink="/player/me"
+          type="button"
+          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        >
+          <fa-icon [icon]="userIcon" class="text-lg text-primary"></fa-icon>
+        </button>
+
+        <button
+          *ngIf="isLoggedIn == false"
+          (click)="login()"
+          type="button"
+          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+        >
+          <fa-icon [icon]="userIcon" class="text-lg text-primary"></fa-icon>
+        </button>
+
+        <div class="hidden lg:flex lg:flex-col lg:space-y-2">
+          <a
+            *ngIf="!isLoggedIn"
+            (click)="login()"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <fa-icon [icon]="userIcon" class="text-primary"></fa-icon>
+            <span>Connexion</span>
+          </a>
+
+          <a
+            *ngIf="isLoggedIn"
+            routerLink="/player/me"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <fa-icon [icon]="userIcon" class="text-secondary"></fa-icon>
+            <span>Mon compte</span>
+          </a>
+
+          <a
+            *ngIf="isAdmin"
+            routerLink="/admin"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <fa-icon [icon]="adminIcon" class="text-frenchRed"></fa-icon>
+            <span>Administration</span>
+          </a>
+        </div>
+      </div>
     </div>
+  </nav>
 
-    <button
-      routerLink="/fifa/tournaments"
-      type="button"
-      class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 group"
+  <div class="lg:flex lg:flex-col lg:w-full">
+    <header
+      class="flex items-center justify-between self-center h-16 px-4 bg-white lg:w-full"
     >
-      <fa-icon [icon]="trophyIcon" class="text-lg text-primary"></fa-icon>
-    </button>
+      <a
+        routerLink=""
+        class="flex self-center items-center justify-center text-xl font-bold text-primaryDarker lg:hidden"
+        ><img
+          class="w-8 h-8"
+          src="assets/img/gameon-logo.webp"
+          alt="GameOn!'s logo"
+        />
+        <span class="ml-2">GameOn!</span></a
+      >
 
-    <button
-      *ngIf="isLoggedIn == true"
-      routerLink="/player/me"
-      type="button"
-      class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
-    >
-      <fa-icon [icon]="userIcon" class="text-lg text-primary"></fa-icon>
-    </button>
+      <a
+        *ngIf="isLoggedIn == false"
+        class="text-2xl text-primary"
+        (click)="login()"
+        ><fa-icon [icon]="userIcon"></fa-icon
+      ></a>
 
-    <button
-      *ngIf="isLoggedIn == false"
-      (click)="login()"
-      type="button"
-      class="inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
-    >
-      <fa-icon [icon]="userIcon" class="text-lg text-primary"></fa-icon>
-    </button>
+      <a
+        *ngIf="isLoggedIn == true"
+        class="text-2xl text-secondary"
+        routerLink="/player/me"
+        ><fa-icon [icon]="userIcon"></fa-icon
+      ></a>
+    </header>
+
+    <div class="mb-24 lg:mb-0 lg:overflow-scroll">
+      <router-outlet></router-outlet>
+    </div>
   </div>
-</nav>
+</div>
