@@ -1,14 +1,14 @@
 <div class="lg:flex lg:h-screen">
   <nav
-    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/4 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
+    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/4 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white lg:bg-gray-200 border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
   >
     <div
       class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
     >
-      <div class="hidden lg:flex lg:w-full lg:justify-center">
+      <div class="hidden lg:flex lg:flex-col lg:w-full lg:justify-center">
         <a
           routerLink=""
-          class="flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
+          class="px-4 flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
           ><img
             class="w-8 h-8"
             src="assets/img/gameon-logo.webp"
@@ -16,6 +16,12 @@
           />
           <span class="ml-2">GameOn!</span></a
         >
+
+        <div class="flex px-4">
+          <div class="w-1/3 border-0 border-b-2 border-frenchBlue h-4"></div>
+          <div class="w-1/3 border-0 border-b-2 border-white h-4"></div>
+          <div class="w-1/3 border-0 border-b-2 border-frenchRed h-4"></div>
+        </div>
       </div>
 
       <div
@@ -111,23 +117,34 @@
           <fa-icon [icon]="userIcon" class="text-lg text-primary"></fa-icon>
         </button>
 
-        <a
-          *ngIf="!isLoggedIn"
-          (click)="login()"
-          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
-        >
-          <fa-icon [icon]="userIcon" class="text-primary"></fa-icon>
-          <span>Connexion</span>
-        </a>
+        <div class="hidden lg:flex lg:flex-col lg:space-y-2">
+          <a
+            *ngIf="!isLoggedIn"
+            (click)="login()"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <fa-icon [icon]="userIcon" class="text-primary"></fa-icon>
+            <span>Connexion</span>
+          </a>
 
-        <a
-          *ngIf="isLoggedIn"
-          routerLink="/player/me"
-          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
-        >
-          <fa-icon [icon]="userIcon" class="text-primary"></fa-icon>
-          <span>Mon compte</span>
-        </a>
+          <a
+            *ngIf="isLoggedIn"
+            routerLink="/player/me"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <fa-icon [icon]="userIcon" class="text-secondary"></fa-icon>
+            <span>Mon compte</span>
+          </a>
+
+          <a
+            *ngIf="isAdmin"
+            routerLink="/admin"
+            class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
+          >
+            <fa-icon [icon]="adminIcon" class="text-frenchRed"></fa-icon>
+            <span>Administration</span>
+          </a>
+        </div>
       </div>
     </div>
   </nav>
