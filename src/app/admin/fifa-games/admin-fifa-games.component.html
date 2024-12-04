@@ -1,32 +1,28 @@
-<div class="m-4 overflow-x-auto mt-8">
-  <div
-    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+<section class="h-screen bg-bgDarker px-4 pt-4">
+  <app-loading-spinner
     *ngIf="loading == true"
-  >
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
+    [@inOutAnimation]
+  ></app-loading-spinner>
 
-  <div
-    class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary mb-4"
-    *ngIf="loading == false"
-  >
+  <div class="m-4 overflow-x-auto mt-8">
     <div
-      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
+      class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary mb-4"
+      *ngIf="loading == false"
     >
-      <img src="assets/img/svg/fifagame.svg" class="w-4" />
+      <div
+        class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
+      >
+        <img src="assets/img/svg/fifagame.svg" class="w-4" />
+      </div>
+      <span class="text-white">Matchs joués (FIFA)</span>
     </div>
-    <span class="text-white">Matchs joués (FIFA)</span>
-  </div>
 
-  <div
-    class="mt-4 flex flex-col w-full text-white space-y-4"
-    *ngIf="loading == false"
-  >
-    <app-fifa-game-history-card
-      *ngFor="let game of games"
-      [game]="game"
-      [admin]="isAdmin"
-    ></app-fifa-game-history-card>
+    <div class="mt-4 flex flex-col space-y-4" *ngIf="loading == false">
+      <app-fifa-game-history-card
+        *ngFor="let game of games"
+        [game]="game"
+        [admin]="isAdmin"
+      ></app-fifa-game-history-card>
+    </div>
   </div>
-</div>
+</section>

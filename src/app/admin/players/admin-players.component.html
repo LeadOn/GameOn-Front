@@ -1,56 +1,55 @@
-<div class="m-4 overflow-x-auto mt-8">
-  <div
-    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+<section class="h-screen bg-bgDarker px-4 pt-4">
+  <app-loading-spinner
     *ngIf="loading == true"
-  >
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
+    [@inOutAnimation]
+  ></app-loading-spinner>
 
-  <div
-    class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == false"
-  >
+  <div class="m-4 overflow-scroll mt-8">
     <div
-      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
+      class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
+      *ngIf="loading == false"
     >
-      <img src="assets/img/svg/player.svg" class="w-4" />
-    </div>
-    <span class="text-white">Joueurs</span>
-  </div>
-
-  <table
-    class="w-full text-sm text-left text-gray-400 mt-4"
-    *ngIf="loading == false"
-  >
-    <thead class="text-xs uppercase bg-primary text-white">
-      <tr>
-        <th scope="col" class="px-6 py-3">#</th>
-        <th scope="col" class="px-6 py-3">Nom complet</th>
-        <th scope="col" class="px-6 py-3">Surnom</th>
-        <th scope="col" class="px-6 py-3">Archive</th>
-        <th scope="col" class="px-6 py-3">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let player of players"
+      <div
+        class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
       >
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-          {{ player.id }}
-        </th>
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-          {{ player.fullName }}
-        </th>
-        <td class="px-6 py-4">{{ player.nickname }}</td>
-        <td class="px-6 py-4">{{ player.archived }}</td>
-        <td class="px-6 py-4">
-          <a [routerLink]="['/admin/players/edit', player.id]"
-            ><img src="assets/img/svg/edit.svg" class="w-8"
-          /></a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+        <img src="assets/img/svg/player.svg" class="w-4" />
+      </div>
+      <span class="text-white">Joueurs</span>
+    </div>
+
+    <table
+      class="w-full text-sm text-left text-gray-400 mt-4"
+      *ngIf="loading == false"
+    >
+      <thead class="text-xs uppercase bg-primary text-white">
+        <tr>
+          <th scope="col" class="px-6 py-3">#</th>
+          <th scope="col" class="px-6 py-3">Nom complet</th>
+          <th scope="col" class="px-6 py-3">Surnom</th>
+          <th scope="col" class="px-6 py-3">Archive</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          class="border-b border-secondary bg-secondaryDarker text-white"
+          *ngFor="let player of players"
+        >
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+            {{ player.id }}
+          </th>
+          <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+            {{ player.fullName }}
+          </th>
+          <td class="px-6 py-4">{{ player.nickname }}</td>
+          <td class="px-6 py-4">{{ player.archived }}</td>
+          <td class="px-6 py-4">
+            <a [routerLink]="['/admin/players/edit', player.id]"
+              ><img src="assets/img/svg/edit.svg" class="w-8"
+            /></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
