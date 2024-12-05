@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, signal } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { KeycloakService } from 'keycloak-angular';
 import { GameOnPlayerService } from './shared/services/gameon-player.service';
@@ -12,6 +12,12 @@ import { setPlayer } from './store/actions/player.actions';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
+  darkMode = signal<boolean>(false);
+
+  @HostBinding('class.dark') get mode() {
+    return this.darkMode();
+  }
+
   constructor(
     private keycloak: KeycloakService,
     private playerService: GameOnPlayerService,

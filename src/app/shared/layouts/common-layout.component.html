@@ -1,6 +1,6 @@
 <div class="lg:flex lg:h-screen">
   <nav
-    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/6 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white lg:bg-white border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
+    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/6 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white dark:bg-bgDark lg:bg-white border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
   >
     <div
       class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
@@ -164,19 +164,22 @@
         <span class="ml-2">GameOn!</span></a
       >
 
-      <a
-        *ngIf="isLoggedIn == false"
-        class="text-2xl text-primary"
-        (click)="login()"
-        ><fa-icon [icon]="userIcon"></fa-icon
-      ></a>
-
-      <a
-        *ngIf="isLoggedIn == true"
-        class="text-2xl text-secondary"
-        routerLink="/player/me"
-        ><fa-icon [icon]="userIcon"></fa-icon
-      ></a>
+      <button
+        type="button"
+        class="lg:hidden"
+        (click)="darkMode.set(!darkMode())"
+      >
+        <fa-icon
+          [icon]="lightIcon"
+          *ngIf="darkMode()"
+          class="text-lg text-primary"
+        ></fa-icon>
+        <fa-icon
+          [icon]="darkIcon"
+          *ngIf="!darkMode()"
+          class="text-lg text-primary"
+        ></fa-icon>
+      </button>
     </header>
 
     <div class="mb-24 lg:mb-0 lg:overflow-scroll">

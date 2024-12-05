@@ -20,5 +20,6 @@ module.exports = {
       frenchRed: "#ED2939",
     },
   },
+  darkMode: "class",
   plugins: [require("flowbite/plugin")],
 };
