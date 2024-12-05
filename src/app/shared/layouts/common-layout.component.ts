@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, signal } from '@angular/core';
+import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faCog,
@@ -19,7 +19,9 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrls: ['./common-layout.component.scss'],
 })
 export class CommonLayoutComponent implements OnInit {
-  darkMode = signal<boolean>(false);
+  darkMode = signal<boolean>(
+    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false')
+  );
 
   @HostBinding('class.dark') get mode() {
     return this.darkMode();
@@ -40,6 +42,13 @@ export class CommonLayoutComponent implements OnInit {
   constructor(private keycloak: KeycloakService, private router: Router) {
     this.isLoggedIn = this.keycloak.isLoggedIn();
     this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
+
+    effect(() => {
+      window.localStorage.setItem(
+        'gameon-dark-theme',
+        JSON.stringify(this.darkMode())
+      );
+    });
   }
 
   ngOnInit(): void {

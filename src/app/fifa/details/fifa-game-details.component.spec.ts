@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FifaGameDetailsComponent } from "./fifa-game-details.component";
+import { FifaGameDetailsComponent } from './fifa-game-details.component';
 
-describe("FifaGameDetailsComponent", () => {
+describe('FifaGameDetailsComponent', () => {
   let component: FifaGameDetailsComponent;
   let fixture: ComponentFixture<FifaGameDetailsComponent>;
 
@@ -15,7 +15,7 @@ describe("FifaGameDetailsComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
