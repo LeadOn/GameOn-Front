@@ -1,6 +1,6 @@
 <div class="lg:flex lg:h-screen">
   <nav
-    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/4 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white lg:bg-gray-200 border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
+    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/6 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white lg:bg-white border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
   >
     <div
       class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
@@ -17,7 +17,7 @@
           <span class="ml-2">GameOn!</span></a
         >
 
-        <div class="flex px-4">
+        <div class="flex px-8">
           <div class="w-1/3 border-0 border-b-2 border-frenchBlue h-4"></div>
           <div class="w-1/3 border-0 border-b-2 border-white h-4"></div>
           <div class="w-1/3 border-0 border-b-2 border-frenchRed h-4"></div>
@@ -33,13 +33,13 @@
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
       >
         <span class="font-semibold">Football</span>
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
       >
         <button routerLink="/fifa" type="button" class="lg:hidden">
           <fa-icon [icon]="ballIcon" class="text-lg text-primary"></fa-icon>
@@ -55,7 +55,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
       >
         <button
           (click)="createMatch()"
@@ -75,7 +75,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
       >
         <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
           <fa-icon [icon]="trophyIcon" class="text-lg text-primary"></fa-icon>
@@ -91,13 +91,13 @@
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
       >
         <span class="font-semibold">Compte</span>
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
       >
         <button
           *ngIf="isLoggedIn == true"
