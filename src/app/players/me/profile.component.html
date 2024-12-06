@@ -38,8 +38,13 @@
       src="assets/img/gameon-logo.webp"
     />
 
-    <span class="text-xl font-semibold mt-2">{{ currentPlayer.nickname }}</span>
-    <span class="text-gray-500">{{ currentPlayer.fullName }}</span>
+    <span
+      class="text-xl font-semibold mt-2 text-primary dark:text-primaryDark"
+      >{{ currentPlayer.nickname }}</span
+    >
+    <span class="text-gray-500 dark:text-gray-400">{{
+      currentPlayer.fullName
+    }}</span>
   </div>
 </section>
 
@@ -50,7 +55,9 @@
     loading == false && isAdmin == true && (player$ | async) as currentPlayer
   "
 >
-  <span class="text-lg font-semibold">Administration</span>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >Administration</span
+  >
 </div>
 
 <section
@@ -61,7 +68,7 @@
   "
   [@inOutAnimation]
 >
-  <div class="bg-white p-4 rounded-lg text-sm drop-shadow-lg">
+  <div class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg">
     <div
       class="flex flex-row justify-between text-customRed cursor-pointer"
       [routerLink]="['/admin']"
@@ -92,7 +99,9 @@
   [@inOutAnimation]
   *ngIf="loading == false && (player$ | async) as currentPlayer"
 >
-  <span class="text-lg font-semibold">FIFA</span>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >FIFA</span
+  >
 </div>
 
 <section
@@ -101,9 +110,9 @@
   *ngIf="loading == false && (player$ | async) as currentPlayer"
   [@inOutAnimation]
 >
-  <div class="bg-white p-4 rounded-lg text-sm drop-shadow-lg">
+  <div class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg">
     <div
-      class="flex flex-row justify-between cursor-pointer"
+      class="flex flex-row justify-between cursor-pointer text-primary dark:text-primaryDark"
       [routerLink]="['/player', currentPlayer.id]"
     >
       <a
@@ -121,7 +130,9 @@
   [@inOutAnimation]
   *ngIf="loading == false && (player$ | async) as currentPlayer"
 >
-  <span class="text-lg font-semibold">Préférences</span>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >Préférences</span
+  >
 </div>
 
 <section
@@ -130,8 +141,10 @@
   *ngIf="loading == false && (player$ | async) as currentPlayer"
   [@inOutAnimation]
 >
-  <div class="bg-white p-4 rounded-lg text-sm drop-shadow-lg">
-    <div class="flex flex-row justify-between cursor-pointer">
+  <div class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg">
+    <div
+      class="flex flex-row justify-between cursor-pointer text-primary dark:text-primaryDark"
+    >
       <span
         ><fa-icon [icon]="calendarIcon" class="mr-2"></fa-icon>
         {{ currentPlayer.createdOn | date : "medium" }}</span
@@ -145,7 +158,7 @@
         <input
           type="text"
           id="fullname"
-          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
           required
           formControlName="fullName"
         />
@@ -162,13 +175,13 @@
         <input
           type="text"
           id="nickname"
-          class="block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
           required
           formControlName="nickname"
         />
         <label
           for="nickname"
-          class="peer-focus:font-medium absolute text-sm text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Pseudo
           <span class="text-customRed">*</span>
@@ -179,13 +192,13 @@
         <input
           type="text"
           id="profilePictureUrl"
-          class="block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
           required
           formControlName="profilePictureUrl"
         />
         <label
           for="profilePictureUrl"
-          class="peer-focus:font-medium absolute text-sm text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Photo de profil (URL)
           <span class="text-customRed">*</span>
@@ -194,7 +207,7 @@
 
       <button
         (click)="updateUser()"
-        class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-white hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
       >
         Mettre à jour
       </button>

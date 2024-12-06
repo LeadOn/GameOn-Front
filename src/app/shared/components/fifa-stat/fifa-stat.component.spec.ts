@@ -8,7 +8,7 @@ describe('FifaStatComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FifaStatComponent]
+      declarations: [FifaStatComponent],
     });
     fixture = TestBed.createComponent(FifaStatComponent);
     component = fixture.componentInstance;

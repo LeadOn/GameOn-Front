@@ -8,9 +8,8 @@ describe('CommonLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CommonLayoutComponent]
-    })
-    .compileComponents();
+      declarations: [CommonLayoutComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommonLayoutComponent);
     component = fixture.componentInstance;

@@ -1,63 +1,60 @@
-<section id="top-card" class="px-4 mt-4">
+<section id="top-card" class="px-4 pt-4 h-screen">
   <app-loading-spinner
     *ngIf="loading == true"
     [@inOutAnimation]
   ></app-loading-spinner>
 
-  <div *ngIf="loading == false" [@inOutAnimation]>
-    <div
-      class="justify-center flex flex-row items-center border border-l-2 border-r-2 border-l-frenchBlue border-t-white border-b-white border-r-frenchRed p-4 rounded-full drop-shadow-lg mt-4 bg-gray-50"
-    >
-      <fa-icon [icon]="trophyIcon" class="text-2xl"></fa-icon>
-      <span class="text-2xl ml-4">Tournois</span>
-    </div>
-  </div>
-</section>
+  <app-common-page-header
+    *ngIf="!loading"
+    [@inOutAnimation]
+    [icon]="trophyIcon"
+    [title]="'Tournois'"
+  ></app-common-page-header>
 
-<section
-  id="tournament-list"
-  class="px-4 mt-4 flex flex-col space-y-4"
-  [@inOutAnimation]
-  *ngIf="loading == false"
->
   <div
-    class="bg-white rounded-lg drop-shadow-lg flex flex-col space-y-2"
-    *ngFor="let tournament of tournaments"
-    [routerLink]="['/fifa/tournaments', tournament.id]"
+    [@inOutAnimation]
+    *ngIf="loading == false"
+    class="flex flex-col space-y-4 mt-4"
   >
-    <div class="flex flex-col justify-center items-center space-y-2 mt-4">
-      <img
-        class="w-16 rounded-full"
-        *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
-        src="{{ tournament.logoUrl }}"
-      />
-      <img
-        class="w-16 rounded-full"
-        *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
-        src="assets/img/gameon-logo.webp"
-      />
+    <div
+      class="bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg flex flex-col space-y-2"
+      *ngFor="let tournament of tournaments"
+      [routerLink]="['/fifa/tournaments', tournament.id]"
+    >
+      <div class="flex flex-col justify-center items-center space-y-2 mt-4">
+        <img
+          class="w-16 rounded-full"
+          *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
+          src="{{ tournament.logoUrl }}"
+        />
+        <img
+          class="w-16 rounded-full"
+          *ngIf="tournament.logoUrl == null || tournament.logoUrl == ''"
+          src="assets/img/gameon-logo.webp"
+        />
 
-      <span>
-        {{ tournament.name }}
-      </span>
+        <span class="text-primary dark:text-primaryDark">
+          {{ tournament.name }}
+        </span>
 
-      <div
-        class="drop-shadow-lg rounded-full px-2 bg-secondary text-white text-xs"
-        [class.bg-gray-600]="tournament.state == 0"
-        [class.bg-customGreen]="tournament.state == 1"
-        [class.bg-secondary]="tournament.state == 2"
-        [class.bg-customYellow]="tournament.state == 3"
-        [class.bg-green-800]="tournament.state == 4"
-      >
-        {{ getState(tournament.state) }}
+        <div
+          class="drop-shadow-lg rounded-full px-2 bg-secondary text-white text-xs"
+          [class.bg-gray-600]="tournament.state == 0"
+          [class.bg-customGreen]="tournament.state == 1"
+          [class.bg-secondary]="tournament.state == 2"
+          [class.bg-customYellow]="tournament.state == 3"
+          [class.bg-green-800]="tournament.state == 4"
+        >
+          {{ getState(tournament.state) }}
+        </div>
       </div>
-    </div>
 
-    <div class="flex justify-center">
-      <span class="text-xs text-gray-500">
-        {{ tournament.plannedFrom.toString().split("T")[0] }} -
-        {{ tournament.plannedTo.toString().split("T")[0] }}
-      </span>
+      <div class="flex justify-center">
+        <span class="text-xs text-gray-500 dark:text-gray-300">
+          {{ tournament.plannedFrom.toString().split("T")[0] }} -
+          {{ tournament.plannedTo.toString().split("T")[0] }}
+        </span>
+      </div>
     </div>
   </div>
 </section>

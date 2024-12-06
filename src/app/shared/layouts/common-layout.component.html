@@ -1,6 +1,6 @@
-<div class="lg:flex lg:h-screen">
+<div class="lg:flex h-screen bg-bgLightDarker dark:bg-bgDarkDarker">
   <nav
-    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/4 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-white lg:bg-gray-200 border border-l-2 border-r-2 border-l-frenchBlue border-t-gray-300 border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-lg"
+    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/6 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-bgLight dark:bg-bgDark border border-l-2 border-r-2 dark:border-2 lg:dark:border-0 border-l-frenchBlue border-t-gray-300 dark:border-y-bgLight border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-xl"
   >
     <div
       class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
@@ -14,48 +14,52 @@
             src="assets/img/gameon-logo.webp"
             alt="GameOn!'s logo"
           />
-          <span class="ml-2">GameOn!</span></a
+          <span class="ml-2 dark:text-white">GameOn!</span></a
         >
-
-        <div class="flex px-4">
-          <div class="w-1/3 border-0 border-b-2 border-frenchBlue h-4"></div>
-          <div class="w-1/3 border-0 border-b-2 border-white h-4"></div>
-          <div class="w-1/3 border-0 border-b-2 border-frenchRed h-4"></div>
-        </div>
       </div>
 
       <div
-        class="lg:hidden inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group lg:mt-4"
+        routerLink=""
+        class="lg:hidden cursor-pointer inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none group lg:mt-4"
       >
-        <button routerLink="" type="button" class="lg:hidden">
-          <fa-icon [icon]="homeIcon" class="text-lg text-primary"></fa-icon>
-        </button>
+        <fa-icon
+          [icon]="homeIcon"
+          class="text-lg text-primary dark:text-primaryDark"
+        ></fa-icon>
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
       >
-        <span class="font-semibold">Football</span>
+        <span class="font-semibold text-primary dark:text-primaryDark"
+          >Football</span
+        >
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
       >
         <button routerLink="/fifa" type="button" class="lg:hidden">
-          <fa-icon [icon]="ballIcon" class="text-lg text-primary"></fa-icon>
+          <fa-icon
+            [icon]="ballIcon"
+            class="text-lg text-primary dark:text-primaryDark"
+          ></fa-icon>
         </button>
 
         <a
           routerLink="/fifa"
           class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
         >
-          <fa-icon [icon]="ballIcon" class="text-primary"></fa-icon>
-          <span>Matchs joués</span>
+          <fa-icon
+            [icon]="ballIcon"
+            class="text-primary dark:text-primaryDark"
+          ></fa-icon>
+          <span class="text-primary dark:text-primaryDark">Matchs joués</span>
         </a>
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
       >
         <button
           (click)="createMatch()"
@@ -69,52 +73,71 @@
           (click)="createMatch()"
           class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
         >
-          <fa-icon [icon]="plusIcon" class="text-primary"></fa-icon>
-          <span>Ajouter un match</span>
+          <fa-icon
+            [icon]="plusIcon"
+            class="text-primary dark:text-primaryDark"
+          ></fa-icon>
+          <span class="text-primary dark:text-primaryDark"
+            >Ajouter un match</span
+          >
         </a>
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
       >
         <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
-          <fa-icon [icon]="trophyIcon" class="text-lg text-primary"></fa-icon>
+          <fa-icon
+            [icon]="trophyIcon"
+            class="text-lg text-primary dark:text-primaryDark"
+          ></fa-icon>
         </button>
 
         <a
           routerLink="/fifa/tournaments"
           class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
         >
-          <fa-icon [icon]="trophyIcon" class="text-primary"></fa-icon>
-          <span>Tournois</span>
+          <fa-icon
+            [icon]="trophyIcon"
+            class="text-primary dark:text-primaryDark"
+          ></fa-icon>
+          <span class="text-primary dark:text-primaryDark">Tournois</span>
         </a>
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-4"
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
       >
-        <span class="font-semibold">Compte</span>
+        <span class="font-semibold text-primary dark:text-primaryDark"
+          >Compte</span
+        >
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none hover:bg-gray-50 lg:hover:bg-transparent group"
+        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
       >
         <button
           *ngIf="isLoggedIn == true"
           routerLink="/player/me"
           type="button"
-          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full group"
         >
-          <fa-icon [icon]="userIcon" class="text-lg text-primary"></fa-icon>
+          <fa-icon
+            [icon]="userIcon"
+            class="text-lg text-primary dark:text-primaryDark"
+          ></fa-icon>
         </button>
 
         <button
           *ngIf="isLoggedIn == false"
           (click)="login()"
           type="button"
-          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full group"
         >
-          <fa-icon [icon]="userIcon" class="text-lg text-primary"></fa-icon>
+          <fa-icon
+            [icon]="userIcon"
+            class="text-lg text-primary dark:text-primaryDark"
+          ></fa-icon>
         </button>
 
         <div class="hidden lg:flex lg:flex-col lg:space-y-2">
@@ -123,8 +146,11 @@
             (click)="login()"
             class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
           >
-            <fa-icon [icon]="userIcon" class="text-primary"></fa-icon>
-            <span>Connexion</span>
+            <fa-icon
+              [icon]="userIcon"
+              class="text-primary dark:text-primaryDark"
+            ></fa-icon>
+            <span class="text-primary dark:text-primaryDark">Connexion</span>
           </a>
 
           <a
@@ -133,7 +159,7 @@
             class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
           >
             <fa-icon [icon]="userIcon" class="text-secondary"></fa-icon>
-            <span>Mon compte</span>
+            <span class="text-primary dark:text-primaryDark">Mon compte</span>
           </a>
 
           <a
@@ -142,7 +168,9 @@
             class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
           >
             <fa-icon [icon]="adminIcon" class="text-frenchRed"></fa-icon>
-            <span>Administration</span>
+            <span class="text-primary dark:text-primaryDark"
+              >Administration</span
+            >
           </a>
         </div>
       </div>
@@ -151,7 +179,7 @@
 
   <div class="lg:flex lg:flex-col lg:w-full">
     <header
-      class="flex items-center justify-between self-center h-16 px-4 bg-white lg:w-full"
+      class="flex items-center justify-between lg:justify-end self-center h-16 px-4 bg-bgLight dark:bg-bgDark lg:w-full"
     >
       <a
         routerLink=""
@@ -161,25 +189,26 @@
           src="assets/img/gameon-logo.webp"
           alt="GameOn!'s logo"
         />
-        <span class="ml-2">GameOn!</span></a
+        <span class="ml-2 dark:text-primaryDark">GameOn!</span></a
       >
 
-      <a
-        *ngIf="isLoggedIn == false"
-        class="text-2xl text-primary"
-        (click)="login()"
-        ><fa-icon [icon]="userIcon"></fa-icon
-      ></a>
-
-      <a
-        *ngIf="isLoggedIn == true"
-        class="text-2xl text-secondary"
-        routerLink="/player/me"
-        ><fa-icon [icon]="userIcon"></fa-icon
-      ></a>
+      <button type="button" (click)="darkMode.set(!darkMode())">
+        <fa-icon
+          [icon]="lightIcon"
+          *ngIf="darkMode()"
+          class="text-lg text-customYellow"
+        ></fa-icon>
+        <fa-icon
+          [icon]="darkIcon"
+          *ngIf="!darkMode()"
+          class="text-lg text-frenchBlue"
+        ></fa-icon>
+      </button>
     </header>
 
-    <div class="mb-24 lg:mb-0 lg:overflow-scroll">
+    <div
+      class="pb-24 lg:pb-0 lg:overflow-y-scroll bg-bgLightDarker dark:bg-bgDarkDarker"
+    >
       <router-outlet></router-outlet>
     </div>
   </div>

@@ -1,6 +1,6 @@
 export class CreateHighlightDto {
-  name: string = "";
+  name: string = '';
   description?: string;
-  externalUrl?: string = "";
+  externalUrl?: string = '';
   fifaGameId: number = 0;
 }

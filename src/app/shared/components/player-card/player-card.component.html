@@ -1,5 +1,5 @@
 <div
-  class="flex flex-row rounded-lg border border-gray-300 px-4 mt-2 drop-shadow-lg"
+  class="flex flex-row rounded-lg border border-bgLightDarker dark:border-bgLight px-4 mt-2 drop-shadow-lg"
   [routerLink]="['/player', player.id]"
 >
   <div class="flex items-center justify-center">
@@ -18,7 +18,7 @@
     />
   </div>
 
-  <div class="flex flex-col mx-4 grow">
+  <div class="flex flex-col mx-4 grow text-primary dark:text-primaryDark">
     <span class="font-bold">{{ player.fullName }}</span>
     <span *ngIf="player.nickname != null">
       {{ player.nickname }}

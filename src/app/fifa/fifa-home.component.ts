@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
   faExternalLinkAlt,
-  faFilter,
   faSoccerBall,
 } from '@fortawesome/free-solid-svg-icons';
 import { KeycloakService } from 'keycloak-angular';

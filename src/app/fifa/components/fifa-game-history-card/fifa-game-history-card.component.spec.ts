@@ -8,7 +8,7 @@ describe('FifaGameHistoryCardComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FifaGameHistoryCardComponent]
+      declarations: [FifaGameHistoryCardComponent],
     });
     fixture = TestBed.createComponent(FifaGameHistoryCardComponent);
     component = fixture.componentInstance;

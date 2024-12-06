@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateGameComponent } from "./fifa-create-game.component";
+import { FifaCreateGameComponent } from './fifa-create-game.component';
 
-describe("CreateGameComponent", () => {
-  let component: CreateGameComponent;
-  let fixture: ComponentFixture<CreateGameComponent>;
+describe('FifaCreateGameComponent', () => {
+  let component: FifaCreateGameComponent;
+  let fixture: ComponentFixture<FifaCreateGameComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateGameComponent],
+      declarations: [FifaCreateGameComponent],
     });
-    fixture = TestBed.createComponent(CreateGameComponent);
+    fixture = TestBed.createComponent(FifaCreateGameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

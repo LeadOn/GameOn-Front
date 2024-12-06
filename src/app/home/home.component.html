@@ -1,5 +1,9 @@
-<section id="home-top-pills" class="px-4 mt-4" [@inOutAnimation]>
-  <div class="flex justify-between">
+<section
+  id="home-top-pills"
+  class="px-4 bg-bgLightDarker dark:bg-bgDarkDarker"
+  [@inOutAnimation]
+>
+  <div class="flex justify-between pt-4">
     <div
       class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm"
     >
@@ -13,14 +17,14 @@
 
     <div
       routerLink="/changelog"
-      class="bg-white drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary text-sm cursor-pointer"
+      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer"
     >
       <span>Nouveautés</span>
     </div>
   </div>
 </section>
 
-<section id="home-cards" class="px-4 mt-4" [@inOutAnimation]>
+<section id="home-cards" class="px-4 dark:bg-bgDarkDarker" [@inOutAnimation]>
   <div
     class="flex flex-col justify-between px-4 text-white drop-shadow-lg font-bold mt-4 h-48 welcome-card rounded-lg"
   >
@@ -29,14 +33,22 @@
   </div>
 </section>
 
-<section id="home-players" class="px-4 mt-4 py-4 bg-white" [@inOutAnimation]>
+<section
+  id="home-players"
+  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark"
+  [@inOutAnimation]
+>
   <div class="flex">
-    <span class="text-lg font-semibold">Joueurs actifs</span>
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Joueurs actifs</span
+    >
   </div>
 
-  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+  <app-loading-spinner
+    *ngIf="loadingActivePlayers == true"
+  ></app-loading-spinner>
 
-  <div *ngIf="loading == false" class="mt-4">
+  <div *ngIf="loadingActivePlayers == false" class="mt-4">
     <app-player-card
       ng-if="players.length > 0"
       *ngFor="let player of players"
@@ -45,12 +57,16 @@
   </div>
 
   <div class="flex mt-4">
-    <span class="text-lg font-semibold">Joueurs archivés</span>
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Joueurs archivés</span
+    >
   </div>
 
-  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+  <app-loading-spinner
+    *ngIf="loadingArchivedPlayers == true"
+  ></app-loading-spinner>
 
-  <div *ngIf="loading == false" class="mt-4">
+  <div *ngIf="loadingArchivedPlayers == false" class="mt-4">
     <app-player-card
       ng-if="players.length > 0"
       *ngFor="let player of archivedPlayers"

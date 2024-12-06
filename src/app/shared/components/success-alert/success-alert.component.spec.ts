@@ -8,7 +8,7 @@ describe('SuccessAlertComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SuccessAlertComponent]
+      declarations: [SuccessAlertComponent],
     });
     fixture = TestBed.createComponent(SuccessAlertComponent);
     component = fixture.componentInstance;

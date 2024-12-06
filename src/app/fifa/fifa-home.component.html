@@ -1,19 +1,17 @@
-<section id="fifa-game-played" class="px-4 mt-4">
+<section id="fifa-game-played" class="px-4 pt-4">
   <app-loading-spinner
     *ngIf="loading == true"
     [@inOutAnimation]
   ></app-loading-spinner>
 
   <div>
-    <div
-      class="justify-center flex flex-row items-center border border-l-2 border-r-2 border-l-frenchBlue border-t-white border-b-white border-r-frenchRed p-4 rounded-full drop-shadow-lg mt-4 bg-gray-50"
-    >
-      <fa-icon [icon]="footballIcon" class="text-2xl"></fa-icon>
-      <span class="text-2xl ml-4">Matchs joués</span>
-    </div>
+    <app-common-page-header
+      [icon]="footballIcon"
+      [title]="'Matchs joués'"
+    ></app-common-page-header>
 
     <div
-      class="flex flex-col bg-white p-4 rounded-lg text-primary mb-4 border border-gray-300 mt-4 drop-shadow-lg"
+      class="flex flex-col bg-bgLight dark:bg-bgDark p-4 rounded-lg text-primary dark:text-primaryDark mb-4 border border-bgLightDarker dark:border-bgDarkDarker mt-4 drop-shadow-lg"
     >
       <span class="text-lg font-semibold">Filtres</span>
 
@@ -22,7 +20,7 @@
           <span class="text-sm">Nombre de matchs</span>
           <select
             [(ngModel)]="numberOfGames"
-            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300"
+            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300 dark:bg-bgDarkDarker"
           >
             <option value="5">5</option>
             <option value="10">10</option>
@@ -37,7 +35,7 @@
           <span class="text-sm">Platforme</span>
           <select
             [(ngModel)]="platformId"
-            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300"
+            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300 dark:bg-bgDarkDarker"
           >
             <option value="0">--- Plateforme ---</option>
             <option
@@ -54,7 +52,7 @@
           <input
             [(ngModel)]="startDate"
             type="date"
-            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300"
+            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300 dark:bg-bgDarkDarker"
           />
         </div>
 
@@ -63,7 +61,7 @@
           <input
             [(ngModel)]="endDate"
             type="date"
-            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300"
+            class="focus:ring-secondary focus:border-secondary rounded-lg w-full border-gray-300 dark:bg-bgDarkDarker"
           />
         </div>
       </div>

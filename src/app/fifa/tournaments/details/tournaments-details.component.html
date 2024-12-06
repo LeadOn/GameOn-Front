@@ -1,4 +1,4 @@
-<section id="top-card" class="px-4 mt-4">
+<section id="top-card" class="px-4 pt-4">
   <app-loading-spinner
     *ngIf="loading == true"
     [@inOutAnimation]
@@ -48,7 +48,7 @@
   [@inOutAnimation]
 >
   <div
-    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
   >
     <img
       class="rounded-full drop-shadow-lg"
@@ -65,8 +65,10 @@
     />
 
     <div class="flex flex-col">
-      <span class="text-xl font-semibold">{{ tournament.name }}</span>
-      <span class="text-xs text-gray-600"
+      <span class="text-xl font-semibold text-primary dark:text-primaryDark">{{
+        tournament.name
+      }}</span>
+      <span class="text-xs text-gray-600 dark:text-gray-300"
         >{{ tournament.plannedFrom.toString().split("T")[0] }} au
         {{ tournament.plannedTo.toString().split("T")[0] }}</span
       >
@@ -79,7 +81,9 @@
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
-  <span class="text-lg font-semibold">Gagnant</span>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >Gagnant</span
+  >
 </div>
 
 <section
@@ -88,20 +92,21 @@
   *ngIf="loading == false && tournament != null && tournament.winner != null"
   [@inOutAnimation]
 >
-  <div class="bg-white rounded-lg">
+  <div class="bg-bgLight dark:bg-bgDark rounded-lg">
     <app-player-card [player]="tournament.winner"></app-player-card>
   </div>
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
   [@inOutAnimation]
   *ngIf="
     loading == false && tournament != null && tournament.description != null
   "
+  (click)="showDetailsContent()"
 >
   <span class="text-lg font-semibold">Détails</span>
-  <span class="text-lg font-semibold" (click)="showDetailsContent()">
+  <span class="text-lg font-semibold">
     <fa-icon [icon]="downChevronIcon" *ngIf="showDetails == true"></fa-icon>
     <fa-icon [icon]="rightChevronIcon" *ngIf="showDetails == false"></fa-icon>
   </span>
@@ -119,19 +124,20 @@
   [@inOutAnimation]
 >
   <div
-    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
+    class="bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
   >
     {{ tournament.description }}
   </div>
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && tournament.rules != null"
+  (click)="showRulesContent()"
 >
   <span class="text-lg font-semibold">Règlement</span>
-  <span class="text-lg font-semibold" (click)="showRulesContent()">
+  <span class="text-lg font-semibold">
     <fa-icon [icon]="downChevronIcon" *ngIf="showRules == true"></fa-icon>
     <fa-icon [icon]="rightChevronIcon" *ngIf="showRules == false"></fa-icon>
   </span>
@@ -149,7 +155,7 @@
   [@inOutAnimation]
 >
   <div
-    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
+    class="bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
     [innerHtml]="tournament.rules"
   ></div>
 </section>
@@ -164,12 +170,14 @@
     subscriptionShown == true
   "
 >
-  <span class="text-lg font-semibold">Inscription</span>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >Inscription</span
+  >
 </div>
 
 <section
   id="tournament-subscription"
-  class="m-4 bg-white p-4 rounded-lg drop-shadow-lg"
+  class="m-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
   [@inOutAnimation]
   *ngIf="
     loading == false &&
@@ -183,7 +191,7 @@
     class="flex flex-col justify-center align-center items-center"
   >
     <select
-      class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      class="m-4 bg-primaryDarker text-primary dark:text-primaryDark bg-bgLight dark:bg-bgDark border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -204,7 +212,7 @@
     class="flex flex-col justify-center align-center items-center"
   >
     <select
-      class="m-4 bg-primaryDarker text-white border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      class="m-4 bg-primaryDarker text-primary dark:text-primaryDark bg-bgLight dark:bg-bgDark border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -222,18 +230,19 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
   [@inOutAnimation]
   *ngIf="
     loading == false &&
     tournament != null &&
     tournament.phase2ChallongeUrl != null
   "
+  (click)="showTournamentBracket()"
 >
   <span class="text-lg font-semibold"
     >Tournoi<span *ngIf="tournament.state < 3"> prévisionnel</span></span
   >
-  <span class="text-lg font-semibold" (click)="showTournamentBracket()">
+  <span class="text-lg font-semibold">
     <fa-icon
       [icon]="downChevronIcon"
       *ngIf="tournamentBracketShown == true"
@@ -267,14 +276,15 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
   [@inOutAnimation]
   *ngIf="
     loading == false && tournament != null && tournament.players.length > 0
   "
+  (click)="showPlayers()"
 >
   <span class="text-lg font-semibold">Joueurs</span>
-  <span class="text-lg font-semibold" (click)="showPlayers()">
+  <span class="text-lg font-semibold">
     <fa-icon [icon]="downChevronIcon" *ngIf="playersShown == true"></fa-icon>
     <fa-icon [icon]="rightChevronIcon" *ngIf="playersShown == false"></fa-icon>
   </span>
@@ -292,8 +302,8 @@
   [@inOutAnimation]
 >
   <div class="relative drop-shadow-lg lg:px-4">
-    <table class="w-full text-sm text-left text-gray-500">
-      <thead class="text-xs text-gray-700 text-center">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
+      <thead class="text-xs text-gray-700 dark:text-gray-400 text-center">
         <tr>
           <th scope="col" class="px-6 py-3">Score</th>
           <th scope="col" class="px-6 py-3">Joueur</th>
@@ -309,7 +319,7 @@
         >
           <th
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
+            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
             [class.text-yellow-500]="
               tournament.players.indexOf(player) == 0 && tournament.state >= 2
             "
@@ -322,7 +332,9 @@
           >
             {{ player.score }}
           </th>
-          <td class="px-6 py-4 text-center text-xs text-primary font-semibold">
+          <td
+            class="px-6 py-4 text-center text-xs text-primary dark:text-primaryDark font-semibold"
+          >
             {{ player.player.fullName }}
           </td>
           <td class="px-6 py-4 flex justify-center items-center">
@@ -343,7 +355,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && myGamesToPlay.length > 0"
   (click)="showMyMatchsToPlay()"
@@ -379,7 +391,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && gamesToPlay.length > 0"
   (click)="showMatchsPlanned()"
@@ -415,7 +427,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null && gamesPlayed.length > 0"
   (click)="showMatchsPlayed()"

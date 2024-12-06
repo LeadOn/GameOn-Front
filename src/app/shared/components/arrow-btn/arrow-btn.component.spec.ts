@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ArrowBtnComponent } from "./arrow-btn.component";
+import { ArrowBtnComponent } from './arrow-btn.component';
 
-describe("ArrowBtnComponent", () => {
+describe('ArrowBtnComponent', () => {
   let component: ArrowBtnComponent;
   let fixture: ComponentFixture<ArrowBtnComponent>;
 
@@ -15,7 +15,7 @@ describe("ArrowBtnComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
