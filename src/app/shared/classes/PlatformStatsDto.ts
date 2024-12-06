@@ -1,4 +1,4 @@
-import { Platform } from "./Platform";
+import { Platform } from './Platform';
 
 export class PlatformStatsDto {
   platform: Platform = new Platform();

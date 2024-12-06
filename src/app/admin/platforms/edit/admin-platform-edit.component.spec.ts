@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminPlatformEditComponent } from "./admin-platform-edit.component";
+import { AdminPlatformEditComponent } from './admin-platform-edit.component';
 
-describe("AdminPlatformEditComponent", () => {
+describe('AdminPlatformEditComponent', () => {
   let component: AdminPlatformEditComponent;
   let fixture: ComponentFixture<AdminPlatformEditComponent>;
 
@@ -15,7 +15,7 @@ describe("AdminPlatformEditComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

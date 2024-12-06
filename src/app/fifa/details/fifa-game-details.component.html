@@ -57,10 +57,13 @@
 <section
   *ngIf="loading == false"
   id="game-details"
-  class="m-4 mt-4 bg-white p-4 rounded-lg drop-shadow-lg"
+  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
   [@inOutAnimation]
 >
-  <span class="text-xs text-primary" *ngIf="game.isPlayed == true">
+  <span
+    class="text-xs text-primary dark:text-primaryDark"
+    *ngIf="game.isPlayed == true"
+  >
     <fa-icon [icon]="clockIcon"></fa-icon> {{ game.playedOn | date : "medium" }}
   </span>
 
@@ -68,15 +71,17 @@
 
   <div class="flex flex-col" ngClass="['mt-4': game.isPlayed == true]">
     <div class="flex justify-between text-xs">
-      <div class="flex flex-col">
+      <div class="flex flex-col text-primary dark:text-primaryDark">
         <span *ngFor="let player of game.team1.players">{{
           player.nickname
         }}</span>
       </div>
-      <div class="grow text-center font-semibold">
+      <div
+        class="grow text-center font-semibold text-primary dark:text-primaryDark"
+      >
         <span>Buts</span>
       </div>
-      <div class="flex flex-col text-right">
+      <div class="flex flex-col text-right text-primary dark:text-primaryDark">
         <span *ngFor="let player of game.team2.players">{{
           player.nickname
         }}</span>
@@ -104,7 +109,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark"
   [@inOutAnimation]
   *ngIf="loading == false"
 >
@@ -122,11 +127,11 @@
       showCreateHighlightForm == true)
   "
   id="highlights"
-  class="m-4 mt-4 bg-white p-4 rounded-lg drop-shadow-lg"
+  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
 >
   <span
     *ngIf="game.highlights == null || game.highlights.length == 0"
-    class="text-xs text-primary text-center"
+    class="text-xs text-primary dark:text-primaryDark text-center"
   >
     Aucun temps fort n'est disponible pour ce match.
   </span>
@@ -150,14 +155,14 @@
       <input
         type="text"
         id="name"
-        class="block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
         required
         maxlength="50"
         formControlName="name"
       />
       <label
         for="name"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Nom du temps fort
         <span class="text-customRed">*</span>
@@ -168,13 +173,13 @@
       <input
         type="text"
         id="description"
-        class="block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
         maxlength="500"
         formControlName="description"
       />
       <label
         for="description"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Description
       </label>
@@ -184,14 +189,14 @@
       <input
         type="text"
         id="externalUrl"
-        class="block py-2.5 px-0 w-full text-sm text-primary bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
         required
         maxlength="3000"
         formControlName="externalUrl"
       />
       <label
         for="externalUrl"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         Lien externe (YouTube, ...)
       </label>
@@ -199,7 +204,7 @@
 
     <button
       (click)="createHighlight()"
-      class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-white hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark dark:text-primaryDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
     >
       Ajouter
     </button>
@@ -215,7 +220,7 @@
   <div
     *ngFor="let highlight of game.highlights"
     [@inOutAnimation]
-    class="bg-white rounded-lg drop-shadow-lg"
+    class="bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg"
   >
     <div
       class="bg-secondary rounded-tl-lg rounded-tr-lg p-4 text-white font-semibold"
@@ -228,7 +233,7 @@
     </div>
 
     <div
-      class="bg-white rounded-tl-lg rounded-tr-lg p-4 text-primary"
+      class="bg-bgLight dark:bg-bgDark rounded-tl-lg rounded-tr-lg p-4 text-primary dark:text-primaryDark"
       *ngIf="highlight.description != null"
       [ngClass]="{
         'rounded-bl-lg': highlight.externalUrl == null,
@@ -239,7 +244,7 @@
     </div>
 
     <div
-      class="bg-white rounded-bl-lg rounded-br-lg p-4 text-primary"
+      class="bg-bgLight dark:bg-bgDark rounded-bl-lg rounded-br-lg p-4 text-primary dark:text-primaryDark"
       *ngIf="highlight.externalUrl != null"
     >
       <a [href]="highlight.externalUrl" target="_blank"
@@ -254,7 +259,9 @@
   [@inOutAnimation]
   *ngIf="loading == false"
 >
-  <span class="text-lg font-semibold">Équipe #1</span>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >Équipe #1</span
+  >
 </div>
 
 <section
@@ -263,13 +270,16 @@
   class="px-4 mt-4"
   [@inOutAnimation]
 >
-  <div class="bg-white rounded-lg" *ngFor="let player of game.team1.players">
+  <div
+    class="bg-bgLight dark:bg-bgDark rounded-lg"
+    *ngFor="let player of game.team1.players"
+  >
     <app-player-card [player]="player"></app-player-card>
   </div>
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark"
   [@inOutAnimation]
   *ngIf="loading == false"
 >
@@ -282,7 +292,10 @@
   class="px-4 mt-4"
   [@inOutAnimation]
 >
-  <div class="bg-white rounded-lg" *ngFor="let player of game.team2.players">
+  <div
+    class="bg-bgLight dark:bg-bgDark rounded-lg"
+    *ngFor="let player of game.team2.players"
+  >
     <app-player-card [player]="player"></app-player-card>
   </div>
 </section>

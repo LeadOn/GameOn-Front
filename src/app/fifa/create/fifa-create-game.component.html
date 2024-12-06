@@ -1,10 +1,8 @@
-<section id="fifa-header" class="px-4 mt-4" [@inOutAnimation]>
-  <div
-    class="justify-center flex flex-row items-center border border-l-2 border-r-2 border-l-frenchBlue border-t-white border-b-white border-r-frenchRed p-4 rounded-full drop-shadow-lg mt-4 bg-gray-50"
-  >
-    <fa-icon [icon]="footballIcon" class="text-2xl"></fa-icon>
-    <span class="text-2xl ml-4">Création match</span>
-  </div>
+<section id="fifa-header" class="px-4 pt-4" [@inOutAnimation]>
+  <app-common-page-header
+    [icon]="footballIcon"
+    [title]="'Création match'"
+  ></app-common-page-header>
 </section>
 
 <section id="top-card" class="px-4 mt-4">
@@ -21,18 +19,20 @@
   *ngIf="isLoading == false"
 >
   <div class="px-4 mt-4 flex" [@inOutAnimation]>
-    <span class="text-lg font-semibold">Équipe #1</span>
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Équipe #1</span
+    >
   </div>
 
   <div
-    class="flex flex-col space-y-4 bg-white p-4 rounded-lg drop-shadow-lg m-4"
+    class="flex flex-col space-y-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg m-4"
   >
     <div class="relative z-0 w-full mb-6 group flex flex-row mt-2">
       <div class="w-full">
         <input
           type="text"
           id="fifaTeam1"
-          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
           formControlName="teamFifa1"
           list="fifaTeam1List"
         />
@@ -46,7 +46,7 @@
 
         <label
           for="fifaTeam1"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Équipe <span class="text-customRed">*</span>
         </label>
@@ -59,13 +59,13 @@
           type="number"
           id="teamScore1"
           min="0"
-          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
           formControlName="teamScore1"
           required
         />
         <label
           for="teamScore1"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Score
           <span class="text-customRed">*</span>
@@ -74,7 +74,10 @@
     </div>
 
     <div class="relative z-0 w-full mb-6 group">
-      <label for="team1" class="block mb-2 text-sm font-medium">
+      <label
+        for="team1"
+        class="block mb-2 text-sm font-medium text-primary dark:text-primaryDark"
+      >
         Joueurs <span class="text-customRed">*</span>
       </label>
 
@@ -82,7 +85,7 @@
         multiple
         id="team1"
         formControlName="team1"
-        class="border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        class="border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-bgDarkDarker dark:text-primaryDark"
       >
         <option *ngFor="let player of players" value="{{ player.id }}">
           {{ player.fullName }}
@@ -92,18 +95,20 @@
   </div>
 
   <div class="px-4 mt-4 flex" [@inOutAnimation]>
-    <span class="text-lg font-semibold">Équipe #2</span>
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Équipe #2</span
+    >
   </div>
 
   <div
-    class="flex flex-col space-y-4 bg-white p-4 rounded-lg drop-shadow-lg m-4"
+    class="flex flex-col space-y-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg m-4"
   >
     <div class="relative z-0 w-full mb-6 group flex flex-row mt-2">
       <div class="w-full">
         <input
           type="text"
           id="fifaTeam2"
-          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
           formControlName="teamFifa2"
           list="fifaTeam2List"
         />
@@ -117,7 +122,7 @@
 
         <label
           for="fifaTeam2"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Équipe <span class="text-customRed">*</span>
         </label>
@@ -130,13 +135,13 @@
           type="number"
           id="teamScore2"
           min="0"
-          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
           formControlName="teamScore1"
           required
         />
         <label
           for="teamScore2"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
         >
           Score
           <span class="text-customRed">*</span>
@@ -145,7 +150,10 @@
     </div>
 
     <div class="relative z-0 w-full mb-6 group">
-      <label for="team2" class="block mb-2 text-sm font-medium">
+      <label
+        for="team2"
+        class="block mb-2 text-sm font-medium text-primary dark:text-primaryDark"
+      >
         Joueurs <span class="text-customRed">*</span>
       </label>
 
@@ -153,7 +161,7 @@
         multiple
         id="team2"
         formControlName="team2"
-        class="border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        class="border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-bgDarkDarker dark:text-primaryDark"
       >
         <option *ngFor="let player of players" value="{{ player.id }}">
           {{ player.fullName }}
@@ -163,14 +171,18 @@
   </div>
 
   <div class="px-4 mt-4 flex" [@inOutAnimation]>
-    <span class="text-lg font-semibold">Plateforme</span>
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Plateforme</span
+    >
   </div>
 
-  <div class="mx-4 mt-4 p-4 rounded-lg bg-white drop-shadow-lg">
+  <div
+    class="mx-4 mt-4 p-4 rounded-lg bg-bgLight dark:bg-bgDark drop-shadow-lg"
+  >
     <select
       id="platform"
       formControlName="platform"
-      class="border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      class="dark:bg-bgDarkDarker dark:text-primaryDark border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
     >
       <option *ngFor="let platform of platforms" value="{{ platform.id }}">
         {{ platform.name }}

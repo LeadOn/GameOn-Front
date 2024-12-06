@@ -1,8 +1,8 @@
-import {TestBed} from "@angular/core/testing";
+import { TestBed } from '@angular/core/testing';
 
-import {GameOnHighlightService} from "./gameon-highlight.service";
+import { GameOnHighlightService } from './gameon-highlight.service';
 
-describe("GameOnHighlightService", () => {
+describe('GameOnHighlightService', () => {
   let service: GameOnHighlightService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe("GameOnHighlightService", () => {
     service = TestBed.inject(GameOnHighlightService);
   });
 
-  it("should be created", () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 });

@@ -28,15 +28,15 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 export class HomeComponent implements OnInit {
   player$: Observable<Player>;
-
   isLoggedIn = false;
   isAdmin = false;
   version = environment.version;
   currentSeason?: Season;
-
   players: Player[] = [];
   archivedPlayers: Player[] = [];
-  loading = true;
+  loadingSeason = true;
+  loadingActivePlayers = true;
+  loadingArchivedPlayers = true;
 
   constructor(
     private keycloak: KeycloakService,
@@ -51,29 +51,31 @@ export class HomeComponent implements OnInit {
     this.seasonService.getCurrent().subscribe(
       (x) => {
         this.currentSeason = x;
-
-        this.playerService.getAll().subscribe(
-          (data) => {
-            this.players = data;
-
-            this.playerService.getAll(true).subscribe(
-              (data) => {
-                this.archivedPlayers = data;
-                this.loading = false;
-              },
-              (err) => {
-                console.error(err);
-              }
-            );
-          },
-          (err) => {
-            console.error(err);
-          }
-        );
+        this.loadingSeason = false;
       },
       (err) => {
         console.error(err);
         alert('Erreur lors de la récupération de la saison en cours.');
+      }
+    );
+
+    this.playerService.getAll().subscribe(
+      (data) => {
+        this.players = data;
+        this.loadingActivePlayers = false;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+
+    this.playerService.getAll(true).subscribe(
+      (data) => {
+        this.archivedPlayers = data;
+        this.loadingArchivedPlayers = false;
+      },
+      (err) => {
+        console.error(err);
       }
     );
 

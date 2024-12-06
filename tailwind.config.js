@@ -10,8 +10,11 @@ module.exports = {
     },
     colors: {
       primary: "#282b30",
-      bgDark: "#282b30",
-      bgDarker: "#0a0a0a",
+      primaryDark: "#ffffff",
+      bgLight: "#ffffff",
+      bgLightDarker: "#e6e7eb",
+      bgDark: "#36393e",
+      bgDarkDarker: "#282b30",
       secondary: "#73c3e9",
       customRed: "#C82D44",
       customGreen: "#1B998B",
@@ -20,5 +23,6 @@ module.exports = {
       frenchRed: "#ED2939",
     },
   },
+  darkMode: "class",
   plugins: [require("flowbite/plugin")],
 };

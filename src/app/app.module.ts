@@ -45,27 +45,15 @@ function initializeKeycloak(keycloak: KeycloakService) {
   declarations: [
     AppComponent,
     CommonLayoutComponent,
-
-    /* Home page */
     HomeComponent,
-
-    /* Player pages */
     ProfilePageComponent,
     PlayerDetailsComponent,
-
-    /* FIFA related */
     FifaHomeComponent,
-
-    /* Tournament pages */
     TournamentsHomeComponent,
     TournamentsDetailsComponent,
-
-    /* Five pages */
     FiveComponent,
     CreateFiveComponent,
     FiveDetailsComponent,
-
-    /* Other */
     SafePipe,
     ChangelogComponent,
   ],

@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminHighlightsComponent } from "./admin-highlights.component";
+import { AdminHighlightsComponent } from './admin-highlights.component';
 
-describe("AdminHighlightsComponent", () => {
+describe('AdminHighlightsComponent', () => {
   let component: AdminHighlightsComponent;
   let fixture: ComponentFixture<AdminHighlightsComponent>;
 
@@ -15,7 +15,7 @@ describe("AdminHighlightsComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

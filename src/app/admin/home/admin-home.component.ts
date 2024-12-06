@@ -1,11 +1,11 @@
-import {Component, OnInit} from "@angular/core";
-import {GameOnAdminService} from "../shared/services/gameon-admin.service";
-import {AdminDashboard} from "../shared/classes/AdminDashboard";
+import { Component, OnInit } from '@angular/core';
+import { GameOnAdminService } from '../shared/services/gameon-admin.service';
+import { AdminDashboard } from '../shared/classes/AdminDashboard';
 
 @Component({
-  selector: "app-admin-home",
-  templateUrl: "./admin-home.component.html",
-  styleUrls: ["./admin-home.component.scss"],
+  selector: 'app-admin-home',
+  templateUrl: './admin-home.component.html',
+  styleUrls: ['./admin-home.component.scss'],
 })
 export class AdminHomeComponent implements OnInit {
   loading = true;
@@ -23,7 +23,7 @@ export class AdminHomeComponent implements OnInit {
       (err) => {
         this.loading = false;
         alert(
-          "Une erreur est survenue lors de la récupération des statistiques."
+          'Une erreur est survenue lors de la récupération des statistiques.'
         );
         console.error(err);
       }

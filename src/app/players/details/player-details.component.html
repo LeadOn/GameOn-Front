@@ -24,7 +24,7 @@
     *ngIf="player.tournamentsWon != null && player.tournamentsWon.length > 0"
   >
     <span
-      class="drop-shadow-lg rounded-full px-2 border border-customYellow bg-white text-customYellow text-sm cursor-pointer"
+      class="drop-shadow-lg rounded-full px-2 border border-customYellow bg-bgLight dark:bg-bgDark text-customYellow text-sm cursor-pointer"
       *ngFor="let tournament of player.tournamentsWon"
       [routerLink]="['/fifa/tournaments', tournament.id]"
     >
@@ -41,7 +41,7 @@
   [@inOutAnimation]
 >
   <div
-    class="bg-white p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
   >
     <img
       class="rounded-full drop-shadow-lg"
@@ -58,8 +58,12 @@
     />
 
     <div class="flex flex-col">
-      <span class="text-xl font-semibold">{{ player.fullName }}</span>
-      <span class="text-xs text-gray-600">{{ player.nickname }}</span>
+      <span class="text-xl font-semibold text-primary dark:text-primaryDark">{{
+        player.fullName
+      }}</span>
+      <span class="text-xs text-gray-600 dark:text-gray-300">{{
+        player.nickname
+      }}</span>
     </div>
   </div>
 </section>
@@ -67,14 +71,14 @@
 <div class="px-4 mt-4" [@inOutAnimation]>
   <div class="w-full" *ngIf="player != null && player.id != 0">
     <div
-      class="bg-white p-4 rounded-lg flex flex-col items-center drop-shadow-lg"
+      class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex flex-col items-center drop-shadow-lg"
     >
       <div class="text-center w-full">
         <select
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
           id="seasons"
-          class="mt-2 border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          class="mt-2 border text-primary dark:text-primaryDark bg-bgLight dark:bg-bgDark border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
         >
           <option *ngFor="let season of seasons" value="{{ season.id }}">
             {{ season.name }}
@@ -89,7 +93,7 @@
             [(ngModel)]="selectedStats"
             (change)="calculateStats()"
             id="stats"
-            class="mb-4 border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            class="mb-4 border bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option
               *ngFor="let platform of fifaPlayerStats.statsPerPlatform"
@@ -143,7 +147,9 @@
   [@inOutAnimation]
   *ngIf="loading == false && games != null && games.length > 0"
 >
-  <span class="text-lg font-semibold">Matchs joués</span>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >Matchs joués</span
+  >
 </div>
 
 <section

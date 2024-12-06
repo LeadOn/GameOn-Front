@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminFifaGameEditComponent } from "./admin-fifa-game-edit.component";
+import { AdminFifaGameEditComponent } from './admin-fifa-game-edit.component';
 
-describe("AdminFifaGameEditComponent", () => {
+describe('AdminFifaGameEditComponent', () => {
   let component: AdminFifaGameEditComponent;
   let fixture: ComponentFixture<AdminFifaGameEditComponent>;
 
@@ -15,7 +15,7 @@ describe("AdminFifaGameEditComponent", () => {
     fixture.detectChanges();
   });
 
-  it("should create", () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
