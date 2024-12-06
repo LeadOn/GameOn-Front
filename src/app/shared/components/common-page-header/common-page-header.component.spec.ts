@@ -8,9 +8,8 @@ describe('CommonPageHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CommonPageHeaderComponent]
-    })
-    .compileComponents();
+      declarations: [CommonPageHeaderComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommonPageHeaderComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,4 @@
-import { FifaTeam } from "./FifaTeam";
+import { FifaTeam } from './FifaTeam';
 
 export class TopTeamStatDto {
   numberOfGames: number = 0;
