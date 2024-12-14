@@ -1,26 +1,17 @@
-<div class="m-4 overflow-x-auto mt-8">
-  <div
-    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+<section class="h-screen bg-bgDarker px-4 pt-4">
+  <app-loading-spinner
+    [@inOutAnimation]
     *ngIf="loading == true"
-  >
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
+  ></app-loading-spinner>
 
-  <div
-    class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == false"
-  >
-    <div
-      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
-    >
-      <img src="assets/img/svg/player.svg" class="w-4" />
-    </div>
-    <span class="text-white">Tournois</span>
-  </div>
+  <app-common-page-header
+    [icon]="tournamentIcon"
+    [title]="'Tournois'"
+    [@inOutAnimation]
+  ></app-common-page-header>
 
   <a
-    class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-lg transition ease-in-out delay-50 bg-customGreen hover:bg-green-800 mt-4 neomorphism-primaryDarker-2"
+    class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-full transition ease-in-out delay-50 bg-customGreen hover:bg-green-800 mt-4"
     *ngIf="loading == false"
     routerLink="/admin/tournaments/create"
   >
@@ -32,60 +23,74 @@
     <span class="text-white">Créer un tournoi</span>
   </a>
 
-  <table
-    class="w-full text-sm text-left text-gray-400 mt-4"
-    *ngIf="loading == false"
-  >
-    <thead class="text-xs uppercase bg-primary text-white">
-      <tr>
-        <th scope="col" class="px-6 py-3">#</th>
-        <th scope="col" class="px-6 py-3">Nom</th>
-        <th scope="col" class="px-6 py-3">Du</th>
-        <th scope="col" class="px-6 py-3">Au</th>
-        <th scope="col" class="px-6 py-3">État</th>
-        <th scope="col" class="px-6 py-3">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let tournament of tournaments"
-      >
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-          {{ tournament.id }}
-        </th>
-        <td class="px-6 py-4">{{ tournament.name }}</td>
-        <td class="px-6 py-4">
-          {{ tournament.plannedFrom.toString().split("T")[0] }}
-        </td>
-        <td class="px-6 py-4">
-          {{ tournament.plannedTo.toString().split("T")[0] }}
-        </td>
-        <td class="px-6 py-4">{{ getState(tournament.state) }}</td>
-        <td class="px-6 py-4 flex flex-row">
-          <a [routerLink]="['/admin/tournaments/edit', tournament.id]">
-            <img src="assets/img/svg/edit.svg" class="w-8" />
-          </a>
-
-          <button (click)="delete(tournament.id)">
-            <img src="assets/img/svg/trash.svg" class="w-8" />
-          </button>
-
-          <button
-            *ngIf="tournament.state < 2"
-            (click)="goToPhase1(tournament.id)"
+  <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
+      <thead class="text-xs text-gray-700 dark:text-gray-400 text-center">
+        <tr>
+          <th scope="col" class="px-6 py-3">Nom</th>
+          <th scope="col" class="px-6 py-3">Du</th>
+          <th scope="col" class="px-6 py-3">Au</th>
+          <th scope="col" class="px-6 py-3">État</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr
+          class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b"
+          *ngFor="let tournament of tournaments"
+        >
+          <th
+            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
           >
-            Phase 1
-          </button>
+            {{ tournament.name }}
+          </th>
 
-          <button
-            *ngIf="tournament.state == 2"
-            (click)="savePhase1Score(tournament.id)"
+          <th
+            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
           >
-            Save Phase 1 score
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+            {{ tournament.plannedFrom.toString().split("T")[0] }}
+          </th>
+
+          <th
+            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+          >
+            {{ tournament.plannedTo.toString().split("T")[0] }}
+          </th>
+
+          <th
+            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+          >
+            {{ getState(tournament.state) }}
+          </th>
+          <td class="px-6 py-4 flex flex-row justify-center space-x-2">
+            <fa-icon
+              [icon]="editIcon"
+              class="text-xl text-primary dark:text-primaryDark cursor-pointer"
+              [routerLink]="['/admin/tournaments/edit', tournament.id]"
+            ></fa-icon>
+
+            <button
+              *ngIf="tournament.state < 2"
+              (click)="goToPhase1(tournament.id)"
+            >
+              P1
+            </button>
+
+            <fa-icon
+              *ngIf="tournament.state == 2"
+              (click)="savePhase1Score(tournament.id)"
+              [icon]="saveIcon"
+              class="text-xl text-primary dark:text-primaryDark cursor-pointer"
+            ></fa-icon>
+
+            <fa-icon
+              [icon]="trashIcon"
+              class="text-xl text-frenchRed cursor-pointer"
+              (click)="delete(tournament.id)"
+            ></fa-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

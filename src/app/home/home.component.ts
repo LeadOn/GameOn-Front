@@ -8,6 +8,9 @@ import { GameOnSeasonService } from '../shared/services/gameon-season.service';
 import { environment } from '../../environments/environment';
 import { GameOnPlayerService } from '../shared/services/gameon-player.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { GameOnTournamentService } from '../shared/services/gameon-tournament.service';
+import { Tournament } from '../shared/classes/Tournament';
+import { faExternalLinkAlt, faTrophy } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -37,12 +40,16 @@ export class HomeComponent implements OnInit {
   loadingSeason = true;
   loadingActivePlayers = true;
   loadingArchivedPlayers = true;
+  tournaments: Tournament[] = [];
+  tournamentIcon = faTrophy;
+  externalIcon = faExternalLinkAlt;
 
   constructor(
     private keycloak: KeycloakService,
     private store: Store<{ player: Player }>,
     private seasonService: GameOnSeasonService,
-    private playerService: GameOnPlayerService
+    private playerService: GameOnPlayerService,
+    private tournamentService: GameOnTournamentService
   ) {
     this.player$ = store.select('player');
   }
@@ -84,5 +91,14 @@ export class HomeComponent implements OnInit {
     if (this.isLoggedIn == true) {
       this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
     }
+
+    this.tournamentService.getFeatured().subscribe(
+      (data) => {
+        this.tournaments = data;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
 }

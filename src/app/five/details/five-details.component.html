@@ -322,10 +322,7 @@
               <div *ngIf="choice.answers != null" class="flex flex-row">
                 <img
                   *ngFor="let answer of choice.answers"
-                  src="{{
-                    answer.player.profilePictureUrl ??
-                      'assets/img/gameon-logo.webp'
-                  }}"
+                  src="{{ answer.player.profilePictureUrl }}"
                   class="w-6 rounded-full"
                 />
               </div>

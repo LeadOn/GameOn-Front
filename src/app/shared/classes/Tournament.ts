@@ -17,4 +17,5 @@ export class Tournament {
   winPoints: number = 0;
   loosePoints: number = 0;
   drawPoints: number = 0;
+  featured: boolean = false;
 }
