@@ -4,7 +4,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { GameOnPlayerService } from './shared/services/gameon-player.service';
 import { Store } from '@ngrx/store';
 import { Player } from './shared/classes/Player';
-import { setPlayer } from './store/actions/player.actions';
+import { setPlayer, setPlayerStats } from './store/actions/player.actions';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +26,17 @@ export class AppComponent implements OnInit {
       this.playerService.getCurrent().subscribe(
         (data) => {
           this.store.dispatch(setPlayer({ player: data }));
+
+          this.playerService.getStats(data.id).subscribe(
+            (data) => {
+              this.store.dispatch(
+                setPlayerStats({ globalStats: data.statsPerPlatform[0] })
+              );
+            },
+            (err) => {
+              console.error('[AppComponent]', err);
+            }
+          );
         },
         (err) => {
           console.error('[AppComponent]', err);

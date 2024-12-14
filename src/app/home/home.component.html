@@ -51,6 +51,47 @@
 </section>
 
 <section
+  id="profile-details"
+  class="px-4 mt-4 dark:bg-bgDarkDarker animate-fade-up flex space-x-2"
+  *ngIf="isLoggedIn == true"
+>
+  <div
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center"
+    *ngIf="this.player$ | async as player"
+  >
+    <img
+      class="rounded-full"
+      *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
+      src="{{ player.profilePictureUrl }}"
+      width="64"
+      [@inOutAnimation]
+    />
+
+    <img
+      class="rounded-full drop-shadow-lg"
+      *ngIf="player.profilePictureUrl == null || player.profilePictureUrl == ''"
+      src="assets/img/gameon-logo.webp"
+      width="64"
+      [@inOutAnimation]
+    />
+
+    <span class="text-primary dark:text-primaryDark">{{
+      player.nickname
+    }}</span>
+  </div>
+
+  <div
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full"
+    *ngIf="this.globalStats$ | async as globalStats"
+  >
+    <app-fifa-stat
+      [stat]="globalStats"
+      *ngIf="globalStats != null"
+    ></app-fifa-stat>
+  </div>
+</section>
+
+<section
   id="home-players"
   class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark"
   [@inOutAnimation]

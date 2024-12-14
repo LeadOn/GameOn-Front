@@ -11,6 +11,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { GameOnTournamentService } from '../shared/services/gameon-tournament.service';
 import { Tournament } from '../shared/classes/Tournament';
 import { faExternalLinkAlt, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { PlatformStatsDto } from '../shared/classes/PlatformStatsDto';
+import { setPlayerStats } from '../store/actions/player.actions';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +33,7 @@ import { faExternalLinkAlt, faTrophy } from '@fortawesome/free-solid-svg-icons';
 })
 export class HomeComponent implements OnInit {
   player$: Observable<Player>;
+  globalStats$: Observable<PlatformStatsDto>;
   isLoggedIn = false;
   isAdmin = false;
   version = environment.version;
@@ -47,11 +50,18 @@ export class HomeComponent implements OnInit {
   constructor(
     private keycloak: KeycloakService,
     private store: Store<{ player: Player }>,
+    private statsStore: Store<{ globalStats: PlatformStatsDto }>,
     private seasonService: GameOnSeasonService,
     private playerService: GameOnPlayerService,
     private tournamentService: GameOnTournamentService
   ) {
     this.player$ = store.select('player');
+    this.globalStats$ = statsStore.select('globalStats');
+    this.isLoggedIn = this.keycloak.isLoggedIn();
+
+    if (this.isLoggedIn == true) {
+      this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
+    }
   }
 
   ngOnInit(): void {
@@ -86,12 +96,6 @@ export class HomeComponent implements OnInit {
       }
     );
 
-    this.isLoggedIn = this.keycloak.isLoggedIn();
-
-    if (this.isLoggedIn == true) {
-      this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
-    }
-
     this.tournamentService.getFeatured().subscribe(
       (data) => {
         this.tournaments = data;
@@ -100,5 +104,21 @@ export class HomeComponent implements OnInit {
         console.error(err);
       }
     );
+
+    if (this.isLoggedIn) {
+      this.player$.subscribe((x) => {
+        this.playerService.getStats(x.id).subscribe((data) => {
+          if (
+            data != null &&
+            data.statsPerPlatform != null &&
+            data.statsPerPlatform.length > 0
+          ) {
+            this.statsStore.dispatch(
+              setPlayerStats({ globalStats: data.statsPerPlatform[0] })
+            );
+          }
+        });
+      });
+    }
   }
 }
