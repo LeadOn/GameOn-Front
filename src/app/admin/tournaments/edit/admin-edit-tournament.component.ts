@@ -29,6 +29,7 @@ export class AdminEditTournamentComponent implements OnInit {
     loosePoints: new FormControl(0),
     drawPoints: new FormControl(0),
     rules: new FormControl('', [Validators.maxLength(5000)]),
+    featured: new FormControl(false),
   });
 
   constructor(
@@ -65,6 +66,10 @@ export class AdminEditTournamentComponent implements OnInit {
 
         this.editTournamentForm.controls['drawPoints'].setValue(
           this.tournament.drawPoints
+        );
+
+        this.editTournamentForm.controls['featured'].setValue(
+          this.tournament.featured
         );
 
         if (data.description != null) {
@@ -203,7 +208,8 @@ export class AdminEditTournamentComponent implements OnInit {
           winPoints,
           drawPoints,
           loosePoints,
-          rules
+          rules,
+          this.editTournamentForm.controls['featured'].value ?? false
         )
         .subscribe(
           (data) => {

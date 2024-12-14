@@ -4,16 +4,31 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Platform } from '../../../shared/classes/Platform';
 import { GameOnPlatformService } from '../../../shared/services/gameon-platform.service';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { faComputer } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin-platform-edit',
   templateUrl: './admin-platform-edit.component.html',
   styleUrls: ['./admin-platform-edit.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class AdminPlatformEditComponent implements OnInit {
   platformId: any;
   platform: Platform = new Platform();
   loading = true;
+  platformIcon = faComputer;
 
   updatePlatformForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -61,7 +76,6 @@ export class AdminPlatformEditComponent implements OnInit {
       this.loading = true;
       this.adminService.updatePlatform(platform).subscribe(
         (data) => {
-          alert('Plateforme mise à jour !');
           this.loading = false;
           this.router.navigate(['/admin/platforms']);
         },

@@ -1,44 +1,38 @@
-<div class="m-4 overflow-x-auto mt-8">
-  <div
-    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+<section class="h-screen bg-bgDarker px-4 pt-4">
+  <app-loading-spinner
+    [@inOutAnimation]
     *ngIf="loading == true"
-  >
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
+  ></app-loading-spinner>
 
-  <div
-    class="flex flex-row space-x-2 justify-center p-4 rounded-lg bg-primary"
-    *ngIf="loading == false"
-  >
-    <div
-      class="rounded-full bg-customRed w-8 flex flex-col items-center justify-center"
-    >
-      <img src="assets/img/svg/player.svg" class="w-4" />
-    </div>
-    <span class="text-white">Saisons</span>
-  </div>
+  <app-common-page-header
+    [icon]="seasonIcon"
+    [title]="'Saisons'"
+    [@inOutAnimation]
+  ></app-common-page-header>
 
-  <table
-    class="w-full text-sm text-left text-gray-400 mt-4"
-    *ngIf="loading == false"
-  >
-    <thead class="text-xs uppercase bg-primary text-white">
-      <tr>
-        <th scope="col" class="px-6 py-3">#</th>
-        <th scope="col" class="px-6 py-3">Nom</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        class="border-b border-secondary bg-secondaryDarker text-white"
-        *ngFor="let season of seasons"
-      >
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-          {{ season.id }}
-        </th>
-        <td class="px-6 py-4">{{ season.name }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
+      <thead class="text-xs text-gray-700 dark:text-gray-400 text-center">
+        <tr>
+          <th scope="col" class="px-6 py-3">#</th>
+          <th scope="col" class="px-6 py-3">Nom</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr
+          class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b"
+          *ngFor="let season of seasons"
+        >
+          <th
+            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+          >
+            {{ season.id }}
+          </th>
+          <td class="px-6 py-4">
+            {{ season.name }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

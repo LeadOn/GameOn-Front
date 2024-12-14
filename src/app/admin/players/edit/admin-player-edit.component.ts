@@ -4,16 +4,31 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
 import { Player } from '../../../shared/classes/Player';
 import { GameOnPlayerService } from '../../../shared/services/gameon-player.service';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin-player-edit',
   templateUrl: './admin-player-edit.component.html',
   styleUrls: ['./admin-player-edit.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class AdminPlayerEditComponent implements OnInit {
   playerId: any;
   player: Player = new Player();
   loading = true;
+  playerIcon = faUserCircle;
 
   updatePlayerForm = new FormGroup({
     keycloakId: new FormControl('', [Validators.maxLength(50)]),
@@ -113,7 +128,6 @@ export class AdminPlayerEditComponent implements OnInit {
         )
         .subscribe(
           (data) => {
-            alert('Joueur mis à jour !');
             this.loading = false;
             this.router.navigate(['/admin/players']);
           },

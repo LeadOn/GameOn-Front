@@ -223,6 +223,17 @@
       </label>
     </div>
 
+    <div class="relative z-0 w-full mt-6 mb-6 group">
+      <label
+        for="featured"
+        class="block mb-2 text-sm font-medium text-white scale-100"
+      >
+        Mis en avant
+      </label>
+
+      <input type="checkbox" formControlName="featured" />
+    </div>
+
     <button
       (click)="editTournament()"
       class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-customYellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"

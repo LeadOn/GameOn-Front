@@ -17,6 +17,12 @@ export class GameOnTournamentService {
     );
   }
 
+  getFeatured(): Observable<Tournament[]> {
+    return this.client.get<Tournament[]>(
+      environment.gameOnApiUrl + '/tournament/featured'
+    );
+  }
+
   getById(id: number): Observable<Tournament> {
     return this.client.get<Tournament>(
       environment.gameOnApiUrl + '/tournament/' + id
