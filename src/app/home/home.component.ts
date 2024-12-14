@@ -10,7 +10,11 @@ import { GameOnPlayerService } from '../shared/services/gameon-player.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { GameOnTournamentService } from '../shared/services/gameon-tournament.service';
 import { Tournament } from '../shared/classes/Tournament';
-import { faExternalLinkAlt, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExternalLinkAlt,
+  faInfoCircle,
+  faTrophy,
+} from '@fortawesome/free-solid-svg-icons';
 import { PlatformStatsDto } from '../shared/classes/PlatformStatsDto';
 import { setPlayerStats } from '../store/actions/player.actions';
 
@@ -39,13 +43,13 @@ export class HomeComponent implements OnInit {
   version = environment.version;
   currentSeason?: Season;
   players: Player[] = [];
-  archivedPlayers: Player[] = [];
   loadingSeason = true;
   loadingActivePlayers = true;
-  loadingArchivedPlayers = true;
+
   tournaments: Tournament[] = [];
   tournamentIcon = faTrophy;
   externalIcon = faExternalLinkAlt;
+  infoIcon = faInfoCircle;
 
   constructor(
     private keycloak: KeycloakService,
@@ -80,16 +84,6 @@ export class HomeComponent implements OnInit {
       (data) => {
         this.players = data;
         this.loadingActivePlayers = false;
-      },
-      (err) => {
-        console.error(err);
-      }
-    );
-
-    this.playerService.getAll(true).subscribe(
-      (data) => {
-        this.archivedPlayers = data;
-        this.loadingArchivedPlayers = false;
       },
       (err) => {
         console.error(err);

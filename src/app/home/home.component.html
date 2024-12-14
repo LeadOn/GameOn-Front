@@ -92,6 +92,17 @@
 </section>
 
 <section
+  id="login-details"
+  class="m-4 animate-fade flex space-x-2 bg-secondary p-4 rounded-lg drop-shadow-lg"
+  *ngIf="isLoggedIn == false"
+>
+  <fa-icon [icon]="infoIcon" class="text-primaryDark"></fa-icon>
+  <span class="text-primaryDark"
+    >Connectez-vous pour profiter d'une experience personalisée !</span
+  >
+</section>
+
+<section
   id="home-players"
   class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark"
   [@inOutAnimation]
@@ -110,24 +121,6 @@
     <app-player-card
       ng-if="players.length > 0"
       *ngFor="let player of players"
-      [player]="player"
-    ></app-player-card>
-  </div>
-
-  <div class="flex mt-4">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-      >Joueurs archivés</span
-    >
-  </div>
-
-  <app-loading-spinner
-    *ngIf="loadingArchivedPlayers == true"
-  ></app-loading-spinner>
-
-  <div *ngIf="loadingArchivedPlayers == false" class="mt-4">
-    <app-player-card
-      ng-if="players.length > 0"
-      *ngFor="let player of archivedPlayers"
       [player]="player"
     ></app-player-card>
   </div>
