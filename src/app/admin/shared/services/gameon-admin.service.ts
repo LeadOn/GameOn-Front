@@ -116,7 +116,8 @@ export class GameOnAdminService {
     winPoints: number = 0,
     drawPoints: number = 0,
     loosePoints: number = 0,
-    rules?: string
+    rules?: string,
+    featured: boolean = false
   ): Observable<Tournament> {
     let body: any = {
       name: name,
@@ -128,6 +129,7 @@ export class GameOnAdminService {
       drawPoints: drawPoints,
       loosePoints: loosePoints,
       rules: rules,
+      featured: featured,
     };
 
     if (description != null) {

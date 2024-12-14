@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Tournament } from '../../shared/classes/Tournament';
 import { GameOnTournamentService } from '../../shared/services/gameon-tournament.service';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
+import {
+  faEdit,
+  faSave,
+  faTrash,
+  faTrophy,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin-tournaments',
@@ -10,8 +16,12 @@ import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 })
 export class AdminTournamentsComponent implements OnInit {
   tournaments: Tournament[] = [];
+  tournamentIcon = faTrophy;
   states: any[] = [];
   loading = true;
+  editIcon = faEdit;
+  saveIcon = faSave;
+  trashIcon = faTrash;
 
   constructor(
     private tournamentService: GameOnTournamentService,
@@ -53,7 +63,6 @@ export class AdminTournamentsComponent implements OnInit {
     ) {
       this.adminService.goToPhase1(id).subscribe(
         (data) => {
-          alert('Phase 1 confirmée !');
           window.location.reload();
         },
         (err) => {
@@ -68,7 +77,6 @@ export class AdminTournamentsComponent implements OnInit {
     if (confirm('Voulez-vous sauvegarder le score de la phase 1 ?')) {
       this.adminService.savePhase1Score(id).subscribe(
         (data) => {
-          alert('Score Phase 1 sauvegardé !');
           window.location.reload();
         },
         (err) => {
@@ -91,7 +99,6 @@ export class AdminTournamentsComponent implements OnInit {
     ) {
       this.adminService.deleteTournament(id).subscribe(
         (data) => {
-          alert('Suppression réussie !');
           window.location.reload();
         },
         (err) => {

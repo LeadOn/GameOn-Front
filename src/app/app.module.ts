@@ -11,7 +11,10 @@ import { HomeComponent } from './home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import { playerReducer } from './store/reducers/player.reducer';
+import {
+  playerReducer,
+  playerStatsReducer,
+} from './store/reducers/player.reducer';
 import { ProfilePageComponent } from './players/me/profile.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { FifaHomeComponent } from './fifa/fifa-home.component';
@@ -66,6 +69,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     BrowserAnimationsModule,
     StoreModule.forRoot({
       player: playerReducer,
+      globalStats: playerStatsReducer,
     }),
     HttpClientModule,
     ClipboardModule,

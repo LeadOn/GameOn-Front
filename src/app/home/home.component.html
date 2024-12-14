@@ -4,33 +4,102 @@
   [@inOutAnimation]
 >
   <div class="flex justify-between pt-4">
-    <div
-      class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm"
-    >
-      <span *ngIf="currentSeason == undefined || currentSeason == null">
-        Chargement...
-      </span>
-      <span *ngIf="currentSeason != undefined && currentSeason != null">
-        {{ currentSeason.name }}
-      </span>
+    <div class="flex space-x-2">
+      <div
+        class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm animate-fade-up"
+      >
+        <span *ngIf="currentSeason == undefined || currentSeason == null">
+          Chargement...
+        </span>
+        <span *ngIf="currentSeason != undefined && currentSeason != null">
+          {{ currentSeason.name }}
+        </span>
+      </div>
+
+      <div
+        *ngFor="let tournament of tournaments"
+        [routerLink]="['/fifa/tournaments', tournament.id]"
+        class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full border border-frenchRed text-primary dark:text-primaryDark text-sm cursor-pointer px-2 animate-fade-up"
+      >
+        <fa-icon
+          [icon]="tournamentIcon"
+          class="animate-pulse text-frenchRed"
+        ></fa-icon>
+        <span>
+          {{ tournament.name }}
+        </span>
+        <fa-icon class="ml-1 text-xs" [icon]="externalIcon"></fa-icon>
+      </div>
     </div>
 
     <div
       routerLink="/changelog"
-      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer"
+      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer animate-fade-right"
     >
       <span>Nouveautés</span>
     </div>
   </div>
 </section>
 
-<section id="home-cards" class="px-4 dark:bg-bgDarkDarker" [@inOutAnimation]>
+<section id="home-cards" class="px-4 dark:bg-bgDarkDarker animate-fade-up">
   <div
     class="flex flex-col justify-between px-4 text-white drop-shadow-lg font-bold mt-4 h-48 welcome-card rounded-lg"
   >
     <span class="w-full text-left mt-2">Bienvenue dans GameOn!</span>
     <span class="w-full text-center text-sm mb-2">Version {{ version }}</span>
   </div>
+</section>
+
+<section
+  id="profile-details"
+  class="px-4 mt-4 dark:bg-bgDarkDarker animate-fade-up flex space-x-2"
+  *ngIf="isLoggedIn == true"
+>
+  <div
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center"
+    *ngIf="this.player$ | async as player"
+  >
+    <img
+      class="rounded-full"
+      *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
+      src="{{ player.profilePictureUrl }}"
+      width="64"
+      [@inOutAnimation]
+    />
+
+    <img
+      class="rounded-full drop-shadow-lg"
+      *ngIf="player.profilePictureUrl == null || player.profilePictureUrl == ''"
+      src="assets/img/gameon-logo.webp"
+      width="64"
+      [@inOutAnimation]
+    />
+
+    <span class="text-primary dark:text-primaryDark">{{
+      player.nickname
+    }}</span>
+  </div>
+
+  <div
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full"
+    *ngIf="this.globalStats$ | async as globalStats"
+  >
+    <app-fifa-stat
+      [stat]="globalStats"
+      *ngIf="globalStats != null"
+    ></app-fifa-stat>
+  </div>
+</section>
+
+<section
+  id="login-details"
+  class="m-4 animate-fade flex space-x-2 bg-secondary p-4 rounded-lg drop-shadow-lg"
+  *ngIf="isLoggedIn == false"
+>
+  <fa-icon [icon]="infoIcon" class="text-primaryDark"></fa-icon>
+  <span class="text-primaryDark"
+    >Connectez-vous pour profiter d'une experience personalisée !</span
+  >
 </section>
 
 <section
@@ -52,24 +121,6 @@
     <app-player-card
       ng-if="players.length > 0"
       *ngFor="let player of players"
-      [player]="player"
-    ></app-player-card>
-  </div>
-
-  <div class="flex mt-4">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-      >Joueurs archivés</span
-    >
-  </div>
-
-  <app-loading-spinner
-    *ngIf="loadingArchivedPlayers == true"
-  ></app-loading-spinner>
-
-  <div *ngIf="loadingArchivedPlayers == false" class="mt-4">
-    <app-player-card
-      ng-if="players.length > 0"
-      *ngFor="let player of archivedPlayers"
       [player]="player"
     ></app-player-card>
   </div>
