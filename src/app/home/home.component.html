@@ -52,8 +52,9 @@
   *ngIf="isLoggedIn == true"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center animate-fade-right"
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center animate-fade-right cursor-pointer"
     *ngIf="this.player$ | async as player"
+    routerLink="/player/me"
   >
     <img
       class="rounded-full"
