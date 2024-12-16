@@ -96,6 +96,45 @@
 </section>
 
 <section
+  id="home-planned-matches"
+  *ngIf="isLoggedIn == true"
+  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark animate-fade-up"
+>
+  <div class="flex">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Mes prochains matchs</span
+    >
+  </div>
+
+  <app-loading-spinner
+    *ngIf="loadingPlannedMatches == true"
+  ></app-loading-spinner>
+
+  <div
+    *ngIf="loadingPlannedMatches == false && plannedMatches.length > 0"
+    class="mt-4"
+  >
+    <div class="mt-4 flex flex-col w-full space-y-4">
+      <app-fifa-game-history-card
+        *ngFor="let game of plannedMatches"
+        [game]="game"
+      ></app-fifa-game-history-card>
+    </div>
+  </div>
+
+  <div
+    *ngIf="loadingPlannedMatches == false && plannedMatches.length == 0"
+    class="mt-4"
+  >
+    <app-info-message
+      [icon]="infoIcon"
+      [type]="'info'"
+      [title]="'Aucun match prévu pour le moment.'"
+    ></app-info-message>
+  </div>
+</section>
+
+<section
   id="home-players"
   class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark animate-fade-up"
 >

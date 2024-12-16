@@ -17,6 +17,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { PlatformStatsDto } from '../shared/classes/PlatformStatsDto';
 import { setPlayerStats } from '../store/actions/player.actions';
+import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
+import { GameOnGameService } from '../shared/services/gameon-game.service';
 
 @Component({
   selector: 'app-home',
@@ -30,9 +32,13 @@ export class HomeComponent implements OnInit {
   isAdmin = false;
   version = environment.version;
   currentSeason?: Season;
+
+  plannedMatches: FifaGamePlayed[] = [];
+
   players: Player[] = [];
   loadingSeason = true;
   loadingActivePlayers = true;
+  loadingPlannedMatches = false;
 
   tournaments: Tournament[] = [];
   tournamentIcon = faTrophy;
@@ -45,7 +51,8 @@ export class HomeComponent implements OnInit {
     private statsStore: Store<{ globalStats: PlatformStatsDto }>,
     private seasonService: GameOnSeasonService,
     private playerService: GameOnPlayerService,
-    private tournamentService: GameOnTournamentService
+    private tournamentService: GameOnTournamentService,
+    private gameService: GameOnGameService
   ) {
     this.player$ = store.select('player');
     this.globalStats$ = statsStore.select('globalStats');
@@ -100,6 +107,18 @@ export class HomeComponent implements OnInit {
             );
           }
         });
+
+        this.loadingPlannedMatches = true;
+
+        this.gameService.getPlanned(x.id, 5).subscribe(
+          (y) => {
+            this.plannedMatches = y;
+            this.loadingPlannedMatches = false;
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
       });
     }
   }

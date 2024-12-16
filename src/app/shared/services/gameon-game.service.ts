@@ -16,6 +16,16 @@ export class GameOnGameService {
     );
   }
 
+  getPlanned(playerId: number, limit: number): Observable<FifaGamePlayed[]> {
+    return this.client.get<FifaGamePlayed[]>(
+      environment.gameOnApiUrl +
+        '/fifagame/planned/' +
+        playerId +
+        '?limit=' +
+        limit
+    );
+  }
+
   search(
     limit: number,
     platformId?: number,
