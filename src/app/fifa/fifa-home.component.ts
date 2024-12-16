@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  faChevronDown,
+  faChevronRight,
   faExternalLinkAlt,
   faSoccerBall,
 } from '@fortawesome/free-solid-svg-icons';
@@ -8,24 +10,11 @@ import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
 import { Platform } from '../shared/classes/Platform';
 import { GameOnGameService } from '../shared/services/gameon-game.service';
 import { GameOnPlatformService } from '../shared/services/gameon-platform.service';
-import { trigger, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-fifa-home',
   templateUrl: './fifa-home.component.html',
   styleUrls: ['./fifa-home.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class FifaHomeComponent implements OnInit {
   loading = true;
@@ -36,9 +25,12 @@ export class FifaHomeComponent implements OnInit {
   numberOfGames = 10;
   startDate = undefined;
   endDate = undefined;
+  showFilters = true;
 
   externalIcon = faExternalLinkAlt;
   footballIcon = faSoccerBall;
+  rightChevronIcon = faChevronRight;
+  downChevronIcon = faChevronDown;
 
   constructor(
     private gameService: GameOnGameService,
@@ -99,5 +91,9 @@ export class FifaHomeComponent implements OnInit {
           );
         }
       );
+  }
+
+  showFiltersClick() {
+    this.showFilters = !this.showFilters;
   }
 }

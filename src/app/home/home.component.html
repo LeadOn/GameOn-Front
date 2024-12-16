@@ -1,12 +1,8 @@
-<section
-  id="home-top-pills"
-  class="px-4 bg-bgLightDarker dark:bg-bgDarkDarker"
-  [@inOutAnimation]
->
+<section id="home-top-pills" class="px-4 bg-bgLightDarker dark:bg-bgDarkDarker">
   <div class="flex justify-between pt-4">
     <div class="flex space-x-2">
       <div
-        class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm animate-fade-up"
+        class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm animate-fade-right"
       >
         <span *ngIf="currentSeason == undefined || currentSeason == null">
           Chargement...
@@ -19,7 +15,7 @@
       <div
         *ngFor="let tournament of tournaments"
         [routerLink]="['/fifa/tournaments', tournament.id]"
-        class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full border border-frenchRed text-primary dark:text-primaryDark text-sm cursor-pointer px-2 animate-fade-up"
+        class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full border border-frenchRed text-primary dark:text-primaryDark text-sm cursor-pointer px-2 animate-fade-right"
       >
         <fa-icon
           [icon]="tournamentIcon"
@@ -34,7 +30,7 @@
 
     <div
       routerLink="/changelog"
-      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer animate-fade-right"
+      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer animate-fade-left"
     >
       <span>Nouveautés</span>
     </div>
@@ -52,19 +48,19 @@
 
 <section
   id="profile-details"
-  class="px-4 mt-4 dark:bg-bgDarkDarker animate-fade-up flex space-x-2"
+  class="px-4 mt-4 flex space-x-2"
   *ngIf="isLoggedIn == true"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center"
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center animate-fade-right cursor-pointer"
     *ngIf="this.player$ | async as player"
+    routerLink="/player/me"
   >
     <img
       class="rounded-full"
       *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
       src="{{ player.profilePictureUrl }}"
       width="64"
-      [@inOutAnimation]
     />
 
     <img
@@ -72,7 +68,6 @@
       *ngIf="player.profilePictureUrl == null || player.profilePictureUrl == ''"
       src="assets/img/gameon-logo.webp"
       width="64"
-      [@inOutAnimation]
     />
 
     <span class="text-primary dark:text-primaryDark">{{
@@ -81,7 +76,7 @@
   </div>
 
   <div
-    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full"
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full animate-fade-left"
     *ngIf="this.globalStats$ | async as globalStats"
   >
     <app-fifa-stat
@@ -91,21 +86,57 @@
   </div>
 </section>
 
-<section
-  id="login-details"
-  class="m-4 animate-fade flex space-x-2 bg-secondary p-4 rounded-lg drop-shadow-lg"
-  *ngIf="isLoggedIn == false"
->
-  <fa-icon [icon]="infoIcon" class="text-primaryDark"></fa-icon>
-  <span class="text-primaryDark"
-    >Connectez-vous pour profiter d'une experience personalisée !</span
+<section id="login-details" *ngIf="isLoggedIn == false">
+  <app-info-message
+    [icon]="infoIcon"
+    [type]="'info'"
+    [title]="'Connectez-vous pour profiter d\'une experience personalisée !'"
   >
+  </app-info-message>
+</section>
+
+<section
+  id="home-planned-matches"
+  *ngIf="isLoggedIn == true"
+  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark animate-fade-up"
+>
+  <div class="flex">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Mes prochains matchs</span
+    >
+  </div>
+
+  <app-loading-spinner
+    *ngIf="loadingPlannedMatches == true"
+  ></app-loading-spinner>
+
+  <div
+    *ngIf="loadingPlannedMatches == false && plannedMatches.length > 0"
+    class="mt-4"
+  >
+    <div class="mt-4 flex flex-col w-full space-y-4">
+      <app-fifa-game-history-card
+        *ngFor="let game of plannedMatches"
+        [game]="game"
+      ></app-fifa-game-history-card>
+    </div>
+  </div>
+
+  <div
+    *ngIf="loadingPlannedMatches == false && plannedMatches.length == 0"
+    class="mt-4"
+  >
+    <app-info-message
+      [icon]="infoIcon"
+      [type]="'info'"
+      [title]="'Aucun match prévu pour le moment.'"
+    ></app-info-message>
+  </div>
 </section>
 
 <section
   id="home-players"
-  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark"
-  [@inOutAnimation]
+  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark animate-fade-up"
 >
   <div class="flex">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
