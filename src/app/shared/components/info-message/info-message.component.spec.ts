@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FiveComponent } from './five.component';
+import { InfoMessageComponent } from './info-message.component';
 
-describe('FiveComponent', () => {
-  let component: FiveComponent;
-  let fixture: ComponentFixture<FiveComponent>;
+describe('InfoMessageComponent', () => {
+  let component: InfoMessageComponent;
+  let fixture: ComponentFixture<InfoMessageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FiveComponent]
+      declarations: [InfoMessageComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FiveComponent);
+    fixture = TestBed.createComponent(InfoMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

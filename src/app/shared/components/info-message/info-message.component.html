@@ -1,0 +1,11 @@
+<div
+  class="m-4 animate-fade-up flex space-x-2 p-4 rounded-lg drop-shadow-lg"
+  [ngClass]="{
+    'bg-secondary': type == 'info',
+    'bg-frenchRed': type == 'error',
+    'bg-customGreen': type == 'success'
+  }"
+>
+  <fa-icon [icon]="icon" class="text-primaryDark"></fa-icon>
+  <span class="text-primaryDark">{{ title }}</span>
+</div>

@@ -24,9 +24,6 @@ import { SafePipe } from './shared/pipes/safe.pipe';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { AdminModule } from './admin/admin.module';
 import { ChangelogComponent } from './changelog/changelog.component';
-import { FiveComponent } from './five/five.component';
-import { CreateFiveComponent } from './five/create/five-create.component';
-import { FiveDetailsComponent } from './five/details/five-details.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -54,9 +51,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     FifaHomeComponent,
     TournamentsHomeComponent,
     TournamentsDetailsComponent,
-    FiveComponent,
-    CreateFiveComponent,
-    FiveDetailsComponent,
     SafePipe,
     ChangelogComponent,
   ],
