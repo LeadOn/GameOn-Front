@@ -1,8 +1,4 @@
-<section
-  id="home-top-pills"
-  class="px-4 bg-bgLightDarker dark:bg-bgDarkDarker"
-  [@inOutAnimation]
->
+<section id="home-top-pills" class="px-4 bg-bgLightDarker dark:bg-bgDarkDarker">
   <div class="flex justify-between pt-4">
     <div class="flex space-x-2">
       <div
@@ -64,7 +60,6 @@
       *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
       src="{{ player.profilePictureUrl }}"
       width="64"
-      [@inOutAnimation]
     />
 
     <img
@@ -72,7 +67,6 @@
       *ngIf="player.profilePictureUrl == null || player.profilePictureUrl == ''"
       src="assets/img/gameon-logo.webp"
       width="64"
-      [@inOutAnimation]
     />
 
     <span class="text-primary dark:text-primaryDark">{{
@@ -91,21 +85,18 @@
   </div>
 </section>
 
-<section
-  id="login-details"
-  class="m-4 animate-fade flex space-x-2 bg-secondary p-4 rounded-lg drop-shadow-lg"
-  *ngIf="isLoggedIn == false"
->
-  <fa-icon [icon]="infoIcon" class="text-primaryDark"></fa-icon>
-  <span class="text-primaryDark"
-    >Connectez-vous pour profiter d'une experience personalisée !</span
+<section id="login-details" *ngIf="isLoggedIn == false">
+  <app-info-message
+    [icon]="infoIcon"
+    [type]="'info'"
+    [title]="'Connectez-vous pour profiter d\'une experience personalisée !'"
   >
+  </app-info-message>
 </section>
 
 <section
   id="home-players"
-  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark"
-  [@inOutAnimation]
+  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark animate-fade-up"
 >
   <div class="flex">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"

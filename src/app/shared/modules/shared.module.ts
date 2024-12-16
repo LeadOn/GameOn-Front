@@ -14,6 +14,7 @@ import { FifaGameDetailsComponent } from '../../fifa/details/fifa-game-details.c
 import { FifaStatComponent } from '../components/fifa-stat/fifa-stat.component';
 import { PlayerTeamListComponent } from '../components/player-team-list/player-team-list.component';
 import { CommonPageHeaderComponent } from '../components/common-page-header/common-page-header.component';
+import { InfoMessageComponent } from '../components/info-message/info-message.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CommonPageHeaderComponent } from '../components/common-page-header/comm
     FifaStatComponent,
     PlayerTeamListComponent,
     CommonPageHeaderComponent,
+    InfoMessageComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +54,7 @@ import { CommonPageHeaderComponent } from '../components/common-page-header/comm
     FifaStatComponent,
     PlayerTeamListComponent,
     CommonPageHeaderComponent,
+    InfoMessageComponent,
   ],
 })
 export class SharedModule {}
