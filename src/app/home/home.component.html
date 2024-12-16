@@ -6,7 +6,7 @@
   <div class="flex justify-between pt-4">
     <div class="flex space-x-2">
       <div
-        class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm animate-fade-up"
+        class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm animate-fade-right"
       >
         <span *ngIf="currentSeason == undefined || currentSeason == null">
           Chargement...
@@ -19,7 +19,7 @@
       <div
         *ngFor="let tournament of tournaments"
         [routerLink]="['/fifa/tournaments', tournament.id]"
-        class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full border border-frenchRed text-primary dark:text-primaryDark text-sm cursor-pointer px-2 animate-fade-up"
+        class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full border border-frenchRed text-primary dark:text-primaryDark text-sm cursor-pointer px-2 animate-fade-right"
       >
         <fa-icon
           [icon]="tournamentIcon"
@@ -34,7 +34,7 @@
 
     <div
       routerLink="/changelog"
-      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer animate-fade-right"
+      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer animate-fade-left"
     >
       <span>Nouveautés</span>
     </div>
@@ -52,11 +52,11 @@
 
 <section
   id="profile-details"
-  class="px-4 mt-4 dark:bg-bgDarkDarker animate-fade-up flex space-x-2"
+  class="px-4 mt-4 flex space-x-2"
   *ngIf="isLoggedIn == true"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center"
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center animate-fade-right"
     *ngIf="this.player$ | async as player"
   >
     <img
@@ -81,7 +81,7 @@
   </div>
 
   <div
-    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full"
+    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full animate-fade-left"
     *ngIf="this.globalStats$ | async as globalStats"
   >
     <app-fifa-stat
