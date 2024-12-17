@@ -37,7 +37,8 @@
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["js-sha256"]
           },
           "configurations": {
             "production": {

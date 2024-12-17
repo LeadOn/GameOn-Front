@@ -1,0 +1,18 @@
+<div
+  class="justify-center items-center space-x-1 drop-shadow-lg rounded-full px-2 text-sm animate-fade-right"
+  [ngClass]="{ 'cursor-pointer': showExternalIcon == true }"
+  [class]="style"
+>
+  <fa-icon
+    *ngIf="icon != null"
+    [icon]="icon"
+    [class]="iconColor"
+    [ngClass]="{ 'animate-pulse': iconPulsate == true }"
+  ></fa-icon>
+
+  <span>
+    {{ title }}
+  </span>
+
+  <fa-icon *ngIf="showExternalIcon == true" [icon]="externalIcon"></fa-icon>
+</div>

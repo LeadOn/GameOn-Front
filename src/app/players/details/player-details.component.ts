@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
 import { PlatformStatsDto } from '../../shared/classes/PlatformStatsDto';
@@ -36,6 +36,7 @@ export class PlayerDetailsComponent implements OnInit {
   calculatedStats = new PlatformStatsDto();
   loading = true;
   externalIcon = faExternalLinkAlt;
+  starIcon = faStar;
 
   playerId: any;
   fifaPlayerStats?: FifaPlayerStatsDto;

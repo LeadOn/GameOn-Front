@@ -14,7 +14,6 @@ import { Player } from '../../../shared/classes/Player';
 import {
   faCheck,
   faChevronDown,
-  faChevronLeft,
   faChevronRight,
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
@@ -53,6 +52,8 @@ export class TournamentsDetailsComponent implements OnInit {
   checkIcon = faCheck;
   rightChevronIcon = faChevronRight;
   downChevronIcon = faChevronDown;
+
+  statePillColor = 'primary';
 
   playersShown = true;
   plannedMatchsShown = false;
@@ -112,6 +113,32 @@ export class TournamentsDetailsComponent implements OnInit {
     this.tournamentService.getById(this.tournamentId).subscribe(
       (data) => {
         this.tournament = data;
+
+        switch (this.tournament.state) {
+          case 0:
+            this.statePillColor = 'gray';
+            break;
+
+          case 1:
+            this.statePillColor = 'green';
+            break;
+
+          case 2:
+            this.statePillColor = 'secondary';
+            break;
+
+          case 3:
+            this.statePillColor = 'yellow';
+            break;
+
+          case 4:
+            this.statePillColor = 'green';
+            break;
+
+          default:
+            break;
+        }
+
         if (
           this.tournament.phase2ChallongeUrl != null &&
           this.tournament.phase2ChallongeUrl != ''

@@ -1,39 +1,26 @@
 <section id="home-top-pills" class="px-4 bg-bgLightDarker dark:bg-bgDarkDarker">
   <div class="flex justify-between pt-4">
     <div class="flex space-x-2">
-      <div
-        class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm animate-fade-right"
-      >
-        <span *ngIf="currentSeason == undefined || currentSeason == null">
-          Chargement...
-        </span>
-        <span *ngIf="currentSeason != undefined && currentSeason != null">
-          {{ currentSeason.name }}
-        </span>
-      </div>
+      <app-pill [title]="currentSeasonTitle" [bgStyle]="'secondary'"></app-pill>
 
-      <div
+      <app-pill
         *ngFor="let tournament of tournaments"
+        [title]="tournament.name"
+        [showExternalIcon]="true"
+        [icon]="tournamentIcon"
+        [iconColor]="'text-frenchRed'"
+        [iconPulsate]="true"
+        [borderStyle]="'red'"
         [routerLink]="['/fifa/tournaments', tournament.id]"
-        class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full border border-frenchRed text-primary dark:text-primaryDark text-sm cursor-pointer px-2 animate-fade-right"
-      >
-        <fa-icon
-          [icon]="tournamentIcon"
-          class="animate-pulse text-frenchRed"
-        ></fa-icon>
-        <span>
-          {{ tournament.name }}
-        </span>
-        <fa-icon class="ml-1 text-xs" [icon]="externalIcon"></fa-icon>
-      </div>
+      ></app-pill>
     </div>
 
-    <div
+    <app-pill
+      [title]="'Nouveautés'"
+      [showExternalIcon]="true"
+      [borderStyle]="'primary'"
       routerLink="/changelog"
-      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-full px-2 border border-gray-300 text-primary dark:text-primaryDark text-sm cursor-pointer animate-fade-left"
-    >
-      <span>Nouveautés</span>
-    </div>
+    ></app-pill>
   </div>
 </section>
 
@@ -86,11 +73,12 @@
   </div>
 </section>
 
-<section id="login-details" *ngIf="isLoggedIn == false">
+<section id="login-details" *ngIf="isLoggedIn == false" class="cursor-pointer">
   <app-info-message
     [icon]="infoIcon"
     [type]="'info'"
     [title]="'Connectez-vous pour profiter d\'une experience personalisée !'"
+    routerLink="/player/me"
   >
   </app-info-message>
 </section>
