@@ -13,6 +13,9 @@ import { TournamentsDetailsComponent } from './fifa/tournaments/details/tourname
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { ChangelogComponent } from './changelog/changelog.component';
 import { DonateComponent } from './donate/donate.component';
+import { FiveComponent } from './five/five.component';
+import { FiveDetailsComponent } from './five/details/five-details.component';
+import { CreateFiveComponent } from './five/create/five-create.component';
 
 const routes: Routes = [
   {
@@ -34,6 +37,18 @@ const routes: Routes = [
       {
         path: 'donate',
         component: DonateComponent,
+      },
+      {
+        path: 'soccerfive',
+        component: FiveComponent,
+      },
+      {
+        path: 'soccerfive/create',
+        component: CreateFiveComponent,
+      },
+      {
+        path: 'soccerfive/:id',
+        component: FiveDetailsComponent,
       },
       {
         path: 'player/me',

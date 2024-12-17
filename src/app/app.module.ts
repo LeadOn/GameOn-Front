@@ -25,6 +25,9 @@ import { PlayerDetailsComponent } from './players/details/player-details.compone
 import { AdminModule } from './admin/admin.module';
 import { ChangelogComponent } from './changelog/changelog.component';
 import { DonateComponent } from './donate/donate.component';
+import { FiveComponent } from './five/five.component';
+import { FiveDetailsComponent } from './five/details/five-details.component';
+import { CreateFiveComponent } from './five/create/five-create.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -55,6 +58,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     SafePipe,
     ChangelogComponent,
     DonateComponent,
+    FiveComponent,
+    FiveDetailsComponent,
+    CreateFiveComponent,
   ],
   imports: [
     BrowserModule,
