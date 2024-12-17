@@ -1,6 +1,7 @@
 import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  faBitcoinSign,
   faCog,
   faHome,
   faMoon,
@@ -38,6 +39,7 @@ export class CommonLayoutComponent implements OnInit {
   plusIcon = faPlus;
   trophyIcon = faTrophy;
   adminIcon = faCog;
+  btcIcon = faBitcoinSign;
 
   constructor(private keycloak: KeycloakService, private router: Router) {
     this.isLoggedIn = this.keycloak.isLoggedIn();

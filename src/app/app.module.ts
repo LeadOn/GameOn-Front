@@ -24,6 +24,7 @@ import { SafePipe } from './shared/pipes/safe.pipe';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { AdminModule } from './admin/admin.module';
 import { ChangelogComponent } from './changelog/changelog.component';
+import { DonateComponent } from './donate/donate.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -53,6 +54,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     TournamentsDetailsComponent,
     SafePipe,
     ChangelogComponent,
+    DonateComponent,
   ],
   imports: [
     BrowserModule,

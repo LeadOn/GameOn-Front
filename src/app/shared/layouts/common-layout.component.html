@@ -192,18 +192,28 @@
         <span class="ml-2 dark:text-primaryDark">GameOn!</span></a
       >
 
-      <button type="button" (click)="darkMode.set(!darkMode())">
-        <fa-icon
-          [icon]="lightIcon"
-          *ngIf="darkMode()"
-          class="text-lg text-customYellow"
-        ></fa-icon>
-        <fa-icon
-          [icon]="darkIcon"
-          *ngIf="!darkMode()"
-          class="text-lg text-frenchBlue"
-        ></fa-icon>
-      </button>
+      <div class="flex justify-center items-center space-x-4">
+        <app-pill
+          [title]="'Me soutenir'"
+          [icon]="btcIcon"
+          [iconColor]="'text-customYellow'"
+          [showExternalIcon]="true"
+          routerLink="/donate"
+        ></app-pill>
+
+        <button type="button" (click)="darkMode.set(!darkMode())">
+          <fa-icon
+            [icon]="lightIcon"
+            *ngIf="darkMode()"
+            class="text-lg text-customYellow"
+          ></fa-icon>
+          <fa-icon
+            [icon]="darkIcon"
+            *ngIf="!darkMode()"
+            class="text-lg text-frenchBlue"
+          ></fa-icon>
+        </button>
+      </div>
     </header>
 
     <div

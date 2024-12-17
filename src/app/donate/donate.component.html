@@ -1,0 +1,47 @@
+<section id="top-card" class="px-4 pt-4">
+  <div [@inOutAnimation]>
+    <app-common-page-header
+      [icon]="btcIcon"
+      [title]="'Me soutenir'"
+    ></app-common-page-header>
+
+    <div
+      class="flex flex-col bg-bgLight dark:bgDark p-4 rounded-lg text-primary dark:text-primaryDark mb-4 border border-bgLightDarker dark:bg-bgDarkDarker mt-4 drop-shadow-lg"
+    >
+      <div class="flex flex-col mt-4">
+        <span class="text-sm"
+          >Si vous le désirez, vous pouvez me soutenir financièrement pour le
+          travail accompli sur ce projet. Pour ce faire, vous pouvez via les
+          moyens suivants :</span
+        >
+      </div>
+
+      <ul class="mt-4">
+        <li class="flex items-center justify-left space-x-2">
+          <img src="assets/img/svg/paypal.svg" class="w-4" />
+          <span
+            >PayPal :
+            <a
+              href="https://www.paypal.me/ValentinVirot"
+              class="text-blue-600 cursor-pointer"
+              target="_blank"
+              >https://www.paypal.me/ValentinVirot</a
+            ></span
+          >
+        </li>
+        <li>
+          <fa-icon [icon]="btcIcon" class="text-customYellow"></fa-icon> Bitcoin
+          : bc1qkcwhv4u8aktm9mm0t9r2x4ryck2up24wlwyelw
+        </li>
+        <li class="flex items-center justify-left space-x-2">
+          <img src="assets/img/svg/doge.svg" class="w-4" />
+          <span>DogeCoin : DDT6RLMA79rYrtx7y3oo1yP2V1wQbpgfdS</span>
+        </li>
+        <li class="flex items-center justify-left space-x-2">
+          <img src="assets/img/svg/eth.svg" class="w-4" />
+          <span>Ethereum : 0xa92d055886ef00B5c81DFD22316136C8444C7B87</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

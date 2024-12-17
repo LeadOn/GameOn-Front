@@ -15,6 +15,7 @@ import { FifaStatComponent } from '../components/fifa-stat/fifa-stat.component';
 import { PlayerTeamListComponent } from '../components/player-team-list/player-team-list.component';
 import { CommonPageHeaderComponent } from '../components/common-page-header/common-page-header.component';
 import { InfoMessageComponent } from '../components/info-message/info-message.component';
+import { PillComponent } from '../components/pill/pill.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { InfoMessageComponent } from '../components/info-message/info-message.co
     PlayerTeamListComponent,
     CommonPageHeaderComponent,
     InfoMessageComponent,
+    PillComponent,
   ],
   imports: [
     CommonModule,
@@ -55,6 +57,7 @@ import { InfoMessageComponent } from '../components/info-message/info-message.co
     PlayerTeamListComponent,
     CommonPageHeaderComponent,
     InfoMessageComponent,
+    PillComponent,
   ],
 })
 export class SharedModule {}
