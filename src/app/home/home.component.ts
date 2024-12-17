@@ -33,6 +33,8 @@ export class HomeComponent implements OnInit {
   version = environment.version;
   currentSeason?: Season;
 
+  currentSeasonTitle = 'Chargement...';
+
   plannedMatches: FifaGamePlayed[] = [];
 
   players: Player[] = [];
@@ -67,6 +69,7 @@ export class HomeComponent implements OnInit {
     this.seasonService.getCurrent().subscribe(
       (x) => {
         this.currentSeason = x;
+        this.currentSeasonTitle = x.name;
         this.loadingSeason = false;
       },
       (err) => {

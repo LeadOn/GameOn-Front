@@ -12,6 +12,7 @@ import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.co
 import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { ChangelogComponent } from './changelog/changelog.component';
+import { DonateComponent } from './donate/donate.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'changelog',
         component: ChangelogComponent,
+      },
+      {
+        path: 'donate',
+        component: DonateComponent,
       },
       {
         path: 'player/me',

@@ -1,33 +1,27 @@
 <section
   id="header-pills"
-  class="p-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+  class="p-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
   [@inOutAnimation]
   *ngIf="loading == false"
 >
   <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
-    <span
-      class="drop-shadow-lg rounded-full px-2 border border-secondary bg-secondary text-white text-sm"
-    >
-      {{ game.season.name }}
-    </span>
+    <app-pill [bgStyle]="'secondary'" [title]="game.season.name"></app-pill>
 
-    <span
+    <app-pill
       *ngIf="game != null && game.tournamentId != null"
       [routerLink]="['/fifa/tournaments', game.tournamentId]"
-      class="drop-shadow-lg rounded-full px-2 border border-yellow-300 bg-yellow-300 text-white text-sm cursor-pointer"
-    >
-      Accéder au tournoi
-      <fa-icon class="ml-1 text-xs" [icon]="externalIcon"></fa-icon>
-    </span>
+      [showExternalIcon]="true"
+      [title]="'Accéder au tournoi'"
+      [bgStyle]="'yellow'"
+    ></app-pill>
 
-    <span
+    <app-pill
       *ngIf="game != null && isAdmin == true"
       [routerLink]="['/admin/fifa-games/edit', gameId]"
-      class="drop-shadow-lg rounded-full px-2 border border-frenchRed bg-frenchRed text-white text-sm cursor-pointer"
-    >
-      Modifier
-      <fa-icon class="ml-1 text-xs" [icon]="externalIcon"></fa-icon>
-    </span>
+      [bgStyle]="'red'"
+      [title]="'Modifier'"
+      [showExternalIcon]="true"
+    ></app-pill>
   </div>
 </section>
 
