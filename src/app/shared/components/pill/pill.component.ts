@@ -61,6 +61,22 @@ export class PillComponent implements OnInit {
         this.style = 'bg-secondary text-primaryDark';
         break;
 
+      case 'gray':
+        this.style = 'bg-gray-600 text-white';
+        break;
+
+      case 'yellow':
+        this.style = 'bg-yellow-300 text-white';
+        break;
+
+      case 'red':
+        this.style = 'bg-frenchRed text-white';
+        break;
+
+      case 'green':
+        this.style = 'bg-customGreen text-white';
+        break;
+
       default:
         this.style =
           'bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark';
@@ -76,6 +92,14 @@ export class PillComponent implements OnInit {
 
       case 'red':
         this.style += ' border border-frenchRed';
+        break;
+
+      case 'gray':
+        this.style += ' border border-gray-600';
+        break;
+
+      case 'gold':
+        this.style += ' border border-yellow-300 border-yellow-300';
         break;
 
       default:

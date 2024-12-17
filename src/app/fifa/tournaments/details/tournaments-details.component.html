@@ -7,37 +7,33 @@
 
 <section
   id="header-pills"
-  class="px-4 py-2 mb-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+  class="px-4 py-2 mb-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
   [@inOutAnimation]
   *ngIf="loading == false && tournament != null"
 >
   <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
-    <span
-      class="drop-shadow-lg rounded-full px-2 border border-customGreen bg-customGreen text-white text-sm cursor-pointer"
+    <app-pill
       *ngIf="isSubscribed != null"
       (click)="showSubscription()"
+      [title]="'Inscrit'"
+      [icon]="checkIcon"
+      [iconColor]="'text-white'"
+      [bgStyle]="'green'"
     >
-      <fa-icon [icon]="checkIcon"></fa-icon> Inscrit
-    </span>
+    </app-pill>
 
-    <span
-      class="drop-shadow-lg rounded-full px-2 bg-secondary text-white text-sm"
-      [class.bg-gray-600]="tournament.state == 0"
-      [class.bg-customGreen]="tournament.state == 1"
-      [class.bg-secondary]="tournament.state == 2"
-      [class.bg-customYellow]="tournament.state == 3"
-      [class.bg-green-800]="tournament.state == 4"
-    >
-      {{ getState(tournament.state) }}
-    </span>
+    <app-pill [title]="getState(tournament.state)" [bgStyle]="statePillColor">
+    </app-pill>
 
-    <span
-      class="drop-shadow-lg rounded-full px-2 border border-frenchRed bg-frenchRed text-white text-sm cursor-pointer"
+    <app-pill
       *ngIf="isAdmin == true"
       [routerLink]="['/admin/tournaments/edit', tournamentId]"
+      [title]="'Modifier'"
+      [showExternalIcon]="true"
+      [bgStyle]="'red'"
     >
       Modifier
-    </span>
+    </app-pill>
   </div>
 </section>
 
