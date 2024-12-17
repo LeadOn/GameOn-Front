@@ -124,12 +124,18 @@ export class AdminFifaGameEditComponent implements OnInit {
     if (this.updateGameForm.controls['phase'].value != null) {
       updateGame.phase = this.updateGameForm.controls['phase'].value;
     }
-    if (this.updateGameForm.controls['tournamentId'].value != null) {
+    if (
+      this.updateGameForm.controls['tournamentId'].value != null &&
+      this.updateGameForm.controls['tournamentId'].value != -1
+    ) {
       updateGame.tournamentId =
         this.updateGameForm.controls['tournamentId'].value;
     }
 
-    if (this.updateGameForm.controls['platform'].value != null) {
+    if (
+      this.updateGameForm.controls['platform'].value != null &&
+      this.updateGameForm.controls['platform'].value != -1
+    ) {
       updateGame.PlatformId = this.updateGameForm.controls['platform'].value;
     }
     if (this.updateGameForm.controls['teamFifa1'].value != null) {
