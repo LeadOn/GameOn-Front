@@ -13,4 +13,7 @@ export class CommonPageHeaderComponent {
 
   @Input()
   title: string = 'Default';
+
+  @Input()
+  five = false;
 }

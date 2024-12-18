@@ -36,11 +36,15 @@ export class HomeComponent implements OnInit {
   currentSeasonTitle = 'Chargement...';
 
   plannedMatches: FifaGamePlayed[] = [];
+  lastMatches: FifaGamePlayed[] = [];
+  lastPlayerMatches: FifaGamePlayed[] = [];
 
   players: Player[] = [];
   loadingSeason = true;
   loadingActivePlayers = true;
   loadingPlannedMatches = false;
+  loadingLastMatches = true;
+  loadingLastPlayerMatches = true;
 
   tournaments: Tournament[] = [];
   tournamentIcon = faTrophy;
@@ -122,7 +126,27 @@ export class HomeComponent implements OnInit {
             console.error(err);
           }
         );
+
+        this.gameService.getLastByPlayer(x.id, 5).subscribe(
+          (data) => {
+            this.loadingLastPlayerMatches = false;
+            this.lastPlayerMatches = data;
+          },
+          (err) => {
+            console.error(err);
+          }
+        );
       });
+    } else {
+      this.gameService.getLast(5).subscribe(
+        (data) => {
+          this.loadingLastMatches = false;
+          this.lastMatches = data;
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
     }
   }
 }
