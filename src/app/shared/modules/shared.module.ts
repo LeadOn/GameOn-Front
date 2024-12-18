@@ -16,6 +16,7 @@ import { PlayerTeamListComponent } from '../components/player-team-list/player-t
 import { CommonPageHeaderComponent } from '../components/common-page-header/common-page-header.component';
 import { InfoMessageComponent } from '../components/info-message/info-message.component';
 import { PillComponent } from '../components/pill/pill.component';
+import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/loading-spinner-tiny.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { PillComponent } from '../components/pill/pill.component';
     CommonPageHeaderComponent,
     InfoMessageComponent,
     PillComponent,
+    LoadingSpinnerTinyComponent,
   ],
   imports: [
     CommonModule,
@@ -58,6 +60,7 @@ import { PillComponent } from '../components/pill/pill.component';
     CommonPageHeaderComponent,
     InfoMessageComponent,
     PillComponent,
+    LoadingSpinnerTinyComponent,
   ],
 })
 export class SharedModule {}
