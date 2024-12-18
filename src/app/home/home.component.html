@@ -86,21 +86,23 @@
 <section
   id="home-planned-matches"
   *ngIf="isLoggedIn == true"
-  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark animate-fade-up"
+  class="animate-fade-up"
 >
-  <div class="flex">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+  <div class="px-4 mt-4 flex justify-between items-center">
+    <span
+      class="text-lg font-semibold text-primary dark:text-primaryDark"
+      *ngIf="loadingPlannedMatches == true || plannedMatches.length > 0"
       >Mes prochains matchs</span
     >
-  </div>
 
-  <app-loading-spinner
-    *ngIf="loadingPlannedMatches == true"
-  ></app-loading-spinner>
+    <app-loading-spinner-tiny
+      *ngIf="loadingPlannedMatches == true"
+    ></app-loading-spinner-tiny>
+  </div>
 
   <div
     *ngIf="loadingPlannedMatches == false && plannedMatches.length > 0"
-    class="mt-4"
+    class="mt-4 px-4"
   >
     <div class="mt-4 flex flex-col w-full space-y-4">
       <app-fifa-game-history-card
@@ -109,32 +111,68 @@
       ></app-fifa-game-history-card>
     </div>
   </div>
+</section>
 
-  <div
-    *ngIf="loadingPlannedMatches == false && plannedMatches.length == 0"
-    class="mt-4"
-  >
-    <app-info-message
-      [icon]="infoIcon"
-      [type]="'info'"
-      [title]="'Aucun match prévu pour le moment.'"
-    ></app-info-message>
+<section
+  id="home-last-matches"
+  class="animate-fade-up"
+  *ngIf="isLoggedIn == true"
+>
+  <div class="px-4 mt-4 flex justify-between items-center">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Mes derniers matchs joués</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="loadingLastPlayerMatches == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <div *ngIf="loadingLastPlayerMatches == false" class="mt-4 px-4">
+    <div class="mt-4 flex flex-col w-full space-y-4">
+      <app-fifa-game-history-card
+        *ngFor="let game of lastPlayerMatches"
+        [game]="game"
+      ></app-fifa-game-history-card>
+    </div>
   </div>
 </section>
 
 <section
-  id="home-players"
-  class="px-4 mt-4 py-4 bg-bgLight dark:bg-bgDark animate-fade-up"
+  id="home-last-matches"
+  class="animate-fade-up"
+  *ngIf="isLoggedIn == false"
 >
-  <div class="flex">
+  <div class="px-4 mt-4 flex justify-between items-center">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Derniers matchs joués</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="loadingLastMatches == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <div *ngIf="loadingLastMatches == false" class="mt-4 px-4">
+    <div class="mt-4 flex flex-col w-full space-y-4">
+      <app-fifa-game-history-card
+        *ngFor="let game of lastMatches"
+        [game]="game"
+      ></app-fifa-game-history-card>
+    </div>
+  </div>
+</section>
+
+<section id="home-players" class="px-4 mt-4 py-4 animate-fade-up">
+  <div class="flex justify-between items-center">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Joueurs actifs</span
     >
-  </div>
 
-  <app-loading-spinner
-    *ngIf="loadingActivePlayers == true"
-  ></app-loading-spinner>
+    <app-loading-spinner-tiny
+      *ngIf="loadingActivePlayers == true"
+    ></app-loading-spinner-tiny>
+  </div>
 
   <div *ngIf="loadingActivePlayers == false" class="mt-4">
     <app-player-card

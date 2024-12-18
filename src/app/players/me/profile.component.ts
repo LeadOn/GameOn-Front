@@ -71,6 +71,8 @@ export class ProfilePageComponent implements OnInit, OnChanges {
     fullName: new FormControl('', [Validators.maxLength(100)]),
     nickname: new FormControl('', [Validators.maxLength(100)]),
     profilePictureUrl: new FormControl('', [Validators.maxLength(500)]),
+    riotGamesNickname: new FormControl('', [Validators.maxLength(500)]),
+    riotGamesTagLine: new FormControl('', [Validators.maxLength(500)]),
   });
 
   constructor(
@@ -86,6 +88,17 @@ export class ProfilePageComponent implements OnInit, OnChanges {
       this.updatePlayerForm.controls['profilePictureUrl'].setValue(
         x.profilePictureUrl
       );
+      if (x.riotGamesNickname != null) {
+        this.updatePlayerForm.controls['riotGamesNickname'].setValue(
+          x.riotGamesNickname
+        );
+      }
+
+      if (x.riotGamesTagLine != null) {
+        this.updatePlayerForm.controls['riotGamesTagLine'].setValue(
+          x.riotGamesTagLine
+        );
+      }
     });
 
     this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
@@ -123,12 +136,33 @@ export class ProfilePageComponent implements OnInit, OnChanges {
 
   updateUser() {
     if (this.loading == false) {
+      let riotGamesNickname: string | undefined = undefined;
+      let riotGamesTagLine: string | undefined = undefined;
+
+      if (
+        this.updatePlayerForm.controls['riotGamesNickname'].value != null &&
+        this.updatePlayerForm.controls['riotGamesNickname'].value != ''
+      ) {
+        riotGamesNickname =
+          this.updatePlayerForm.controls['riotGamesNickname'].value;
+      }
+
+      if (
+        this.updatePlayerForm.controls['riotGamesTagLine'].value != null &&
+        this.updatePlayerForm.controls['riotGamesTagLine'].value != ''
+      ) {
+        riotGamesTagLine =
+          this.updatePlayerForm.controls['riotGamesTagLine'].value;
+      }
+
       this.loading = true;
       this.playerService
         .update(
           this.updatePlayerForm.controls['fullName'].value,
           this.updatePlayerForm.controls['nickname'].value,
-          this.updatePlayerForm.controls['profilePictureUrl'].value
+          this.updatePlayerForm.controls['profilePictureUrl'].value,
+          riotGamesNickname,
+          riotGamesTagLine
         )
         .subscribe(
           (data) => {
@@ -142,6 +176,24 @@ export class ProfilePageComponent implements OnInit, OnChanges {
             alert('Une erreur est survenue lors de la mise à jour du compte !');
           }
         );
+    }
+  }
+
+  refreshSummoner() {
+    if (this.loading == false) {
+      this.loading = true;
+      this.playerService.refreshSummoner().subscribe(
+        (data) => {
+          this.successMessage = true; // Getting its account, and setting it into store
+          this.successMessageChange.emit(true);
+          this.store.dispatch(setPlayer({ player: data }));
+          this.loading = false;
+        },
+        (err) => {
+          this.loading = false;
+          alert('Une erreur est survenue lors de la mise à jour du compte !');
+        }
+      );
     }
   }
 }

@@ -3,7 +3,8 @@
   [ngClass]="{
     'bg-secondary': type == 'info',
     'bg-frenchRed': type == 'error',
-    'bg-customGreen': type == 'success'
+    'bg-customGreen': type == 'success',
+    'cursor-pointer': clickable == true,
   }"
 >
   <fa-icon [icon]="icon" class="text-primaryDark"></fa-icon>

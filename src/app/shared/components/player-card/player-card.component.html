@@ -1,5 +1,5 @@
 <div
-  class="flex flex-row rounded-lg border border-bgLightDarker dark:border-bgLight px-4 mt-2 drop-shadow-lg cursor-pointer"
+  class="flex flex-row rounded-lg border border-bgLightDarker dark:border-bgLight bg-bgLight dark:bg-bgDark px-4 mt-2 drop-shadow-lg cursor-pointer"
   [routerLink]="['/player', player.id]"
 >
   <div class="flex items-center justify-center">
@@ -24,6 +24,17 @@
       {{ player.nickname }}
     </span>
     <span *ngIf="player.nickname == null">Pseudo inconnu</span>
+    <div class="flex items-center text-gray-500 dark:text-gray-400">
+      <img
+        src="assets/img/svg/lol.svg"
+        class="w-6 h-6"
+        *ngIf="player.riotGamesPUUID != null"
+      />
+      <span class="text-sm" *ngIf="player.riotGamesPUUID != null"
+        >{{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }} - niveau
+        {{ player.lolSummonerLevel }}</span
+      >
+    </div>
   </div>
 
   <div class="flex" *ngIf="player.tournamentsWon != null">
