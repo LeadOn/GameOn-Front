@@ -45,6 +45,23 @@
     <span class="text-gray-500 dark:text-gray-400">{{
       currentPlayer.fullName
     }}</span>
+
+    <div
+      class="flex justify-center items-center text-gray-500 dark:text-gray-400"
+      *ngIf="loading == false && (player$ | async) as currentPlayer"
+    >
+      <img
+        src="assets/img/svg/lol.svg"
+        class="w-8 h-8"
+        *ngIf="currentPlayer.riotGamesPUUID != null"
+      />
+      <span *ngIf="currentPlayer.riotGamesPUUID != null"
+        >{{ currentPlayer.riotGamesNickname }}#{{
+          currentPlayer.riotGamesTagLine
+        }}
+        - niveau {{ currentPlayer.lolSummonerLevel }}</span
+      >
+    </div>
   </div>
 </section>
 
@@ -131,6 +148,59 @@
   *ngIf="loading == false && (player$ | async) as currentPlayer"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >League of Legends (beta)</span
+  >
+</div>
+
+<section
+  id="player-lol"
+  class="mt-4"
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+  [@inOutAnimation]
+>
+  <app-info-message
+    *ngIf="currentPlayer.riotGamesNickname == null"
+    [title]="
+      'Vous pouvez renseigner votre compte Riot Games au niveau des préférences de votre profil !'
+    "
+  ></app-info-message>
+
+  <div
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg mx-4"
+  >
+    <div
+      class="flex flex-col space-y-2 justify-between cursor-pointer text-primary dark:text-primaryDark"
+    >
+      <span
+        ><fa-icon [icon]="calendarIcon" class="mr-2"></fa-icon> Dernière mise à
+        jour : {{ currentPlayer.lolRefreshedOn | date : "medium" }}</span
+      >
+
+      <span
+        >Compte : {{ currentPlayer.riotGamesNickname }}#{{
+          currentPlayer.riotGamesTagLine
+        }}</span
+      >
+      <span>Niveau : {{ currentPlayer.lolSummonerLevel }}</span>
+      <span>Identifiant invocateur : {{ currentPlayer.lolSummonerId }}</span>
+      <span>Identifiant Riot Games: {{ currentPlayer.riotGamesPUUID }}</span>
+    </div>
+
+    <button
+      (click)="refreshSummoner()"
+      class="mt-4 text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+    >
+      Mettre à jour
+    </button>
+  </div>
+</section>
+
+<div
+  class="px-4 mt-4 flex justify-between"
+  [@inOutAnimation]
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+>
+  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
     >Préférences</span
   >
 </div>
@@ -202,6 +272,40 @@
         >
           Photo de profil (URL)
           <span class="text-customRed">*</span>
+        </label>
+      </div>
+
+      <hr class="my-4" />
+
+      <div class="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          id="riotGamesNickname"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
+          required
+          formControlName="riotGamesNickname"
+        />
+        <label
+          for="riotGamesNickname"
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Nom de compte Riot Games
+        </label>
+      </div>
+
+      <div class="relative z-0 w-full mb-6 group">
+        <input
+          type="text"
+          id="riotGamesTagLine"
+          class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer text-primary dark:text-primaryDark"
+          required
+          formControlName="riotGamesTagLine"
+        />
+        <label
+          for="riotGamesTagLine"
+          class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >
+          Tag (exemple: EUW)
         </label>
       </div>
 

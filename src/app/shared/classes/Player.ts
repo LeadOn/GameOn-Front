@@ -9,4 +9,10 @@ export class Player {
   createdOn: Date = new Date();
   archived: boolean = false;
   tournamentsWon?: Tournament[];
+  riotGamesNickname?: string;
+  riotGamesTagLine?: string;
+  riotGamesPUUID?: string;
+  lolSummonerId?: string;
+  lolSummonerLevel?: string;
+  lolRefreshedOn?: Date;
 }
