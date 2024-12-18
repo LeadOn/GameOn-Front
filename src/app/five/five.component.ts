@@ -5,6 +5,7 @@ import { GameOnSoccerfiveService } from '../shared/services/gameon-soccerfive.se
 import { KeycloakService } from 'keycloak-angular';
 import {
   faFootballBall,
+  faInfoCircle,
   faSoccerBall,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,24 +13,13 @@ import {
   selector: 'app-five',
   templateUrl: './five.component.html',
   styleUrl: './five.component.scss',
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
 })
 export class FiveComponent implements OnInit {
   loading = false;
   fives: SoccerFive[] = [];
   isLoggedIn = true;
   footballIcon = faSoccerBall;
+  infoIcon = faInfoCircle;
 
   constructor(
     private fiveService: GameOnSoccerfiveService,
@@ -64,5 +54,9 @@ export class FiveComponent implements OnInit {
     });
 
     return label;
+  }
+
+  login() {
+    this.keycloakService.login();
   }
 }
