@@ -51,11 +51,26 @@ export class GameOnPlayerService {
     );
   }
 
-  update(fullName: any, nickname: any, profilePicUrl: any): Observable<Player> {
+  update(
+    fullName: any,
+    nickname: any,
+    profilePicUrl: any,
+    riotGamesNickname?: string,
+    riotGamesTagLine?: string
+  ): Observable<Player> {
     return this.client.patch<Player>(environment.gameOnApiUrl + '/player/me', {
       FullName: fullName,
       Nickname: nickname,
       ProfilePictureUrl: profilePicUrl,
+      RiotGamesNickname: riotGamesNickname,
+      RiotGamesTagLine: riotGamesTagLine,
     });
+  }
+
+  refreshSummoner(): Observable<Player> {
+    return this.client.patch<Player>(
+      environment.gameOnApiUrl + '/player/me/summoner',
+      null
+    );
   }
 }

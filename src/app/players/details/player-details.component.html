@@ -64,6 +64,20 @@
       <span class="text-xs text-gray-600 dark:text-gray-300">{{
         player.nickname
       }}</span>
+
+      <div
+        class="flex justify-center items-center text-gray-500 dark:text-gray-400"
+      >
+        <img
+          src="assets/img/svg/lol.svg"
+          class="w-8 h-8"
+          *ngIf="player.riotGamesPUUID != null"
+        />
+        <span class="text-xs" *ngIf="player.riotGamesPUUID != null"
+          >{{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }} - niveau
+          {{ player.lolSummonerLevel }}</span
+        >
+      </div>
     </div>
   </div>
 </section>
