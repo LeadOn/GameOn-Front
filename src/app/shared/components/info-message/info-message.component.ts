@@ -16,4 +16,7 @@ export class InfoMessageComponent {
 
   @Input()
   type: string = 'info';
+
+  @Input()
+  clickable = false;
 }

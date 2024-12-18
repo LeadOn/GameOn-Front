@@ -21,6 +21,14 @@
     </div>
   </div>
 
+  <app-info-message
+    [icon]="infoIcon"
+    [title]="'Connectez-vous pour organiser un five !'"
+    *ngIf="isLoggedIn == false"
+    (click)="login()"
+    [clickable]="true"
+  ></app-info-message>
+
   <div class="w-full flex flex-col mt-4 px-4">
     <div
       *ngIf="loading == false && fives.length > 0"
