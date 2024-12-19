@@ -5,6 +5,7 @@ import { Player } from '../../shared/classes/Player';
 import { environment } from '../../../environments/environment';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
 import { GlobalStatsDto } from '../../shared/classes/GlobalStatsDto';
+import { PlayerDto } from '../classes/PlayerDto';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class GameOnPlayerService {
     );
   }
 
-  getAllLol(archived?: boolean): Observable<Player[]> {
+  getAllLol(archived?: boolean): Observable<PlayerDto[]> {
     let archivalState = false;
 
     if (archived != undefined && archived != null) {

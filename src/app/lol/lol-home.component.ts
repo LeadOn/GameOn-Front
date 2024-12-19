@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameOnPlayerService } from '../shared/services/gameon-player.service';
-import { Player } from '../shared/classes/Player';
 import { KeycloakService } from 'keycloak-angular';
+import { PlayerDto } from '../shared/classes/PlayerDto';
 
 @Component({
   selector: 'app-lol-home',
@@ -9,7 +9,7 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrl: './lol-home.component.scss',
 })
 export class LolHomeComponent implements OnInit {
-  leaguePlayers: Player[] = [];
+  leaguePlayers: PlayerDto[] = [];
   isLoading = true;
   isLoggedIn = false;
 
@@ -25,6 +25,7 @@ export class LolHomeComponent implements OnInit {
       (players) => {
         this.leaguePlayers = players;
         this.isLoading = false;
+        console.log(this.leaguePlayers);
       },
       (err) => {
         console.error(err);
