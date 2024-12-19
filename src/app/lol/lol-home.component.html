@@ -1,0 +1,35 @@
+<section id="top-card" class="px-4 pt-4">
+  <app-common-page-header
+    [lol]="true"
+    [title]="'League of Legends (beta)'"
+  ></app-common-page-header>
+</section>
+
+<section id="lol-content">
+  <app-info-message
+    *ngIf="isLoggedIn == true"
+    [title]="
+      'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'
+    "
+  ></app-info-message>
+</section>
+
+<section id="home-players" class="px-4 mt-4 py-4 animate-fade-up">
+  <div class="flex justify-between items-center">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Joueurs League of Legends actifs</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="isLoading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <div *ngIf="isLoading == false" class="mt-4">
+    <app-player-card
+      ng-if="players.length > 0"
+      *ngFor="let player of leaguePlayers"
+      [player]="player"
+    ></app-player-card>
+  </div>
+</section>

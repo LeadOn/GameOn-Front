@@ -16,4 +16,7 @@ export class CommonPageHeaderComponent {
 
   @Input()
   five = false;
+
+  @Input()
+  lol = false;
 }
