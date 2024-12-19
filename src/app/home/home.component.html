@@ -26,10 +26,13 @@
 
 <section id="home-cards" class="px-4 dark:bg-bgDarkDarker animate-fade-up">
   <div
-    class="flex flex-col justify-between px-4 text-white drop-shadow-lg font-bold mt-4 h-48 welcome-card rounded-lg"
+    class="flex flex-col justify-between px-4 text-white drop-shadow-lg font-bold mt-4 aspect-video welcome-card rounded-lg cursor-pointer"
+    routerLink="/lol"
   >
-    <span class="w-full text-left mt-2">Bienvenue dans GameOn!</span>
-    <span class="w-full text-center text-sm mb-2">Version {{ version }}</span>
+    <span class="w-full text-left mt-2"
+      >Accéder à l'espace League of Legends !</span
+    >
+    <span class="w-full text-right text-sm mb-2">v{{ version }}</span>
   </div>
 </section>
 

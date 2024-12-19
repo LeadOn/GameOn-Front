@@ -24,6 +24,18 @@ export class GameOnPlayerService {
     );
   }
 
+  getAllLol(archived?: boolean): Observable<Player[]> {
+    let archivalState = false;
+
+    if (archived != undefined && archived != null) {
+      archivalState = archived;
+    }
+
+    return this.client.get<Player[]>(
+      environment.gameOnApiUrl + '/player/lol?archived=' + archivalState
+    );
+  }
+
   get(id: number): Observable<Player> {
     return this.client.get<Player>(environment.gameOnApiUrl + '/player/' + id);
   }
