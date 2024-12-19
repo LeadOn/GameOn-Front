@@ -16,6 +16,7 @@ import { DonateComponent } from './donate/donate.component';
 import { FiveComponent } from './five/five.component';
 import { FiveDetailsComponent } from './five/details/five-details.component';
 import { CreateFiveComponent } from './five/create/five-create.component';
+import { LolHomeComponent } from './lol/lol-home.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,10 @@ const routes: Routes = [
       {
         path: 'player/:id',
         component: PlayerDetailsComponent,
+      },
+      {
+        path: 'lol',
+        component: LolHomeComponent,
       },
       {
         path: 'fifa',
