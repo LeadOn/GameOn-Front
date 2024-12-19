@@ -5,9 +5,8 @@
   ></app-common-page-header>
 </section>
 
-<section id="lol-content">
+<section id="lol-messages" *ngIf="isLoggedIn == false">
   <app-info-message
-    *ngIf="isLoggedIn == true"
     [title]="
       'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'
     "

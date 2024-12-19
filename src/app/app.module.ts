@@ -30,6 +30,7 @@ import { FiveDetailsComponent } from './five/details/five-details.component';
 import { CreateFiveComponent } from './five/create/five-create.component';
 import { LolHomeComponent } from './lol/lol-home.component';
 import { LolPlayerCardComponent } from './lol/components/lol-player-card/lol-player-card.component';
+import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -65,6 +66,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     CreateFiveComponent,
     LolHomeComponent,
     LolPlayerCardComponent,
+    LolPlayerDetailsComponent,
   ],
   imports: [
     BrowserModule,

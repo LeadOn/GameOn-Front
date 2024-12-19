@@ -149,4 +149,8 @@ export class HomeComponent implements OnInit {
       );
     }
   }
+
+  login() {
+    this.keycloak.login();
+  }
 }

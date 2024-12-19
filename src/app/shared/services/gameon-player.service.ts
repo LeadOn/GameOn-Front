@@ -41,6 +41,12 @@ export class GameOnPlayerService {
     return this.client.get<Player>(environment.gameOnApiUrl + '/player/' + id);
   }
 
+  getSummoner(id: number): Observable<PlayerDto> {
+    return this.client.get<PlayerDto>(
+      environment.gameOnApiUrl + '/player/' + id + '/lol'
+    );
+  }
+
   getCurrent(): Observable<Player> {
     return this.client.get<Player>(environment.gameOnApiUrl + '/player/me');
   }
@@ -83,6 +89,13 @@ export class GameOnPlayerService {
   refreshSummoner(): Observable<Player> {
     return this.client.patch<Player>(
       environment.gameOnApiUrl + '/player/me/summoner',
+      null
+    );
+  }
+
+  refreshSummonerById(id: string): Observable<Player> {
+    return this.client.patch<Player>(
+      environment.gameOnApiUrl + '/player/' + id + '/summoner',
       null
     );
   }

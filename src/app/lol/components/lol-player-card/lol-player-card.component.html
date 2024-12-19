@@ -1,6 +1,6 @@
 <div
   class="flex flex-row rounded-lg border border-bgLightDarker dark:border-bgLight bg-bgLight dark:bg-bgDark px-4 mt-2 drop-shadow-lg cursor-pointer"
-  [routerLink]="['/player', player.id]"
+  [routerLink]="['/lol/summoner', player.id]"
 >
   <div class="flex items-center justify-center">
     <img
@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col">
+  <div class="flex flex-col text-primary dark:text-primaryDark">
     <div
       *ngIf="player.leagueOfLegendsSoloRank != null"
       class="flex flex-row justify-center items-center space-x-2"

@@ -169,26 +169,24 @@
     class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg mx-4"
   >
     <div
-      class="flex flex-col space-y-2 justify-between cursor-pointer text-primary dark:text-primaryDark"
+      class="flex flex-row justify-between cursor-pointer text-primary dark:text-primaryDark"
+      [routerLink]="['/lol/summoner', currentPlayer.id]"
     >
-      <span
-        ><fa-icon [icon]="calendarIcon" class="mr-2"></fa-icon> Dernière mise à
-        jour : {{ currentPlayer.lolRefreshedOn | date : "medium" }}</span
-      >
+      <div class="flex items-center space-x-2">
+        <img src="assets/img/svg/lol.svg" class="w-8" />
+        <span>Voir mon profil</span>
+      </div>
 
-      <span
-        >Compte : {{ currentPlayer.riotGamesNickname }}#{{
-          currentPlayer.riotGamesTagLine
-        }}</span
-      >
-      <span>Niveau : {{ currentPlayer.lolSummonerLevel }}</span>
-      <span>Identifiant invocateur : {{ currentPlayer.lolSummonerId }}</span>
-      <span>Identifiant Riot Games: {{ currentPlayer.riotGamesPUUID }}</span>
+      <fa-icon [icon]="arrowRightIcon"></fa-icon>
     </div>
+  </div>
 
+  <div
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg mx-4 mt-4"
+  >
     <button
       (click)="refreshSummoner()"
-      class="mt-4 text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
     >
       Mettre à jour
     </button>
