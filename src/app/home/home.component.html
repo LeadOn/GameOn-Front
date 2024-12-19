@@ -81,7 +81,7 @@
     [icon]="infoIcon"
     [type]="'info'"
     [title]="'Connectez-vous pour profiter d\'une experience personalisée !'"
-    routerLink="/player/me"
+    (click)="login()"
   >
   </app-info-message>
 </section>

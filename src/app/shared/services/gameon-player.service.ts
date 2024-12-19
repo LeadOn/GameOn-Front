@@ -5,6 +5,7 @@ import { Player } from '../../shared/classes/Player';
 import { environment } from '../../../environments/environment';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
 import { GlobalStatsDto } from '../../shared/classes/GlobalStatsDto';
+import { PlayerDto } from '../classes/PlayerDto';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class GameOnPlayerService {
     );
   }
 
-  getAllLol(archived?: boolean): Observable<Player[]> {
+  getAllLol(archived?: boolean): Observable<PlayerDto[]> {
     let archivalState = false;
 
     if (archived != undefined && archived != null) {
@@ -38,6 +39,12 @@ export class GameOnPlayerService {
 
   get(id: number): Observable<Player> {
     return this.client.get<Player>(environment.gameOnApiUrl + '/player/' + id);
+  }
+
+  getSummoner(id: number): Observable<PlayerDto> {
+    return this.client.get<PlayerDto>(
+      environment.gameOnApiUrl + '/player/' + id + '/lol'
+    );
   }
 
   getCurrent(): Observable<Player> {
@@ -82,6 +89,13 @@ export class GameOnPlayerService {
   refreshSummoner(): Observable<Player> {
     return this.client.patch<Player>(
       environment.gameOnApiUrl + '/player/me/summoner',
+      null
+    );
+  }
+
+  refreshSummonerById(id: string): Observable<Player> {
+    return this.client.patch<Player>(
+      environment.gameOnApiUrl + '/player/' + id + '/summoner',
       null
     );
   }
