@@ -43,12 +43,9 @@
       <span class="text-xl font-semibold text-primary dark:text-primaryDark">{{
         player.fullName
       }}</span>
-      <span class="text-xs text-gray-600 dark:text-gray-300">{{
-        player.nickname
-      }}</span>
 
       <div
-        class="flex justify-center items-center text-gray-500 dark:text-gray-400"
+        class="flex justify-start items-center text-gray-500 dark:text-gray-400"
       >
         <img
           src="assets/img/svg/lol.svg"
@@ -145,4 +142,11 @@
       {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP</span
     >
   </div>
+</section>
+
+<section
+  id="player-stats"
+  class="m-4 p-4 bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg"
+>
+  <canvas id="myChart"></canvas>
 </section>
