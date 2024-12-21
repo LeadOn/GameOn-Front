@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
 import { GlobalStatsDto } from '../../shared/classes/GlobalStatsDto';
 import { PlayerDto } from '../classes/PlayerDto';
+import { LeagueOfLegendsRankHistory } from '../classes/LeagueOfLegendsRankHistory';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,19 @@ export class GameOnPlayerService {
 
     return this.client.get<Player[]>(
       environment.gameOnApiUrl + '/player/lol?archived=' + archivalState
+    );
+  }
+
+  getLolRankHistory(
+    id: number,
+    limit: number
+  ): Observable<LeagueOfLegendsRankHistory[]> {
+    return this.client.get<LeagueOfLegendsRankHistory[]>(
+      environment.gameOnApiUrl +
+        '/player/' +
+        id +
+        '/summoner/rank?limit=' +
+        limit
     );
   }
 
