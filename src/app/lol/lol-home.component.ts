@@ -25,7 +25,6 @@ export class LolHomeComponent implements OnInit {
       (players) => {
         this.leaguePlayers = players;
         this.isLoading = false;
-        console.log(this.leaguePlayers);
       },
       (err) => {
         console.error(err);
