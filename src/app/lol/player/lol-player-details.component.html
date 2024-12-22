@@ -23,7 +23,7 @@
   *ngIf="loading == false && player != null"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg w-2/3"
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg w-3/4"
   >
     <img
       class="rounded-full drop-shadow-lg"
@@ -61,7 +61,7 @@
   </div>
 
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg w-1/3 cursor-pointer flex-col text-primary dark:text-primaryDark"
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg w-1/4 cursor-pointer flex-col text-primary dark:text-primaryDark"
     (click)="refreshSummoner()"
   >
     <fa-icon [icon]="refreshIcon" class="text-2xl"></fa-icon>
@@ -76,12 +76,12 @@
   *ngIf="loading == false && player != null"
 >
   <div
-    class="w-1/2 bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg flex-col space-y-2 animate-fade-right"
+    class="w-1/2 bg-bgLight dark:bg-bgDark p-4 rounded-lg flex flex-row justify-evenly items-center align-middle drop-shadow-lg space-y-2 animate-fade-right"
   >
     <img
       src="assets/img/gameon-logo.webp"
       *ngIf="player.leagueOfLegendsSoloRank == null"
-      class="w-32 animate-fade-right"
+      class="w-16 h-16 animate-fade-right"
     />
 
     <img
@@ -89,33 +89,44 @@
       src="assets/img/lol/rank/{{
         player.leagueOfLegendsSoloRank.tier | lowercase
       }}.png"
-      class="w-32 h-32"
+      class="w-16 h-16 animate-fade-right"
     />
 
-    <app-pill [title]="'Solo 5v5'" [bgStyle]="'secondary'"></app-pill>
+    <div class="flex flex-col text-center space-y-1">
+      <app-pill [title]="'Solo 5v5'" [bgStyle]="'secondary'"></app-pill>
 
-    <span
-      class="text-primary dark:text-primaryDark animate-fade-right"
-      *ngIf="player.leagueOfLegendsSoloRank == null"
-      >Non classé</span
-    >
+      <span
+        class="text-primary dark:text-primaryDark animate-fade-right"
+        *ngIf="player.leagueOfLegendsSoloRank == null"
+        >Non classé</span
+      >
 
-    <span
-      class="text-primary dark:text-primaryDark animate-fade-right"
-      *ngIf="player.leagueOfLegendsSoloRank != null"
-      >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
-      {{ player.leagueOfLegendsSoloRank.rank }} -
-      {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP</span
-    >
+      <span
+        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        *ngIf="player.leagueOfLegendsSoloRank != null"
+        >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
+        {{ player.leagueOfLegendsSoloRank.rank }}
+        {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP</span
+      >
+
+      <span
+        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        *ngIf="player.leagueOfLegendsSoloRank != null"
+        ><span class="text-customGreen">{{ soloWins }}V</span> -
+        <span class="text-frenchRed">{{ soloLosses }}D</span> ({{
+          soloWinRate.toFixed(2)
+        }}%)</span
+      >
+    </div>
   </div>
 
   <div
-    class="w-1/2 bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg flex-col space-y-2 animate-fade-right"
+    class="w-1/2 bg-bgLight dark:bg-bgDark p-4 rounded-lg flex flex-row justify-evenly items-center align-middle drop-shadow-lg space-y-2 animate-fade-right"
   >
     <img
       src="assets/img/gameon-logo.webp"
       *ngIf="player.leagueOfLegendsFlexRank == null"
-      class="w-32 animate-fade-right"
+      class="w-16 h-16 animate-fade-right"
     />
 
     <img
@@ -123,30 +134,46 @@
       src="assets/img/lol/rank/{{
         player.leagueOfLegendsFlexRank.tier | lowercase
       }}.png"
-      class="w-32 h-32"
+      class="w-16 h-16 animate-fade-right"
     />
 
-    <app-pill [title]="'Flex 5v5'" [bgStyle]="'green'"></app-pill>
+    <div class="flex flex-col text-center space-y-1">
+      <app-pill [title]="'Flex 5v5'" [bgStyle]="'green'"></app-pill>
 
-    <span
-      class="text-primary dark:text-primaryDark animate-fade-right"
-      *ngIf="player.leagueOfLegendsFlexRank == null"
-      >Non classé</span
-    >
+      <span
+        class="text-primary dark:text-primaryDark animate-fade-right"
+        *ngIf="player.leagueOfLegendsFlexRank == null"
+        >Non classé</span
+      >
 
-    <span
-      class="text-primary dark:text-primaryDark animate-fade-right"
-      *ngIf="player.leagueOfLegendsFlexRank != null"
-      >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
-      {{ player.leagueOfLegendsFlexRank.rank }} -
-      {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP</span
-    >
+      <span
+        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        *ngIf="player.leagueOfLegendsFlexRank != null"
+        >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
+        {{ player.leagueOfLegendsFlexRank.rank }}
+        {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP</span
+      >
+
+      <span
+        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        *ngIf="player.leagueOfLegendsSoloRank != null"
+        ><span class="text-customGreen">{{ flexWins }}V</span> -
+        <span class="text-frenchRed">{{ flexLosses }}D</span> ({{
+          flexWinRate.toFixed(2)
+        }}%)</span
+      >
+    </div>
   </div>
 </section>
 
-<section
-  id="player-stats"
-  class="m-4 p-4 bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg"
->
-  <canvas id="myChart"></canvas>
-</section>
+<app-info-message
+  *ngIf="loading == false && rankHistory.length == 0"
+  [title]="
+    player?.riotGamesNickname + ' n\'as pas encore joué de partie classée.'
+  "
+></app-info-message>
+
+<app-rank-history
+  *ngIf="rankHistory.length > 0 && loading == false"
+  [rankHistory]="rankHistory"
+></app-rank-history>

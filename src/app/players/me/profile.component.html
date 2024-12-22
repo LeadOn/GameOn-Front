@@ -148,7 +148,7 @@
   *ngIf="loading == false && (player$ | async) as currentPlayer"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-    >League of Legends (beta)</span
+    >League of Legends</span
   >
 </div>
 
@@ -179,17 +179,6 @@
 
       <fa-icon [icon]="arrowRightIcon"></fa-icon>
     </div>
-  </div>
-
-  <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg mx-4 mt-4"
-  >
-    <button
-      (click)="refreshSummoner()"
-      class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
-    >
-      Mettre à jour
-    </button>
   </div>
 </section>
 
