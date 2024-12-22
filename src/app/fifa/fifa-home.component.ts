@@ -10,6 +10,7 @@ import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
 import { Platform } from '../shared/classes/Platform';
 import { GameOnGameService } from '../shared/services/gameon-game.service';
 import { GameOnPlatformService } from '../shared/services/gameon-platform.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-fifa-home',
@@ -35,7 +36,8 @@ export class FifaHomeComponent implements OnInit {
   constructor(
     private gameService: GameOnGameService,
     private platformService: GameOnPlatformService,
-    private keycloak: KeycloakService
+    private keycloak: KeycloakService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -95,5 +97,13 @@ export class FifaHomeComponent implements OnInit {
 
   showFiltersClick() {
     this.showFilters = !this.showFilters;
+  }
+
+  createMatch() {
+    if (this.isLoggedIn == false) {
+      this.keycloak.login();
+    } else {
+      this.router.navigate(['/fifa/create']);
+    }
   }
 }

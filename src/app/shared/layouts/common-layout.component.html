@@ -59,28 +59,9 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="cursor-pointer lg:hidden inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
       >
-        <button
-          (click)="createMatch()"
-          type="button"
-          class="lg:hidden inline-flex items-center justify-center w-10 h-10 font-medium bg-frenchBlue rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
-        >
-          <fa-icon [icon]="plusIcon" class="text-lg text-white"></fa-icon>
-        </button>
-
-        <a
-          (click)="createMatch()"
-          class="hidden lg:flex lg:flex-row lg:items-center lg:space-x-2"
-        >
-          <fa-icon
-            [icon]="plusIcon"
-            class="text-primary dark:text-primaryDark"
-          ></fa-icon>
-          <span class="text-primary dark:text-primaryDark"
-            >Ajouter un match</span
-          >
-        </a>
+        <img src="assets/img/svg/lol.svg" routerLink="/lol" class="w-10" />
       </div>
 
       <div
@@ -102,6 +83,33 @@
             class="text-primary dark:text-primaryDark"
           ></fa-icon>
           <span class="text-primary dark:text-primaryDark">Tournois</span>
+        </a>
+      </div>
+
+      <div
+        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
+      >
+        <span class="font-semibold text-primary dark:text-primaryDark"
+          >League of Legends</span
+        >
+      </div>
+
+      <div
+        class="cursor-pointer lg:mt-4 inline-flex hidden lg:flex flex-col lg:justify-start px-5 lg:px-6 rounded-s-full lg:rounded-none group space-y-1"
+      >
+        <div *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
+          <a
+            [routerLink]="['/lol/summoner', currentPlayer.id]"
+            class="hidden lg:flex lg:flex-row lg:items-center"
+          >
+            <img src="assets/img/svg/lol.svg" class="w-8" />
+            <span class="text-primary dark:text-primaryDark">Mes stats</span>
+          </a>
+        </div>
+
+        <a routerLink="/lol" class="hidden lg:flex lg:flex-row lg:items-center">
+          <img src="assets/img/svg/lol.svg" class="w-8" />
+          <span class="text-primary dark:text-primaryDark">Joueurs</span>
         </a>
       </div>
 

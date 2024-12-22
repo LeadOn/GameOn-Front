@@ -13,6 +13,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { initFlowbite } from 'flowbite';
 import { KeycloakService } from 'keycloak-angular';
+import { Player } from '../classes/Player';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-common-layout',
@@ -28,6 +31,8 @@ export class CommonLayoutComponent implements OnInit {
     return this.darkMode();
   }
 
+  player$: Observable<Player>;
+
   lightIcon = faSun;
   darkIcon = faMoon;
 
@@ -41,7 +46,13 @@ export class CommonLayoutComponent implements OnInit {
   adminIcon = faCog;
   btcIcon = faBitcoinSign;
 
-  constructor(private keycloak: KeycloakService, private router: Router) {
+  constructor(
+    private keycloak: KeycloakService,
+    private router: Router,
+    private store: Store<{ player: Player }>
+  ) {
+    this.player$ = store.select('player');
+
     this.isLoggedIn = this.keycloak.isLoggedIn();
     this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
 
