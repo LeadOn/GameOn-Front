@@ -5,12 +5,24 @@
   ></app-common-page-header>
 </section>
 
-<section id="lol-messages" *ngIf="isLoggedIn == false">
+<section id="lol-messages">
   <app-info-message
+    *ngIf="isLoggedIn == false"
     [title]="
       'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'
     "
+    [clickable]="true"
+    (click)="login()"
   ></app-info-message>
+
+  <div *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
+    <app-info-message
+      *ngIf="currentPlayer.lolSummonerId == null"
+      [title]="
+        'Vous n\'avez pas encore ajouté votre identifiant Riot Games. Ajoutez-le pour apparaître dans la liste !'
+      "
+    ></app-info-message>
+  </div>
 </section>
 
 <section id="home-players" class="px-4 mt-4 py-4 animate-fade-up">
