@@ -144,9 +144,7 @@
   </div>
 </section>
 
-<section
-  id="player-stats"
-  class="m-4 p-4 bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg"
->
-  <canvas id="myChart"></canvas>
-</section>
+<app-rank-history
+  *ngIf="rankHistory.length > 0 && loading == false"
+  [rankHistory]="rankHistory"
+></app-rank-history>
