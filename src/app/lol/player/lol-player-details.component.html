@@ -177,3 +177,31 @@
   *ngIf="rankHistory.length > 0 && loading == false"
   [rankHistory]="rankHistory"
 ></app-rank-history>
+
+<section id="games-played" class="mt-4 py-4 animate-fade-up">
+  <div class="flex justify-between items-center px-4">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Historique de parties</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="gameHistoryLoading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <app-info-message
+    [title]="
+      'Cette partie de l\'application est encore en cours de développement, mais est activée pour vous permettre de tester. N\'hésitez pas à nous faire vos retours !'
+    "
+  ></app-info-message>
+
+  <div
+    *ngIf="gameHistoryLoading == false"
+    class="flex flex-col mt-4 space-y-2 px-4"
+  >
+    <app-lol-game-card
+      *ngFor="let game of gamesPlayed"
+      [game]="game"
+    ></app-lol-game-card>
+  </div>
+</section>

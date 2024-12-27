@@ -5,6 +5,7 @@ import { PlayerDto } from '../../shared/classes/PlayerDto';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { LeagueOfLegendsRankHistory } from '../../shared/classes/LeagueOfLegendsRankHistory';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
+import { LoLGame } from '../../shared/classes/LoLGame';
 
 @Component({
   selector: 'app-lol-player-details',
@@ -14,6 +15,7 @@ import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-l
 export class LolPlayerDetailsComponent implements OnInit {
   playerId: any;
   loading = true;
+  gameHistoryLoading = true;
   player?: PlayerDto;
   refreshIcon = faSync;
   rankHistory: LeagueOfLegendsRankHistory[] = [];
@@ -24,6 +26,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   soloWinRate = 0.0;
   flexWinRate = 0.0;
   overAllWinRate = 0.0;
+  gamesPlayed: LoLGame[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +44,7 @@ export class LolPlayerDetailsComponent implements OnInit {
       (player) => {
         this.player = player;
         this.getRankHistory();
+        this.getLastGamesPlayed();
       },
       (err) => {
         console.error(err);
@@ -84,6 +88,18 @@ export class LolPlayerDetailsComponent implements OnInit {
         this.rankHistory = data;
         this.calculateWinRate();
         this.loading = false;
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
+
+  getLastGamesPlayed() {
+    this.lolService.getLastGamesPlayed(this.playerId).subscribe(
+      (data) => {
+        this.gamesPlayed = data;
+        this.gameHistoryLoading = false;
       },
       (err) => {
         console.error(err);
