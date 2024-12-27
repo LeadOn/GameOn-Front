@@ -5,6 +5,7 @@ import { PlayerDto } from '../shared/classes/PlayerDto';
 import { Observable } from 'rxjs';
 import { Player } from '../shared/classes/Player';
 import { Store } from '@ngrx/store';
+import { GameOnLoLService } from '../shared/services/leagueoflegends/gameon-lol.service';
 
 @Component({
   selector: 'app-lol-home',
@@ -18,7 +19,7 @@ export class LolHomeComponent implements OnInit {
   player$: Observable<Player>;
 
   constructor(
-    private playerService: GameOnPlayerService,
+    private lolService: GameOnLoLService,
     private keycloakService: KeycloakService,
     private store: Store<{ player: Player }>
   ) {
@@ -32,7 +33,7 @@ export class LolHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.playerService.getAllLol().subscribe(
+    this.lolService.getAll().subscribe(
       (players) => {
         this.leaguePlayers = players;
         this.isLoading = false;

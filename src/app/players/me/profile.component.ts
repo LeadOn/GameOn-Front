@@ -26,6 +26,7 @@ import { environment } from '../../../environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
 import { setPlayer } from '../../store/actions/player.actions';
+import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -78,7 +79,8 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   constructor(
     private store: Store<{ player: Player }>,
     private keycloak: KeycloakService,
-    private playerService: GameOnPlayerService
+    private playerService: GameOnPlayerService,
+    private lolService: GameOnLoLService
   ) {
     this.player$ = store.select('player');
 
@@ -182,7 +184,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   refreshSummoner() {
     if (this.loading == false) {
       this.loading = true;
-      this.playerService.refreshSummoner().subscribe(
+      this.lolService.refreshCurrent().subscribe(
         (data) => {
           this.successMessage = true; // Getting its account, and setting it into store
           this.successMessageChange.emit(true);
