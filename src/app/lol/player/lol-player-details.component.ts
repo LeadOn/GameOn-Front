@@ -112,6 +112,7 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.lolService.refreshById(this.playerId).subscribe(
       () => {
         this.getSummoner();
+        this.getLastGamesPlayed();
       },
       (err) => {
         console.error(err);
