@@ -1,0 +1,15 @@
+<app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
+
+<div
+  *ngIf="isLoading == false"
+  class="px-4 mt-4 bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark"
+>
+  <p class="underline">Game information:</p>
+
+  <ul class="mt-4">
+    <li>Game ID: {{ game.gameId }}</li>
+    <li>Match ID: {{ game.matchId }}</li>
+    <li>Game version: {{ game.gameVersion }}</li>
+    <li>End of game result: {{ game.endOfGameResult }}</li>
+  </ul>
+</div>

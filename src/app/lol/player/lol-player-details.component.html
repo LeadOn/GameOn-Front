@@ -25,48 +25,57 @@
   <div
     class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg w-3/4"
   >
-    <img
-      class="rounded-full drop-shadow-lg"
-      *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
-      src="{{ player.profilePictureUrl }}"
-      width="64"
-    />
+    <div class="flex flex-col items-center">
+      <img
+        class="rounded-full drop-shadow-lg"
+        *ngIf="
+          player.profilePictureUrl != null && player.profilePictureUrl != ''
+        "
+        src="{{ player.profilePictureUrl }}"
+        width="64"
+      />
 
-    <img
-      class="rounded-full drop-shadow-lg"
-      *ngIf="player.profilePictureUrl == null || player.profilePictureUrl == ''"
-      src="assets/img/gameon-logo.webp"
-      width="64"
-    />
+      <img
+        class="rounded-full drop-shadow-lg"
+        *ngIf="
+          player.profilePictureUrl == null || player.profilePictureUrl == ''
+        "
+        src="assets/img/gameon-logo.webp"
+        width="64"
+      />
+
+      <span
+        class="-mt-2 z-50 bg-secondary text-xs text-bgLight rounded-full px-2"
+        >{{ player.lolSummonerLevel }}</span
+      >
+    </div>
 
     <div class="flex flex-col">
-      <span class="text-xl font-semibold text-primary dark:text-primaryDark">{{
-        player.fullName
-      }}</span>
+      <span
+        class="text-xl font-semibold text-primary dark:text-primaryDark flex items-center"
+        >{{ player.riotGamesNickname
+        }}<span class="text-gray-500 dark:text-gray-400 text-xs"
+          >#{{ player.riotGamesTagLine }}</span
+        >
+      </span>
 
       <div
         class="flex justify-start items-center text-gray-500 dark:text-gray-400"
       >
-        <img
-          src="assets/img/svg/lol.svg"
-          class="w-8 h-8"
-          *ngIf="player.riotGamesPUUID != null"
-        />
-        <span class="text-xs" *ngIf="player.riotGamesPUUID != null"
-          >{{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }} - niveau
-          {{ player.lolSummonerLevel }}</span
-        >
+        <span class="text-xs">{{ player.fullName }}</span>
       </div>
     </div>
   </div>
 
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg w-1/4 cursor-pointer flex-col text-primary dark:text-primaryDark"
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-center items-center align-middle drop-shadow-lg w-1/4 cursor-pointer flex-col text-primary dark:text-primaryDark"
     (click)="refreshSummoner()"
   >
     <fa-icon [icon]="refreshIcon" class="text-2xl"></fa-icon>
 
-    <span class="text-xs">{{ player.lolRefreshedOn | date : "short" }}</span>
+    <span class="hidden md:block text-xs">{{
+      player.lolRefreshedOn | date : "short"
+    }}</span>
   </div>
 </section>
 
@@ -166,14 +175,54 @@
   </div>
 </section>
 
-<app-info-message
-  *ngIf="loading == false && rankHistory.length == 0"
-  [title]="
-    player?.riotGamesNickname + ' n\'as pas encore joué de partie classée.'
-  "
-></app-info-message>
+<section id="rank-history" class="mt-4 py-4 animate-fade-up">
+  <div class="flex justify-between items-center px-4">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Historique des rangs</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="loading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <app-info-message
+    *ngIf="loading == false && rankHistory.length == 0"
+    [title]="
+      player?.riotGamesNickname + ' n\'as pas encore joué de partie classée.'
+    "
+  ></app-info-message>
+</section>
 
 <app-rank-history
   *ngIf="rankHistory.length > 0 && loading == false"
   [rankHistory]="rankHistory"
 ></app-rank-history>
+
+<section id="games-played" class="mt-4 py-4 animate-fade-up">
+  <div class="flex justify-between items-center px-4">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Historique de parties</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="gameHistoryLoading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <app-info-message
+    [title]="
+      'Cette partie de l\'application est encore en cours de développement, mais est activée pour vous permettre de tester. N\'hésitez pas à nous faire vos retours !'
+    "
+  ></app-info-message>
+
+  <div
+    *ngIf="gameHistoryLoading == false"
+    class="flex flex-col mt-4 space-y-2 px-4"
+  >
+    <app-lol-game-card
+      *ngFor="let game of gamesPlayed"
+      [game]="game"
+    ></app-lol-game-card>
+  </div>
+</section>
