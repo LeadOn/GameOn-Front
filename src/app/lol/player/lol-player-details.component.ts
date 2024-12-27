@@ -4,6 +4,7 @@ import { GameOnPlayerService } from '../../shared/services/gameon-player.service
 import { PlayerDto } from '../../shared/classes/PlayerDto';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { LeagueOfLegendsRankHistory } from '../../shared/classes/LeagueOfLegendsRankHistory';
+import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 
 @Component({
   selector: 'app-lol-player-details',
@@ -26,7 +27,8 @@ export class LolPlayerDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: GameOnPlayerService
+    private playerService: GameOnPlayerService,
+    private lolService: GameOnLoLService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +37,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   }
 
   getSummoner() {
-    this.playerService.getSummoner(this.playerId).subscribe(
+    this.lolService.getById(this.playerId).subscribe(
       (player) => {
         this.player = player;
         this.getRankHistory();
@@ -77,7 +79,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   }
 
   getRankHistory() {
-    this.playerService.getLolRankHistory(this.playerId, 25).subscribe(
+    this.lolService.getRankHistory(this.playerId, 25).subscribe(
       (data) => {
         this.rankHistory = data;
         this.calculateWinRate();
@@ -91,7 +93,7 @@ export class LolPlayerDetailsComponent implements OnInit {
 
   refreshSummoner() {
     this.loading = true;
-    this.playerService.refreshSummonerById(this.playerId).subscribe(
+    this.lolService.refreshById(this.playerId).subscribe(
       () => {
         this.getSummoner();
       },
