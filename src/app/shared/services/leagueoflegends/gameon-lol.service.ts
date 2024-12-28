@@ -48,7 +48,7 @@ export class GameOnLoLService {
     return this.client.patch<Player>(this.baseUrl + '/me', null);
   }
 
-  getGame(id: number): Observable<LoLGame> {
+  getGame(id: string): Observable<LoLGame> {
     return this.client.get<LoLGame>(
       environment.gameOnApiUrl + '/lol/match/' + id
     );
@@ -57,6 +57,13 @@ export class GameOnLoLService {
   getLastGamesPlayed(id: number): Observable<LoLGame[]> {
     return this.client.get<LoLGame[]>(
       environment.gameOnApiUrl + '/lol/match/player/' + id
+    );
+  }
+
+  refreshGame(matchId: string): Observable<any> {
+    return this.client.post<any>(
+      environment.gameOnApiUrl + '/lol/match/' + matchId + '/update',
+      null
     );
   }
 }

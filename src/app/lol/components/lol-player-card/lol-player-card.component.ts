@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PlayerDto } from '../../../shared/classes/PlayerDto';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-lol-player-card',
@@ -9,4 +10,6 @@ import { PlayerDto } from '../../../shared/classes/PlayerDto';
 export class LolPlayerCardComponent {
   @Input()
   player: PlayerDto = new PlayerDto();
+
+  currentLoLPatch: string = environment.currentLoLPatch;
 }

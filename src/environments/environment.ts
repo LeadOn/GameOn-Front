@@ -6,5 +6,6 @@ export const environment = {
     realm: 'gameon',
     clientId: 'gameon-front-dev',
   },
-  version: '4.2.0',
+  version: '4.2.1',
+  currentLoLPatch: '14.24.1',
 };

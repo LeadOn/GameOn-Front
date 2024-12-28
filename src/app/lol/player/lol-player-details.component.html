@@ -27,23 +27,34 @@
   >
     <div class="flex flex-col items-center">
       <img
-        class="rounded-full drop-shadow-lg"
-        *ngIf="
-          player.profilePictureUrl != null && player.profilePictureUrl != ''
-        "
-        src="{{ player.profilePictureUrl }}"
+        *ngIf="player.lolIconId != null"
+        src="https://ddragon.leagueoflegends.com/cdn/{{
+          currentLoLPatch
+        }}/img/profileicon/{{ player.lolIconId }}.png"
         width="64"
+        class="rounded-full"
       />
 
       <img
-        class="rounded-full drop-shadow-lg"
         *ngIf="
-          player.profilePictureUrl == null || player.profilePictureUrl == ''
+          player.profilePictureUrl != null &&
+          player.profilePictureUrl != '' &&
+          player.lolIconId == null
         "
+        src="{{ player.profilePictureUrl }}"
+        width="64"
+        class="rounded-full"
+      />
+
+      <img
+        *ngIf="
+          player.profilePictureUrl == null ||
+          (player.profilePictureUrl == '' && player.lolIconId == null)
+        "
+        class="rounded-full"
         src="assets/img/gameon-logo.webp"
         width="64"
       />
-
       <span
         class="-mt-2 z-50 bg-secondary text-xs text-bgLight rounded-full px-2"
         >{{ player.lolSummonerLevel }}</span
