@@ -10,16 +10,5 @@ export class FifaStatComponent implements OnInit {
   @Input()
   stat: PlatformStatsDto = new PlatformStatsDto();
 
-  ngOnInit(): void {
-    // let gamesPlayed = this.stat.wins + this.stat.losses + this.stat.draws;
-    // this.stat.winRate = parseFloat(
-    //   ((this.stat.wins * 100) / gamesPlayed).toFixed(2)
-    // );
-    // this.stat.looseRate = parseFloat(
-    //   ((this.stat.losses * 100) / gamesPlayed).toFixed(2)
-    // );
-    // this.stat.drawRate = parseFloat(
-    //   ((this.stat.draws * 100) / gamesPlayed).toFixed(2)
-    // );
-  }
+  ngOnInit(): void {}
 }

@@ -80,6 +80,23 @@
       </div>
     </div>
   </div>
+
+  <div
+    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg mt-4"
+    *ngIf="player != null && player.riotGamesPUUID != null"
+  >
+    <div
+      class="flex flex-row justify-between cursor-pointer text-primary dark:text-primaryDark"
+      [routerLink]="['/lol/summoner', player.id]"
+    >
+      <div class="flex items-center space-x-2">
+        <img src="assets/img/svg/lol.svg" class="w-8" />
+        <span>Voir le profil</span>
+      </div>
+
+      <fa-icon [icon]="rightArrowIcon"></fa-icon>
+    </div>
+  </div>
 </section>
 
 <div class="px-4 mt-4" [@inOutAnimation]>

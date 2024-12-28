@@ -1,13 +1,8 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { SoccerFive } from '../shared/classes/SoccerFive';
 import { GameOnSoccerfiveService } from '../shared/services/gameon-soccerfive.service';
 import { KeycloakService } from 'keycloak-angular';
-import {
-  faFootballBall,
-  faInfoCircle,
-  faSoccerBall,
-} from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faSoccerBall } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-five',

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NotFoundComponent } from '../../components/not-found/not-found.component';
+import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { ArrowBtnComponent } from '../components/arrow-btn/arrow-btn.component';
 import { PlayerCardComponent } from '../components/player-card/player-card.component';
 import { LoadingSpinnerComponent } from '../components/loading-spinner/loading-spinner.component';
@@ -17,6 +17,8 @@ import { CommonPageHeaderComponent } from '../components/common-page-header/comm
 import { InfoMessageComponent } from '../components/info-message/info-message.component';
 import { PillComponent } from '../components/pill/pill.component';
 import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/loading-spinner-tiny.component';
+import { ChangelogCardComponent } from '../components/changelog-card/changelog-card.component';
+import { SafePipe } from '../pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/
     InfoMessageComponent,
     PillComponent,
     LoadingSpinnerTinyComponent,
+    ChangelogCardComponent,
+    SafePipe,
   ],
   imports: [
     CommonModule,
@@ -61,6 +65,8 @@ import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/
     InfoMessageComponent,
     PillComponent,
     LoadingSpinnerTinyComponent,
+    ChangelogCardComponent,
+    SafePipe,
   ],
 })
 export class SharedModule {}
