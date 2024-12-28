@@ -17,10 +17,6 @@ import {
 } from './store/reducers/player.reducer';
 import { ProfilePageComponent } from './players/me/profile.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { FifaHomeComponent } from './fifa/fifa-home.component';
-import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
-import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
-import { SafePipe } from './shared/pipes/safe.pipe';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { AdminModule } from './admin/admin.module';
 import { ChangelogComponent } from './changelog/changelog.component';
@@ -62,10 +58,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     ProfilePageComponent,
     PlayerDetailsComponent,
-    FifaHomeComponent,
-    TournamentsHomeComponent,
-    TournamentsDetailsComponent,
-    SafePipe,
     ChangelogComponent,
     DonateComponent,
     FiveComponent,

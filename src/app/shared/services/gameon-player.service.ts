@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { Player } from '../../shared/classes/Player';
 import { environment } from '../../../environments/environment';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
-import { GlobalStatsDto } from '../../shared/classes/GlobalStatsDto';
 
 @Injectable({
   providedIn: 'root',
@@ -43,12 +42,6 @@ export class GameOnPlayerService {
     }
 
     return this.client.get<FifaPlayerStatsDto>(url);
-  }
-
-  getGlobalStats(): Observable<GlobalStatsDto> {
-    return this.client.get<GlobalStatsDto>(
-      environment.gameOnApiUrl + '/player/global/stats'
-    );
   }
 
   update(
