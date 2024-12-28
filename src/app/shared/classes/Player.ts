@@ -13,6 +13,7 @@ export class Player {
   riotGamesTagLine?: string;
   riotGamesPUUID?: string;
   lolSummonerId?: string;
+  lolIconId?: number;
   lolSummonerLevel?: string;
   lolRefreshedOn?: Date;
 }
