@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameOnChangelogService } from '../shared/services/gameon-changelog.service';
-import { Changelog } from '../shared/classes/Changelog';
+import { Changelog } from '../shared/classes/common/Changelog';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

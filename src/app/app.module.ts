@@ -35,6 +35,7 @@ import { RankHistoryComponent } from './lol/player/components/rank-history/rank-
 import { WinRateChartComponent } from './lol/player/components/win-rate-chart/win-rate-chart.component';
 import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
 import { LoLGameCardComponent } from './lol/components/lol-game-card/lol-game-card.component';
+import { HomeChangelogComponent } from './home/components/changelog/home-changelog.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -75,6 +76,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     WinRateChartComponent,
     LolGameDetailsComponent,
     LoLGameCardComponent,
+    HomeChangelogComponent,
   ],
   imports: [
     BrowserModule,

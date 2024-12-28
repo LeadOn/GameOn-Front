@@ -7,7 +7,6 @@ import { Season } from '../shared/classes/Season';
 import { GameOnSeasonService } from '../shared/services/gameon-season.service';
 import { environment } from '../../environments/environment';
 import { GameOnPlayerService } from '../shared/services/gameon-player.service';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { GameOnTournamentService } from '../shared/services/gameon-tournament.service';
 import { Tournament } from '../shared/classes/Tournament';
 import {
@@ -19,6 +18,8 @@ import { PlatformStatsDto } from '../shared/classes/PlatformStatsDto';
 import { setPlayerStats } from '../store/actions/player.actions';
 import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
 import { GameOnGameService } from '../shared/services/gameon-game.service';
+import { GameOnCommonService } from '../shared/services/common/gameon-common.service';
+import { HomeDataDto } from '../shared/classes/common/HomeDataDto';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,11 @@ import { GameOnGameService } from '../shared/services/gameon-game.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  loading = true;
+  error = false;
+
+  homeData?: HomeDataDto;
+
   player$: Observable<Player>;
   globalStats$: Observable<PlatformStatsDto>;
   isLoggedIn = false;
@@ -58,7 +64,8 @@ export class HomeComponent implements OnInit {
     private seasonService: GameOnSeasonService,
     private playerService: GameOnPlayerService,
     private tournamentService: GameOnTournamentService,
-    private gameService: GameOnGameService
+    private gameService: GameOnGameService,
+    private commonService: GameOnCommonService
   ) {
     this.player$ = store.select('player');
     this.globalStats$ = statsStore.select('globalStats');
@@ -70,6 +77,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getHomeData();
+
     this.seasonService.getCurrent().subscribe(
       (x) => {
         this.currentSeason = x;
@@ -152,5 +161,18 @@ export class HomeComponent implements OnInit {
 
   login() {
     this.keycloak.login();
+  }
+
+  getHomeData() {
+    this.commonService.getHomeData().subscribe(
+      (data) => {
+        this.homeData = data;
+        this.loading = false;
+      },
+      (err) => {
+        this.error = true;
+        console.error(err);
+      }
+    );
   }
 }

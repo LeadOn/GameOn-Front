@@ -1,15 +1,14 @@
-<section id="home-changelog" class="px-4 mt-4">
-  <div class="flex justify-between items-center">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-      >Nouveautés</span
-    >
+<app-info-message
+  [type]="'error'"
+  [title]="'Une erreur est survenue lors de la récupération des données.'"
+  *ngIf="error == true"
+></app-info-message>
 
-    <fa-icon
-      [icon]="externalIcon"
-      class="text-primary cursor-pointer dark:text-primaryDark"
-      routerLink="/changelog"
-    ></fa-icon>
-  </div>
+<section id="home-changelog" class="px-4 mt-4">
+  <app-home-changelog
+    [changelog]="homeData?.latestChangelog"
+    [loading]="loading"
+  ></app-home-changelog>
 </section>
 
 <section id="home-top-pills" class="px-4 bg-bgLightDarker dark:bg-bgDarkDarker">
