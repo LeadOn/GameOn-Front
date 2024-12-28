@@ -17,10 +17,6 @@ import {
 } from './store/reducers/player.reducer';
 import { ProfilePageComponent } from './players/me/profile.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { FifaHomeComponent } from './fifa/fifa-home.component';
-import { TournamentsHomeComponent } from './fifa/tournaments/tournaments-home.component';
-import { TournamentsDetailsComponent } from './fifa/tournaments/details/tournaments-details.component';
-import { SafePipe } from './shared/pipes/safe.pipe';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { AdminModule } from './admin/admin.module';
 import { ChangelogComponent } from './changelog/changelog.component';
@@ -35,6 +31,9 @@ import { RankHistoryComponent } from './lol/player/components/rank-history/rank-
 import { WinRateChartComponent } from './lol/player/components/win-rate-chart/win-rate-chart.component';
 import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
 import { LoLGameCardComponent } from './lol/components/lol-game-card/lol-game-card.component';
+import { HomeChangelogComponent } from './home/components/changelog/home-changelog.component';
+import { HomeFifaComponent } from './home/components/fifa/home-fifa.component';
+import { HomeLolComponent } from './home/components/lol/home-lol.component';
 
 function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
@@ -59,10 +58,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
     HomeComponent,
     ProfilePageComponent,
     PlayerDetailsComponent,
-    FifaHomeComponent,
-    TournamentsHomeComponent,
-    TournamentsDetailsComponent,
-    SafePipe,
     ChangelogComponent,
     DonateComponent,
     FiveComponent,
@@ -75,6 +70,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
     WinRateChartComponent,
     LolGameDetailsComponent,
     LoLGameCardComponent,
+    HomeChangelogComponent,
+    HomeFifaComponent,
+    HomeLolComponent,
   ],
   imports: [
     BrowserModule,

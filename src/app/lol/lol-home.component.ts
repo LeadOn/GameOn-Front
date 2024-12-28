@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GameOnPlayerService } from '../shared/services/gameon-player.service';
 import { KeycloakService } from 'keycloak-angular';
 import { PlayerDto } from '../shared/classes/PlayerDto';
 import { Observable } from 'rxjs';

@@ -1,73 +1,15 @@
 <section id="top-card" class="px-4 pt-4">
-  <app-loading-spinner
-    [@inOutAnimation]
-    *ngIf="loading == true"
-  ></app-loading-spinner>
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 
-  <div *ngIf="loading == false" [@inOutAnimation]>
+  <div *ngIf="loading == false">
     <app-common-page-header
       [icon]="changelogIcon"
       [title]="'Changelog'"
     ></app-common-page-header>
 
-    <div
+    <app-changelog-card
       *ngFor="let changelog of changelogs"
-      class="flex flex-col bg-bgLight dark:bgDark p-4 rounded-lg text-primary dark:text-primaryDark mb-4 border border-bgLightDarker dark:bg-bgDarkDarker mt-4 drop-shadow-lg"
-    >
-      <div class="flex flex-row items-center">
-        <div class="flex justify-center items-center">
-          <span
-            class="rounded-full px-4 text-sm border text-primary dark:text-primaryDark"
-            [ngClass]="{
-              'border-gray-300': changelog.type == 2,
-              'border-green-500': changelog.type == 1,
-              'border-red-600': changelog.type == 0
-            }"
-          >
-            {{ changelog.version }}
-          </span>
-        </div>
-
-        <span *ngIf="changelog.name != null" class="ml-4 text-sm">{{
-          changelog.name
-        }}</span>
-      </div>
-
-      <div class="flex flex-col mt-4" *ngIf="changelog.context != null">
-        <span class="font-semibold">Contexte :</span>
-
-        <span class="text-sm">{{ changelog.context }}</span>
-      </div>
-
-      <div class="flex flex-col mt-4" *ngIf="changelog.newFeatures != null">
-        <span class="font-semibold text-green-600">Nouveautés :</span>
-
-        <ul>
-          <li class="text-sm" *ngFor="let feature of changelog.newFeatures">
-            + {{ feature }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="flex flex-col mt-4" *ngIf="changelog.updatedFeatures != null">
-        <span class="font-semibold text-yellow-600">Mises à jour :</span>
-
-        <ul>
-          <li class="text-sm" *ngFor="let feature of changelog.updatedFeatures">
-            * {{ feature }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="flex flex-col mt-4" *ngIf="changelog.removedFeatures != null">
-        <span class="font-semibold text-red-600">Suppressions :</span>
-
-        <ul>
-          <li class="text-sm" *ngFor="let feature of changelog.removedFeatures">
-            - {{ feature }}
-          </li>
-        </ul>
-      </div>
-    </div>
+      [changelog]="changelog"
+    ></app-changelog-card>
   </div>
 </section>

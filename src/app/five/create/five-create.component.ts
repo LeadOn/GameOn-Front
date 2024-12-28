@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { GameOnSoccerfiveService } from '../../shared/services/gameon-soccerfive.service';
 
 @Component({
