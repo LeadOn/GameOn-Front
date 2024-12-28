@@ -6,6 +6,7 @@ import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { LeagueOfLegendsRankHistory } from '../../shared/classes/LeagueOfLegendsRankHistory';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { LoLGame } from '../../shared/classes/LoLGame';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-lol-player-details',
@@ -27,6 +28,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   flexWinRate = 0.0;
   overAllWinRate = 0.0;
   gamesPlayed: LoLGame[] = [];
+  currentLoLPatch: string = environment.currentLoLPatch;
 
   constructor(
     private route: ActivatedRoute,

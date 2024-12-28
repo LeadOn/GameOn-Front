@@ -16,6 +16,7 @@ export class PlayerDto {
   lolSummonerId?: string;
   lolSummonerLevel?: string;
   lolRefreshedOn?: Date;
+  lolIconId?: number;
   leagueOfLegendsSoloRank?: LeagueOfLegendsRankHistory;
   leagueOfLegendsFlexRank?: LeagueOfLegendsRankHistory;
 }
