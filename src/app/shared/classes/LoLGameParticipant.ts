@@ -10,4 +10,5 @@ export class LoLGameParticipant {
   riotIdGameName?: string;
   championId?: number;
   championName?: string;
+  teamId: number = 0;
 }

@@ -7,6 +7,7 @@ import {
   faExternalLink,
   faSync,
 } from '@fortawesome/free-solid-svg-icons';
+import { LoLGameParticipant } from '../../../shared/classes/LoLGameParticipant';
 
 @Component({
   selector: 'app-lol-game-details',
@@ -17,6 +18,8 @@ export class LolGameDetailsComponent implements OnInit {
   gameId: any;
 
   game: LoLGame = new LoLGame();
+  team1: LoLGameParticipant[] = [];
+  team2: LoLGameParticipant[] = [];
 
   patchTitle = 'Patch inconnu';
 
@@ -48,8 +51,32 @@ export class LolGameDetailsComponent implements OnInit {
           this.patchTitle = `Patch ${this.game.gameVersion}`;
         }
 
+        let teams = game.leagueOfLegendsGameParticipants.reduce(
+          (acc: { [teamId: number]: LoLGameParticipant[] }, player) => {
+            if (!acc[player.teamId]) {
+              acc[player.teamId] = [];
+            }
+            acc[player.teamId].push(player);
+            return acc;
+          },
+          {}
+        );
+
+        let keys = Object.keys(teams);
+        if (keys.length == 2) {
+          keys.forEach((key) => {
+            if (keys.indexOf(key) == 0) {
+              this.team1 = teams[100];
+            } else {
+              this.team2 = teams[200];
+            }
+          });
+        }
+
         this.isLoading = false;
         console.log(this.game);
+        console.log(this.team1);
+        console.log(this.team2);
       },
       (err) => {
         this.gameError = true;

@@ -7,4 +7,5 @@ export class LoLGame {
   gameVersion: string = '';
   retrievedOn: Date = new Date();
   leagueOfLegendsGameParticipants: LoLGameParticipant[] = [];
+  winningTeamId: number = 0;
 }
