@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ProfilePageComponent } from './players/me/profile.component';
 import { AuthGuard } from './shared/guards/auth.guard';
