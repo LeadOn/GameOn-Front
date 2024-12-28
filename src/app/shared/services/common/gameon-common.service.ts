@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { HomeDataDto } from '../../classes/common/HomeDataDto';
+import { GlobalStatsDto } from '../../classes/GlobalStatsDto';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +15,9 @@ export class GameOnCommonService {
 
   getHomeData(): Observable<HomeDataDto> {
     return this.client.get<HomeDataDto>(this.baseUrl + '/home');
+  }
+
+  getGlobalStats(): Observable<GlobalStatsDto> {
+    return this.client.get<GlobalStatsDto>(this.baseUrl + '/global/stats');
   }
 }

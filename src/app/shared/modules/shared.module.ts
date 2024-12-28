@@ -18,6 +18,7 @@ import { InfoMessageComponent } from '../components/info-message/info-message.co
 import { PillComponent } from '../components/pill/pill.component';
 import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/loading-spinner-tiny.component';
 import { ChangelogCardComponent } from '../components/changelog-card/changelog-card.component';
+import { SafePipe } from '../pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ChangelogCardComponent } from '../components/changelog-card/changelog-c
     PillComponent,
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
+    SafePipe,
   ],
   imports: [
     CommonModule,
@@ -64,6 +66,7 @@ import { ChangelogCardComponent } from '../components/changelog-card/changelog-c
     PillComponent,
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
+    SafePipe,
   ],
 })
 export class SharedModule {}

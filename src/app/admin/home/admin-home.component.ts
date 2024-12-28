@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 import { AdminDashboard } from '../shared/classes/AdminDashboard';
 import {
-  faCamera,
   faComputer,
   faRankingStar,
   faSoccerBall,

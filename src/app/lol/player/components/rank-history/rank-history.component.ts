@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { LeagueOfLegendsRankHistory } from '../../../../shared/classes/LeagueOfLegendsRankHistory';
-import { tick } from '@angular/core/testing';
 
 @Component({
   selector: 'app-rank-history',
