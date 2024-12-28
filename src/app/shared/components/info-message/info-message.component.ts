@@ -19,4 +19,7 @@ export class InfoMessageComponent {
 
   @Input()
   clickable = false;
+
+  @Input()
+  applyMargin = true;
 }

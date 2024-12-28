@@ -17,7 +17,6 @@ export class HomeChangelogComponent implements OnChanges {
   externalIcon = faExternalLink;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('Changes detected', changes);
     this.loading = changes['loading'].currentValue;
     this.changelog = changes['changelog'].currentValue;
   }
