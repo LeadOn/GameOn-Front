@@ -3,9 +3,10 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
-  selector: 'app-info-message',
-  templateUrl: './info-message.component.html',
-  styleUrl: './info-message.component.scss',
+    selector: 'app-info-message',
+    templateUrl: './info-message.component.html',
+    styleUrl: './info-message.component.scss',
+    standalone: false
 })
 export class InfoMessageComponent {
   @Input()

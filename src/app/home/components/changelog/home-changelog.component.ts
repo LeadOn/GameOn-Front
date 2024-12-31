@@ -3,9 +3,10 @@ import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { Changelog } from '../../../shared/classes/common/Changelog';
 
 @Component({
-  selector: 'app-home-changelog',
-  templateUrl: './home-changelog.component.html',
-  styleUrl: './home-changelog.component.scss',
+    selector: 'app-home-changelog',
+    templateUrl: './home-changelog.component.html',
+    styleUrl: './home-changelog.component.scss',
+    standalone: false
 })
 export class HomeChangelogComponent implements OnChanges {
   @Input()

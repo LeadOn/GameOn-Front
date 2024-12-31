@@ -5,9 +5,10 @@ import { KeycloakService } from 'keycloak-angular';
 import { faInfoCircle, faSoccerBall } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-five',
-  templateUrl: './five.component.html',
-  styleUrl: './five.component.scss',
+    selector: 'app-five',
+    templateUrl: './five.component.html',
+    styleUrl: './five.component.scss',
+    standalone: false
 })
 export class FiveComponent implements OnInit {
   loading = false;

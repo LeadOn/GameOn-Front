@@ -5,9 +5,10 @@ import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
 import { GameOnTournamentService } from '../../../shared/services/gameon-tournament.service';
 
 @Component({
-  selector: 'app-admin-create-tournament-edit',
-  templateUrl: './admin-create-tournament.component.html',
-  styleUrls: ['./admin-create-tournament.component.scss'],
+    selector: 'app-admin-create-tournament-edit',
+    templateUrl: './admin-create-tournament.component.html',
+    styleUrls: ['./admin-create-tournament.component.scss'],
+    standalone: false
 })
 export class AdminCreateTournamentComponent implements OnInit {
   loading = false;

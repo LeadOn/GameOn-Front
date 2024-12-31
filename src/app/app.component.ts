@@ -7,9 +7,10 @@ import { Player } from './shared/classes/Player';
 import { setPlayer, setPlayerStats } from './store/actions/player.actions';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    standalone: false
 })
 export class AppComponent implements OnInit {
   constructor(

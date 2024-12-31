@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { GameOnSoccerfiveService } from '../../shared/services/gameon-soccerfive.service';
 
 @Component({
-  selector: 'app-five-create',
-  templateUrl: './five-create.component.html',
-  styleUrls: ['./five-create.component.scss'],
+    selector: 'app-five-create',
+    templateUrl: './five-create.component.html',
+    styleUrls: ['./five-create.component.scss'],
+    standalone: false
 })
 export class CreateFiveComponent implements OnInit {
   isLoading = false;

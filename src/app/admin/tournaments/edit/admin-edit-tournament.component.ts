@@ -6,9 +6,10 @@ import { GameOnTournamentService } from '../../../shared/services/gameon-tournam
 import { Tournament } from '../../../shared/classes/Tournament';
 
 @Component({
-  selector: 'app-admin-edit-tournament-edit',
-  templateUrl: './admin-edit-tournament.component.html',
-  styleUrls: ['./admin-edit-tournament.component.scss'],
+    selector: 'app-admin-edit-tournament-edit',
+    templateUrl: './admin-edit-tournament.component.html',
+    styleUrls: ['./admin-edit-tournament.component.scss'],
+    standalone: false
 })
 export class AdminEditTournamentComponent implements OnInit {
   loading = true;

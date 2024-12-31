@@ -8,21 +8,22 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-admin-player-edit',
-  templateUrl: './admin-player-edit.component.html',
-  styleUrls: ['./admin-player-edit.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: 'app-admin-player-edit',
+    templateUrl: './admin-player-edit.component.html',
+    styleUrls: ['./admin-player-edit.component.scss'],
+    animations: [
+        trigger('inOutAnimation', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(200, style({ opacity: 1 })),
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate(200, style({ opacity: 0 })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class AdminPlayerEditComponent implements OnInit {
   playerId: any;

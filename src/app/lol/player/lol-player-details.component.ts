@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
 import { PlayerDto } from '../../shared/classes/PlayerDto';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLink, faSync } from '@fortawesome/free-solid-svg-icons';
 import { LeagueOfLegendsRankHistory } from '../../shared/classes/LeagueOfLegendsRankHistory';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { LoLGame } from '../../shared/classes/LoLGame';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-lol-player-details',
-  templateUrl: './lol-player-details.component.html',
-  styleUrl: './lol-player-details.component.scss',
+    selector: 'app-lol-player-details',
+    templateUrl: './lol-player-details.component.html',
+    styleUrl: './lol-player-details.component.scss',
+    standalone: false
 })
 export class LolPlayerDetailsComponent implements OnInit {
   playerId: any;
@@ -29,10 +29,11 @@ export class LolPlayerDetailsComponent implements OnInit {
   overAllWinRate = 0.0;
   gamesPlayed: LoLGame[] = [];
   currentLoLPatch: string = environment.currentLoLPatch;
+  syncIcon = faSync;
+  externalIcon = faExternalLink;
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: GameOnPlayerService,
     private lolService: GameOnLoLService
   ) {}
 
@@ -114,6 +115,18 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.lolService.refreshById(this.playerId).subscribe(
       () => {
         this.getSummoner();
+        this.getLastGamesPlayed();
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
+  }
+
+  refreshGame(matchId: string) {
+    this.gameHistoryLoading = true;
+    this.lolService.refreshGame(matchId).subscribe(
+      (data) => {
         this.getLastGamesPlayed();
       },
       (err) => {

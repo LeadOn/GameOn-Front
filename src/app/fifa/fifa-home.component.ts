@@ -13,9 +13,10 @@ import { GameOnPlatformService } from '../shared/services/gameon-platform.servic
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-fifa-home',
-  templateUrl: './fifa-home.component.html',
-  styleUrls: ['./fifa-home.component.scss'],
+    selector: 'app-fifa-home',
+    templateUrl: './fifa-home.component.html',
+    styleUrls: ['./fifa-home.component.scss'],
+    standalone: false
 })
 export class FifaHomeComponent implements OnInit {
   loading = true;

@@ -7,9 +7,10 @@ import { GameOnCommonService } from '../shared/services/common/gameon-common.ser
 import { HomeDataDto } from '../shared/classes/common/HomeDataDto';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: false
 })
 export class HomeComponent implements OnInit {
   loading = true;

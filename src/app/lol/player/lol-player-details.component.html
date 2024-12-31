@@ -227,13 +227,48 @@
     "
   ></app-info-message>
 
-  <div
-    *ngIf="gameHistoryLoading == false"
-    class="flex flex-col mt-4 space-y-2 px-4"
-  >
-    <app-lol-game-card
-      *ngFor="let game of gamesPlayed"
-      [game]="game"
-    ></app-lol-game-card>
+  <div class="relative overflow-x-auto">
+    <table
+      class="w-full text-sm text-left rtl:text-right text-primary dark:text-primaryDark"
+    >
+      <thead
+        class="text-xs text-primary uppercase bg-bgLight dark:bg-bgDark dark:text-primaryDark"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Identifiant partie</th>
+          <th scope="col" class="px-6 py-3">Patch</th>
+          <th scope="col" class="px-6 py-3">Etat</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let game of gamesPlayed"
+          class="bg-bgLightDarker border-b dark:bg-bgDarkDarker dark:border-bgDarkDarker"
+        >
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ game.matchId }}
+          </th>
+          <td class="px-6 py-4">{{ game.gameVersion }}</td>
+          <td class="px-6 py-4">{{ game.endOfGameResult }}</td>
+          <td
+            class="px-6 py-4 flex flex-row justify-center items-center space-x-2 text-2xl"
+          >
+            <div (click)="refreshGame(game.matchId)" class="cursor-pointer">
+              <fa-icon [icon]="syncIcon"></fa-icon>
+            </div>
+            <div
+              [routerLink]="['/lol/game', game.matchId]"
+              class="cursor-pointer"
+            >
+              <fa-icon [icon]="externalIcon"></fa-icon>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
