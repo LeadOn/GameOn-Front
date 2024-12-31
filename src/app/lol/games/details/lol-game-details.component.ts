@@ -10,9 +10,10 @@ import {
 import { LoLGameParticipant } from '../../../shared/classes/LoLGameParticipant';
 
 @Component({
-  selector: 'app-lol-game-details',
-  templateUrl: './lol-game-details.component.html',
-  styleUrl: './lol-game-details.component.scss',
+    selector: 'app-lol-game-details',
+    templateUrl: './lol-game-details.component.html',
+    styleUrl: './lol-game-details.component.scss',
+    standalone: false
 })
 export class LolGameDetailsComponent implements OnInit {
   gameId: any;

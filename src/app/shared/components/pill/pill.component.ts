@@ -5,9 +5,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-pill',
-  templateUrl: './pill.component.html',
-  styleUrl: './pill.component.scss',
+    selector: 'app-pill',
+    templateUrl: './pill.component.html',
+    styleUrl: './pill.component.scss',
+    standalone: false
 })
 export class PillComponent implements OnInit {
   @Input()

@@ -9,9 +9,10 @@ import { Chart } from 'chart.js/auto';
 import { LeagueOfLegendsRankHistory } from '../../../../shared/classes/LeagueOfLegendsRankHistory';
 
 @Component({
-  selector: 'app-rank-history',
-  templateUrl: './rank-history.component.html',
-  styleUrl: './rank-history.component.scss',
+    selector: 'app-rank-history',
+    templateUrl: './rank-history.component.html',
+    styleUrl: './rank-history.component.scss',
+    standalone: false
 })
 export class RankHistoryComponent implements OnInit, OnChanges {
   @Input()

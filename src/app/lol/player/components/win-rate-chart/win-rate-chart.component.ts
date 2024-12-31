@@ -8,9 +8,10 @@ import {
 import { Chart } from 'chart.js/auto';
 
 @Component({
-  selector: 'app-win-rate-chart',
-  templateUrl: './win-rate-chart.component.html',
-  styleUrl: './win-rate-chart.component.scss',
+    selector: 'app-win-rate-chart',
+    templateUrl: './win-rate-chart.component.html',
+    styleUrl: './win-rate-chart.component.scss',
+    standalone: false
 })
 export class WinRateChartComponent implements OnInit, OnChanges {
   @Input()

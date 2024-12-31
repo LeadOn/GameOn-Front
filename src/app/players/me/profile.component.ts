@@ -29,21 +29,22 @@ import { setPlayer } from '../../store/actions/player.actions';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: 'app-profile-page',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.scss'],
+    animations: [
+        trigger('inOutAnimation', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(200, style({ opacity: 1 })),
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate(200, style({ opacity: 0 })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class ProfilePageComponent implements OnInit, OnChanges {
   player$: Observable<Player>;

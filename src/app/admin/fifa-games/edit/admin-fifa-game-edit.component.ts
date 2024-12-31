@@ -11,9 +11,10 @@ import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.
 import { UpdateGame } from '../../shared/classes/UpdateGame';
 
 @Component({
-  selector: 'app-admin-fifa-game-edit',
-  templateUrl: './admin-fifa-game-edit.component.html',
-  styleUrls: ['./admin-fifa-game-edit.component.scss'],
+    selector: 'app-admin-fifa-game-edit',
+    templateUrl: './admin-fifa-game-edit.component.html',
+    styleUrls: ['./admin-fifa-game-edit.component.scss'],
+    standalone: false
 })
 export class AdminFifaGameEditComponent implements OnInit {
   gameId: any;

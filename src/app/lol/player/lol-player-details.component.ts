@@ -8,9 +8,10 @@ import { LoLGame } from '../../shared/classes/LoLGame';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-lol-player-details',
-  templateUrl: './lol-player-details.component.html',
-  styleUrl: './lol-player-details.component.scss',
+    selector: 'app-lol-player-details',
+    templateUrl: './lol-player-details.component.html',
+    styleUrl: './lol-player-details.component.scss',
+    standalone: false
 })
 export class LolPlayerDetailsComponent implements OnInit {
   playerId: any;

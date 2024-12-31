@@ -16,9 +16,10 @@ import { GameOnGameService } from '../../../shared/services/gameon-game.service'
 import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 
 @Component({
-  selector: 'app-home-fifa',
-  templateUrl: './home-fifa.component.html',
-  styleUrl: './home-fifa.component.scss',
+    selector: 'app-home-fifa',
+    templateUrl: './home-fifa.component.html',
+    styleUrl: './home-fifa.component.scss',
+    standalone: false
 })
 export class HomeFifaComponent implements OnChanges {
   @Input()
