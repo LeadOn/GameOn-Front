@@ -8,9 +8,10 @@ import { GameOnCommonService } from '../../shared/services/common/gameon-common.
 import { GlobalStatsDto } from '../../shared/classes/GlobalStatsDto';
 
 @Component({
-  selector: 'app-fifa-global-stats',
-  templateUrl: './fifa-global-stats.component.html',
-  styleUrl: './fifa-global-stats.component.scss',
+    selector: 'app-fifa-global-stats',
+    templateUrl: './fifa-global-stats.component.html',
+    styleUrl: './fifa-global-stats.component.scss',
+    standalone: false
 })
 export class FifaGlobalStatsComponent implements OnInit {
   statsIcon = faFileExcel;

@@ -13,21 +13,22 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { faSoccerBall } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-fifa-create-game',
-  templateUrl: './fifa-create-game.component.html',
-  styleUrls: ['./fifa-create-game.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: 'app-fifa-create-game',
+    templateUrl: './fifa-create-game.component.html',
+    styleUrls: ['./fifa-create-game.component.scss'],
+    animations: [
+        trigger('inOutAnimation', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(200, style({ opacity: 1 })),
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate(200, style({ opacity: 0 })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class FifaCreateGameComponent implements OnInit {
   isLoading = true;

@@ -17,21 +17,22 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SoccerFiveVoteChoice } from '../../shared/classes/SoccerFiveVoteChoice';
 import { VoteSoccerFiveDto } from '../../shared/classes/VoteSoccerFiveDto';
 @Component({
-  selector: 'app-five-details',
-  templateUrl: './five-details.component.html',
-  styleUrls: ['./five-details.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: 'app-five-details',
+    templateUrl: './five-details.component.html',
+    styleUrls: ['./five-details.component.scss'],
+    animations: [
+        trigger('inOutAnimation', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(200, style({ opacity: 1 })),
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate(200, style({ opacity: 0 })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class FiveDetailsComponent implements OnInit {
   loading = true;

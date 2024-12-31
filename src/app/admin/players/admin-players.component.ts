@@ -5,21 +5,22 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { faEdit, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-admin-players',
-  templateUrl: './admin-players.component.html',
-  styleUrls: ['./admin-players.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+    selector: 'app-admin-players',
+    templateUrl: './admin-players.component.html',
+    styleUrls: ['./admin-players.component.scss'],
+    animations: [
+        trigger('inOutAnimation', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(200, style({ opacity: 1 })),
+            ]),
+            transition(':leave', [
+                style({ opacity: 1 }),
+                animate(200, style({ opacity: 0 })),
+            ]),
+        ]),
+    ],
+    standalone: false
 })
 export class AdminPlayersComponent implements OnInit {
   players: Player[] = [];

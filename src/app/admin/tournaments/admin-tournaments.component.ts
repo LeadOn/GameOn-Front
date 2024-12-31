@@ -10,9 +10,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-admin-tournaments',
-  templateUrl: './admin-tournaments.component.html',
-  styleUrls: ['./admin-tournaments.component.scss'],
+    selector: 'app-admin-tournaments',
+    templateUrl: './admin-tournaments.component.html',
+    styleUrls: ['./admin-tournaments.component.scss'],
+    standalone: false
 })
 export class AdminTournamentsComponent implements OnInit {
   tournaments: Tournament[] = [];

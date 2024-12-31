@@ -9,9 +9,10 @@ import { GameOnAdminService } from '../../../admin/shared/services/gameon-admin.
 import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 
 @Component({
-  selector: 'app-fifa-game-history-card',
-  templateUrl: './fifa-game-history-card.component.html',
-  styleUrls: ['./fifa-game-history-card.component.scss'],
+    selector: 'app-fifa-game-history-card',
+    templateUrl: './fifa-game-history-card.component.html',
+    styleUrls: ['./fifa-game-history-card.component.scss'],
+    standalone: false
 })
 export class FifaGameHistoryCardComponent {
   @Input()

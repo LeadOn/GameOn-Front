@@ -4,9 +4,10 @@ import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 
 @Component({
-  selector: 'app-admin-fifa-games',
-  templateUrl: './admin-fifa-games.component.html',
-  styleUrls: ['./admin-fifa-games.component.scss'],
+    selector: 'app-admin-fifa-games',
+    templateUrl: './admin-fifa-games.component.html',
+    styleUrls: ['./admin-fifa-games.component.scss'],
+    standalone: false
 })
 export class AdminFifaGamesComponent implements OnInit {
   games: FifaGamePlayed[] = [];
