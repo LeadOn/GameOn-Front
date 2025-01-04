@@ -1,25 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FifaGamePlayed } from '../classes/FifaGamePlayed';
-import { environment } from '../../../environments/environment';
+import { FifaGamePlayed } from '../../classes/fifa/FifaGamePlayed';
+import { environment } from '../../../../environments/environment';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameOnGameService {
-  constructor(private client: HttpClient) {}
+  constructor(private client: HttpClient, private keycloak: KeycloakService) {}
 
   getLast(limit: number): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
-      environment.gameOnApiUrl + '/fifagame/last/' + limit
+      environment.gameOnApiUrl + '/fifa/fifagame/last/' + limit
     );
   }
 
   getPlanned(playerId: number, limit: number): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
       environment.gameOnApiUrl +
-        '/fifagame/planned/' +
+        '/fifa/fifagame/planned/' +
         playerId +
         '?limit=' +
         limit
@@ -32,7 +33,7 @@ export class GameOnGameService {
     startDate?: string,
     endDate?: string
   ): Observable<FifaGamePlayed[]> {
-    let url = environment.gameOnApiUrl + '/fifagame?limit=' + limit;
+    let url = environment.gameOnApiUrl + '/fifa/fifagame?limit=' + limit;
 
     if (platformId != null && platformId != 0) {
       url += '&platformId=' + platformId;
@@ -55,7 +56,7 @@ export class GameOnGameService {
   ): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
       environment.gameOnApiUrl +
-        '/fifagame/last/' +
+        '/fifa/fifagame/last/' +
         limit +
         '/player/' +
         playerId
@@ -64,13 +65,13 @@ export class GameOnGameService {
 
   getById(gameId: number): Observable<FifaGamePlayed> {
     return this.client.get<FifaGamePlayed>(
-      environment.gameOnApiUrl + '/fifagame/' + gameId
+      environment.gameOnApiUrl + '/fifa/fifagame/' + gameId
     );
   }
 
   create(body: any): Observable<FifaGamePlayed> {
     return this.client.post<FifaGamePlayed>(
-      environment.gameOnApiUrl + '/fifagame',
+      environment.gameOnApiUrl + '/fifa/fifagame',
       body
     );
   }
@@ -81,10 +82,23 @@ export class GameOnGameService {
   ): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
       environment.gameOnApiUrl +
-        '/fifagame/tournament/' +
+        '/fifa/fifagame/tournament/' +
         tournamentId +
         '?isPlayed=' +
         isPlayed
     );
+  }
+
+  deleteGame(gameId: number): Observable<any> {
+    if (
+      this.keycloak.isLoggedIn() == true &&
+      this.keycloak.isUserInRole('gameon_admin')
+    ) {
+      return this.client.delete<any>(
+        environment.gameOnApiUrl + '/fifa/fifagame/' + gameId
+      );
+    }
+
+    return new Observable();
   }
 }

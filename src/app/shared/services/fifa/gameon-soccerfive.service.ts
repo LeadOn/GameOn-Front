@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { SoccerFiveVoteChoice } from '../../classes/SoccerFiveVoteChoice';
 import { SoccerFiveDto } from '../../classes/fifa/SoccerFiveDto';
 import { SoccerFive } from '../../classes/fifa/SoccerFive';
 import { VoteSoccerFiveDto } from '../../classes/fifa/VoteSoccerFiveDto';
+import { SoccerFiveVoteChoice } from '../../classes/fifa/SoccerFiveVoteChoice';
 
 @Injectable({
   providedIn: 'root',

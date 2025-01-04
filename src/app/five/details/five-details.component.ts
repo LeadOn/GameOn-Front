@@ -11,11 +11,11 @@ import {
   faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SoccerFiveVoteChoice } from '../../shared/classes/SoccerFiveVoteChoice';
 import { GameOnSoccerfiveService } from '../../shared/services/fifa/gameon-soccerfive.service';
 import { SoccerFiveDto } from '../../shared/classes/fifa/SoccerFiveDto';
 import { VoteSoccerFiveDto } from '../../shared/classes/fifa/VoteSoccerFiveDto';
 import { Player } from '../../shared/classes/common/Player';
+import { SoccerFiveVoteChoice } from '../../shared/classes/fifa/SoccerFiveVoteChoice';
 @Component({
   selector: 'app-five-details',
   templateUrl: './five-details.component.html',

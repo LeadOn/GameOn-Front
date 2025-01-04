@@ -6,11 +6,11 @@ import {
   faSoccerBall,
 } from '@fortawesome/free-solid-svg-icons';
 import { KeycloakService } from 'keycloak-angular';
-import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
-import { GameOnGameService } from '../shared/services/gameon-game.service';
 import { Router } from '@angular/router';
 import { GameOnPlatformService } from '../shared/services/common/gameon-platform.service';
 import { Platform } from '../shared/classes/common/Platform';
+import { FifaGamePlayed } from '../shared/classes/fifa/FifaGamePlayed';
+import { GameOnGameService } from '../shared/services/fifa/gameon-game.service';
 
 @Component({
   selector: 'app-fifa-home',

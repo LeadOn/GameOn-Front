@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { HomeDataDto } from '../../classes/common/HomeDataDto';
-import { GlobalStatsDto } from '../../classes/GlobalStatsDto';
+import { GlobalStatsDto } from '../../classes/fifa/GlobalStatsDto';
 
 @Injectable({
   providedIn: 'root',
