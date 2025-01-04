@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Highlight } from '../../shared/classes/Highlight';
-import { GameOnHighlightService } from '../../shared/services/gameon-highlight.service';
+import { GameOnHighlightService } from '../../shared/services/common/gameon-highlight.service';
+import { Highlight } from '../../shared/classes/common/Highlight';
 
 @Component({
-    selector: 'app-admin-highlights',
-    templateUrl: './admin-highlights.component.html',
-    styleUrls: ['./admin-highlights.component.scss'],
-    standalone: false
+  selector: 'app-admin-highlights',
+  templateUrl: './admin-highlights.component.html',
+  styleUrls: ['./admin-highlights.component.scss'],
+  standalone: false,
 })
 export class AdminHighlightsComponent implements OnInit {
   highlights: Highlight[] = [];
