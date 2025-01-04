@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { setPlayer, setPlayerStats } from '../actions/player.actions';
-import { PlatformStatsDto } from '../../shared/classes/PlatformStatsDto';
 import { Player } from '../../shared/classes/common/Player';
+import { PlatformStatsDto } from '../../shared/classes/common/PlatformStatsDto';
 
 export const initialState: Player = new Player();
 export const initialStatsState: PlatformStatsDto = new PlatformStatsDto();

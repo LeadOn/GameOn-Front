@@ -7,16 +7,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { KeycloakService } from 'keycloak-angular';
 import { FifaGamePlayed } from '../shared/classes/FifaGamePlayed';
-import { Platform } from '../shared/classes/Platform';
 import { GameOnGameService } from '../shared/services/gameon-game.service';
-import { GameOnPlatformService } from '../shared/services/gameon-platform.service';
 import { Router } from '@angular/router';
+import { GameOnPlatformService } from '../shared/services/common/gameon-platform.service';
+import { Platform } from '../shared/classes/common/Platform';
 
 @Component({
-    selector: 'app-fifa-home',
-    templateUrl: './fifa-home.component.html',
-    styleUrls: ['./fifa-home.component.scss'],
-    standalone: false
+  selector: 'app-fifa-home',
+  templateUrl: './fifa-home.component.html',
+  styleUrls: ['./fifa-home.component.scss'],
+  standalone: false,
 })
 export class FifaHomeComponent implements OnInit {
   loading = true;

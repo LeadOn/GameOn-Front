@@ -7,13 +7,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
-import { PlatformStatsDto } from '../../shared/classes/PlatformStatsDto';
 import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { Player } from '../../shared/classes/common/Player';
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 import { Season } from '../../shared/classes/fifa/Season';
 import { GameOnSeasonService } from '../../shared/services/fifa/gameon-season.service';
+import { PlatformStatsDto } from '../../shared/classes/common/PlatformStatsDto';
 
 @Component({
   selector: 'app-player-details',
