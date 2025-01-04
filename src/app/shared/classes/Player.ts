@@ -1,4 +1,4 @@
-import { Tournament } from './Tournament';
+import { Tournament } from './fifa/Tournament';
 
 export class Player {
   id: number = 0;

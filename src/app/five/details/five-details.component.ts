@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
-import { SoccerFiveDto } from '../../shared/classes/SoccerFiveDto';
-import { GameOnSoccerfiveService } from '../../shared/services/gameon-soccerfive.service';
 import { Player } from '../../shared/classes/Player';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -15,24 +13,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SoccerFiveVoteChoice } from '../../shared/classes/SoccerFiveVoteChoice';
-import { VoteSoccerFiveDto } from '../../shared/classes/VoteSoccerFiveDto';
+import { GameOnSoccerfiveService } from '../../shared/services/fifa/gameon-soccerfive.service';
+import { SoccerFiveDto } from '../../shared/classes/fifa/SoccerFiveDto';
+import { VoteSoccerFiveDto } from '../../shared/classes/fifa/VoteSoccerFiveDto';
 @Component({
-    selector: 'app-five-details',
-    templateUrl: './five-details.component.html',
-    styleUrls: ['./five-details.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-five-details',
+  templateUrl: './five-details.component.html',
+  styleUrls: ['./five-details.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class FiveDetailsComponent implements OnInit {
   loading = true;

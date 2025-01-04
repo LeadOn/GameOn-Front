@@ -1,5 +1,5 @@
-import { Player } from './Player';
-import { SoccerFiveVoteChoice } from './SoccerFiveVoteChoice';
+import { Player } from '../Player';
+import { SoccerFiveVoteChoice } from '../SoccerFiveVoteChoice';
 
 export class SoccerFiveDto {
   id: number = 0;

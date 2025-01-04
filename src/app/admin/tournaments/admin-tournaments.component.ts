@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Tournament } from '../../shared/classes/Tournament';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 import {
   faEdit,
@@ -8,6 +7,7 @@ import {
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
 import { GameOnTournamentService } from '../../shared/services/fifa/gameon-tournament.service';
+import { Tournament } from '../../shared/classes/fifa/Tournament';
 
 @Component({
   selector: 'app-admin-tournaments',

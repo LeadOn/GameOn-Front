@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { Tournament } from '../../shared/classes/Tournament';
 import { GameOnTournamentService } from '../../shared/services/fifa/gameon-tournament.service';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { Tournament } from '../../shared/classes/fifa/Tournament';
 
 @Component({
   selector: 'app-tournaments-home',

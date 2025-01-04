@@ -1,6 +1,6 @@
-import { FifaTeam } from './FifaTeam';
-import { PlatformStatsDto } from './PlatformStatsDto';
-import { Player } from './Player';
+import { FifaTeam } from '../FifaTeam';
+import { PlatformStatsDto } from '../PlatformStatsDto';
+import { Player } from '../Player';
 
 export class TournamentPlayerDto {
   player: Player = new Player();
