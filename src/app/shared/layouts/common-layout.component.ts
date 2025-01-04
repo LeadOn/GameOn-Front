@@ -13,15 +13,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { initFlowbite } from 'flowbite';
 import { KeycloakService } from 'keycloak-angular';
-import { Player } from '../classes/Player';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Player } from '../classes/common/Player';
 
 @Component({
-    selector: 'app-common-layout',
-    templateUrl: './common-layout.component.html',
-    styleUrls: ['./common-layout.component.scss'],
-    standalone: false
+  selector: 'app-common-layout',
+  templateUrl: './common-layout.component.html',
+  styleUrls: ['./common-layout.component.scss'],
+  standalone: false,
 })
 export class CommonLayoutComponent implements OnInit {
   darkMode = signal<boolean>(

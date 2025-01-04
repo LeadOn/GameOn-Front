@@ -1,4 +1,4 @@
-import { Player } from './Player';
+import { Player } from './common/Player';
 
 export class LoLGameParticipant {
   id: number = 0;

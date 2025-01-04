@@ -1,4 +1,4 @@
-import { Player } from '../Player';
+import { Player } from '../common/Player';
 import { TournamentPlayerDto } from './TournamentPlayerDto';
 
 export class Tournament {

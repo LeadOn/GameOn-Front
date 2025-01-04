@@ -7,7 +7,6 @@ import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.
 import { GameOnGameService } from '../../../shared/services/gameon-game.service';
 import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 import { Store } from '@ngrx/store';
-import { Player } from '../../../shared/classes/Player';
 import {
   faCheck,
   faChevronDown,
@@ -17,6 +16,7 @@ import {
 import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
 import { TournamentPlayerDto } from '../../../shared/classes/fifa/TournamentPlayerDto';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
+import { Player } from '../../../shared/classes/common/Player';
 
 @Component({
   selector: 'app-tournaments-details',

@@ -1,7 +1,6 @@
-import { Tournament } from './fifa/Tournament';
-import { LeagueOfLegendsRankHistory } from './LeagueOfLegendsRankHistory';
+import { Tournament } from '../fifa/Tournament';
 
-export class PlayerDto {
+export class Player {
   id: number = 0;
   keycloakId?: string;
   fullName: string = '';
@@ -14,9 +13,7 @@ export class PlayerDto {
   riotGamesTagLine?: string;
   riotGamesPUUID?: string;
   lolSummonerId?: string;
+  lolIconId?: number;
   lolSummonerLevel?: string;
   lolRefreshedOn?: Date;
-  lolIconId?: number;
-  leagueOfLegendsSoloRank?: LeagueOfLegendsRankHistory;
-  leagueOfLegendsFlexRank?: LeagueOfLegendsRankHistory;
 }

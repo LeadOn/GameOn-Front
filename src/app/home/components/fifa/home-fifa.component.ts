@@ -5,15 +5,15 @@ import {
   faFutbol,
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
-import { Player } from '../../../shared/classes/Player';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { GameOnPlayerService } from '../../../shared/services/gameon-player.service';
 import { PlatformStatsDto } from '../../../shared/classes/PlatformStatsDto';
 import { setPlayerStats } from '../../../store/actions/player.actions';
 import { GameOnGameService } from '../../../shared/services/gameon-game.service';
 import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
+import { Player } from '../../../shared/classes/common/Player';
+import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
 
 @Component({
   selector: 'app-home-fifa',

@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Player } from '../../shared/classes/Player';
-import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faEdit, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
+import { Player } from '../../shared/classes/common/Player';
 
 @Component({
-    selector: 'app-admin-players',
-    templateUrl: './admin-players.component.html',
-    styleUrls: ['./admin-players.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-admin-players',
+  templateUrl: './admin-players.component.html',
+  styleUrls: ['./admin-players.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class AdminPlayersComponent implements OnInit {
   players: Player[] = [];
