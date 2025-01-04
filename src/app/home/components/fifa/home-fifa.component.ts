@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Season } from '../../../shared/classes/Season';
 import {
   faExternalLink,
   faFutbol,
@@ -14,6 +13,7 @@ import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { Player } from '../../../shared/classes/common/Player';
 import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
+import { Season } from '../../../shared/classes/fifa/Season';
 
 @Component({
   selector: 'app-home-fifa',

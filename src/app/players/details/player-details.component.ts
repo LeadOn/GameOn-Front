@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import {
   faArrowRight,
   faExternalLinkAlt,
@@ -11,10 +10,10 @@ import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
 import { PlatformStatsDto } from '../../shared/classes/PlatformStatsDto';
 import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { GameOnSeasonService } from '../../shared/services/gameon-season.service';
-import { Season } from '../../shared/classes/Season';
 import { Player } from '../../shared/classes/common/Player';
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
+import { Season } from '../../shared/classes/fifa/Season';
+import { GameOnSeasonService } from '../../shared/services/fifa/gameon-season.service';
 
 @Component({
   selector: 'app-player-details',

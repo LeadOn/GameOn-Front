@@ -1,6 +1,6 @@
 import { FifaTeamDto } from './FifaTeamDto';
-import { Season } from './Season';
 import { Highlight } from './common/Highlight';
+import { Season } from './fifa/Season';
 
 export class FifaGamePlayed {
   id: number = 0;
