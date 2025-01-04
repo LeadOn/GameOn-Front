@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameon-lol.service';
-import { LoLGame } from '../../../shared/classes/LoLGame';
 import { ActivatedRoute } from '@angular/router';
 import {
   faCalendar,
   faExternalLink,
   faSync,
 } from '@fortawesome/free-solid-svg-icons';
-import { LoLGameParticipant } from '../../../shared/classes/LoLGameParticipant';
+import { LoLGame } from '../../../shared/classes/lol/LoLGame';
+import { LoLGameParticipant } from '../../../shared/classes/lol/LoLGameParticipant';
 
 @Component({
-    selector: 'app-lol-game-details',
-    templateUrl: './lol-game-details.component.html',
-    styleUrl: './lol-game-details.component.scss',
-    standalone: false
+  selector: 'app-lol-game-details',
+  templateUrl: './lol-game-details.component.html',
+  styleUrl: './lol-game-details.component.scss',
+  standalone: false,
 })
 export class LolGameDetailsComponent implements OnInit {
   gameId: any;
