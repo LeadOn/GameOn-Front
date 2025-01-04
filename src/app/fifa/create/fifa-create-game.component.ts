@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FifaTeam } from '../../shared/classes/FifaTeam';
-import { Platform } from '../../shared/classes/Platform';
 import { GameOnFifaTeamService } from '../../shared/services/gameon-fifateam.service';
 import { GameOnGameService } from '../../shared/services/gameon-game.service';
-import { GameOnPlatformService } from '../../shared/services/gameon-platform.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { faSoccerBall } from '@fortawesome/free-solid-svg-icons';
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 import { Player } from '../../shared/classes/common/Player';
+import { Platform } from '../../shared/classes/common/Platform';
+import { GameOnPlatformService } from '../../shared/services/common/gameon-platform.service';
 
 @Component({
   selector: 'app-fifa-create-game',

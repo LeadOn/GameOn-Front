@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AdminDashboard } from '../classes/AdminDashboard';
-import { Platform } from '../../../shared/classes/Platform';
 import { UpdateGame } from '../classes/UpdateGame';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { Player } from '../../../shared/classes/common/Player';
+import { Platform } from '../../../shared/classes/common/Platform';
 
 @Injectable({
   providedIn: 'root',
