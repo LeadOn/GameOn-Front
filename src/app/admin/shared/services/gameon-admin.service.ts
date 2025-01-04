@@ -6,7 +6,7 @@ import { AdminDashboard } from '../classes/AdminDashboard';
 import { Platform } from '../../../shared/classes/Platform';
 import { UpdateGame } from '../classes/UpdateGame';
 import { Player } from '../../../shared/classes/Player';
-import { Tournament } from '../../../shared/classes/Tournament';
+import { Tournament } from '../../../shared/classes/fifa/Tournament';
 
 @Injectable({
   providedIn: 'root',

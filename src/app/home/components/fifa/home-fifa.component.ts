@@ -5,7 +5,6 @@ import {
   faFutbol,
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
-import { Tournament } from '../../../shared/classes/Tournament';
 import { Player } from '../../../shared/classes/Player';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -14,12 +13,13 @@ import { PlatformStatsDto } from '../../../shared/classes/PlatformStatsDto';
 import { setPlayerStats } from '../../../store/actions/player.actions';
 import { GameOnGameService } from '../../../shared/services/gameon-game.service';
 import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
+import { Tournament } from '../../../shared/classes/fifa/Tournament';
 
 @Component({
-    selector: 'app-home-fifa',
-    templateUrl: './home-fifa.component.html',
-    styleUrl: './home-fifa.component.scss',
-    standalone: false
+  selector: 'app-home-fifa',
+  templateUrl: './home-fifa.component.html',
+  styleUrl: './home-fifa.component.scss',
+  standalone: false,
 })
 export class HomeFifaComponent implements OnChanges {
   @Input()

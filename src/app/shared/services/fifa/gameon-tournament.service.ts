@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { Tournament } from '../../classes/Tournament';
-import { TournamentPlayerDto } from '../../classes/TournamentPlayerDto';
+import { Tournament } from '../../classes/fifa/Tournament';
+import { TournamentPlayerDto } from '../../classes/fifa/TournamentPlayerDto';
 
 @Injectable({
   providedIn: 'root',

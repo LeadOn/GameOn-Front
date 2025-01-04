@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
-import { Tournament } from '../../../shared/classes/Tournament';
 import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
+import { Tournament } from '../../../shared/classes/fifa/Tournament';
 
 @Component({
   selector: 'app-admin-edit-tournament-edit',

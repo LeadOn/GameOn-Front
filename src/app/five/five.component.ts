@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { SoccerFive } from '../shared/classes/SoccerFive';
-import { GameOnSoccerfiveService } from '../shared/services/gameon-soccerfive.service';
 import { KeycloakService } from 'keycloak-angular';
 import { faInfoCircle, faSoccerBall } from '@fortawesome/free-solid-svg-icons';
+import { GameOnSoccerfiveService } from '../shared/services/fifa/gameon-soccerfive.service';
+import { SoccerFive } from '../shared/classes/fifa/SoccerFive';
 
 @Component({
-    selector: 'app-five',
-    templateUrl: './five.component.html',
-    styleUrl: './five.component.scss',
-    standalone: false
+  selector: 'app-five',
+  templateUrl: './five.component.html',
+  styleUrl: './five.component.scss',
+  standalone: false,
 })
 export class FiveComponent implements OnInit {
   loading = false;

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Tournament } from '../../../shared/classes/Tournament';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
@@ -7,7 +6,6 @@ import { FifaTeam } from '../../../shared/classes/FifaTeam';
 import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.service';
 import { GameOnGameService } from '../../../shared/services/gameon-game.service';
 import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
-import { TournamentPlayerDto } from '../../../shared/classes/TournamentPlayerDto';
 import { Store } from '@ngrx/store';
 import { Player } from '../../../shared/classes/Player';
 import {
@@ -17,6 +15,8 @@ import {
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
 import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
+import { TournamentPlayerDto } from '../../../shared/classes/fifa/TournamentPlayerDto';
+import { Tournament } from '../../../shared/classes/fifa/Tournament';
 
 @Component({
   selector: 'app-tournaments-details',
