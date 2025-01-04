@@ -1,4 +1,4 @@
-import { Player } from './common/Player';
+import { Player } from '../common/Player';
 import { FifaPlayerStatsDto } from './FifaPlayerStatsDto';
 
 export class GlobalStatsDto {

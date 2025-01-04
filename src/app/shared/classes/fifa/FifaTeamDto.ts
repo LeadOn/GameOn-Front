@@ -1,4 +1,4 @@
-import { Player } from './common/Player';
+import { Player } from '../common/Player';
 
 export class FifaTeamDto {
   id: number = 0;

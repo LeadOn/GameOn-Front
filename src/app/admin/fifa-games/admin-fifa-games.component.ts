@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
-import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
+import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
+import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
 
 @Component({
-    selector: 'app-admin-fifa-games',
-    templateUrl: './admin-fifa-games.component.html',
-    styleUrls: ['./admin-fifa-games.component.scss'],
-    standalone: false
+  selector: 'app-admin-fifa-games',
+  templateUrl: './admin-fifa-games.component.html',
+  styleUrls: ['./admin-fifa-games.component.scss'],
+  standalone: false,
 })
 export class AdminFifaGamesComponent implements OnInit {
   games: FifaGamePlayed[] = [];

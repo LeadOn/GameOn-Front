@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { KeycloakService } from 'keycloak-angular';
 import {
@@ -27,6 +26,7 @@ import { setPlayer } from '../../store/actions/player.actions';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 import { Player } from '../../shared/classes/common/Player';
+import { FifaPlayerStatsDto } from '../../shared/classes/fifa/FifaPlayerStatsDto';
 
 @Component({
   selector: 'app-profile-page',

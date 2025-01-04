@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
-import { FifaTeam } from '../../../shared/classes/FifaTeam';
-import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.service';
-import { GameOnGameService } from '../../../shared/services/gameon-game.service';
-import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 import { Store } from '@ngrx/store';
 import {
   faCheck,
@@ -17,6 +13,10 @@ import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-to
 import { TournamentPlayerDto } from '../../../shared/classes/fifa/TournamentPlayerDto';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { Player } from '../../../shared/classes/common/Player';
+import { FifaTeam } from '../../../shared/classes/fifa/FifaTeam';
+import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
+import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifateam.service';
+import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
 
 @Component({
   selector: 'app-tournaments-details',

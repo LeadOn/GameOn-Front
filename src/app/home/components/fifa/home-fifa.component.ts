@@ -7,13 +7,13 @@ import {
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { setPlayerStats } from '../../../store/actions/player.actions';
-import { GameOnGameService } from '../../../shared/services/gameon-game.service';
-import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { Player } from '../../../shared/classes/common/Player';
 import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
 import { Season } from '../../../shared/classes/fifa/Season';
 import { PlatformStatsDto } from '../../../shared/classes/common/PlatformStatsDto';
+import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
+import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
 
 @Component({
   selector: 'app-home-fifa',
