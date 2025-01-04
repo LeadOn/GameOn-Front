@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Tournament } from '../../shared/classes/Tournament';
-import { GameOnTournamentService } from '../../shared/services/gameon-tournament.service';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 import {
   faEdit,
@@ -8,12 +7,13 @@ import {
   faTrash,
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
+import { GameOnTournamentService } from '../../shared/services/fifa/gameon-tournament.service';
 
 @Component({
-    selector: 'app-admin-tournaments',
-    templateUrl: './admin-tournaments.component.html',
-    styleUrls: ['./admin-tournaments.component.scss'],
-    standalone: false
+  selector: 'app-admin-tournaments',
+  templateUrl: './admin-tournaments.component.html',
+  styleUrls: ['./admin-tournaments.component.scss'],
+  standalone: false,
 })
 export class AdminTournamentsComponent implements OnInit {
   tournaments: Tournament[] = [];

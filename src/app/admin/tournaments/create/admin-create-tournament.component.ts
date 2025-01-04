@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
-import { GameOnTournamentService } from '../../../shared/services/gameon-tournament.service';
+import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
 
 @Component({
-    selector: 'app-admin-create-tournament-edit',
-    templateUrl: './admin-create-tournament.component.html',
-    styleUrls: ['./admin-create-tournament.component.scss'],
-    standalone: false
+  selector: 'app-admin-create-tournament-edit',
+  templateUrl: './admin-create-tournament.component.html',
+  styleUrls: ['./admin-create-tournament.component.scss'],
+  standalone: false,
 })
 export class AdminCreateTournamentComponent implements OnInit {
   loading = false;
