@@ -1,44 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Tournament } from '../classes/Tournament';
-import { TournamentPlayerDto } from '../classes/TournamentPlayerDto';
+import { environment } from '../../../../environments/environment';
+import { Tournament } from '../../classes/Tournament';
+import { TournamentPlayerDto } from '../../classes/TournamentPlayerDto';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameOnTournamentService {
+  baseControllerUrl = environment.gameOnApiUrl + '/fifa/tournament';
+
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<Tournament[]> {
-    return this.client.get<Tournament[]>(
-      environment.gameOnApiUrl + '/tournament'
-    );
+    return this.client.get<Tournament[]>(this.baseControllerUrl);
   }
 
   getFeatured(): Observable<Tournament[]> {
-    return this.client.get<Tournament[]>(
-      environment.gameOnApiUrl + '/tournament/featured'
-    );
+    return this.client.get<Tournament[]>(this.baseControllerUrl + '/featured');
   }
 
   getById(id: number): Observable<Tournament> {
-    return this.client.get<Tournament>(
-      environment.gameOnApiUrl + '/tournament/' + id
-    );
+    return this.client.get<Tournament>(this.baseControllerUrl + '/' + id);
   }
 
   checkPlayerSubscription(id: number): Observable<TournamentPlayerDto> {
     return this.client.get<TournamentPlayerDto>(
-      environment.gameOnApiUrl + '/tournament/' + id + '/subscription'
+      this.baseControllerUrl + '/' + id + '/subscription'
     );
   }
 
   subscribe(id: number, fifaTeamId: number): Observable<any> {
     return this.client.post<any>(
-      environment.gameOnApiUrl +
-        '/tournament/' +
+      this.baseControllerUrl +
+        '/' +
         id +
         '/subscription?fifaTeamId=' +
         fifaTeamId,
@@ -51,8 +47,8 @@ export class GameOnTournamentService {
     fifaTeamId: number
   ): Observable<TournamentPlayerDto> {
     return this.client.patch<TournamentPlayerDto>(
-      environment.gameOnApiUrl +
-        '/tournament/' +
+      this.baseControllerUrl +
+        '/' +
         id +
         '/subscription?fifaTeamId=' +
         fifaTeamId,

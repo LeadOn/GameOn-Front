@@ -35,7 +35,7 @@ export class GameOnAdminService {
 
   deleteTournament(tournamentId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.gameOnApiUrl + '/tournament/' + tournamentId
+      environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId
     );
   }
 
@@ -98,7 +98,7 @@ export class GameOnAdminService {
     }
 
     return this.client.post<Tournament>(
-      environment.gameOnApiUrl + '/tournament',
+      environment.gameOnApiUrl + '/fifa/tournament',
       body
     );
   }
@@ -145,14 +145,14 @@ export class GameOnAdminService {
     }
 
     return this.client.patch<Tournament>(
-      environment.gameOnApiUrl + '/tournament/' + id,
+      environment.gameOnApiUrl + '/fifa/tournament/' + id,
       body
     );
   }
 
   goToPhase1(tournamentId: number): Observable<any> {
     return this.client.post<any>(
-      environment.gameOnApiUrl + '/tournament/' + tournamentId + '/phase1',
+      environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId + '/phase1',
       null
     );
   }
@@ -160,7 +160,7 @@ export class GameOnAdminService {
   savePhase1Score(tournamentId: number): Observable<any> {
     return this.client.post<any>(
       environment.gameOnApiUrl +
-        '/tournament/' +
+        '/fifa/tournament/' +
         tournamentId +
         '/phase1/score',
       null
@@ -173,7 +173,7 @@ export class GameOnAdminService {
   ): Observable<any> {
     return this.client.delete<any>(
       environment.gameOnApiUrl +
-        '/tournament/' +
+        '/fifa/tournament/' +
         tournamentId +
         '/player/' +
         playerId
