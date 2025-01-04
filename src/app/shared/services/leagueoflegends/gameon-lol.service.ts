@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { LeagueOfLegendsRankHistory } from '../../classes/LeagueOfLegendsRankHistory';
-import { LoLGame } from '../../classes/LoLGame';
 import { Player } from '../../classes/common/Player';
 import { PlayerDto } from '../../classes/common/PlayerDto';
+import { LeagueOfLegendsRankHistory } from '../../classes/lol/LeagueOfLegendsRankHistory';
+import { LoLGame } from '../../classes/lol/LoLGame';
 
 @Injectable({
   providedIn: 'root',

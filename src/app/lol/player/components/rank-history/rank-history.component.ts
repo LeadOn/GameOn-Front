@@ -6,13 +6,13 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { LeagueOfLegendsRankHistory } from '../../../../shared/classes/LeagueOfLegendsRankHistory';
+import { LeagueOfLegendsRankHistory } from '../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
 
 @Component({
-    selector: 'app-rank-history',
-    templateUrl: './rank-history.component.html',
-    styleUrl: './rank-history.component.scss',
-    standalone: false
+  selector: 'app-rank-history',
+  templateUrl: './rank-history.component.html',
+  styleUrl: './rank-history.component.scss',
+  standalone: false,
 })
 export class RankHistoryComponent implements OnInit, OnChanges {
   @Input()
