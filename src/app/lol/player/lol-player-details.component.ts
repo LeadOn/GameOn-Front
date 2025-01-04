@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PlayerDto } from '../../shared/classes/PlayerDto';
 import { faExternalLink, faSync } from '@fortawesome/free-solid-svg-icons';
-import { LeagueOfLegendsRankHistory } from '../../shared/classes/LeagueOfLegendsRankHistory';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
-import { LoLGame } from '../../shared/classes/LoLGame';
 import { environment } from '../../../environments/environment';
+import { PlayerDto } from '../../shared/classes/common/PlayerDto';
+import { LeagueOfLegendsRankHistory } from '../../shared/classes/lol/LeagueOfLegendsRankHistory';
+import { LoLGame } from '../../shared/classes/lol/LoLGame';
 
 @Component({
-    selector: 'app-lol-player-details',
-    templateUrl: './lol-player-details.component.html',
-    styleUrl: './lol-player-details.component.scss',
-    standalone: false
+  selector: 'app-lol-player-details',
+  templateUrl: './lol-player-details.component.html',
+  styleUrl: './lol-player-details.component.scss',
+  standalone: false,
 })
 export class LolPlayerDetailsComponent implements OnInit {
   playerId: any;

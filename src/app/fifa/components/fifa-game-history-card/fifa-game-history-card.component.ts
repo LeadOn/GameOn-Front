@@ -6,13 +6,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { KeycloakService } from 'keycloak-angular';
 import { GameOnAdminService } from '../../../admin/shared/services/gameon-admin.service';
-import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
+import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
 
 @Component({
-    selector: 'app-fifa-game-history-card',
-    templateUrl: './fifa-game-history-card.component.html',
-    styleUrls: ['./fifa-game-history-card.component.scss'],
-    standalone: false
+  selector: 'app-fifa-game-history-card',
+  templateUrl: './fifa-game-history-card.component.html',
+  styleUrls: ['./fifa-game-history-card.component.scss'],
+  standalone: false,
 })
 export class FifaGameHistoryCardComponent {
   @Input()

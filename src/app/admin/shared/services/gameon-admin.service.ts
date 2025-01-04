@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { AdminDashboard } from '../classes/AdminDashboard';
-import { Platform } from '../../../shared/classes/Platform';
 import { UpdateGame } from '../classes/UpdateGame';
-import { Player } from '../../../shared/classes/Player';
-import { Tournament } from '../../../shared/classes/Tournament';
+import { Tournament } from '../../../shared/classes/fifa/Tournament';
+import { Player } from '../../../shared/classes/common/Player';
+import { Platform } from '../../../shared/classes/common/Platform';
 
 @Injectable({
   providedIn: 'root',
@@ -29,18 +29,21 @@ export class GameOnAdminService {
 
   deleteGame(gameId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.gameOnApiUrl + '/fifagame/' + gameId
+      environment.gameOnApiUrl + '/fifa/fifagame/' + gameId
     );
   }
 
   deleteTournament(tournamentId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.gameOnApiUrl + '/tournament/' + tournamentId
+      environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId
     );
   }
 
   updateGame(game: UpdateGame): Observable<any> {
-    return this.client.patch<any>(environment.gameOnApiUrl + '/fifagame', game);
+    return this.client.patch<any>(
+      environment.gameOnApiUrl + '/fifa/fifagame',
+      game
+    );
   }
 
   updatePlayer(
@@ -98,7 +101,7 @@ export class GameOnAdminService {
     }
 
     return this.client.post<Tournament>(
-      environment.gameOnApiUrl + '/tournament',
+      environment.gameOnApiUrl + '/fifa/tournament',
       body
     );
   }
@@ -145,14 +148,14 @@ export class GameOnAdminService {
     }
 
     return this.client.patch<Tournament>(
-      environment.gameOnApiUrl + '/tournament/' + id,
+      environment.gameOnApiUrl + '/fifa/tournament/' + id,
       body
     );
   }
 
   goToPhase1(tournamentId: number): Observable<any> {
     return this.client.post<any>(
-      environment.gameOnApiUrl + '/tournament/' + tournamentId + '/phase1',
+      environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId + '/phase1',
       null
     );
   }
@@ -160,7 +163,7 @@ export class GameOnAdminService {
   savePhase1Score(tournamentId: number): Observable<any> {
     return this.client.post<any>(
       environment.gameOnApiUrl +
-        '/tournament/' +
+        '/fifa/tournament/' +
         tournamentId +
         '/phase1/score',
       null
@@ -173,7 +176,7 @@ export class GameOnAdminService {
   ): Observable<any> {
     return this.client.delete<any>(
       environment.gameOnApiUrl +
-        '/tournament/' +
+        '/fifa/tournament/' +
         tournamentId +
         '/player/' +
         playerId

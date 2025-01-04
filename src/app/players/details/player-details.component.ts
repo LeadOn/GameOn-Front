@@ -1,38 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import {
   faArrowRight,
   faExternalLinkAlt,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
-import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
-import { PlatformStatsDto } from '../../shared/classes/PlatformStatsDto';
-import { Player } from '../../shared/classes/Player';
-import { GameOnGameService } from '../../shared/services/gameon-game.service';
-import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { GameOnSeasonService } from '../../shared/services/gameon-season.service';
-import { Season } from '../../shared/classes/Season';
+import { Player } from '../../shared/classes/common/Player';
+import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
+import { Season } from '../../shared/classes/fifa/Season';
+import { GameOnSeasonService } from '../../shared/services/fifa/gameon-season.service';
+import { PlatformStatsDto } from '../../shared/classes/common/PlatformStatsDto';
+import { FifaPlayerStatsDto } from '../../shared/classes/fifa/FifaPlayerStatsDto';
+import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
+import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
 
 @Component({
-    selector: 'app-player-details',
-    templateUrl: './player-details.component.html',
-    styleUrls: ['./player-details.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-player-details',
+  templateUrl: './player-details.component.html',
+  styleUrls: ['./player-details.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class PlayerDetailsComponent implements OnInit {
   selectedStats = 0;

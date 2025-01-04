@@ -1,5 +1,5 @@
-import { Season } from '../Season';
-import { Tournament } from '../Tournament';
+import { Season } from '../fifa/Season';
+import { Tournament } from '../fifa/Tournament';
 import { Changelog } from './Changelog';
 
 export class HomeDataDto {

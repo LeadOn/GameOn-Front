@@ -1,4 +1,4 @@
-import { Player } from './Player';
+import { Player } from '../common/Player';
 
 export class SoccerFive {
   id: number = 0;

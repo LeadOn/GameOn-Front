@@ -1,29 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Platform } from '../../../shared/classes/Platform';
-import { GameOnPlatformService } from '../../../shared/services/gameon-platform.service';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faComputer } from '@fortawesome/free-solid-svg-icons';
+import { GameOnPlatformService } from '../../../shared/services/common/gameon-platform.service';
+import { Platform } from '../../../shared/classes/common/Platform';
 
 @Component({
-    selector: 'app-admin-platform-edit',
-    templateUrl: './admin-platform-edit.component.html',
-    styleUrls: ['./admin-platform-edit.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-admin-platform-edit',
+  templateUrl: './admin-platform-edit.component.html',
+  styleUrls: ['./admin-platform-edit.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class AdminPlatformEditComponent implements OnInit {
   platformId: any;

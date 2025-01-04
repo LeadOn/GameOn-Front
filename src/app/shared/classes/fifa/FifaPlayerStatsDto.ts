@@ -1,4 +1,4 @@
-import { PlatformStatsDto } from './PlatformStatsDto';
+import { PlatformStatsDto } from '../common/PlatformStatsDto';
 import { TopTeamStatDto } from './TopTeamStatDto';
 
 export class FifaPlayerStatsDto {

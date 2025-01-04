@@ -2,28 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
-import { Player } from '../../../shared/classes/Player';
-import { GameOnPlayerService } from '../../../shared/services/gameon-player.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { Player } from '../../../shared/classes/common/Player';
+import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
 
 @Component({
-    selector: 'app-admin-player-edit',
-    templateUrl: './admin-player-edit.component.html',
-    styleUrls: ['./admin-player-edit.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-admin-player-edit',
+  templateUrl: './admin-player-edit.component.html',
+  styleUrls: ['./admin-player-edit.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class AdminPlayerEditComponent implements OnInit {
   playerId: any;

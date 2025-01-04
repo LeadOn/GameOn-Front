@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GameOnSoccerfiveService } from '../../shared/services/gameon-soccerfive.service';
+import { GameOnSoccerfiveService } from '../../shared/services/fifa/gameon-soccerfive.service';
 
 @Component({
-    selector: 'app-five-create',
-    templateUrl: './five-create.component.html',
-    styleUrls: ['./five-create.component.scss'],
-    standalone: false
+  selector: 'app-five-create',
+  templateUrl: './five-create.component.html',
+  styleUrls: ['./five-create.component.scss'],
+  standalone: false,
 })
 export class CreateFiveComponent implements OnInit {
   isLoading = false;

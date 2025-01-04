@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { Highlight } from '../classes/Highlight';
-import { CreateHighlightDto } from '../classes/CreateHighlightDto';
+import { environment } from '../../../../environments/environment';
+import { Highlight } from '../../classes/common/Highlight';
+import { CreateHighlightDto } from '../../classes/common/CreateHighlightDto';
 
 @Injectable({
   providedIn: 'root',

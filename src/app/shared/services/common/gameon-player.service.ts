@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Player } from '../../shared/classes/Player';
-import { environment } from '../../../environments/environment';
-import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
+import { Player } from '../../classes/common/Player';
+import { environment } from '../../../../environments/environment';
+import { FifaPlayerStatsDto } from '../../classes/fifa/FifaPlayerStatsDto';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,4 @@
-import { Player } from './Player';
+import { Player } from '../common/Player';
 import { SoccerFiveVoteChoice } from './SoccerFiveVoteChoice';
 
 export class SoccerFiveDto {

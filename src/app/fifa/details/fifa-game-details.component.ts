@@ -1,35 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   faClock,
   faExternalLinkAlt,
   faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
-import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GameOnHighlightService } from '../../shared/services/gameon-highlight.service';
-import { CreateHighlightDto } from '../../shared/classes/CreateHighlightDto';
 import { KeycloakService } from 'keycloak-angular';
+import { GameOnHighlightService } from '../../shared/services/common/gameon-highlight.service';
+import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
+import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
+import { CreateHighlightDto } from '../../shared/classes/common/CreateHighlightDto';
 
 @Component({
-    selector: 'app-fifa-game-details',
-    templateUrl: './fifa-game-details.component.html',
-    styleUrls: ['./fifa-game-details.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-fifa-game-details',
+  templateUrl: './fifa-game-details.component.html',
+  styleUrls: ['./fifa-game-details.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class FifaGameDetailsComponent implements OnInit {
   gameId: any;
@@ -54,7 +54,8 @@ export class FifaGameDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private gameService: GameOnGameService,
     private highlightService: GameOnHighlightService,
-    private keycloak: KeycloakService
+    private keycloak: KeycloakService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -118,6 +119,23 @@ export class FifaGameDetailsComponent implements OnInit {
         (err) => {
           this.loading = false;
           alert('Une erreur est survenue lors de la création du temps fort !');
+        }
+      );
+    }
+  }
+
+  deleteGame() {
+    if (
+      this.isAdmin == true &&
+      confirm('Êtes-vous sûr de vouloir supprimer ce match ?')
+    ) {
+      this.gameService.deleteGame(this.gameId).subscribe(
+        (data) => {
+          this.router.navigate(['/fifa']);
+        },
+        (err) => {
+          alert('Une erreur est survenue lors de la suppression du match.');
+          console.error(err);
         }
       );
     }

@@ -1,5 +1,5 @@
-import { LeagueOfLegendsRankHistory } from './LeagueOfLegendsRankHistory';
-import { Tournament } from './Tournament';
+import { Tournament } from '../fifa/Tournament';
+import { LeagueOfLegendsRankHistory } from '../lol/LeagueOfLegendsRankHistory';
 
 export class PlayerDto {
   id: number = 0;

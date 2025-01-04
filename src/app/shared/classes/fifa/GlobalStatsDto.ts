@@ -1,5 +1,5 @@
+import { Player } from '../common/Player';
 import { FifaPlayerStatsDto } from './FifaPlayerStatsDto';
-import { Player } from './Player';
 
 export class GlobalStatsDto {
   numberOfGames: number = 0;

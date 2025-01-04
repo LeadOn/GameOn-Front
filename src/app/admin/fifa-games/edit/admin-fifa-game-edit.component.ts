@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Platform } from '../../../shared/classes/Platform';
-import { GameOnPlatformService } from '../../../shared/services/gameon-platform.service';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
-import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
-import { GameOnGameService } from '../../../shared/services/gameon-game.service';
-import { FifaTeam } from '../../../shared/classes/FifaTeam';
-import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.service';
 import { UpdateGame } from '../../shared/classes/UpdateGame';
+import { Platform } from '../../../shared/classes/common/Platform';
+import { GameOnPlatformService } from '../../../shared/services/common/gameon-platform.service';
+import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
+import { FifaTeam } from '../../../shared/classes/fifa/FifaTeam';
+import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
+import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifateam.service';
 
 @Component({
-    selector: 'app-admin-fifa-game-edit',
-    templateUrl: './admin-fifa-game-edit.component.html',
-    styleUrls: ['./admin-fifa-game-edit.component.scss'],
-    standalone: false
+  selector: 'app-admin-fifa-game-edit',
+  templateUrl: './admin-fifa-game-edit.component.html',
+  styleUrls: ['./admin-fifa-game-edit.component.scss'],
+  standalone: false,
 })
 export class AdminFifaGameEditComponent implements OnInit {
   gameId: any;

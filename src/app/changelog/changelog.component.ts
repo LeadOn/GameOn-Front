@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { GameOnChangelogService } from '../shared/services/gameon-changelog.service';
+import { GameOnChangelogService } from '../shared/services/common/gameon-changelog.service';
 import { Changelog } from '../shared/classes/common/Changelog';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-changelog',
-    templateUrl: './changelog.component.html',
-    styleUrl: './changelog.component.scss',
-    standalone: false
+  selector: 'app-changelog',
+  templateUrl: './changelog.component.html',
+  styleUrl: './changelog.component.scss',
+  standalone: false,
 })
 export class ChangelogComponent implements OnInit {
   changelogIcon = faClock;

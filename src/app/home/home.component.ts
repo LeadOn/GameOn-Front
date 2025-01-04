@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
-import { Player } from '../shared/classes/Player';
-import { GameOnPlayerService } from '../shared/services/gameon-player.service';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { GameOnCommonService } from '../shared/services/common/gameon-common.service';
 import { HomeDataDto } from '../shared/classes/common/HomeDataDto';
+import { GameOnPlayerService } from '../shared/services/common/gameon-player.service';
+import { Player } from '../shared/classes/common/Player';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
-    standalone: false
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
+  standalone: false,
 })
 export class HomeComponent implements OnInit {
   loading = true;

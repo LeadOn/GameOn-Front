@@ -1,4 +1,4 @@
-import { Highlight } from './Highlight';
+import { Highlight } from '../common/Highlight';
 import { FifaTeamDto } from './FifaTeamDto';
 import { Season } from './Season';
 

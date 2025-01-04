@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
-import { PlayerDto } from '../shared/classes/PlayerDto';
 import { Observable } from 'rxjs';
-import { Player } from '../shared/classes/Player';
 import { Store } from '@ngrx/store';
 import { GameOnLoLService } from '../shared/services/leagueoflegends/gameon-lol.service';
+import { Player } from '../shared/classes/common/Player';
+import { PlayerDto } from '../shared/classes/common/PlayerDto';
 
 @Component({
-    selector: 'app-lol-home',
-    templateUrl: './lol-home.component.html',
-    styleUrl: './lol-home.component.scss',
-    standalone: false
+  selector: 'app-lol-home',
+  templateUrl: './lol-home.component.html',
+  styleUrl: './lol-home.component.scss',
+  standalone: false,
 })
 export class LolHomeComponent implements OnInit {
   leaguePlayers: PlayerDto[] = [];

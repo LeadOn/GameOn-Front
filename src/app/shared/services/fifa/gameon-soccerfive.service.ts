@@ -1,28 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { SoccerFive } from '../classes/SoccerFive';
-import { SoccerFiveDto } from '../classes/SoccerFiveDto';
-import { SoccerFiveVoteChoice } from '../classes/SoccerFiveVoteChoice';
-import { VoteSoccerFiveDto } from '../classes/VoteSoccerFiveDto';
+import { environment } from '../../../../environments/environment';
+import { SoccerFiveDto } from '../../classes/fifa/SoccerFiveDto';
+import { SoccerFive } from '../../classes/fifa/SoccerFive';
+import { VoteSoccerFiveDto } from '../../classes/fifa/VoteSoccerFiveDto';
+import { SoccerFiveVoteChoice } from '../../classes/fifa/SoccerFiveVoteChoice';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameOnSoccerfiveService {
+  baseControllerUrl = environment.gameOnApiUrl + '/fifa/soccerfive';
+
   constructor(private client: HttpClient) {}
 
   getAll(): Observable<SoccerFive[]> {
-    return this.client.get<SoccerFive[]>(
-      environment.gameOnApiUrl + '/soccerfive'
-    );
+    return this.client.get<SoccerFive[]>(this.baseControllerUrl);
   }
 
   getById(id: number): Observable<SoccerFiveDto> {
-    return this.client.get<SoccerFiveDto>(
-      environment.gameOnApiUrl + '/soccerfive/' + id
-    );
+    return this.client.get<SoccerFiveDto>(this.baseControllerUrl + '/' + id);
   }
 
   create(
@@ -30,14 +28,11 @@ export class GameOnSoccerfiveService {
     description?: string,
     plannedOn?: string
   ): Observable<SoccerFive> {
-    return this.client.post<SoccerFive>(
-      environment.gameOnApiUrl + '/soccerfive',
-      {
-        name,
-        description,
-        plannedOn,
-      }
-    );
+    return this.client.post<SoccerFive>(this.baseControllerUrl, {
+      name,
+      description,
+      plannedOn,
+    });
   }
 
   getStates(): any[] {
@@ -63,7 +58,7 @@ export class GameOnSoccerfiveService {
     choices: SoccerFiveVoteChoice[]
   ): Observable<SoccerFiveDto> {
     return this.client.patch<SoccerFiveDto>(
-      environment.gameOnApiUrl + '/soccerfive/' + fiveId + '/survey',
+      this.baseControllerUrl + '/' + fiveId + '/survey',
       {
         SoccerFiveId: fiveId,
         VoteQuestion: question,
@@ -74,7 +69,7 @@ export class GameOnSoccerfiveService {
 
   vote(fiveId: number, voteDto: VoteSoccerFiveDto) {
     return this.client.post<boolean>(
-      environment.gameOnApiUrl + '/soccerfive/' + fiveId + '/survey/vote',
+      this.baseControllerUrl + '/' + fiveId + '/survey/vote',
       voteDto
     );
   }
@@ -94,15 +89,10 @@ export class GameOnSoccerfiveService {
       state,
     };
 
-    return this.client.patch<SoccerFiveDto>(
-      environment.gameOnApiUrl + '/soccerfive',
-      body
-    );
+    return this.client.patch<SoccerFiveDto>(this.baseControllerUrl, body);
   }
 
   delete(fiveId: number) {
-    return this.client.delete(
-      environment.gameOnApiUrl + '/soccerfive/' + fiveId
-    );
+    return this.client.delete(this.baseControllerUrl + '/' + fiveId);
   }
 }

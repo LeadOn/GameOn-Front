@@ -1,40 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { Tournament } from '../../../shared/classes/Tournament';
-import { GameOnTournamentService } from '../../../shared/services/gameon-tournament.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
-import { FifaTeam } from '../../../shared/classes/FifaTeam';
-import { GameOnFifaTeamService } from '../../../shared/services/gameon-fifateam.service';
-import { GameOnGameService } from '../../../shared/services/gameon-game.service';
-import { FifaGamePlayed } from '../../../shared/classes/FifaGamePlayed';
-import { TournamentPlayerDto } from '../../../shared/classes/TournamentPlayerDto';
 import { Store } from '@ngrx/store';
-import { Player } from '../../../shared/classes/Player';
 import {
   faCheck,
   faChevronDown,
   faChevronRight,
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
+import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
+import { TournamentPlayerDto } from '../../../shared/classes/fifa/TournamentPlayerDto';
+import { Tournament } from '../../../shared/classes/fifa/Tournament';
+import { Player } from '../../../shared/classes/common/Player';
+import { FifaTeam } from '../../../shared/classes/fifa/FifaTeam';
+import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
+import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifateam.service';
+import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
 
 @Component({
-    selector: 'app-tournaments-details',
-    templateUrl: './tournaments-details.component.html',
-    styleUrls: ['./tournaments-details.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-tournaments-details',
+  templateUrl: './tournaments-details.component.html',
+  styleUrls: ['./tournaments-details.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class TournamentsDetailsComponent implements OnInit {
   loading = true;
