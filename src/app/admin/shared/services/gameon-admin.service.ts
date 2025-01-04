@@ -5,8 +5,8 @@ import { environment } from '../../../../environments/environment';
 import { AdminDashboard } from '../classes/AdminDashboard';
 import { Platform } from '../../../shared/classes/Platform';
 import { UpdateGame } from '../classes/UpdateGame';
-import { Player } from '../../../shared/classes/Player';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
+import { Player } from '../../../shared/classes/common/Player';
 
 @Injectable({
   providedIn: 'root',

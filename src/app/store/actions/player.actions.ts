@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Player } from '../../shared/classes/Player';
 import { PlatformStatsDto } from '../../shared/classes/PlatformStatsDto';
+import { Player } from '../../shared/classes/common/Player';
 
 export const setPlayer = createAction(
   'Set Player',

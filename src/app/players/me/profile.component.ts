@@ -10,7 +10,6 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { FifaPlayerStatsDto } from '../../shared/classes/FifaPlayerStatsDto';
-import { Player } from '../../shared/classes/Player';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { KeycloakService } from 'keycloak-angular';
 import {
@@ -24,27 +23,28 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GameOnPlayerService } from '../../shared/services/gameon-player.service';
 import { setPlayer } from '../../store/actions/player.actions';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
+import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
+import { Player } from '../../shared/classes/common/Player';
 
 @Component({
-    selector: 'app-profile-page',
-    templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-profile-page',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class ProfilePageComponent implements OnInit, OnChanges {
   player$: Observable<Player>;

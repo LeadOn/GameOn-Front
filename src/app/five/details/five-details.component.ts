@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
-import { Player } from '../../shared/classes/Player';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
@@ -16,6 +15,7 @@ import { SoccerFiveVoteChoice } from '../../shared/classes/SoccerFiveVoteChoice'
 import { GameOnSoccerfiveService } from '../../shared/services/fifa/gameon-soccerfive.service';
 import { SoccerFiveDto } from '../../shared/classes/fifa/SoccerFiveDto';
 import { VoteSoccerFiveDto } from '../../shared/classes/fifa/VoteSoccerFiveDto';
+import { Player } from '../../shared/classes/common/Player';
 @Component({
   selector: 'app-five-details',
   templateUrl: './five-details.component.html',
