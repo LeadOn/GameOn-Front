@@ -9,27 +9,27 @@ import { FifaGamePlayed } from '../../shared/classes/FifaGamePlayed';
 import { GameOnGameService } from '../../shared/services/gameon-game.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GameOnHighlightService } from '../../shared/services/gameon-highlight.service';
 import { CreateHighlightDto } from '../../shared/classes/CreateHighlightDto';
 import { KeycloakService } from 'keycloak-angular';
+import { GameOnHighlightService } from '../../shared/services/common/gameon-highlight.service';
 
 @Component({
-    selector: 'app-fifa-game-details',
-    templateUrl: './fifa-game-details.component.html',
-    styleUrls: ['./fifa-game-details.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-fifa-game-details',
+  templateUrl: './fifa-game-details.component.html',
+  styleUrls: ['./fifa-game-details.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class FifaGameDetailsComponent implements OnInit {
   gameId: any;
