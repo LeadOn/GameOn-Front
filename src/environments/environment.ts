@@ -7,5 +7,5 @@ export const environment = {
     clientId: 'gameon-front-dev',
   },
   version: '4.3.0',
-  currentLoLPatch: '14.24.1',
+  currentLoLPatch: '15.1.1',
 };

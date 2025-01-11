@@ -75,6 +75,20 @@
       >
         <span class="text-xs">{{ player.fullName }}</span>
       </div>
+
+      <div
+        class="flex justify-start items-center text-gray-500 dark:text-gray-400"
+      >
+        <a
+          href="https://www.op.gg/summoners/euw/{{
+            player.riotGamesNickname
+          }}-{{ player.riotGamesTagLine }}"
+          class="text-xs"
+          target="_blank"
+          >Accéder à OP.GG
+          <fa-icon class="text-xs" [icon]="externalIcon"></fa-icon
+        ></a>
+      </div>
     </div>
   </div>
 
