@@ -1,14 +1,10 @@
 <section id="top-card" class="px-4 pt-4">
-  <app-loading-spinner
-    *ngIf="loading == true"
-    [@inOutAnimation]
-  ></app-loading-spinner>
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 </section>
 
 <section
   id="header-pills"
   class="px-4 py-2 mb-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
-  [@inOutAnimation]
   *ngIf="loading == false && tournament != null"
 >
   <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
@@ -41,7 +37,6 @@
   id="tournament-detail-card"
   class="px-4"
   *ngIf="loading == false && tournament != null"
-  [@inOutAnimation]
 >
   <div
     class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
@@ -74,7 +69,6 @@
 
 <div
   class="px-4 mt-4 flex space-x-2"
-  [@inOutAnimation]
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -86,7 +80,6 @@
   id="tournament-winner"
   class="px-4 mt-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
-  [@inOutAnimation]
 >
   <div class="bg-bgLight dark:bg-bgDark rounded-lg">
     <app-player-card [player]="tournament.winner"></app-player-card>
@@ -95,7 +88,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
-  [@inOutAnimation]
   *ngIf="
     loading == false && tournament != null && tournament.description != null
   "
@@ -117,7 +109,6 @@
     tournament.description != null &&
     showDetails == true
   "
-  [@inOutAnimation]
 >
   <div
     class="bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
@@ -128,7 +119,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
-  [@inOutAnimation]
   *ngIf="loading == false && tournament != null && tournament.rules != null"
   (click)="showRulesContent()"
 >
@@ -148,7 +138,6 @@
     tournament.description != null &&
     showRules == true
   "
-  [@inOutAnimation]
 >
   <div
     class="bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
@@ -158,7 +147,6 @@
 
 <div
   class="px-4 mt-4 flex"
-  [@inOutAnimation]
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -174,7 +162,6 @@
 <section
   id="tournament-subscription"
   class="m-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
-  [@inOutAnimation]
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -227,7 +214,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
-  [@inOutAnimation]
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -259,7 +245,6 @@
     tournament.phase2ChallongeUrl != null &&
     tournamentBracketShown == true
   "
-  [@inOutAnimation]
 >
   <iframe
     [src]="tournament.phase2ChallongeUrl | safe"
@@ -273,7 +258,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
-  [@inOutAnimation]
   *ngIf="
     loading == false && tournament != null && tournament.players.length > 0
   "
@@ -295,7 +279,6 @@
     tournament.players.length > 0 &&
     playersShown == true
   "
-  [@inOutAnimation]
 >
   <div class="relative drop-shadow-lg lg:px-4">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
@@ -352,7 +335,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
-  [@inOutAnimation]
   *ngIf="loading == false && tournament != null && myGamesToPlay.length > 0"
   (click)="showMyMatchsToPlay()"
 >
@@ -378,7 +360,6 @@
     myGamesToPlay.length > 0 &&
     myMatchsToPlayShown == true
   "
-  [@inOutAnimation]
 >
   <app-fifa-game-history-card
     *ngFor="let game of myGamesToPlay"
@@ -388,7 +369,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
-  [@inOutAnimation]
   *ngIf="loading == false && tournament != null && gamesToPlay.length > 0"
   (click)="showMatchsPlanned()"
 >
@@ -414,7 +394,6 @@
     gamesToPlay.length > 0 &&
     plannedMatchsShown == true
   "
-  [@inOutAnimation]
 >
   <app-fifa-game-history-card
     *ngFor="let game of gamesToPlay"
@@ -424,7 +403,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
-  [@inOutAnimation]
   *ngIf="loading == false && tournament != null && gamesPlayed.length > 0"
   (click)="showMatchsPlayed()"
 >
@@ -450,7 +428,6 @@
     gamesPlayed.length > 0 &&
     matchsPlayedShown == true
   "
-  [@inOutAnimation]
 >
   <app-fifa-game-history-card
     *ngFor="let game of gamesPlayed"

@@ -1,21 +1,13 @@
 <section id="top-card" class="px-4 pt-4 h-screen">
-  <app-loading-spinner
-    *ngIf="loading == true"
-    [@inOutAnimation]
-  ></app-loading-spinner>
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 
   <app-common-page-header
     *ngIf="!loading"
-    [@inOutAnimation]
     [icon]="trophyIcon"
     [title]="'Tournois'"
   ></app-common-page-header>
 
-  <div
-    [@inOutAnimation]
-    *ngIf="loading == false"
-    class="flex flex-col space-y-4 mt-4"
-  >
+  <div *ngIf="loading == false" class="flex flex-col space-y-4 mt-4">
     <div
       class="bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg flex flex-col space-y-2"
       *ngFor="let tournament of tournaments"

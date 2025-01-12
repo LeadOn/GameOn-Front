@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { GameOnTournamentService } from '../../shared/services/fifa/gameon-tournament.service';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Tournament } from '../../shared/classes/fifa/Tournament';
@@ -8,18 +7,6 @@ import { Tournament } from '../../shared/classes/fifa/Tournament';
   selector: 'app-tournaments-home',
   templateUrl: './tournaments-home.component.html',
   styleUrls: ['./tournaments-home.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   standalone: false,
 })
 export class TournamentsHomeComponent implements OnInit {

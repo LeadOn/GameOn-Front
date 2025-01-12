@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { trigger, style, animate, transition } from '@angular/animations';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
@@ -16,25 +14,17 @@ import { SoccerFiveDto } from '../../shared/classes/fifa/SoccerFiveDto';
 import { VoteSoccerFiveDto } from '../../shared/classes/fifa/VoteSoccerFiveDto';
 import { Player } from '../../shared/classes/common/Player';
 import { SoccerFiveVoteChoice } from '../../shared/classes/fifa/SoccerFiveVoteChoice';
+import Keycloak from 'keycloak-js';
+
 @Component({
   selector: 'app-five-details',
   templateUrl: './five-details.component.html',
   styleUrls: ['./five-details.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   standalone: false,
 })
 export class FiveDetailsComponent implements OnInit {
+  private readonly keycloak = inject(Keycloak);
+
   loading = true;
   isLoggedIn = false;
   five?: SoccerFiveDto;
@@ -68,7 +58,6 @@ export class FiveDetailsComponent implements OnInit {
   constructor(
     private fiveService: GameOnSoccerfiveService,
     private route: ActivatedRoute,
-    private keycloak: KeycloakService,
     private store: Store<{ player: Player }>,
     private router: Router
   ) {
@@ -77,7 +66,10 @@ export class FiveDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.keycloak.isLoggedIn();
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
     this.player$.subscribe((data) => {
       this.currentUserId = data.id;
 

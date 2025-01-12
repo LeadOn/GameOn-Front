@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { GameOnLoLService } from '../shared/services/leagueoflegends/gameon-lol.service';
 import { Player } from '../shared/classes/common/Player';
 import { PlayerDto } from '../shared/classes/common/PlayerDto';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-lol-home',
@@ -13,6 +13,8 @@ import { PlayerDto } from '../shared/classes/common/PlayerDto';
   standalone: false,
 })
 export class LolHomeComponent implements OnInit {
+  private readonly keycloak = inject(Keycloak);
+
   leaguePlayers: PlayerDto[] = [];
   isLoading = true;
   isLoggedIn = false;
@@ -20,16 +22,18 @@ export class LolHomeComponent implements OnInit {
 
   constructor(
     private lolService: GameOnLoLService,
-    private keycloakService: KeycloakService,
     private store: Store<{ player: Player }>
   ) {
     this.player$ = store.select('player');
 
-    this.isLoggedIn = keycloakService.isLoggedIn();
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
   }
 
   login() {
-    this.keycloakService.login();
+    this.keycloak.login();
   }
 
   ngOnInit() {

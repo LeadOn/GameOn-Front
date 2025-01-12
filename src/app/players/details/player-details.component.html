@@ -1,11 +1,10 @@
-<div [@inOutAnimation] class="px-4 mt-4" *ngIf="loading == true">
+<div class="px-4 mt-4" *ngIf="loading == true">
   <app-loading-spinner></app-loading-spinner>
 </div>
 
 <section
   id="header-pills"
   class="p-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
-  [@inOutAnimation]
   *ngIf="loading == false && player != null"
 >
   <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
@@ -38,7 +37,6 @@
   id="player-detail-card"
   class="px-4"
   *ngIf="loading == false && player != null"
-  [@inOutAnimation]
 >
   <div
     class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
@@ -99,7 +97,7 @@
   </div>
 </section>
 
-<div class="px-4 mt-4" [@inOutAnimation]>
+<div class="px-4 mt-4">
   <div class="w-full" *ngIf="player != null && player.id != 0">
     <div
       class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex flex-col items-center drop-shadow-lg"
@@ -175,7 +173,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between"
-  [@inOutAnimation]
   *ngIf="loading == false && games != null && games.length > 0"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -187,7 +184,6 @@
   id="my-matchs-planned"
   class="px-4 mt-4 flex flex-col space-y-4"
   *ngIf="loading == false && games != null && games.length > 0"
-  [@inOutAnimation]
 >
   <app-fifa-game-history-card
     *ngFor="let game of games"

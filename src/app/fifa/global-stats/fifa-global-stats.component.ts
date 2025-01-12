@@ -28,7 +28,6 @@ export class FifaGlobalStatsComponent implements OnInit {
   ngOnInit(): void {
     this.commonService.getGlobalStats().subscribe(
       (data) => {
-        console.log(data);
         this.loading = false;
         this.globalStats = data;
       },

@@ -4,7 +4,7 @@ import { CommonLayoutComponent } from './shared/layouts/common-layout.component'
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ProfilePageComponent } from './players/me/profile.component';
-import { AuthGuard } from './shared/guards/auth.guard';
+import { canActivateAuthRole } from './shared/guards/auth.guard';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { ChangelogComponent } from './changelog/changelog.component';
 import { DonateComponent } from './donate/donate.component';
@@ -15,7 +15,7 @@ import { LolHomeComponent } from './lol/lol-home.component';
 import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
 import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     component: CommonLayoutComponent,
@@ -51,7 +51,8 @@ const routes: Routes = [
       {
         path: 'player/me',
         component: ProfilePageComponent,
-        canActivate: [AuthGuard],
+        canActivate: [canActivateAuthRole],
+        data: { role: 'default-roles-gameon' },
       },
       {
         path: 'player/:id',

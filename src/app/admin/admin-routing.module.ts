@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminHomeComponent } from './home/admin-home.component';
-import { AuthGuard } from '../shared/guards/auth.guard';
 import { AdminLayoutComponent } from './admin-layout.component';
 import { AdminPlatformsComponent } from './platforms/admin-platforms.component';
 import { AdminPlatformEditComponent } from './platforms/edit/admin-platform-edit.component';
@@ -14,13 +13,14 @@ import { AdminSeasonsComponent } from './seasons/admin-seasons.component';
 import { AdminEditTournamentComponent } from './tournaments/edit/admin-edit-tournament.component';
 import { AdminCreateTournamentComponent } from './tournaments/create/admin-create-tournament.component';
 import { AdminTournamentsComponent } from './tournaments/admin-tournaments.component';
+import { canActivateAuthRole } from '../shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['gameon_admin'] },
+    canActivate: [canActivateAuthRole],
+    data: { role: 'gameon_admin' },
     children: [
       {
         path: '',

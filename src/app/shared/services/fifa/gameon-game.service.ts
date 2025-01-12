@@ -1,15 +1,24 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FifaGamePlayed } from '../../classes/fifa/FifaGamePlayed';
 import { environment } from '../../../../environments/environment';
-import { KeycloakService } from 'keycloak-angular';
+import Keycloak from 'keycloak-js';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameOnGameService {
-  constructor(private client: HttpClient, private keycloak: KeycloakService) {}
+  isLoggedIn = false;
+
+  private readonly keycloak = inject(Keycloak);
+
+  constructor(private client: HttpClient) {
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
+  }
 
   getLast(limit: number): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
@@ -90,10 +99,7 @@ export class GameOnGameService {
   }
 
   deleteGame(gameId: number): Observable<any> {
-    if (
-      this.keycloak.isLoggedIn() == true &&
-      this.keycloak.isUserInRole('gameon_admin')
-    ) {
+    if (this.isLoggedIn == true && this.keycloak.hasRealmRole('gameon_admin')) {
       return this.client.delete<any>(
         environment.gameOnApiUrl + '/fifa/fifagame/' + gameId
       );
