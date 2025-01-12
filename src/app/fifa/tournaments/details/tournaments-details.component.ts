@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { trigger, style, animate, transition } from '@angular/animations';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
 import { Store } from '@ngrx/store';
 import {
   faCheck,
@@ -17,26 +15,17 @@ import { FifaTeam } from '../../../shared/classes/fifa/FifaTeam';
 import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
 import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifateam.service';
 import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-tournaments-details',
   templateUrl: './tournaments-details.component.html',
   styleUrls: ['./tournaments-details.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   standalone: false,
 })
 export class TournamentsDetailsComponent implements OnInit {
+  private readonly keycloak = inject(Keycloak);
+
   loading = true;
   isLoggedIn = false;
   isAdmin = false;
@@ -68,18 +57,20 @@ export class TournamentsDetailsComponent implements OnInit {
   constructor(
     private tournamentService: GameOnTournamentService,
     private route: ActivatedRoute,
-    private keycloak: KeycloakService,
     private fifaTeamService: GameOnFifaTeamService,
     private gameService: GameOnGameService,
     private store: Store<{ player: Player }>
   ) {
     this.states = tournamentService.getStates();
     this.tournamentId = this.route.snapshot.paramMap.get('id');
-    this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
+    this.isAdmin = this.keycloak.hasRealmRole('gameon_admin');
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.keycloak.isLoggedIn();
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
 
     if (this.isLoggedIn == true) {
       this.tournamentService

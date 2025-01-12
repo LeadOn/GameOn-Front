@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from '../shared/layouts/common-layout.component';
 import { FifaHomeComponent } from './fifa-home.component';
 import { FifaCreateGameComponent } from './create/fifa-create-game.component';
-import { AuthGuard } from '../shared/guards/auth.guard';
 import { FifaGameDetailsComponent } from './details/fifa-game-details.component';
 import { TournamentsHomeComponent } from './tournaments/tournaments-home.component';
 import { TournamentsDetailsComponent } from './tournaments/details/tournaments-details.component';
 import { FifaGlobalStatsComponent } from './global-stats/fifa-global-stats.component';
+import { canActivateAuthRole } from '../shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,7 +25,8 @@ const routes: Routes = [
       {
         path: 'create',
         component: FifaCreateGameComponent,
-        canActivate: [AuthGuard],
+        canActivate: [canActivateAuthRole],
+        data: { role: 'default-roles-gameon' },
       },
       {
         path: 'details/:id',

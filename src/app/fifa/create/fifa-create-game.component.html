@@ -1,4 +1,4 @@
-<section id="fifa-header" class="px-4 pt-4" [@inOutAnimation]>
+<section id="fifa-header" class="px-4 pt-4">
   <app-common-page-header
     [icon]="footballIcon"
     [title]="'Création match'"
@@ -6,19 +6,15 @@
 </section>
 
 <section id="top-card" class="px-4 mt-4">
-  <app-loading-spinner
-    *ngIf="isLoading == true"
-    [@inOutAnimation]
-  ></app-loading-spinner>
+  <app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
 </section>
 
 <form
   [formGroup]="createGameForm"
   class="flex flex-col"
-  [@inOutAnimation]
   *ngIf="isLoading == false"
 >
-  <div class="px-4 mt-4 flex" [@inOutAnimation]>
+  <div class="px-4 mt-4 flex">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Équipe #1</span
     >
@@ -94,7 +90,7 @@
     </div>
   </div>
 
-  <div class="px-4 mt-4 flex" [@inOutAnimation]>
+  <div class="px-4 mt-4 flex">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Équipe #2</span
     >
@@ -170,7 +166,7 @@
     </div>
   </div>
 
-  <div class="px-4 mt-4 flex" [@inOutAnimation]>
+  <div class="px-4 mt-4 flex">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Plateforme</span
     >
@@ -191,7 +187,7 @@
   </div>
 </form>
 
-<div class="px-4 mt-4 flex" [@inOutAnimation] *ngIf="isLoading == false">
+<div class="px-4 mt-4 flex" *ngIf="isLoading == false">
   <button
     (click)="createGame()"
     class="drop-shadow-lg text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"

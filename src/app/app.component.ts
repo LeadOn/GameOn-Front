@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
-import { KeycloakService } from 'keycloak-angular';
 import { Store } from '@ngrx/store';
 import { setPlayer, setPlayerStats } from './store/actions/player.actions';
 import { Player } from './shared/classes/common/Player';
 import { GameOnPlayerService } from './shared/services/common/gameon-player.service';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +13,11 @@ import { GameOnPlayerService } from './shared/services/common/gameon-player.serv
   standalone: false,
 })
 export class AppComponent implements OnInit {
+  private readonly keycloak = inject(Keycloak);
+
+  isLoggedIn = false;
+
   constructor(
-    private keycloak: KeycloakService,
     private playerService: GameOnPlayerService,
     private store: Store<{ player: Player }>
   ) {}
@@ -22,7 +25,12 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
 
-    if (this.keycloak.isLoggedIn()) {
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
+
+    if (this.isLoggedIn) {
       // Getting its account, and setting it into store
       this.playerService.getCurrent().subscribe(
         (data) => {

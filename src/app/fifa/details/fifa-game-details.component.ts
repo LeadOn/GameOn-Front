@@ -1,37 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   faClock,
   faExternalLinkAlt,
   faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { KeycloakService } from 'keycloak-angular';
 import { GameOnHighlightService } from '../../shared/services/common/gameon-highlight.service';
 import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
 import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
 import { CreateHighlightDto } from '../../shared/classes/common/CreateHighlightDto';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-fifa-game-details',
   templateUrl: './fifa-game-details.component.html',
   styleUrls: ['./fifa-game-details.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+
   standalone: false,
 })
 export class FifaGameDetailsComponent implements OnInit {
+  private readonly keycloak = inject(Keycloak);
+
   gameId: any;
   loading = true;
   game: FifaGamePlayed = new FifaGamePlayed();
@@ -54,15 +44,17 @@ export class FifaGameDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private gameService: GameOnGameService,
     private highlightService: GameOnHighlightService,
-    private keycloak: KeycloakService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get('id');
 
-    this.isLoggedIn = this.keycloak.isLoggedIn();
-    this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
+    this.isAdmin = this.keycloak.hasRealmRole('gameon_admin');
 
     this.getGame();
   }

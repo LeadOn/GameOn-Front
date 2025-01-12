@@ -1,12 +1,18 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import {
+  createInterceptorCondition,
+  INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+  IncludeBearerTokenCondition,
+  includeBearerTokenInterceptor,
+  provideKeycloak,
+} from 'keycloak-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/modules/shared.module';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,21 +40,15 @@ import { HomeChangelogComponent } from './home/components/changelog/home-changel
 import { HomeFifaComponent } from './home/components/fifa/home-fifa.component';
 import { HomeLolComponent } from './home/components/lol/home-lol.component';
 
-function initializeKeycloak(keycloak: KeycloakService) {
-  return () =>
-    keycloak.init({
-      config: {
-        url: environment.keycloak.url,
-        realm: environment.keycloak.realm,
-        clientId: environment.keycloak.clientId,
-      },
-      initOptions: {
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri:
-          window.location.origin + '/assets/silent-check-sso.html',
-      },
-    });
-}
+const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
+  urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
+  bearerPrefix: 'Bearer',
+});
+
+const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
+  urlPattern: /^(https:\/\/gameon-api.valentinvirot.fr)(\/.*)?$/i,
+  bearerPrefix: 'Bearer',
+});
 
 @NgModule({
   declarations: [
@@ -75,7 +75,6 @@ function initializeKeycloak(keycloak: KeycloakService) {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    KeycloakAngularModule,
     SharedModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
@@ -83,17 +82,26 @@ function initializeKeycloak(keycloak: KeycloakService) {
       player: playerReducer,
       globalStats: playerStatsReducer,
     }),
-    HttpClientModule,
     ClipboardModule,
     AdminModule,
   ],
   providers: [
+    provideKeycloak({
+      config: {
+        url: environment.keycloak.url,
+        realm: environment.keycloak.realm,
+        clientId: environment.keycloak.clientId,
+      },
+      initOptions: {
+        onLoad: 'check-sso',
+        silentCheckSsoRedirectUri: `${window.location.origin}/assets/silent-check-sso.html`,
+      },
+    }),
     {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeycloak,
-      multi: true,
-      deps: [KeycloakService],
+      provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
+      useValue: [devCondition, prodCondition],
     },
+    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
   ],
   bootstrap: [AppComponent],
 })

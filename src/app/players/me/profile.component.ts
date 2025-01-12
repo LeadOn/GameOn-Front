@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   OnInit,
@@ -9,8 +10,6 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { trigger, style, animate, transition } from '@angular/animations';
-import { KeycloakService } from 'keycloak-angular';
 import {
   faArrowRight,
   faCalendar,
@@ -27,26 +26,17 @@ import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-l
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 import { Player } from '../../shared/classes/common/Player';
 import { FifaPlayerStatsDto } from '../../shared/classes/fifa/FifaPlayerStatsDto';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   standalone: false,
 })
 export class ProfilePageComponent implements OnInit, OnChanges {
+  private readonly keycloak = inject(Keycloak);
+
   player$: Observable<Player>;
   stats?: FifaPlayerStatsDto;
   loading = true;
@@ -79,7 +69,6 @@ export class ProfilePageComponent implements OnInit, OnChanges {
 
   constructor(
     private store: Store<{ player: Player }>,
-    private keycloak: KeycloakService,
     private playerService: GameOnPlayerService,
     private lolService: GameOnLoLService
   ) {
@@ -104,11 +93,11 @@ export class ProfilePageComponent implements OnInit, OnChanges {
       }
     });
 
-    this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
+    this.isAdmin = this.keycloak.hasRealmRole('gameon_admin');
 
-    this.keycloak.getToken().then((x) => {
-      this.token = x;
-    });
+    if (this.keycloak.token != null) {
+      this.token = this.keycloak.token;
+    }
   }
 
   ngOnInit(): void {
