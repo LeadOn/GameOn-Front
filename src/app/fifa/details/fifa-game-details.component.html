@@ -1,7 +1,6 @@
 <section
   id="header-pills"
   class="p-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLightDarker dark:[&::-webkit-scrollbar-thumb]:bg-bgDarkDarker"
-  [@inOutAnimation]
   *ngIf="loading == false"
 >
   <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
@@ -34,25 +33,21 @@
 </section>
 
 <section id="game-details-header" class="px-4">
-  <app-loading-spinner
-    *ngIf="loading == true"
-    [@inOutAnimation]
-  ></app-loading-spinner>
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 
   <div class="mb-4" *ngIf="successMessage == true">
     <app-success-alert
       [text]="'Mise à jour réussie !'"
       [(show)]="successMessage"
-      [@inOutAnimation]
     ></app-success-alert>
   </div>
 
-  <div *ngIf="loading == false" [@inOutAnimation]>
+  <div *ngIf="loading == false">
     <app-fifa-game-history-card [game]="game"></app-fifa-game-history-card>
   </div>
 </section>
 
-<div class="px-4 mt-4 flex" [@inOutAnimation]>
+<div class="px-4 mt-4 flex">
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
     >Détails du match</span
   >
@@ -62,7 +57,6 @@
   *ngIf="loading == false"
   id="game-details"
   class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
-  [@inOutAnimation]
 >
   <span
     class="text-xs text-primary dark:text-primaryDark"
@@ -114,7 +108,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark"
-  [@inOutAnimation]
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Temps forts</span>
@@ -142,7 +135,6 @@
 
   <hr
     class="my-4"
-    [@inOutAnimation]
     *ngIf="
       (game.highlights == null || game.highlights.length == 0) &&
       showCreateHighlightForm == true
@@ -150,7 +142,6 @@
   />
 
   <form
-    [@inOutAnimation]
     *ngIf="showCreateHighlightForm == true"
     [formGroup]="createHighlightForm"
     class="mt-4"
@@ -219,11 +210,9 @@
   *ngIf="loading == false && game.highlights != null"
   id="highlights-list"
   class="px-4 mt-4 flex flex-col space-y-4"
-  [@inOutAnimation]
 >
   <div
     *ngFor="let highlight of game.highlights"
-    [@inOutAnimation]
     class="bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg"
   >
     <div
@@ -260,7 +249,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary"
-  [@inOutAnimation]
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -272,7 +260,6 @@
   *ngIf="loading == false && game.team1 != null"
   id="players-team1-list"
   class="px-4 mt-4"
-  [@inOutAnimation]
 >
   <div
     class="bg-bgLight dark:bg-bgDark rounded-lg"
@@ -284,7 +271,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark"
-  [@inOutAnimation]
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Équipe #2</span>
@@ -294,7 +280,6 @@
   *ngIf="loading == false && game.team1 != null"
   id="players-team2-list"
   class="px-4 mt-4"
-  [@inOutAnimation]
 >
   <div
     class="bg-bgLight dark:bg-bgDark rounded-lg"

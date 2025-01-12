@@ -1,4 +1,11 @@
-import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  HostBinding,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faBitcoinSign,
@@ -12,10 +19,10 @@ import {
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { initFlowbite } from 'flowbite';
-import { KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Player } from '../classes/common/Player';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-common-layout',
@@ -24,6 +31,8 @@ import { Player } from '../classes/common/Player';
   standalone: false,
 })
 export class CommonLayoutComponent implements OnInit {
+  private readonly keycloak = inject(Keycloak);
+
   darkMode = signal<boolean>(
     JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false')
   );
@@ -48,14 +57,16 @@ export class CommonLayoutComponent implements OnInit {
   btcIcon = faBitcoinSign;
 
   constructor(
-    private keycloak: KeycloakService,
     private router: Router,
     private store: Store<{ player: Player }>
   ) {
     this.player$ = store.select('player');
 
-    this.isLoggedIn = this.keycloak.isLoggedIn();
-    this.isAdmin = this.keycloak.isUserInRole('gameon_admin');
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
+    this.isAdmin = this.keycloak.hasRealmRole('gameon_admin');
 
     effect(() => {
       window.localStorage.setItem(

@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { trigger, style, animate, transition } from '@angular/animations';
 import { faSoccerBall } from '@fortawesome/free-solid-svg-icons';
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 import { Player } from '../../shared/classes/common/Player';
@@ -16,18 +15,6 @@ import { GameOnFifaTeamService } from '../../shared/services/fifa/gameon-fifatea
   selector: 'app-fifa-create-game',
   templateUrl: './fifa-create-game.component.html',
   styleUrls: ['./fifa-create-game.component.scss'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   standalone: false,
 })
 export class FifaCreateGameComponent implements OnInit {

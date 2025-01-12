@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { Component, inject, OnInit } from '@angular/core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { GameOnCommonService } from '../shared/services/common/gameon-common.service';
 import { HomeDataDto } from '../shared/classes/common/HomeDataDto';
 import { GameOnPlayerService } from '../shared/services/common/gameon-player.service';
 import { Player } from '../shared/classes/common/Player';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +13,8 @@ import { Player } from '../shared/classes/common/Player';
   standalone: false,
 })
 export class HomeComponent implements OnInit {
+  private readonly keycloak = inject(Keycloak);
+
   loading = true;
   error = false;
   isLoggedIn = false;
@@ -25,11 +27,13 @@ export class HomeComponent implements OnInit {
   infoIcon = faInfoCircle;
 
   constructor(
-    private keycloak: KeycloakService,
     private playerService: GameOnPlayerService,
     private commonService: GameOnCommonService
   ) {
-    this.isLoggedIn = this.keycloak.isLoggedIn();
+    this.isLoggedIn =
+      this.keycloak.authenticated != null && this.keycloak.authenticated
+        ? true
+        : false;
   }
 
   ngOnInit(): void {

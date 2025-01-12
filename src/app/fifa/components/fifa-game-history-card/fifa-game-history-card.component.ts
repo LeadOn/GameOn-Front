@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import {
   faEdit,
   faExternalLinkAlt,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { KeycloakService } from 'keycloak-angular';
 import { GameOnAdminService } from '../../../admin/shared/services/gameon-admin.service';
 import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
+import Keycloak from 'keycloak-js';
 
 @Component({
   selector: 'app-fifa-game-history-card',
@@ -15,6 +15,8 @@ import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
   standalone: false,
 })
 export class FifaGameHistoryCardComponent {
+  private readonly keycloak = inject(Keycloak);
+
   @Input()
   game: FifaGamePlayed = new FifaGamePlayed();
 
@@ -27,18 +29,15 @@ export class FifaGameHistoryCardComponent {
 
   isAdmin = false;
 
-  constructor(
-    private adminService: GameOnAdminService,
-    private keycloakService: KeycloakService
-  ) {
-    if (keycloakService.isUserInRole('gameon_admin')) {
+  constructor(private adminService: GameOnAdminService) {
+    if (this.keycloak.hasRealmRole('gameon_admin')) {
       this.isAdmin = true;
     }
   }
 
   deleteGame(game: FifaGamePlayed) {
     if (
-      this.keycloakService.isUserInRole('gameon_admin') &&
+      this.isAdmin &&
       confirm(
         'Voulez-vous vraiment supprimer le match ' +
           game.id +

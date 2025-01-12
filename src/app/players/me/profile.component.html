@@ -1,14 +1,10 @@
-<app-loading-spinner
-  *ngIf="loading == true"
-  [@inOutAnimation]
-></app-loading-spinner>
+<app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 
 <section id="profile-popups" class="px-4 mt-4">
   <app-success-alert
     *ngIf="showSuccess == true"
     [text]="'Mise à jour réussie !'"
     [(show)]="showSuccess"
-    [@inOutAnimation]
   ></app-success-alert>
 </section>
 
@@ -16,13 +12,11 @@
   id="profile-head"
   class="px-4 mt-4"
   *ngIf="loading == false && (player$ | async) as currentPlayer"
-  [@inOutAnimation]
 >
   <app-success-alert
     *ngIf="showSuccess == true"
     [text]="'Mise à jour réussie !'"
     [(show)]="showSuccess"
-    [@inOutAnimation]
   ></app-success-alert>
 
   <div class="flex flex-col items-center w-full justify-center">
@@ -67,7 +61,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between"
-  [@inOutAnimation]
   *ngIf="
     loading == false && isAdmin == true && (player$ | async) as currentPlayer
   "
@@ -83,7 +76,6 @@
   *ngIf="
     loading == false && isAdmin == true && (player$ | async) as currentPlayer
   "
-  [@inOutAnimation]
 >
   <div class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg">
     <div
@@ -113,7 +105,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between"
-  [@inOutAnimation]
   *ngIf="loading == false && (player$ | async) as currentPlayer"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -125,7 +116,6 @@
   id="player-fifa"
   class="px-4 mt-4"
   *ngIf="loading == false && (player$ | async) as currentPlayer"
-  [@inOutAnimation]
 >
   <div class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg">
     <div
@@ -144,7 +134,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between"
-  [@inOutAnimation]
   *ngIf="loading == false && (player$ | async) as currentPlayer"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -156,7 +145,6 @@
   id="player-lol"
   class="mt-4"
   *ngIf="loading == false && (player$ | async) as currentPlayer"
-  [@inOutAnimation]
 >
   <app-info-message
     *ngIf="currentPlayer.riotGamesNickname == null"
@@ -184,7 +172,6 @@
 
 <div
   class="px-4 mt-4 flex justify-between"
-  [@inOutAnimation]
   *ngIf="loading == false && (player$ | async) as currentPlayer"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -196,7 +183,6 @@
   id="player-preferences"
   class="px-4 mt-4"
   *ngIf="loading == false && (player$ | async) as currentPlayer"
-  [@inOutAnimation]
 >
   <div class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg">
     <div
