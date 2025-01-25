@@ -75,9 +75,6 @@ export class LolGameDetailsComponent implements OnInit {
         }
 
         this.isLoading = false;
-        console.log(this.game);
-        console.log(this.team1);
-        console.log(this.team2);
       },
       (err) => {
         this.gameError = true;
