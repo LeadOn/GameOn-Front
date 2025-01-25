@@ -245,6 +245,7 @@
     <app-lol-game-card
       *ngFor="let game of gamesPlayed"
       [game]="game"
+      [playerId]="player?.id"
     ></app-lol-game-card>
   </div>
 

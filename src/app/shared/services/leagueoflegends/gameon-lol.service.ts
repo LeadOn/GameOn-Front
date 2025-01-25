@@ -60,8 +60,8 @@ export class GameOnLoLService {
     );
   }
 
-  refreshGame(matchId: string): Observable<any> {
-    return this.client.post<any>(
+  refreshGame(matchId: string): Observable<LoLGame> {
+    return this.client.post<LoLGame>(
       environment.gameOnApiUrl + '/lol/match/' + matchId + '/update',
       null
     );

@@ -10,4 +10,5 @@ export class LoLGame {
   winningTeamId: number = 0;
   gameStart: Date = new Date();
   gameEnd: Date = new Date();
+  queueType: string = '';
 }
