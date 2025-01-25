@@ -33,7 +33,7 @@ export class FifaGlobalStatsComponent implements OnInit {
       },
       (err) => {
         this.errorLoading = true;
-        console.log(err);
+        console.error(err);
       }
     );
   }

@@ -39,6 +39,7 @@ import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.co
 import { HomeChangelogComponent } from './home/components/changelog/home-changelog.component';
 import { HomeFifaComponent } from './home/components/fifa/home-fifa.component';
 import { HomeLolComponent } from './home/components/lol/home-lol.component';
+import { LolGameCardComponent } from './lol/components/lol-game-card/lol-game-card.component';
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -71,6 +72,7 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     HomeChangelogComponent,
     HomeFifaComponent,
     HomeLolComponent,
+    LolGameCardComponent,
   ],
   imports: [
     BrowserModule,

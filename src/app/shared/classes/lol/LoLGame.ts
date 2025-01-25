@@ -8,4 +8,7 @@ export class LoLGame {
   retrievedOn: Date = new Date();
   leagueOfLegendsGameParticipants: LoLGameParticipant[] = [];
   winningTeamId: number = 0;
+  gameStart: Date = new Date();
+  gameEnd: Date = new Date();
+  queueType: string = '';
 }
