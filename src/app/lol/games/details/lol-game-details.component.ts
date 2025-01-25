@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { LoLGame } from '../../../shared/classes/lol/LoLGame';
 import { LoLGameParticipant } from '../../../shared/classes/lol/LoLGameParticipant';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-lol-game-details',
@@ -17,6 +18,7 @@ import { LoLGameParticipant } from '../../../shared/classes/lol/LoLGameParticipa
 })
 export class LolGameDetailsComponent implements OnInit {
   gameId: any;
+  playerId: any;
 
   game: LoLGame = new LoLGame();
   team1: LoLGameParticipant[] = [];
@@ -31,6 +33,8 @@ export class LolGameDetailsComponent implements OnInit {
   isLoading = true;
   gameError = false;
 
+  currentLoLPatch = environment.currentLoLPatch;
+
   constructor(
     private route: ActivatedRoute,
     private lolService: GameOnLoLService
@@ -38,6 +42,7 @@ export class LolGameDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get('id');
+    this.playerId = this.route.snapshot.paramMap.get('playerId');
 
     this.loadGame();
   }
