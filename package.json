@@ -23,7 +23,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@ngrx/store": "^19.0.0",
     "chart.js": "^4.4.7",
-    "flowbite": "^2.5.2",
+    "flowbite": "^3.0.0",
     "keycloak-angular": "^19.0.2",
     "keycloak-js": "^26.0.7",
     "rxjs": "~7.8.1",

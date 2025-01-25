@@ -241,6 +241,13 @@
     "
   ></app-info-message>
 
+  <div class="px-4 w-full mb-4">
+    <app-lol-game-card
+      *ngFor="let game of gamesPlayed"
+      [game]="game"
+    ></app-lol-game-card>
+  </div>
+
   <div class="relative overflow-x-auto">
     <table
       class="w-full text-sm text-left rtl:text-right text-primary dark:text-primaryDark"

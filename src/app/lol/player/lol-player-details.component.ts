@@ -102,6 +102,7 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.lolService.getLastGamesPlayed(this.playerId).subscribe(
       (data) => {
         this.gamesPlayed = data;
+        console.log(this.gamesPlayed);
         this.gameHistoryLoading = false;
       },
       (err) => {
