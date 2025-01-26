@@ -29,32 +29,32 @@
       [title]="'Partie non synchronisée'"
     ></app-pill>
 
+    <app-pill
+      *ngIf="game != null"
+      [icon]="calendarIcon"
+      [iconColor]="'white'"
+      [title]="game.retrievedOn.toString()"
+    ></app-pill>
+
+    <app-pill
+      [icon]="refreshIcon"
+      [iconColor]="'white'"
+      (click)="updateGame()"
+      [title]="'Synchroniser'"
+    >
+    </app-pill>
+
     <app-pill *ngIf="game != null" [title]="patchTitle"></app-pill>
   </div>
 </section>
 
-<section
-  id="game-card"
-  class="px-4 mt-4 flex space-x-4"
-  *ngIf="game != null && isLoading == false"
->
-  <div
-    class="flex bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark rounded-lg drop-shadow-lg p-4 animate-fade-right w-3/4 justify-center items-center"
-  >
-    <span
-      ><fa-icon [icon]="calendarIcon" class="mr-2"></fa-icon>
-      {{ game.retrievedOn | date : "short" }}</span
-    >
-  </div>
-
-  <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-center items-center align-middle drop-shadow-lg w-1/4 cursor-pointer flex-col text-primary dark:text-primaryDark animate-fade-left"
-    (click)="updateGame()"
-  >
-    <fa-icon [icon]="refreshIcon" class="text-2xl"></fa-icon>
-    <span>Synchroniser</span>
-  </div>
-</section>
+<div class="px-4 mt-4">
+  <app-lol-game-card
+    [game]="game"
+    [playerId]="playerId"
+    *ngIf="game != null && isLoading == false"
+  ></app-lol-game-card>
+</div>
 
 <section id="lol-team-1-header" class="px-4 mt-4" *ngIf="game != null">
   <div class="flex justify-between items-center animate-fade-up">
@@ -93,35 +93,12 @@
   class="px-4 mt-4"
   *ngIf="game != null && team1.length > 0"
 >
-  <div
-    class="flex flex-col space-y-4 animate-fade-up"
-    *ngFor="let player of team1"
-  >
-    <app-player-card
-      *ngIf="player.player != null"
-      [player]="player.player"
-    ></app-player-card>
-
-    <div
-      class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-center items-center align-middle drop-shadow-lg flex-col text-primary dark:text-primaryDark mt-4"
-      *ngIf="player.player == null"
-    >
-      <span *ngIf="player.puuid != null && player.riotIdGameName == null">{{
-        player.puuid
-      }}</span>
-      <span *ngIf="player.riotIdGameName != null && player.riotIdTagLine"
-        >{{ player.riotIdGameName }}#{{ player.riotIdTagLine }}</span
-      >
-      <span *ngIf="player.championName != null">{{ player.championName }}</span>
-      <a
-        *ngIf="player.riotIdGameName != null && player.riotIdTagLine"
-        href="https://www.op.gg/summoners/euw/{{ player.riotIdGameName }}-{{
-          player.riotIdTagLine
-        }}"
-        target="_blank"
-        ><fa-icon [icon]="externalIcon"></fa-icon> Voir le profil Op.GG</a
-      >
-    </div>
+  <div class="flex flex-col animate-fade-up divide-y-2 divide-gray-400">
+    <app-lol-game-details-player
+      *ngFor="let player of team1"
+      [player]="player"
+      [timeline]="timeline"
+    ></app-lol-game-details-player>
   </div>
 </section>
 
@@ -162,34 +139,11 @@
   class="px-4 mt-4"
   *ngIf="game != null && team2.length > 0"
 >
-  <div
-    class="flex flex-col space-y-4 animate-fade-up"
-    *ngFor="let player of team2"
-  >
-    <app-player-card
-      *ngIf="player.player != null"
-      [player]="player.player"
-    ></app-player-card>
-
-    <div
-      class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-center items-center align-middle drop-shadow-lg flex-col text-primary dark:text-primaryDark mt-4"
-      *ngIf="player.player == null"
-    >
-      <span *ngIf="player.puuid != null && player.riotIdGameName == null">{{
-        player.puuid
-      }}</span>
-      <span *ngIf="player.riotIdGameName != null && player.riotIdTagLine"
-        >{{ player.riotIdGameName }}#{{ player.riotIdTagLine }}</span
-      >
-      <span *ngIf="player.championName != null">{{ player.championName }}</span>
-      <a
-        *ngIf="player.riotIdGameName != null && player.riotIdTagLine"
-        href="https://www.op.gg/summoners/euw/{{ player.riotIdGameName }}-{{
-          player.riotIdTagLine
-        }}"
-        target="_blank"
-        ><fa-icon [icon]="externalIcon"></fa-icon> Voir le profil Op.GG</a
-      >
-    </div>
+  <div class="flex flex-col animate-fade-up divide-y-2 divide-gray-400">
+    <app-lol-game-details-player
+      *ngFor="let player of team2"
+      [player]="player"
+      [timeline]="timeline"
+    ></app-lol-game-details-player>
   </div>
 </section>

@@ -6,6 +6,7 @@ import { Player } from '../../classes/common/Player';
 import { PlayerDto } from '../../classes/common/PlayerDto';
 import { LeagueOfLegendsRankHistory } from '../../classes/lol/LeagueOfLegendsRankHistory';
 import { LoLGame } from '../../classes/lol/LoLGame';
+import { LoLGameTimelineFrame } from '../../classes/lol/LoLGameTimelineFrame';
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +52,12 @@ export class GameOnLoLService {
   getGame(id: string): Observable<LoLGame> {
     return this.client.get<LoLGame>(
       environment.gameOnApiUrl + '/lol/match/' + id
+    );
+  }
+
+  getGameTimeline(id: string): Observable<LoLGameTimelineFrame[]> {
+    return this.client.get<LoLGameTimelineFrame[]>(
+      environment.gameOnApiUrl + '/lol/match/' + id + '/timeline'
     );
   }
 
