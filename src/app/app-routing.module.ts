@@ -67,7 +67,7 @@ export const routes: Routes = [
         component: LolPlayerDetailsComponent,
       },
       {
-        path: 'lol/game/:id',
+        path: 'lol/game/:id/:playerId',
         component: LolGameDetailsComponent,
       },
     ],
