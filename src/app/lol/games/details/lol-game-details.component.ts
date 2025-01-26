@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameon-lol.service';
 import { ActivatedRoute } from '@angular/router';
-import {
-  faCalendar,
-  faExternalLink,
-  faSync,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faSync } from '@fortawesome/free-solid-svg-icons';
 import { LoLGame } from '../../../shared/classes/lol/LoLGame';
 import { LoLGameParticipant } from '../../../shared/classes/lol/LoLGameParticipant';
-import { environment } from '../../../../environments/environment';
+import { LoLGameTimelineFrame } from '../../../shared/classes/lol/LoLGameTimelineFrame';
 
 @Component({
   selector: 'app-lol-game-details',
@@ -24,16 +20,15 @@ export class LolGameDetailsComponent implements OnInit {
   team1: LoLGameParticipant[] = [];
   team2: LoLGameParticipant[] = [];
 
+  timeline?: LoLGameTimelineFrame[];
+
   patchTitle = 'Patch inconnu';
 
   refreshIcon = faSync;
   calendarIcon = faCalendar;
-  externalIcon = faExternalLink;
 
   isLoading = true;
   gameError = false;
-
-  currentLoLPatch = environment.currentLoLPatch;
 
   constructor(
     private route: ActivatedRoute,
@@ -79,7 +74,7 @@ export class LolGameDetailsComponent implements OnInit {
           });
         }
 
-        this.isLoading = false;
+        this.getTimeline();
       },
       (err) => {
         this.gameError = true;
@@ -93,6 +88,19 @@ export class LolGameDetailsComponent implements OnInit {
     this.lolService.refreshGame(this.gameId).subscribe(
       (x) => {
         this.loadGame();
+      },
+      (err) => {
+        this.gameError = true;
+        console.error(err);
+      }
+    );
+  }
+
+  getTimeline() {
+    this.lolService.getGameTimeline(this.gameId).subscribe(
+      (timeline) => {
+        this.timeline = timeline;
+        this.isLoading = false;
       },
       (err) => {
         this.gameError = true;
