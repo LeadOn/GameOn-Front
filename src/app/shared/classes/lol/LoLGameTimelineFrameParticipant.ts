@@ -11,4 +11,16 @@ export class LoLGameTimelineFrameParticipant {
   totalGold: number = 0;
   xp: number = 0;
   participantPUUID: string = '';
+  magicDamageDone: number = 0;
+  magicDamageDoneToChampions: number = 0;
+  magicDamageTaken: number = 0;
+  physicalDamageDone: number = 0;
+  physicalDamageDoneToChampions: number = 0;
+  physicalDamageTaken: number = 0;
+  totalDamageDone: number = 0;
+  totalDamageDoneToChampions: number = 0;
+  totalDamageTaken: number = 0;
+  trueDamageDone: number = 0;
+  trueDamageDoneToChampions: number = 0;
+  trueDamageTaken: number = 0;
 }
