@@ -107,4 +107,17 @@ export class GameOnGameService {
 
     return new Observable();
   }
+
+  declareScore(gameId: number, score1: number, score2: number) {
+    return this.client.post<FifaGamePlayed>(
+      environment.gameOnApiUrl +
+        '/fifa/fifagame/' +
+        gameId +
+        '/' +
+        score1 +
+        '/' +
+        score2,
+      null
+    );
+  }
 }

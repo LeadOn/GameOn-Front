@@ -47,8 +47,77 @@
   </div>
 </section>
 
-<div class="px-4 mt-4 flex">
+<div
+  class="px-4 mt-4 flex justify-between text-primary animate-fade-right"
+  *ngIf="
+    loading == false &&
+    game.isPlayed == false &&
+    isLoggedIn == true &&
+    showDeclareScore == true
+  "
+>
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    >Déclarer le score</span
+  >
+</div>
+
+<section
+  *ngIf="
+    loading == false &&
+    game.isPlayed == false &&
+    isLoggedIn == true &&
+    showDeclareScore == true
+  "
+  id="declare-score"
+  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg animate-fade-right"
+>
+  <form [formGroup]="declareScoreForm" class="mt-4">
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="number"
+        id="scoreTeam1"
+        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        required
+        formControlName="scoreTeam1"
+      />
+      <label
+        for="scoreTeam1"
+        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Score équipe #1
+        <span class="text-customRed">*</span>
+      </label>
+    </div>
+
+    <div class="relative z-0 w-full mb-6 group">
+      <input
+        type="number"
+        id="scoreTeam2"
+        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        required
+        formControlName="scoreTeam2"
+      />
+      <label
+        for="scoreTeam2"
+        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >
+        Score équipe #2
+        <span class="text-customRed">*</span>
+      </label>
+    </div>
+
+    <button
+      (click)="declareScore()"
+      class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark dark:text-primaryDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+    >
+      Déclarer
+    </button>
+  </form>
+</section>
+
+<div class="px-4 mt-4 flex" *ngIf="loading == false">
+  <span
+    class="text-lg font-semibold text-primary dark:text-primaryDark animate-fade-right"
     >Détails du match</span
   >
 </div>
@@ -56,7 +125,7 @@
 <section
   *ngIf="loading == false"
   id="game-details"
-  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
+  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg animate-fade-right"
 >
   <span
     class="text-xs text-primary dark:text-primaryDark"
@@ -107,7 +176,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark animate-fade-right"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Temps forts</span>
@@ -124,7 +193,7 @@
       showCreateHighlightForm == true)
   "
   id="highlights"
-  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
+  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg animate-fade-right"
 >
   <span
     *ngIf="game.highlights == null || game.highlights.length == 0"
@@ -209,7 +278,7 @@
 <section
   *ngIf="loading == false && game.highlights != null"
   id="highlights-list"
-  class="px-4 mt-4 flex flex-col space-y-4"
+  class="px-4 mt-4 flex flex-col space-y-4 animate-fade-right"
 >
   <div
     *ngFor="let highlight of game.highlights"
@@ -248,7 +317,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary"
+  class="px-4 mt-4 flex justify-between text-primary animate-fade-right"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -259,7 +328,7 @@
 <section
   *ngIf="loading == false && game.team1 != null"
   id="players-team1-list"
-  class="px-4 mt-4"
+  class="px-4 mt-4 animate-fade-right"
 >
   <div
     class="bg-bgLight dark:bg-bgDark rounded-lg"
@@ -270,7 +339,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark"
+  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark animate-fade-right"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Équipe #2</span>
@@ -279,7 +348,7 @@
 <section
   *ngIf="loading == false && game.team1 != null"
   id="players-team2-list"
-  class="px-4 mt-4"
+  class="px-4 mt-4 animate-fade-right"
 >
   <div
     class="bg-bgLight dark:bg-bgDark rounded-lg"
