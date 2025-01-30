@@ -21,10 +21,6 @@
   ></app-home-changelog>
 </section>
 
-<section id="home-lol" class="px-4 mt-4">
-  <app-home-lol></app-home-lol>
-</section>
-
 <section id="home-fifa" class="px-4 mt-4">
   <app-home-fifa
     [season]="homeData?.currentSeason"
@@ -32,6 +28,10 @@
     [tournaments]="homeData?.featuredTournaments"
     [isLoggedIn]="isLoggedIn"
   ></app-home-fifa>
+</section>
+
+<section id="home-lol" class="px-4 mt-4">
+  <app-home-lol></app-home-lol>
 </section>
 
 <section id="home-players" class="px-4 py-4 animate-fade-up">

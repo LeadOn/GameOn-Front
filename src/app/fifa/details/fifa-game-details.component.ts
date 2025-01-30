@@ -11,6 +11,9 @@ import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
 import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
 import { CreateHighlightDto } from '../../shared/classes/common/CreateHighlightDto';
 import Keycloak from 'keycloak-js';
+import { Player } from '../../shared/classes/common/Player';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-fifa-game-details',
@@ -21,6 +24,8 @@ import Keycloak from 'keycloak-js';
 })
 export class FifaGameDetailsComponent implements OnInit {
   private readonly keycloak = inject(Keycloak);
+
+  player$: Observable<Player>;
 
   gameId: any;
   loading = true;
@@ -33,6 +38,7 @@ export class FifaGameDetailsComponent implements OnInit {
   isAdmin = false;
   team1GoalPercentage = 0;
   showCreateHighlightForm = false;
+  showDeclareScore = false;
 
   createHighlightForm = new FormGroup({
     name: new FormControl('', [Validators.maxLength(50), Validators.required]),
@@ -40,12 +46,20 @@ export class FifaGameDetailsComponent implements OnInit {
     externalUrl: new FormControl('', [Validators.maxLength(300)]),
   });
 
+  declareScoreForm = new FormGroup({
+    scoreTeam1: new FormControl(0, Validators.required),
+    scoreTeam2: new FormControl(0, Validators.required),
+  });
+
   constructor(
     private route: ActivatedRoute,
     private gameService: GameOnGameService,
     private highlightService: GameOnHighlightService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private playerStore: Store<{ player: Player }>
+  ) {
+    this.player$ = this.playerStore.select('player');
+  }
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get('id');
@@ -71,6 +85,17 @@ export class FifaGameDetailsComponent implements OnInit {
 
         let totalGoals = data.team1.score + data.team2.score;
         this.team1GoalPercentage = (data.team1.score / totalGoals) * 100;
+
+        if (this.isLoggedIn) {
+          this.player$.subscribe((x) => {
+            if (
+              this.game.team1.players.find((p) => p.id == x.id) != null ||
+              this.game.team2.players.find((p) => p.id == x.id) != null
+            ) {
+              this.showDeclareScore = true;
+            }
+          });
+        }
       },
       (err) => {
         alert('Une erreur est survenue lors de la récupération du match.');
@@ -127,6 +152,36 @@ export class FifaGameDetailsComponent implements OnInit {
         },
         (err) => {
           alert('Une erreur est survenue lors de la suppression du match.');
+          console.error(err);
+        }
+      );
+    }
+  }
+
+  declareScore() {
+    if (
+      this.isLoggedIn == true &&
+      this.showDeclareScore == true &&
+      confirm('Êtes-vous sûr de vouloir déclarer ce score ?')
+    ) {
+      this.loading = true;
+      let score1 = 0;
+      let score2 = 0;
+
+      if (this.declareScoreForm.controls['scoreTeam1'].value != null) {
+        score1 = this.declareScoreForm.controls['scoreTeam1'].value;
+      }
+
+      if (this.declareScoreForm.controls['scoreTeam2'].value != null) {
+        score2 = this.declareScoreForm.controls['scoreTeam2'].value;
+      }
+
+      this.gameService.declareScore(this.gameId, score1, score2).subscribe(
+        (data) => {
+          this.getGame();
+        },
+        (err) => {
+          alert('Une erreur est survenue lors de la déclaration du score.');
           console.error(err);
         }
       );

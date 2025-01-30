@@ -10,7 +10,6 @@
   <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
     <app-pill
       *ngIf="isSubscribed != null"
-      (click)="showSubscription()"
       [title]="'Inscrit'"
       [icon]="checkIcon"
       [iconColor]="'text-white'"
@@ -151,7 +150,7 @@
     loading == false &&
     tournament != null &&
     isLoggedIn == true &&
-    subscriptionShown == true
+    tournament.state < 2
   "
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -166,11 +165,11 @@
     loading == false &&
     tournament != null &&
     isLoggedIn == true &&
-    subscriptionShown == true
+    tournament.state < 2
   "
 >
   <div
-    *ngIf="isSubscribed == null && tournament.state < 2"
+    *ngIf="isSubscribed == null"
     class="flex flex-col justify-center align-center items-center"
   >
     <select
@@ -191,7 +190,7 @@
   </div>
 
   <div
-    *ngIf="isSubscribed != null && tournament.state < 2"
+    *ngIf="isSubscribed != null"
     class="flex flex-col justify-center align-center items-center"
   >
     <select
@@ -272,7 +271,7 @@
 
 <section
   id="tournament-players"
-  class="mt-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+  class="mt-4 pb-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker dark:[&::-webkit-scrollbar-thumb]:bg-bgDark"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -280,7 +279,7 @@
     playersShown == true
   "
 >
-  <div class="relative drop-shadow-lg lg:px-4">
+  <div class="relative drop-shadow-lg px-4">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
       <thead class="text-xs text-gray-700 dark:text-gray-400 text-center">
         <tr>
