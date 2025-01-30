@@ -50,7 +50,6 @@ export class TournamentsDetailsComponent implements OnInit {
   matchsPlayedShown = false;
   myMatchsToPlayShown = false;
   tournamentBracketShown = false;
-  subscriptionShown = false;
   showDetails = true;
   showRules = false;
 
@@ -78,15 +77,11 @@ export class TournamentsDetailsComponent implements OnInit {
         .subscribe(
           (x) => {
             this.isSubscribed = x;
-            if (this.isSubscribed == undefined) {
-              this.subscriptionShown = true;
-            }
           },
           (err) => {
             console.error(
               '[TournamentDetailsComponent] Player is not subscribe to tournament.]'
             );
-            this.subscriptionShown = true;
           }
         );
 
@@ -199,10 +194,6 @@ export class TournamentsDetailsComponent implements OnInit {
 
   showTournamentBracket() {
     this.tournamentBracketShown = !this.tournamentBracketShown;
-  }
-
-  showSubscription() {
-    this.subscriptionShown = !this.subscriptionShown;
   }
 
   showDetailsContent() {
