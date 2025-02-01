@@ -17,27 +17,28 @@ import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/
 import { ChangelogCardComponent } from '../components/changelog-card/changelog-card.component';
 import { SafePipe } from '../../core/pipes/safe.pipe';
 import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-game-history-card/fifa-game-history-card.component';
-import { FifaCreateGameComponent } from '../../routes/fifa/create/fifa-create-game.component';
-import { FifaGameDetailsComponent } from '../../routes/fifa/details/fifa-game-details.component';
 
 @NgModule({
   declarations: [
+    /* Pipes */
+    SafePipe,
+
+    /* FIFA related components */
+    FifaGameHistoryCardComponent,
+    FifaStatComponent,
+
+    /* Components */
     NotFoundComponent,
     ArrowBtnComponent,
     PlayerCardComponent,
     LoadingSpinnerComponent,
     SuccessAlertComponent,
-    FifaGameHistoryCardComponent,
-    FifaCreateGameComponent,
-    FifaGameDetailsComponent,
-    FifaStatComponent,
     PlayerTeamListComponent,
     CommonPageHeaderComponent,
     InfoMessageComponent,
     PillComponent,
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
-    SafePipe,
   ],
   imports: [
     CommonModule,
@@ -47,26 +48,31 @@ import { FifaGameDetailsComponent } from '../../routes/fifa/details/fifa-game-de
     ReactiveFormsModule,
   ],
   exports: [
+    /* Modules */
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+
+    /* Pipes */
+    SafePipe,
+
+    /* FIFA related components */
+    FifaGameHistoryCardComponent,
+    FifaStatComponent,
+
+    /* Other components */
     ArrowBtnComponent,
     PlayerCardComponent,
     LoadingSpinnerComponent,
     SuccessAlertComponent,
-    FifaGameHistoryCardComponent,
-    FifaCreateGameComponent,
-    FifaGameDetailsComponent,
-    FifaStatComponent,
     PlayerTeamListComponent,
     CommonPageHeaderComponent,
     InfoMessageComponent,
     PillComponent,
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
-    SafePipe,
   ],
 })
 export class SharedModule {}

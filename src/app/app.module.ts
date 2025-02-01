@@ -39,7 +39,6 @@ import { HomeChangelogComponent } from './routes/home/components/changelog/home-
 import { HomeFifaComponent } from './routes/home/components/fifa/home-fifa.component';
 import { HomeLolComponent } from './routes/home/components/lol/home-lol.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
-import { FifaPlayerDetailsComponent } from './routes/fifa/player/fifa-player-details.component';
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -57,7 +56,6 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     CommonLayoutComponent,
     HomeComponent,
     ProfilePageComponent,
-    FifaPlayerDetailsComponent,
     ChangelogComponent,
     DonateComponent,
     LolHomeComponent,
