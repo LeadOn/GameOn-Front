@@ -24,7 +24,7 @@ export class GameOnLoLService {
     }
 
     return this.client.get<Player[]>(
-      this.baseUrl + '?archived=' + archivalState
+      this.baseUrl + '?archived=' + archivalState,
     );
   }
 
@@ -34,10 +34,10 @@ export class GameOnLoLService {
 
   getRankHistory(
     id: number,
-    limit: number
+    limit: number,
   ): Observable<LeagueOfLegendsRankHistory[]> {
     return this.client.get<LeagueOfLegendsRankHistory[]>(
-      this.baseUrl + '/' + id + '/rank?limit=' + limit
+      this.baseUrl + '/' + id + '/rank?limit=' + limit,
     );
   }
 
@@ -51,26 +51,26 @@ export class GameOnLoLService {
 
   getGame(id: string): Observable<LoLGame> {
     return this.client.get<LoLGame>(
-      environment.gameOnApiUrl + '/lol/match/' + id
+      environment.gameOnApiUrl + '/lol/match/' + id,
     );
   }
 
   getGameTimeline(id: string): Observable<LoLGameTimelineFrame[]> {
     return this.client.get<LoLGameTimelineFrame[]>(
-      environment.gameOnApiUrl + '/lol/match/' + id + '/timeline'
+      environment.gameOnApiUrl + '/lol/match/' + id + '/timeline',
     );
   }
 
   getLastGamesPlayed(id: number): Observable<LoLGame[]> {
     return this.client.get<LoLGame[]>(
-      environment.gameOnApiUrl + '/lol/match/player/' + id
+      environment.gameOnApiUrl + '/lol/match/player/' + id,
     );
   }
 
   refreshGame(matchId: string): Observable<LoLGame> {
     return this.client.post<LoLGame>(
       environment.gameOnApiUrl + '/lol/match/' + matchId + '/update',
-      null
+      null,
     );
   }
 }

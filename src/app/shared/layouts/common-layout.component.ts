@@ -34,7 +34,7 @@ export class CommonLayoutComponent implements OnInit {
   private readonly keycloak = inject(Keycloak);
 
   darkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false')
+    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false'),
   );
 
   @HostBinding('class.dark') get mode() {
@@ -58,7 +58,7 @@ export class CommonLayoutComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private store: Store<{ player: Player }>
+    private store: Store<{ player: Player }>,
   ) {
     this.player$ = store.select('player');
 
@@ -71,7 +71,7 @@ export class CommonLayoutComponent implements OnInit {
     effect(() => {
       window.localStorage.setItem(
         'gameon-dark-theme',
-        JSON.stringify(this.darkMode())
+        JSON.stringify(this.darkMode()),
       );
     });
   }

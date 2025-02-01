@@ -1,22 +1,22 @@
-<div class="lg:flex h-screen bg-bgLightDarker dark:bg-bgDarkDarker">
+<div class="h-screen bg-bgLightDarker dark:bg-bgDarkDarker lg:flex">
   <nav
-    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/6 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-bgLight dark:bg-bgDark border border-l-2 border-r-2 dark:border-2 lg:dark:border-0 border-l-frenchBlue border-t-gray-300 dark:border-y-bgLight border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-xl"
+    class="fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-l-2 border-r-2 border-b-gray-300 border-l-frenchBlue border-r-frenchRed border-t-gray-300 bg-bgLight drop-shadow-xl dark:border-2 dark:border-y-bgLight dark:bg-bgDark lg:relative lg:bottom-auto lg:left-auto lg:z-auto lg:h-auto lg:w-1/6 lg:max-w-none lg:-translate-x-0 lg:rounded-none lg:border-0 lg:dark:border-0"
   >
     <div
-      class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
+      class="mx-auto grid h-full max-w-lg grid-cols-5 lg:mx-0 lg:flex lg:h-auto lg:max-w-full lg:grid-cols-none lg:flex-col lg:pt-4"
     >
-      <div class="hidden lg:flex lg:flex-col lg:w-full lg:justify-center">
+      <div class="hidden lg:flex lg:w-full lg:flex-col lg:justify-center">
         <a
           routerLink="/admin"
-          class="px-4 flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
+          class="text-primaryDarker flex items-center justify-center self-center px-4 text-xl font-bold"
           ><img
-            class="w-8 h-8"
+            class="h-8 w-8"
             src="assets/img/gameon-logo.webp"
             alt="GameOn!'s logo"
           />
-          <span class="ml-2 dark:text-white flex flex-col"
+          <span class="ml-2 flex flex-col dark:text-white"
             >GameOn!<span
-              class="drop-shadow-lg rounded-full px-2 border border-frenchRed bg-frenchRed text-center font-normal text-white text-sm"
+              class="rounded-full border border-frenchRed bg-frenchRed px-2 text-center text-sm font-normal text-white drop-shadow-lg"
               >Admin</span
             ></span
           ></a
@@ -25,7 +25,7 @@
 
       <div
         routerLink="/admin"
-        class="lg:hidden cursor-pointer inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none group lg:mt-4"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:hidden lg:flex-row lg:justify-start lg:rounded-none lg:px-4"
       >
         <fa-icon
           [icon]="homeIcon"
@@ -34,7 +34,7 @@
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
+        class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
         <span class="font-semibold text-primary dark:text-primaryDark"
           >Football</span
@@ -42,7 +42,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/admin/fifa-games" type="button" class="lg:hidden">
           <fa-icon
@@ -64,12 +64,12 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-2 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button
           type="button"
           routerLink=""
-          class="lg:hidden inline-flex items-center justify-center w-10 h-10 font-medium bg-frenchBlue rounded-full hover:bg-blue-700 group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800"
+          class="group inline-flex h-10 w-10 items-center justify-center rounded-full bg-frenchBlue font-medium hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 lg:hidden"
         >
           <fa-icon [icon]="homeIcon" class="text-lg text-white"></fa-icon>
         </button>
@@ -87,7 +87,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-2 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
           <fa-icon
@@ -109,13 +109,13 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button
           *ngIf="isLoggedIn == true"
           routerLink="/player/me"
           type="button"
-          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full group"
+          class="group inline-flex flex-col items-center justify-center rounded-e-full px-5 lg:hidden"
         >
           <fa-icon
             [icon]="userIcon"
@@ -126,22 +126,22 @@
     </div>
   </nav>
 
-  <div class="lg:flex lg:flex-col lg:w-full">
+  <div class="lg:flex lg:w-full lg:flex-col">
     <header
-      class="flex items-center justify-between lg:justify-end self-center h-16 px-4 bg-bgLight dark:bg-bgDark lg:w-full"
+      class="flex h-16 items-center justify-between self-center bg-bgLight px-4 dark:bg-bgDark lg:w-full lg:justify-end"
     >
       <a
         routerLink="/admin"
-        class="flex self-center items-center justify-center text-xl font-bold text-primaryDarker lg:hidden"
+        class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold lg:hidden"
         ><img
-          class="w-8 h-8"
+          class="h-8 w-8"
           src="assets/img/gameon-logo.webp"
           alt="GameOn!'s logo"
         />
-        <span class="ml-2 dark:text-primaryDark flex flex-col"
+        <span class="ml-2 flex flex-col dark:text-primaryDark"
           ><span>GameOn!</span>
           <span
-            class="drop-shadow-lg rounded-full px-2 border border-frenchRed bg-frenchRed text-center font-normal text-white text-sm"
+            class="rounded-full border border-frenchRed bg-frenchRed px-2 text-center text-sm font-normal text-white drop-shadow-lg"
             >Admin</span
           >
         </span></a
@@ -162,7 +162,7 @@
     </header>
 
     <div
-      class="pb-24 lg:pb-0 lg:overflow-y-scroll bg-bgLightDarker dark:bg-bgDarkDarker"
+      class="bg-bgLightDarker pb-24 dark:bg-bgDarkDarker lg:overflow-y-scroll lg:pb-0"
     >
       <router-outlet></router-outlet>
     </div>

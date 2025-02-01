@@ -1,4 +1,4 @@
-<section class="h-screen bg-bgDarker px-4 pt-4">
+<section class="bg-bgDarker h-screen px-4 pt-4">
   <app-loading-spinner
     [@inOutAnimation]
     *ngIf="loading == true"
@@ -12,26 +12,26 @@
   ></app-common-page-header>
 
   <div
-    class="flex flex-col items-center mt-4"
+    class="mt-4 flex flex-col items-center"
     *ngIf="loading == false && platform.id != 0"
     [@inOutAnimation]
   >
     <form
       [formGroup]="updatePlatformForm"
-      class="bg-bgLight dark:bg-bgDark p-8 rounded-lg w-full"
+      class="w-full rounded-lg bg-bgLight p-8 dark:bg-bgDark"
     >
-      <div class="relative z-0 w-full mb-6 group">
+      <div class="group relative z-0 mb-6 w-full">
         <input
           type="text"
           id="name"
-          class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
           formControlName="name"
           maxlength="50"
           required
         />
         <label
           for="name"
-          class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
         >
           Nom
           <span class="text-customRed">*</span>
@@ -40,7 +40,7 @@
 
       <button
         (click)="updatePlatform()"
-        class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
       >
         Mettre à jour
       </button>

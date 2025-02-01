@@ -4,10 +4,10 @@ import { PlatformStatsDto } from '../../../shared/classes/common/PlatformStatsDt
 
 export const setPlayer = createAction(
   'Set Player',
-  props<{ player: Player }>()
+  props<{ player: Player }>(),
 );
 
 export const setPlayerStats = createAction(
   'Set Player Stats',
-  props<{ globalStats: PlatformStatsDto }>()
+  props<{ globalStats: PlatformStatsDto }>(),
 );

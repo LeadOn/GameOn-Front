@@ -37,7 +37,7 @@ export class AdminEditTournamentComponent implements OnInit {
     private adminService: GameOnAdminService,
     private tournamentService: GameOnTournamentService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     this.states = this.tournamentService.getStates();
     this.tournamentId = this.route.snapshot.paramMap.get('id');
@@ -51,31 +51,31 @@ export class AdminEditTournamentComponent implements OnInit {
         this.editTournamentForm.controls['name'].setValue(data.name);
         this.editTournamentForm.controls['state'].setValue(data.state);
         this.editTournamentForm.controls['plannedFrom'].setValue(
-          data.plannedFrom.toString()
+          data.plannedFrom.toString(),
         );
         this.editTournamentForm.controls['plannedTo'].setValue(
-          data.plannedTo.toString()
+          data.plannedTo.toString(),
         );
 
         this.editTournamentForm.controls['winPoints'].setValue(
-          this.tournament.winPoints
+          this.tournament.winPoints,
         );
 
         this.editTournamentForm.controls['loosePoints'].setValue(
-          this.tournament.loosePoints
+          this.tournament.loosePoints,
         );
 
         this.editTournamentForm.controls['drawPoints'].setValue(
-          this.tournament.drawPoints
+          this.tournament.drawPoints,
         );
 
         this.editTournamentForm.controls['featured'].setValue(
-          this.tournament.featured
+          this.tournament.featured,
         );
 
         if (data.description != null) {
           this.editTournamentForm.controls['description'].setValue(
-            data.description
+            data.description,
           );
         }
 
@@ -89,7 +89,7 @@ export class AdminEditTournamentComponent implements OnInit {
 
         if (data.phase2ChallongeUrl != null) {
           this.editTournamentForm.controls['phase2ChallongeUrl'].setValue(
-            data.phase2ChallongeUrl
+            data.phase2ChallongeUrl,
           );
         }
 
@@ -102,7 +102,7 @@ export class AdminEditTournamentComponent implements OnInit {
       (err) => {
         alert('Une erreur est survenue lors de la récupération du tournoi.');
         console.error(err);
-      }
+      },
     );
   }
 
@@ -210,7 +210,7 @@ export class AdminEditTournamentComponent implements OnInit {
           drawPoints,
           loosePoints,
           rules,
-          this.editTournamentForm.controls['featured'].value ?? false
+          this.editTournamentForm.controls['featured'].value ?? false,
         )
         .subscribe(
           (data) => {
@@ -222,7 +222,7 @@ export class AdminEditTournamentComponent implements OnInit {
             alert('Erreur lors de la mise à jour du tournoi !');
             console.error(err);
             this.loading = false;
-          }
+          },
         );
     } else {
       alert('Certaines informations sont manquantes !');
@@ -245,7 +245,7 @@ export class AdminEditTournamentComponent implements OnInit {
             alert("Erreur lors de la suppression de l'utilisateur !");
             console.error(err);
             this.loading = false;
-          }
+          },
         );
     }
   }

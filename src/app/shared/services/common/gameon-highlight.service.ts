@@ -13,14 +13,14 @@ export class GameOnHighlightService {
 
   getAll(): Observable<Highlight[]> {
     return this.client.get<Highlight[]>(
-      environment.gameOnApiUrl + '/highlight'
+      environment.gameOnApiUrl + '/highlight',
     );
   }
 
   create(highlight: CreateHighlightDto): Observable<any> {
     return this.client.post<any>(
       environment.gameOnApiUrl + '/highlight',
-      highlight
+      highlight,
     );
   }
 }

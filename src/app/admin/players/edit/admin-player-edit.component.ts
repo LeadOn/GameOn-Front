@@ -52,7 +52,7 @@ export class AdminPlayerEditComponent implements OnInit {
     private route: ActivatedRoute,
     private playerService: GameOnPlayerService,
     private adminService: GameOnAdminService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +65,7 @@ export class AdminPlayerEditComponent implements OnInit {
 
         if (data.keycloakId != null) {
           this.updatePlayerForm.controls['keycloakId'].setValue(
-            data.keycloakId
+            data.keycloakId,
           );
         }
 
@@ -74,7 +74,7 @@ export class AdminPlayerEditComponent implements OnInit {
 
         if (data.profilePictureUrl != null) {
           this.updatePlayerForm.controls['profilePicUrl'].setValue(
-            data.profilePictureUrl
+            data.profilePictureUrl,
           );
         }
 
@@ -88,7 +88,7 @@ export class AdminPlayerEditComponent implements OnInit {
         console.error(err);
         alert('Une erreur est survenue lors de la récupération du joueur.');
         this.loading = false;
-      }
+      },
     );
   }
 
@@ -125,7 +125,7 @@ export class AdminPlayerEditComponent implements OnInit {
           this.updatePlayerForm.controls['nickname'].value,
           this.updatePlayerForm.controls['profilePicUrl'].value,
           keycloakId,
-          archived
+          archived,
         )
         .subscribe(
           (data) => {
@@ -136,7 +136,7 @@ export class AdminPlayerEditComponent implements OnInit {
             alert('Erreur lors de la mise à jour du joueur !');
             console.error(err);
             this.loading = false;
-          }
+          },
         );
     } else {
       alert('Certaines informations sont manquantes !');

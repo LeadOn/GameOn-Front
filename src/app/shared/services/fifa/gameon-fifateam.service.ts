@@ -12,7 +12,7 @@ export class GameOnFifaTeamService {
 
   getAll(): Observable<FifaTeam[]> {
     return this.client.get<FifaTeam[]>(
-      environment.gameOnApiUrl + '/fifa/fifateam'
+      environment.gameOnApiUrl + '/fifa/fifateam',
     );
   }
 }

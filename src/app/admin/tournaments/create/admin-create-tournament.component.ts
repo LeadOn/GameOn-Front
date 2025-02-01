@@ -26,7 +26,7 @@ export class AdminCreateTournamentComponent implements OnInit {
   constructor(
     private adminService: GameOnAdminService,
     private tournamentService: GameOnTournamentService,
-    private router: Router
+    private router: Router,
   ) {
     this.states = this.tournamentService.getStates();
   }
@@ -68,7 +68,7 @@ export class AdminCreateTournamentComponent implements OnInit {
           this.createTournamentForm.controls['plannedFrom'].value,
           this.createTournamentForm.controls['plannedTo'].value,
           description,
-          logoUrl
+          logoUrl,
         )
         .subscribe(
           (data) => {
@@ -80,7 +80,7 @@ export class AdminCreateTournamentComponent implements OnInit {
             alert('Erreur lors de la création du tournoi !');
             console.error(err);
             this.loading = false;
-          }
+          },
         );
     } else {
       alert('Certaines informations sont manquantes !');

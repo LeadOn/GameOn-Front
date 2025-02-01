@@ -39,7 +39,7 @@ export class AdminPlatformEditComponent implements OnInit {
     private route: ActivatedRoute,
     private platformService: GameOnPlatformService,
     private adminService: GameOnAdminService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -53,10 +53,10 @@ export class AdminPlatformEditComponent implements OnInit {
       (err) => {
         console.error(err);
         alert(
-          'Une erreur est survenue lors de la récupération de la plateforme.'
+          'Une erreur est survenue lors de la récupération de la plateforme.',
         );
         this.loading = false;
-      }
+      },
     );
   }
 
@@ -82,10 +82,10 @@ export class AdminPlatformEditComponent implements OnInit {
         },
         (err) => {
           alert(
-            'Erreur lors de la mise à jour de la plateforme ! Erreur : ' + err
+            'Erreur lors de la mise à jour de la plateforme ! Erreur : ' + err,
           );
           this.loading = false;
-        }
+        },
       );
     } else {
       alert('Certaines informations sont manquantes !');

@@ -1,9 +1,9 @@
 <div
-  class="flex space-x-2 rounded-lg drop-shadow-lg w-full mb-4 animate-fade-up"
+  class="mb-4 flex w-full animate-fade-up space-x-2 rounded-lg drop-shadow-lg"
   [ngClass]="{
     'bg-gray-600/40': game.endOfGameResult == null,
     'bg-blue-600/40': game.endOfGameResult != null && won == true,
-    'bg-red-600/40': game.endOfGameResult != null && won == false
+    'bg-red-600/40': game.endOfGameResult != null && won == false,
   }"
 >
   <div class="flex" [routerLink]="['/lol/game', game.matchId, playerId]">
@@ -12,29 +12,29 @@
       [ngClass]="{
         'bg-gray-500': game.endOfGameResult == null,
         'bg-blue-600': game.endOfGameResult != null && won == true,
-        'bg-red-600': game.endOfGameResult != null && won == false
+        'bg-red-600': game.endOfGameResult != null && won == false,
       }"
     ></div>
   </div>
 
   <div
-    class="flex flex-col w-full"
+    class="flex w-full flex-col"
     [routerLink]="['/lol/game', game.matchId, playerId]"
   >
-    <div class="flex w-full justify-between border-b mb-2 pb-2 border-gray-300">
-      <div class="flex space-x-2 text-sm items-center justify-center">
+    <div class="mb-2 flex w-full justify-between border-b border-gray-300 pb-2">
+      <div class="flex items-center justify-center space-x-2 text-sm">
         <span
-          class="text-gray-600 font-bold"
+          class="font-bold text-gray-600"
           *ngIf="game.endOfGameResult == null"
           >Inconnu</span
         >
         <span
-          class="text-red-600 font-bold"
+          class="font-bold text-red-600"
           *ngIf="game.endOfGameResult != null && won == false"
           >Défaite</span
         >
         <span
-          class="text-blue-600 font-bold"
+          class="font-bold text-blue-600"
           *ngIf="game.endOfGameResult != null && won == true"
           >Victoire</span
         >
@@ -43,7 +43,7 @@
         }}</span>
       </div>
 
-      <div class="flex text-sm items-center justify-center text-gray-200">
+      <div class="flex items-center justify-center text-sm text-gray-200">
         <span class="pr-2" *ngIf="game.queueType == ''">File inconnue</span>
         <span class="pr-2" *ngIf="game.queueType == 'RANKED_SOLO_DUO'"
           >Classée en solo/duo</span
@@ -54,16 +54,16 @@
       </div>
     </div>
 
-    <div class="flex w-full justify-between mb-2 items-center">
+    <div class="mb-2 flex w-full items-center justify-between">
       <div class="flex flex-col items-center">
         <img
-          class="rounded-full w-16"
+          class="w-16 rounded-full"
           src="assets/img/gameon-logo.webp"
           *ngIf="championName == null || championName == ''"
         />
 
         <img
-          class="rounded-full w-16"
+          class="w-16 rounded-full"
           src="https://ddragon.leagueoflegends.com/cdn/{{
             currentLoLPatch
           }}/img/champion/{{ championName }}.png"
@@ -71,19 +71,19 @@
         />
 
         <span
-          class="bg-gray-800 text-white text-xs rounded-full -mt-2 z-50"
+          class="z-50 -mt-2 rounded-full bg-gray-800 text-xs text-white"
           *ngIf="champLevel == null || champLevel == 0"
           >??</span
         >
 
         <span
-          class="bg-gray-800 text-white text-xs rounded-full -mt-2 z-50 px-1"
+          class="z-50 -mt-2 rounded-full bg-gray-800 px-1 text-xs text-white"
           *ngIf="champLevel != null && champLevel != 0"
           >{{ champLevel }}</span
         >
       </div>
 
-      <div class="flex flex-col items-center text-gray-300 text-sm">
+      <div class="flex flex-col items-center text-sm text-gray-300">
         <span>{{ kills }} / {{ deaths }} / {{ assists }}</span>
         <span>{{ kda }} KDA</span>
       </div>
@@ -143,11 +143,11 @@
 
   <div class="flex" (click)="updateGame()">
     <div
-      class="w-8 rounded-r-lg flex justify-center items-center text-white"
+      class="flex w-8 items-center justify-center rounded-r-lg text-white"
       [ngClass]="{
         'bg-gray-500': game.endOfGameResult == null,
         'bg-blue-600': game.endOfGameResult != null && won == true,
-        'bg-red-600': game.endOfGameResult != null && won == false
+        'bg-red-600': game.endOfGameResult != null && won == false,
       }"
     >
       <button class="p-1">

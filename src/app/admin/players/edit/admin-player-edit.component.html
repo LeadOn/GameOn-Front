@@ -1,4 +1,4 @@
-<section class="h-screen bg-bgDarker px-4 pt-4">
+<section class="bg-bgDarker h-screen px-4 pt-4">
   <app-loading-spinner
     [@inOutAnimation]
     *ngIf="loading == true"
@@ -12,89 +12,89 @@
   ></app-common-page-header>
 
   <div
-    class="flex flex-col items-center mt-4"
+    class="mt-4 flex flex-col items-center"
     *ngIf="loading == false && player.id != 0"
     [@inOutAnimation]
   >
     <form
       [formGroup]="updatePlayerForm"
-      class="bg-bgLight dark:bg-bgDark p-8 rounded-lg w-full"
+      class="w-full rounded-lg bg-bgLight p-8 dark:bg-bgDark"
     >
-      <div class="relative z-0 w-full mb-6 group">
+      <div class="group relative z-0 mb-6 w-full">
         <input
           type="text"
           id="keycloakId"
-          class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
           formControlName="keycloakId"
           maxlength="50"
         />
         <label
           for="keycloakId"
-          class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
         >
           Keycloak ID
         </label>
       </div>
 
-      <div class="relative z-0 w-full mb-6 group">
+      <div class="group relative z-0 mb-6 w-full">
         <input
           type="text"
           id="fullName"
-          class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
           formControlName="fullName"
           maxlength="100"
           required
         />
         <label
           for="fullName"
-          class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
         >
           Nom complet
           <span class="text-customRed">*</span>
         </label>
       </div>
 
-      <div class="relative z-0 w-full mb-6 group">
+      <div class="group relative z-0 mb-6 w-full">
         <input
           type="text"
           id="nickname"
-          class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
           formControlName="nickname"
           maxlength="50"
           required
         />
         <label
           for="nickname"
-          class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
         >
           Pseudo
           <span class="text-customRed">*</span>
         </label>
       </div>
 
-      <div class="relative z-0 w-full mb-6 group">
+      <div class="group relative z-0 mb-6 w-full">
         <input
           type="text"
           id="profilePicUrl"
-          class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+          class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
           formControlName="profilePicUrl"
           maxlength="500"
           required
         />
         <label
           for="profilePicUrl"
-          class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
         >
           URL de photo de profil
           <span class="text-customRed">*</span>
         </label>
       </div>
 
-      <div class="relative z-0 w-full mb-6 group">
+      <div class="group relative z-0 mb-6 w-full">
         <input
           id="archived"
           type="checkbox"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
           formControlName="archived"
         />
         <label for="archived" class="ms-2 text-sm font-medium text-gray-400"
@@ -104,7 +104,7 @@
 
       <button
         (click)="updatePlayer()"
-        class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
       >
         Mettre à jour
       </button>

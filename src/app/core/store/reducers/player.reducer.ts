@@ -8,10 +8,10 @@ export const initialStatsState: PlatformStatsDto = new PlatformStatsDto();
 
 export const playerReducer = createReducer(
   initialState,
-  on(setPlayer, (state, { player }) => player)
+  on(setPlayer, (state, { player }) => player),
 );
 
 export const playerStatsReducer = createReducer(
   initialStatsState,
-  on(setPlayerStats, (state, { globalStats }) => globalStats)
+  on(setPlayerStats, (state, { globalStats }) => globalStats),
 );

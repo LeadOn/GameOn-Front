@@ -26,7 +26,7 @@ export class AdminTournamentsComponent implements OnInit {
 
   constructor(
     private tournamentService: GameOnTournamentService,
-    private adminService: GameOnAdminService
+    private adminService: GameOnAdminService,
   ) {
     this.states = this.tournamentService.getStates();
   }
@@ -41,7 +41,7 @@ export class AdminTournamentsComponent implements OnInit {
         alert('Une erreur est survenue lors de la récupération des tournois.');
         console.error(err);
         this.loading = false;
-      }
+      },
     );
   }
 
@@ -59,7 +59,7 @@ export class AdminTournamentsComponent implements OnInit {
   goToPhase1(id: number) {
     if (
       confirm(
-        'Voulez-vous passer ce tournoi en phase 1 ? Cette action va générer les matchs concernés !'
+        'Voulez-vous passer ce tournoi en phase 1 ? Cette action va générer les matchs concernés !',
       )
     ) {
       this.adminService.goToPhase1(id).subscribe(
@@ -69,7 +69,7 @@ export class AdminTournamentsComponent implements OnInit {
         (err) => {
           console.error(err);
           alert('Une erreur est survenue lors du passage en phase 1.');
-        }
+        },
       );
     }
   }
@@ -83,9 +83,9 @@ export class AdminTournamentsComponent implements OnInit {
         (err) => {
           console.error(err);
           alert(
-            'Une erreur est survenue lors de la sauvegarde du score de la phase 1.'
+            'Une erreur est survenue lors de la sauvegarde du score de la phase 1.',
           );
-        }
+        },
       );
     }
   }
@@ -95,7 +95,7 @@ export class AdminTournamentsComponent implements OnInit {
       confirm(
         'Êtes-vous sûr de bien vouloir supprimer le tournoi ' +
           id +
-          ' ? ATTENTION : Cette action est irrévesible !'
+          ' ? ATTENTION : Cette action est irrévesible !',
       )
     ) {
       this.adminService.deleteTournament(id).subscribe(
@@ -105,7 +105,7 @@ export class AdminTournamentsComponent implements OnInit {
         (err) => {
           console.error(err);
           alert('Une erreur est survenue lors de la suppresion du tournoi.');
-        }
+        },
       );
     }
   }
