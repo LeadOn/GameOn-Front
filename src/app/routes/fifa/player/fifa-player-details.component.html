@@ -1,13 +1,13 @@
-<div class="px-4 mt-4" *ngIf="loading == true">
+<div class="mt-4 px-4" *ngIf="loading == true">
   <app-loading-spinner></app-loading-spinner>
 </div>
 
 <section
   id="header-pills"
-  class="p-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
   *ngIf="loading == false && player != null"
 >
-  <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
+  <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
     <app-pill
       *ngIf="player.archived == true"
       [title]="'Archivé'"
@@ -17,7 +17,7 @@
   </div>
 
   <div
-    class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2"
+    class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap"
     *ngIf="player.tournamentsWon != null && player.tournamentsWon.length > 0"
   >
     <app-pill
@@ -39,7 +39,7 @@
   *ngIf="loading == false && player != null"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
+    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
   >
     <img
       class="rounded-full drop-shadow-lg"
@@ -64,11 +64,11 @@
       }}</span>
 
       <div
-        class="flex justify-center items-center text-gray-500 dark:text-gray-400"
+        class="flex items-center justify-center text-gray-500 dark:text-gray-400"
       >
         <img
           src="assets/img/svg/lol.svg"
-          class="w-8 h-8"
+          class="h-8 w-8"
           *ngIf="player.riotGamesPUUID != null"
         />
         <span class="text-xs" *ngIf="player.riotGamesPUUID != null"
@@ -80,11 +80,11 @@
   </div>
 
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg text-sm drop-shadow-lg mt-4"
+    class="mt-4 rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
     *ngIf="player != null && player.riotGamesPUUID != null"
   >
     <div
-      class="flex flex-row justify-between cursor-pointer text-primary dark:text-primaryDark"
+      class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
       [routerLink]="['/lol/summoner', player.id]"
     >
       <div class="flex items-center space-x-2">
@@ -97,17 +97,17 @@
   </div>
 </section>
 
-<div class="px-4 mt-4">
+<div class="mt-4 px-4">
   <div class="w-full" *ngIf="player != null && player.id != 0">
     <div
-      class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex flex-col items-center drop-shadow-lg"
+      class="flex flex-col items-center rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
     >
-      <div class="text-center w-full">
+      <div class="w-full text-center">
         <select
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
           id="seasons"
-          class="mt-2 border text-primary dark:text-primaryDark bg-bgLight dark:bg-bgDark border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          class="mt-2 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
         >
           <option *ngFor="let season of seasons" value="{{ season.id }}">
             {{ season.name }}
@@ -115,14 +115,14 @@
         </select>
 
         <div
-          class="mt-2 border border-secondary rounded-lg p-4"
+          class="mt-2 rounded-lg border border-secondary p-4"
           *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null"
         >
           <select
             [(ngModel)]="selectedStats"
             (change)="calculateStats()"
             id="stats"
-            class="mb-4 border bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            class="mb-4 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
           >
             <option
               *ngFor="let platform of fifaPlayerStats.statsPerPlatform"
@@ -172,7 +172,7 @@
 </div>
 
 <div
-  class="px-4 mt-4 flex justify-between"
+  class="mt-4 flex justify-between px-4"
   *ngIf="loading == false && games != null && games.length > 0"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -182,7 +182,7 @@
 
 <section
   id="my-matchs-planned"
-  class="px-4 mt-4 flex flex-col space-y-4"
+  class="mt-4 flex flex-col space-y-4 px-4"
   *ngIf="loading == false && games != null && games.length > 0"
 >
   <app-fifa-game-history-card

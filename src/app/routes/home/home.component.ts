@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private playerService: GameOnPlayerService,
-    private commonService: GameOnCommonService
+    private commonService: GameOnCommonService,
   ) {
     this.isLoggedIn =
       this.keycloak.authenticated != null && this.keycloak.authenticated
@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
       },
       (err) => {
         console.error(err);
-      }
+      },
     );
   }
 
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
       (err) => {
         this.error = true;
         console.error(err);
-      }
+      },
     );
   }
 }

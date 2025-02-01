@@ -1,17 +1,14 @@
-<div class="flex justify-between items-center animate-fade-up">
-  <div class="flex justify-center items-center space-x-2">
-    <img src="assets/img/gameon-logo.webp" class="w-6" />
+<div class="flex animate-fade items-center justify-between">
+  <div class="flex items-center justify-center space-x-2">
+    <fa-icon
+      [icon]="updateIcon"
+      class="cursor-pointer text-primary dark:text-primaryDark"
+    ></fa-icon>
+
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Nouveautés</span
     >
   </div>
-
-  <fa-icon
-    *ngIf="loading == false"
-    [icon]="externalIcon"
-    class="text-primary cursor-pointer dark:text-primaryDark"
-    routerLink="/changelog"
-  ></fa-icon>
 
   <app-loading-spinner-tiny *ngIf="loading == true"></app-loading-spinner-tiny>
 </div>

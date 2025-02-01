@@ -1,9 +1,9 @@
 <section
   id="header-pills"
-  class="p-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLightDarker dark:[&::-webkit-scrollbar-thumb]:bg-bgDarkDarker"
+  class="overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLightDarker dark:[&::-webkit-scrollbar-thumb]:bg-bgDarkDarker [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
   *ngIf="loading == false"
 >
-  <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
+  <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
     <app-pill [bgStyle]="'secondary'" [title]="game.season.name"></app-pill>
 
     <app-pill
@@ -48,7 +48,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary animate-fade-right"
+  class="mt-4 flex animate-fade-right justify-between px-4 text-primary"
   *ngIf="
     loading == false &&
     game.isPlayed == false &&
@@ -69,37 +69,37 @@
     showDeclareScore == true
   "
   id="declare-score"
-  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg animate-fade-right"
+  class="m-4 mt-4 animate-fade-right rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
 >
   <form [formGroup]="declareScoreForm" class="mt-4">
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="number"
         id="scoreTeam1"
-        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
         required
         formControlName="scoreTeam1"
       />
       <label
         for="scoreTeam1"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-600 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
       >
         Score équipe #1
         <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="number"
         id="scoreTeam2"
-        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
         required
         formControlName="scoreTeam2"
       />
       <label
         for="scoreTeam2"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-600 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
       >
         Score équipe #2
         <span class="text-customRed">*</span>
@@ -108,16 +108,16 @@
 
     <button
       (click)="declareScore()"
-      class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark dark:text-primaryDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="delay-50 w-full rounded-lg border border-customGreen bg-bgLight px-5 py-2.5 text-center text-sm text-customGreen transition ease-in-out hover:bg-customGreen hover:text-white focus:outline-none focus:ring-4 focus:ring-customGreen dark:bg-bgDark dark:text-primaryDark"
     >
       Déclarer
     </button>
   </form>
 </section>
 
-<div class="px-4 mt-4 flex" *ngIf="loading == false">
+<div class="mt-4 flex px-4" *ngIf="loading == false">
   <span
-    class="text-lg font-semibold text-primary dark:text-primaryDark animate-fade-right"
+    class="animate-fade-right text-lg font-semibold text-primary dark:text-primaryDark"
     >Détails du match</span
   >
 </div>
@@ -125,13 +125,13 @@
 <section
   *ngIf="loading == false"
   id="game-details"
-  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg animate-fade-right"
+  class="m-4 mt-4 animate-fade-right rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
 >
   <span
     class="text-xs text-primary dark:text-primaryDark"
     *ngIf="game.isPlayed == true"
   >
-    <fa-icon [icon]="clockIcon"></fa-icon> {{ game.playedOn | date : "medium" }}
+    <fa-icon [icon]="clockIcon"></fa-icon> {{ game.playedOn | date: "medium" }}
   </span>
 
   <hr class="my-4" *ngIf="game.isPlayed == true" />
@@ -155,19 +155,19 @@
       </div>
     </div>
     <div
-      class="w-full bg-gray-200 rounded-full h-2.5"
+      class="h-2.5 w-full rounded-full bg-gray-200"
       [ngClass]="{
         'bg-red-500': game.team1.score > game.team2.score,
         'bg-green-500': game.team1.score < game.team2.score,
-        'bg-yellow-200': game.team1.score == game.team2.score
+        'bg-yellow-200': game.team1.score == game.team2.score,
       }"
     >
       <div
-        class="bg-blue-600 h-2.5 rounded-full"
+        class="h-2.5 rounded-full bg-blue-600"
         *ngIf="game.team1.score != game.team2.score"
         [ngClass]="{
           'bg-green-500': game.team1.score > game.team2.score,
-          'bg-red-500': game.team1.score < game.team2.score
+          'bg-red-500': game.team1.score < game.team2.score,
         }"
         style="width: {{ team1GoalPercentage }}%"
       ></div>
@@ -176,7 +176,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark animate-fade-right"
+  class="mt-4 flex animate-fade-right justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Temps forts</span>
@@ -193,11 +193,11 @@
       showCreateHighlightForm == true)
   "
   id="highlights"
-  class="m-4 mt-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg animate-fade-right"
+  class="m-4 mt-4 animate-fade-right rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
 >
   <span
     *ngIf="game.highlights == null || game.highlights.length == 0"
-    class="text-xs text-primary dark:text-primaryDark text-center"
+    class="text-center text-xs text-primary dark:text-primaryDark"
   >
     Aucun temps fort n'est disponible pour ce match.
   </span>
@@ -215,52 +215,52 @@
     [formGroup]="createHighlightForm"
     class="mt-4"
   >
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="text"
         id="name"
-        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
         required
         maxlength="50"
         formControlName="name"
       />
       <label
         for="name"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-600 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
       >
         Nom du temps fort
         <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="text"
         id="description"
-        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
         maxlength="500"
         formControlName="description"
       />
       <label
         for="description"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-600 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
       >
         Description
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="text"
         id="externalUrl"
-        class="block py-2.5 px-0 w-full text-sm text-primary dark:text-primaryDark bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
         required
         maxlength="3000"
         formControlName="externalUrl"
       />
       <label
         for="externalUrl"
-        class="peer-focus:font-medium absolute text-sm text-gray-600 dark:text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-600 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
       >
         Lien externe (YouTube, ...)
       </label>
@@ -268,7 +268,7 @@
 
     <button
       (click)="createHighlight()"
-      class="text-customGreen hover:text-white transition ease-in-out delay-50 border border-customGreen bg-bgLight dark:bg-bgDark dark:text-primaryDark hover:bg-customGreen focus:ring-4 focus:outline-none focus:ring-customGreen rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="delay-50 w-full rounded-lg border border-customGreen bg-bgLight px-5 py-2.5 text-center text-sm text-customGreen transition ease-in-out hover:bg-customGreen hover:text-white focus:outline-none focus:ring-4 focus:ring-customGreen dark:bg-bgDark dark:text-primaryDark"
     >
       Ajouter
     </button>
@@ -278,35 +278,35 @@
 <section
   *ngIf="loading == false && game.highlights != null"
   id="highlights-list"
-  class="px-4 mt-4 flex flex-col space-y-4 animate-fade-right"
+  class="mt-4 flex animate-fade-right flex-col space-y-4 px-4"
 >
   <div
     *ngFor="let highlight of game.highlights"
-    class="bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg"
+    class="rounded-lg bg-bgLight drop-shadow-lg dark:bg-bgDark"
   >
     <div
-      class="bg-secondary rounded-tl-lg rounded-tr-lg p-4 text-white font-semibold"
+      class="rounded-tl-lg rounded-tr-lg bg-secondary p-4 font-semibold text-white"
       [ngClass]="{
         'rounded-lg':
-          highlight.description == null && highlight.externalUrl == null
+          highlight.description == null && highlight.externalUrl == null,
       }"
     >
       <span>{{ highlight.name }}</span>
     </div>
 
     <div
-      class="bg-bgLight dark:bg-bgDark rounded-tl-lg rounded-tr-lg p-4 text-primary dark:text-primaryDark"
+      class="rounded-tl-lg rounded-tr-lg bg-bgLight p-4 text-primary dark:bg-bgDark dark:text-primaryDark"
       *ngIf="highlight.description != null"
       [ngClass]="{
         'rounded-bl-lg': highlight.externalUrl == null,
-        'rounded-br-lg': highlight.externalUrl == null
+        'rounded-br-lg': highlight.externalUrl == null,
       }"
     >
       <span>{{ highlight.description }}</span>
     </div>
 
     <div
-      class="bg-bgLight dark:bg-bgDark rounded-bl-lg rounded-br-lg p-4 text-primary dark:text-primaryDark"
+      class="rounded-bl-lg rounded-br-lg bg-bgLight p-4 text-primary dark:bg-bgDark dark:text-primaryDark"
       *ngIf="highlight.externalUrl != null"
     >
       <a [href]="highlight.externalUrl" target="_blank"
@@ -317,7 +317,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary animate-fade-right"
+  class="mt-4 flex animate-fade-right justify-between px-4 text-primary"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -328,10 +328,10 @@
 <section
   *ngIf="loading == false && game.team1 != null"
   id="players-team1-list"
-  class="px-4 mt-4 animate-fade-right"
+  class="mt-4 animate-fade-right px-4"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark rounded-lg"
+    class="rounded-lg bg-bgLight dark:bg-bgDark"
     *ngFor="let player of game.team1.players"
   >
     <app-player-card [player]="player"></app-player-card>
@@ -339,7 +339,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark animate-fade-right"
+  class="mt-4 flex animate-fade-right justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Équipe #2</span>
@@ -348,10 +348,10 @@
 <section
   *ngIf="loading == false && game.team1 != null"
   id="players-team2-list"
-  class="px-4 mt-4 animate-fade-right"
+  class="mt-4 animate-fade-right px-4"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark rounded-lg"
+    class="rounded-lg bg-bgLight dark:bg-bgDark"
     *ngFor="let player of game.team2.players"
   >
     <app-player-card [player]="player"></app-player-card>

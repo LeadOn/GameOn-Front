@@ -4,10 +4,10 @@
 
 <section
   id="header-pills"
-  class="px-4 py-2 mb-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 mb-4 overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
   *ngIf="loading == false && tournament != null"
 >
-  <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
+  <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
     <app-pill
       *ngIf="isSubscribed != null"
       [title]="'Inscrit'"
@@ -38,7 +38,7 @@
   *ngIf="loading == false && tournament != null"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg"
+    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
   >
     <img
       class="rounded-full drop-shadow-lg"
@@ -67,7 +67,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex space-x-2"
+  class="mt-4 flex space-x-2 px-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -77,16 +77,16 @@
 
 <section
   id="tournament-winner"
-  class="px-4 mt-4"
+  class="mt-4 px-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
-  <div class="bg-bgLight dark:bg-bgDark rounded-lg">
+  <div class="rounded-lg bg-bgLight dark:bg-bgDark">
     <app-player-card [player]="tournament.winner"></app-player-card>
   </div>
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
+  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="
     loading == false && tournament != null && tournament.description != null
   "
@@ -101,7 +101,7 @@
 
 <section
   id="tournament-details"
-  class="px-4 mt-4"
+  class="mt-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -110,14 +110,14 @@
   "
 >
   <div
-    class="bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
+    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle text-sm text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
   >
     {{ tournament.description }}
   </div>
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
+  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && tournament.rules != null"
   (click)="showRulesContent()"
 >
@@ -130,7 +130,7 @@
 
 <section
   id="tournament-rules"
-  class="px-4 mt-4"
+  class="mt-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -139,13 +139,13 @@
   "
 >
   <div
-    class="bg-bgLight dark:bg-bgDark text-primary dark:text-primaryDark p-4 rounded-lg flex justify-evenly items-center align-middle text-sm drop-shadow-lg"
+    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle text-sm text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
     [innerHtml]="tournament.rules"
   ></div>
 </section>
 
 <div
-  class="px-4 mt-4 flex"
+  class="mt-4 flex px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -160,7 +160,7 @@
 
 <section
   id="tournament-subscription"
-  class="m-4 bg-bgLight dark:bg-bgDark p-4 rounded-lg drop-shadow-lg"
+  class="m-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -170,10 +170,10 @@
 >
   <div
     *ngIf="isSubscribed == null"
-    class="flex flex-col justify-center align-center items-center"
+    class="align-center flex flex-col items-center justify-center"
   >
     <select
-      class="m-4 bg-primaryDarker text-primary dark:text-primaryDark bg-bgLight dark:bg-bgDark border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      class="bg-primaryDarker m-4 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -182,7 +182,7 @@
     </select>
 
     <button
-      class="text-white bg-customGreen hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-customGreen font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
       (click)="subscribe()"
     >
       S'inscrire !
@@ -191,10 +191,10 @@
 
   <div
     *ngIf="isSubscribed != null"
-    class="flex flex-col justify-center align-center items-center"
+    class="align-center flex flex-col items-center justify-center"
   >
     <select
-      class="m-4 bg-primaryDarker text-primary dark:text-primaryDark bg-bgLight dark:bg-bgDark border border-secondary text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+      class="bg-primaryDarker m-4 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -203,7 +203,7 @@
     </select>
 
     <button
-      class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="focus:ring-yellow w-full rounded-lg bg-customYellow px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4"
       (click)="updateSubscription()"
     >
       Modifier
@@ -212,7 +212,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
+  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -237,7 +237,7 @@
 
 <section
   id="tournament-rules"
-  class="px-4 mt-4"
+  class="mt-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -256,7 +256,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
+  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="
     loading == false && tournament != null && tournament.players.length > 0
   "
@@ -271,7 +271,7 @@
 
 <section
   id="tournament-players"
-  class="mt-4 pb-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker dark:[&::-webkit-scrollbar-thumb]:bg-bgDark"
+  class="mt-4 overflow-x-scroll pb-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-thumb]:bg-bgDark [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -279,9 +279,9 @@
     playersShown == true
   "
 >
-  <div class="relative drop-shadow-lg px-4">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
-      <thead class="text-xs text-gray-700 dark:text-gray-400 text-center">
+  <div class="relative px-4 drop-shadow-lg">
+    <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
+      <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3">Score</th>
           <th scope="col" class="px-6 py-3">Joueur</th>
@@ -291,13 +291,13 @@
       </thead>
       <tbody>
         <tr
-          class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b"
+          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
           *ngFor="let player of tournament.players"
           [routerLink]="['/player', player.player.id]"
         >
           <th
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
             [class.text-yellow-500]="
               tournament.players.indexOf(player) == 0 && tournament.state >= 2
             "
@@ -311,14 +311,14 @@
             {{ player.score }}
           </th>
           <td
-            class="px-6 py-4 text-center text-xs text-primary dark:text-primaryDark font-semibold"
+            class="px-6 py-4 text-center text-xs font-semibold text-primary dark:text-primaryDark"
           >
             {{ player.player.fullName }}
           </td>
-          <td class="px-6 py-4 flex justify-center items-center">
+          <td class="flex items-center justify-center px-6 py-4">
             <img
               src="assets/img/fifa/teams/{{ player.team.id }}.png"
-              class="rounded-full w-8 h-8 drop-shadow-lg"
+              class="h-8 w-8 rounded-full drop-shadow-lg"
             />
           </td>
           <td class="px-6 py-4 text-center font-semibold">
@@ -333,7 +333,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
+  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && myGamesToPlay.length > 0"
   (click)="showMyMatchsToPlay()"
 >
@@ -352,7 +352,7 @@
 
 <section
   id="my-matchs-planned"
-  class="px-4 mt-4 flex flex-col space-y-4"
+  class="mt-4 flex flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -367,7 +367,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
+  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && gamesToPlay.length > 0"
   (click)="showMatchsPlanned()"
 >
@@ -386,7 +386,7 @@
 
 <section
   id="matchs-planned"
-  class="px-4 mt-4 flex flex-col space-y-4"
+  class="mt-4 flex flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -401,7 +401,7 @@
 </section>
 
 <div
-  class="px-4 mt-4 flex justify-between text-primary dark:text-primaryDark cursor-pointer"
+  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && gamesPlayed.length > 0"
   (click)="showMatchsPlayed()"
 >
@@ -420,7 +420,7 @@
 
 <section
   id="my-matchs-planned"
-  class="px-4 mt-4 flex flex-col space-y-4"
+  class="mt-4 flex flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&

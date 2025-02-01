@@ -1,9 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import {
-  faExternalLink,
-  faFutbol,
-  faTrophy,
-} from '@fortawesome/free-solid-svg-icons';
+import { faFutbol, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Season } from '../../../../shared/classes/fifa/Season';
@@ -37,6 +33,8 @@ export class HomeFifaComponent implements OnChanges {
   player$: Observable<Player>;
   globalStats$: Observable<PlatformStatsDto>;
 
+  playerNickname = '';
+
   loadingPlannedMatches = true;
   loadingLastMatches = true;
   plannedMatchesError = false;
@@ -45,14 +43,13 @@ export class HomeFifaComponent implements OnChanges {
   lastMatches: FifaGamePlayed[] = [];
 
   soccerIcon = faFutbol;
-  externalIcon = faExternalLink;
   tournamentIcon = faTrophy;
 
   constructor(
     private playerStore: Store<{ player: Player }>,
     private statsStore: Store<{ globalStats: PlatformStatsDto }>,
     private playerService: GameOnPlayerService,
-    private gameService: GameOnGameService
+    private gameService: GameOnGameService,
   ) {
     this.player$ = this.playerStore.select('player');
     this.globalStats$ = statsStore.select('globalStats');
@@ -77,6 +74,12 @@ export class HomeFifaComponent implements OnChanges {
   getPlayerStats() {
     if (this.isLoggedIn) {
       this.player$.subscribe((x) => {
+        if (x.nickname.length <= 5) {
+          this.playerNickname = x.nickname;
+        } else {
+          this.playerNickname = x.nickname.substring(0, 5) + '...';
+        }
+
         this.playerService.getStats(x.id).subscribe((data) => {
           if (
             data != null &&
@@ -84,7 +87,7 @@ export class HomeFifaComponent implements OnChanges {
             data.statsPerPlatform.length > 0
           ) {
             this.statsStore.dispatch(
-              setPlayerStats({ globalStats: data.statsPerPlatform[0] })
+              setPlayerStats({ globalStats: data.statsPerPlatform[0] }),
             );
           }
         });
@@ -103,7 +106,7 @@ export class HomeFifaComponent implements OnChanges {
           (err) => {
             console.error(err);
             this.plannedMatchesError = true;
-          }
+          },
         );
       });
     }
@@ -120,7 +123,7 @@ export class HomeFifaComponent implements OnChanges {
           (err) => {
             console.error(err);
             this.lastMatchesError = true;
-          }
+          },
         );
       });
     } else {
@@ -132,7 +135,7 @@ export class HomeFifaComponent implements OnChanges {
         (err) => {
           console.error(err);
           this.lastMatchesError = true;
-        }
+        },
       );
     }
   }

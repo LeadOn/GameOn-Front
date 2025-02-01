@@ -1,23 +1,18 @@
 <section id="fifa-header">
-  <div class="flex justify-between items-center animate-fade-up">
-    <div class="flex justify-center items-center space-x-2">
+  <div
+    class="flex animate-fade cursor-pointer items-center justify-between"
+    routerLink="/fifa"
+  >
+    <div class="flex items-center justify-center space-x-2">
       <fa-icon
-        *ngIf="loading == false"
         [icon]="soccerIcon"
-        class="text-primary cursor-pointer dark:text-primaryDark"
+        class="cursor-pointer text-primary dark:text-primaryDark"
       ></fa-icon>
 
       <span class="text-lg font-semibold text-primary dark:text-primaryDark"
         >FIFA</span
       >
     </div>
-
-    <fa-icon
-      *ngIf="loading == false"
-      [icon]="externalIcon"
-      class="text-primary cursor-pointer dark:text-primaryDark"
-      routerLink="/fifa"
-    ></fa-icon>
 
     <app-loading-spinner-tiny
       *ngIf="loading == true"
@@ -36,11 +31,11 @@
     <app-pill
       *ngFor="let tournament of tournaments"
       [title]="tournament.name"
-      [showExternalIcon]="true"
       [icon]="tournamentIcon"
       [iconColor]="'text-frenchRed'"
       [iconPulsate]="true"
       [borderStyle]="'red'"
+      [pointer]="true"
       [routerLink]="['/fifa/tournaments', tournament.id]"
     ></app-pill>
   </div>
@@ -48,46 +43,40 @@
 
 <section id="fifa-header-card">
   <div
-    class="flex flex-col justify-between px-4 text-white drop-shadow-lg font-bold mt-4 aspect-video fifa-card rounded-lg cursor-pointer animate-fade-right"
+    class="fifa-card mt-4 flex aspect-video animate-fade-right cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
     routerLink="/fifa"
   >
-    <span class="w-full text-center mt-2">Tournoi Yunit - 21 avril 2023</span>
-    <span class="w-full text-right text-sm mb-2"></span>
+    <span class="mt-2 w-full text-center">Tournoi Yunit - 21 avril 2023</span>
+    <span class="mb-2 w-full text-right text-sm"></span>
   </div>
 </section>
 
 <section id="fifa-player-stats">
   <div class="mt-4 flex space-x-2" *ngIf="isLoggedIn == true">
     <div
-      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 items-center justify-center animate-fade-right cursor-pointer"
+      class="flex animate-fade-right cursor-pointer flex-col items-center justify-center space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
       *ngIf="this.player$ | async as player"
       routerLink="/player/me"
     >
       <img
-        class="rounded-full"
+        class="w-32 rounded-full"
         *ngIf="
           player.profilePictureUrl != null && player.profilePictureUrl != ''
         "
         src="{{ player.profilePictureUrl }}"
-        width="64"
       />
 
       <img
-        class="rounded-full drop-shadow-lg"
+        class="w-32 rounded-full drop-shadow-lg"
         *ngIf="
           player.profilePictureUrl == null || player.profilePictureUrl == ''
         "
         src="assets/img/gameon-logo.webp"
-        width="64"
       />
-
-      <span class="text-primary dark:text-primaryDark">{{
-        player.nickname
-      }}</span>
     </div>
 
     <div
-      class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full animate-fade-left"
+      class="flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
       *ngIf="this.globalStats$ | async as globalStats"
     >
       <app-fifa-stat
@@ -111,7 +100,7 @@
   </div>
 
   <div class="animate-fade-up">
-    <div class="mt-4 flex justify-between items-center">
+    <div class="mt-4 flex items-center justify-between">
       <span
         class="text-lg font-semibold text-primary dark:text-primaryDark"
         *ngIf="loadingPlannedMatches == true || plannedMatches.length > 0"
@@ -127,7 +116,7 @@
       *ngIf="loadingPlannedMatches == false && plannedMatches.length > 0"
       class="mt-4"
     >
-      <div class="mt-4 flex flex-col w-full space-y-4">
+      <div class="mt-4 flex w-full flex-col space-y-4">
         <app-fifa-game-history-card
           *ngFor="let game of plannedMatches"
           [game]="game"
@@ -150,7 +139,7 @@
   </div>
 
   <div class="animate-fade-up">
-    <div class="mt-4 flex justify-between items-center">
+    <div class="mt-4 flex items-center justify-between">
       <span
         class="text-lg font-semibold text-primary dark:text-primaryDark"
         *ngIf="loadingLastMatches == true || lastMatches.length > 0"
@@ -167,7 +156,7 @@
       *ngIf="loadingLastMatches == false && lastMatches.length > 0"
       class="mt-4"
     >
-      <div class="mt-4 flex flex-col w-full space-y-4">
+      <div class="mt-4 flex w-full flex-col space-y-4">
         <app-fifa-game-history-card
           *ngFor="let game of lastMatches"
           [game]="game"

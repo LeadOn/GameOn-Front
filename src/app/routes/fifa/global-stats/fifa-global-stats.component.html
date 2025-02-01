@@ -17,12 +17,12 @@
   *ngIf="errorLoading == true"
 ></app-info-message>
 
-<section id="stat-number-games" class="px-4 mt-4">
-  <div class="flex justify-between items-center animate-fade-up">
-    <div class="flex justify-center items-center space-x-2">
+<section id="stat-number-games" class="mt-4 px-4">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center space-x-2">
       <fa-icon
         [icon]="countIcon"
-        class="text-primary cursor-pointer dark:text-primaryDark"
+        class="cursor-pointer text-primary dark:text-primaryDark"
       ></fa-icon>
 
       <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -42,9 +42,9 @@
   </div>
 </section>
 
-<section id="best-player-header" class="px-4 mt-4">
-  <div class="flex justify-between items-center animate-fade-up">
-    <div class="flex justify-center items-center space-x-2">
+<section id="best-player-header" class="mt-4 px-4">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center space-x-2">
       <fa-icon [icon]="trophyIcon" class="text-customGreen"></fa-icon>
 
       <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -63,12 +63,12 @@
   *ngIf="
     loading == false && globalStats != null && globalStats.bestPlayer != null
   "
-  class="px-4 mt-4"
+  class="mt-4 px-4"
 >
   <app-player-card [player]="globalStats.bestPlayer"></app-player-card>
 
   <div
-    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full animate-fade-left mt-4"
+    class="mt-4 flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
     *ngIf="
       globalStats.bestPlayerStats != null &&
       globalStats.bestPlayerStats.statsPerPlatform.length > 0
@@ -80,9 +80,9 @@
   </div>
 </section>
 
-<section id="worst-player-header" class="px-4 mt-4">
-  <div class="flex justify-between items-center animate-fade-up">
-    <div class="flex justify-center items-center space-x-2">
+<section id="worst-player-header" class="mt-4 px-4">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center space-x-2">
       <fa-icon [icon]="trophyIcon" class="text-frenchRed"></fa-icon>
 
       <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -101,12 +101,12 @@
   *ngIf="
     loading == false && globalStats != null && globalStats.worstPlayer != null
   "
-  class="px-4 mt-4"
+  class="mt-4 px-4"
 >
   <app-player-card [player]="globalStats.worstPlayer"></app-player-card>
 
   <div
-    class="bg-bgLight dark:bg-bgDark drop-shadow-lg rounded-lg px-8 py-2 flex flex-col space-y-2 w-full animate-fade-left mt-4"
+    class="mt-4 flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
     *ngIf="
       globalStats.worstPlayerStats != null &&
       globalStats.worstPlayerStats.statsPerPlatform.length > 0

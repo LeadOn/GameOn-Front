@@ -1,4 +1,4 @@
-<section id="top-card" class="px-4 pt-4 h-screen">
+<section id="top-card" class="h-screen px-4 pt-4">
   <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 
   <app-common-page-header
@@ -7,13 +7,13 @@
     [title]="'Tournois'"
   ></app-common-page-header>
 
-  <div *ngIf="loading == false" class="flex flex-col space-y-4 mt-4">
+  <div *ngIf="loading == false" class="mt-4 flex flex-col space-y-4">
     <div
-      class="bg-bgLight dark:bg-bgDark rounded-lg drop-shadow-lg flex flex-col space-y-2"
+      class="flex flex-col space-y-2 rounded-lg bg-bgLight drop-shadow-lg dark:bg-bgDark"
       *ngFor="let tournament of tournaments"
       [routerLink]="['/fifa/tournaments', tournament.id]"
     >
-      <div class="flex flex-col justify-center items-center space-y-2 mt-4">
+      <div class="mt-4 flex flex-col items-center justify-center space-y-2">
         <img
           class="w-16 rounded-full"
           *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
@@ -30,7 +30,7 @@
         </span>
 
         <div
-          class="drop-shadow-lg rounded-full px-2 bg-secondary text-white text-xs"
+          class="rounded-full bg-secondary px-2 text-xs text-white drop-shadow-lg"
           [class.bg-gray-600]="tournament.state == 0"
           [class.bg-customGreen]="tournament.state == 1"
           [class.bg-secondary]="tournament.state == 2"

@@ -1,6 +1,6 @@
 <section id="lol-header">
-  <div class="flex justify-between items-center animate-fade-up">
-    <div class="flex justify-center items-center">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center">
       <img src="assets/img/svg/lol.svg" class="w-8" />
 
       <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -10,7 +10,7 @@
 
     <fa-icon
       [icon]="externalIcon"
-      class="text-primary cursor-pointer dark:text-primaryDark"
+      class="cursor-pointer text-primary dark:text-primaryDark"
       routerLink="/lol"
     ></fa-icon>
   </div>
@@ -27,11 +27,11 @@
 
 <section
   id="lol-card"
-  class="flex flex-col justify-between px-4 text-white drop-shadow-lg font-bold mt-4 aspect-video lol-card rounded-lg cursor-pointer animate-fade-up"
+  class="lol-card mt-4 flex aspect-video animate-fade-up cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
   routerLink="/lol"
 >
-  <span class="w-full text-left mt-2"
+  <span class="mt-2 w-full text-left"
     >Accéder à l'espace League of Legends !</span
   >
-  <span class="w-full text-right text-sm mb-2"></span>
+  <span class="mb-2 w-full text-right text-sm"></span>
 </section>
