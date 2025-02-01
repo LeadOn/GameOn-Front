@@ -20,7 +20,6 @@ import { StoreModule } from '@ngrx/store';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AdminModule } from './admin/admin.module';
 import { DonateComponent } from './routes/donate/donate.component';
-import { LolHomeComponent } from './lol/lol-home.component';
 import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
 import { RankHistoryComponent } from './lol/player/components/rank-history/rank-history.component';
 import { WinRateChartComponent } from './lol/player/components/win-rate-chart/win-rate-chart.component';
@@ -38,7 +37,6 @@ import { HomeChangelogComponent } from './routes/home/components/changelog/home-
 import { HomeFifaComponent } from './routes/home/components/fifa/home-fifa.component';
 import { HomeLolComponent } from './routes/home/components/lol/home-lol.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
-import { LolOldPlayerCardComponent } from './lol/components/lol-player-card/lol-old-player-card.component';
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -58,8 +56,6 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     ProfilePageComponent,
     ChangelogComponent,
     DonateComponent,
-    LolHomeComponent,
-    LolOldPlayerCardComponent,
     LolPlayerDetailsComponent,
     RankHistoryComponent,
     WinRateChartComponent,

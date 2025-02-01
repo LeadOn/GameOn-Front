@@ -37,10 +37,10 @@
   </div>
 
   <div *ngIf="isLoading == false" class="mt-4">
-    <app-lol-old-player-card
+    <app-lol-player-card
       ng-if="players.length > 0"
       *ngFor="let player of leaguePlayers"
       [player]="player"
-    ></app-lol-old-player-card>
+    ></app-lol-player-card>
   </div>
 </section>

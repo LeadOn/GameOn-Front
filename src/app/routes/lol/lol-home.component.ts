@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { GameOnLoLService } from '../shared/services/leagueoflegends/gameon-lol.service';
-import { Player } from '../shared/classes/common/Player';
-import { PlayerDto } from '../shared/classes/common/PlayerDto';
 import Keycloak from 'keycloak-js';
+import { PlayerDto } from '../../shared/classes/common/PlayerDto';
+import { Player } from '../../shared/classes/common/Player';
+import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 
 @Component({
   selector: 'app-lol-home',
@@ -22,7 +22,7 @@ export class LolHomeComponent implements OnInit {
 
   constructor(
     private lolService: GameOnLoLService,
-    private store: Store<{ player: Player }>
+    private store: Store<{ player: Player }>,
   ) {
     this.player$ = store.select('player');
 
@@ -44,7 +44,7 @@ export class LolHomeComponent implements OnInit {
       },
       (err) => {
         console.error(err);
-      }
+      },
     );
   }
 }

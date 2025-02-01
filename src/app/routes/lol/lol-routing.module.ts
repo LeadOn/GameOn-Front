@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from '../../shared/layouts/common-layout.component';
-import { CommonPageHeaderComponent } from '../../shared/components/common-page-header/common-page-header.component';
+import { LolHomeComponent } from './lol-home.component';
+import { LolGameDetailsComponent } from '../../lol/games/details/lol-game-details.component';
+import { LolPlayerDetailsComponent } from '../../lol/player/lol-player-details.component';
 
 const routes: Routes = [
   {
@@ -10,7 +12,15 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: CommonPageHeaderComponent,
+        component: LolHomeComponent,
+      },
+      {
+        path: 'summoner/:id',
+        component: LolPlayerDetailsComponent,
+      },
+      {
+        path: 'game/:id/:playerId',
+        component: LolGameDetailsComponent,
       },
     ],
   },
