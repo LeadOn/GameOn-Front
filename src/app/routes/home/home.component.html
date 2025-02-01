@@ -30,26 +30,6 @@
   ></app-home-fifa>
 </section>
 
-<section id="home-lol" class="mt-4 px-4">
+<section id="home-lol" class="my-4 px-4">
   <app-home-lol></app-home-lol>
-</section>
-
-<section id="home-players" class="animate-fade-up px-4 py-4">
-  <div class="flex items-center justify-between">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-      >Joueurs actifs</span
-    >
-
-    <app-loading-spinner-tiny
-      *ngIf="loadingActivePlayers == true"
-    ></app-loading-spinner-tiny>
-  </div>
-
-  <div *ngIf="loadingActivePlayers == false" class="mt-4">
-    <app-player-card
-      ng-if="players.length > 0"
-      *ngFor="let player of players"
-      [player]="player"
-    ></app-player-card>
-  </div>
 </section>
