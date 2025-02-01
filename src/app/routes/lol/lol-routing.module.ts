@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from '../../shared/layouts/common-layout.component';
 import { LolHomeComponent } from './lol-home.component';
-import { LolGameDetailsComponent } from '../../lol/games/details/lol-game-details.component';
-import { LolPlayerDetailsComponent } from '../../lol/player/lol-player-details.component';
+import { LolGameDetailsComponent } from './games/details/lol-game-details.component';
+import { LolPlayerDetailsComponent } from './player/lol-player-details.component';
 
 const routes: Routes = [
   {

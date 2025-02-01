@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { LeagueOfLegendsRankHistory } from '../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
+import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
 
 @Component({
   selector: 'app-rank-history',
@@ -33,11 +33,11 @@ export class RankHistoryComponent implements OnInit, OnChanges {
 
   buildChart() {
     let soloRankedHistory = this.rankHistory.filter(
-      (history) => history.queueType === 'RANKED_SOLO_5x5'
+      (history) => history.queueType === 'RANKED_SOLO_5x5',
     );
 
     let flexRankedHistory = this.rankHistory.filter(
-      (history) => history.queueType === 'RANKED_FLEX_SR'
+      (history) => history.queueType === 'RANKED_FLEX_SR',
     );
 
     let fiveLabels: string[] = [];

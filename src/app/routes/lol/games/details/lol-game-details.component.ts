@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameon-lol.service';
 import { ActivatedRoute } from '@angular/router';
 import { faCalendar, faSync } from '@fortawesome/free-solid-svg-icons';
-import { LoLGame } from '../../../shared/classes/lol/LoLGame';
-import { LoLGameParticipant } from '../../../shared/classes/lol/LoLGameParticipant';
-import { LoLGameTimelineFrame } from '../../../shared/classes/lol/LoLGameTimelineFrame';
+import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
+import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
+import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
+import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/gameon-lol.service';
 
 @Component({
   selector: 'app-lol-game-details',
@@ -32,7 +32,7 @@ export class LolGameDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private lolService: GameOnLoLService
+    private lolService: GameOnLoLService,
   ) {}
 
   ngOnInit(): void {
@@ -60,7 +60,7 @@ export class LolGameDetailsComponent implements OnInit {
             acc[player.teamId].push(player);
             return acc;
           },
-          {}
+          {},
         );
 
         let keys = Object.keys(teams);
@@ -79,7 +79,7 @@ export class LolGameDetailsComponent implements OnInit {
       (err) => {
         this.gameError = true;
         console.error(err);
-      }
+      },
     );
   }
 
@@ -92,7 +92,7 @@ export class LolGameDetailsComponent implements OnInit {
       (err) => {
         this.gameError = true;
         console.error(err);
-      }
+      },
     );
   }
 
@@ -105,7 +105,7 @@ export class LolGameDetailsComponent implements OnInit {
       (err) => {
         this.gameError = true;
         console.error(err);
-      }
+      },
     );
   }
 }

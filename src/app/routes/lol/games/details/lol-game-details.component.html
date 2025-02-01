@@ -49,11 +49,11 @@
 </section>
 
 <div class="mt-4 px-4">
-  <app-lol-old-game-card
+  <app-lol-game-card
     [game]="game"
     [playerId]="playerId"
     *ngIf="game != null && isLoading == false"
-  ></app-lol-old-game-card>
+  ></app-lol-game-card>
 </div>
 
 <section id="lol-team-1-header" class="mt-4 px-4" *ngIf="game != null">
@@ -94,11 +94,11 @@
   *ngIf="game != null && team1.length > 0"
 >
   <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
-    <app-lol-old-game-details-player
+    <app-lol-game-details-player
       *ngFor="let player of team1"
       [player]="player"
       [timeline]="timeline"
-    ></app-lol-old-game-details-player>
+    ></app-lol-game-details-player>
   </div>
 </section>
 
@@ -140,10 +140,10 @@
   *ngIf="game != null && team2.length > 0"
 >
   <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
-    <app-lol-old-game-details-player
+    <app-lol-game-details-player
       *ngFor="let player of team2"
       [player]="player"
       [timeline]="timeline"
-    ></app-lol-old-game-details-player>
+    ></app-lol-game-details-player>
   </div>
 </section>

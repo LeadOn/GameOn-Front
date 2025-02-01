@@ -20,10 +20,6 @@ import { StoreModule } from '@ngrx/store';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AdminModule } from './admin/admin.module';
 import { DonateComponent } from './routes/donate/donate.component';
-import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
-import { RankHistoryComponent } from './lol/player/components/rank-history/rank-history.component';
-import { WinRateChartComponent } from './lol/player/components/win-rate-chart/win-rate-chart.component';
-import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
 import { ChangelogComponent } from './routes/changelog/changelog.component';
 import {
   playerReducer,
@@ -34,9 +30,6 @@ import { HomeChangelogComponent } from './routes/home/components/changelog/home-
 import { HomeFifaComponent } from './routes/home/components/fifa/home-fifa.component';
 import { HomeLolComponent } from './routes/home/components/lol/home-lol.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
-import { LolOldGameDetailsPlayerGraphComponent } from './lol/components/lol-old-game-details-player-graph/lol-old-game-details-player-graph.component';
-import { LolOldGameDetailsPlayerComponent } from './lol/components/lol-old-game-details-player/lol-old-game-details-player.component';
-import { LolOldGameCardComponent } from './lol/components/lol-old-game-card/lol-old-game-card.component';
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -56,16 +49,9 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     ProfilePageComponent,
     ChangelogComponent,
     DonateComponent,
-    LolPlayerDetailsComponent,
-    RankHistoryComponent,
-    WinRateChartComponent,
-    LolGameDetailsComponent,
     HomeChangelogComponent,
     HomeFifaComponent,
     HomeLolComponent,
-    LolOldGameDetailsPlayerComponent,
-    LolOldGameDetailsPlayerGraphComponent,
-    LolOldGameCardComponent,
   ],
   imports: [
     BrowserModule,

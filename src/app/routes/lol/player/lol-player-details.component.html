@@ -242,11 +242,11 @@
   ></app-info-message>
 
   <div class="mb-4 w-full px-4">
-    <app-lol-old-game-card
+    <app-lol-game-card
       *ngFor="let game of gamesPlayed"
       [game]="game"
       [playerId]="player?.id"
-    ></app-lol-old-game-card>
+    ></app-lol-game-card>
   </div>
 
   <div class="relative overflow-x-auto">
