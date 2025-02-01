@@ -25,8 +25,8 @@
   </div>
 </section>
 
-<section id="home-players" class="px-4 mt-4 py-4 animate-fade-up">
-  <div class="flex justify-between items-center">
+<section id="home-players" class="mt-4 animate-fade-up px-4 py-4">
+  <div class="flex items-center justify-between">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Joueurs League of Legends actifs</span
     >
@@ -37,10 +37,10 @@
   </div>
 
   <div *ngIf="isLoading == false" class="mt-4">
-    <app-lol-player-card
+    <app-lol-old-player-card
       ng-if="players.length > 0"
       *ngFor="let player of leaguePlayers"
       [player]="player"
-    ></app-lol-player-card>
+    ></app-lol-old-player-card>
   </div>
 </section>
