@@ -48,7 +48,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade-right justify-between px-4 text-primary"
+  class="mt-4 flex animate-fade justify-between px-4 text-primary"
   *ngIf="
     loading == false &&
     game.isPlayed == false &&
@@ -69,7 +69,7 @@
     showDeclareScore == true
   "
   id="declare-score"
-  class="m-4 mt-4 animate-fade-right rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+  class="m-4 mt-4 animate-fade rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
 >
   <form [formGroup]="declareScoreForm" class="mt-4">
     <div class="group relative z-0 mb-6 w-full">
@@ -117,7 +117,7 @@
 
 <div class="mt-4 flex px-4" *ngIf="loading == false">
   <span
-    class="animate-fade-right text-lg font-semibold text-primary dark:text-primaryDark"
+    class="animate-fade text-lg font-semibold text-primary dark:text-primaryDark"
     >Détails du match</span
   >
 </div>
@@ -125,7 +125,7 @@
 <section
   *ngIf="loading == false"
   id="game-details"
-  class="m-4 mt-4 animate-fade-right rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+  class="m-4 mt-4 animate-fade rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
 >
   <span
     class="text-xs text-primary dark:text-primaryDark"
@@ -176,7 +176,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade-right justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Temps forts</span>
@@ -193,7 +193,7 @@
       showCreateHighlightForm == true)
   "
   id="highlights"
-  class="m-4 mt-4 animate-fade-right rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+  class="m-4 mt-4 animate-fade rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
 >
   <span
     *ngIf="game.highlights == null || game.highlights.length == 0"
@@ -278,7 +278,7 @@
 <section
   *ngIf="loading == false && game.highlights != null"
   id="highlights-list"
-  class="mt-4 flex animate-fade-right flex-col space-y-4 px-4"
+  class="mt-4 flex animate-fade flex-col space-y-4 px-4"
 >
   <div
     *ngFor="let highlight of game.highlights"
@@ -317,7 +317,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade-right justify-between px-4 text-primary"
+  class="mt-4 flex animate-fade justify-between px-4 text-primary"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -328,7 +328,7 @@
 <section
   *ngIf="loading == false && game.team1 != null"
   id="players-team1-list"
-  class="mt-4 animate-fade-right px-4"
+  class="mt-4 animate-fade px-4"
 >
   <div
     class="rounded-lg bg-bgLight dark:bg-bgDark"
@@ -339,7 +339,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade-right justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false"
 >
   <span class="text-lg font-semibold">Équipe #2</span>
@@ -348,7 +348,7 @@
 <section
   *ngIf="loading == false && game.team1 != null"
   id="players-team2-list"
-  class="mt-4 animate-fade-right px-4"
+  class="mt-4 animate-fade px-4"
 >
   <div
     class="rounded-lg bg-bgLight dark:bg-bgDark"

@@ -11,6 +11,8 @@ import { Platform } from '../../shared/classes/common/Platform';
 import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
 import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
 import { GameOnPlatformService } from '../../shared/services/common/gameon-platform.service';
+import { Player } from '../../shared/classes/common/Player';
+import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 
 @Component({
   selector: 'app-fifa-home',
@@ -22,6 +24,7 @@ export class FifaHomeComponent implements OnInit {
   private readonly keycloak = inject(Keycloak);
 
   loading = true;
+  playersLoading = true;
   games: FifaGamePlayed[] = [];
   platforms: Platform[] = [];
   platformId = 0;
@@ -31,6 +34,9 @@ export class FifaHomeComponent implements OnInit {
   endDate = undefined;
   showFilters = true;
 
+  showPlayers = false;
+  players: Player[] = [];
+
   externalIcon = faExternalLinkAlt;
   footballIcon = faSoccerBall;
   rightChevronIcon = faChevronRight;
@@ -39,6 +45,7 @@ export class FifaHomeComponent implements OnInit {
   constructor(
     private gameService: GameOnGameService,
     private platformService: GameOnPlatformService,
+    private playerService: GameOnPlayerService,
     private router: Router,
   ) {}
 
@@ -49,7 +56,20 @@ export class FifaHomeComponent implements OnInit {
         : false;
     this.loading = true;
     this.getPlatforms();
+    this.getPlayers();
     this.getGames();
+  }
+
+  getPlayers() {
+    this.playerService.getAll().subscribe(
+      (data) => {
+        this.players = data;
+        this.playersLoading = false;
+      },
+      (err) => {
+        console.error(err);
+      },
+    );
   }
 
   getPlatforms() {
@@ -102,6 +122,10 @@ export class FifaHomeComponent implements OnInit {
 
   showFiltersClick() {
     this.showFilters = !this.showFilters;
+  }
+
+  showPlayersClick() {
+    this.showPlayers = !this.showPlayers;
   }
 
   createMatch() {

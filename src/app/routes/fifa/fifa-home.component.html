@@ -12,14 +12,14 @@
 <div class="mx-4 mt-4 rounded-full text-sm drop-shadow-lg">
   <button
     (click)="createMatch()"
-    class="delay-50 w-full animate-fade-down rounded-full border border-customGreen bg-bgLight px-5 py-2.5 text-center text-sm text-customGreen transition ease-in-out hover:bg-customGreen hover:text-white focus:outline-none focus:ring-4 focus:ring-customGreen dark:bg-bgDark"
+    class="delay-50 w-full animate-fade rounded-lg border border-customGreen bg-bgLight px-5 py-2.5 text-center text-sm text-customGreen transition ease-in-out hover:bg-customGreen hover:text-white focus:outline-none focus:ring-4 focus:ring-customGreen dark:bg-bgDark"
   >
     Ajouter un match
   </button>
 
   <button
     routerLink="/fifa/global-stats"
-    class="delay-50 mt-4 w-full animate-fade-down rounded-full border border-frenchBlue bg-bgLight px-5 py-2.5 text-center text-sm text-frenchBlue transition ease-in-out hover:bg-frenchBlue hover:text-white focus:outline-none focus:ring-4 focus:ring-frenchBlue dark:bg-bgDark dark:text-white dark:hover:text-frenchBlue"
+    class="delay-50 mt-4 w-full animate-fade rounded-lg border border-frenchBlue bg-bgLight px-5 py-2.5 text-center text-sm text-frenchBlue transition ease-in-out hover:bg-frenchBlue hover:text-white focus:outline-none focus:ring-4 focus:ring-frenchBlue dark:bg-bgDark dark:text-white dark:hover:text-frenchBlue"
   >
     Voir les statistiques globales
   </button>
@@ -28,7 +28,7 @@
 <div class="md:flex md:flex-row md:justify-around">
   <section id="game-filters" class="mt-4 px-4 md:w-1/3">
     <div
-      class="flex animate-fade-down cursor-pointer justify-between text-primary dark:text-primaryDark"
+      class="flex animate-fade cursor-pointer justify-between text-primary dark:text-primaryDark"
       (click)="showFiltersClick()"
     >
       <span class="text-lg font-semibold">Filtres</span>
@@ -43,7 +43,7 @@
 
     <div
       *ngIf="showFilters == true"
-      class="mb-4 mt-4 flex animate-fade-down flex-col rounded-lg border border-bgLightDarker bg-bgLight p-4 text-primary drop-shadow-lg dark:border-bgDarkDarker dark:bg-bgDark dark:text-primaryDark"
+      class="mb-4 mt-4 flex animate-fade flex-col rounded-lg border border-bgLightDarker bg-bgLight p-4 text-primary drop-shadow-lg dark:border-bgDarkDarker dark:bg-bgDark dark:text-primaryDark"
     >
       <div>
         <span class="text-sm">Nombre de matchs</span>
@@ -96,6 +96,36 @@
       >
         Filtrer
       </button>
+    </div>
+  </section>
+
+  <section id="game-players" class="mt-4 px-4 md:w-1/3">
+    <div
+      class="flex animate-fade cursor-pointer justify-between text-primary dark:text-primaryDark"
+      (click)="showPlayersClick()"
+    >
+      <span class="text-lg font-semibold">Joueurs</span>
+      <span class="text-lg font-semibold">
+        <app-loading-spinner-tiny
+          *ngIf="playersLoading == true"
+        ></app-loading-spinner-tiny>
+        <fa-icon
+          [icon]="downChevronIcon"
+          *ngIf="playersLoading == false && showPlayers == true"
+        ></fa-icon>
+        <fa-icon
+          [icon]="rightChevronIcon"
+          *ngIf="playersLoading == false && showPlayers == false"
+        ></fa-icon>
+      </span>
+    </div>
+
+    <div *ngIf="showPlayers == true" class="mt-4">
+      <app-player-card
+        ng-if="players.length > 0"
+        *ngFor="let player of players"
+        [player]="player"
+      ></app-player-card>
     </div>
   </section>
 
