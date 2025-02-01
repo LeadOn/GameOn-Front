@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { ProfilePageComponent } from './players/me/profile.component';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { DonateComponent } from './routes/donate/donate.component';
 import { FiveComponent } from './five/five.component';
@@ -14,6 +13,7 @@ import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.co
 import { canActivateAuthRole } from './core/guards/auth.guard';
 import { ChangelogComponent } from './routes/changelog/changelog.component';
 import { HomeComponent } from './routes/home/home.component';
+import { ProfilePageComponent } from './routes/profile/profile.component';
 
 export const routes: Routes = [
   {

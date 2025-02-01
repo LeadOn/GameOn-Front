@@ -70,7 +70,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   constructor(
     private store: Store<{ player: Player }>,
     private playerService: GameOnPlayerService,
-    private lolService: GameOnLoLService
+    private lolService: GameOnLoLService,
   ) {
     this.player$ = store.select('player');
 
@@ -78,17 +78,17 @@ export class ProfilePageComponent implements OnInit, OnChanges {
       this.updatePlayerForm.controls['fullName'].setValue(x.fullName);
       this.updatePlayerForm.controls['nickname'].setValue(x.nickname);
       this.updatePlayerForm.controls['profilePictureUrl'].setValue(
-        x.profilePictureUrl
+        x.profilePictureUrl,
       );
       if (x.riotGamesNickname != null) {
         this.updatePlayerForm.controls['riotGamesNickname'].setValue(
-          x.riotGamesNickname
+          x.riotGamesNickname,
         );
       }
 
       if (x.riotGamesTagLine != null) {
         this.updatePlayerForm.controls['riotGamesTagLine'].setValue(
-          x.riotGamesTagLine
+          x.riotGamesTagLine,
         );
       }
     });
@@ -107,22 +107,23 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['player'] != null) {
       this.updatePlayerForm.controls['fullName'].setValue(
-        changes['player'].currentValue.fullName
+        changes['player'].currentValue.fullName,
       );
 
       this.updatePlayerForm.controls['nickname'].setValue(
-        changes['player'].currentValue.nickname
+        changes['player'].currentValue.nickname,
       );
 
       this.updatePlayerForm.controls['profilePictureUrl'].setValue(
-        changes['player'].currentValue.profilePictureUrl
+        changes['player'].currentValue.profilePictureUrl,
       );
     }
   }
 
   logout() {
     window.location.replace(
-      environment.keycloak.url + '/realms/gameon/protocol/openid-connect/logout'
+      environment.keycloak.url +
+        '/realms/gameon/protocol/openid-connect/logout',
     );
   }
 
@@ -154,7 +155,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
           this.updatePlayerForm.controls['nickname'].value,
           this.updatePlayerForm.controls['profilePictureUrl'].value,
           riotGamesNickname,
-          riotGamesTagLine
+          riotGamesTagLine,
         )
         .subscribe(
           (data) => {
@@ -166,7 +167,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
           (err) => {
             this.loading = false;
             alert('Une erreur est survenue lors de la mise à jour du compte !');
-          }
+          },
         );
     }
   }
@@ -184,7 +185,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
         (err) => {
           this.loading = false;
           alert('Une erreur est survenue lors de la mise à jour du compte !');
-        }
+        },
       );
     }
   }

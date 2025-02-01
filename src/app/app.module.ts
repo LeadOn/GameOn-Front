@@ -34,7 +34,6 @@ import { LolGameCardComponent } from './lol/components/lol-game-card/lol-game-ca
 import { LolGameDetailsPlayerComponent } from './lol/components/lol-game-details-player/lol-game-details-player.component';
 import { LolGameDetailsPlayerGraphComponent } from './lol/components/lol-game-details-player-graph/lol-game-details-player-graph.component';
 import { ChangelogComponent } from './routes/changelog/changelog.component';
-import { ProfilePageComponent } from './players/me/profile.component';
 import {
   playerReducer,
   playerStatsReducer,
@@ -43,6 +42,7 @@ import { HomeComponent } from './routes/home/home.component';
 import { HomeChangelogComponent } from './routes/home/components/changelog/home-changelog.component';
 import { HomeFifaComponent } from './routes/home/components/fifa/home-fifa.component';
 import { HomeLolComponent } from './routes/home/components/lol/home-lol.component';
+import { ProfilePageComponent } from './routes/profile/profile.component';
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,

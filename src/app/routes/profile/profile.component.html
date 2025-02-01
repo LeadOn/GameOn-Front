@@ -1,0 +1,299 @@
+<div class="mt-4 px-4">
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+</div>
+
+<section id="profile-popups" class="mt-4 px-4">
+  <app-success-alert
+    *ngIf="showSuccess == true"
+    [text]="'Mise à jour réussie !'"
+    [(show)]="showSuccess"
+  ></app-success-alert>
+</section>
+
+<section
+  id="profile-head"
+  class="mt-8 px-4"
+  *ngIf="loading == false && (player$ | async) as currentPlayer"
+>
+  <app-success-alert
+    *ngIf="showSuccess == true"
+    [text]="'Mise à jour réussie !'"
+    [(show)]="showSuccess"
+  ></app-success-alert>
+
+  <div class="flex w-full flex-col items-center justify-center">
+    <img
+      class="w-32 rounded-full drop-shadow-lg"
+      *ngIf="currentPlayer.profilePictureUrl != null"
+      src="{{ currentPlayer.profilePictureUrl }}"
+    />
+
+    <img
+      class="w-32 rounded-full drop-shadow-lg"
+      *ngIf="currentPlayer.profilePictureUrl == null"
+      src="assets/img/gameon-logo.webp"
+    />
+
+    <span
+      class="mt-2 text-xl font-semibold text-primary dark:text-primaryDark"
+      >{{ currentPlayer.nickname }}</span
+    >
+    <span class="text-gray-500 dark:text-gray-400">{{
+      currentPlayer.fullName
+    }}</span>
+  </div>
+</section>
+
+<div class="mt-8">
+  <div
+    class="mt-4 flex animate-fade justify-between px-4"
+    *ngIf="
+      loading == false && isAdmin == true && (player$ | async) as currentPlayer
+    "
+  >
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Administration</span
+    >
+  </div>
+
+  <section
+    id="player-admin"
+    class="mt-4 animate-fade px-4"
+    *ngIf="
+      loading == false && isAdmin == true && (player$ | async) as currentPlayer
+    "
+  >
+    <div
+      class="rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+    >
+      <div
+        class="flex cursor-pointer flex-row justify-between text-customRed"
+        [routerLink]="['/admin']"
+      >
+        <a
+          ><fa-icon [icon]="adminIcon" class="mr-2"></fa-icon> Accéder à
+          l'espace d'administration
+        </a>
+
+        <fa-icon [icon]="arrowRightIcon"></fa-icon>
+      </div>
+
+      <hr class="my-4" />
+
+      <div
+        class="flex cursor-pointer flex-row justify-between text-customYellow"
+        [cdkCopyToClipboard]="token"
+      >
+        <a
+          ><fa-icon [icon]="keyIcon" class="mr-2"></fa-icon> Copier le token
+        </a>
+
+        <fa-icon [icon]="externalIcon"></fa-icon>
+      </div>
+    </div>
+  </section>
+
+  <div
+    class="mt-4 flex animate-fade justify-between px-4"
+    *ngIf="loading == false && (player$ | async) as currentPlayer"
+  >
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >FIFA</span
+    >
+  </div>
+
+  <section
+    id="player-fifa"
+    class="mt-4 animate-fade px-4"
+    *ngIf="loading == false && (player$ | async) as currentPlayer"
+  >
+    <div
+      class="rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+    >
+      <div
+        class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
+        [routerLink]="['/player', currentPlayer.id]"
+      >
+        <a
+          ><fa-icon [icon]="soccerIcon" class="mr-2"></fa-icon> Mes
+          statistiques</a
+        >
+
+        <fa-icon [icon]="arrowRightIcon"></fa-icon>
+      </div>
+    </div>
+  </section>
+
+  <div
+    class="mt-4 flex animate-fade justify-between px-4"
+    *ngIf="loading == false && (player$ | async) as currentPlayer"
+  >
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >League of Legends</span
+    >
+  </div>
+
+  <section
+    id="player-lol"
+    class="mt-4 animate-fade"
+    *ngIf="loading == false && (player$ | async) as currentPlayer"
+  >
+    <app-info-message
+      *ngIf="currentPlayer.riotGamesNickname == null"
+      [title]="
+        'Vous pouvez renseigner votre compte Riot Games au niveau des préférences de votre profil !'
+      "
+    ></app-info-message>
+
+    <div
+      class="mx-4 rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+    >
+      <div
+        class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
+        [routerLink]="['/lol/summoner', currentPlayer.id]"
+      >
+        <div class="flex items-center space-x-2">
+          <img src="assets/img/svg/lol.svg" class="w-8" />
+          <span>Voir mon profil</span>
+        </div>
+
+        <fa-icon [icon]="arrowRightIcon"></fa-icon>
+      </div>
+    </div>
+  </section>
+
+  <div
+    class="mt-4 flex animate-fade justify-between px-4"
+    *ngIf="loading == false && (player$ | async) as currentPlayer"
+  >
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Préférences</span
+    >
+  </div>
+
+  <section
+    id="player-preferences"
+    class="mt-4 animate-fade px-4"
+    *ngIf="loading == false && (player$ | async) as currentPlayer"
+  >
+    <div
+      class="rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+    >
+      <div
+        class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
+      >
+        <span
+          ><fa-icon [icon]="calendarIcon" class="mr-2"></fa-icon>
+          {{ currentPlayer.createdOn | date: "medium" }}</span
+        >
+      </div>
+
+      <hr class="my-4" />
+
+      <form [formGroup]="updatePlayerForm">
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="fullname"
+            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            required
+            formControlName="fullName"
+          />
+          <label
+            for="fullname"
+            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+          >
+            Nom complet
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="nickname"
+            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            required
+            formControlName="nickname"
+          />
+          <label
+            for="nickname"
+            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+          >
+            Pseudo
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="profilePictureUrl"
+            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            required
+            formControlName="profilePictureUrl"
+          />
+          <label
+            for="profilePictureUrl"
+            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+          >
+            Photo de profil (URL)
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+
+        <hr class="my-4" />
+
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="riotGamesNickname"
+            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            required
+            formControlName="riotGamesNickname"
+          />
+          <label
+            for="riotGamesNickname"
+            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+          >
+            Nom de compte Riot Games
+          </label>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="riotGamesTagLine"
+            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            required
+            formControlName="riotGamesTagLine"
+          />
+          <label
+            for="riotGamesTagLine"
+            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+          >
+            Tag (exemple: EUW)
+          </label>
+        </div>
+
+        <button
+          (click)="updateUser()"
+          class="delay-50 w-full rounded-lg border border-customGreen bg-bgLight px-5 py-2.5 text-center text-sm text-customGreen transition ease-in-out hover:bg-customGreen hover:text-white focus:outline-none focus:ring-4 focus:ring-customGreen dark:bg-bgDark"
+        >
+          Mettre à jour
+        </button>
+      </form>
+
+      <hr class="my-4" />
+
+      <div
+        class="flex cursor-pointer flex-row justify-between text-customRed"
+        (click)="logout()"
+      >
+        <a><fa-icon [icon]="logoutIcon" class="mr-2"></fa-icon> Déconnexion </a>
+
+        <fa-icon [icon]="arrowRightIcon"></fa-icon>
+      </div>
+    </div>
+  </section>
+</div>
