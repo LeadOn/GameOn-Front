@@ -13,7 +13,7 @@ import { AdminSeasonsComponent } from './seasons/admin-seasons.component';
 import { AdminEditTournamentComponent } from './tournaments/edit/admin-edit-tournament.component';
 import { AdminCreateTournamentComponent } from './tournaments/create/admin-create-tournament.component';
 import { AdminTournamentsComponent } from './tournaments/admin-tournaments.component';
-import { canActivateAuthRole } from '../shared/guards/auth.guard';
+import { canActivateAuthRole } from '../core/guards/auth.guard';
 
 const routes: Routes = [
   {

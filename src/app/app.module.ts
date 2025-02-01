@@ -13,20 +13,14 @@ import { environment } from '../environments/environment';
 import { SharedModule } from './shared/modules/shared.module';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import {
-  playerReducer,
-  playerStatsReducer,
-} from './store/reducers/player.reducer';
-import { ProfilePageComponent } from './players/me/profile.component';
+
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { AdminModule } from './admin/admin.module';
-import { ChangelogComponent } from './changelog/changelog.component';
-import { DonateComponent } from './donate/donate.component';
+import { DonateComponent } from './routes/donate/donate.component';
 import { FiveComponent } from './five/five.component';
 import { FiveDetailsComponent } from './five/details/five-details.component';
 import { CreateFiveComponent } from './five/create/five-create.component';
@@ -36,12 +30,19 @@ import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.compo
 import { RankHistoryComponent } from './lol/player/components/rank-history/rank-history.component';
 import { WinRateChartComponent } from './lol/player/components/win-rate-chart/win-rate-chart.component';
 import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
-import { HomeChangelogComponent } from './home/components/changelog/home-changelog.component';
-import { HomeFifaComponent } from './home/components/fifa/home-fifa.component';
-import { HomeLolComponent } from './home/components/lol/home-lol.component';
 import { LolGameCardComponent } from './lol/components/lol-game-card/lol-game-card.component';
 import { LolGameDetailsPlayerComponent } from './lol/components/lol-game-details-player/lol-game-details-player.component';
 import { LolGameDetailsPlayerGraphComponent } from './lol/components/lol-game-details-player-graph/lol-game-details-player-graph.component';
+import { ChangelogComponent } from './routes/changelog/changelog.component';
+import { ProfilePageComponent } from './players/me/profile.component';
+import {
+  playerReducer,
+  playerStatsReducer,
+} from './core/store/reducers/player.reducer';
+import { HomeComponent } from './routes/home/home.component';
+import { HomeChangelogComponent } from './routes/home/components/changelog/home-changelog.component';
+import { HomeFifaComponent } from './routes/home/components/fifa/home-fifa.component';
+import { HomeLolComponent } from './routes/home/components/lol/home-lol.component';
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,

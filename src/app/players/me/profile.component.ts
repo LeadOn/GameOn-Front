@@ -21,12 +21,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { setPlayer } from '../../store/actions/player.actions';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 import { Player } from '../../shared/classes/common/Player';
 import { FifaPlayerStatsDto } from '../../shared/classes/fifa/FifaPlayerStatsDto';
 import Keycloak from 'keycloak-js';
+import { setPlayer } from '../../core/store/actions/player.actions';
 
 @Component({
   selector: 'app-profile-page',

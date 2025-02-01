@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { HomeComponent } from './home/home.component';
 import { ProfilePageComponent } from './players/me/profile.component';
-import { canActivateAuthRole } from './shared/guards/auth.guard';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
-import { ChangelogComponent } from './changelog/changelog.component';
-import { DonateComponent } from './donate/donate.component';
+import { DonateComponent } from './routes/donate/donate.component';
 import { FiveComponent } from './five/five.component';
 import { FiveDetailsComponent } from './five/details/five-details.component';
 import { CreateFiveComponent } from './five/create/five-create.component';
 import { LolHomeComponent } from './lol/lol-home.component';
 import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
 import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
+import { canActivateAuthRole } from './core/guards/auth.guard';
+import { ChangelogComponent } from './routes/changelog/changelog.component';
+import { HomeComponent } from './routes/home/home.component';
 
 export const routes: Routes = [
   {
@@ -74,7 +74,8 @@ export const routes: Routes = [
   },
   {
     path: 'fifa',
-    loadChildren: () => import('./fifa/fifa.module').then((m) => m.FifaModule),
+    loadChildren: () =>
+      import('./routes/fifa/fifa.module').then((m) => m.FifaModule),
   },
   {
     path: 'admin',

@@ -8,9 +8,6 @@ import { LoadingSpinnerComponent } from '../components/loading-spinner/loading-s
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuccessAlertComponent } from '../components/success-alert/success-alert.component';
-import { FifaGameHistoryCardComponent } from '../../fifa/components/fifa-game-history-card/fifa-game-history-card.component';
-import { FifaCreateGameComponent } from '../../fifa/create/fifa-create-game.component';
-import { FifaGameDetailsComponent } from '../../fifa/details/fifa-game-details.component';
 import { FifaStatComponent } from '../components/fifa-stat/fifa-stat.component';
 import { PlayerTeamListComponent } from '../components/player-team-list/player-team-list.component';
 import { CommonPageHeaderComponent } from '../components/common-page-header/common-page-header.component';
@@ -18,7 +15,10 @@ import { InfoMessageComponent } from '../components/info-message/info-message.co
 import { PillComponent } from '../components/pill/pill.component';
 import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/loading-spinner-tiny.component';
 import { ChangelogCardComponent } from '../components/changelog-card/changelog-card.component';
-import { SafePipe } from '../pipes/safe.pipe';
+import { SafePipe } from '../../core/pipes/safe.pipe';
+import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-game-history-card/fifa-game-history-card.component';
+import { FifaCreateGameComponent } from '../../routes/fifa/create/fifa-create-game.component';
+import { FifaGameDetailsComponent } from '../../routes/fifa/details/fifa-game-details.component';
 
 @NgModule({
   declarations: [
