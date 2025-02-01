@@ -49,11 +49,11 @@
 </section>
 
 <div class="mt-4 px-4">
-  <app-lol-game-card
+  <app-lol-old-game-card
     [game]="game"
     [playerId]="playerId"
     *ngIf="game != null && isLoading == false"
-  ></app-lol-game-card>
+  ></app-lol-old-game-card>
 </div>
 
 <section id="lol-team-1-header" class="mt-4 px-4" *ngIf="game != null">

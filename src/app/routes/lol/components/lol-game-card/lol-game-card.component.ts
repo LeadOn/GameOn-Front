@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { LoLGame } from '../../../shared/classes/lol/LoLGame';
-import { environment } from '../../../../environments/environment';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameon-lol.service';
+import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
+import { environment } from '../../../../../environments/environment';
+import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/gameon-lol.service';
 
 @Component({
   selector: 'app-lol-game-card',
@@ -51,7 +51,7 @@ export class LolGameCardComponent implements OnChanges {
         // Getting current user if ID is given
         if (this.playerId) {
           let player = this.game.leagueOfLegendsGameParticipants.find(
-            (x) => x.playerId == this.playerId
+            (x) => x.playerId == this.playerId,
           );
 
           if (player != null) {
@@ -103,7 +103,7 @@ export class LolGameCardComponent implements OnChanges {
       },
       (err) => {
         console.error(err);
-      }
+      },
     );
   }
 }

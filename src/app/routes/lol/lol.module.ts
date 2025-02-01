@@ -5,6 +5,7 @@ import { LolPlayerCardComponent } from './components/lol-player-card/lol-player-
 import { LolHomeComponent } from './lol-home.component';
 import { LolGameDetailsPlayerGraphComponent } from './components/lol-game-details-player-graph/lol-game-details-player-graph.component';
 import { LolGameDetailsPlayerComponent } from './components/lol-game-details-player/lol-game-details-player.component';
+import { LolGameCardComponent } from './components/lol-game-card/lol-game-card.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { LolGameDetailsPlayerComponent } from './components/lol-game-details-pla
     LolPlayerCardComponent,
     LolGameDetailsPlayerGraphComponent,
     LolGameDetailsPlayerComponent,
+    LolGameCardComponent,
   ],
   imports: [LolRoutingModule, SharedModule],
 })

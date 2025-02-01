@@ -1,13 +1,13 @@
-<div class="px-4 mt-4" *ngIf="loading == true">
+<div class="mt-4 px-4" *ngIf="loading == true">
   <app-loading-spinner></app-loading-spinner>
 </div>
 
 <section
   id="header-pills"
-  class="p-4 overflow-x-scroll [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500"
+  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
   *ngIf="loading == false && player != null"
 >
-  <div class="flex flex-row flex-nowrap whitespace-nowrap w-full space-x-2">
+  <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
     <app-pill
       *ngIf="player.archived == true"
       [title]="'Archivé'"
@@ -19,11 +19,11 @@
 
 <section
   id="player-detail-card"
-  class="px-4 flex space-x-4"
+  class="flex space-x-4 px-4"
   *ngIf="loading == false && player != null"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-evenly items-center align-middle drop-shadow-lg w-3/4"
+    class="flex w-3/4 items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
   >
     <div class="flex flex-col items-center">
       <img
@@ -56,28 +56,28 @@
         width="64"
       />
       <span
-        class="-mt-2 z-50 bg-secondary text-xs text-bgLight rounded-full px-2"
+        class="z-50 -mt-2 rounded-full bg-secondary px-2 text-xs text-bgLight"
         >{{ player.lolSummonerLevel }}</span
       >
     </div>
 
     <div class="flex flex-col">
       <span
-        class="text-xl font-semibold text-primary dark:text-primaryDark flex items-center"
+        class="flex items-center text-xl font-semibold text-primary dark:text-primaryDark"
         >{{ player.riotGamesNickname
-        }}<span class="text-gray-500 dark:text-gray-400 text-xs"
+        }}<span class="text-xs text-gray-500 dark:text-gray-400"
           >#{{ player.riotGamesTagLine }}</span
         >
       </span>
 
       <div
-        class="flex justify-start items-center text-gray-500 dark:text-gray-400"
+        class="flex items-center justify-start text-gray-500 dark:text-gray-400"
       >
         <span class="text-xs">{{ player.fullName }}</span>
       </div>
 
       <div
-        class="flex justify-start items-center text-gray-500 dark:text-gray-400"
+        class="flex items-center justify-start text-gray-500 dark:text-gray-400"
       >
         <a
           href="https://www.op.gg/summoners/euw/{{
@@ -93,29 +93,29 @@
   </div>
 
   <div
-    class="bg-bgLight dark:bg-bgDark p-4 rounded-lg flex justify-center items-center align-middle drop-shadow-lg w-1/4 cursor-pointer flex-col text-primary dark:text-primaryDark"
+    class="flex w-1/4 cursor-pointer flex-col items-center justify-center rounded-lg bg-bgLight p-4 align-middle text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
     (click)="refreshSummoner()"
   >
     <fa-icon [icon]="refreshIcon" class="text-2xl"></fa-icon>
 
-    <span class="hidden md:block text-xs">{{
-      player.lolRefreshedOn | date : "short"
+    <span class="hidden text-xs md:block">{{
+      player.lolRefreshedOn | date: "short"
     }}</span>
   </div>
 </section>
 
 <section
   id="player-rank"
-  class="px-4 mt-4 flex space-x-4"
+  class="mt-4 flex space-x-4 px-4"
   *ngIf="loading == false && player != null"
 >
   <div
-    class="w-1/2 bg-bgLight dark:bg-bgDark p-4 rounded-lg flex flex-row justify-evenly items-center align-middle drop-shadow-lg space-y-2 animate-fade-right"
+    class="flex w-1/2 animate-fade-right flex-row items-center justify-evenly space-y-2 rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
   >
     <img
       src="assets/img/gameon-logo.webp"
       *ngIf="player.leagueOfLegendsSoloRank == null"
-      class="w-16 h-16 animate-fade-right"
+      class="h-16 w-16 animate-fade-right"
     />
 
     <img
@@ -123,20 +123,20 @@
       src="assets/img/lol/rank/{{
         player.leagueOfLegendsSoloRank.tier | lowercase
       }}.png"
-      class="w-16 h-16 animate-fade-right"
+      class="h-16 w-16 animate-fade-right"
     />
 
-    <div class="flex flex-col text-center space-y-1">
+    <div class="flex flex-col space-y-1 text-center">
       <app-pill [title]="'Solo 5v5'" [bgStyle]="'secondary'"></app-pill>
 
       <span
-        class="text-primary dark:text-primaryDark animate-fade-right"
+        class="animate-fade-right text-primary dark:text-primaryDark"
         *ngIf="player.leagueOfLegendsSoloRank == null"
         >Non classé</span
       >
 
       <span
-        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
         *ngIf="player.leagueOfLegendsSoloRank != null"
         >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
         {{ player.leagueOfLegendsSoloRank.rank }}
@@ -144,7 +144,7 @@
       >
 
       <span
-        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
         *ngIf="player.leagueOfLegendsSoloRank != null"
         ><span class="text-customGreen">{{ soloWins }}V</span> -
         <span class="text-frenchRed">{{ soloLosses }}D</span> ({{
@@ -155,12 +155,12 @@
   </div>
 
   <div
-    class="w-1/2 bg-bgLight dark:bg-bgDark p-4 rounded-lg flex flex-row justify-evenly items-center align-middle drop-shadow-lg space-y-2 animate-fade-right"
+    class="flex w-1/2 animate-fade-right flex-row items-center justify-evenly space-y-2 rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
   >
     <img
       src="assets/img/gameon-logo.webp"
       *ngIf="player.leagueOfLegendsFlexRank == null"
-      class="w-16 h-16 animate-fade-right"
+      class="h-16 w-16 animate-fade-right"
     />
 
     <img
@@ -168,20 +168,20 @@
       src="assets/img/lol/rank/{{
         player.leagueOfLegendsFlexRank.tier | lowercase
       }}.png"
-      class="w-16 h-16 animate-fade-right"
+      class="h-16 w-16 animate-fade-right"
     />
 
-    <div class="flex flex-col text-center space-y-1">
+    <div class="flex flex-col space-y-1 text-center">
       <app-pill [title]="'Flex 5v5'" [bgStyle]="'green'"></app-pill>
 
       <span
-        class="text-primary dark:text-primaryDark animate-fade-right"
+        class="animate-fade-right text-primary dark:text-primaryDark"
         *ngIf="player.leagueOfLegendsFlexRank == null"
         >Non classé</span
       >
 
       <span
-        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
         *ngIf="player.leagueOfLegendsFlexRank != null"
         >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
         {{ player.leagueOfLegendsFlexRank.rank }}
@@ -189,7 +189,7 @@
       >
 
       <span
-        class="text-primary dark:text-primaryDark animate-fade-right text-sm"
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
         *ngIf="player.leagueOfLegendsSoloRank != null"
         ><span class="text-customGreen">{{ flexWins }}V</span> -
         <span class="text-frenchRed">{{ flexLosses }}D</span> ({{
@@ -200,8 +200,8 @@
   </div>
 </section>
 
-<section id="rank-history" class="mt-4 py-4 animate-fade-up">
-  <div class="flex justify-between items-center px-4">
+<section id="rank-history" class="mt-4 animate-fade-up py-4">
+  <div class="flex items-center justify-between px-4">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Historique des rangs</span
     >
@@ -224,8 +224,8 @@
   [rankHistory]="rankHistory"
 ></app-rank-history>
 
-<section id="games-played" class="mt-4 py-4 animate-fade-up">
-  <div class="flex justify-between items-center px-4">
+<section id="games-played" class="mt-4 animate-fade-up py-4">
+  <div class="flex items-center justify-between px-4">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Historique de parties</span
     >
@@ -241,20 +241,20 @@
     "
   ></app-info-message>
 
-  <div class="px-4 w-full mb-4">
-    <app-lol-game-card
+  <div class="mb-4 w-full px-4">
+    <app-lol-old-game-card
       *ngFor="let game of gamesPlayed"
       [game]="game"
       [playerId]="player?.id"
-    ></app-lol-game-card>
+    ></app-lol-old-game-card>
   </div>
 
   <div class="relative overflow-x-auto">
     <table
-      class="w-full text-sm text-left rtl:text-right text-primary dark:text-primaryDark"
+      class="w-full text-left text-sm text-primary dark:text-primaryDark rtl:text-right"
     >
       <thead
-        class="text-xs text-primary uppercase bg-bgLight dark:bg-bgDark dark:text-primaryDark"
+        class="bg-bgLight text-xs uppercase text-primary dark:bg-bgDark dark:text-primaryDark"
       >
         <tr>
           <th scope="col" class="px-6 py-3">Identifiant partie</th>
@@ -266,18 +266,18 @@
       <tbody>
         <tr
           *ngFor="let game of gamesPlayed"
-          class="bg-bgLightDarker border-b dark:bg-bgDarkDarker dark:border-bgDarkDarker"
+          class="border-b bg-bgLightDarker dark:border-bgDarkDarker dark:bg-bgDarkDarker"
         >
           <th
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
           >
             {{ game.matchId }}
           </th>
           <td class="px-6 py-4">{{ game.gameVersion }}</td>
           <td class="px-6 py-4">{{ game.endOfGameResult }}</td>
           <td
-            class="px-6 py-4 flex flex-row justify-center items-center space-x-2 text-2xl"
+            class="flex flex-row items-center justify-center space-x-2 px-6 py-4 text-2xl"
           >
             <div (click)="refreshGame(game.matchId)" class="cursor-pointer">
               <fa-icon [icon]="syncIcon"></fa-icon>
