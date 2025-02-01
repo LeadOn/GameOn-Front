@@ -4,9 +4,6 @@ import { CommonLayoutComponent } from './shared/layouts/common-layout.component'
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { DonateComponent } from './routes/donate/donate.component';
-import { FiveComponent } from './five/five.component';
-import { FiveDetailsComponent } from './five/details/five-details.component';
-import { CreateFiveComponent } from './five/create/five-create.component';
 import { LolHomeComponent } from './lol/lol-home.component';
 import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
 import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
@@ -35,18 +32,6 @@ export const routes: Routes = [
       {
         path: 'donate',
         component: DonateComponent,
-      },
-      {
-        path: 'soccerfive',
-        component: FiveComponent,
-      },
-      {
-        path: 'soccerfive/create',
-        component: CreateFiveComponent,
-      },
-      {
-        path: 'soccerfive/:id',
-        component: FiveDetailsComponent,
       },
       {
         path: 'player/me',

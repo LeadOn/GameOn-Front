@@ -21,9 +21,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { PlayerDetailsComponent } from './players/details/player-details.component';
 import { AdminModule } from './admin/admin.module';
 import { DonateComponent } from './routes/donate/donate.component';
-import { FiveComponent } from './five/five.component';
-import { FiveDetailsComponent } from './five/details/five-details.component';
-import { CreateFiveComponent } from './five/create/five-create.component';
 import { LolHomeComponent } from './lol/lol-home.component';
 import { LolPlayerCardComponent } from './lol/components/lol-player-card/lol-player-card.component';
 import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
@@ -63,9 +60,6 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     PlayerDetailsComponent,
     ChangelogComponent,
     DonateComponent,
-    FiveComponent,
-    FiveDetailsComponent,
-    CreateFiveComponent,
     LolHomeComponent,
     LolPlayerCardComponent,
     LolPlayerDetailsComponent,
