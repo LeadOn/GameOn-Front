@@ -35,7 +35,7 @@
 
 <section
   id="player-detail-card"
-  class="px-4"
+  class="animate-fade px-4"
   *ngIf="loading == false && player != null"
 >
   <div
@@ -62,47 +62,16 @@
       <span class="text-xs text-gray-600 dark:text-gray-300">{{
         player.nickname
       }}</span>
-
-      <div
-        class="flex items-center justify-center text-gray-500 dark:text-gray-400"
-      >
-        <img
-          src="assets/img/svg/lol.svg"
-          class="h-8 w-8"
-          *ngIf="player.riotGamesPUUID != null"
-        />
-        <span class="text-xs" *ngIf="player.riotGamesPUUID != null"
-          >{{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }} - niveau
-          {{ player.lolSummonerLevel }}</span
-        >
-      </div>
-    </div>
-  </div>
-
-  <div
-    class="mt-4 rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
-    *ngIf="player != null && player.riotGamesPUUID != null"
-  >
-    <div
-      class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
-      [routerLink]="['/lol/summoner', player.id]"
-    >
-      <div class="flex items-center space-x-2">
-        <img src="assets/img/svg/lol.svg" class="w-8" />
-        <span>Voir le profil</span>
-      </div>
-
-      <fa-icon [icon]="rightArrowIcon"></fa-icon>
     </div>
   </div>
 </section>
 
-<div class="mt-4 px-4">
+<div class="mt-4 animate-fade px-4">
   <div class="w-full" *ngIf="player != null && player.id != 0">
     <div
       class="flex flex-col items-center rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
     >
-      <div class="w-full text-center">
+      <div class="w-full animate-fade text-center">
         <select
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
@@ -172,7 +141,7 @@
 </div>
 
 <div
-  class="mt-4 flex justify-between px-4"
+  class="mt-4 flex animate-fade justify-between px-4"
   *ngIf="loading == false && games != null && games.length > 0"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"

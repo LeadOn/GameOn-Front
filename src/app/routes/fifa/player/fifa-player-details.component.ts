@@ -32,9 +32,6 @@ export class FifaPlayerDetailsComponent implements OnInit {
   playerId: any;
   fifaPlayerStats?: FifaPlayerStatsDto;
   player?: Player;
-  enemy?: Player;
-  enemyStats?: FifaPlayerStatsDto;
-  players: Player[] = [];
   games: FifaGamePlayed[] = [];
 
   seasons?: Season[];
@@ -50,7 +47,6 @@ export class FifaPlayerDetailsComponent implements OnInit {
     this.loading = true;
     this.playerId = this.route.snapshot.paramMap.get('id');
     this.getPlayer(this.playerId);
-    this.getPlayers();
   }
 
   calculateStats() {
@@ -140,63 +136,6 @@ export class FifaPlayerDetailsComponent implements OnInit {
         console.error(err);
       },
     );
-  }
-
-  getPlayers() {
-    this.loading = true;
-    this.playerService.getAll().subscribe(
-      (data) => {
-        data.forEach((player) => {
-          if (player.id != this.playerId) {
-            this.players.push(player);
-          }
-        });
-
-        this.loading = false;
-      },
-      (err) => {
-        alert(
-          'Une erreur est survenue lors de la récupération de la liste des utilisateurs.',
-        );
-        console.error(err);
-      },
-    );
-  }
-
-  onChangeEnemy(newValue: any) {
-    this.selectedEnemy = parseInt(newValue.value);
-    this.enemyStats = undefined;
-
-    if (newValue.value != '0') {
-      this.loading = true;
-
-      this.playerService.get(newValue.value).subscribe(
-        (data) => {
-          this.enemy = data;
-          // Getting stats
-          this.playerService
-            .getStats(newValue.value, this.selectedSeason)
-            .subscribe(
-              (data2) => {
-                this.enemyStats = data2;
-                this.loading = false;
-              },
-              (err) => {
-                alert(
-                  "Une erreur est survenue lors de la récupération des statistiques de l'adversaire.",
-                );
-                console.error(err);
-              },
-            );
-        },
-        (err) => {
-          alert(
-            "Une erreur est survenue lors de la récupération du profil de l'adversaire.",
-          );
-          console.error(err);
-        },
-      );
-    }
   }
 
   onChangeSeason(newValue: any) {
