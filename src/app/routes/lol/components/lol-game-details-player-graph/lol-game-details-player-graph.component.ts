@@ -5,9 +5,8 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { LoLGameTimelineFrame } from '../../../shared/classes/lol/LoLGameTimelineFrame';
 import { Chart } from 'chart.js/auto';
-import { delay } from 'rxjs';
+import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 
 @Component({
   selector: 'app-lol-game-details-player-graph',
@@ -81,60 +80,60 @@ export class LolGameDetailsPlayerGraphComponent implements OnInit, OnChanges {
 
         // Total damages
         totalDamageDone.push(
-          frame.loLGameTimelineFrameParticipants[0].totalDamageDone
+          frame.loLGameTimelineFrameParticipants[0].totalDamageDone,
         );
         totalDamageTaken.push(
-          frame.loLGameTimelineFrameParticipants[0].totalDamageTaken
+          frame.loLGameTimelineFrameParticipants[0].totalDamageTaken,
         );
         totalDamageDoneToChampions.push(
-          frame.loLGameTimelineFrameParticipants[0].totalDamageDoneToChampions
+          frame.loLGameTimelineFrameParticipants[0].totalDamageDoneToChampions,
         );
 
         // Magic damages
         magicDamageDone.push(
-          frame.loLGameTimelineFrameParticipants[0].magicDamageDone
+          frame.loLGameTimelineFrameParticipants[0].magicDamageDone,
         );
         magicDamageTaken.push(
-          frame.loLGameTimelineFrameParticipants[0].magicDamageTaken
+          frame.loLGameTimelineFrameParticipants[0].magicDamageTaken,
         );
         magicDamageDoneToChampions.push(
-          frame.loLGameTimelineFrameParticipants[0].magicDamageDoneToChampions
+          frame.loLGameTimelineFrameParticipants[0].magicDamageDoneToChampions,
         );
 
         // Physical damages
         physicalDamageDone.push(
-          frame.loLGameTimelineFrameParticipants[0].physicalDamageDone
+          frame.loLGameTimelineFrameParticipants[0].physicalDamageDone,
         );
         physicalDamageTaken.push(
-          frame.loLGameTimelineFrameParticipants[0].physicalDamageTaken
+          frame.loLGameTimelineFrameParticipants[0].physicalDamageTaken,
         );
         physicalDamageDoneToChampions.push(
           frame.loLGameTimelineFrameParticipants[0]
-            .physicalDamageDoneToChampions
+            .physicalDamageDoneToChampions,
         );
 
         // True damages
         trueDamageDone.push(
-          frame.loLGameTimelineFrameParticipants[0].trueDamageDone
+          frame.loLGameTimelineFrameParticipants[0].trueDamageDone,
         );
         trueDamageTaken.push(
-          frame.loLGameTimelineFrameParticipants[0].trueDamageTaken
+          frame.loLGameTimelineFrameParticipants[0].trueDamageTaken,
         );
         trueDamageDoneToChampions.push(
-          frame.loLGameTimelineFrameParticipants[0].trueDamageDoneToChampions
+          frame.loLGameTimelineFrameParticipants[0].trueDamageDoneToChampions,
         );
 
         // Gold related
         totalGold.push(frame.loLGameTimelineFrameParticipants[0].totalGold);
         goldPerSecond.push(
-          frame.loLGameTimelineFrameParticipants[0].goldPerSecond
+          frame.loLGameTimelineFrameParticipants[0].goldPerSecond,
         );
         currentGold.push(frame.loLGameTimelineFrameParticipants[0].currentGold);
         minionsKilled.push(
-          frame.loLGameTimelineFrameParticipants[0].minionsKilled
+          frame.loLGameTimelineFrameParticipants[0].minionsKilled,
         );
         jungleMinionsKilled.push(
-          frame.loLGameTimelineFrameParticipants[0].jungleMinionsKilled
+          frame.loLGameTimelineFrameParticipants[0].jungleMinionsKilled,
         );
 
         // xp/level

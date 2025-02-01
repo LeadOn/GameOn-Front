@@ -1,16 +1,16 @@
-<div class="flex flex-col bg-gray-600/40 p-4 justify-between space-x-4">
+<div class="flex flex-col justify-between space-x-4 bg-gray-600/40 p-4">
   <div class="flex w-full">
-    <div class="flex justify-between w-full">
+    <div class="flex w-full justify-between">
       <div class="flex space-x-2">
-        <div class="flex flex-col items-center w-16">
+        <div class="flex w-16 flex-col items-center">
           <img
-            class="rounded-full w-16"
+            class="w-16 rounded-full"
             src="assets/img/gameon-logo.webp"
             *ngIf="player.championName == null || player.championName == ''"
           />
 
           <img
-            class="rounded-full w-16"
+            class="w-16 rounded-full"
             src="https://ddragon.leagueoflegends.com/cdn/{{
               currentLoLPatch
             }}/img/champion/{{ player.championName }}.png"
@@ -18,13 +18,13 @@
           />
 
           <span
-            class="bg-gray-800 text-white text-xs rounded-full -mt-2 z-50"
+            class="z-50 -mt-2 rounded-full bg-gray-800 text-xs text-white"
             *ngIf="player.champLevel == null || player.champLevel == 0"
             >??</span
           >
 
           <span
-            class="bg-gray-800 text-white text-xs rounded-full -mt-2 z-50 px-1"
+            class="z-50 -mt-2 rounded-full bg-gray-800 px-1 text-xs text-white"
             *ngIf="player.champLevel != null && player.champLevel != 0"
             >{{ player.champLevel }}</span
           >
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <div class="flex justify-center items-center">
+      <div class="flex items-center justify-center">
         <span class="text-sm text-white"
           >{{ player.kills }} / {{ player.deaths }} / {{ player.assists }}</span
         >
@@ -101,7 +101,7 @@
     </div>
 
     <div
-      class="flex w-8 justify-center items-center text-white cursor-pointer"
+      class="flex w-8 cursor-pointer items-center justify-center text-white"
       (click)="showPlayerTimeline()"
     >
       <fa-icon [icon]="detailsIcon"></fa-icon>
@@ -109,8 +109,8 @@
   </div>
 
   <div class="mt-4 text-white" *ngIf="showTimeline == true">
-    <app-lol-game-details-player-graph
+    <app-lol-old-game-details-player-graph
       [timeline]="personalTimeline"
-    ></app-lol-game-details-player-graph>
+    ></app-lol-old-game-details-player-graph>
   </div>
 </div>
