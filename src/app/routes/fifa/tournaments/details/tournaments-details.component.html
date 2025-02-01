@@ -4,7 +4,7 @@
 
 <section
   id="header-pills"
-  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 mb-4 overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
+  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 mb-4 animate-fade overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
   *ngIf="loading == false && tournament != null"
 >
   <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
@@ -34,7 +34,7 @@
 
 <section
   id="tournament-detail-card"
-  class="px-4"
+  class="animate-fade px-4"
   *ngIf="loading == false && tournament != null"
 >
   <div
@@ -67,7 +67,7 @@
 </section>
 
 <div
-  class="mt-4 flex space-x-2 px-4"
+  class="mt-4 flex animate-fade space-x-2 px-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
   <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -77,7 +77,7 @@
 
 <section
   id="tournament-winner"
-  class="mt-4 px-4"
+  class="mt-4 animate-fade px-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
   <div class="rounded-lg bg-bgLight dark:bg-bgDark">
@@ -86,7 +86,7 @@
 </section>
 
 <div
-  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="
     loading == false && tournament != null && tournament.description != null
   "
@@ -101,7 +101,7 @@
 
 <section
   id="tournament-details"
-  class="mt-4 px-4"
+  class="mt-4 animate-fade px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -117,7 +117,7 @@
 </section>
 
 <div
-  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && tournament.rules != null"
   (click)="showRulesContent()"
 >
@@ -130,7 +130,7 @@
 
 <section
   id="tournament-rules"
-  class="mt-4 px-4"
+  class="mt-4 animate-fade px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -145,7 +145,7 @@
 </section>
 
 <div
-  class="mt-4 flex px-4"
+  class="mt-4 flex animate-fade px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -160,7 +160,7 @@
 
 <section
   id="tournament-subscription"
-  class="m-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+  class="m-4 animate-fade rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -212,7 +212,7 @@
 </section>
 
 <div
-  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -237,7 +237,7 @@
 
 <section
   id="tournament-rules"
-  class="mt-4 px-4"
+  class="mt-4 animate-fade px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -256,7 +256,7 @@
 </section>
 
 <div
-  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="
     loading == false && tournament != null && tournament.players.length > 0
   "
@@ -271,7 +271,7 @@
 
 <section
   id="tournament-players"
-  class="mt-4 overflow-x-scroll pb-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-thumb]:bg-bgDark [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
+  class="mt-4 animate-fade overflow-x-scroll pb-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-thumb]:bg-bgDark [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -333,7 +333,7 @@
 </section>
 
 <div
-  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && myGamesToPlay.length > 0"
   (click)="showMyMatchsToPlay()"
 >
@@ -352,7 +352,7 @@
 
 <section
   id="my-matchs-planned"
-  class="mt-4 flex flex-col space-y-4 px-4"
+  class="mt-4 flex animate-fade flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -367,7 +367,7 @@
 </section>
 
 <div
-  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && gamesToPlay.length > 0"
   (click)="showMatchsPlanned()"
 >
@@ -386,7 +386,7 @@
 
 <section
   id="matchs-planned"
-  class="mt-4 flex flex-col space-y-4 px-4"
+  class="mt-4 flex animate-fade flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -401,7 +401,7 @@
 </section>
 
 <div
-  class="mt-4 flex cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
   *ngIf="loading == false && tournament != null && gamesPlayed.length > 0"
   (click)="showMatchsPlayed()"
 >
@@ -420,7 +420,7 @@
 
 <section
   id="my-matchs-planned"
-  class="mt-4 flex flex-col space-y-4 px-4"
+  class="mt-4 flex animate-fade flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&

@@ -2,18 +2,18 @@
   <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 
   <app-common-page-header
-    *ngIf="!loading"
+    *ngIf="loading == false"
     [icon]="trophyIcon"
     [title]="'Tournois'"
   ></app-common-page-header>
 
   <div *ngIf="loading == false" class="mt-4 flex flex-col space-y-4">
     <div
-      class="flex flex-col space-y-2 rounded-lg bg-bgLight drop-shadow-lg dark:bg-bgDark"
+      class="flex animate-fade flex-col space-y-2 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
       *ngFor="let tournament of tournaments"
       [routerLink]="['/fifa/tournaments', tournament.id]"
     >
-      <div class="mt-4 flex flex-col items-center justify-center space-y-2">
+      <div class="flex flex-col items-center justify-center space-y-2">
         <img
           class="w-16 rounded-full"
           *ngIf="tournament.logoUrl != null && tournament.logoUrl != ''"
