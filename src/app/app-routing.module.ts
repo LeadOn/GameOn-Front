@@ -2,18 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { HomeComponent } from './home/home.component';
-import { ProfilePageComponent } from './players/me/profile.component';
-import { canActivateAuthRole } from './shared/guards/auth.guard';
-import { PlayerDetailsComponent } from './players/details/player-details.component';
-import { ChangelogComponent } from './changelog/changelog.component';
-import { DonateComponent } from './donate/donate.component';
-import { FiveComponent } from './five/five.component';
-import { FiveDetailsComponent } from './five/details/five-details.component';
-import { CreateFiveComponent } from './five/create/five-create.component';
-import { LolHomeComponent } from './lol/lol-home.component';
-import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
-import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
+import { DonateComponent } from './routes/donate/donate.component';
+import { canActivateAuthRole } from './core/guards/auth.guard';
+import { ChangelogComponent } from './routes/changelog/changelog.component';
+import { HomeComponent } from './routes/home/home.component';
+import { ProfilePageComponent } from './routes/profile/profile.component';
+import { FifaPlayerDetailsComponent } from './routes/fifa/player/fifa-player-details.component';
 
 export const routes: Routes = [
   {
@@ -37,18 +31,6 @@ export const routes: Routes = [
         component: DonateComponent,
       },
       {
-        path: 'soccerfive',
-        component: FiveComponent,
-      },
-      {
-        path: 'soccerfive/create',
-        component: CreateFiveComponent,
-      },
-      {
-        path: 'soccerfive/:id',
-        component: FiveDetailsComponent,
-      },
-      {
         path: 'player/me',
         component: ProfilePageComponent,
         canActivate: [canActivateAuthRole],
@@ -56,25 +38,19 @@ export const routes: Routes = [
       },
       {
         path: 'player/:id',
-        component: PlayerDetailsComponent,
-      },
-      {
-        path: 'lol',
-        component: LolHomeComponent,
-      },
-      {
-        path: 'lol/summoner/:id',
-        component: LolPlayerDetailsComponent,
-      },
-      {
-        path: 'lol/game/:id/:playerId',
-        component: LolGameDetailsComponent,
+        component: FifaPlayerDetailsComponent,
       },
     ],
   },
   {
+    path: 'lol',
+    loadChildren: () =>
+      import('./routes/lol/lol.module').then((m) => m.LolModule),
+  },
+  {
     path: 'fifa',
-    loadChildren: () => import('./fifa/fifa.module').then((m) => m.FifaModule),
+    loadChildren: () =>
+      import('./routes/fifa/fifa.module').then((m) => m.FifaModule),
   },
   {
     path: 'admin',

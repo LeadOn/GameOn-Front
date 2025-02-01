@@ -39,7 +39,7 @@ export class AdminSeasonsComponent implements OnInit {
         alert('Une erreur est survenue lors de la récupération des saisons.');
         console.error(err);
         this.loading = false;
-      }
+      },
     );
   }
 }

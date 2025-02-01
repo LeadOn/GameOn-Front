@@ -1,0 +1,296 @@
+<div class="mt-4 px-4" *ngIf="loading == true">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<section
+  id="header-pills"
+  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
+  *ngIf="loading == false && player != null"
+>
+  <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
+    <app-pill
+      *ngIf="player.archived == true"
+      [title]="'Archivé'"
+      [bgStyle]="'gray'"
+      [borderStyle]="'gray'"
+    ></app-pill>
+  </div>
+</section>
+
+<section
+  id="player-detail-card"
+  class="flex space-x-4 px-4"
+  *ngIf="loading == false && player != null"
+>
+  <div
+    class="flex w-3/4 items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+  >
+    <div class="flex flex-col items-center">
+      <img
+        *ngIf="player.lolIconId != null"
+        src="https://ddragon.leagueoflegends.com/cdn/{{
+          currentLoLPatch
+        }}/img/profileicon/{{ player.lolIconId }}.png"
+        width="64"
+        class="rounded-full"
+      />
+
+      <img
+        *ngIf="
+          player.profilePictureUrl != null &&
+          player.profilePictureUrl != '' &&
+          player.lolIconId == null
+        "
+        src="{{ player.profilePictureUrl }}"
+        width="64"
+        class="rounded-full"
+      />
+
+      <img
+        *ngIf="
+          player.profilePictureUrl == null ||
+          (player.profilePictureUrl == '' && player.lolIconId == null)
+        "
+        class="rounded-full"
+        src="assets/img/gameon-logo.webp"
+        width="64"
+      />
+      <span
+        class="z-50 -mt-2 rounded-full bg-secondary px-2 text-xs text-bgLight"
+        >{{ player.lolSummonerLevel }}</span
+      >
+    </div>
+
+    <div class="flex flex-col">
+      <span
+        class="flex items-center text-xl font-semibold text-primary dark:text-primaryDark"
+        >{{ player.riotGamesNickname
+        }}<span class="text-xs text-gray-500 dark:text-gray-400"
+          >#{{ player.riotGamesTagLine }}</span
+        >
+      </span>
+
+      <div
+        class="flex items-center justify-start text-gray-500 dark:text-gray-400"
+      >
+        <span class="text-xs">{{ player.fullName }}</span>
+      </div>
+
+      <div
+        class="flex items-center justify-start text-gray-500 dark:text-gray-400"
+      >
+        <a
+          href="https://www.op.gg/summoners/euw/{{
+            player.riotGamesNickname
+          }}-{{ player.riotGamesTagLine }}"
+          class="text-xs"
+          target="_blank"
+          >Accéder à OP.GG
+          <fa-icon class="text-xs" [icon]="externalIcon"></fa-icon
+        ></a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="flex w-1/4 cursor-pointer flex-col items-center justify-center rounded-lg bg-bgLight p-4 align-middle text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
+    (click)="refreshSummoner()"
+  >
+    <fa-icon [icon]="refreshIcon" class="text-2xl"></fa-icon>
+
+    <span class="hidden text-xs md:block">{{
+      player.lolRefreshedOn | date: "short"
+    }}</span>
+  </div>
+</section>
+
+<section
+  id="player-rank"
+  class="mt-4 flex space-x-4 px-4"
+  *ngIf="loading == false && player != null"
+>
+  <div
+    class="flex w-1/2 animate-fade-right flex-row items-center justify-evenly space-y-2 rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+  >
+    <img
+      src="assets/img/gameon-logo.webp"
+      *ngIf="player.leagueOfLegendsSoloRank == null"
+      class="h-16 w-16 animate-fade-right"
+    />
+
+    <img
+      *ngIf="player.leagueOfLegendsSoloRank != null"
+      src="assets/img/lol/rank/{{
+        player.leagueOfLegendsSoloRank.tier | lowercase
+      }}.png"
+      class="h-16 w-16 animate-fade-right"
+    />
+
+    <div class="flex flex-col space-y-1 text-center">
+      <app-pill [title]="'Solo 5v5'" [bgStyle]="'secondary'"></app-pill>
+
+      <span
+        class="animate-fade-right text-primary dark:text-primaryDark"
+        *ngIf="player.leagueOfLegendsSoloRank == null"
+        >Non classé</span
+      >
+
+      <span
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        *ngIf="player.leagueOfLegendsSoloRank != null"
+        >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
+        {{ player.leagueOfLegendsSoloRank.rank }}
+        {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP</span
+      >
+
+      <span
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        *ngIf="player.leagueOfLegendsSoloRank != null"
+        ><span class="text-customGreen">{{ soloWins }}V</span> -
+        <span class="text-frenchRed">{{ soloLosses }}D</span> ({{
+          soloWinRate.toFixed(2)
+        }}%)</span
+      >
+    </div>
+  </div>
+
+  <div
+    class="flex w-1/2 animate-fade-right flex-row items-center justify-evenly space-y-2 rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+  >
+    <img
+      src="assets/img/gameon-logo.webp"
+      *ngIf="player.leagueOfLegendsFlexRank == null"
+      class="h-16 w-16 animate-fade-right"
+    />
+
+    <img
+      *ngIf="player.leagueOfLegendsFlexRank != null"
+      src="assets/img/lol/rank/{{
+        player.leagueOfLegendsFlexRank.tier | lowercase
+      }}.png"
+      class="h-16 w-16 animate-fade-right"
+    />
+
+    <div class="flex flex-col space-y-1 text-center">
+      <app-pill [title]="'Flex 5v5'" [bgStyle]="'green'"></app-pill>
+
+      <span
+        class="animate-fade-right text-primary dark:text-primaryDark"
+        *ngIf="player.leagueOfLegendsFlexRank == null"
+        >Non classé</span
+      >
+
+      <span
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        *ngIf="player.leagueOfLegendsFlexRank != null"
+        >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
+        {{ player.leagueOfLegendsFlexRank.rank }}
+        {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP</span
+      >
+
+      <span
+        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        *ngIf="player.leagueOfLegendsSoloRank != null"
+        ><span class="text-customGreen">{{ flexWins }}V</span> -
+        <span class="text-frenchRed">{{ flexLosses }}D</span> ({{
+          flexWinRate.toFixed(2)
+        }}%)</span
+      >
+    </div>
+  </div>
+</section>
+
+<section id="rank-history" class="mt-4 animate-fade-up py-4">
+  <div class="flex items-center justify-between px-4">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Historique des rangs</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="loading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <app-info-message
+    *ngIf="loading == false && rankHistory.length == 0"
+    [title]="
+      player?.riotGamesNickname + ' n\'as pas encore joué de partie classée.'
+    "
+  ></app-info-message>
+</section>
+
+<app-rank-history
+  *ngIf="rankHistory.length > 0 && loading == false"
+  [rankHistory]="rankHistory"
+></app-rank-history>
+
+<section id="games-played" class="mt-4 animate-fade-up py-4">
+  <div class="flex items-center justify-between px-4">
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Historique de parties</span
+    >
+
+    <app-loading-spinner-tiny
+      *ngIf="gameHistoryLoading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+
+  <app-info-message
+    [title]="
+      'Cette partie de l\'application est encore en cours de développement, mais est activée pour vous permettre de tester. N\'hésitez pas à nous faire vos retours !'
+    "
+  ></app-info-message>
+
+  <div class="mb-4 w-full px-4">
+    <app-lol-game-card
+      *ngFor="let game of gamesPlayed"
+      [game]="game"
+      [playerId]="player?.id"
+    ></app-lol-game-card>
+  </div>
+
+  <div class="relative overflow-x-auto">
+    <table
+      class="w-full text-left text-sm text-primary dark:text-primaryDark rtl:text-right"
+    >
+      <thead
+        class="bg-bgLight text-xs uppercase text-primary dark:bg-bgDark dark:text-primaryDark"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Identifiant partie</th>
+          <th scope="col" class="px-6 py-3">Patch</th>
+          <th scope="col" class="px-6 py-3">Etat</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let game of gamesPlayed"
+          class="border-b bg-bgLightDarker dark:border-bgDarkDarker dark:bg-bgDarkDarker"
+        >
+          <th
+            scope="row"
+            class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+          >
+            {{ game.matchId }}
+          </th>
+          <td class="px-6 py-4">{{ game.gameVersion }}</td>
+          <td class="px-6 py-4">{{ game.endOfGameResult }}</td>
+          <td
+            class="flex flex-row items-center justify-center space-x-2 px-6 py-4 text-2xl"
+          >
+            <div (click)="refreshGame(game.matchId)" class="cursor-pointer">
+              <fa-icon [icon]="syncIcon"></fa-icon>
+            </div>
+            <div
+              [routerLink]="['/lol/game', game.matchId]"
+              class="cursor-pointer"
+            >
+              <fa-icon [icon]="externalIcon"></fa-icon>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

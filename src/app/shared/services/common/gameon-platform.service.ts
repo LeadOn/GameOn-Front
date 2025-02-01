@@ -16,7 +16,7 @@ export class GameOnPlatformService {
 
   getById(id: number): Observable<Platform> {
     return this.client.get<Platform>(
-      environment.gameOnApiUrl + '/platform/' + id
+      environment.gameOnApiUrl + '/platform/' + id,
     );
   }
 }

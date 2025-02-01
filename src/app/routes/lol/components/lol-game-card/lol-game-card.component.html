@@ -1,0 +1,158 @@
+<div
+  class="mb-4 flex w-full animate-fade-up space-x-2 rounded-lg drop-shadow-lg"
+  [ngClass]="{
+    'bg-gray-600/40': game.endOfGameResult == null,
+    'bg-blue-600/40': game.endOfGameResult != null && won == true,
+    'bg-red-600/40': game.endOfGameResult != null && won == false,
+  }"
+>
+  <div class="flex" [routerLink]="['/lol/game', game.matchId, playerId]">
+    <div
+      class="w-2 rounded-l-lg"
+      [ngClass]="{
+        'bg-gray-500': game.endOfGameResult == null,
+        'bg-blue-600': game.endOfGameResult != null && won == true,
+        'bg-red-600': game.endOfGameResult != null && won == false,
+      }"
+    ></div>
+  </div>
+
+  <div
+    class="flex w-full flex-col"
+    [routerLink]="['/lol/game', game.matchId, playerId]"
+  >
+    <div class="mb-2 flex w-full justify-between border-b border-gray-300 pb-2">
+      <div class="flex items-center justify-center space-x-2 text-sm">
+        <span
+          class="font-bold text-gray-600"
+          *ngIf="game.endOfGameResult == null"
+          >Inconnu</span
+        >
+        <span
+          class="font-bold text-red-600"
+          *ngIf="game.endOfGameResult != null && won == false"
+          >Défaite</span
+        >
+        <span
+          class="font-bold text-blue-600"
+          *ngIf="game.endOfGameResult != null && won == true"
+          >Victoire</span
+        >
+        <span class="text-gray-200" *ngIf="gameDuration != null">{{
+          gameDuration
+        }}</span>
+      </div>
+
+      <div class="flex items-center justify-center text-sm text-gray-200">
+        <span class="pr-2" *ngIf="game.queueType == ''">File inconnue</span>
+        <span class="pr-2" *ngIf="game.queueType == 'RANKED_SOLO_DUO'"
+          >Classée en solo/duo</span
+        >
+        <span class="pr-2" *ngIf="game.queueType == 'RANKED_FLEX'"
+          >Classée flexible</span
+        >
+      </div>
+    </div>
+
+    <div class="mb-2 flex w-full items-center justify-between">
+      <div class="flex flex-col items-center">
+        <img
+          class="w-16 rounded-full"
+          src="assets/img/gameon-logo.webp"
+          *ngIf="championName == null || championName == ''"
+        />
+
+        <img
+          class="w-16 rounded-full"
+          src="https://ddragon.leagueoflegends.com/cdn/{{
+            currentLoLPatch
+          }}/img/champion/{{ championName }}.png"
+          *ngIf="championName != null && championName != ''"
+        />
+
+        <span
+          class="z-50 -mt-2 rounded-full bg-gray-800 text-xs text-white"
+          *ngIf="champLevel == null || champLevel == 0"
+          >??</span
+        >
+
+        <span
+          class="z-50 -mt-2 rounded-full bg-gray-800 px-1 text-xs text-white"
+          *ngIf="champLevel != null && champLevel != 0"
+          >{{ champLevel }}</span
+        >
+      </div>
+
+      <div class="flex flex-col items-center text-sm text-gray-300">
+        <span>{{ kills }} / {{ deaths }} / {{ assists }}</span>
+        <span>{{ kda }} KDA</span>
+      </div>
+
+      <div class="flex flex-col">
+        <div class="flex">
+          <img
+            *ngIf="item0 != 0"
+            class="w-6"
+            src="https://ddragon.leagueoflegends.com/cdn/{{
+              currentLoLPatch
+            }}/img/item/{{ item0 }}.png"
+          /><img
+            *ngIf="item1 != 0"
+            class="w-6"
+            src="https://ddragon.leagueoflegends.com/cdn/{{
+              currentLoLPatch
+            }}/img/item/{{ item1 }}.png"
+          /><img
+            class="w-6"
+            *ngIf="item2 != 0"
+            src="https://ddragon.leagueoflegends.com/cdn/{{
+              currentLoLPatch
+            }}/img/item/{{ item2 }}.png"
+          />
+        </div>
+        <div class="flex">
+          <img
+            *ngIf="item3 != 0"
+            class="w-6"
+            src="https://ddragon.leagueoflegends.com/cdn/{{
+              currentLoLPatch
+            }}/img/item/{{ item3 }}.png"
+          /><img
+            class="w-6"
+            *ngIf="item4 != 0"
+            src="https://ddragon.leagueoflegends.com/cdn/{{
+              currentLoLPatch
+            }}/img/item/{{ item4 }}.png"
+          /><img
+            class="w-6"
+            *ngIf="item5 != 0"
+            src="https://ddragon.leagueoflegends.com/cdn/{{
+              currentLoLPatch
+            }}/img/item/{{ item5 }}.png"
+          /><img
+            *ngIf="item6 != 0"
+            class="w-6"
+            src="https://ddragon.leagueoflegends.com/cdn/{{
+              currentLoLPatch
+            }}/img/item/{{ item6 }}.png"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex" (click)="updateGame()">
+    <div
+      class="flex w-8 items-center justify-center rounded-r-lg text-white"
+      [ngClass]="{
+        'bg-gray-500': game.endOfGameResult == null,
+        'bg-blue-600': game.endOfGameResult != null && won == true,
+        'bg-red-600': game.endOfGameResult != null && won == false,
+      }"
+    >
+      <button class="p-1">
+        <fa-icon [icon]="refreshIcon"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { Store } from '@ngrx/store';
-import { setPlayer, setPlayerStats } from './store/actions/player.actions';
 import { Player } from './shared/classes/common/Player';
 import { GameOnPlayerService } from './shared/services/common/gameon-player.service';
 import Keycloak from 'keycloak-js';
+import { setPlayer, setPlayerStats } from './core/store/actions/player.actions';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private playerService: GameOnPlayerService,
-    private store: Store<{ player: Player }>
+    private store: Store<{ player: Player }>,
   ) {}
 
   ngOnInit(): void {
@@ -39,17 +39,17 @@ export class AppComponent implements OnInit {
           this.playerService.getStats(data.id).subscribe(
             (data) => {
               this.store.dispatch(
-                setPlayerStats({ globalStats: data.statsPerPlatform[0] })
+                setPlayerStats({ globalStats: data.statsPerPlatform[0] }),
               );
             },
             (err) => {
               console.error('[AppComponent]', err);
-            }
+            },
           );
         },
         (err) => {
           console.error('[AppComponent]', err);
-        }
+        },
       );
     }
   }

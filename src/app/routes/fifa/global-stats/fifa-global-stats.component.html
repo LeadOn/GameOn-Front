@@ -1,0 +1,119 @@
+<section id="top-card" class="px-4 pt-4">
+  <app-common-page-header
+    [icon]="statsIcon"
+    [title]="'Statistiques globales'"
+  ></app-common-page-header>
+
+  <div class="md:hidden" *ngIf="loading == true">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</section>
+
+<app-info-message
+  [type]="'error'"
+  [title]="
+    'Une erreur est survenue lors de la récupération des statistiques globales.'
+  "
+  *ngIf="errorLoading == true"
+></app-info-message>
+
+<section id="stat-number-games" class="mt-4 px-4">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center space-x-2">
+      <fa-icon
+        [icon]="countIcon"
+        class="cursor-pointer text-primary dark:text-primaryDark"
+      ></fa-icon>
+
+      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+        >Nombre de matchs joués</span
+      >
+    </div>
+
+    <app-loading-spinner-tiny
+      *ngIf="loading == true"
+    ></app-loading-spinner-tiny>
+
+    <span
+      class="text-primary dark:text-primaryDark"
+      *ngIf="loading == false && globalStats != null"
+      >{{ globalStats.numberOfGames }}</span
+    >
+  </div>
+</section>
+
+<section id="best-player-header" class="mt-4 px-4">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center space-x-2">
+      <fa-icon [icon]="trophyIcon" class="text-customGreen"></fa-icon>
+
+      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+        >Meilleur joueur</span
+      >
+    </div>
+
+    <app-loading-spinner-tiny
+      *ngIf="loading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+</section>
+
+<section
+  id="best-player"
+  *ngIf="
+    loading == false && globalStats != null && globalStats.bestPlayer != null
+  "
+  class="mt-4 px-4"
+>
+  <app-player-card [player]="globalStats.bestPlayer"></app-player-card>
+
+  <div
+    class="mt-4 flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
+    *ngIf="
+      globalStats.bestPlayerStats != null &&
+      globalStats.bestPlayerStats.statsPerPlatform.length > 0
+    "
+  >
+    <app-fifa-stat
+      [stat]="globalStats.bestPlayerStats.statsPerPlatform[0]"
+    ></app-fifa-stat>
+  </div>
+</section>
+
+<section id="worst-player-header" class="mt-4 px-4">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center space-x-2">
+      <fa-icon [icon]="trophyIcon" class="text-frenchRed"></fa-icon>
+
+      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+        >Pire joueur</span
+      >
+    </div>
+
+    <app-loading-spinner-tiny
+      *ngIf="loading == true"
+    ></app-loading-spinner-tiny>
+  </div>
+</section>
+
+<section
+  id="worst-player"
+  *ngIf="
+    loading == false && globalStats != null && globalStats.worstPlayer != null
+  "
+  class="mt-4 px-4"
+>
+  <app-player-card [player]="globalStats.worstPlayer"></app-player-card>
+
+  <div
+    class="mt-4 flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
+    *ngIf="
+      globalStats.worstPlayerStats != null &&
+      globalStats.worstPlayerStats.statsPerPlatform.length > 0
+    "
+  >
+    <app-fifa-stat
+      [stat]="globalStats.worstPlayerStats.statsPerPlatform[0]"
+    ></app-fifa-stat>
+  </div>
+</section>

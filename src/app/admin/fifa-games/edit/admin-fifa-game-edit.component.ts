@@ -40,7 +40,7 @@ export class AdminFifaGameEditComponent implements OnInit {
     private platformService: GameOnPlatformService,
     private fifaTeamService: GameOnFifaTeamService,
     private adminService: GameOnAdminService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -53,23 +53,23 @@ export class AdminFifaGameEditComponent implements OnInit {
       (data) => {
         this.game = data;
         this.updateGameForm.controls['teamFifa1'].setValue(
-          this.game.team1.fifaTeamId
+          this.game.team1.fifaTeamId,
         );
         this.updateGameForm.controls['teamScore1'].setValue(
-          this.game.team1.score
+          this.game.team1.score,
         );
         this.updateGameForm.controls['teamFifa2'].setValue(
-          this.game.team2.fifaTeamId
+          this.game.team2.fifaTeamId,
         );
         this.updateGameForm.controls['teamScore2'].setValue(
-          this.game.team2.score
+          this.game.team2.score,
         );
         this.updateGameForm.controls['isPlayed'].setValue(this.game.isPlayed);
         this.updateGameForm.controls['platform'].setValue(this.game.platformId);
 
         if (this.game.tournamentId != null) {
           this.updateGameForm.controls['tournamentId'].setValue(
-            this.game.tournamentId
+            this.game.tournamentId,
           );
         }
 
@@ -84,7 +84,7 @@ export class AdminFifaGameEditComponent implements OnInit {
         console.error(err);
         alert('Une erreur est survenue lors de la récupération du match.');
         this.loading = false;
-      }
+      },
     );
   }
 
@@ -97,9 +97,9 @@ export class AdminFifaGameEditComponent implements OnInit {
       (err) => {
         console.error(err);
         alert(
-          'Une erreur est survenue lors de la récupération des plateformes.'
+          'Une erreur est survenue lors de la récupération des plateformes.',
         );
-      }
+      },
     );
   }
 
@@ -112,9 +112,9 @@ export class AdminFifaGameEditComponent implements OnInit {
       (err) => {
         console.error(err);
         alert(
-          'Une erreur est survenue lors de la récupération des plateformes.'
+          'Une erreur est survenue lors de la récupération des plateformes.',
         );
-      }
+      },
     );
   }
 
@@ -172,7 +172,7 @@ export class AdminFifaGameEditComponent implements OnInit {
         (err) => {
           alert('Erreur lors de la mise à jour du match ! Erreur : ' + err);
           this.loading = false;
-        }
+        },
       );
     } else {
       alert('Certaines informations sont manquantes !');

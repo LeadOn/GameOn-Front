@@ -22,11 +22,11 @@ export class AdminHighlightsComponent implements OnInit {
       },
       (err) => {
         alert(
-          'Une erreur est survenue lors de la récupération des temps forts.'
+          'Une erreur est survenue lors de la récupération des temps forts.',
         );
         console.error(err);
         this.loading = false;
-      }
+      },
     );
   }
 }

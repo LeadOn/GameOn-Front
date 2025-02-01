@@ -16,7 +16,7 @@ export class AdminFifaGamesComponent implements OnInit {
 
   constructor(
     private gameService: GameOnGameService,
-    private adminService: GameOnAdminService
+    private adminService: GameOnAdminService,
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class AdminFifaGamesComponent implements OnInit {
         alert('Une erreur est survenue lors de la récupération des matchs.');
         console.error(err);
         this.loading = false;
-      }
+      },
     );
   }
 }

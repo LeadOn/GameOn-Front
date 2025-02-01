@@ -42,18 +42,18 @@ export class AdminPlayersComponent implements OnInit {
           },
           (err) => {
             alert(
-              'Une erreur est survenue lors de la récupération des players.'
+              'Une erreur est survenue lors de la récupération des players.',
             );
             console.error(err);
             this.loading = false;
-          }
+          },
         );
       },
       (err) => {
         alert('Une erreur est survenue lors de la récupération des players.');
         console.error(err);
         this.loading = false;
-      }
+      },
     );
   }
 }

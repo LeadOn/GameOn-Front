@@ -12,7 +12,7 @@ export class GameOnChangelogService {
 
   getAll(): Observable<Changelog[]> {
     return this.client.get<Changelog[]>(
-      environment.gameOnApiUrl + '/changelog'
+      environment.gameOnApiUrl + '/changelog',
     );
   }
 }

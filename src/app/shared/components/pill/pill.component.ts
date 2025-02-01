@@ -5,10 +5,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-pill',
-    templateUrl: './pill.component.html',
-    styleUrl: './pill.component.scss',
-    standalone: false
+  selector: 'app-pill',
+  templateUrl: './pill.component.html',
+  styleUrl: './pill.component.scss',
+  standalone: false,
 })
 export class PillComponent implements OnInit {
   @Input()
@@ -32,6 +32,9 @@ export class PillComponent implements OnInit {
   @Input()
   borderStyle?: string;
 
+  @Input()
+  pointer = false;
+
   style = '';
 
   externalIcon = faExternalLink;
@@ -43,6 +46,10 @@ export class PillComponent implements OnInit {
 
     if (this.borderStyle) {
       this.buildBorderStyle(this.borderStyle);
+    }
+
+    if (this.pointer) {
+      this.style += ' cursor-pointer';
     }
   }
 

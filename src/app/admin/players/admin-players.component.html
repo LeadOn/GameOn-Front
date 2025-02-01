@@ -1,4 +1,4 @@
-<section class="h-screen bg-bgDarker px-4 pt-4">
+<section class="bg-bgDarker h-screen px-4 pt-4">
   <app-loading-spinner
     [@inOutAnimation]
     *ngIf="loading == true"
@@ -11,8 +11,8 @@
   ></app-common-page-header>
 
   <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
-      <thead class="text-xs text-gray-700 dark:text-gray-400 text-center">
+    <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
+      <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3">Nom complet</th>
           <th scope="col" class="px-6 py-3">Surnom</th>
@@ -21,11 +21,11 @@
       </thead>
       <tbody class="text-center">
         <tr
-          class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b"
+          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
           *ngFor="let player of players"
         >
           <th
-            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
           >
             {{ player.fullName }}
           </th>
@@ -33,7 +33,7 @@
           <td class="px-6 py-4">
             <fa-icon
               [icon]="editIcon"
-              class="text-xl text-primary dark:text-primaryDark cursor-pointer"
+              class="cursor-pointer text-xl text-primary dark:text-primaryDark"
               [routerLink]="['/admin/players/edit', player.id]"
             ></fa-icon>
           </td>

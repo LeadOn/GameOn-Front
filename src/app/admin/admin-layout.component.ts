@@ -15,22 +15,22 @@ import {
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
-    selector: 'app-admin-layout',
-    templateUrl: './admin-layout.component.html',
-    styleUrls: ['./admin-layout.component.scss'],
-    animations: [
-        trigger('inOutAnimation', [
-            transition(':enter', [
-                style({ opacity: 0 }),
-                animate(200, style({ opacity: 1 })),
-            ]),
-            transition(':leave', [
-                style({ opacity: 1 }),
-                animate(200, style({ opacity: 0 })),
-            ]),
-        ]),
-    ],
-    standalone: false
+  selector: 'app-admin-layout',
+  templateUrl: './admin-layout.component.html',
+  styleUrls: ['./admin-layout.component.scss'],
+  animations: [
+    trigger('inOutAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate(200, style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class AdminLayoutComponent implements OnInit {
   userIcon = faUserCircle;
@@ -47,7 +47,7 @@ export class AdminLayoutComponent implements OnInit {
   darkIcon = faMoon;
 
   darkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false')
+    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false'),
   );
 
   @HostBinding('class.dark') get mode() {
@@ -58,7 +58,7 @@ export class AdminLayoutComponent implements OnInit {
     effect(() => {
       window.localStorage.setItem(
         'gameon-dark-theme',
-        JSON.stringify(this.darkMode())
+        JSON.stringify(this.darkMode()),
       );
     });
   }
@@ -69,7 +69,7 @@ export class AdminLayoutComponent implements OnInit {
 
   logout() {
     window.location.replace(
-      environment.keycloak.url + 'realms/yufoot/protocol/openid-connect/logout'
+      environment.keycloak.url + 'realms/yufoot/protocol/openid-connect/logout',
     );
   }
 }

@@ -22,7 +22,7 @@ export class GameOnGameService {
 
   getLast(limit: number): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
-      environment.gameOnApiUrl + '/fifa/fifagame/last/' + limit
+      environment.gameOnApiUrl + '/fifa/fifagame/last/' + limit,
     );
   }
 
@@ -32,7 +32,7 @@ export class GameOnGameService {
         '/fifa/fifagame/planned/' +
         playerId +
         '?limit=' +
-        limit
+        limit,
     );
   }
 
@@ -40,7 +40,7 @@ export class GameOnGameService {
     limit: number,
     platformId?: number,
     startDate?: string,
-    endDate?: string
+    endDate?: string,
   ): Observable<FifaGamePlayed[]> {
     let url = environment.gameOnApiUrl + '/fifa/fifagame?limit=' + limit;
 
@@ -61,47 +61,47 @@ export class GameOnGameService {
 
   getLastByPlayer(
     playerId: number,
-    limit: number
+    limit: number,
   ): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
       environment.gameOnApiUrl +
         '/fifa/fifagame/last/' +
         limit +
         '/player/' +
-        playerId
+        playerId,
     );
   }
 
   getById(gameId: number): Observable<FifaGamePlayed> {
     return this.client.get<FifaGamePlayed>(
-      environment.gameOnApiUrl + '/fifa/fifagame/' + gameId
+      environment.gameOnApiUrl + '/fifa/fifagame/' + gameId,
     );
   }
 
   create(body: any): Observable<FifaGamePlayed> {
     return this.client.post<FifaGamePlayed>(
       environment.gameOnApiUrl + '/fifa/fifagame',
-      body
+      body,
     );
   }
 
   getByTournament(
     tournamentId: number,
-    isPlayed: boolean
+    isPlayed: boolean,
   ): Observable<FifaGamePlayed[]> {
     return this.client.get<FifaGamePlayed[]>(
       environment.gameOnApiUrl +
         '/fifa/fifagame/tournament/' +
         tournamentId +
         '?isPlayed=' +
-        isPlayed
+        isPlayed,
     );
   }
 
   deleteGame(gameId: number): Observable<any> {
     if (this.isLoggedIn == true && this.keycloak.hasRealmRole('gameon_admin')) {
       return this.client.delete<any>(
-        environment.gameOnApiUrl + '/fifa/fifagame/' + gameId
+        environment.gameOnApiUrl + '/fifa/fifagame/' + gameId,
       );
     }
 
@@ -117,7 +117,7 @@ export class GameOnGameService {
         score1 +
         '/' +
         score2,
-      null
+      null,
     );
   }
 }

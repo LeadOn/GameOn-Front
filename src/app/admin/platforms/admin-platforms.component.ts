@@ -38,11 +38,11 @@ export class AdminPlatformsComponent implements OnInit {
       },
       (err) => {
         alert(
-          'Une erreur est survenue lors de la récupération des plateformes.'
+          'Une erreur est survenue lors de la récupération des plateformes.',
         );
         console.error(err);
         this.loading = false;
-      }
+      },
     );
   }
 }

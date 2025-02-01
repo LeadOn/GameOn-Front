@@ -19,7 +19,7 @@ export class GameOnPlayerService {
     }
 
     return this.client.get<Player[]>(
-      environment.gameOnApiUrl + '/player?archived=' + archivalState
+      environment.gameOnApiUrl + '/player?archived=' + archivalState,
     );
   }
 
@@ -33,7 +33,7 @@ export class GameOnPlayerService {
 
   getStats(
     playerId: number,
-    seasonId?: number
+    seasonId?: number,
   ): Observable<FifaPlayerStatsDto> {
     let url = environment.gameOnApiUrl + '/player/' + playerId + '/stats';
 
@@ -49,7 +49,7 @@ export class GameOnPlayerService {
     nickname: any,
     profilePicUrl: any,
     riotGamesNickname?: string,
-    riotGamesTagLine?: string
+    riotGamesTagLine?: string,
   ): Observable<Player> {
     return this.client.patch<Player>(environment.gameOnApiUrl + '/player/me', {
       FullName: fullName,

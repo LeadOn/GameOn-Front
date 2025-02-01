@@ -16,33 +16,33 @@ export class GameOnAdminService {
 
   getDashboardStats(): Observable<AdminDashboard> {
     return this.client.get<AdminDashboard>(
-      environment.gameOnApiUrl + '/admin/dashboard'
+      environment.gameOnApiUrl + '/admin/dashboard',
     );
   }
 
   updatePlatform(platform: Platform): Observable<Platform> {
     return this.client.patch<Platform>(
       environment.gameOnApiUrl + '/platform',
-      platform
+      platform,
     );
   }
 
   deleteGame(gameId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.gameOnApiUrl + '/fifa/fifagame/' + gameId
+      environment.gameOnApiUrl + '/fifa/fifagame/' + gameId,
     );
   }
 
   deleteTournament(tournamentId: number): Observable<any> {
     return this.client.delete<any>(
-      environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId
+      environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId,
     );
   }
 
   updateGame(game: UpdateGame): Observable<any> {
     return this.client.patch<any>(
       environment.gameOnApiUrl + '/fifa/fifagame',
-      game
+      game,
     );
   }
 
@@ -52,7 +52,7 @@ export class GameOnAdminService {
     nickname: any,
     profilePicUrl: any,
     keycloakId?: string,
-    archived?: boolean
+    archived?: boolean,
   ): Observable<Player> {
     let body: any = {
       FullName: fullName,
@@ -73,7 +73,7 @@ export class GameOnAdminService {
 
     return this.client.patch<Player>(
       environment.gameOnApiUrl + '/player',
-      body
+      body,
     );
   }
 
@@ -83,7 +83,7 @@ export class GameOnAdminService {
     plannedFrom: string,
     plannedTo: string,
     description?: string,
-    logoUrl?: string
+    logoUrl?: string,
   ): Observable<Tournament> {
     let body: any = {
       name: name,
@@ -102,7 +102,7 @@ export class GameOnAdminService {
 
     return this.client.post<Tournament>(
       environment.gameOnApiUrl + '/fifa/tournament',
-      body
+      body,
     );
   }
 
@@ -120,7 +120,7 @@ export class GameOnAdminService {
     drawPoints: number = 0,
     loosePoints: number = 0,
     rules?: string,
-    featured: boolean = false
+    featured: boolean = false,
   ): Observable<Tournament> {
     let body: any = {
       name: name,
@@ -149,14 +149,14 @@ export class GameOnAdminService {
 
     return this.client.patch<Tournament>(
       environment.gameOnApiUrl + '/fifa/tournament/' + id,
-      body
+      body,
     );
   }
 
   goToPhase1(tournamentId: number): Observable<any> {
     return this.client.post<any>(
       environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId + '/phase1',
-      null
+      null,
     );
   }
 
@@ -166,20 +166,20 @@ export class GameOnAdminService {
         '/fifa/tournament/' +
         tournamentId +
         '/phase1/score',
-      null
+      null,
     );
   }
 
   removeTournamentSubscription(
     tournamentId: number,
-    playerId: number
+    playerId: number,
   ): Observable<any> {
     return this.client.delete<any>(
       environment.gameOnApiUrl +
         '/fifa/tournament/' +
         tournamentId +
         '/player/' +
-        playerId
+        playerId,
     );
   }
 }

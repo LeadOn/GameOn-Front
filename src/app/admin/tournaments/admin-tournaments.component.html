@@ -1,4 +1,4 @@
-<section class="h-screen bg-bgDarker px-4 pt-4">
+<section class="bg-bgDarker h-screen px-4 pt-4">
   <app-loading-spinner
     [@inOutAnimation]
     *ngIf="loading == true"
@@ -11,12 +11,12 @@
   ></app-common-page-header>
 
   <a
-    class="flex flex-row space-x-2 justify-center cursor-pointer p-2 rounded-full transition ease-in-out delay-50 bg-customGreen hover:bg-green-800 mt-4"
+    class="delay-50 mt-4 flex cursor-pointer flex-row justify-center space-x-2 rounded-full bg-customGreen p-2 transition ease-in-out hover:bg-green-800"
     *ngIf="loading == false"
     routerLink="/admin/tournaments/create"
   >
     <div
-      class="rounded-full bg-secondary w-8 flex flex-col items-center justify-center"
+      class="flex w-8 flex-col items-center justify-center rounded-full bg-secondary"
     >
       +
     </div>
@@ -24,8 +24,8 @@
   </a>
 
   <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-300">
-      <thead class="text-xs text-gray-700 dark:text-gray-400 text-center">
+    <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
+      <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3">Nom</th>
           <th scope="col" class="px-6 py-3">Du</th>
@@ -36,36 +36,36 @@
       </thead>
       <tbody class="text-center">
         <tr
-          class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b"
+          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
           *ngFor="let tournament of tournaments"
         >
           <th
-            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
           >
             {{ tournament.name }}
           </th>
 
           <th
-            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
           >
             {{ tournament.plannedFrom.toString().split("T")[0] }}
           </th>
 
           <th
-            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
           >
             {{ tournament.plannedTo.toString().split("T")[0] }}
           </th>
 
           <th
-            class="px-6 py-4 font-medium text-gray-900 dark:text-gray-300 whitespace-nowrap text-center"
+            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
           >
             {{ getState(tournament.state) }}
           </th>
-          <td class="px-6 py-4 flex flex-row justify-center space-x-2">
+          <td class="flex flex-row justify-center space-x-2 px-6 py-4">
             <fa-icon
               [icon]="editIcon"
-              class="text-xl text-primary dark:text-primaryDark cursor-pointer"
+              class="cursor-pointer text-xl text-primary dark:text-primaryDark"
               [routerLink]="['/admin/tournaments/edit', tournament.id]"
             ></fa-icon>
 
@@ -80,12 +80,12 @@
               *ngIf="tournament.state == 2"
               (click)="savePhase1Score(tournament.id)"
               [icon]="saveIcon"
-              class="text-xl text-primary dark:text-primaryDark cursor-pointer"
+              class="cursor-pointer text-xl text-primary dark:text-primaryDark"
             ></fa-icon>
 
             <fa-icon
               [icon]="trashIcon"
-              class="text-xl text-frenchRed cursor-pointer"
+              class="cursor-pointer text-xl text-frenchRed"
               (click)="delete(tournament.id)"
             ></fa-icon>
           </td>

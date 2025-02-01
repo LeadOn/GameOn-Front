@@ -27,7 +27,7 @@ export class GameOnTournamentService {
 
   checkPlayerSubscription(id: number): Observable<TournamentPlayerDto> {
     return this.client.get<TournamentPlayerDto>(
-      this.baseControllerUrl + '/' + id + '/subscription'
+      this.baseControllerUrl + '/' + id + '/subscription',
     );
   }
 
@@ -38,13 +38,13 @@ export class GameOnTournamentService {
         id +
         '/subscription?fifaTeamId=' +
         fifaTeamId,
-      null
+      null,
     );
   }
 
   updateSubscription(
     id: number,
-    fifaTeamId: number
+    fifaTeamId: number,
   ): Observable<TournamentPlayerDto> {
     return this.client.patch<TournamentPlayerDto>(
       this.baseControllerUrl +
@@ -52,7 +52,7 @@ export class GameOnTournamentService {
         id +
         '/subscription?fifaTeamId=' +
         fifaTeamId,
-      null
+      null,
     );
   }
 

@@ -1,0 +1,22 @@
+<div
+  class="flex animate-fade cursor-pointer items-center justify-between"
+  routerLink="/changelog"
+>
+  <div class="flex items-center justify-center space-x-2">
+    <fa-icon
+      [icon]="updateIcon"
+      class="cursor-pointer text-primary dark:text-primaryDark"
+    ></fa-icon>
+
+    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      >Nouveautés</span
+    >
+  </div>
+
+  <app-loading-spinner-tiny *ngIf="loading == true"></app-loading-spinner-tiny>
+</div>
+
+<app-changelog-card
+  *ngIf="changelog != null"
+  [changelog]="changelog"
+></app-changelog-card>

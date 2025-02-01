@@ -1,6 +1,6 @@
-<div class="flex flex-row justify-center mt-8">
+<div class="mt-8 flex flex-row justify-center">
   <div
-    class="flex flex-row items-center p-4 rounded-lg bg-primary"
+    class="flex flex-row items-center rounded-lg bg-primary p-4"
     *ngIf="loading == true"
   >
     <app-loading-spinner></app-loading-spinner>
@@ -8,11 +8,11 @@
   </div>
 
   <div
-    class="flex flex-row space-x-2 align-center items-center justify-center p-4 rounded-lg bg-primary w-2/3"
+    class="align-center flex w-2/3 flex-row items-center justify-center space-x-2 rounded-lg bg-primary p-4"
     *ngIf="loading == false && tournament != null"
   >
     <div
-      class="rounded-full bg-customYellow p-4 flex flex-col align-center items-center justify-center"
+      class="align-center flex flex-col items-center justify-center rounded-full bg-customYellow p-4"
     >
       <img src="assets/img/svg/trophee.svg" class="w-8" />
     </div>
@@ -21,55 +21,55 @@
 </div>
 
 <div
-  class="flex flex-col items-center mt-4"
+  class="mt-4 flex flex-col items-center"
   *ngIf="loading == false && tournament != null"
 >
   <form
     [formGroup]="editTournamentForm"
-    class="mt-6 bg-primary p-8 rounded-lg w-2/3"
+    class="mt-6 w-2/3 rounded-lg bg-primary p-8"
   >
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="text"
         id="name"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="name"
         maxlength="100"
       />
       <label
         for="name"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Nom
         <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <textarea
         type="text"
         id="description"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="description"
         maxlength="5000"
         required
       ></textarea>
       <label
         for="description"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Description
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
-      <label for="team1" class="block mb-2 text-sm font-medium text-white">
+    <div class="group relative z-0 mb-6 w-full">
+      <label for="team1" class="mb-2 block text-sm font-medium text-white">
         État
       </label>
       <select
         id="state"
         formControlName="state"
-        class="bg-gray-800/40 border border-secondary text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        class="block w-full rounded-lg border border-secondary bg-gray-800/40 p-2.5 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
       >
         <option *ngFor="let state of states" value="{{ state.value }}" selected>
           {{ state.label }}
@@ -77,156 +77,156 @@
       </select>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="text"
         id="logoUrl"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="logoUrl"
         maxlength="3000"
         required
       />
       <label
         for="logoUrl"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         URL du logo
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="text"
         id="phase2ChallongeUrl"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="phase2ChallongeUrl"
         maxlength="3000"
         required
       />
       <label
         for="phase2ChallongeUrl"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         URL du challonge (Phase 2)
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="number"
         min="0"
         id="winnerId"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="winnerId"
       />
       <label
         for="winnerId"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Identifiant du gagnant
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="date"
         id="plannedFrom"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="plannedFrom"
       />
       <label
         for="plannedFrom"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Planifié du
         <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="date"
         id="plannedTo"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="plannedTo"
       />
       <label
         for="plannedTo"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Au
         <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="number"
         min="-100"
         id="winPoints"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="winPoints"
       />
       <label
         for="winPoints"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Score lors d'une victoire <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="number"
         min="-100"
         id="loosePoints"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="loosePoints"
       />
       <label
         for="loosePoints"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Score lors d'une défaite <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="number"
         min="-100"
         id="drawPoints"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="drawPoints"
       />
       <label
         for="drawPoints"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Score lors d'un nul <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mb-6 group">
+    <div class="group relative z-0 mb-6 w-full">
       <input
         type="string"
         aria-multiline="true"
         id="rules"
-        class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-secondary peer"
+        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
         formControlName="rules"
       />
       <label
         for="rules"
-        class="peer-focus:font-medium absolute text-sm text-gray-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-secondary peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
       >
         Règles <span class="text-customRed">*</span>
       </label>
     </div>
 
-    <div class="relative z-0 w-full mt-6 mb-6 group">
+    <div class="group relative z-0 mb-6 mt-6 w-full">
       <label
         for="featured"
-        class="block mb-2 text-sm font-medium text-white scale-100"
+        class="mb-2 block scale-100 text-sm font-medium text-white"
       >
         Mis en avant
       </label>
@@ -236,19 +236,19 @@
 
     <button
       (click)="editTournament()"
-      class="text-white bg-customYellow hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-customYellow font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      class="w-full rounded-lg bg-customYellow px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-customYellow"
     >
       Modifier
     </button>
   </form>
 </div>
 
-<div class="flex flex-col items-center mt-4">
+<div class="mt-4 flex flex-col items-center">
   <table
-    class="w-2/3 text-sm text-left text-gray-400 mt-4"
+    class="mt-4 w-2/3 text-left text-sm text-gray-400"
     *ngIf="loading == false && tournament != null"
   >
-    <thead class="text-xs uppercase bg-primary text-white">
+    <thead class="bg-primary text-xs uppercase text-white">
       <tr>
         <th scope="col" class="px-6 py-3">#</th>
         <th scope="col" class="px-6 py-3">Nom</th>
@@ -259,10 +259,10 @@
     </thead>
     <tbody>
       <tr
-        class="border-b border-secondary bg-secondaryDarker text-white"
+        class="bg-secondaryDarker border-b border-secondary text-white"
         *ngFor="let player of tournament.players"
       >
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+        <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium">
           {{ player.player.id }}
         </th>
         <td class="px-6 py-4">{{ player.player.fullName }}</td>
@@ -272,7 +272,7 @@
         <td class="px-6 py-4">
           {{ player.team.name }}
         </td>
-        <td class="px-6 py-4 flex flex-row">
+        <td class="flex flex-row px-6 py-4">
           <button (click)="deleteUser(player.player.id)">
             <img src="assets/img/svg/trash.svg" class="w-8" />
           </button>

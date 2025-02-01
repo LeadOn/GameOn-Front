@@ -3,10 +3,10 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-common-page-header',
-    templateUrl: './common-page-header.component.html',
-    styleUrl: './common-page-header.component.scss',
-    standalone: false
+  selector: 'app-common-page-header',
+  templateUrl: './common-page-header.component.html',
+  styleUrl: './common-page-header.component.scss',
+  standalone: false,
 })
 export class CommonPageHeaderComponent {
   @Input()

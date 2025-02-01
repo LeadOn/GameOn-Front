@@ -1,16 +1,16 @@
-<div class="lg:flex h-screen bg-bgLightDarker dark:bg-bgDarkDarker">
+<div class="h-screen bg-bgLightDarker dark:bg-bgDarkDarker lg:flex">
   <nav
-    class="fixed lg:relative z-50 lg:z-auto w-11/12 lg:w-1/6 h-16 lg:h-auto max-w-lg lg:max-w-none -translate-x-1/2 lg:-translate-x-0 bg-bgLight dark:bg-bgDark border border-l-2 border-r-2 dark:border-2 lg:dark:border-0 border-l-frenchBlue border-t-gray-300 dark:border-y-bgLight border-b-gray-300 border-r-frenchRed lg:border-0 rounded-full lg:rounded-none bottom-4 lg:bottom-auto left-1/2 lg:left-auto drop-shadow-xl"
+    class="fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-l-2 border-r-2 border-b-gray-300 border-l-frenchBlue border-r-frenchRed border-t-gray-300 bg-bgLight drop-shadow-xl dark:border-2 dark:border-y-bgLight dark:bg-bgDark lg:relative lg:bottom-auto lg:left-auto lg:z-auto lg:h-auto lg:w-1/6 lg:max-w-none lg:-translate-x-0 lg:rounded-none lg:border-0 lg:dark:border-0"
   >
     <div
-      class="grid lg:flex lg:flex-col grid-cols-5 lg:grid-cols-none h-full lg:h-auto max-w-lg lg:max-w-full mx-auto lg:mx-0 lg:pt-4"
+      class="mx-auto grid h-full max-w-lg grid-cols-5 lg:mx-0 lg:flex lg:h-auto lg:max-w-full lg:grid-cols-none lg:flex-col lg:pt-4"
     >
-      <div class="hidden lg:flex lg:flex-col lg:w-full lg:justify-center">
+      <div class="hidden lg:flex lg:w-full lg:flex-col lg:justify-center">
         <a
           routerLink=""
-          class="px-4 flex self-center items-center justify-center text-xl font-bold text-primaryDarker"
+          class="text-primaryDarker flex items-center justify-center self-center px-4 text-xl font-bold"
           ><img
-            class="w-8 h-8"
+            class="h-8 w-8"
             src="assets/img/gameon-logo.webp"
             alt="GameOn!'s logo"
           />
@@ -20,7 +20,7 @@
 
       <div
         routerLink=""
-        class="lg:hidden cursor-pointer inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-4 rounded-s-full lg:rounded-none group lg:mt-4"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:hidden lg:flex-row lg:justify-start lg:rounded-none lg:px-4"
       >
         <fa-icon
           [icon]="homeIcon"
@@ -29,7 +29,7 @@
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
+        class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
         <span class="font-semibold text-primary dark:text-primaryDark"
           >Football</span
@@ -37,7 +37,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/fifa" type="button" class="lg:hidden">
           <fa-icon
@@ -59,7 +59,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:hidden inline-flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:hidden lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <img
           src="assets/img/svg/lol.svg"
@@ -69,7 +69,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-2 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-2 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
           <fa-icon
@@ -91,7 +91,7 @@
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
+        class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
         <span class="font-semibold text-primary dark:text-primaryDark"
           >League of Legends</span
@@ -99,7 +99,7 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex hidden lg:flex flex-col lg:justify-start px-5 lg:px-6 rounded-s-full lg:rounded-none group space-y-1"
+        class="group inline-flex hidden cursor-pointer flex-col space-y-1 rounded-s-full px-5 lg:mt-4 lg:flex lg:justify-start lg:rounded-none lg:px-6"
       >
         <div *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
           <a
@@ -118,7 +118,7 @@
       </div>
 
       <div
-        class="hidden lg:flex lg:flex-row lg:space-x-2 lg:items-center lg:mt-8 lg:px-8"
+        class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
         <span class="font-semibold text-primary dark:text-primaryDark"
           >Compte</span
@@ -126,13 +126,13 @@
       </div>
 
       <div
-        class="cursor-pointer lg:mt-4 inline-flex lg:flex flex-col lg:flex-row items-center justify-center lg:justify-start px-5 lg:px-8 rounded-s-full lg:rounded-none group"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button
           *ngIf="isLoggedIn == true"
           routerLink="/player/me"
           type="button"
-          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full group"
+          class="group inline-flex flex-col items-center justify-center rounded-e-full px-5 lg:hidden"
         >
           <fa-icon
             [icon]="userIcon"
@@ -144,7 +144,7 @@
           *ngIf="isLoggedIn == false"
           (click)="login()"
           type="button"
-          class="lg:hidden inline-flex flex-col items-center justify-center px-5 rounded-e-full group"
+          class="group inline-flex flex-col items-center justify-center rounded-e-full px-5 lg:hidden"
         >
           <fa-icon
             [icon]="userIcon"
@@ -189,30 +189,25 @@
     </div>
   </nav>
 
-  <div class="lg:flex lg:flex-col lg:w-full">
+  <div class="lg:flex lg:w-full lg:flex-col">
     <header
-      class="flex items-center justify-between lg:justify-end self-center h-16 px-4 bg-bgLight dark:bg-bgDark lg:w-full"
+      class="flex h-16 items-center justify-between self-center bg-bgLight px-4 dark:bg-bgDark lg:w-full lg:justify-end"
     >
       <a
         routerLink=""
-        class="flex self-center items-center justify-center text-xl font-bold text-primaryDarker lg:hidden"
+        class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold lg:hidden"
         ><img
-          class="w-8 h-8"
+          class="h-8 w-8"
           src="assets/img/gameon-logo.webp"
           alt="GameOn!'s logo"
         />
         <span class="ml-2 dark:text-primaryDark">GameOn!</span></a
       >
 
-      <div class="flex justify-center items-center space-x-4">
-        <app-pill
-          [title]="'Me soutenir'"
-          [icon]="btcIcon"
-          [iconColor]="'text-customYellow'"
-          [borderStyle]="'primary'"
-          [showExternalIcon]="true"
-          routerLink="/donate"
-        ></app-pill>
+      <div class="flex items-center justify-center space-x-4">
+        <a routerLink="/donate">
+          <fa-icon [icon]="btcIcon" class="text-lg text-customYellow"></fa-icon>
+        </a>
 
         <button type="button" (click)="darkMode.set(!darkMode())">
           <fa-icon
@@ -230,7 +225,7 @@
     </header>
 
     <div
-      class="pb-24 lg:pb-0 px-0 md:px-16 lg:px-32 xl:px-64 2xl:px-80 3xl:px-96 lg:overflow-y-scroll bg-bgLightDarker dark:bg-bgDarkDarker"
+      class="3xl:px-96 bg-bgLightDarker px-0 pb-24 dark:bg-bgDarkDarker md:px-16 lg:overflow-y-scroll lg:px-32 lg:pb-0 xl:px-64 2xl:px-80"
     >
       <router-outlet></router-outlet>
     </div>

@@ -26,7 +26,7 @@ export class GameOnSoccerfiveService {
   create(
     name?: string,
     description?: string,
-    plannedOn?: string
+    plannedOn?: string,
   ): Observable<SoccerFive> {
     return this.client.post<SoccerFive>(this.baseControllerUrl, {
       name,
@@ -55,7 +55,7 @@ export class GameOnSoccerfiveService {
   UpdateSurvey(
     fiveId: number,
     question: string,
-    choices: SoccerFiveVoteChoice[]
+    choices: SoccerFiveVoteChoice[],
   ): Observable<SoccerFiveDto> {
     return this.client.patch<SoccerFiveDto>(
       this.baseControllerUrl + '/' + fiveId + '/survey',
@@ -63,14 +63,14 @@ export class GameOnSoccerfiveService {
         SoccerFiveId: fiveId,
         VoteQuestion: question,
         VotesChoices: choices,
-      }
+      },
     );
   }
 
   vote(fiveId: number, voteDto: VoteSoccerFiveDto) {
     return this.client.post<boolean>(
       this.baseControllerUrl + '/' + fiveId + '/survey/vote',
-      voteDto
+      voteDto,
     );
   }
 
@@ -79,7 +79,7 @@ export class GameOnSoccerfiveService {
     name?: string,
     description?: string,
     dateTime?: string,
-    state?: number
+    state?: number,
   ) {
     let body = {
       id: fiveId,
