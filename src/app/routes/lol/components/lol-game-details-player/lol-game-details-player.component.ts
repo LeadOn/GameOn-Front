@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { LoLGameParticipant } from '../../../shared/classes/lol/LoLGameParticipant';
 import { faExternalLink, faList } from '@fortawesome/free-solid-svg-icons';
-import { LoLGameTimelineFrame } from '../../../shared/classes/lol/LoLGameTimelineFrame';
+import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
+import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-lol-game-details-player',

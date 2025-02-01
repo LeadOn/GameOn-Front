@@ -1,4 +1,4 @@
-<section id="game-header" class="px-4 mt-4">
+<section id="game-header" class="mt-4 px-4">
   <app-common-page-header [title]="'Partie ' + gameId"></app-common-page-header>
 </section>
 
@@ -48,7 +48,7 @@
   </div>
 </section>
 
-<div class="px-4 mt-4">
+<div class="mt-4 px-4">
   <app-lol-game-card
     [game]="game"
     [playerId]="playerId"
@@ -56,9 +56,9 @@
   ></app-lol-game-card>
 </div>
 
-<section id="lol-team-1-header" class="px-4 mt-4" *ngIf="game != null">
-  <div class="flex justify-between items-center animate-fade-up">
-    <div class="flex justify-center items-center">
+<section id="lol-team-1-header" class="mt-4 px-4" *ngIf="game != null">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center">
       <img src="assets/img/svg/lol.svg" class="w-8" />
 
       <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -90,21 +90,21 @@
 
 <section
   id="lol-team1"
-  class="px-4 mt-4"
+  class="mt-4 px-4"
   *ngIf="game != null && team1.length > 0"
 >
-  <div class="flex flex-col animate-fade-up divide-y-2 divide-gray-400">
-    <app-lol-game-details-player
+  <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
+    <app-lol-old-game-details-player
       *ngFor="let player of team1"
       [player]="player"
       [timeline]="timeline"
-    ></app-lol-game-details-player>
+    ></app-lol-old-game-details-player>
   </div>
 </section>
 
-<section id="lol-team-2-header" class="px-4 mt-4" *ngIf="game != null">
-  <div class="flex justify-between items-center animate-fade-up">
-    <div class="flex justify-center items-center">
+<section id="lol-team-2-header" class="mt-4 px-4" *ngIf="game != null">
+  <div class="flex animate-fade-up items-center justify-between">
+    <div class="flex items-center justify-center">
       <img src="assets/img/svg/lol.svg" class="w-8" />
 
       <span class="text-lg font-semibold text-primary dark:text-primaryDark"
@@ -136,14 +136,14 @@
 
 <section
   id="lol-team2"
-  class="px-4 mt-4"
+  class="mt-4 px-4"
   *ngIf="game != null && team2.length > 0"
 >
-  <div class="flex flex-col animate-fade-up divide-y-2 divide-gray-400">
-    <app-lol-game-details-player
+  <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
+    <app-lol-old-game-details-player
       *ngFor="let player of team2"
       [player]="player"
       [timeline]="timeline"
-    ></app-lol-game-details-player>
+    ></app-lol-old-game-details-player>
   </div>
 </section>
