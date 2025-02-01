@@ -5,23 +5,21 @@ import {
   faExternalLinkAlt,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { trigger, style, animate, transition } from '@angular/animations';
-import { Player } from '../../shared/classes/common/Player';
-import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
-import { Season } from '../../shared/classes/fifa/Season';
-import { GameOnSeasonService } from '../../shared/services/fifa/gameon-season.service';
-import { PlatformStatsDto } from '../../shared/classes/common/PlatformStatsDto';
-import { FifaPlayerStatsDto } from '../../shared/classes/fifa/FifaPlayerStatsDto';
-import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
-import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
-
+import { PlatformStatsDto } from '../../../shared/classes/common/PlatformStatsDto';
+import { FifaPlayerStatsDto } from '../../../shared/classes/fifa/FifaPlayerStatsDto';
+import { Player } from '../../../shared/classes/common/Player';
+import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
+import { Season } from '../../../shared/classes/fifa/Season';
+import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
+import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
+import { GameOnSeasonService } from '../../../shared/services/fifa/gameon-season.service';
 @Component({
-  selector: 'app-player-details',
-  templateUrl: './player-details.component.html',
-  styleUrls: ['./player-details.component.scss'],
+  selector: 'app-fifa-player-details',
+  templateUrl: './fifa-player-details.component.html',
+  styleUrls: ['./fifa-player-details.component.scss'],
   standalone: false,
 })
-export class PlayerDetailsComponent implements OnInit {
+export class FifaPlayerDetailsComponent implements OnInit {
   selectedStats = 0;
   selectedEnemy = 0;
   selectedSeason = 0;
@@ -45,7 +43,7 @@ export class PlayerDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private playerService: GameOnPlayerService,
     private gameService: GameOnGameService,
-    private seasonService: GameOnSeasonService
+    private seasonService: GameOnSeasonService,
   ) {}
 
   ngOnInit(): void {
@@ -113,34 +111,34 @@ export class PlayerDetailsComponent implements OnInit {
                   },
                   (err) => {
                     alert(
-                      'Erreur lors de la récupération des dernières parties jouées.'
+                      'Erreur lors de la récupération des dernières parties jouées.',
                     );
                     console.error(err);
-                  }
+                  },
                 );
               },
               (err) => {
                 alert(
-                  "Une erreur est survenue lors de la récupération des statistiques de l'utilisateur."
+                  "Une erreur est survenue lors de la récupération des statistiques de l'utilisateur.",
                 );
                 console.error(err);
-              }
+              },
             );
           },
           (err) => {
             alert(
-              'Une erreur est survenue lors de la récupération des saisons.'
+              'Une erreur est survenue lors de la récupération des saisons.',
             );
             console.error(err);
-          }
+          },
         );
       },
       (err) => {
         alert(
-          "Une erreur est survenue lors de la récupération du profil de l'utilisateur."
+          "Une erreur est survenue lors de la récupération du profil de l'utilisateur.",
         );
         console.error(err);
-      }
+      },
     );
   }
 
@@ -158,10 +156,10 @@ export class PlayerDetailsComponent implements OnInit {
       },
       (err) => {
         alert(
-          'Une erreur est survenue lors de la récupération de la liste des utilisateurs.'
+          'Une erreur est survenue lors de la récupération de la liste des utilisateurs.',
         );
         console.error(err);
-      }
+      },
     );
   }
 
@@ -185,18 +183,18 @@ export class PlayerDetailsComponent implements OnInit {
               },
               (err) => {
                 alert(
-                  "Une erreur est survenue lors de la récupération des statistiques de l'adversaire."
+                  "Une erreur est survenue lors de la récupération des statistiques de l'adversaire.",
                 );
                 console.error(err);
-              }
+              },
             );
         },
         (err) => {
           alert(
-            "Une erreur est survenue lors de la récupération du profil de l'adversaire."
+            "Une erreur est survenue lors de la récupération du profil de l'adversaire.",
           );
           console.error(err);
-        }
+        },
       );
     }
   }
@@ -216,10 +214,10 @@ export class PlayerDetailsComponent implements OnInit {
         },
         (err) => {
           alert(
-            'Une erreur est survenue lors de la récupération des statistiques de la saison.'
+            'Une erreur est survenue lors de la récupération des statistiques de la saison.',
           );
           console.error(err);
-        }
+        },
       );
     }
   }
