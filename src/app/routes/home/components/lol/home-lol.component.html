@@ -1,5 +1,8 @@
 <section id="lol-header">
-  <div class="flex animate-fade-up items-center justify-between">
+  <div
+    class="flex animate-fade cursor-pointer items-center justify-between"
+    routerLink="/lol"
+  >
     <div class="flex items-center justify-center">
       <img src="assets/img/svg/lol.svg" class="w-8" />
 
@@ -7,12 +10,6 @@
         >League of Legends</span
       >
     </div>
-
-    <fa-icon
-      [icon]="externalIcon"
-      class="cursor-pointer text-primary dark:text-primaryDark"
-      routerLink="/lol"
-    ></fa-icon>
   </div>
 </section>
 
@@ -27,7 +24,7 @@
 
 <section
   id="lol-card"
-  class="lol-card mt-4 flex aspect-video animate-fade-up cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
+  class="lol-card mt-4 flex aspect-video animate-fade cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
   routerLink="/lol"
 >
   <span class="mt-2 w-full text-left"
