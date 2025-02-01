@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { DonateComponent } from './routes/donate/donate.component';
-import { LolHomeComponent } from './lol/lol-home.component';
 import { LolPlayerDetailsComponent } from './lol/player/lol-player-details.component';
 import { LolGameDetailsComponent } from './lol/games/details/lol-game-details.component';
 import { canActivateAuthRole } from './core/guards/auth.guard';
@@ -11,6 +10,7 @@ import { ChangelogComponent } from './routes/changelog/changelog.component';
 import { HomeComponent } from './routes/home/home.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
 import { FifaPlayerDetailsComponent } from './routes/fifa/player/fifa-player-details.component';
+import { LolHomeComponent } from './lol/lol-home.component';
 
 export const routes: Routes = [
   {
@@ -56,6 +56,11 @@ export const routes: Routes = [
         component: LolGameDetailsComponent,
       },
     ],
+  },
+  {
+    path: 'lolbeta',
+    loadChildren: () =>
+      import('./routes/lol/lol.module').then((m) => m.LolModule),
   },
   {
     path: 'fifa',
