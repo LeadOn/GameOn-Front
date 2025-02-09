@@ -1,6 +1,6 @@
 {
   "name": "gameon-front",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -21,9 +21,9 @@
     "@angular/router": "^19.1.5",
     "@fortawesome/angular-fontawesome": "^1.0.0",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@ngrx/store": "^19.0.0",
+    "@ngrx/store": "^19.0.1",
     "chart.js": "^4.4.7",
-    "flowbite": "^3.0.0",
+    "flowbite": "^3.1.2",
     "keycloak-angular": "^19.0.2",
     "keycloak-js": "^26.0.7",
     "rxjs": "~7.8.1",
