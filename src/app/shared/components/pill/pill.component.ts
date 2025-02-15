@@ -7,7 +7,7 @@ import {
 @Component({
   selector: 'app-pill',
   templateUrl: './pill.component.html',
-  styleUrl: './pill.component.scss',
+  styleUrl: './pill.component.css',
   standalone: false,
 })
 export class PillComponent implements OnInit {

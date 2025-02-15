@@ -16,7 +16,7 @@ import { GameOnSeasonService } from '../../../shared/services/fifa/gameon-season
 @Component({
   selector: 'app-fifa-player-details',
   templateUrl: './fifa-player-details.component.html',
-  styleUrls: ['./fifa-player-details.component.scss'],
+  styleUrls: ['./fifa-player-details.component.css'],
   standalone: false,
 })
 export class FifaPlayerDetailsComponent implements OnInit {

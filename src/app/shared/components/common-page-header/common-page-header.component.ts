@@ -5,7 +5,7 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-common-page-header',
   templateUrl: './common-page-header.component.html',
-  styleUrl: './common-page-header.component.scss',
+  styleUrl: './common-page-header.component.css',
   standalone: false,
 })
 export class CommonPageHeaderComponent {

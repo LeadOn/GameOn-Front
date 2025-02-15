@@ -9,7 +9,7 @@ import { setPlayer, setPlayerStats } from './core/store/actions/player.actions';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  styleUrl: './app.component.css',
   standalone: false,
 })
 export class AppComponent implements OnInit {

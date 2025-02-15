@@ -9,7 +9,7 @@ import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/ga
   standalone: false,
 
   templateUrl: './lol-game-card.component.html',
-  styleUrl: './lol-game-card.component.scss',
+  styleUrl: './lol-game-card.component.css',
 })
 export class LolGameCardComponent implements OnChanges {
   @Input()

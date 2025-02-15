@@ -14,7 +14,7 @@ import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifa
 @Component({
   selector: 'app-fifa-create-game',
   templateUrl: './fifa-create-game.component.html',
-  styleUrls: ['./fifa-create-game.component.scss'],
+  styleUrls: ['./fifa-create-game.component.css'],
   standalone: false,
 })
 export class FifaCreateGameComponent implements OnInit {

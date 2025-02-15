@@ -4,7 +4,7 @@ import { faCheck, faClose } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-success-alert',
   templateUrl: './success-alert.component.html',
-  styleUrls: ['./success-alert.component.scss'],
+  styleUrls: ['./success-alert.component.css'],
   standalone: false,
 })
 export class SuccessAlertComponent {

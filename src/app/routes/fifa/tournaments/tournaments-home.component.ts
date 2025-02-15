@@ -6,7 +6,7 @@ import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-to
 @Component({
   selector: 'app-tournaments-home',
   templateUrl: './tournaments-home.component.html',
-  styleUrls: ['./tournaments-home.component.scss'],
+  styleUrls: ['./tournaments-home.component.css'],
   standalone: false,
 })
 export class TournamentsHomeComponent implements OnInit {

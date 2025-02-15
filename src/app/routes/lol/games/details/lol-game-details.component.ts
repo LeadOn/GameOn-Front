@@ -9,7 +9,7 @@ import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/ga
 @Component({
   selector: 'app-lol-game-details',
   templateUrl: './lol-game-details.component.html',
-  styleUrl: './lol-game-details.component.scss',
+  styleUrl: './lol-game-details.component.css',
   standalone: false,
 })
 export class LolGameDetailsComponent implements OnInit {

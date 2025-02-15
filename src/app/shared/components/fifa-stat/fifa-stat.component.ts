@@ -4,7 +4,7 @@ import { PlatformStatsDto } from '../../classes/common/PlatformStatsDto';
 @Component({
   selector: 'app-fifa-stat',
   templateUrl: './fifa-stat.component.html',
-  styleUrls: ['./fifa-stat.component.scss'],
+  styleUrls: ['./fifa-stat.component.css'],
   standalone: false,
 })
 export class FifaStatComponent implements OnInit {

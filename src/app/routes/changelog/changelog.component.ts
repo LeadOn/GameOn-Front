@@ -6,7 +6,7 @@ import { GameOnChangelogService } from '../../shared/services/common/gameon-chan
 @Component({
   selector: 'app-changelog',
   templateUrl: './changelog.component.html',
-  styleUrl: './changelog.component.scss',
+  styleUrl: './changelog.component.css',
   standalone: false,
 })
 export class ChangelogComponent implements OnInit {

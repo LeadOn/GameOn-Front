@@ -7,7 +7,7 @@ import { GameOnCommonService } from '../../shared/services/common/gameon-common.
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: ['./home.component.css'],
   standalone: false,
 })
 export class HomeComponent implements OnInit {

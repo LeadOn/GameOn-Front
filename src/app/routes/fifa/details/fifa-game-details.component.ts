@@ -18,7 +18,7 @@ import { CreateHighlightDto } from '../../../shared/classes/common/CreateHighlig
 @Component({
   selector: 'app-fifa-game-details',
   templateUrl: './fifa-game-details.component.html',
-  styleUrls: ['./fifa-game-details.component.scss'],
+  styleUrls: ['./fifa-game-details.component.css'],
 
   standalone: false,
 })

@@ -7,7 +7,7 @@ import { Player } from '../../shared/classes/common/Player';
 @Component({
   selector: 'app-admin-players',
   templateUrl: './admin-players.component.html',
-  styleUrls: ['./admin-players.component.scss'],
+  styleUrls: ['./admin-players.component.css'],
   animations: [
     trigger('inOutAnimation', [
       transition(':enter', [

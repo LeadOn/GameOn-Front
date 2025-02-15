@@ -9,7 +9,7 @@ import { environment } from '../../../../../environments/environment';
   standalone: false,
 
   templateUrl: './lol-game-details-player.component.html',
-  styleUrl: './lol-game-details-player.component.scss',
+  styleUrl: './lol-game-details-player.component.css',
 })
 export class LolGameDetailsPlayerComponent implements OnChanges {
   @Input()

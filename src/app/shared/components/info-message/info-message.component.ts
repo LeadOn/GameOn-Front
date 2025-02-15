@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 @Component({
   selector: 'app-info-message',
   templateUrl: './info-message.component.html',
-  styleUrl: './info-message.component.scss',
+  styleUrl: './info-message.component.css',
   standalone: false,
 })
 export class InfoMessageComponent {

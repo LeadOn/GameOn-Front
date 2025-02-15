@@ -9,7 +9,7 @@ import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-l
 @Component({
   selector: 'app-lol-home',
   templateUrl: './lol-home.component.html',
-  styleUrl: './lol-home.component.scss',
+  styleUrl: './lol-home.component.css',
   standalone: false,
 })
 export class LolHomeComponent implements OnInit {

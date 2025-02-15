@@ -7,7 +7,7 @@ import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-to
 @Component({
   selector: 'app-admin-create-tournament-edit',
   templateUrl: './admin-create-tournament.component.html',
-  styleUrls: ['./admin-create-tournament.component.scss'],
+  styleUrls: ['./admin-create-tournament.component.css'],
   standalone: false,
 })
 export class AdminCreateTournamentComponent implements OnInit {

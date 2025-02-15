@@ -12,7 +12,7 @@ import { Tournament } from '../../shared/classes/fifa/Tournament';
 @Component({
   selector: 'app-admin-tournaments',
   templateUrl: './admin-tournaments.component.html',
-  styleUrls: ['./admin-tournaments.component.scss'],
+  styleUrls: ['./admin-tournaments.component.css'],
   standalone: false,
 })
 export class AdminTournamentsComponent implements OnInit {

@@ -10,7 +10,7 @@ import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameo
 @Component({
   selector: 'app-lol-player-details',
   templateUrl: './lol-player-details.component.html',
-  styleUrl: './lol-player-details.component.scss',
+  styleUrl: './lol-player-details.component.css',
   standalone: false,
 })
 export class LolPlayerDetailsComponent implements OnInit {

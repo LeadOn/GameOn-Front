@@ -5,7 +5,7 @@ import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-home-lol',
   templateUrl: './home-lol.component.html',
-  styleUrl: './home-lol.component.scss',
+  styleUrl: './home-lol.component.css',
   standalone: false,
 })
 export class HomeLolComponent {

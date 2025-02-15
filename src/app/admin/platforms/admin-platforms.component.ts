@@ -7,7 +7,7 @@ import { GameOnPlatformService } from '../../shared/services/common/gameon-platf
 @Component({
   selector: 'app-admin-platforms',
   templateUrl: './admin-platforms.component.html',
-  styleUrls: ['./admin-platforms.component.scss'],
+  styleUrls: ['./admin-platforms.component.css'],
   animations: [
     trigger('inOutAnimation', [
       transition(':enter', [

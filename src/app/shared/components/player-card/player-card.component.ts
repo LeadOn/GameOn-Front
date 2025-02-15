@@ -4,7 +4,7 @@ import { Player } from '../../classes/common/Player';
 @Component({
   selector: 'app-player-card',
   templateUrl: './player-card.component.html',
-  styleUrls: ['./player-card.component.scss'],
+  styleUrls: ['./player-card.component.css'],
   standalone: false,
 })
 export class PlayerCardComponent {

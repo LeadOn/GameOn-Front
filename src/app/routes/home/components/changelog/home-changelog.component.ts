@@ -5,7 +5,7 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-home-changelog',
   templateUrl: './home-changelog.component.html',
-  styleUrl: './home-changelog.component.scss',
+  styleUrl: './home-changelog.component.css',
   standalone: false,
 })
 export class HomeChangelogComponent implements OnChanges {

@@ -5,7 +5,7 @@ import { Highlight } from '../../shared/classes/common/Highlight';
 @Component({
   selector: 'app-admin-highlights',
   templateUrl: './admin-highlights.component.html',
-  styleUrls: ['./admin-highlights.component.scss'],
+  styleUrls: ['./admin-highlights.component.css'],
   standalone: false,
 })
 export class AdminHighlightsComponent implements OnInit {

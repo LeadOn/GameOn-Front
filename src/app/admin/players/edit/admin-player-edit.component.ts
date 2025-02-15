@@ -10,7 +10,7 @@ import { GameOnPlayerService } from '../../../shared/services/common/gameon-play
 @Component({
   selector: 'app-admin-player-edit',
   templateUrl: './admin-player-edit.component.html',
-  styleUrls: ['./admin-player-edit.component.scss'],
+  styleUrls: ['./admin-player-edit.component.css'],
   animations: [
     trigger('inOutAnimation', [
       transition(':enter', [

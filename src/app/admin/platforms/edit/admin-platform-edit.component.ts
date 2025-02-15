@@ -10,7 +10,7 @@ import { Platform } from '../../../shared/classes/common/Platform';
 @Component({
   selector: 'app-admin-platform-edit',
   templateUrl: './admin-platform-edit.component.html',
-  styleUrls: ['./admin-platform-edit.component.scss'],
+  styleUrls: ['./admin-platform-edit.component.css'],
   animations: [
     trigger('inOutAnimation', [
       transition(':enter', [

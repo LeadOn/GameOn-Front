@@ -14,7 +14,7 @@ import { setPlayerStats } from '../../../../core/store/actions/player.actions';
 @Component({
   selector: 'app-home-fifa',
   templateUrl: './home-fifa.component.html',
-  styleUrl: './home-fifa.component.scss',
+  styleUrl: './home-fifa.component.css',
   standalone: false,
 })
 export class HomeFifaComponent implements OnChanges {

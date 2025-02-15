@@ -7,15 +7,11 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
+          "style": "css",
           "standalone": false
         },
-        "@schematics/angular:directive": {
-          "standalone": false
-        },
-        "@schematics/angular:pipe": {
-          "standalone": false
-        }
+        "@schematics/angular:directive": { "standalone": false },
+        "@schematics/angular:pipe": { "standalone": false }
       },
       "root": "",
       "sourceRoot": "src",
@@ -29,14 +25,9 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
-            "styles": ["src/styles.scss"],
+            "inlineStyleLanguage": "css",
+            "assets": [{ "glob": "**/*", "input": "public" }],
+            "styles": ["src/styles.css"],
             "scripts": [],
             "allowedCommonJsDependencies": ["js-sha256"]
           },
@@ -73,12 +64,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "gameon-front:build:production"
-            },
-            "development": {
-              "buildTarget": "gameon-front:build:development"
-            }
+            "production": { "buildTarget": "gameon-front:build:production" },
+            "development": { "buildTarget": "gameon-front:build:development" }
           },
           "defaultConfiguration": "development"
         },
@@ -90,21 +77,14 @@
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
-            "styles": ["src/styles.scss"],
+            "inlineStyleLanguage": "css",
+            "assets": [{ "glob": "**/*", "input": "public" }],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }
       }
     }
   },
-  "cli": {
-    "analytics": false
-  }
+  "cli": { "analytics": false }
 }

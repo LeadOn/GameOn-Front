@@ -6,7 +6,7 @@ import { GameOnGameService } from '../../shared/services/fifa/gameon-game.servic
 @Component({
   selector: 'app-admin-fifa-games',
   templateUrl: './admin-fifa-games.component.html',
-  styleUrls: ['./admin-fifa-games.component.scss'],
+  styleUrls: ['./admin-fifa-games.component.css'],
   standalone: false,
 })
 export class AdminFifaGamesComponent implements OnInit {

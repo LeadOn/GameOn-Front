@@ -13,7 +13,7 @@ import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifa
 @Component({
   selector: 'app-admin-fifa-game-edit',
   templateUrl: './admin-fifa-game-edit.component.html',
-  styleUrls: ['./admin-fifa-game-edit.component.scss'],
+  styleUrls: ['./admin-fifa-game-edit.component.css'],
   standalone: false,
 })
 export class AdminFifaGameEditComponent implements OnInit {

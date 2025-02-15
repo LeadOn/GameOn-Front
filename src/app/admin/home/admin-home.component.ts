@@ -14,7 +14,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.scss'],
+  styleUrls: ['./admin-home.component.css'],
   animations: [
     trigger('inOutAnimation', [
       transition(':enter', [

@@ -31,7 +31,7 @@ import { setPlayer } from '../../core/store/actions/player.actions';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  styleUrls: ['./profile.component.css'],
   standalone: false,
 })
 export class ProfilePageComponent implements OnInit, OnChanges {

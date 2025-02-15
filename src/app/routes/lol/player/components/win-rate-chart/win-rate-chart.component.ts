@@ -10,7 +10,7 @@ import { Chart } from 'chart.js/auto';
 @Component({
   selector: 'app-win-rate-chart',
   templateUrl: './win-rate-chart.component.html',
-  styleUrl: './win-rate-chart.component.scss',
+  styleUrl: './win-rate-chart.component.css',
   standalone: false,
 })
 export class WinRateChartComponent implements OnInit, OnChanges {

@@ -11,7 +11,7 @@ import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/Le
 @Component({
   selector: 'app-rank-history',
   templateUrl: './rank-history.component.html',
-  styleUrl: './rank-history.component.scss',
+  styleUrl: './rank-history.component.css',
   standalone: false,
 })
 export class RankHistoryComponent implements OnInit, OnChanges {

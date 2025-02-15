@@ -20,7 +20,7 @@ import { Player } from '../../../../shared/classes/common/Player';
 @Component({
   selector: 'app-tournaments-details',
   templateUrl: './tournaments-details.component.html',
-  styleUrls: ['./tournaments-details.component.scss'],
+  styleUrls: ['./tournaments-details.component.css'],
   standalone: false,
 })
 export class TournamentsDetailsComponent implements OnInit {

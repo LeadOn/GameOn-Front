@@ -10,7 +10,7 @@ import { GameOnCommonService } from '../../../shared/services/common/gameon-comm
 @Component({
   selector: 'app-fifa-global-stats',
   templateUrl: './fifa-global-stats.component.html',
-  styleUrl: './fifa-global-stats.component.scss',
+  styleUrl: './fifa-global-stats.component.css',
   standalone: false,
 })
 export class FifaGlobalStatsComponent implements OnInit {

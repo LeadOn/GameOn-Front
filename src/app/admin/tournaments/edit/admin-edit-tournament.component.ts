@@ -8,7 +8,7 @@ import { Tournament } from '../../../shared/classes/fifa/Tournament';
 @Component({
   selector: 'app-admin-edit-tournament-edit',
   templateUrl: './admin-edit-tournament.component.html',
-  styleUrls: ['./admin-edit-tournament.component.scss'],
+  styleUrls: ['./admin-edit-tournament.component.css'],
   standalone: false,
 })
 export class AdminEditTournamentComponent implements OnInit {

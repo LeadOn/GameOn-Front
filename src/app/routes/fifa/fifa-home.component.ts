@@ -17,7 +17,7 @@ import { GameOnPlayerService } from '../../shared/services/common/gameon-player.
 @Component({
   selector: 'app-fifa-home',
   templateUrl: './fifa-home.component.html',
-  styleUrls: ['./fifa-home.component.scss'],
+  styleUrls: ['./fifa-home.component.css'],
   standalone: false,
 })
 export class FifaHomeComponent implements OnInit {

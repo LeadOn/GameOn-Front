@@ -13,7 +13,7 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
   standalone: false,
 
   templateUrl: './lol-game-details-player-graph.component.html',
-  styleUrl: './lol-game-details-player-graph.component.scss',
+  styleUrl: './lol-game-details-player-graph.component.css',
 })
 export class LolGameDetailsPlayerGraphComponent implements OnInit, OnChanges {
   randomId = 'damage-history-' + (Math.random() * 10000).toFixed(0).toString();
@@ -190,18 +190,9 @@ export class LolGameDetailsPlayerGraphComponent implements OnInit, OnChanges {
         datasets: [
           { label: 'Total des golds', data: totalGold },
           { label: 'Golds par seconde', data: goldPerSecond },
-          {
-            label: 'Golds actuels',
-            data: currentGold,
-          },
-          {
-            label: 'CS tués',
-            data: minionsKilled,
-          },
-          {
-            label: 'CS tués en jungle',
-            data: jungleMinionsKilled,
-          },
+          { label: 'Golds actuels', data: currentGold },
+          { label: 'CS tués', data: minionsKilled },
+          { label: 'CS tués en jungle', data: jungleMinionsKilled },
         ],
       },
       options: {

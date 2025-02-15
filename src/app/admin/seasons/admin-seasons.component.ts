@@ -7,7 +7,7 @@ import { GameOnSeasonService } from '../../shared/services/fifa/gameon-season.se
 @Component({
   selector: 'app-admin-seasons',
   templateUrl: './admin-seasons.component.html',
-  styleUrls: ['./admin-seasons.component.scss'],
+  styleUrls: ['./admin-seasons.component.css'],
   animations: [
     trigger('inOutAnimation', [
       transition(':enter', [

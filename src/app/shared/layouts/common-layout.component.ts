@@ -27,7 +27,7 @@ import Keycloak from 'keycloak-js';
 @Component({
   selector: 'app-common-layout',
   templateUrl: './common-layout.component.html',
-  styleUrls: ['./common-layout.component.scss'],
+  styleUrls: ['./common-layout.component.css'],
   standalone: false,
 })
 export class CommonLayoutComponent implements OnInit {
