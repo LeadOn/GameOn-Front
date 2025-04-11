@@ -3,7 +3,7 @@
     class="border-l-frenchBlue border-r-frenchRed bg-bgLight dark:border-y-bgLight dark:bg-bgDark fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 drop-shadow-xl lg:relative lg:bottom-auto lg:left-auto lg:z-auto lg:h-auto lg:w-1/6 lg:max-w-none lg:-translate-x-0 lg:rounded-none lg:border-0 dark:border-2 lg:dark:border-0"
   >
     <div
-      class="mx-auto grid h-full max-w-lg grid-cols-5 lg:mx-0 lg:flex lg:h-auto lg:max-w-full lg:grid-cols-none lg:flex-col lg:pt-4"
+      class="flex h-full w-full grow basis-1 items-center justify-around align-middle lg:h-auto lg:grow-0 lg:basis-0 lg:flex-col lg:items-start lg:justify-normal lg:pt-4 lg:align-baseline"
     >
       <div class="hidden lg:flex lg:w-full lg:flex-col lg:justify-center">
         <a
@@ -20,7 +20,7 @@
 
       <div
         routerLink=""
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:hidden lg:flex-row lg:justify-start lg:rounded-none lg:px-4"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-4 lg:hidden lg:flex-row lg:justify-start lg:rounded-none lg:px-4"
       >
         <fa-icon
           [icon]="homeIcon"
@@ -37,7 +37,7 @@
       </div>
 
       <div
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/fifa" type="button" class="lg:hidden">
           <fa-icon
@@ -59,7 +59,7 @@
       </div>
 
       <div
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:hidden lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:hidden lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <img
           src="assets/img/svg/lol.svg"
@@ -69,7 +69,7 @@
       </div>
 
       <div
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-2 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-2 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
           <fa-icon
@@ -99,7 +99,7 @@
       </div>
 
       <div
-        class="group hidden inline-flex cursor-pointer flex-col space-y-1 rounded-s-full px-5 lg:mt-4 lg:flex lg:justify-start lg:rounded-none lg:px-6"
+        class="group hidden cursor-pointer flex-col space-y-1 rounded-s-full lg:mt-4 lg:flex lg:justify-start lg:rounded-none lg:px-6"
       >
         <div *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
           <a
@@ -126,13 +126,13 @@
       </div>
 
       <div
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full px-5 lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button
           *ngIf="isLoggedIn == true"
           routerLink="/player/me"
           type="button"
-          class="group inline-flex flex-col items-center justify-center rounded-e-full px-5 lg:hidden"
+          class="group inline-flex flex-col items-center justify-center rounded-e-full lg:hidden"
         >
           <fa-icon
             [icon]="userIcon"
@@ -144,7 +144,7 @@
           *ngIf="isLoggedIn == false"
           (click)="login()"
           type="button"
-          class="group inline-flex flex-col items-center justify-center rounded-e-full px-5 lg:hidden"
+          class="group inline-flex flex-col items-center justify-center rounded-e-full lg:hidden"
         >
           <fa-icon
             [icon]="userIcon"

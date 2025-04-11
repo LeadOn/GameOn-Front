@@ -24,6 +24,7 @@
     "@ngrx/store": "^19.1.0",
     "@tailwindcss/postcss": "^4.1.3",
     "chart.js": "^4.4.7",
+    "flowbite": "^3.0.0-beta.1",
     "keycloak-angular": "^19.0.2",
     "keycloak-js": "^26.0.7",
     "postcss": "^8.5.3",
