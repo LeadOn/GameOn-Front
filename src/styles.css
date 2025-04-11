@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tailwindcss-animated";
 
 /**
  * @license
@@ -14,7 +13,6 @@
  * Chillax Regular
  *
 */
-
 @font-face {
   font-family: "Chillax-Regular";
   src:
@@ -24,4 +22,20 @@
   font-weight: 400;
   font-display: swap;
   font-style: normal;
+}
+
+@theme {
+  --default-font-family: "Chillax-Regular", sans-serif;
+  --color-primary: #282b30;
+  --color-primaryDark: #ffffff;
+  --color-bgLight: #ffffff;
+  --color-bgLightDarker: #e6e7eb;
+  --color-bgDark: #373a42;
+  --color-bgDarkDarker: #23252c;
+  --color-secondary: #73c3e9;
+  --color-customRed: #c82d44;
+  --color-customGreen: #1b998b;
+  --color-customYellow: #d4ac0c;
+  --color-frenchBlue: #071d90;
+  --color-frenchRed: #ed2939;
 }

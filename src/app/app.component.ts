@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { initFlowbite } from 'flowbite';
 import { Store } from '@ngrx/store';
 import { Player } from './shared/classes/common/Player';
 import { GameOnPlayerService } from './shared/services/common/gameon-player.service';
@@ -23,8 +22,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    initFlowbite();
-
     this.isLoggedIn =
       this.keycloak.authenticated != null && this.keycloak.authenticated
         ? true

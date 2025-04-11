@@ -1,6 +1,6 @@
-<div class="h-screen bg-bgLightDarker dark:bg-bgDarkDarker lg:flex">
+<div class="bg-bgLightDarker dark:bg-bgDarkDarker h-screen lg:flex">
   <nav
-    class="fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-l-2 border-r-2 border-b-gray-300 border-l-frenchBlue border-r-frenchRed border-t-gray-300 bg-bgLight drop-shadow-xl dark:border-2 dark:border-y-bgLight dark:bg-bgDark lg:relative lg:bottom-auto lg:left-auto lg:z-auto lg:h-auto lg:w-1/6 lg:max-w-none lg:-translate-x-0 lg:rounded-none lg:border-0 lg:dark:border-0"
+    class="border-l-frenchBlue border-r-frenchRed bg-bgLight dark:border-y-bgLight dark:bg-bgDark fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 drop-shadow-xl lg:relative lg:bottom-auto lg:left-auto lg:z-auto lg:h-auto lg:w-1/6 lg:max-w-none lg:-translate-x-0 lg:rounded-none lg:border-0 dark:border-2 lg:dark:border-0"
   >
     <div
       class="mx-auto grid h-full max-w-lg grid-cols-5 lg:mx-0 lg:flex lg:h-auto lg:max-w-full lg:grid-cols-none lg:flex-col lg:pt-4"
@@ -24,14 +24,14 @@
       >
         <fa-icon
           [icon]="homeIcon"
-          class="text-lg text-primary dark:text-primaryDark"
+          class="text-primary dark:text-primaryDark text-lg"
         ></fa-icon>
       </div>
 
       <div
         class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
-        <span class="font-semibold text-primary dark:text-primaryDark"
+        <span class="text-primary dark:text-primaryDark font-semibold"
           >Football</span
         >
       </div>
@@ -42,7 +42,7 @@
         <button routerLink="/fifa" type="button" class="lg:hidden">
           <fa-icon
             [icon]="ballIcon"
-            class="text-lg text-primary dark:text-primaryDark"
+            class="text-primary dark:text-primaryDark text-lg"
           ></fa-icon>
         </button>
 
@@ -74,7 +74,7 @@
         <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
           <fa-icon
             [icon]="trophyIcon"
-            class="text-lg text-primary dark:text-primaryDark"
+            class="text-primary dark:text-primaryDark text-lg"
           ></fa-icon>
         </button>
 
@@ -93,13 +93,13 @@
       <div
         class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
-        <span class="font-semibold text-primary dark:text-primaryDark"
+        <span class="text-primary dark:text-primaryDark font-semibold"
           >League of Legends</span
         >
       </div>
 
       <div
-        class="group inline-flex hidden cursor-pointer flex-col space-y-1 rounded-s-full px-5 lg:mt-4 lg:flex lg:justify-start lg:rounded-none lg:px-6"
+        class="group hidden inline-flex cursor-pointer flex-col space-y-1 rounded-s-full px-5 lg:mt-4 lg:flex lg:justify-start lg:rounded-none lg:px-6"
       >
         <div *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
           <a
@@ -120,7 +120,7 @@
       <div
         class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
-        <span class="font-semibold text-primary dark:text-primaryDark"
+        <span class="text-primary dark:text-primaryDark font-semibold"
           >Compte</span
         >
       </div>
@@ -136,7 +136,7 @@
         >
           <fa-icon
             [icon]="userIcon"
-            class="text-lg text-primary dark:text-primaryDark"
+            class="text-primary dark:text-primaryDark text-lg"
           ></fa-icon>
         </button>
 
@@ -148,7 +148,7 @@
         >
           <fa-icon
             [icon]="userIcon"
-            class="text-lg text-primary dark:text-primaryDark"
+            class="text-primary dark:text-primaryDark text-lg"
           ></fa-icon>
         </button>
 
@@ -191,7 +191,7 @@
 
   <div class="lg:flex lg:w-full lg:flex-col">
     <header
-      class="flex h-16 items-center justify-between self-center bg-bgLight px-4 dark:bg-bgDark lg:w-full lg:justify-end"
+      class="bg-bgLight dark:bg-bgDark flex h-16 items-center justify-between self-center px-4 lg:w-full lg:justify-end"
     >
       <a
         routerLink=""
@@ -201,15 +201,15 @@
           src="assets/img/gameon-logo.webp"
           alt="GameOn!'s logo"
         />
-        <span class="ml-2 dark:text-primaryDark">GameOn!</span></a
+        <span class="dark:text-primaryDark ml-2">GameOn!</span></a
       >
 
       <div class="flex items-center justify-center space-x-4">
         <a routerLink="/donate">
-          <fa-icon [icon]="btcIcon" class="text-lg text-customYellow"></fa-icon>
+          <fa-icon [icon]="btcIcon" class="text-customYellow text-lg"></fa-icon>
         </a>
 
-        <button type="button" (click)="darkMode.set(!darkMode())">
+        <!-- <button type="button" (click)="darkMode.set(!darkMode())">
           <fa-icon
             [icon]="lightIcon"
             *ngIf="darkMode()"
@@ -220,12 +220,12 @@
             *ngIf="!darkMode()"
             class="text-lg text-frenchBlue"
           ></fa-icon>
-        </button>
+        </button> -->
       </div>
     </header>
 
     <div
-      class="3xl:px-96 bg-bgLightDarker px-0 pb-24 dark:bg-bgDarkDarker md:px-16 lg:overflow-y-scroll lg:px-32 lg:pb-0 xl:px-64 2xl:px-80"
+      class="3xl:px-96 bg-bgLightDarker dark:bg-bgDarkDarker px-0 pb-24 md:px-16 lg:overflow-y-scroll lg:px-32 lg:pb-0 xl:px-64 2xl:px-80"
     >
       <router-outlet></router-outlet>
     </div>

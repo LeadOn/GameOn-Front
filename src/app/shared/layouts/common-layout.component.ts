@@ -1,11 +1,4 @@
-import {
-  Component,
-  effect,
-  HostBinding,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faBitcoinSign,
@@ -18,7 +11,6 @@ import {
   faTrophy,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { initFlowbite } from 'flowbite';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Player } from '../classes/common/Player';
@@ -30,16 +22,8 @@ import Keycloak from 'keycloak-js';
   styleUrls: ['./common-layout.component.css'],
   standalone: false,
 })
-export class CommonLayoutComponent implements OnInit {
+export class CommonLayoutComponent {
   private readonly keycloak = inject(Keycloak);
-
-  darkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false'),
-  );
-
-  @HostBinding('class.dark') get mode() {
-    return this.darkMode();
-  }
 
   player$: Observable<Player>;
 
@@ -67,17 +51,6 @@ export class CommonLayoutComponent implements OnInit {
         ? true
         : false;
     this.isAdmin = this.keycloak.hasRealmRole('gameon_admin');
-
-    effect(() => {
-      window.localStorage.setItem(
-        'gameon-dark-theme',
-        JSON.stringify(this.darkMode()),
-      );
-    });
-  }
-
-  ngOnInit(): void {
-    initFlowbite();
   }
 
   login() {

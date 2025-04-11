@@ -1,5 +1,4 @@
 import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
-import { initFlowbite } from 'flowbite';
 import { environment } from '../../environments/environment';
 import {
   faCog,
@@ -32,7 +31,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   ],
   standalone: false,
 })
-export class AdminLayoutComponent implements OnInit {
+export class AdminLayoutComponent {
   userIcon = faUserCircle;
   homeIcon = faHome;
   ballIcon = faSoccerBall;
@@ -61,10 +60,6 @@ export class AdminLayoutComponent implements OnInit {
         JSON.stringify(this.darkMode()),
       );
     });
-  }
-
-  ngOnInit(): void {
-    initFlowbite();
   }
 
   logout() {
