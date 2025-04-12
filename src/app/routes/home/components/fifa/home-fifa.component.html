@@ -1,15 +1,15 @@
 <section id="fifa-header">
   <div
-    class="flex animate-fade cursor-pointer items-center justify-between"
+    class="animate-fade flex cursor-pointer items-center justify-between"
     routerLink="/fifa"
   >
     <div class="flex items-center justify-center space-x-2">
       <fa-icon
         [icon]="soccerIcon"
-        class="cursor-pointer text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark cursor-pointer"
       ></fa-icon>
 
-      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >FIFA</span
       >
     </div>
@@ -43,18 +43,18 @@
 
 <section id="fifa-header-card">
   <div
-    class="fifa-card mt-4 flex aspect-video animate-fade-right cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
+    class="fifa-card animate-fade-right mt-4 flex aspect-video cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
     routerLink="/fifa"
   >
-    <span class="mt-2 w-full text-center">Tournoi Yunit - 21 avril 2023</span>
     <span class="mb-2 w-full text-right text-sm"></span>
+    <span class="mt-2 w-full text-center">Five Yunit - 2 avril 2025</span>
   </div>
 </section>
 
 <section id="fifa-player-stats">
   <div class="mt-4 flex space-x-2" *ngIf="isLoggedIn == true">
     <div
-      class="flex animate-fade-right cursor-pointer flex-col items-center justify-center space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
+      class="animate-fade-right bg-bgLight dark:bg-bgDark flex cursor-pointer flex-col items-center justify-center space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
       *ngIf="this.player$ | async as player"
       routerLink="/player/me"
     >
@@ -76,7 +76,7 @@
     </div>
 
     <div
-      class="flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
+      class="animate-fade-left bg-bgLight dark:bg-bgDark flex w-full flex-col space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
       *ngIf="this.globalStats$ | async as globalStats"
     >
       <app-fifa-stat
@@ -102,7 +102,7 @@
   <div class="animate-fade-up">
     <div class="mt-4 flex items-center justify-between">
       <span
-        class="text-lg font-semibold text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark text-lg font-semibold"
         *ngIf="loadingPlannedMatches == true || plannedMatches.length > 0"
         >Mes prochains matchs</span
       >
@@ -141,7 +141,7 @@
   <div class="animate-fade-up">
     <div class="mt-4 flex items-center justify-between">
       <span
-        class="text-lg font-semibold text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark text-lg font-semibold"
         *ngIf="loadingLastMatches == true || lastMatches.length > 0"
         ><span *ngIf="isLoggedIn == true">Mes derniers matchs joués</span
         ><span *ngIf="isLoggedIn == false">Derniers matchs joués</span></span
