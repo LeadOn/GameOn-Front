@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faEdit, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
-import { Player } from '../../shared/classes/common/Player';
+import { Player } from '../../../shared/classes/common/Player';
+import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
 
 @Component({
   selector: 'app-admin-players',

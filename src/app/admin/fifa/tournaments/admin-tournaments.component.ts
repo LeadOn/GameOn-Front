@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 import {
   faEdit,
   faSave,
   faTrash,
   faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
-import { GameOnTournamentService } from '../../shared/services/fifa/gameon-tournament.service';
-import { Tournament } from '../../shared/classes/fifa/Tournament';
+import { Tournament } from '../../../shared/classes/fifa/Tournament';
+import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
+import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
 
 @Component({
   selector: 'app-admin-tournaments',

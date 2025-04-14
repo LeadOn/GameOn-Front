@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { faRankingStar } from '@fortawesome/free-solid-svg-icons';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Season } from '../../shared/classes/fifa/Season';
-import { GameOnSeasonService } from '../../shared/services/fifa/gameon-season.service';
+import { Season } from '../../../shared/classes/fifa/Season';
+import { GameOnSeasonService } from '../../../shared/services/fifa/gameon-season.service';
 
 @Component({
   selector: 'app-admin-seasons',

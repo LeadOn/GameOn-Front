@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
-import { UpdateGame } from '../../shared/classes/UpdateGame';
-import { Platform } from '../../../shared/classes/common/Platform';
-import { GameOnPlatformService } from '../../../shared/services/common/gameon-platform.service';
-import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
-import { FifaTeam } from '../../../shared/classes/fifa/FifaTeam';
-import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
-import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifateam.service';
+import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
+import { UpdateGame } from '../../../shared/classes/UpdateGame';
+import { Platform } from '../../../../shared/classes/common/Platform';
+import { GameOnPlatformService } from '../../../../shared/services/common/gameon-platform.service';
+import { FifaGamePlayed } from '../../../../shared/classes/fifa/FifaGamePlayed';
+import { FifaTeam } from '../../../../shared/classes/fifa/FifaTeam';
+import { GameOnGameService } from '../../../../shared/services/fifa/gameon-game.service';
+import { GameOnFifaTeamService } from '../../../../shared/services/fifa/gameon-fifateam.service';
 
 @Component({
   selector: 'app-admin-fifa-game-edit',
@@ -167,7 +167,7 @@ export class AdminFifaGameEditComponent implements OnInit {
         (data) => {
           alert('Match mis à jour !');
           this.loading = false;
-          this.router.navigate(['/admin/fifa-games']);
+          this.router.navigate(['/admin/fifa/games']);
         },
         (err) => {
           alert('Erreur lors de la mise à jour du match ! Erreur : ' + err);

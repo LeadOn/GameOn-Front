@@ -4,7 +4,7 @@
 
 <section
   id="header-pills"
-  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 mb-4 animate-fade overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
+  class="animate-fade [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker mb-4 overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full dark:[&::-webkit-scrollbar-track]:bg-neutral-700"
   *ngIf="loading == false && tournament != null"
 >
   <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
@@ -22,7 +22,7 @@
 
     <app-pill
       *ngIf="isAdmin == true"
-      [routerLink]="['/admin/tournaments/edit', tournamentId]"
+      [routerLink]="['/admin/fifa/tournaments/edit', tournamentId]"
       [title]="'Modifier'"
       [showExternalIcon]="true"
       [bgStyle]="'red'"
@@ -38,7 +38,7 @@
   *ngIf="loading == false && tournament != null"
 >
   <div
-    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+    class="bg-bgLight dark:bg-bgDark flex items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <img
       class="rounded-full drop-shadow-lg"
@@ -55,7 +55,7 @@
     />
 
     <div class="flex flex-col">
-      <span class="text-xl font-semibold text-primary dark:text-primaryDark">{{
+      <span class="text-primary dark:text-primaryDark text-xl font-semibold">{{
         tournament.name
       }}</span>
       <span class="text-xs text-gray-600 dark:text-gray-300"
@@ -67,26 +67,26 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade space-x-2 px-4"
+  class="animate-fade mt-4 flex space-x-2 px-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
-  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
     >Gagnant</span
   >
 </div>
 
 <section
   id="tournament-winner"
-  class="mt-4 animate-fade px-4"
+  class="animate-fade mt-4 px-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
-  <div class="rounded-lg bg-bgLight dark:bg-bgDark">
+  <div class="bg-bgLight dark:bg-bgDark rounded-lg">
     <app-player-card [player]="tournament.winner"></app-player-card>
   </div>
 </section>
 
 <div
-  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
   *ngIf="
     loading == false && tournament != null && tournament.description != null
   "
@@ -101,7 +101,7 @@
 
 <section
   id="tournament-details"
-  class="mt-4 animate-fade px-4"
+  class="animate-fade mt-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -110,14 +110,14 @@
   "
 >
   <div
-    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle text-sm text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
+    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
   >
     {{ tournament.description }}
   </div>
 </section>
 
 <div
-  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
   *ngIf="loading == false && tournament != null && tournament.rules != null"
   (click)="showRulesContent()"
 >
@@ -130,7 +130,7 @@
 
 <section
   id="tournament-rules"
-  class="mt-4 animate-fade px-4"
+  class="animate-fade mt-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -139,13 +139,13 @@
   "
 >
   <div
-    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle text-sm text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
+    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
     [innerHtml]="tournament.rules"
   ></div>
 </section>
 
 <div
-  class="mt-4 flex animate-fade px-4"
+  class="animate-fade mt-4 flex px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -153,14 +153,14 @@
     tournament.state < 2
   "
 >
-  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
     >Inscription</span
   >
 </div>
 
 <section
   id="tournament-subscription"
-  class="m-4 animate-fade rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+  class="animate-fade bg-bgLight dark:bg-bgDark m-4 rounded-lg p-4 drop-shadow-lg"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -173,7 +173,7 @@
     class="align-center flex flex-col items-center justify-center"
   >
     <select
-      class="bg-primaryDarker m-4 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
+      class="bg-primaryDarker border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark m-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -182,7 +182,7 @@
     </select>
 
     <button
-      class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
+      class="bg-customGreen focus:ring-customGreen w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:ring-4 focus:outline-none"
       (click)="subscribe()"
     >
       S'inscrire !
@@ -194,7 +194,7 @@
     class="align-center flex flex-col items-center justify-center"
   >
     <select
-      class="bg-primaryDarker m-4 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
+      class="bg-primaryDarker border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark m-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -203,7 +203,7 @@
     </select>
 
     <button
-      class="focus:ring-yellow w-full rounded-lg bg-customYellow px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:outline-none focus:ring-4"
+      class="focus:ring-yellow bg-customYellow w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
       (click)="updateSubscription()"
     >
       Modifier
@@ -212,7 +212,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -237,7 +237,7 @@
 
 <section
   id="tournament-rules"
-  class="mt-4 animate-fade px-4"
+  class="animate-fade mt-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -256,7 +256,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
   *ngIf="
     loading == false && tournament != null && tournament.players.length > 0
   "
@@ -271,7 +271,7 @@
 
 <section
   id="tournament-players"
-  class="mt-4 animate-fade overflow-x-scroll pb-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-thumb]:bg-bgDark [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
+  class="animate-fade [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-thumb]:bg-bgDark [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker mt-4 overflow-x-scroll pb-4 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -297,7 +297,7 @@
         >
           <th
             scope="row"
-            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
             [class.text-yellow-500]="
               tournament.players.indexOf(player) == 0 && tournament.state >= 2
             "
@@ -311,7 +311,7 @@
             {{ player.score }}
           </th>
           <td
-            class="px-6 py-4 text-center text-xs font-semibold text-primary dark:text-primaryDark"
+            class="text-primary dark:text-primaryDark px-6 py-4 text-center text-xs font-semibold"
           >
             {{ player.player.fullName }}
           </td>
@@ -333,7 +333,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
   *ngIf="loading == false && tournament != null && myGamesToPlay.length > 0"
   (click)="showMyMatchsToPlay()"
 >
@@ -352,7 +352,7 @@
 
 <section
   id="my-matchs-planned"
-  class="mt-4 flex animate-fade flex-col space-y-4 px-4"
+  class="animate-fade mt-4 flex flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -367,7 +367,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
   *ngIf="loading == false && tournament != null && gamesToPlay.length > 0"
   (click)="showMatchsPlanned()"
 >
@@ -386,7 +386,7 @@
 
 <section
   id="matchs-planned"
-  class="mt-4 flex animate-fade flex-col space-y-4 px-4"
+  class="animate-fade mt-4 flex flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -401,7 +401,7 @@
 </section>
 
 <div
-  class="mt-4 flex animate-fade cursor-pointer justify-between px-4 text-primary dark:text-primaryDark"
+  class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
   *ngIf="loading == false && tournament != null && gamesPlayed.length > 0"
   (click)="showMatchsPlayed()"
 >
@@ -420,7 +420,7 @@
 
 <section
   id="my-matchs-planned"
-  class="mt-4 flex animate-fade flex-col space-y-4 px-4"
+  class="animate-fade mt-4 flex flex-col space-y-4 px-4"
   *ngIf="
     loading == false &&
     tournament != null &&

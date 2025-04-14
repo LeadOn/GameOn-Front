@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameOnHighlightService } from '../../shared/services/common/gameon-highlight.service';
-import { Highlight } from '../../shared/classes/common/Highlight';
+import { Highlight } from '../../../shared/classes/common/Highlight';
+import { GameOnHighlightService } from '../../../shared/services/common/gameon-highlight.service';
 
 @Component({
   selector: 'app-admin-highlights',

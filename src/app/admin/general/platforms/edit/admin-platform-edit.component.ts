@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faComputer } from '@fortawesome/free-solid-svg-icons';
-import { GameOnPlatformService } from '../../../shared/services/common/gameon-platform.service';
-import { Platform } from '../../../shared/classes/common/Platform';
+import { Platform } from '../../../../shared/classes/common/Platform';
+import { GameOnPlatformService } from '../../../../shared/services/common/gameon-platform.service';
+import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
 
 @Component({
   selector: 'app-admin-platform-edit',
@@ -78,7 +78,7 @@ export class AdminPlatformEditComponent implements OnInit {
       this.adminService.updatePlatform(platform).subscribe(
         (data) => {
           this.loading = false;
-          this.router.navigate(['/admin/platforms']);
+          this.router.navigate(['/admin/general/platforms']);
         },
         (err) => {
           alert(
