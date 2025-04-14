@@ -24,15 +24,15 @@
           *ngFor="let platform of platforms"
         >
           <th
-            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
           >
             {{ platform.name }}
           </th>
           <td class="px-6 py-4">
             <fa-icon
               [icon]="editIcon"
-              class="cursor-pointer text-xl text-primary dark:text-primaryDark"
-              [routerLink]="['/admin/platforms/edit', platform.id]"
+              class="text-primary dark:text-primaryDark cursor-pointer text-xl"
+              [routerLink]="['/admin/general/platforms/edit', platform.id]"
             ></fa-icon>
           </td>
         </tr>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { GameOnAdminService } from '../shared/services/gameon-admin.service';
-import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
-import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
+import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
+import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
+import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
 
 @Component({
   selector: 'app-admin-fifa-games',

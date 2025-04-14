@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
-import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
-import { Tournament } from '../../../shared/classes/fifa/Tournament';
-
+import { Tournament } from '../../../../shared/classes/fifa/Tournament';
+import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
+import { GameOnTournamentService } from '../../../../shared/services/fifa/gameon-tournament.service';
 @Component({
   selector: 'app-admin-edit-tournament-edit',
   templateUrl: './admin-edit-tournament.component.html',
@@ -216,7 +215,7 @@ export class AdminEditTournamentComponent implements OnInit {
           (data) => {
             alert('Tournoi mis à jour !');
             this.loading = false;
-            this.router.navigate(['/admin/tournaments']);
+            this.router.navigate(['/admin/fifa/tournaments']);
           },
           (err) => {
             alert('Erreur lors de la mise à jour du tournoi !');
@@ -239,7 +238,7 @@ export class AdminEditTournamentComponent implements OnInit {
           (data) => {
             alert('Utilisateur supprimé !');
             this.loading = false;
-            this.router.navigate(['/admin/tournaments']);
+            this.router.navigate(['/admin/fifa/tournaments']);
           },
           (err) => {
             alert("Erreur lors de la suppression de l'utilisateur !");

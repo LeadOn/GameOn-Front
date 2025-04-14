@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import { Player } from '../../../shared/classes/common/Player';
-import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
+import { Player } from '../../../../shared/classes/common/Player';
+import { GameOnPlayerService } from '../../../../shared/services/common/gameon-player.service';
+import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
 
 @Component({
   selector: 'app-admin-player-edit',
@@ -130,7 +130,7 @@ export class AdminPlayerEditComponent implements OnInit {
         .subscribe(
           (data) => {
             this.loading = false;
-            this.router.navigate(['/admin/players']);
+            this.router.navigate(['/admin/general/players']);
           },
           (err) => {
             alert('Erreur lors de la mise à jour du joueur !');

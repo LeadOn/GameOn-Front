@@ -11,12 +11,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-admin-home',
-  templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.css'],
+  selector: 'app-admin-fifa-home',
+  templateUrl: './admin-fifa-home.component.html',
+  styleUrls: ['./admin-fifa-home.component.css'],
   standalone: false,
 })
-export class AdminHomeComponent implements OnInit {
+export class AdminFifaHomeComponent implements OnInit {
   loading = true;
   platformIcon = faComputer;
   playerIcon = faUserCircle;
