@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faComputer, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { Platform } from '../../shared/classes/common/Platform';
-import { GameOnPlatformService } from '../../shared/services/common/gameon-platform.service';
+import { Platform } from '../../../shared/classes/common/Platform';
+import { GameOnPlatformService } from '../../../shared/services/common/gameon-platform.service';
 
 @Component({
   selector: 'app-admin-platforms',

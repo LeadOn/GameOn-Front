@@ -1,22 +1,18 @@
 <section class="bg-bgDarker h-screen px-4 pt-4">
-  <app-loading-spinner
-    [@inOutAnimation]
-    *ngIf="loading == true"
-  ></app-loading-spinner>
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
 
   <app-common-page-header
     [icon]="tournamentIcon"
     [title]="'Tournois'"
-    [@inOutAnimation]
   ></app-common-page-header>
 
   <a
-    class="delay-50 mt-4 flex cursor-pointer flex-row justify-center space-x-2 rounded-full bg-customGreen p-2 transition ease-in-out hover:bg-green-800"
+    class="bg-customGreen animate-fade mt-4 flex cursor-pointer flex-row justify-center space-x-2 rounded-full p-2 transition delay-50 ease-in-out hover:bg-green-800"
     *ngIf="loading == false"
-    routerLink="/admin/tournaments/create"
+    routerLink="/admin/fifa/tournaments/create"
   >
     <div
-      class="flex w-8 flex-col items-center justify-center rounded-full bg-secondary"
+      class="bg-secondary flex w-8 flex-col items-center justify-center rounded-full"
     >
       +
     </div>
@@ -40,33 +36,33 @@
           *ngFor="let tournament of tournaments"
         >
           <th
-            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
           >
             {{ tournament.name }}
           </th>
 
           <th
-            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
           >
             {{ tournament.plannedFrom.toString().split("T")[0] }}
           </th>
 
           <th
-            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
           >
             {{ tournament.plannedTo.toString().split("T")[0] }}
           </th>
 
           <th
-            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
           >
             {{ getState(tournament.state) }}
           </th>
           <td class="flex flex-row justify-center space-x-2 px-6 py-4">
             <fa-icon
               [icon]="editIcon"
-              class="cursor-pointer text-xl text-primary dark:text-primaryDark"
-              [routerLink]="['/admin/tournaments/edit', tournament.id]"
+              class="text-primary dark:text-primaryDark cursor-pointer text-xl"
+              [routerLink]="['/admin/fifa/tournaments/edit', tournament.id]"
             ></fa-icon>
 
             <button
@@ -80,12 +76,12 @@
               *ngIf="tournament.state == 2"
               (click)="savePhase1Score(tournament.id)"
               [icon]="saveIcon"
-              class="cursor-pointer text-xl text-primary dark:text-primaryDark"
+              class="text-primary dark:text-primaryDark cursor-pointer text-xl"
             ></fa-icon>
 
             <fa-icon
               [icon]="trashIcon"
-              class="cursor-pointer text-xl text-frenchRed"
+              class="text-frenchRed cursor-pointer text-xl"
               (click)="delete(tournament.id)"
             ></fa-icon>
           </td>

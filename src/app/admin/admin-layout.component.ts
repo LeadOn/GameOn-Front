@@ -6,6 +6,7 @@ import {
   faHome,
   faMoon,
   faPlus,
+  faRightFromBracket,
   faSoccerBall,
   faSun,
   faTrophy,
@@ -42,6 +43,9 @@ export class AdminLayoutComponent {
   isAdmin = false;
   platformIcon = faComputer;
 
+  logoutIcon = faRightFromBracket;
+  generalIcon = faCog;
+
   lightIcon = faSun;
   darkIcon = faMoon;
 
@@ -64,7 +68,8 @@ export class AdminLayoutComponent {
 
   logout() {
     window.location.replace(
-      environment.keycloak.url + 'realms/yufoot/protocol/openid-connect/logout',
+      environment.keycloak.url +
+        '/realms/gameon/protocol/openid-connect/logout',
     );
   }
 }
