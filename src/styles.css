@@ -2,6 +2,8 @@
 @import "tailwindcss-animated";
 @config "../tailwind.config.js";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /**
  * @license
  *

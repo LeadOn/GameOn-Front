@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faBitcoinSign,
@@ -22,7 +22,7 @@ import Keycloak from 'keycloak-js';
   styleUrls: ['./common-layout.component.css'],
   standalone: false,
 })
-export class CommonLayoutComponent {
+export class CommonLayoutComponent implements OnInit {
   private readonly keycloak = inject(Keycloak);
 
   player$: Observable<Player>;
@@ -40,6 +40,8 @@ export class CommonLayoutComponent {
   adminIcon = faCog;
   btcIcon = faBitcoinSign;
 
+  darkMode = false;
+
   constructor(
     private router: Router,
     private store: Store<{ player: Player }>,
@@ -53,6 +55,15 @@ export class CommonLayoutComponent {
     this.isAdmin = this.keycloak.hasRealmRole('gameon_admin');
   }
 
+  ngOnInit(): void {
+    this.darkMode =
+      window.localStorage.getItem('gameon-dark-theme') == 'true' ? true : false;
+
+    if (this.darkMode) {
+      document.documentElement.classList.add('dark');
+    }
+  }
+
   login() {
     this.keycloak.login();
   }
@@ -62,6 +73,17 @@ export class CommonLayoutComponent {
       this.login();
     } else {
       this.router.navigate(['/fifa/create']);
+    }
+  }
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
+    window.localStorage.setItem('gameon-dark-theme', this.darkMode.toString());
+
+    if (this.darkMode == false) {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
     }
   }
 }

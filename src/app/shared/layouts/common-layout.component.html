@@ -209,18 +209,18 @@
           <fa-icon [icon]="btcIcon" class="text-customYellow text-lg"></fa-icon>
         </a>
 
-        <!-- <button type="button" (click)="darkMode.set(!darkMode())">
+        <button type="button" (click)="toggleDarkMode()">
           <fa-icon
             [icon]="lightIcon"
-            *ngIf="darkMode()"
-            class="text-lg text-customYellow"
+            *ngIf="darkMode"
+            class="text-customYellow text-lg"
           ></fa-icon>
           <fa-icon
             [icon]="darkIcon"
-            *ngIf="!darkMode()"
-            class="text-lg text-frenchBlue"
+            *ngIf="!darkMode"
+            class="text-frenchBlue text-lg"
           ></fa-icon>
-        </button> -->
+        </button>
       </div>
     </header>
 
