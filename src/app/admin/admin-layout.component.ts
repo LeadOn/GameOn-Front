@@ -72,4 +72,12 @@ export class AdminLayoutComponent {
         '/realms/gameon/protocol/openid-connect/logout',
     );
   }
+
+  toggleDarkMode() {
+    this.darkMode.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-dark-theme',
+      JSON.stringify(this.darkMode()),
+    );
+  }
 }
