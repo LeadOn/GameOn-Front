@@ -29,7 +29,7 @@
       </div>
 
       <div
-        class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
+        class="hidden lg:mt-8 lg:flex lg:w-full lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
         <span class="text-primary dark:text-primaryDark font-semibold"
           >Football</span
@@ -37,7 +37,7 @@
       </div>
 
       <div
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-4 lg:flex lg:w-full lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/fifa" type="button" class="lg:hidden">
           <fa-icon
@@ -69,7 +69,7 @@
       </div>
 
       <div
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-2 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-2 lg:flex lg:w-full lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button routerLink="/fifa/tournaments" type="button" class="lg:hidden">
           <fa-icon
@@ -91,7 +91,7 @@
       </div>
 
       <div
-        class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
+        class="hidden lg:mt-8 lg:flex lg:w-full lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
         <span class="text-primary dark:text-primaryDark font-semibold"
           >League of Legends</span
@@ -99,7 +99,7 @@
       </div>
 
       <div
-        class="group hidden cursor-pointer flex-col space-y-1 rounded-s-full lg:mt-4 lg:flex lg:justify-start lg:rounded-none lg:px-6"
+        class="group hidden cursor-pointer flex-col space-y-1 rounded-s-full lg:mt-4 lg:flex lg:w-full lg:justify-start lg:rounded-none lg:px-6"
       >
         <div *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
           <a
@@ -118,7 +118,7 @@
       </div>
 
       <div
-        class="hidden lg:mt-8 lg:flex lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
+        class="hidden lg:mt-8 lg:flex lg:w-full lg:flex-row lg:items-center lg:space-x-2 lg:px-8"
       >
         <span class="text-primary dark:text-primaryDark font-semibold"
           >Compte</span
@@ -126,7 +126,7 @@
       </div>
 
       <div
-        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-4 lg:flex lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full lg:mt-4 lg:flex lg:w-full lg:flex-row lg:justify-start lg:rounded-none lg:px-8"
       >
         <button
           *ngIf="isLoggedIn == true"
@@ -209,7 +209,7 @@
           <fa-icon [icon]="btcIcon" class="text-customYellow text-lg"></fa-icon>
         </a>
 
-        <button type="button" (click)="toggleDarkMode()">
+        <button type="button" class="cursor-pointer" (click)="toggleDarkMode()">
           <fa-icon
             [icon]="lightIcon"
             *ngIf="darkMode"
