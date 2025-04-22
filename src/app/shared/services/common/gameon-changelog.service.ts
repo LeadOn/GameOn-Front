@@ -15,4 +15,16 @@ export class GameOnChangelogService {
       environment.gameOnApiUrl + '/changelog',
     );
   }
+
+  getLatest(): Observable<Changelog> {
+    return this.client.get<Changelog>(
+      environment.gameOnApiUrl + '/changelog/latest',
+    );
+  }
+
+  get(id: number): Observable<Changelog> {
+    return this.client.get<Changelog>(
+      environment.gameOnApiUrl + '/changelog/' + id,
+    );
+  }
 }

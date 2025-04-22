@@ -1,0 +1,58 @@
+<section class="px-4 pt-4">
+  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+</section>
+
+<div class="animate-fade flex space-x-2 px-4" *ngIf="loading == false">
+  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+    >Changelog
+  </span>
+</div>
+
+<section
+  id="admin-home-changelog"
+  class="animate-fade mt-4 flex w-full flex-col space-y-2 space-x-2 px-4"
+  *ngIf="loading == false"
+>
+  <a
+    class="bg-customGreen animate-fade flex cursor-pointer flex-row justify-center space-x-2 rounded-full p-2 transition delay-50 ease-in-out hover:bg-green-800"
+    *ngIf="loading == false"
+    routerLink="/admin/changelog/create"
+  >
+    <div
+      class="bg-secondary flex w-8 flex-col items-center justify-center rounded-full"
+    >
+      +
+    </div>
+    <span class="text-white">Créer un changelog</span>
+  </a>
+
+  <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
+    <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
+      <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">Version</th>
+          <th scope="col" class="px-6 py-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr
+          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
+          *ngFor="let changelog of changelogs"
+        >
+          <th
+            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
+          >
+            {{ changelog.version }}
+          </th>
+          <td class="px-6 py-4">
+            <fa-icon
+              [icon]="editIcon"
+              class="text-primary dark:text-primaryDark cursor-pointer text-xl"
+              [routerLink]="['/admin/changelog/edit', changelog.id]"
+            ></fa-icon>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

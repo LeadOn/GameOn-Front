@@ -7,6 +7,8 @@ import { UpdateGame } from '../classes/UpdateGame';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { Player } from '../../../shared/classes/common/Player';
 import { Platform } from '../../../shared/classes/common/Platform';
+import { CreateChangelogDto } from '../classes/CreateChangelogDto';
+import { Changelog } from '../../../shared/classes/common/Changelog';
 
 @Injectable({
   providedIn: 'root',
@@ -180,6 +182,26 @@ export class GameOnAdminService {
         tournamentId +
         '/player/' +
         playerId,
+    );
+  }
+
+  createChangelog(changelog: CreateChangelogDto): Observable<any> {
+    return this.client.post<any>(
+      environment.gameOnApiUrl + '/changelog',
+      changelog,
+    );
+  }
+
+  updateChangelog(changelog: Changelog): Observable<any> {
+    return this.client.patch<any>(
+      environment.gameOnApiUrl + '/changelog',
+      changelog,
+    );
+  }
+
+  deleteChangelog(id: number): Observable<any> {
+    return this.client.delete<any>(
+      environment.gameOnApiUrl + '/changelog/' + id,
     );
   }
 }
