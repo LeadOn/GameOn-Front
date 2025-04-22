@@ -1,14 +1,14 @@
 <div
-  class="flex animate-fade cursor-pointer items-center justify-between"
+  class="animate-fade flex cursor-pointer items-center justify-between"
   routerLink="/changelog"
 >
   <div class="flex items-center justify-center space-x-2">
     <fa-icon
       [icon]="updateIcon"
-      class="cursor-pointer text-primary dark:text-primaryDark"
+      class="text-primary dark:text-primaryDark cursor-pointer"
     ></fa-icon>
 
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >Nouveautés</span
     >
   </div>
@@ -17,6 +17,6 @@
 </div>
 
 <app-changelog-card
-  *ngIf="changelog != null"
   [changelog]="changelog"
+  [loading]="loading"
 ></app-changelog-card>

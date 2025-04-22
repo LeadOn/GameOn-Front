@@ -1,10 +1,11 @@
 <div
-  class="dark:bgDark mb-4 mt-4 flex animate-fade cursor-pointer flex-col rounded-lg bg-bgLight p-4 text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
+  class="dark:bgDark animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 drop-shadow-lg"
+  *ngIf="loading == false && changelog != null"
 >
   <div class="flex flex-row items-center">
     <div class="flex items-center justify-center">
       <span
-        class="rounded-full border px-4 text-sm text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark rounded-full border px-4 text-sm"
         [ngClass]="{
           'border-gray-300': changelog.type == 2,
           'border-green-500': changelog.type == 1,
@@ -26,7 +27,10 @@
     <span class="text-sm">{{ changelog.context }}</span>
   </div>
 
-  <div class="mt-4 flex flex-col" *ngIf="changelog.newFeatures != null">
+  <div
+    class="mt-4 flex flex-col"
+    *ngIf="changelog.newFeatures != null && changelog.newFeatures.length > 0"
+  >
     <span class="font-semibold text-green-600">Nouveautés :</span>
 
     <ul>
@@ -36,7 +40,12 @@
     </ul>
   </div>
 
-  <div class="mt-4 flex flex-col" *ngIf="changelog.updatedFeatures != null">
+  <div
+    class="mt-4 flex flex-col"
+    *ngIf="
+      changelog.updatedFeatures != null && changelog.updatedFeatures.length > 0
+    "
+  >
     <span class="font-semibold text-yellow-600">Mises à jour :</span>
 
     <ul>
@@ -46,7 +55,12 @@
     </ul>
   </div>
 
-  <div class="mt-4 flex flex-col" *ngIf="changelog.removedFeatures != null">
+  <div
+    class="mt-4 flex flex-col"
+    *ngIf="
+      changelog.removedFeatures != null && changelog.removedFeatures.length > 0
+    "
+  >
     <span class="font-semibold text-red-600">Suppressions :</span>
 
     <ul>
@@ -54,5 +68,37 @@
         - {{ feature }}
       </li>
     </ul>
+  </div>
+</div>
+
+<div
+  *ngIf="loading == true || changelog == null"
+  role="status"
+  class="dark:bgDark bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mt-4 mb-4 flex animate-pulse cursor-pointer flex-col rounded-lg p-4 drop-shadow-lg"
+>
+  <div class="flex flex-row items-center">
+    <span class="h-6 w-16 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+
+    <span
+      class="ml-4 h-4 w-64 rounded-full bg-gray-300 dark:bg-gray-700"
+    ></span>
+  </div>
+
+  <div class="mt-4 flex flex-col space-y-2">
+    <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+
+    <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+  </div>
+
+  <div class="mt-4 flex flex-col space-y-2">
+    <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+
+    <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+  </div>
+
+  <div class="mt-4 flex flex-col space-y-2">
+    <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+
+    <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
   </div>
 </div>

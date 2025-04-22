@@ -15,6 +15,9 @@ import { AdminPlatformsComponent } from './general/platforms/admin-platforms.com
 import { AdminPlatformEditComponent } from './general/platforms/edit/admin-platform-edit.component';
 import { AdminPlayersComponent } from './general/players/admin-players.component';
 import { AdminPlayerEditComponent } from './general/players/edit/admin-player-edit.component';
+import { AdminChangelogHomeComponent } from './changelog/admin-changelog-home.component';
+import { AdminChangelogEditComponent } from './changelog/edit/admin-changelog-edit.component';
+import { AdminChangelogCreateComponent } from './changelog/create/admin-changelog-create.component';
 
 const routes: Routes = [
   {
@@ -74,6 +77,18 @@ const routes: Routes = [
       {
         path: 'general/players/edit/:id',
         component: AdminPlayerEditComponent,
+      },
+      {
+        path: 'changelog',
+        component: AdminChangelogHomeComponent,
+      },
+      {
+        path: 'changelog/create',
+        component: AdminChangelogCreateComponent,
+      },
+      {
+        path: 'changelog/edit/:id',
+        component: AdminChangelogEditComponent,
       },
     ],
   },
