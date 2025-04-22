@@ -18,7 +18,7 @@ export class FifaGameHistoryCardComponent {
   private readonly keycloak = inject(Keycloak);
 
   @Input()
-  game: FifaGamePlayed = new FifaGamePlayed();
+  game?: FifaGamePlayed;
 
   @Input()
   admin = false;
