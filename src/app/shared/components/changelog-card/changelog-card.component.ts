@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Changelog } from '../../classes/common/Changelog';
 
 @Component({
@@ -7,7 +7,15 @@ import { Changelog } from '../../classes/common/Changelog';
   styleUrl: './changelog-card.component.css',
   standalone: false,
 })
-export class ChangelogCardComponent {
+export class ChangelogCardComponent implements OnChanges {
   @Input()
-  changelog: Changelog = new Changelog();
+  changelog?: Changelog;
+
+  @Input()
+  loading = false;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loading = changes['loading'].currentValue;
+    this.changelog = changes['changelog'].currentValue;
+  }
 }
