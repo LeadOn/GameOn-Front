@@ -1,6 +1,7 @@
 import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
+  faClock,
   faCog,
   faComputer,
   faHome,
@@ -42,6 +43,7 @@ export class AdminLayoutComponent {
   isLoggedIn = false;
   isAdmin = false;
   platformIcon = faComputer;
+  changelogIcon = faClock;
 
   logoutIcon = faRightFromBracket;
   generalIcon = faCog;
@@ -70,6 +72,14 @@ export class AdminLayoutComponent {
     window.location.replace(
       environment.keycloak.url +
         '/realms/gameon/protocol/openid-connect/logout',
+    );
+  }
+
+  toggleDarkMode() {
+    this.darkMode.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-dark-theme',
+      JSON.stringify(this.darkMode()),
     );
   }
 }

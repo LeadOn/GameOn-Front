@@ -17,6 +17,9 @@ import { AdminPlatformsComponent } from './general/platforms/admin-platforms.com
 import { AdminPlatformEditComponent } from './general/platforms/edit/admin-platform-edit.component';
 import { AdminPlayersComponent } from './general/players/admin-players.component';
 import { AdminPlayerEditComponent } from './general/players/edit/admin-player-edit.component';
+import { AdminChangelogHomeComponent } from './changelog/admin-changelog-home.component';
+import { AdminChangelogEditComponent } from './changelog/edit/admin-changelog-edit.component';
+import { AdminChangelogCreateComponent } from './changelog/create/admin-changelog-create.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { AdminPlayerEditComponent } from './general/players/edit/admin-player-ed
     AdminTournamentsComponent,
     AdminCreateTournamentComponent,
     AdminEditTournamentComponent,
+    AdminChangelogHomeComponent,
+    AdminChangelogCreateComponent,
+    AdminChangelogEditComponent,
   ],
   imports: [
     CommonModule,

@@ -1,6 +1,47 @@
-<div class="bg-bgLightDarker dark:bg-bgDarkDarker h-screen lg:flex">
-  <nav class="bg-bgLight dark:bg-bgDark fixed bottom-0 left-0 z-50 h-16 w-full">
-    <div class="mx-auto grid h-full max-w-lg grid-cols-4 font-medium">
+<div class="bg-bgLightDarker dark:bg-bgDarkDarker flex h-screen flex-col">
+  <header
+    class="bg-bgLight dark:bg-bgDark flex h-16 min-h-16 w-full items-center justify-between self-center px-4"
+  >
+    <a
+      routerLink="/admin"
+      class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold"
+      ><img
+        class="h-8 w-8"
+        src="assets/img/gameon-logo.webp"
+        alt="GameOn!'s logo"
+      />
+      <span class="dark:text-primaryDark ml-2 flex flex-col"
+        ><span>GameOn!</span>
+        <span
+          class="border-frenchRed bg-frenchRed rounded-full border px-2 text-center text-sm font-normal text-white drop-shadow-lg"
+          >Admin</span
+        >
+      </span></a
+    >
+
+    <button type="button" (click)="toggleDarkMode()">
+      <fa-icon
+        [icon]="lightIcon"
+        *ngIf="darkMode()"
+        class="text-customYellow text-lg"
+      ></fa-icon>
+      <fa-icon
+        [icon]="darkIcon"
+        *ngIf="!darkMode()"
+        class="text-frenchBlue text-lg"
+      ></fa-icon>
+    </button>
+  </header>
+
+  <section
+    id="admin-content"
+    class="bg-bgLightDarker dark:bg-bgDarkDarker grow overflow-y-scroll py-4"
+  >
+    <router-outlet></router-outlet>
+  </section>
+
+  <nav class="bg-bgLight dark:bg-bgDark z-50 h-16 min-h-16 w-full pt-2">
+    <div class="mx-auto grid grid-cols-4 font-medium">
       <button
         routerLink="/admin"
         type="button"
@@ -34,6 +75,22 @@
       </button>
 
       <button
+        routerLink="/admin/changelog"
+        type="button"
+        class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+      >
+        <fa-icon
+          [icon]="changelogIcon"
+          class="text-primary dark:text-primaryDark hover:text-frenchBlue"
+        ></fa-icon>
+
+        <span
+          class="text-primary dark:text-primaryDark hover:text-frenchBlue dark:group-hover:text-frenchBlue text-sm"
+          >Changelog</span
+        >
+      </button>
+
+      <button
         routerLink="/"
         type="button"
         class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -46,46 +103,4 @@
       </button>
     </div>
   </nav>
-
-  <div class="lg:flex lg:w-full lg:flex-col">
-    <header
-      class="bg-bgLight dark:bg-bgDark flex h-16 items-center justify-between self-center px-4 lg:w-full"
-    >
-      <a
-        routerLink="/admin"
-        class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold"
-        ><img
-          class="h-8 w-8"
-          src="assets/img/gameon-logo.webp"
-          alt="GameOn!'s logo"
-        />
-        <span class="dark:text-primaryDark ml-2 flex flex-col"
-          ><span>GameOn!</span>
-          <span
-            class="border-frenchRed bg-frenchRed rounded-full border px-2 text-center text-sm font-normal text-white drop-shadow-lg"
-            >Admin</span
-          >
-        </span></a
-      >
-
-      <button type="button" (click)="darkMode.set(!darkMode())">
-        <fa-icon
-          [icon]="lightIcon"
-          *ngIf="darkMode()"
-          class="text-customYellow text-lg"
-        ></fa-icon>
-        <fa-icon
-          [icon]="darkIcon"
-          *ngIf="!darkMode()"
-          class="text-frenchBlue text-lg"
-        ></fa-icon>
-      </button>
-    </header>
-
-    <div
-      class="bg-bgLightDarker dark:bg-bgDarkDarker pb-24 lg:overflow-y-scroll lg:pb-0"
-    >
-      <router-outlet></router-outlet>
-    </div>
-  </div>
 </div>

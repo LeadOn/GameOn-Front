@@ -71,4 +71,12 @@ export class CommonLayoutComponent {
       this.router.navigate(['/fifa/create']);
     }
   }
+
+  toggleDarkMode() {
+    this.darkMode.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-dark-theme',
+      JSON.stringify(this.darkMode()),
+    );
+  }
 }

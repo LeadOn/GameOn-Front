@@ -1,7 +1,5 @@
-export class Changelog {
-  id: number = 0;
+export class CreateChangelogDto {
   name?: string;
-  publicationDate: Date = new Date();
   type: number = 0;
   version: string = '';
   context?: string;
