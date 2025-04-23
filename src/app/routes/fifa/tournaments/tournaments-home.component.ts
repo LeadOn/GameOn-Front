@@ -11,6 +11,7 @@ import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-to
 })
 export class TournamentsHomeComponent implements OnInit {
   loading = true;
+  tournamentLoadingError = false;
   states: any[] = [];
   tournaments: Tournament[] = [];
   trophyIcon = faTrophy;
@@ -26,7 +27,8 @@ export class TournamentsHomeComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        alert('Erreur lors de la récupération des tournois.');
+        this.loading = false;
+        this.tournamentLoadingError = true;
         console.error(err);
       },
     );
