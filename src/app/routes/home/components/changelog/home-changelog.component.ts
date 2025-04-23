@@ -15,10 +15,14 @@ export class HomeChangelogComponent implements OnChanges {
   @Input()
   changelog?: Changelog;
 
+  @Input()
+  error = false;
+
   updateIcon = faClock;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loading = changes['loading'].currentValue;
     this.changelog = changes['changelog'].currentValue;
+    this.changelog = changes['error'].currentValue;
   }
 }
