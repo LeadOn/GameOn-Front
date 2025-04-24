@@ -1,11 +1,5 @@
 <app-info-message
-  [type]="'error'"
-  [title]="'Une erreur est survenue lors de la récupération des données.'"
-  *ngIf="error == true"
-></app-info-message>
-
-<app-info-message
-  *ngIf="isLoggedIn == false"
+  *ngIf="isLoggedIn == false && error == false"
   [icon]="infoIcon"
   [type]="'info'"
   [clickable]="true"
@@ -14,10 +8,11 @@
 >
 </app-info-message>
 
-<section id="home-changelog" class="mt-4 px-4">
+<section id="home-changelog" class="mt-4">
   <app-home-changelog
     [changelog]="homeData?.latestChangelog"
     [loading]="loading"
+    [error]="error"
   ></app-home-changelog>
 </section>
 

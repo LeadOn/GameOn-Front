@@ -1,9 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   faChevronDown,
   faChevronRight,
   faExternalLinkAlt,
   faSoccerBall,
+  faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import Keycloak from 'keycloak-js';
@@ -25,22 +26,38 @@ export class FifaHomeComponent implements OnInit {
 
   loading = true;
   playersLoading = true;
+  gamesLoading = true;
+  isLoggedIn = false;
+  platformLoadingError = false;
+  playersLoadingError = false;
+  gamesLoadingError = false;
+
   games: FifaGamePlayed[] = [];
   platforms: Platform[] = [];
+  players: Player[] = [];
+
   platformId = 0;
-  isLoggedIn = false;
   numberOfGames = 10;
   startDate = undefined;
   endDate = undefined;
-  showFilters = true;
-
-  showPlayers = false;
-  players: Player[] = [];
 
   externalIcon = faExternalLinkAlt;
   footballIcon = faSoccerBall;
   rightChevronIcon = faChevronRight;
   downChevronIcon = faChevronDown;
+  errorIcon = faTriangleExclamation;
+
+  showFilters = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-fifa-show-filters') ?? 'false',
+    ),
+  );
+
+  showPlayers = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-fifa-show-players') ?? 'false',
+    ),
+  );
 
   constructor(
     private gameService: GameOnGameService,
@@ -67,6 +84,8 @@ export class FifaHomeComponent implements OnInit {
         this.playersLoading = false;
       },
       (err) => {
+        this.playersLoadingError = true;
+        this.playersLoading = false;
         console.error(err);
       },
     );
@@ -78,7 +97,7 @@ export class FifaHomeComponent implements OnInit {
         this.platforms = data;
       },
       (err) => {
-        alert('Erreur lors de la récupération des plateformes.');
+        this.platformLoadingError = true;
         console.error(err);
       },
     );
@@ -86,46 +105,52 @@ export class FifaHomeComponent implements OnInit {
 
   getGames() {
     this.games.length = 0;
-    this.loading = true;
+    this.gamesLoading = true;
     this.gameService.getLast(this.numberOfGames).subscribe(
       (data) => {
         this.games = data;
-        this.loading = false;
+        this.gamesLoading = false;
       },
       (err) => {
+        this.gamesLoadingError = true;
+        this.gamesLoading = false;
         console.error('[FifaHistory]', err);
-        alert(
-          'Une erreur est survenue lors de la récupération des matchs joués.',
-        );
       },
     );
   }
 
   searchGame() {
     this.games.length = 0;
-    this.loading = true;
+    this.gamesLoading = true;
     this.gameService
       .search(this.numberOfGames, this.platformId, this.startDate, this.endDate)
       .subscribe(
         (data) => {
           this.games = data;
-          this.loading = false;
+          this.gamesLoading = false;
         },
         (err) => {
+          this.gamesLoading = false;
+          this.gamesLoadingError = true;
           console.error('[FifaHistory]', err);
-          alert(
-            'Une erreur est survenue lors de la récupération des matchs joués.',
-          );
         },
       );
   }
 
   showFiltersClick() {
-    this.showFilters = !this.showFilters;
+    this.showFilters.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-fifa-show-filters',
+      JSON.stringify(this.showFilters()),
+    );
   }
 
   showPlayersClick() {
-    this.showPlayers = !this.showPlayers;
+    this.showPlayers.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-fifa-show-players',
+      JSON.stringify(this.showPlayers()),
+    );
   }
 
   createMatch() {

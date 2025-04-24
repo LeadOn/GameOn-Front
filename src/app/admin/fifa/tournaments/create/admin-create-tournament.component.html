@@ -1,133 +1,127 @@
-<div class="mt-8 flex flex-row justify-center">
-  <div
-    class="flex flex-row items-center rounded-lg bg-primary p-4"
-    *ngIf="loading == true"
-  >
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
-
-  <div
-    class="align-center flex w-2/3 flex-row items-center justify-center space-x-2 rounded-lg bg-primary p-4"
-    *ngIf="loading == false"
-  >
-    <div
-      class="align-center flex flex-col items-center justify-center rounded-full bg-customGreen p-4"
-    >
-      <img src="assets/img/svg/trophee.svg" class="w-8" />
-    </div>
-    <span class="text-white">Créer un tournoi</span>
-  </div>
+<div class="animate-fade flex space-x-2 px-4">
+  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+    >Création tournoi
+  </span>
 </div>
 
-<div class="mt-4 flex flex-col items-center">
-  <form
-    [formGroup]="createTournamentForm"
-    class="mt-6 w-2/3 rounded-lg bg-primary p-8"
-  >
-    <div class="group relative z-0 mb-6 w-full">
-      <input
-        type="text"
-        id="name"
-        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
-        formControlName="name"
-        maxlength="100"
-      />
-      <label
-        for="name"
-        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
-      >
-        Nom
-        <span class="text-customRed">*</span>
-      </label>
-    </div>
-
-    <div class="group relative z-0 mb-6 w-full">
-      <textarea
-        type="text"
-        id="description"
-        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
-        formControlName="description"
-        maxlength="5000"
-        required
-      ></textarea>
-      <label
-        for="description"
-        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
-      >
-        Description
-      </label>
-    </div>
-
-    <div class="group relative z-0 mb-6 w-full">
-      <label for="team1" class="mb-2 block text-sm font-medium text-white">
-        État
-      </label>
-      <select
-        id="state"
-        formControlName="state"
-        class="block w-full rounded-lg border border-secondary bg-gray-800/40 p-2.5 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
-      >
-        <option *ngFor="let state of states" value="{{ state.value }}" selected>
-          {{ state.label }}
-        </option>
-      </select>
-    </div>
-
-    <div class="group relative z-0 mb-6 w-full">
-      <input
-        type="text"
-        id="logoUrl"
-        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
-        formControlName="logoUrl"
-        maxlength="3000"
-        required
-      />
-      <label
-        for="logoUrl"
-        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
-      >
-        URL du logo
-      </label>
-    </div>
-
-    <div class="group relative z-0 mb-6 w-full">
-      <input
-        type="date"
-        id="plannedFrom"
-        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
-        formControlName="plannedFrom"
-      />
-      <label
-        for="plannedFrom"
-        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
-      >
-        Planifié du
-        <span class="text-customRed">*</span>
-      </label>
-    </div>
-
-    <div class="group relative z-0 mb-6 w-full">
-      <input
-        type="date"
-        id="plannedTo"
-        class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-white focus:border-secondary focus:outline-none focus:ring-0"
-        formControlName="plannedTo"
-      />
-      <label
-        for="plannedTo"
-        class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
-      >
-        Au
-        <span class="text-customRed">*</span>
-      </label>
-    </div>
-
-    <button
-      (click)="createTournament()"
-      class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
+<section class="bg-bgDarker mt-4 space-x-4 px-4">
+  <div class="animate-fade flex flex-col items-center">
+    <form
+      [formGroup]="createTournamentForm"
+      class="flex w-full flex-col space-y-4"
     >
-      Créer
-    </button>
-  </form>
-</div>
+      <div class="bg-bgLight dark:bg-bgDark rounded-lg p-8">
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="name"
+            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+            formControlName="name"
+          />
+          <label
+            for="name"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+          >
+            Nom
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <textarea
+            type="text"
+            id="description"
+            class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+            formControlName="description"
+            maxlength="5000"
+            required
+          ></textarea>
+          <label
+            for="description"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+          >
+            Description
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <label
+            for="state"
+            class="mb-2 block text-sm font-medium text-gray-400"
+          >
+            État
+          </label>
+
+          <select
+            id="state"
+            formControlName="state"
+            class="border-secondary block w-full rounded-lg border bg-gray-800/40 p-2.5 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
+          >
+            <option
+              *ngFor="let state of states"
+              value="{{ state.value }}"
+              selected
+            >
+              {{ state.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="logoUrl"
+            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+            formControlName="logoUrl"
+          />
+          <label
+            for="logoUrl"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+          >
+            URL du logo
+          </label>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="date"
+            id="plannedFrom"
+            class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+            formControlName="plannedFrom"
+          />
+          <label
+            for="plannedFrom"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+          >
+            Planifié du
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="date"
+            id="plannedTo"
+            class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+            formControlName="plannedTo"
+          />
+          <label
+            for="plannedTo"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+          >
+            Au
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+
+        <button
+          (click)="createTournament()"
+          class="bg-customGreen focus:ring-customGreen w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:ring-4 focus:outline-none"
+        >
+          Créer le tournoi
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

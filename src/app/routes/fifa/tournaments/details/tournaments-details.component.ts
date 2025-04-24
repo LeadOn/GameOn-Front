@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
@@ -45,13 +45,46 @@ export class TournamentsDetailsComponent implements OnInit {
 
   statePillColor = 'primary';
 
-  playersShown = true;
-  plannedMatchsShown = false;
-  matchsPlayedShown = false;
-  myMatchsToPlayShown = false;
-  tournamentBracketShown = false;
-  showDetails = true;
-  showRules = false;
+  tournamentError = false;
+
+  showDetails = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-tournament-show-details') ?? 'true',
+    ),
+  );
+  showRules = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-tournament-show-rules') ?? 'true',
+    ),
+  );
+  tournamentBracketShown = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-tournament-show-bracket') ?? 'true',
+    ),
+  );
+  playersShown = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-tournament-show-players') ?? 'true',
+    ),
+  );
+  myMatchsToPlayShown = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-tournament-show-matchs-to-play') ??
+        'true',
+    ),
+  );
+  plannedMatchsShown = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-tournament-show-matchs-planned') ??
+        'true',
+    ),
+  );
+  matchsPlayedShown = signal<boolean>(
+    JSON.parse(
+      window.localStorage.getItem('gameon-tournament-show-matchs-played') ??
+        'true',
+    ),
+  );
 
   constructor(
     private tournamentService: GameOnTournamentService,
@@ -91,7 +124,7 @@ export class TournamentsDetailsComponent implements OnInit {
           this.selectedTeam = data[0].id;
         },
         (err) => {
-          alert('Erreur lors de la récupération des équipes FIFA.');
+          this.tournamentError = true;
           console.error(err);
         },
       );
@@ -126,16 +159,10 @@ export class TournamentsDetailsComponent implements OnInit {
             break;
         }
 
-        if (
-          this.tournament.phase2ChallongeUrl != null &&
-          this.tournament.phase2ChallongeUrl != ''
-        ) {
-          this.tournamentBracketShown = true;
-        }
         this.loading = false;
       },
       (err) => {
-        alert('Erreur lors de la récupération du tournoi.');
+        this.tournamentError = true;
         console.error(err);
       },
     );
@@ -165,43 +192,71 @@ export class TournamentsDetailsComponent implements OnInit {
           },
           (err) => {
             console.error(err);
-            alert('Erreur lors de la récupération des matchs.');
+            this.tournamentError = true;
           },
         );
       },
       (err) => {
         console.error(err);
-        alert('Erreur lors de la récupération des matchs.');
+        this.tournamentError = true;
       },
     );
   }
 
   showPlayers() {
-    this.playersShown = !this.playersShown;
+    this.playersShown.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-tournament-show-players',
+      JSON.stringify(this.playersShown()),
+    );
   }
 
   showMatchsPlanned() {
-    this.plannedMatchsShown = !this.plannedMatchsShown;
+    this.plannedMatchsShown.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-tournament-show-matchs-planned',
+      JSON.stringify(this.plannedMatchsShown()),
+    );
   }
 
   showMatchsPlayed() {
-    this.matchsPlayedShown = !this.matchsPlayedShown;
+    this.matchsPlayedShown.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-tournament-show-matchs-played',
+      JSON.stringify(this.matchsPlayedShown()),
+    );
   }
 
   showMyMatchsToPlay() {
-    this.myMatchsToPlayShown = !this.myMatchsToPlayShown;
+    this.myMatchsToPlayShown.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-tournament-show-matchs-to-play',
+      JSON.stringify(this.myMatchsToPlayShown()),
+    );
   }
 
   showTournamentBracket() {
-    this.tournamentBracketShown = !this.tournamentBracketShown;
+    this.tournamentBracketShown.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-tournament-show-bracket',
+      JSON.stringify(this.tournamentBracketShown()),
+    );
   }
 
   showDetailsContent() {
-    this.showDetails = !this.showDetails;
+    this.showDetails.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-tournament-show-details',
+      JSON.stringify(this.showDetails()),
+    );
   }
 
   showRulesContent() {
-    this.showRules = !this.showRules;
+    this.showRules.update((prev) => !prev);
+    window.localStorage.setItem(
+      'gameon-tournament-show-rules',
+      JSON.stringify(this.showRules()),
+    );
   }
 
   getState(stateId: number): string {
