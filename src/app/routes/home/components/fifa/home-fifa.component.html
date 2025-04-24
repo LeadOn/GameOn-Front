@@ -131,7 +131,7 @@
       >
 
       <app-loading-spinner-tiny
-        *ngIf="loadingPlannedMatches == true"
+        *ngIf="loadingPlannedMatches == true && plannedMatchesError == false"
       ></app-loading-spinner-tiny>
     </div>
 
@@ -147,7 +147,10 @@
       </div>
     </div>
 
-    <div *ngIf="loadingPlannedMatches == true" class="mt-4">
+    <div
+      *ngIf="loadingPlannedMatches == true && plannedMatchesError == false"
+      class="mt-4"
+    >
       <div class="mt-4 flex w-full flex-col space-y-4">
         <app-fifa-game-history-card></app-fifa-game-history-card>
       </div>
@@ -177,7 +180,7 @@
       >
 
       <app-loading-spinner-tiny
-        *ngIf="loadingLastMatches == true"
+        *ngIf="loadingLastMatches == true && lastMatchesError == false"
       ></app-loading-spinner-tiny>
     </div>
 
@@ -193,7 +196,10 @@
       </div>
     </div>
 
-    <div *ngIf="loadingLastMatches == true" class="mt-4">
+    <div
+      *ngIf="loadingLastMatches == true && lastMatchesError == false"
+      class="mt-4"
+    >
       <div class="mt-4 flex w-full flex-col space-y-4">
         <app-fifa-game-history-card></app-fifa-game-history-card>
       </div>

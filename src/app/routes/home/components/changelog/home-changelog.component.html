@@ -1,5 +1,5 @@
 <div
-  class="animate-fade flex cursor-pointer items-center justify-between"
+  class="animate-fade flex cursor-pointer items-center justify-between px-4"
   routerLink="/changelog"
 >
   <div class="flex items-center justify-center space-x-2">
@@ -13,10 +13,20 @@
     >
   </div>
 
-  <app-loading-spinner-tiny *ngIf="loading == true"></app-loading-spinner-tiny>
+  <app-loading-spinner-tiny
+    *ngIf="loading == true && error == false"
+  ></app-loading-spinner-tiny>
 </div>
 
-<app-changelog-card
-  [changelog]="changelog"
-  [loading]="loading"
-></app-changelog-card>
+<app-info-message
+  [type]="'error'"
+  [title]="'Une erreur est survenue lors de la récupération des nouveautés.'"
+  *ngIf="error == true"
+></app-info-message>
+
+<div class="px-4" *ngIf="error == false">
+  <app-changelog-card
+    [changelog]="changelog"
+    [loading]="loading"
+  ></app-changelog-card>
+</div>

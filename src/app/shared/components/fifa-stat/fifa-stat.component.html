@@ -1,45 +1,45 @@
 <div class="align-center flex flex-col items-center justify-center">
   <div class="flex w-full flex-row">
-    <div class="h-4 w-full rounded-full bg-gray-300 dark:bg-gray-600">
+    <div class="h-4 w-full rounded-full bg-gray-300 dark:bg-[#ffffff]">
       <div
-        class="h-4 rounded-full bg-customGreen p-0.5 text-center text-xs font-medium leading-none text-black"
+        class="bg-customGreen h-4 rounded-full p-0.5 text-center text-xs leading-none font-medium text-black"
         [class.bg-transparent]="stat.winRate == 0"
         style="width: {{ stat.winRate }}%"
       >
         {{ stat.winRate }}%
       </div>
     </div>
-    <span class="ml-2 w-6 text-xs text-customGreen">{{ stat.wins }}V</span>
+    <span class="text-customGreen ml-2 w-6 text-xs">{{ stat.wins }}V</span>
   </div>
 
   <div class="mt-1 flex w-full flex-row">
-    <div class="h-4 w-full rounded-full bg-gray-300 dark:bg-gray-600">
+    <div class="h-4 w-full rounded-full bg-gray-300 dark:bg-[#ffffff]">
       <div
-        class="h-4 rounded-full bg-customRed p-0.5 text-center text-xs font-medium leading-none text-black"
+        class="bg-customRed h-4 rounded-full p-0.5 text-center text-xs leading-none font-medium text-black"
         [class.bg-transparent]="stat.looseRate == 0"
         style="width: {{ stat.looseRate }}%"
       >
         {{ stat.looseRate }}%
       </div>
     </div>
-    <span class="ml-2 w-6 text-xs text-customRed">{{ stat.losses }}D</span>
+    <span class="text-customRed ml-2 w-6 text-xs">{{ stat.losses }}D</span>
   </div>
 
   <div class="mt-1 flex w-full flex-row">
-    <div class="h-4 w-full rounded-full bg-gray-300 dark:bg-gray-600">
+    <div class="h-4 w-full rounded-full bg-gray-300 dark:bg-[#ffffff]">
       <div
-        class="h-4 rounded-full bg-customYellow p-0.5 text-center text-xs font-medium leading-none text-black"
+        class="bg-customYellow h-4 rounded-full p-0.5 text-center text-xs leading-none font-medium text-black"
         [class.bg-transparent]="stat.drawRate == 0"
         style="width: {{ stat.drawRate }}%"
       >
         {{ stat.drawRate }}%
       </div>
     </div>
-    <span class="ml-2 w-6 text-xs text-customYellow">{{ stat.draws }}N</span>
+    <span class="text-customYellow ml-2 w-6 text-xs">{{ stat.draws }}N</span>
   </div>
 </div>
 
-<div class="mt-2 text-center text-xs text-primary dark:text-primaryDark">
+<div class="text-primary dark:text-primaryDark mt-2 text-center text-xs">
   <span class="block">
     Moy. marqués : {{ stat.averageGoalGiven }} - total :
     {{ stat.goalsGiven }}

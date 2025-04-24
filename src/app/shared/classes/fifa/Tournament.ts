@@ -4,7 +4,7 @@ import { TournamentPlayerDto } from './TournamentPlayerDto';
 export class Tournament {
   id: number = 0;
   name: string = 'UNKNOWN';
-  description?: string;
+  description: string = 'UNKNOWN';
   state: number = 0;
   logoUrl?: string;
   phase2ChallongeUrl?: string;

@@ -19,7 +19,6 @@ import { StoreModule } from '@ngrx/store';
 
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { AdminModule } from './admin/admin.module';
-import { DonateComponent } from './routes/donate/donate.component';
 import { ChangelogComponent } from './routes/changelog/changelog.component';
 import {
   playerReducer,
@@ -48,7 +47,6 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     HomeComponent,
     ProfilePageComponent,
     ChangelogComponent,
-    DonateComponent,
     HomeChangelogComponent,
     HomeFifaComponent,
     HomeLolComponent,

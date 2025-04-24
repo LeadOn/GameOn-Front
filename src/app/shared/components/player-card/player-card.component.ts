@@ -11,5 +11,8 @@ export class PlayerCardComponent {
   @Input()
   player: Player = new Player();
 
+  @Input()
+  loading = false;
+
   constructor() {}
 }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { DonateComponent } from './routes/donate/donate.component';
 import { canActivateAuthRole } from './core/guards/auth.guard';
 import { ChangelogComponent } from './routes/changelog/changelog.component';
 import { HomeComponent } from './routes/home/home.component';
@@ -25,10 +24,6 @@ export const routes: Routes = [
       {
         path: 'changelog',
         component: ChangelogComponent,
-      },
-      {
-        path: 'donate',
-        component: DonateComponent,
       },
       {
         path: 'player/me',
