@@ -1,3 +1,9 @@
+<app-info-message
+  [type]="'error'"
+  [title]="'Une erreur est survenue lors de la récupération du tournoi.'"
+  *ngIf="tournamentError == true"
+></app-info-message>
+
 <section
   id="header-pills"
   class="animate-fade [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker mb-4 overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full"
@@ -83,7 +89,7 @@
       width="64"
     />
 
-    <div class="flex flex-col">
+    <div class="flex flex-col space-y-2">
       <span
         *ngIf="loading == true || tournament == null"
         class="h-4 w-32 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"
@@ -129,61 +135,77 @@
 
 <div
   class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
-  *ngIf="
-    loading == false && tournament != null && tournament.description != null
-  "
   (click)="showDetailsContent()"
 >
   <span class="text-lg font-semibold">Détails</span>
   <span class="text-lg font-semibold">
-    <fa-icon [icon]="downChevronIcon" *ngIf="showDetails == true"></fa-icon>
-    <fa-icon [icon]="rightChevronIcon" *ngIf="showDetails == false"></fa-icon>
+    <fa-icon [icon]="downChevronIcon" *ngIf="showDetails()"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="!showDetails()"></fa-icon>
   </span>
 </div>
 
 <section
   id="tournament-details"
   class="animate-fade mt-4 px-4"
-  *ngIf="
-    loading == false &&
-    tournament != null &&
-    tournament.description != null &&
-    showDetails == true
-  "
+  *ngIf="showDetails()"
 >
   <div
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex flex-col items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
   >
-    {{ tournament.description }}
+    <div
+      class="h-4 w-64 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"
+      *ngIf="loading == true || tournament == null"
+    ></div>
+
+    <span *ngIf="loading == false && tournament != null">
+      {{ tournament.description }}
+    </span>
   </div>
 </section>
 
 <div
   class="animate-fade text-primary dark:text-primaryDark mt-4 flex cursor-pointer justify-between px-4"
-  *ngIf="loading == false && tournament != null && tournament.rules != null"
   (click)="showRulesContent()"
 >
   <span class="text-lg font-semibold">Règlement</span>
   <span class="text-lg font-semibold">
-    <fa-icon [icon]="downChevronIcon" *ngIf="showRules == true"></fa-icon>
-    <fa-icon [icon]="rightChevronIcon" *ngIf="showRules == false"></fa-icon>
+    <fa-icon [icon]="downChevronIcon" *ngIf="showRules()"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="!showRules()"></fa-icon>
   </span>
 </div>
 
-<section
-  id="tournament-rules"
-  class="animate-fade mt-4 px-4"
-  *ngIf="
-    loading == false &&
-    tournament != null &&
-    tournament.description != null &&
-    showRules == true
-  "
->
+<section id="tournament-rules" class="mt-4 px-4">
   <div
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    class="animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    *ngIf="
+      loading == false &&
+      tournament != null &&
+      tournament.rules != null &&
+      showRules()
+    "
     [innerHtml]="tournament.rules"
   ></div>
+
+  <div
+    class="animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    *ngIf="
+      loading == false &&
+      tournament != null &&
+      tournament.rules == null &&
+      showRules()
+    "
+  >
+    <span>Aucune règle n'est définie pour ce tournoi.</span>
+  </div>
+
+  <div
+    class="animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    *ngIf="loading == true && showRules()"
+  >
+    <div
+      class="h-4 w-64 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"
+    ></div>
+  </div>
 </section>
 
 <div
@@ -268,11 +290,11 @@
   <span class="text-lg font-semibold">
     <fa-icon
       [icon]="downChevronIcon"
-      *ngIf="tournamentBracketShown == true"
+      *ngIf="tournamentBracketShown()"
     ></fa-icon>
     <fa-icon
       [icon]="rightChevronIcon"
-      *ngIf="tournamentBracketShown == false"
+      *ngIf="!tournamentBracketShown()"
     ></fa-icon>
   </span>
 </div>
@@ -284,7 +306,7 @@
     loading == false &&
     tournament != null &&
     tournament.phase2ChallongeUrl != null &&
-    tournamentBracketShown == true
+    tournamentBracketShown()
   "
 >
   <iframe
@@ -306,8 +328,8 @@
 >
   <span class="text-lg font-semibold">Joueurs</span>
   <span class="text-lg font-semibold">
-    <fa-icon [icon]="downChevronIcon" *ngIf="playersShown == true"></fa-icon>
-    <fa-icon [icon]="rightChevronIcon" *ngIf="playersShown == false"></fa-icon>
+    <fa-icon [icon]="downChevronIcon" *ngIf="playersShown()"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="!playersShown()"></fa-icon>
   </span>
 </div>
 
@@ -318,7 +340,7 @@
     loading == false &&
     tournament != null &&
     tournament.players.length > 0 &&
-    playersShown == true
+    playersShown()
   "
 >
   <div class="relative px-4 drop-shadow-lg">
@@ -381,14 +403,8 @@
 >
   <span class="text-lg font-semibold">Mes matchs à venir</span>
   <span class="text-lg font-semibold">
-    <fa-icon
-      [icon]="downChevronIcon"
-      *ngIf="myMatchsToPlayShown == true"
-    ></fa-icon>
-    <fa-icon
-      [icon]="rightChevronIcon"
-      *ngIf="myMatchsToPlayShown == false"
-    ></fa-icon>
+    <fa-icon [icon]="downChevronIcon" *ngIf="myMatchsToPlayShown()"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="!myMatchsToPlayShown()"></fa-icon>
   </span>
 </div>
 
@@ -399,7 +415,7 @@
     loading == false &&
     tournament != null &&
     myGamesToPlay.length > 0 &&
-    myMatchsToPlayShown == true
+    myMatchsToPlayShown()
   "
 >
   <app-fifa-game-history-card
@@ -415,14 +431,8 @@
 >
   <span class="text-lg font-semibold">Matchs planifiés</span>
   <span class="text-lg font-semibold">
-    <fa-icon
-      [icon]="downChevronIcon"
-      *ngIf="plannedMatchsShown == true"
-    ></fa-icon>
-    <fa-icon
-      [icon]="rightChevronIcon"
-      *ngIf="plannedMatchsShown == false"
-    ></fa-icon>
+    <fa-icon [icon]="downChevronIcon" *ngIf="plannedMatchsShown()"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="!plannedMatchsShown()"></fa-icon>
   </span>
 </div>
 
@@ -433,7 +443,7 @@
     loading == false &&
     tournament != null &&
     gamesToPlay.length > 0 &&
-    plannedMatchsShown == true
+    plannedMatchsShown()
   "
 >
   <app-fifa-game-history-card
@@ -449,14 +459,8 @@
 >
   <span class="text-lg font-semibold">Matchs joués</span>
   <span class="text-lg font-semibold">
-    <fa-icon
-      [icon]="downChevronIcon"
-      *ngIf="matchsPlayedShown == true"
-    ></fa-icon>
-    <fa-icon
-      [icon]="rightChevronIcon"
-      *ngIf="matchsPlayedShown == false"
-    ></fa-icon>
+    <fa-icon [icon]="downChevronIcon" *ngIf="matchsPlayedShown()"></fa-icon>
+    <fa-icon [icon]="rightChevronIcon" *ngIf="!matchsPlayedShown()"></fa-icon>
   </span>
 </div>
 
@@ -467,7 +471,7 @@
     loading == false &&
     tournament != null &&
     gamesPlayed.length > 0 &&
-    matchsPlayedShown == true
+    matchsPlayedShown()
   "
 >
   <app-fifa-game-history-card
