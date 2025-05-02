@@ -35,7 +35,7 @@
     />
 
     <span
-      class="mt-2 text-xl font-semibold text-primary dark:text-primaryDark"
+      class="text-primary dark:text-primaryDark mt-2 text-xl font-semibold"
       >{{ currentPlayer.nickname }}</span
     >
     <span class="text-gray-500 dark:text-gray-400">{{
@@ -46,28 +46,28 @@
 
 <div class="mt-8">
   <div
-    class="mt-4 flex animate-fade justify-between px-4"
+    class="animate-fade mt-4 flex justify-between px-4"
     *ngIf="
       loading == false && isAdmin == true && (player$ | async) as currentPlayer
     "
   >
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >Administration</span
     >
   </div>
 
   <section
     id="player-admin"
-    class="mt-4 animate-fade px-4"
+    class="animate-fade mt-4 px-4"
     *ngIf="
       loading == false && isAdmin == true && (player$ | async) as currentPlayer
     "
   >
     <div
-      class="rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+      class="bg-bgLight dark:bg-bgDark rounded-lg p-4 text-sm drop-shadow-lg"
     >
       <div
-        class="flex cursor-pointer flex-row justify-between text-customRed"
+        class="text-customRed flex cursor-pointer flex-row justify-between"
         [routerLink]="['/admin']"
       >
         <a
@@ -81,7 +81,7 @@
       <hr class="my-4" />
 
       <div
-        class="flex cursor-pointer flex-row justify-between text-customYellow"
+        class="text-customYellow flex cursor-pointer flex-row justify-between"
         [cdkCopyToClipboard]="token"
       >
         <a
@@ -94,24 +94,24 @@
   </section>
 
   <div
-    class="mt-4 flex animate-fade justify-between px-4"
+    class="animate-fade mt-4 flex justify-between px-4"
     *ngIf="loading == false && (player$ | async) as currentPlayer"
   >
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >FIFA</span
     >
   </div>
 
   <section
     id="player-fifa"
-    class="mt-4 animate-fade px-4"
+    class="animate-fade mt-4 px-4"
     *ngIf="loading == false && (player$ | async) as currentPlayer"
   >
     <div
-      class="rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+      class="bg-bgLight dark:bg-bgDark rounded-lg p-4 text-sm drop-shadow-lg"
     >
       <div
-        class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
         [routerLink]="['/player', currentPlayer.id]"
       >
         <a
@@ -125,17 +125,17 @@
   </section>
 
   <div
-    class="mt-4 flex animate-fade justify-between px-4"
+    class="animate-fade mt-4 flex justify-between px-4"
     *ngIf="loading == false && (player$ | async) as currentPlayer"
   >
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >League of Legends</span
     >
   </div>
 
   <section
     id="player-lol"
-    class="mt-4 animate-fade"
+    class="animate-fade mt-4"
     *ngIf="loading == false && (player$ | async) as currentPlayer"
   >
     <app-info-message
@@ -146,10 +146,10 @@
     ></app-info-message>
 
     <div
-      class="mx-4 rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+      class="bg-bgLight dark:bg-bgDark mx-4 rounded-lg p-4 text-sm drop-shadow-lg"
     >
       <div
-        class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
         [routerLink]="['/lol/summoner', currentPlayer.id]"
       >
         <div class="flex items-center space-x-2">
@@ -163,24 +163,24 @@
   </section>
 
   <div
-    class="mt-4 flex animate-fade justify-between px-4"
+    class="animate-fade mt-4 flex justify-between px-4"
     *ngIf="loading == false && (player$ | async) as currentPlayer"
   >
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >Préférences</span
     >
   </div>
 
   <section
     id="player-preferences"
-    class="mt-4 animate-fade px-4"
+    class="animate-fade mt-4 px-4"
     *ngIf="loading == false && (player$ | async) as currentPlayer"
   >
     <div
-      class="rounded-lg bg-bgLight p-4 text-sm drop-shadow-lg dark:bg-bgDark"
+      class="bg-bgLight dark:bg-bgDark rounded-lg p-4 text-sm drop-shadow-lg"
     >
       <div
-        class="flex cursor-pointer flex-row justify-between text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
       >
         <span
           ><fa-icon [icon]="calendarIcon" class="mr-2"></fa-icon>
@@ -195,13 +195,13 @@
           <input
             type="text"
             id="fullname"
-            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             required
             formControlName="fullName"
           />
           <label
             for="fullname"
-            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
           >
             Nom complet
             <span class="text-customRed">*</span>
@@ -212,13 +212,13 @@
           <input
             type="text"
             id="nickname"
-            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             required
             formControlName="nickname"
           />
           <label
             for="nickname"
-            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
           >
             Pseudo
             <span class="text-customRed">*</span>
@@ -229,16 +229,14 @@
           <input
             type="text"
             id="profilePictureUrl"
-            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
-            required
+            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="profilePictureUrl"
           />
           <label
             for="profilePictureUrl"
-            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
           >
             Photo de profil (URL)
-            <span class="text-customRed">*</span>
           </label>
         </div>
 
@@ -248,13 +246,13 @@
           <input
             type="text"
             id="riotGamesNickname"
-            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             required
             formControlName="riotGamesNickname"
           />
           <label
             for="riotGamesNickname"
-            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
           >
             Nom de compte Riot Games
           </label>
@@ -264,13 +262,13 @@
           <input
             type="text"
             id="riotGamesTagLine"
-            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             required
             formControlName="riotGamesTagLine"
           />
           <label
             for="riotGamesTagLine"
-            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
           >
             Tag (exemple: EUW)
           </label>
@@ -278,7 +276,7 @@
 
         <button
           (click)="updateUser()"
-          class="delay-50 w-full rounded-lg border border-customGreen bg-bgLight px-5 py-2.5 text-center text-sm text-customGreen transition ease-in-out hover:bg-customGreen hover:text-white focus:outline-none focus:ring-4 focus:ring-customGreen dark:bg-bgDark"
+          class="border-customGreen bg-bgLight text-customGreen hover:bg-customGreen focus:ring-customGreen dark:bg-bgDark w-full rounded-lg border px-5 py-2.5 text-center text-sm transition delay-50 ease-in-out hover:text-white focus:ring-4 focus:outline-none"
         >
           Mettre à jour
         </button>
@@ -287,7 +285,7 @@
       <hr class="my-4" />
 
       <div
-        class="flex cursor-pointer flex-row justify-between text-customRed"
+        class="text-customRed flex cursor-pointer flex-row justify-between"
         (click)="logout()"
       >
         <a><fa-icon [icon]="logoutIcon" class="mr-2"></fa-icon> Déconnexion </a>
