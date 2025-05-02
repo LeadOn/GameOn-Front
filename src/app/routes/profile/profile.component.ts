@@ -60,8 +60,14 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   @Output() successMessageChange = new EventEmitter<boolean>();
 
   updatePlayerForm = new FormGroup({
-    fullName: new FormControl('', [Validators.maxLength(100)]),
-    nickname: new FormControl('', [Validators.maxLength(100)]),
+    fullName: new FormControl('', [
+      Validators.maxLength(100),
+      Validators.required,
+    ]),
+    nickname: new FormControl('', [
+      Validators.maxLength(100),
+      Validators.required,
+    ]),
     profilePictureUrl: new FormControl('', [Validators.maxLength(500)]),
     riotGamesNickname: new FormControl('', [Validators.maxLength(500)]),
     riotGamesTagLine: new FormControl('', [Validators.maxLength(500)]),
@@ -131,6 +137,15 @@ export class ProfilePageComponent implements OnInit, OnChanges {
     if (this.loading == false) {
       let riotGamesNickname: string | undefined = undefined;
       let riotGamesTagLine: string | undefined = undefined;
+      let profilePictureUrl: string | undefined = undefined;
+
+      if (
+        this.updatePlayerForm.controls['profilePictureUrl'].value != null &&
+        this.updatePlayerForm.controls['profilePictureUrl'].value != ''
+      ) {
+        profilePictureUrl =
+          this.updatePlayerForm.controls['profilePictureUrl'].value;
+      }
 
       if (
         this.updatePlayerForm.controls['riotGamesNickname'].value != null &&
@@ -153,7 +168,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
         .update(
           this.updatePlayerForm.controls['fullName'].value,
           this.updatePlayerForm.controls['nickname'].value,
-          this.updatePlayerForm.controls['profilePictureUrl'].value,
+          profilePictureUrl,
           riotGamesNickname,
           riotGamesTagLine,
         )
