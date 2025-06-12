@@ -1,6 +1,6 @@
 {
   "name": "gameon-front",
-  "version": "5.3.0",
+  "version": "5.3.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -22,12 +22,11 @@
     "@fortawesome/angular-fontawesome": "^2.0.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@ngrx/store": "^19.2.1",
-    "@tailwindcss/postcss": "^4.1.8",
+    "@tailwindcss/postcss": "^4.1.10",
     "chart.js": "^4.4.9",
     "flowbite": "^3.1.2",
     "keycloak-angular": "^19.0.2",
     "keycloak-js": "^26.0.7",
-    "postcss": "^8.5.4",
     "rxjs": "^7.8.2",
     "tailwindcss-animated": "^2.0.0",
     "tslib": "^2.8.1",
@@ -45,10 +44,10 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "postcss": "^8.5.4",
+    "postcss": "^8.5.5",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
-    "tailwindcss": "^4.1.8",
+    "tailwindcss": "^4.1.10",
     "typescript": "~5.8.3"
   }
 }
