@@ -22,7 +22,7 @@
     "@fortawesome/angular-fontawesome": "^2.0.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@ngrx/store": "^19.2.1",
-    "@tailwindcss/postcss": "^4.1.10",
+    "@tailwindcss/postcss": "^4.1.11",
     "chart.js": "^4.5.0",
     "flowbite": "^3.1.2",
     "keycloak-angular": "^20.0.0",
@@ -45,9 +45,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "postcss": "^8.5.6",
-    "prettier": "^3.6.0",
+    "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.13",
-    "tailwindcss": "^4.1.10",
+    "tailwindcss": "^4.1.11",
     "typescript": "~5.8.3"
   }
 }
