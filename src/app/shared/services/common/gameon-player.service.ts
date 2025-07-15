@@ -54,9 +54,18 @@ export class GameOnPlayerService {
     return this.client.patch<Player>(environment.gameOnApiUrl + '/player/me', {
       FullName: fullName,
       Nickname: nickname,
-      ProfilePictureUrl: profilePicUrl,
       RiotGamesNickname: riotGamesNickname,
       RiotGamesTagLine: riotGamesTagLine,
     });
+  }
+
+  updateProfilePicture(file: any): Observable<any> {
+    let formData = new FormData();
+    formData.append('profilePicture', file);
+
+    return this.client.post<any>(
+      environment.gameOnApiUrl + '/player/pp',
+      formData,
+    );
   }
 }

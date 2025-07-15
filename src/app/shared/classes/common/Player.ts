@@ -5,7 +5,7 @@ export class Player {
   keycloakId?: string;
   fullName: string = '';
   nickname: string = '';
-  profilePictureUrl: string = 'assets/img/gameon-logo.webp';
+  profilePictureUrl: string = 'default.webp';
   createdOn: Date = new Date();
   archived: boolean = false;
   tournamentsWon?: Tournament[];

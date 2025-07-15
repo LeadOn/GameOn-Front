@@ -226,7 +226,25 @@
         </div>
 
         <div class="group relative z-0 mb-6 w-full">
+          <label
+            class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+            for="file_input"
+            >Photo de profil</label
+          >
           <input
+            class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+            aria-describedby="file_input_help"
+            id="file_input"
+            type="file"
+            (change)="uploadProfilePicture($event)"
+          />
+          <p
+            class="mt-1 text-sm text-gray-500 dark:text-gray-300"
+            id="file_input_help"
+          >
+            PNG, JPG ou GIF pour des résultats optimaux.
+          </p>
+          <!-- <input
             type="text"
             id="profilePictureUrl"
             class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
@@ -237,7 +255,7 @@
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
           >
             Photo de profil (URL)
-          </label>
+          </label> -->
         </div>
 
         <hr class="my-4" />

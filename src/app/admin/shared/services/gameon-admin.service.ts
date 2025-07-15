@@ -59,7 +59,6 @@ export class GameOnAdminService {
     let body: any = {
       FullName: fullName,
       Nickname: nickname,
-      ProfilePictureUrl: profilePicUrl,
       Id: id,
     };
 
