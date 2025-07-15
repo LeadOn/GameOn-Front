@@ -45,14 +45,10 @@
       <span class="bubble"></span>
       <span class="bubble"></span>
       <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
     </div>
 
     <nav
-      class="border-l-frenchBlue border-r-frenchRed bg-bgLight dark:border-y-bgLight dark:bg-bgDark fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 drop-shadow-xl"
+      class="border-l-frenchBlue border-r-frenchRed bg-bgLight/30 dark:border-y-bgLight dark:bg-bgDark/30 fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
     >
       <div
         class="flex h-full w-full grow basis-1 items-center justify-around align-middle"
@@ -63,6 +59,16 @@
         >
           <fa-icon
             [icon]="homeIcon"
+            class="text-primary dark:text-primaryDark text-lg"
+          ></fa-icon>
+        </div>
+
+        <div
+          routerLink="/fifa"
+          class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full"
+        >
+          <fa-icon
+            [icon]="ballIcon"
             class="text-primary dark:text-primaryDark text-lg"
           ></fa-icon>
         </div>

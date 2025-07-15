@@ -31,6 +31,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   currentLoLPatch: string = environment.currentLoLPatch;
   syncIcon = faSync;
   externalIcon = faExternalLink;
+  apiUrl = environment.gameOnApiUrl;
 
   constructor(
     private route: ActivatedRoute,

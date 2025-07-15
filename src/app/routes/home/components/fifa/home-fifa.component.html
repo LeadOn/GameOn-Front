@@ -60,7 +60,7 @@
           player.profilePictureUrl != '' &&
           loading == false
         "
-        src="{{ player.profilePictureUrl }}"
+        src="{{ apiUrl }}/player/{{ player.id }}/pp"
       />
 
       <img
