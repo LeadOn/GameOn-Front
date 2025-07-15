@@ -10,7 +10,7 @@
 
 # Description
 
-This project is a front-end for the GameOn! Front-End, done using Angular 19 / TailwindCSS v4, and will be running live on [this site](https://gameon.valentinvirot.fr/).
+This project is a front-end for the GameOn! Front-End, done using Angular 20 / TailwindCSS v4, and will be running live on [this site](https://gameon.valentinvirot.fr/).
 
 Currently, this front-end uses multiple concepts, such as :
 

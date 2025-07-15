@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { canActivateAuthRole } from './core/guards/auth.guard';
 import { ChangelogComponent } from './routes/changelog/changelog.component';
 import { HomeComponent } from './routes/home/home.component';
@@ -58,7 +57,7 @@ export const routes: Routes = [
     children: [
       {
         path: '**',
-        component: NotFoundComponent,
+        component: HomeComponent,
       },
     ],
   },
