@@ -4,7 +4,7 @@
 
 <section
   id="header-pills"
-  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
+  class="[&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker overflow-x-scroll p-4 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full dark:[&::-webkit-scrollbar-track]:bg-neutral-700"
   *ngIf="loading == false && player != null"
 >
   <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
@@ -39,12 +39,12 @@
   *ngIf="loading == false && player != null"
 >
   <div
-    class="flex items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+    class="bg-bgLight dark:bg-bgDark flex items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <img
       class="rounded-full drop-shadow-lg"
       *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
-      src="{{ player.profilePictureUrl }}"
+      src="{{ apiUrl }}/player/{{ player.id }}/pp"
       width="64"
     />
 
@@ -56,7 +56,7 @@
     />
 
     <div class="flex flex-col">
-      <span class="text-xl font-semibold text-primary dark:text-primaryDark">{{
+      <span class="text-primary dark:text-primaryDark text-xl font-semibold">{{
         player.fullName
       }}</span>
       <span class="text-xs text-gray-600 dark:text-gray-300">{{
@@ -66,17 +66,17 @@
   </div>
 </section>
 
-<div class="mt-4 animate-fade px-4">
+<div class="animate-fade mt-4 px-4">
   <div class="w-full" *ngIf="player != null && player.id != 0">
     <div
-      class="flex flex-col items-center rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+      class="bg-bgLight dark:bg-bgDark flex flex-col items-center rounded-lg p-4 drop-shadow-lg"
     >
-      <div class="w-full animate-fade text-center">
+      <div class="animate-fade w-full text-center">
         <select
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
           id="seasons"
-          class="mt-2 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
+          class="border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mt-2 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
         >
           <option *ngFor="let season of seasons" value="{{ season.id }}">
             {{ season.name }}
@@ -84,14 +84,14 @@
         </select>
 
         <div
-          class="mt-2 rounded-lg border border-secondary p-4"
+          class="border-secondary mt-2 rounded-lg border p-4"
           *ngIf="fifaPlayerStats != undefined && fifaPlayerStats != null"
         >
           <select
             [(ngModel)]="selectedStats"
             (change)="calculateStats()"
             id="stats"
-            class="mb-4 block w-full rounded-lg border border-secondary bg-bgLight p-2.5 text-sm text-primary focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDark dark:text-primaryDark"
+            class="border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mb-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
           >
             <option
               *ngFor="let platform of fifaPlayerStats.statsPerPlatform"
@@ -141,10 +141,10 @@
 </div>
 
 <div
-  class="mt-4 flex animate-fade justify-between px-4"
+  class="animate-fade mt-4 flex justify-between px-4"
   *ngIf="loading == false && games != null && games.length > 0"
 >
-  <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
     >Matchs joués</span
   >
 </div>

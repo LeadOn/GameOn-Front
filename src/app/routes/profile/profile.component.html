@@ -25,7 +25,7 @@
     <img
       class="w-32 rounded-full drop-shadow-lg"
       *ngIf="currentPlayer.profilePictureUrl != null"
-      src="{{ currentPlayer.profilePictureUrl }}"
+      src="{{ apiUrl }}/player/{{ currentPlayer.id }}/pp"
     />
 
     <img

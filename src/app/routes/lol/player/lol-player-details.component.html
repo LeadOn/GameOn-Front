@@ -4,7 +4,7 @@
 
 <section
   id="header-pills"
-  class="dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker [&::-webkit-scrollbar]:h-2"
+  class="[&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker overflow-x-scroll p-4 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full dark:[&::-webkit-scrollbar-track]:bg-neutral-700"
   *ngIf="loading == false && player != null"
 >
   <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
@@ -23,7 +23,7 @@
   *ngIf="loading == false && player != null"
 >
   <div
-    class="flex w-3/4 items-center justify-evenly rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+    class="bg-bgLight dark:bg-bgDark flex w-3/4 items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <div class="flex flex-col items-center">
       <img
@@ -41,7 +41,7 @@
           player.profilePictureUrl != '' &&
           player.lolIconId == null
         "
-        src="{{ player.profilePictureUrl }}"
+        src="{{ apiUrl }}/player/{{ player.id }}/pp"
         width="64"
         class="rounded-full"
       />
@@ -56,14 +56,14 @@
         width="64"
       />
       <span
-        class="z-50 -mt-2 rounded-full bg-secondary px-2 text-xs text-bgLight"
+        class="bg-secondary text-bgLight z-50 -mt-2 rounded-full px-2 text-xs"
         >{{ player.lolSummonerLevel }}</span
       >
     </div>
 
     <div class="flex flex-col">
       <span
-        class="flex items-center text-xl font-semibold text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark flex items-center text-xl font-semibold"
         >{{ player.riotGamesNickname
         }}<span class="text-xs text-gray-500 dark:text-gray-400"
           >#{{ player.riotGamesTagLine }}</span
@@ -93,7 +93,7 @@
   </div>
 
   <div
-    class="flex w-1/4 cursor-pointer flex-col items-center justify-center rounded-lg bg-bgLight p-4 align-middle text-primary drop-shadow-lg dark:bg-bgDark dark:text-primaryDark"
+    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-1/4 cursor-pointer flex-col items-center justify-center rounded-lg p-4 align-middle drop-shadow-lg"
     (click)="refreshSummoner()"
   >
     <fa-icon [icon]="refreshIcon" class="text-2xl"></fa-icon>
@@ -110,12 +110,12 @@
   *ngIf="loading == false && player != null"
 >
   <div
-    class="flex w-1/2 animate-fade-right flex-row items-center justify-evenly space-y-2 rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+    class="animate-fade-right bg-bgLight dark:bg-bgDark flex w-1/2 flex-row items-center justify-evenly space-y-2 rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <img
       src="assets/img/gameon-logo.webp"
       *ngIf="player.leagueOfLegendsSoloRank == null"
-      class="h-16 w-16 animate-fade-right"
+      class="animate-fade-right h-16 w-16"
     />
 
     <img
@@ -123,7 +123,7 @@
       src="assets/img/lol/rank/{{
         player.leagueOfLegendsSoloRank.tier | lowercase
       }}.png"
-      class="h-16 w-16 animate-fade-right"
+      class="animate-fade-right h-16 w-16"
     />
 
     <div class="flex flex-col space-y-1 text-center">
@@ -136,7 +136,7 @@
       >
 
       <span
-        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        class="animate-fade-right text-primary dark:text-primaryDark text-sm"
         *ngIf="player.leagueOfLegendsSoloRank != null"
         >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
         {{ player.leagueOfLegendsSoloRank.rank }}
@@ -144,7 +144,7 @@
       >
 
       <span
-        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        class="animate-fade-right text-primary dark:text-primaryDark text-sm"
         *ngIf="player.leagueOfLegendsSoloRank != null"
         ><span class="text-customGreen">{{ soloWins }}V</span> -
         <span class="text-frenchRed">{{ soloLosses }}D</span> ({{
@@ -155,12 +155,12 @@
   </div>
 
   <div
-    class="flex w-1/2 animate-fade-right flex-row items-center justify-evenly space-y-2 rounded-lg bg-bgLight p-4 align-middle drop-shadow-lg dark:bg-bgDark"
+    class="animate-fade-right bg-bgLight dark:bg-bgDark flex w-1/2 flex-row items-center justify-evenly space-y-2 rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <img
       src="assets/img/gameon-logo.webp"
       *ngIf="player.leagueOfLegendsFlexRank == null"
-      class="h-16 w-16 animate-fade-right"
+      class="animate-fade-right h-16 w-16"
     />
 
     <img
@@ -168,7 +168,7 @@
       src="assets/img/lol/rank/{{
         player.leagueOfLegendsFlexRank.tier | lowercase
       }}.png"
-      class="h-16 w-16 animate-fade-right"
+      class="animate-fade-right h-16 w-16"
     />
 
     <div class="flex flex-col space-y-1 text-center">
@@ -181,7 +181,7 @@
       >
 
       <span
-        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        class="animate-fade-right text-primary dark:text-primaryDark text-sm"
         *ngIf="player.leagueOfLegendsFlexRank != null"
         >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
         {{ player.leagueOfLegendsFlexRank.rank }}
@@ -189,7 +189,7 @@
       >
 
       <span
-        class="animate-fade-right text-sm text-primary dark:text-primaryDark"
+        class="animate-fade-right text-primary dark:text-primaryDark text-sm"
         *ngIf="player.leagueOfLegendsSoloRank != null"
         ><span class="text-customGreen">{{ flexWins }}V</span> -
         <span class="text-frenchRed">{{ flexLosses }}D</span> ({{
@@ -200,9 +200,9 @@
   </div>
 </section>
 
-<section id="rank-history" class="mt-4 animate-fade-up py-4">
+<section id="rank-history" class="animate-fade-up mt-4 py-4">
   <div class="flex items-center justify-between px-4">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >Historique des rangs</span
     >
 
@@ -224,9 +224,9 @@
   [rankHistory]="rankHistory"
 ></app-rank-history>
 
-<section id="games-played" class="mt-4 animate-fade-up py-4">
+<section id="games-played" class="animate-fade-up mt-4 py-4">
   <div class="flex items-center justify-between px-4">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >Historique de parties</span
     >
 
@@ -251,10 +251,10 @@
 
   <div class="relative overflow-x-auto">
     <table
-      class="w-full text-left text-sm text-primary dark:text-primaryDark rtl:text-right"
+      class="text-primary dark:text-primaryDark w-full text-left text-sm rtl:text-right"
     >
       <thead
-        class="bg-bgLight text-xs uppercase text-primary dark:bg-bgDark dark:text-primaryDark"
+        class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark text-xs uppercase"
       >
         <tr>
           <th scope="col" class="px-6 py-3">Identifiant partie</th>
@@ -266,11 +266,11 @@
       <tbody>
         <tr
           *ngFor="let game of gamesPlayed"
-          class="border-b bg-bgLightDarker dark:border-bgDarkDarker dark:bg-bgDarkDarker"
+          class="bg-bgLightDarker dark:border-bgDarkDarker dark:bg-bgDarkDarker border-b"
         >
           <th
             scope="row"
-            class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+            class="px-6 py-4 font-medium whitespace-nowrap text-gray-900 dark:text-white"
           >
             {{ game.matchId }}
           </th>

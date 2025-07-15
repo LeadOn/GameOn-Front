@@ -13,4 +13,5 @@ export class LolPlayerCardComponent {
   player: PlayerDto = new PlayerDto();
 
   currentLoLPatch: string = environment.currentLoLPatch;
+  apiUrl: string = environment.gameOnApiUrl;
 }

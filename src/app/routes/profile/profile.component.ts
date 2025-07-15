@@ -51,6 +51,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   logoutIcon = faLockOpen;
   calendarIcon = faCalendar;
   soccerIcon = faSoccerBall;
+  apiUrl = environment.gameOnApiUrl;
 
   @Input()
   player: Player = new Player();

@@ -1,5 +1,5 @@
 <div
-  class="mt-2 flex cursor-pointer flex-row rounded-lg border border-bgLightDarker bg-bgLight px-4 drop-shadow-lg dark:border-bgLight dark:bg-bgDark"
+  class="border-bgLightDarker bg-bgLight dark:border-bgLight dark:bg-bgDark mt-2 flex cursor-pointer flex-row rounded-lg border px-4 drop-shadow-lg"
   [routerLink]="['/lol/summoner', player.id]"
 >
   <div class="flex items-center justify-center">
@@ -18,7 +18,7 @@
         player.profilePictureUrl != '' &&
         player.lolIconId == null
       "
-      src="{{ player.profilePictureUrl }}"
+      src="{{ apiUrl }}/player/{{ player.id }}/pp"
       width="32"
       class="rounded-full"
     />
@@ -34,7 +34,7 @@
     />
   </div>
 
-  <div class="mx-4 flex grow flex-col text-primary dark:text-primaryDark">
+  <div class="text-primary dark:text-primaryDark mx-4 flex grow flex-col">
     <span class="font-bold">{{ player.fullName }}</span>
 
     <div
@@ -53,7 +53,7 @@
   </div>
 
   <div
-    class="flex flex-col items-center justify-evenly text-primary dark:text-primaryDark"
+    class="text-primary dark:text-primaryDark flex flex-col items-center justify-evenly"
   >
     <div
       *ngIf="player.leagueOfLegendsSoloRank != null"
