@@ -1,53 +1,55 @@
-<div class="bg-bgLightDarker dark:bg-bgDarkDarker h-screen">
-  <header
-    class="bg-bgLight dark:bg-bgDark flex h-16 items-center justify-between self-center px-4"
-  >
-    <a
-      routerLink=""
-      class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold"
-      ><img
-        class="h-8 w-8"
-        src="assets/img/gameon-logo.webp"
-        alt="GameOn!'s logo"
-      />
-      <span class="dark:text-primaryDark ml-2">GameOn!</span></a
+<div class="bg-bgLightDarker dark:bg-bgDarkDarker h-screen overflow-x-hidden">
+  <div class="background h-screen overflow-x-hidden">
+    <header
+      class="bg-bgLight/30 dark:bg-bgDark/30 sticky top-0 z-50 flex h-16 items-center justify-between self-center px-4 backdrop-blur-xs backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
     >
+      <a
+        routerLink=""
+        class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold"
+        ><img
+          class="h-8 w-8"
+          src="assets/img/gameon-logo.webp"
+          alt="GameOn!'s logo"
+        />
+        <span class="dark:text-primaryDark ml-2">GameOn!</span></a
+      >
 
-    <div class="flex items-center justify-center space-x-4">
-      <button type="button" class="cursor-pointer" (click)="toggleDarkMode()">
-        <fa-icon
-          [icon]="lightIcon"
-          *ngIf="darkMode()"
-          class="text-customYellow text-lg"
-        ></fa-icon>
-        <fa-icon
-          [icon]="darkIcon"
-          *ngIf="!darkMode()"
-          class="text-frenchBlue text-lg"
-        ></fa-icon>
-      </button>
+      <div class="flex items-center justify-center space-x-4">
+        <button type="button" class="cursor-pointer" (click)="toggleDarkMode()">
+          <fa-icon
+            [icon]="lightIcon"
+            *ngIf="darkMode()"
+            class="text-customYellow text-lg"
+          ></fa-icon>
+          <fa-icon
+            [icon]="darkIcon"
+            *ngIf="!darkMode()"
+            class="text-frenchBlue text-lg"
+          ></fa-icon>
+        </button>
+      </div>
+    </header>
+
+    <div>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
+      <span class="bubble"></span>
     </div>
-  </header>
-
-  <div class="bubbles background h-screen">
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
-    <span class="bubble"></span>
 
     <nav
       class="border-l-frenchBlue border-r-frenchRed bg-bgLight dark:border-y-bgLight dark:bg-bgDark fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 drop-shadow-xl"

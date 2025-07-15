@@ -1,5 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { faFutbol, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExclamationCircle,
+  faFutbol,
+  faTrophy,
+} from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Season } from '../../../../shared/classes/fifa/Season';
@@ -44,6 +48,7 @@ export class HomeFifaComponent implements OnChanges {
 
   soccerIcon = faFutbol;
   tournamentIcon = faTrophy;
+  errorIcon = faExclamationCircle;
 
   constructor(
     private playerStore: Store<{ player: Player }>,

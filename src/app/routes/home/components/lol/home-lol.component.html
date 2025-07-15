@@ -1,20 +1,14 @@
 <section id="lol-header">
   <div
-    class="flex animate-fade cursor-pointer items-center justify-between"
+    class="animate-fade flex cursor-pointer items-center justify-between"
     routerLink="/lol"
   >
     <div class="flex items-center justify-center">
-      <img src="assets/img/svg/lol.svg" class="w-8" />
-
-      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      <span class="dark:text-primaryDark text-primary text-lg font-semibold"
         >League of Legends</span
       >
     </div>
-  </div>
-</section>
 
-<section id="lol-pill">
-  <div class="flex justify-between pt-4">
     <app-pill
       [title]="'Assets utilisés : patch ' + lolVersion"
       [bgStyle]="'secondary'"
@@ -24,11 +18,11 @@
 
 <section
   id="lol-card"
-  class="lol-card mt-4 flex aspect-video animate-fade cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
+  class="lol-card animate-fade mt-4 mb-16 flex aspect-video cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
   routerLink="/lol"
 >
-  <span class="mt-2 w-full text-left"
+  <span class="mt-2 w-full text-left"></span>
+  <span class="mb-2 w-full text-right text-sm"
     >Accéder à l'espace League of Legends !</span
   >
-  <span class="mb-2 w-full text-right text-sm"></span>
 </section>

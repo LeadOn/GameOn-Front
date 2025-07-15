@@ -4,12 +4,7 @@
     routerLink="/fifa"
   >
     <div class="flex items-center justify-center space-x-2">
-      <fa-icon
-        [icon]="soccerIcon"
-        class="text-primary dark:text-primaryDark cursor-pointer"
-      ></fa-icon>
-
-      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+      <span class="dark:text-primaryDark text-primary text-lg font-semibold"
         >FIFA</span
       >
     </div>
@@ -117,6 +112,7 @@
       [title]="
         'Une erreur est survenue lors de la récupération des matchs planifiés.'
       "
+      [icon]="errorIcon"
       *ngIf="plannedMatchesError == true"
       [applyMargin]="false"
     ></app-info-message>
@@ -165,6 +161,7 @@
       [title]="
         'Une erreur est survenue lors de la récupération des derniers matchs joués.'
       "
+      [icon]="errorIcon"
       *ngIf="lastMatchesError == true"
       [applyMargin]="false"
     ></app-info-message>

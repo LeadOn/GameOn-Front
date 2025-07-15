@@ -1,11 +1,11 @@
 <div
-  class="dark:bgDark animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 drop-shadow-lg"
+  class="animate-fade text-primary dark:text-primaryDark bg-bgLight/30 dark:bg-bgDark/30 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
   *ngIf="loading == false && changelog != null"
 >
   <div class="flex flex-row items-center">
     <div class="flex items-center justify-center">
       <span
-        class="text-primary dark:text-primaryDark rounded-full border px-4 text-sm"
+        class="text-primary dark:text-primaryDark rounded-full border-2 px-4 text-sm font-bold"
         [ngClass]="{
           'border-gray-300': changelog.type == 2,
           'border-green-500': changelog.type == 1,
@@ -72,9 +72,9 @@
 </div>
 
 <div
-  *ngIf="loading == true || changelog == null"
   role="status"
-  class="dark:bgDark bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mt-4 mb-4 flex animate-pulse cursor-pointer flex-col rounded-lg p-4 drop-shadow-lg"
+  *ngIf="loading == true || changelog == null"
+  class="animate-fade text-primary dark:text-primaryDark bg-bgLight/30 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-md backdrop-filter"
 >
   <div class="flex flex-row items-center">
     <span class="h-6 w-16 rounded-full bg-gray-300 dark:bg-gray-700"></span>

@@ -1,6 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Changelog } from '../../../../shared/classes/common/Changelog';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleExclamation,
+  faClock,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home-changelog',
@@ -18,7 +21,7 @@ export class HomeChangelogComponent implements OnChanges {
   @Input()
   error = false;
 
-  updateIcon = faClock;
+  errorIcon = faCircleExclamation;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loading =
