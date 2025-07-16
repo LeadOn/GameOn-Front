@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
   faArrowRight,
+  faArrowRightFromBracket,
   faCalendar,
   faCog,
   faExternalLink,
@@ -48,7 +49,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   keyIcon = faKey;
   externalIcon = faExternalLink;
   token: string = '';
-  logoutIcon = faLockOpen;
+  logoutIcon = faArrowRightFromBracket;
   calendarIcon = faCalendar;
   soccerIcon = faSoccerBall;
   apiUrl = environment.gameOnApiUrl;
@@ -179,6 +180,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
           .subscribe(
             (data) => {
               this.successMessage = true; // Getting its account, and setting it into store
+              this.showSuccess = true; // Getting its account, and setting it into store
               this.successMessageChange.emit(true);
               this.store.dispatch(setPlayer({ player: data }));
               this.loading = false;
