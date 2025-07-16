@@ -49,7 +49,7 @@
 <section id="fifa-player-stats">
   <div class="mt-4 flex space-x-2" *ngIf="isLoggedIn == true">
     <div
-      class="animate-fade bg-bgLight/30 dark:bg-bgDark/30 flex cursor-pointer flex-col items-center justify-center space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex cursor-pointer flex-col items-center justify-center space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
       *ngIf="this.player$ | async as player"
       routerLink="/player/me"
     >
@@ -94,7 +94,7 @@
     </div>
 
     <div
-      class="animate-fade bg-bgLight/30 dark:bg-bgDark/30 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
       *ngIf="this.globalStats$ | async as globalStats"
     >
       <app-fifa-stat

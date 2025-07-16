@@ -41,7 +41,7 @@ export class PillComponent implements OnInit {
 
   ngOnInit(): void {
     this.style =
-      'bg-bgLight/30 text-primary dark:bg-bgDark/30 dark:text-primaryDark';
+      'bg-bgLight/50 text-primary dark:bg-bgDark/50 dark:text-primaryDark';
 
     this.buildBgStyle(this.bgStyle);
 
@@ -58,7 +58,7 @@ export class PillComponent implements OnInit {
     switch (bgStyle) {
       case 'primary':
         this.style =
-          'bg-bgLight/30 text-primary dark:bg-bgDark/30 dark:text-primaryDark';
+          'bg-bgLight/50 text-primary dark:bg-bgDark/50 dark:text-primaryDark';
         break;
 
       case 'primary-dark':
@@ -88,7 +88,7 @@ export class PillComponent implements OnInit {
 
       default:
         this.style =
-          'bg-bgLight/30 text-primary dark:bg-bgDark/30 dark:text-primaryDark';
+          'bg-bgLight/50 text-primary dark:bg-bgDark/50 dark:text-primaryDark';
         break;
     }
   }

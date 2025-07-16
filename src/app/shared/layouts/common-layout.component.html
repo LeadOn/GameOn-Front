@@ -1,7 +1,7 @@
 <div class="bg-bgLightDarker dark:bg-bgDarkDarker h-screen overflow-x-hidden">
   <div class="background h-screen overflow-x-hidden">
     <header
-      class="bg-bgLight/30 dark:bg-bgDark/30 sticky top-0 z-50 flex h-16 items-center justify-between self-center px-4 backdrop-blur-xs backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      class="bg-bgLight/40 dark:bg-bgDark/40 sticky top-0 z-50 flex h-16 items-center justify-between self-center px-4 backdrop-blur-xs backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
     >
       <a
         routerLink=""
@@ -48,7 +48,7 @@
     </div>
 
     <nav
-      class="border-l-frenchBlue border-r-frenchRed bg-bgLight/30 dark:border-y-bgLight dark:bg-bgDark/30 fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      class="border-l-frenchBlue border-r-frenchRed bg-bgLight/50 dark:border-y-bgLight dark:bg-bgDark/50 fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
     >
       <div
         class="flex h-full w-full grow basis-1 items-center justify-around align-middle"
@@ -86,7 +86,11 @@
         <div
           class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full"
         >
-          <button routerLink="/fifa/tournaments" type="button">
+          <button
+            routerLink="/fifa/tournaments"
+            type="button"
+            class="cursor-pointer"
+          >
             <fa-icon
               [icon]="trophyIcon"
               class="text-primary dark:text-primaryDark text-lg"
@@ -101,7 +105,7 @@
             *ngIf="isLoggedIn == true"
             routerLink="/player/me"
             type="button"
-            class="group inline-flex flex-col items-center justify-center rounded-e-full"
+            class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-e-full"
           >
             <fa-icon
               [icon]="userIcon"
@@ -113,7 +117,7 @@
             *ngIf="isLoggedIn == false"
             (click)="login()"
             type="button"
-            class="group inline-flex flex-col items-center justify-center rounded-e-full"
+            class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-e-full"
           >
             <fa-icon
               [icon]="userIcon"
