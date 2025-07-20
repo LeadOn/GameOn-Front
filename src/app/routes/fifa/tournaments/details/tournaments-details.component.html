@@ -68,24 +68,8 @@
 
     <img
       class="rounded-full drop-shadow-lg"
-      *ngIf="
-        loading == false &&
-        tournament != null &&
-        tournament.logoUrl != null &&
-        tournament.logoUrl != ''
-      "
-      src="{{ tournament.logoUrl }}"
-      width="64"
-    />
-
-    <img
-      class="rounded-full drop-shadow-lg"
-      *ngIf="
-        loading == false &&
-        tournament != null &&
-        (tournament.logoUrl == null || tournament.logoUrl == '')
-      "
-      src="assets/img/gameon-logo.webp"
+      *ngIf="loading == false && tournament != null"
+      src="{{ apiUrl }}/fifa/tournament/{{ tournament.id }}/logo"
       width="64"
     />
 

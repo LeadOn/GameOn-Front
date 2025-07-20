@@ -72,21 +72,6 @@
         <div class="group relative z-0 mb-6 w-full">
           <input
             type="text"
-            id="logoUrl"
-            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-            formControlName="logoUrl"
-          />
-          <label
-            for="logoUrl"
-            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
-            URL du logo
-          </label>
-        </div>
-
-        <div class="group relative z-0 mb-6 w-full">
-          <input
-            type="text"
             id="phase2ChallongeUrl"
             class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="phase2ChallongeUrl"
@@ -231,6 +216,40 @@
           Modifier
         </button>
       </div>
+    </form>
+  </div>
+</section>
+
+<section class="bg-bgDarker mt-4 space-x-4 px-4">
+  <div class="animate-fade flex flex-col items-center">
+    <form class="flex w-full flex-col space-y-4">
+      <div class="group relative z-0 mb-6 w-full">
+        <label
+          class="text-primary dark:text-primaryDark mb-2 block text-xs font-medium"
+          for="file_input"
+          >Photo de profil</label
+        >
+        <input
+          class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+          aria-describedby="file_input_help"
+          id="file_input"
+          type="file"
+          (change)="uploadProfilePicture($event)"
+        />
+        <p
+          class="mt-2 text-sm text-gray-500 dark:text-gray-500"
+          id="file_input_help"
+        >
+          Formats PNG, JPG, WebP ou GIF autorisés.
+        </p>
+      </div>
+
+      <button
+        (click)="updateTournamentLogo()"
+        class="bg-customYellow focus:ring-customYellow w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
+      >
+        Modifier
+      </button>
     </form>
   </div>
 </section>
