@@ -6,5 +6,5 @@ export const environment = {
     realm: 'gameon',
     clientId: 'gameon-front',
   },
-  currentLoLPatch: '15.9.1',
+  currentLoLPatch: '15.13.1',
 };

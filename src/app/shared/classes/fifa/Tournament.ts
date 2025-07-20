@@ -6,7 +6,6 @@ export class Tournament {
   name: string = 'UNKNOWN';
   description: string = 'UNKNOWN';
   state: number = 0;
-  logoUrl?: string;
   phase2ChallongeUrl?: string;
   plannedFrom: Date = new Date();
   plannedTo: Date = new Date();

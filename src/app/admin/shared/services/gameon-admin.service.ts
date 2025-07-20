@@ -59,7 +59,6 @@ export class GameOnAdminService {
     let body: any = {
       FullName: fullName,
       Nickname: nickname,
-      ProfilePictureUrl: profilePicUrl,
       Id: id,
     };
 
@@ -85,7 +84,6 @@ export class GameOnAdminService {
     plannedFrom: string,
     plannedTo: string,
     description?: string,
-    logoUrl?: string,
   ): Observable<Tournament> {
     let body: any = {
       name: name,
@@ -96,10 +94,6 @@ export class GameOnAdminService {
 
     if (description != null) {
       body.description = description;
-    }
-
-    if (logoUrl != null) {
-      body.logoUrl = logoUrl;
     }
 
     return this.client.post<Tournament>(
@@ -115,7 +109,6 @@ export class GameOnAdminService {
     plannedFrom: string,
     plannedTo: string,
     description?: string,
-    logoUrl?: string,
     phase2ChallongeUrl?: string,
     winnerId?: number,
     winPoints: number = 0,
@@ -139,10 +132,6 @@ export class GameOnAdminService {
 
     if (description != null) {
       body.description = description;
-    }
-
-    if (logoUrl != null) {
-      body.logoUrl = logoUrl;
     }
 
     if (phase2ChallongeUrl != null) {
@@ -202,6 +191,16 @@ export class GameOnAdminService {
   deleteChangelog(id: number): Observable<any> {
     return this.client.delete<any>(
       environment.gameOnApiUrl + '/changelog/' + id,
+    );
+  }
+
+  updateTournamentLogo(tournamentId: any, file: any): Observable<any> {
+    let formData = new FormData();
+    formData.append('tournamentPicture', file);
+
+    return this.client.post<any>(
+      environment.gameOnApiUrl + '/fifa/tournament/' + tournamentId + '/logo',
+      formData,
     );
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Player } from '../../classes/common/Player';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-player-card',
@@ -13,6 +14,8 @@ export class PlayerCardComponent {
 
   @Input()
   loading = false;
+
+  apiUrl = environment.gameOnApiUrl;
 
   constructor() {}
 }

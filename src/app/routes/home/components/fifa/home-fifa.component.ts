@@ -1,5 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { faFutbol, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExclamationCircle,
+  faFutbol,
+  faTrophy,
+} from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Season } from '../../../../shared/classes/fifa/Season';
@@ -10,6 +14,7 @@ import { FifaGamePlayed } from '../../../../shared/classes/fifa/FifaGamePlayed';
 import { GameOnGameService } from '../../../../shared/services/fifa/gameon-game.service';
 import { GameOnPlayerService } from '../../../../shared/services/common/gameon-player.service';
 import { setPlayerStats } from '../../../../core/store/actions/player.actions';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-home-fifa',
@@ -44,6 +49,8 @@ export class HomeFifaComponent implements OnChanges {
 
   soccerIcon = faFutbol;
   tournamentIcon = faTrophy;
+  errorIcon = faExclamationCircle;
+  apiUrl = environment.gameOnApiUrl;
 
   constructor(
     private playerStore: Store<{ player: Player }>,

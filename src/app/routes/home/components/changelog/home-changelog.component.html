@@ -3,12 +3,7 @@
   routerLink="/changelog"
 >
   <div class="flex items-center justify-center space-x-2">
-    <fa-icon
-      [icon]="updateIcon"
-      class="text-primary dark:text-primaryDark cursor-pointer"
-    ></fa-icon>
-
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+    <span class="dark:text-primaryDark text-primary text-lg font-semibold"
       >Nouveautés</span
     >
   </div>
@@ -20,6 +15,7 @@
 
 <app-info-message
   [type]="'error'"
+  [icon]="errorIcon"
   [title]="'Une erreur est survenue lors de la récupération des nouveautés.'"
   *ngIf="error == true"
 ></app-info-message>

@@ -40,7 +40,8 @@ export class PillComponent implements OnInit {
   externalIcon = faExternalLink;
 
   ngOnInit(): void {
-    this.style = 'bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark';
+    this.style =
+      'bg-bgLight/50 text-primary dark:bg-bgDark/50 dark:text-primaryDark';
 
     this.buildBgStyle(this.bgStyle);
 
@@ -57,12 +58,12 @@ export class PillComponent implements OnInit {
     switch (bgStyle) {
       case 'primary':
         this.style =
-          'bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark';
+          'bg-bgLight/50 text-primary dark:bg-bgDark/50 dark:text-primaryDark';
         break;
 
       case 'primary-dark':
         this.style =
-          'bg-bgLightDarker text-primary dark:bg-bgDarkDarker dark:text-primaryDark';
+          'bg-bgLightDarker/30 text-primary dark:bg-bgDarkDarker/30 dark:text-primaryDark';
         break;
 
       case 'secondary':
@@ -87,7 +88,7 @@ export class PillComponent implements OnInit {
 
       default:
         this.style =
-          'bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark';
+          'bg-bgLight/50 text-primary dark:bg-bgDark/50 dark:text-primaryDark';
         break;
     }
   }

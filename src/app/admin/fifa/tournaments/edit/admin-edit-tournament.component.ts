@@ -16,11 +16,12 @@ export class AdminEditTournamentComponent implements OnInit {
   tournament?: Tournament;
   states: any[] = [];
 
+  currentFile?: File;
+
   editTournamentForm = new FormGroup({
     name: new FormControl('', [Validators.maxLength(100), Validators.required]),
     description: new FormControl('', [Validators.maxLength(5000)]),
     state: new FormControl(0, [Validators.required]),
-    logoUrl: new FormControl('', [Validators.maxLength(3000)]),
     phase2ChallongeUrl: new FormControl('', [Validators.maxLength(3000)]),
     plannedFrom: new FormControl('', [Validators.required]),
     plannedTo: new FormControl('', [Validators.required]),
@@ -82,10 +83,6 @@ export class AdminEditTournamentComponent implements OnInit {
           this.editTournamentForm.controls['rules'].setValue(data.rules);
         }
 
-        if (data.logoUrl != null) {
-          this.editTournamentForm.controls['logoUrl'].setValue(data.logoUrl);
-        }
-
         if (data.phase2ChallongeUrl != null) {
           this.editTournamentForm.controls['phase2ChallongeUrl'].setValue(
             data.phase2ChallongeUrl,
@@ -103,6 +100,35 @@ export class AdminEditTournamentComponent implements OnInit {
         console.error(err);
       },
     );
+  }
+
+  uploadProfilePicture(event: any) {
+    if (event.target.files.length > 0) {
+      this.currentFile = event.target.files[0];
+    }
+  }
+
+  updateTournamentLogo() {
+    if (this.currentFile != null) {
+      this.loading = true;
+
+      this.adminService
+        .updateTournamentLogo(this.tournamentId, this.currentFile)
+        .subscribe(
+          (data) => {
+            alert('Tournoi mis à jour !');
+            this.loading = false;
+            this.router.navigate(['/admin/fifa/tournaments']);
+          },
+          (err) => {
+            alert('Erreur lors de la mise à jour du tournoi !');
+            console.error(err);
+            this.loading = false;
+          },
+        );
+    } else {
+      alert('Certaines informations sont manquantes !');
+    }
   }
 
   editTournament() {
@@ -123,14 +149,6 @@ export class AdminEditTournamentComponent implements OnInit {
         this.editTournamentForm.controls['description'].value != ''
       ) {
         description = this.editTournamentForm.controls['description'].value;
-      }
-
-      let logoUrl: any = null;
-      if (
-        this.editTournamentForm.controls['logoUrl'].value != null &&
-        this.editTournamentForm.controls['logoUrl'].value != ''
-      ) {
-        logoUrl = this.editTournamentForm.controls['logoUrl'].value;
       }
 
       let phase2ChallongeUrl: any = null;
@@ -202,7 +220,6 @@ export class AdminEditTournamentComponent implements OnInit {
           this.editTournamentForm.controls['plannedFrom'].value,
           this.editTournamentForm.controls['plannedTo'].value,
           description,
-          logoUrl,
           phase2ChallongeUrl,
           winnerId,
           winPoints,

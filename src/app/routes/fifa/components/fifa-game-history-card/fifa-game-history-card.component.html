@@ -1,6 +1,6 @@
 <div
   *ngIf="game != null"
-  class="animate-fade bg-bgLight dark:bg-bgDark flex w-full cursor-pointer justify-between rounded-lg p-2 drop-shadow-lg"
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex w-full cursor-pointer justify-between rounded-lg p-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
   [routerLink]="['/fifa/details', game.id]"
 >
   <div class="align-center flex w-2/5 flex-col items-center justify-center">

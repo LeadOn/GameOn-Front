@@ -13,6 +13,7 @@ import { Season } from '../../../shared/classes/fifa/Season';
 import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
 import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
 import { GameOnSeasonService } from '../../../shared/services/fifa/gameon-season.service';
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-fifa-player-details',
   templateUrl: './fifa-player-details.component.html',
@@ -28,6 +29,7 @@ export class FifaPlayerDetailsComponent implements OnInit {
   externalIcon = faExternalLinkAlt;
   starIcon = faStar;
   rightArrowIcon = faArrowRight;
+  apiUrl = environment.gameOnApiUrl;
 
   playerId: any;
   fifaPlayerStats?: FifaPlayerStatsDto;

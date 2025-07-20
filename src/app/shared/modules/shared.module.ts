@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NotFoundComponent } from '../components/not-found/not-found.component';
 import { ArrowBtnComponent } from '../components/arrow-btn/arrow-btn.component';
 import { PlayerCardComponent } from '../components/player-card/player-card.component';
 import { LoadingSpinnerComponent } from '../components/loading-spinner/loading-spinner.component';
@@ -28,7 +27,6 @@ import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-
     FifaStatComponent,
 
     /* Components */
-    NotFoundComponent,
     ArrowBtnComponent,
     PlayerCardComponent,
     LoadingSpinnerComponent,

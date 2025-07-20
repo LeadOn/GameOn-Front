@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-tournaments-home',
@@ -15,6 +16,7 @@ export class TournamentsHomeComponent implements OnInit {
   states: any[] = [];
   tournaments: Tournament[] = [];
   trophyIcon = faTrophy;
+  apiUrl = environment.gameOnApiUrl;
 
   constructor(private tournamentService: GameOnTournamentService) {
     this.states = tournamentService.getStates();

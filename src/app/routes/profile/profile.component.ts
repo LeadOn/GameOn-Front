@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import {
   faArrowRight,
+  faArrowRightFromBracket,
   faCalendar,
   faCog,
   faExternalLink,
@@ -48,9 +49,11 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   keyIcon = faKey;
   externalIcon = faExternalLink;
   token: string = '';
-  logoutIcon = faLockOpen;
+  logoutIcon = faArrowRightFromBracket;
   calendarIcon = faCalendar;
   soccerIcon = faSoccerBall;
+  apiUrl = environment.gameOnApiUrl;
+  currentFile?: File;
 
   @Input()
   player: Player = new Player();
@@ -68,7 +71,6 @@ export class ProfilePageComponent implements OnInit, OnChanges {
       Validators.maxLength(100),
       Validators.required,
     ]),
-    profilePictureUrl: new FormControl('', [Validators.maxLength(500)]),
     riotGamesNickname: new FormControl('', [Validators.maxLength(500)]),
     riotGamesTagLine: new FormControl('', [Validators.maxLength(500)]),
   });
@@ -83,9 +85,6 @@ export class ProfilePageComponent implements OnInit, OnChanges {
     this.player$.subscribe((x) => {
       this.updatePlayerForm.controls['fullName'].setValue(x.fullName);
       this.updatePlayerForm.controls['nickname'].setValue(x.nickname);
-      this.updatePlayerForm.controls['profilePictureUrl'].setValue(
-        x.profilePictureUrl,
-      );
       if (x.riotGamesNickname != null) {
         this.updatePlayerForm.controls['riotGamesNickname'].setValue(
           x.riotGamesNickname,
@@ -119,10 +118,12 @@ export class ProfilePageComponent implements OnInit, OnChanges {
       this.updatePlayerForm.controls['nickname'].setValue(
         changes['player'].currentValue.nickname,
       );
+    }
+  }
 
-      this.updatePlayerForm.controls['profilePictureUrl'].setValue(
-        changes['player'].currentValue.profilePictureUrl,
-      );
+  uploadProfilePicture(event: any) {
+    if (event.target.files.length > 0) {
+      this.currentFile = event.target.files[0];
     }
   }
 
@@ -137,15 +138,6 @@ export class ProfilePageComponent implements OnInit, OnChanges {
     if (this.loading == false) {
       let riotGamesNickname: string | undefined = undefined;
       let riotGamesTagLine: string | undefined = undefined;
-      let profilePictureUrl: string | undefined = undefined;
-
-      if (
-        this.updatePlayerForm.controls['profilePictureUrl'].value != null &&
-        this.updatePlayerForm.controls['profilePictureUrl'].value != ''
-      ) {
-        profilePictureUrl =
-          this.updatePlayerForm.controls['profilePictureUrl'].value;
-      }
 
       if (
         this.updatePlayerForm.controls['riotGamesNickname'].value != null &&
@@ -164,26 +156,43 @@ export class ProfilePageComponent implements OnInit, OnChanges {
       }
 
       this.loading = true;
-      this.playerService
-        .update(
-          this.updatePlayerForm.controls['fullName'].value,
-          this.updatePlayerForm.controls['nickname'].value,
-          profilePictureUrl,
-          riotGamesNickname,
-          riotGamesTagLine,
-        )
-        .subscribe(
-          (data) => {
-            this.successMessage = true; // Getting its account, and setting it into store
-            this.successMessageChange.emit(true);
-            this.store.dispatch(setPlayer({ player: data }));
-            this.loading = false;
-          },
+
+      if (this.currentFile != null) {
+        this.playerService.updateProfilePicture(this.currentFile).subscribe(
+          (data) => {},
           (err) => {
             this.loading = false;
-            alert('Une erreur est survenue lors de la mise à jour du compte !');
+            alert(
+              'Une erreur est survenue lors de la mise à jour de la photo de profil !',
+            );
           },
         );
+      }
+
+      if (this.loading == true) {
+        this.playerService
+          .update(
+            this.updatePlayerForm.controls['fullName'].value,
+            this.updatePlayerForm.controls['nickname'].value,
+            riotGamesNickname,
+            riotGamesTagLine,
+          )
+          .subscribe(
+            (data) => {
+              this.successMessage = true; // Getting its account, and setting it into store
+              this.showSuccess = true; // Getting its account, and setting it into store
+              this.successMessageChange.emit(true);
+              this.store.dispatch(setPlayer({ player: data }));
+              this.loading = false;
+            },
+            (err) => {
+              this.loading = false;
+              alert(
+                'Une erreur est survenue lors de la mise à jour du compte !',
+              );
+            },
+          );
+      }
     }
   }
 
