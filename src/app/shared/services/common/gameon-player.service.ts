@@ -47,7 +47,6 @@ export class GameOnPlayerService {
   update(
     fullName: any,
     nickname: any,
-    profilePicUrl?: any,
     riotGamesNickname?: string,
     riotGamesTagLine?: string,
   ): Observable<Player> {
