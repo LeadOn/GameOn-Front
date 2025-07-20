@@ -18,7 +18,6 @@ export class AdminCreateTournamentComponent implements OnInit {
     name: new FormControl('', [Validators.maxLength(100), Validators.required]),
     description: new FormControl('', [Validators.maxLength(5000)]),
     state: new FormControl(0, [Validators.required]),
-    logoUrl: new FormControl('', [Validators.maxLength(3000)]),
     plannedFrom: new FormControl('', [Validators.required]),
     plannedTo: new FormControl('', [Validators.required]),
   });
@@ -53,14 +52,6 @@ export class AdminCreateTournamentComponent implements OnInit {
         description = this.createTournamentForm.controls['description'].value;
       }
 
-      let logoUrl: any = null;
-      if (
-        this.createTournamentForm.controls['logoUrl'].value != null &&
-        this.createTournamentForm.controls['logoUrl'].value != ''
-      ) {
-        logoUrl = this.createTournamentForm.controls['logoUrl'].value;
-      }
-
       this.adminService
         .createTournament(
           this.createTournamentForm.controls['name'].value,
@@ -68,7 +59,6 @@ export class AdminCreateTournamentComponent implements OnInit {
           this.createTournamentForm.controls['plannedFrom'].value,
           this.createTournamentForm.controls['plannedTo'].value,
           description,
-          logoUrl,
         )
         .subscribe(
           (data) => {

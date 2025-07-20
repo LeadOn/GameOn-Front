@@ -16,6 +16,7 @@ import { GameOnTournamentService } from '../../../../shared/services/fifa/gameon
 import { GameOnFifaTeamService } from '../../../../shared/services/fifa/gameon-fifateam.service';
 import { GameOnGameService } from '../../../../shared/services/fifa/gameon-game.service';
 import { Player } from '../../../../shared/classes/common/Player';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-tournaments-details',
@@ -29,6 +30,7 @@ export class TournamentsDetailsComponent implements OnInit {
   loading = true;
   isLoggedIn = false;
   isAdmin = false;
+  apiUrl = environment.gameOnApiUrl;
   isSubscribed?: TournamentPlayerDto;
   states: any[] = [];
   tournament?: Tournament;
