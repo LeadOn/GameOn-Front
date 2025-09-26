@@ -67,7 +67,7 @@
     </div>
 
     <img
-      class="rounded-full drop-shadow-lg"
+      class="aspect-square rounded-full object-cover drop-shadow-lg"
       *ngIf="loading == false && tournament != null"
       src="{{ apiUrl }}/fifa/tournament/{{ tournament.id }}/logo"
       width="64"

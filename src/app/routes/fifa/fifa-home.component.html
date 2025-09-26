@@ -37,13 +37,13 @@
 
       <div
         *ngIf="showFilters()"
-        class="animate-fade border-bgLightDarker bg-bgLight text-primary dark:border-bgDarkDarker dark:bg-bgDark dark:text-primaryDark mt-4 mb-4 flex flex-col rounded-lg border p-4 drop-shadow-lg"
+        class="animate-fade text-primary dark:text-primaryDark bg-bgLight/40 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
       >
         <div>
           <span class="text-sm">Nombre de matchs</span>
           <select
             [(ngModel)]="numberOfGames"
-            class="focus:border-secondary focus:ring-secondary dark:bg-bgDarkDarker w-full rounded-lg border-gray-300"
+            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
           >
             <option value="5">5</option>
             <option value="10">10</option>
@@ -67,7 +67,7 @@
 
           <select
             [(ngModel)]="platformId"
-            class="focus:border-secondary focus:ring-secondary dark:bg-bgDarkDarker w-full rounded-lg border-gray-300"
+            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
           >
             <option value="0">--- Plateforme ---</option>
             <option
@@ -84,7 +84,7 @@
           <input
             [(ngModel)]="startDate"
             type="date"
-            class="focus:border-secondary focus:ring-secondary dark:bg-bgDarkDarker w-full rounded-lg border-gray-300"
+            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
           />
         </div>
 
@@ -93,7 +93,7 @@
           <input
             [(ngModel)]="endDate"
             type="date"
-            class="focus:border-secondary focus:ring-secondary dark:bg-bgDarkDarker w-full rounded-lg border-gray-300"
+            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
           />
         </div>
         <button

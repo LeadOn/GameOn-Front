@@ -42,7 +42,7 @@
     class="bg-bgLight dark:bg-bgDark flex items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <img
-      class="rounded-full drop-shadow-lg"
+      class="aspect-square rounded-full object-cover drop-shadow-lg"
       *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
       src="{{ apiUrl }}/player/{{ player.id }}/pp"
       width="64"

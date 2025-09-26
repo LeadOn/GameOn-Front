@@ -8,7 +8,7 @@
       *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
       src="{{ apiUrl }}/player/{{ player.id }}/pp"
       width="32"
-      class="rounded-full"
+      class="aspect-square rounded-full object-cover"
     />
 
     <img
