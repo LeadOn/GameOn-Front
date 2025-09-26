@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import {
+  faInfoCircle,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-info-message',
@@ -10,7 +12,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 })
 export class InfoMessageComponent {
   @Input()
-  icon: IconProp = faInfoCircle;
+  icon: IconDefinition = faInfoCircle;
 
   @Input()
   title: string = 'Default';

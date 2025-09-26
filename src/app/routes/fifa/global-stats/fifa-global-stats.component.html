@@ -18,14 +18,14 @@
 ></app-info-message>
 
 <section id="stat-number-games" class="mt-4 px-4">
-  <div class="flex animate-fade-up items-center justify-between">
+  <div class="animate-fade-up flex items-center justify-between">
     <div class="flex items-center justify-center space-x-2">
       <fa-icon
         [icon]="countIcon"
-        class="cursor-pointer text-primary dark:text-primaryDark"
+        class="text-primary dark:text-primaryDark cursor-pointer"
       ></fa-icon>
 
-      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >Nombre de matchs joués</span
       >
     </div>
@@ -43,11 +43,11 @@
 </section>
 
 <section id="best-player-header" class="mt-4 px-4">
-  <div class="flex animate-fade-up items-center justify-between">
+  <div class="animate-fade-up flex items-center justify-between">
     <div class="flex items-center justify-center space-x-2">
       <fa-icon [icon]="trophyIcon" class="text-customGreen"></fa-icon>
 
-      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >Meilleur joueur</span
       >
     </div>
@@ -68,7 +68,7 @@
   <app-player-card [player]="globalStats.bestPlayer"></app-player-card>
 
   <div
-    class="mt-4 flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
+    class="animate-fade-left bg-bgLight/40 dark:bg-bgDark/40 mt-4 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
     *ngIf="
       globalStats.bestPlayerStats != null &&
       globalStats.bestPlayerStats.statsPerPlatform.length > 0
@@ -81,11 +81,11 @@
 </section>
 
 <section id="worst-player-header" class="mt-4 px-4">
-  <div class="flex animate-fade-up items-center justify-between">
+  <div class="animate-fade-up flex items-center justify-between">
     <div class="flex items-center justify-center space-x-2">
       <fa-icon [icon]="trophyIcon" class="text-frenchRed"></fa-icon>
 
-      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >Pire joueur</span
       >
     </div>
@@ -106,7 +106,7 @@
   <app-player-card [player]="globalStats.worstPlayer"></app-player-card>
 
   <div
-    class="mt-4 flex w-full animate-fade-left flex-col space-y-2 rounded-lg bg-bgLight px-8 py-2 drop-shadow-lg dark:bg-bgDark"
+    class="animate-fade-left bg-bgLight/40 dark:bg-bgDark/40 mt-4 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
     *ngIf="
       globalStats.worstPlayerStats != null &&
       globalStats.worstPlayerStats.statsPerPlatform.length > 0

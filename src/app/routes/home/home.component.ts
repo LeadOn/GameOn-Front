@@ -34,10 +34,6 @@ export class HomeComponent implements OnInit {
     this.getHomeData();
   }
 
-  login() {
-    this.keycloak.login();
-  }
-
   getHomeData() {
     this.commonService.getHomeData().subscribe(
       (data) => {

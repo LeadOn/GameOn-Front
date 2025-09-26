@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
+import { faClock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-common-page-header',
@@ -10,7 +10,7 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 })
 export class CommonPageHeaderComponent {
   @Input()
-  icon: IconProp = faClock;
+  icon: IconDefinition = faClock;
 
   @Input()
   title: string = 'Default';

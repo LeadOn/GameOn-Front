@@ -4,7 +4,7 @@
 
 <section
   id="header-pills"
-  class="[&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker overflow-x-scroll p-4 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full dark:[&::-webkit-scrollbar-track]:bg-neutral-700"
+  class="overflow-x-scroll p-4 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-transparent [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-track]:bg-transparent"
   *ngIf="loading == false && player != null"
 >
   <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
@@ -39,10 +39,10 @@
   *ngIf="loading == false && player != null"
 >
   <div
-    class="bg-bgLight dark:bg-bgDark flex items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
+    class="bg-bgLight/40 dark:bg-bgDark/40 flex items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <img
-      class="rounded-full drop-shadow-lg"
+      class="aspect-square rounded-full object-cover drop-shadow-lg"
       *ngIf="player.profilePictureUrl != null && player.profilePictureUrl != ''"
       src="{{ apiUrl }}/player/{{ player.id }}/pp"
       width="64"
@@ -69,14 +69,14 @@
 <div class="animate-fade mt-4 px-4">
   <div class="w-full" *ngIf="player != null && player.id != 0">
     <div
-      class="bg-bgLight dark:bg-bgDark flex flex-col items-center rounded-lg p-4 drop-shadow-lg"
+      class="bg-bgLight/40 dark:bg-bgDark/40 flex flex-col items-center rounded-lg p-4 drop-shadow-lg"
     >
       <div class="animate-fade w-full text-center">
         <select
           (change)="onChangeSeason($event.target)"
           [ngModel]="selectedSeason"
           id="seasons"
-          class="border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mt-2 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
+          class="border-secondary text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark mt-2 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
         >
           <option *ngFor="let season of seasons" value="{{ season.id }}">
             {{ season.name }}
@@ -91,7 +91,7 @@
             [(ngModel)]="selectedStats"
             (change)="calculateStats()"
             id="stats"
-            class="border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark mb-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
+            class="border-secondary text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark mb-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
           >
             <option
               *ngFor="let platform of fifaPlayerStats.statsPerPlatform"

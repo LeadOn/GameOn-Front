@@ -1,10 +1,10 @@
 <div
-  class="mt-4 flex animate-fade flex-row items-center justify-center rounded-lg border border-l-2 border-r-2 border-y-white border-l-frenchBlue border-r-frenchRed bg-bgLight p-4 drop-shadow-lg dark:border-2 dark:bg-bgDark"
+  class="animate-fade text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 mt-4 mb-4 flex cursor-pointer flex-row items-center justify-center rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
 >
   <fa-icon
     *ngIf="five == false && lol == false"
     [icon]="icon"
-    class="text-2xl text-primary dark:text-primaryDark"
+    class="text-primary dark:text-primaryDark text-2xl"
   ></fa-icon>
 
   <img
@@ -15,7 +15,7 @@
 
   <img src="assets/img/svg/lol.svg" class="h-8 w-8" *ngIf="lol == true" />
 
-  <span class="ml-4 text-2xl text-primary dark:text-primaryDark">{{
+  <span class="text-primary dark:text-primaryDark ml-4 text-2xl">{{
     title
   }}</span>
 </div>
