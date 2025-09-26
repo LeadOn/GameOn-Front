@@ -116,6 +116,7 @@ export class GameOnAdminService {
     loosePoints: number = 0,
     rules?: string,
     featured: boolean = false,
+    phaseOneDoubleRound: boolean = false,
   ): Observable<Tournament> {
     let body: any = {
       name: name,
@@ -128,6 +129,7 @@ export class GameOnAdminService {
       loosePoints: loosePoints,
       rules: rules,
       featured: featured,
+      phaseOneDoubleRound: phaseOneDoubleRound,
     };
 
     if (description != null) {
