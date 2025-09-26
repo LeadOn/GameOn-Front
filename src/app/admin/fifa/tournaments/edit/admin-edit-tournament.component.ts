@@ -31,6 +31,7 @@ export class AdminEditTournamentComponent implements OnInit {
     drawPoints: new FormControl(0),
     rules: new FormControl('', [Validators.maxLength(5000)]),
     featured: new FormControl(false),
+    phaseOneDoubleRound: new FormControl(false),
   });
 
   constructor(
@@ -71,6 +72,10 @@ export class AdminEditTournamentComponent implements OnInit {
 
         this.editTournamentForm.controls['featured'].setValue(
           this.tournament.featured,
+        );
+
+        this.editTournamentForm.controls['phaseOneDoubleRound'].setValue(
+          this.tournament.phaseOneDoubleRound,
         );
 
         if (data.description != null) {
@@ -227,6 +232,8 @@ export class AdminEditTournamentComponent implements OnInit {
           loosePoints,
           rules,
           this.editTournamentForm.controls['featured'].value ?? false,
+          this.editTournamentForm.controls['phaseOneDoubleRound'].value ??
+            false,
         )
         .subscribe(
           (data) => {
@@ -243,6 +250,18 @@ export class AdminEditTournamentComponent implements OnInit {
     } else {
       alert('Certaines informations sont manquantes !');
     }
+  }
+
+  goToPhase1(id: number) {
+    this.adminService.goToPhase1(id).subscribe(
+      (data) => {
+        window.location.reload();
+      },
+      (err) => {
+        console.error(err);
+        alert('Une erreur est survenue lors du passage en phase 1.');
+      },
+    );
   }
 
   deleteUser(userId: number) {

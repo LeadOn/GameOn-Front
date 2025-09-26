@@ -1,7 +1,4 @@
-<div
-  class="animate-fade flex cursor-pointer items-center justify-between px-4"
-  routerLink="/changelog"
->
+<div class="animate-fade flex items-center justify-between px-4">
   <div class="flex items-center justify-center space-x-2">
     <span class="dark:text-primaryDark text-primary text-lg font-semibold"
       >Nouveautés</span
@@ -20,7 +17,7 @@
   *ngIf="error == true"
 ></app-info-message>
 
-<div class="px-4" *ngIf="error == false">
+<div class="cursor-pointer px-4" *ngIf="error == false" routerLink="/changelog">
   <app-changelog-card
     [changelog]="changelog"
     [loading]="loading"

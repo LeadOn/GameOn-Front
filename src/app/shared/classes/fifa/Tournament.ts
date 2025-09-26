@@ -17,4 +17,5 @@ export class Tournament {
   loosePoints: number = 0;
   drawPoints: number = 0;
   featured: boolean = false;
+  phaseOneDoubleRound: boolean = false;
 }

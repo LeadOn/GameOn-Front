@@ -209,11 +209,30 @@
           <input type="checkbox" formControlName="featured" />
         </div>
 
+        <div class="group relative z-0 mt-6 mb-6 w-full">
+          <label
+            for="featured"
+            class="mb-2 block scale-100 text-sm font-medium text-gray-400"
+          >
+            Matchs aller-retour en phase de poules
+          </label>
+
+          <input type="checkbox" formControlName="phaseOneDoubleRound" />
+        </div>
+
         <button
           (click)="editTournament()"
           class="bg-customYellow focus:ring-customYellow w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
         >
           Modifier
+        </button>
+
+        <button
+          (click)="goToPhase1(tournamentId)"
+          *ngIf="tournament != null && tournament.state < 2"
+          class="bg-customGreen focus:ring-customGreen mt-2 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
+        >
+          Passer en phase 1
         </button>
       </div>
     </form>
