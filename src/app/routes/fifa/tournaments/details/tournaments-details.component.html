@@ -6,7 +6,7 @@
 
 <section
   id="header-pills"
-  class="animate-fade [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker mb-4 overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full"
+  class="animate-fade mb-4 overflow-x-scroll px-4 py-2 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-track]:bg-transparent"
 >
   <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
     <span
@@ -44,7 +44,7 @@
 
 <section id="tournament-detail-card" class="animate-fade px-4">
   <div
-    class="bg-bgLight dark:bg-bgDark flex items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
+    class="bg-bgLight/40 dark:bg-bgDark/40 flex items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
   >
     <div
       *ngIf="loading == true || tournament == null"
@@ -85,7 +85,7 @@
 
       <span
         *ngIf="loading == false && tournament != null"
-        class="text-primary dark:text-primaryDark text-xl font-semibold"
+        class="text-primary dark:text-primaryDark text-lg font-semibold"
         >{{ tournament.name }}</span
       >
       <span
@@ -112,7 +112,7 @@
   class="animate-fade mt-4 px-4"
   *ngIf="loading == false && tournament != null && tournament.winner != null"
 >
-  <div class="bg-bgLight dark:bg-bgDark rounded-lg">
+  <div class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg">
     <app-player-card [player]="tournament.winner"></app-player-card>
   </div>
 </section>
@@ -134,7 +134,7 @@
   *ngIf="showDetails()"
 >
   <div
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex flex-col items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    class="text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark flex flex-col items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
   >
     <div
       class="h-4 w-64 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"
@@ -160,7 +160,7 @@
 
 <section id="tournament-rules" class="mt-4 px-4">
   <div
-    class="animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    class="animate-fade text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
     *ngIf="
       loading == false &&
       tournament != null &&
@@ -171,7 +171,7 @@
   ></div>
 
   <div
-    class="animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    class="animate-fade text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
     *ngIf="
       loading == false &&
       tournament != null &&
@@ -183,7 +183,7 @@
   </div>
 
   <div
-    class="animate-fade bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
+    class="animate-fade text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark flex items-center justify-evenly rounded-lg p-4 align-middle text-sm drop-shadow-lg"
     *ngIf="loading == true && showRules()"
   >
     <div
@@ -208,7 +208,7 @@
 
 <section
   id="tournament-subscription"
-  class="animate-fade bg-bgLight dark:bg-bgDark m-4 rounded-lg p-4 drop-shadow-lg"
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 m-4 rounded-lg p-4 drop-shadow-lg"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -221,7 +221,7 @@
     class="align-center flex flex-col items-center justify-center"
   >
     <select
-      class="bg-primaryDarker border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark m-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
+      class="bg-primaryDarker border-secondary text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark m-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -242,7 +242,7 @@
     class="align-center flex flex-col items-center justify-center"
   >
     <select
-      class="bg-primaryDarker border-secondary bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark m-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
+      class="bg-primaryDarker border-secondary text-primary bg-bgLight/40 dark:bg-bgDark/40 dark:text-primaryDark m-4 block w-full rounded-lg border p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500"
       [(ngModel)]="selectedTeam"
     >
       <option *ngFor="let fifaTeam of fifaTeams" value="{{ fifaTeam.id }}">
@@ -319,7 +319,7 @@
 
 <section
   id="tournament-players"
-  class="animate-fade [&::-webkit-scrollbar-thumb]:bg-bgLight dark:[&::-webkit-scrollbar-thumb]:bg-bgDark [&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker mt-4 overflow-x-scroll pb-4 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full"
+  class="animate-fade mt-4 overflow-x-scroll pb-4 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-transparent [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-track]:bg-transparent"
   *ngIf="
     loading == false &&
     tournament != null &&
@@ -339,7 +339,7 @@
       </thead>
       <tbody>
         <tr
-          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
+          class="odd:bg-bgLight/40 odd:dark:bg-bgDark/40 border-b even:bg-gray-50/40 even:dark:bg-gray-800/40"
           *ngFor="let player of tournament.players"
           [routerLink]="['/player', player.player.id]"
         >
@@ -463,3 +463,5 @@
     [game]="game"
   ></app-fifa-game-history-card>
 </section>
+
+<div class="mb-24 h-2 w-full"></div>
