@@ -1,3 +1,11 @@
+<section id="home-changelog" class="mt-4 mb-4">
+  <app-home-changelog
+    [changelog]="homeData?.latestChangelog"
+    [loading]="loading"
+    [error]="error"
+  ></app-home-changelog>
+</section>
+
 <section id="home-fifa" class="mt-4 px-4">
   <app-home-fifa
     [season]="homeData?.currentSeason"
@@ -9,12 +17,4 @@
 
 <section id="home-lol" class="my-4 px-4">
   <app-home-lol></app-home-lol>
-</section>
-
-<section id="home-changelog">
-  <app-home-changelog
-    [changelog]="homeData?.latestChangelog"
-    [loading]="loading"
-    [error]="error"
-  ></app-home-changelog>
 </section>
