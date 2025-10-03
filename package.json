@@ -20,9 +20,9 @@
     "@angular/platform-browser-dynamic": "^20.3.3",
     "@angular/router": "^20.3.3",
     "@fortawesome/angular-fontawesome": "^3.0.0",
-    "@fortawesome/free-solid-svg-icons": "^7.0.1",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@ngrx/store": "^20.0.1",
-    "@tailwindcss/postcss": "^4.1.13",
+    "@tailwindcss/postcss": "^4.1.14",
     "chart.js": "^4.5.0",
     "flowbite": "^3.1.2",
     "keycloak-angular": "^20.0.0",
@@ -47,7 +47,7 @@
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "tailwindcss": "^4.1.13",
+    "tailwindcss": "^4.1.14",
     "typescript": "~5.8.3"
   }
 }
