@@ -9,7 +9,7 @@
     <form
       [formGroup]="createTournamentForm"
       class="flex w-full flex-col space-y-4"
-    >
+      >
       <div class="bg-bgLight dark:bg-bgDark rounded-lg p-8">
         <div class="group relative z-0 mb-6 w-full">
           <input
@@ -17,11 +17,11 @@
             id="name"
             class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="name"
-          />
+            />
           <label
             for="name"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Nom
             <span class="text-customRed">*</span>
           </label>
@@ -39,7 +39,7 @@
           <label
             for="description"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Description
             <span class="text-customRed">*</span>
           </label>
@@ -49,7 +49,7 @@
           <label
             for="state"
             class="mb-2 block text-sm font-medium text-gray-400"
-          >
+            >
             État
           </label>
 
@@ -57,14 +57,15 @@
             id="state"
             formControlName="state"
             class="border-secondary block w-full rounded-lg border bg-gray-800/40 p-2.5 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
-          >
-            <option
-              *ngFor="let state of states"
-              value="{{ state.value }}"
-              selected
             >
-              {{ state.label }}
-            </option>
+            @for (state of states; track state) {
+              <option
+                value="{{ state.value }}"
+                selected
+                >
+                {{ state.label }}
+              </option>
+            }
           </select>
         </div>
 
@@ -74,11 +75,11 @@
             id="plannedFrom"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="plannedFrom"
-          />
+            />
           <label
             for="plannedFrom"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Planifié du
             <span class="text-customRed">*</span>
           </label>
@@ -90,11 +91,11 @@
             id="plannedTo"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="plannedTo"
-          />
+            />
           <label
             for="plannedTo"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Au
             <span class="text-customRed">*</span>
           </label>
@@ -103,7 +104,7 @@
         <button
           (click)="createTournament()"
           class="bg-customGreen focus:ring-customGreen w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:ring-4 focus:outline-none"
-        >
+          >
           Créer le tournoi
         </button>
       </div>

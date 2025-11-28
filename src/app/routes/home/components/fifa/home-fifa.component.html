@@ -2,204 +2,226 @@
   <div
     class="animate-fade flex cursor-pointer items-center justify-between"
     routerLink="/fifa"
-  >
+    >
     <div class="flex items-center justify-center space-x-2">
       <span class="dark:text-primaryDark text-primary text-lg font-semibold"
         >FIFA</span
-      >
-    </div>
-
-    <app-loading-spinner-tiny
-      *ngIf="loading == true"
-    ></app-loading-spinner-tiny>
-  </div>
-</section>
-
-<section id="fifa-pill">
-  <div class="flex justify-between pt-4">
-    <app-pill
-      *ngIf="season != null"
-      [title]="season.name"
-      [bgStyle]="'secondary'"
-    ></app-pill>
-
-    <app-pill
-      *ngFor="let tournament of tournaments"
-      [title]="tournament.name"
-      [icon]="tournamentIcon"
-      [iconColor]="'text-frenchRed'"
-      [iconPulsate]="true"
-      [borderStyle]="'red'"
-      [pointer]="true"
-      [routerLink]="['/fifa/tournaments', tournament.id]"
-    ></app-pill>
-  </div>
-</section>
-
-<section id="fifa-header-card">
-  <div
-    class="fifa-card animate-fade mt-4 flex aspect-video cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
-    routerLink="/fifa"
-  >
-    <span class="mb-2 w-full text-right text-sm"></span>
-    <span class="mt-2 w-full text-center">Five Yunit - 2 avril 2025</span>
-  </div>
-</section>
-
-<section id="fifa-player-stats">
-  <div class="mt-4 flex space-x-2" *ngIf="isLoggedIn == true">
-    <div
-      class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex cursor-pointer flex-col items-center justify-center space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-      *ngIf="this.player$ | async as player"
-      routerLink="/player/me"
-    >
-      <img
-        class="aspect-square w-32 rounded-full object-cover"
-        *ngIf="
-          player.profilePictureUrl != null &&
-          player.profilePictureUrl != '' &&
-          loading == false
-        "
-        src="{{ apiUrl }}/player/{{ player.id }}/pp"
-      />
-
-      <img
-        class="w-32 rounded-full drop-shadow-lg"
-        *ngIf="
-          player.profilePictureUrl == null ||
-          (player.profilePictureUrl == '' && loading == false)
-        "
-        src="assets/img/gameon-logo.webp"
-      />
-
-      <div
-        class="flex h-32 w-32 animate-pulse items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
-        *ngIf="loading == true"
-      >
-        <svg
-          class="h-10 w-10 text-gray-200 dark:text-gray-600"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 16 20"
         >
-          <path
-            d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"
-          />
-          <path
-            d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"
-          />
-        </svg>
       </div>
-    </div>
 
+      @if (loading == true) {
+        <app-loading-spinner-tiny
+        ></app-loading-spinner-tiny>
+      }
+    </div>
+  </section>
+
+  <section id="fifa-pill">
+    <div class="flex justify-between pt-4">
+      @if (season != null) {
+        <app-pill
+          [title]="season.name"
+          [bgStyle]="'secondary'"
+        ></app-pill>
+      }
+
+      @for (tournament of tournaments; track tournament) {
+        <app-pill
+          [title]="tournament.name"
+          [icon]="tournamentIcon"
+          [iconColor]="'text-frenchRed'"
+          [iconPulsate]="true"
+          [borderStyle]="'red'"
+          [pointer]="true"
+          [routerLink]="['/fifa/tournaments', tournament.id]"
+        ></app-pill>
+      }
+    </div>
+  </section>
+
+  <section id="fifa-header-card">
     <div
-      class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-      *ngIf="this.globalStats$ | async as globalStats"
-    >
-      <app-fifa-stat
-        [stat]="globalStats"
-        *ngIf="globalStats != null"
-      ></app-fifa-stat>
+      class="fifa-card animate-fade mt-4 flex aspect-video cursor-pointer flex-col justify-between rounded-lg px-4 font-bold text-white drop-shadow-lg"
+      routerLink="/fifa"
+      >
+      <span class="mb-2 w-full text-right text-sm"></span>
+      <span class="mt-2 w-full text-center">Five Yunit - 2 avril 2025</span>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="fifa-planned-matches" *ngIf="isLoggedIn == true">
-  <div class="mt-4">
-    <app-info-message
-      [type]="'error'"
+  <section id="fifa-player-stats">
+    @if (isLoggedIn == true) {
+      <div class="mt-4 flex space-x-2">
+        @if (this.player$ | async; as player) {
+          <div
+            class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex cursor-pointer flex-col items-center justify-center space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+            routerLink="/player/me"
+            >
+            @if (
+              player.profilePictureUrl != null &&
+              player.profilePictureUrl != '' &&
+              loading == false
+              ) {
+              <img
+                class="aspect-square w-32 rounded-full object-cover"
+                src="{{ apiUrl }}/player/{{ player.id }}/pp"
+                />
+            }
+            @if (
+              player.profilePictureUrl == null ||
+              (player.profilePictureUrl == '' && loading == false)
+              ) {
+              <img
+                class="w-32 rounded-full drop-shadow-lg"
+                src="assets/img/gameon-logo.webp"
+                />
+            }
+            @if (loading == true) {
+              <div
+                class="flex h-32 w-32 animate-pulse items-center justify-center rounded-full bg-gray-300 dark:bg-gray-700"
+                >
+                <svg
+                  class="h-10 w-10 text-gray-200 dark:text-gray-600"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 16 20"
+                  >
+                  <path
+                    d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"
+                    />
+                  <path
+                    d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"
+                    />
+                </svg>
+              </div>
+            }
+          </div>
+        }
+        @if (this.globalStats$ | async; as globalStats) {
+          <div
+            class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+            >
+            @if (globalStats != null) {
+              <app-fifa-stat
+                [stat]="globalStats"
+              ></app-fifa-stat>
+            }
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  @if (isLoggedIn == true) {
+    <section id="fifa-planned-matches">
+      <div class="mt-4">
+        @if (plannedMatchesError == true) {
+          <app-info-message
+            [type]="'error'"
       [title]="
         'Une erreur est survenue lors de la récupération des matchs planifiés.'
       "
-      [icon]="errorIcon"
-      *ngIf="plannedMatchesError == true"
-      [applyMargin]="false"
-    ></app-info-message>
-  </div>
-
-  <div class="animate-fade">
-    <div class="mt-4 flex items-center justify-between">
-      <span
-        class="text-primary dark:text-primaryDark text-lg font-semibold"
-        *ngIf="loadingPlannedMatches == true || plannedMatches.length > 0"
-        >Mes prochains matchs</span
-      >
-
-      <app-loading-spinner-tiny
-        *ngIf="loadingPlannedMatches == true && plannedMatchesError == false"
-      ></app-loading-spinner-tiny>
-    </div>
-
-    <div
-      *ngIf="loadingPlannedMatches == false && plannedMatches.length > 0"
-      class="mt-4"
-    >
-      <div class="mt-4 flex w-full flex-col space-y-4">
-        <app-fifa-game-history-card
-          *ngFor="let game of plannedMatches"
-          [game]="game"
-        ></app-fifa-game-history-card>
+            [icon]="errorIcon"
+            [applyMargin]="false"
+          ></app-info-message>
+        }
       </div>
-    </div>
+      <div class="animate-fade">
+        <div class="mt-4 flex items-center justify-between">
+          @if (loadingPlannedMatches == true || plannedMatches.length > 0) {
+            <span
+              class="text-primary dark:text-primaryDark text-lg font-semibold"
+              >Mes prochains matchs</span
+              >
+            }
+            @if (loadingPlannedMatches == true && plannedMatchesError == false) {
+              <app-loading-spinner-tiny
+              ></app-loading-spinner-tiny>
+            }
+          </div>
+          @if (loadingPlannedMatches == false && plannedMatches.length > 0) {
+            <div
+              class="mt-4"
+              >
+              <div class="mt-4 flex w-full flex-col space-y-4">
+                @for (game of plannedMatches; track game) {
+                  <app-fifa-game-history-card
+                    [game]="game"
+                  ></app-fifa-game-history-card>
+                }
+              </div>
+            </div>
+          }
+          @if (loadingPlannedMatches == true && plannedMatchesError == false) {
+            <div
+              class="mt-4"
+              >
+              <div class="mt-4 flex w-full flex-col space-y-4">
+                <app-fifa-game-history-card></app-fifa-game-history-card>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
 
-    <div
-      *ngIf="loadingPlannedMatches == true && plannedMatchesError == false"
-      class="mt-4"
-    >
-      <div class="mt-4 flex w-full flex-col space-y-4">
-        <app-fifa-game-history-card></app-fifa-game-history-card>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="fifa-last-matches">
-  <div class="mt-4">
-    <app-info-message
-      [type]="'error'"
+    <section id="fifa-last-matches">
+      <div class="mt-4">
+        @if (lastMatchesError == true) {
+          <app-info-message
+            [type]="'error'"
       [title]="
         'Une erreur est survenue lors de la récupération des derniers matchs joués.'
       "
-      [icon]="errorIcon"
-      *ngIf="lastMatchesError == true"
-      [applyMargin]="false"
-    ></app-info-message>
-  </div>
-
-  <div class="animate-fade">
-    <div class="mt-4 flex items-center justify-between">
-      <span
-        class="text-primary dark:text-primaryDark text-lg font-semibold"
-        *ngIf="loadingLastMatches == true || lastMatches.length > 0"
-        ><span *ngIf="isLoggedIn == true">Mes derniers matchs joués</span
-        ><span *ngIf="isLoggedIn == false">Derniers matchs joués</span></span
-      >
-
-      <app-loading-spinner-tiny
-        *ngIf="loadingLastMatches == true && lastMatchesError == false"
-      ></app-loading-spinner-tiny>
-    </div>
-
-    <div
-      *ngIf="loadingLastMatches == false && lastMatches.length > 0"
-      class="mt-4"
-    >
-      <div class="mt-4 flex w-full flex-col space-y-4">
-        <app-fifa-game-history-card
-          *ngFor="let game of lastMatches"
-          [game]="game"
-        ></app-fifa-game-history-card>
+            [icon]="errorIcon"
+            [applyMargin]="false"
+          ></app-info-message>
+        }
       </div>
-    </div>
 
-    <div
-      *ngIf="loadingLastMatches == true && lastMatchesError == false"
-      class="mt-4"
-    >
-      <div class="mt-4 flex w-full flex-col space-y-4">
-        <app-fifa-game-history-card></app-fifa-game-history-card>
-      </div>
-    </div>
-  </div>
-</section>
+      <div class="animate-fade">
+        <div class="mt-4 flex items-center justify-between">
+          @if (loadingLastMatches == true || lastMatches.length > 0) {
+            <span
+              class="text-primary dark:text-primaryDark text-lg font-semibold"
+              >@if (isLoggedIn == true) {
+              <span>Mes derniers matchs joués</span
+                >
+                }@if (isLoggedIn == false) {
+                <span>Derniers matchs joués</span>
+                }</span
+                >
+              }
+
+              @if (loadingLastMatches == true && lastMatchesError == false) {
+                <app-loading-spinner-tiny
+                ></app-loading-spinner-tiny>
+              }
+            </div>
+
+            @if (loadingLastMatches == false && lastMatches.length > 0) {
+              <div
+                class="mt-4"
+                >
+                <div class="mt-4 flex w-full flex-col space-y-4">
+                  @for (game of lastMatches; track game) {
+                    <app-fifa-game-history-card
+                      [game]="game"
+                    ></app-fifa-game-history-card>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (loadingLastMatches == true && lastMatchesError == false) {
+              <div
+                class="mt-4"
+                >
+                <div class="mt-4 flex w-full flex-col space-y-4">
+                  <app-fifa-game-history-card></app-fifa-game-history-card>
+                </div>
+              </div>
+            }
+          </div>
+        </section>

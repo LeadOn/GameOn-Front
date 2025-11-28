@@ -1,104 +1,103 @@
-<div
-  class="animate-fade text-primary dark:text-primaryDark bg-bgLight/40 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-  *ngIf="loading == false && changelog != null"
->
-  <div class="flex flex-row items-center">
-    <div class="flex items-center justify-center">
-      <span
-        class="text-primary dark:text-primaryDark rounded-full border-2 px-4 text-sm font-bold"
+@if (loading == false && changelog != null) {
+  <div
+    class="animate-fade text-primary dark:text-primaryDark bg-bgLight/40 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    >
+    <div class="flex flex-row items-center">
+      <div class="flex items-center justify-center">
+        <span
+          class="text-primary dark:text-primaryDark rounded-full border-2 px-4 text-sm font-bold"
         [ngClass]="{
           'border-gray-300': changelog.type == 2,
           'border-green-500': changelog.type == 1,
           'border-red-600': changelog.type == 0,
         }"
-      >
-        {{ changelog.version }}
-      </span>
+          >
+          {{ changelog.version }}
+        </span>
+      </div>
+      @if (changelog.name != null) {
+        <span class="ml-4 text-sm">{{
+          changelog.name
+        }}</span>
+      }
     </div>
-
-    <span *ngIf="changelog.name != null" class="ml-4 text-sm">{{
-      changelog.name
-    }}</span>
-  </div>
-
-  <div class="mt-4 flex flex-col" *ngIf="changelog.context != null">
-    <span class="font-semibold">Contexte :</span>
-
-    <span class="text-sm">{{ changelog.context }}</span>
-  </div>
-
-  <div
-    class="mt-4 flex flex-col"
-    *ngIf="changelog.newFeatures != null && changelog.newFeatures.length > 0"
-  >
-    <span class="font-semibold text-green-600">Nouveautés :</span>
-
-    <ul>
-      <li class="text-sm" *ngFor="let feature of changelog.newFeatures">
-        + {{ feature }}
-      </li>
-    </ul>
-  </div>
-
-  <div
-    class="mt-4 flex flex-col"
-    *ngIf="
+    @if (changelog.context != null) {
+      <div class="mt-4 flex flex-col">
+        <span class="font-semibold">Contexte :</span>
+        <span class="text-sm">{{ changelog.context }}</span>
+      </div>
+    }
+    @if (changelog.newFeatures != null && changelog.newFeatures.length > 0) {
+      <div
+        class="mt-4 flex flex-col"
+        >
+        <span class="font-semibold text-green-600">Nouveautés :</span>
+        <ul>
+          @for (feature of changelog.newFeatures; track feature) {
+            <li class="text-sm">
+              + {{ feature }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
+    @if (
       changelog.updatedFeatures != null && changelog.updatedFeatures.length > 0
-    "
-  >
-    <span class="font-semibold text-yellow-600">Mises à jour :</span>
-
-    <ul>
-      <li class="text-sm" *ngFor="let feature of changelog.updatedFeatures">
-        * {{ feature }}
-      </li>
-    </ul>
-  </div>
-
-  <div
-    class="mt-4 flex flex-col"
-    *ngIf="
+      ) {
+      <div
+        class="mt-4 flex flex-col"
+        >
+        <span class="font-semibold text-yellow-600">Mises à jour :</span>
+        <ul>
+          @for (feature of changelog.updatedFeatures; track feature) {
+            <li class="text-sm">
+              * {{ feature }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
+    @if (
       changelog.removedFeatures != null && changelog.removedFeatures.length > 0
-    "
-  >
-    <span class="font-semibold text-red-600">Suppressions :</span>
-
-    <ul>
-      <li class="text-sm" *ngFor="let feature of changelog.removedFeatures">
-        - {{ feature }}
-      </li>
-    </ul>
+      ) {
+      <div
+        class="mt-4 flex flex-col"
+        >
+        <span class="font-semibold text-red-600">Suppressions :</span>
+        <ul>
+          @for (feature of changelog.removedFeatures; track feature) {
+            <li class="text-sm">
+              - {{ feature }}
+            </li>
+          }
+        </ul>
+      </div>
+    }
   </div>
-</div>
+}
 
-<div
-  role="status"
-  *ngIf="loading == true || changelog == null"
-  class="animate-fade text-primary dark:text-primaryDark bg-bgLight/40 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
->
-  <div class="flex flex-row items-center">
-    <span class="h-6 w-16 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-
-    <span
-      class="ml-4 h-4 w-64 rounded-full bg-gray-300 dark:bg-gray-700"
-    ></span>
+@if (loading == true || changelog == null) {
+  <div
+    role="status"
+    class="animate-fade text-primary dark:text-primaryDark bg-bgLight/40 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    >
+    <div class="flex flex-row items-center">
+      <span class="h-6 w-16 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      <span
+        class="ml-4 h-4 w-64 rounded-full bg-gray-300 dark:bg-gray-700"
+      ></span>
+    </div>
+    <div class="mt-4 flex flex-col space-y-2">
+      <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+    </div>
+    <div class="mt-4 flex flex-col space-y-2">
+      <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+    </div>
+    <div class="mt-4 flex flex-col space-y-2">
+      <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+    </div>
   </div>
-
-  <div class="mt-4 flex flex-col space-y-2">
-    <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-
-    <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-  </div>
-
-  <div class="mt-4 flex flex-col space-y-2">
-    <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-
-    <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-  </div>
-
-  <div class="mt-4 flex flex-col space-y-2">
-    <span class="h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-
-    <span class="h-4 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-  </div>
-</div>
+}

@@ -2,17 +2,20 @@
   class="animate-fade items-center justify-center space-x-1 rounded-full px-2 text-sm drop-shadow-lg"
   [ngClass]="{ 'cursor-pointer': pointer == true }"
   [class]="style"
->
-  <fa-icon
-    *ngIf="icon != null"
-    [icon]="icon"
-    [class]="iconColor"
-    [ngClass]="{ 'animate-pulse': iconPulsate == true }"
-  ></fa-icon>
+  >
+  @if (icon != null) {
+    <fa-icon
+      [icon]="icon"
+      [class]="iconColor"
+      [ngClass]="{ 'animate-pulse': iconPulsate == true }"
+    ></fa-icon>
+  }
 
   <span>
     {{ title }}
   </span>
 
-  <fa-icon *ngIf="showExternalIcon == true" [icon]="externalIcon"></fa-icon>
+  @if (showExternalIcon == true) {
+    <fa-icon [icon]="externalIcon"></fa-icon>
+  }
 </div>

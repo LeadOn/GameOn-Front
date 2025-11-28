@@ -1,106 +1,108 @@
 <div class="bg-bgLightDarker dark:bg-bgDarkDarker flex h-screen flex-col">
   <header
     class="bg-bgLight dark:bg-bgDark flex h-16 min-h-16 w-full items-center justify-between self-center px-4"
-  >
+    >
     <a
       routerLink="/admin"
       class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold"
       ><img
-        class="h-8 w-8"
-        src="assets/img/gameon-logo.webp"
-        alt="GameOn!'s logo"
+      class="h-8 w-8"
+      src="assets/img/gameon-logo.webp"
+      alt="GameOn!'s logo"
       />
-      <span class="dark:text-primaryDark ml-2 flex flex-col"
-        ><span>GameOn!</span>
-        <span
-          class="border-frenchRed bg-frenchRed rounded-full border px-2 text-center text-sm font-normal text-white drop-shadow-lg"
-          >Admin</span
+    <span class="dark:text-primaryDark ml-2 flex flex-col"
+      ><span>GameOn!</span>
+      <span
+        class="border-frenchRed bg-frenchRed rounded-full border px-2 text-center text-sm font-normal text-white drop-shadow-lg"
+        >Admin</span
         >
       </span></a
-    >
-
-    <button type="button" (click)="toggleDarkMode()">
-      <fa-icon
-        [icon]="lightIcon"
-        *ngIf="darkMode()"
-        class="text-customYellow text-lg"
-      ></fa-icon>
-      <fa-icon
-        [icon]="darkIcon"
-        *ngIf="!darkMode()"
-        class="text-frenchBlue text-lg"
-      ></fa-icon>
-    </button>
-  </header>
-
-  <section
-    id="admin-content"
-    class="bg-bgLightDarker dark:bg-bgDarkDarker grow overflow-y-scroll py-4"
-  >
-    <router-outlet></router-outlet>
-  </section>
-
-  <nav class="bg-bgLight dark:bg-bgDark z-50 h-16 min-h-16 w-full pt-2">
-    <div class="mx-auto grid grid-cols-4 font-medium">
-      <button
-        routerLink="/admin"
-        type="button"
-        class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
       >
-        <fa-icon
-          [icon]="homeIcon"
-          class="text-primary dark:text-primaryDark hover:text-frenchBlue"
-        ></fa-icon>
 
-        <span
-          class="text-primary dark:text-primaryDark hover:text-frenchBlue dark:group-hover:text-frenchBlue text-sm"
-          >Accueil</span
-        >
+      <button type="button" (click)="toggleDarkMode()">
+        @if (darkMode()) {
+          <fa-icon
+            [icon]="lightIcon"
+            class="text-customYellow text-lg"
+          ></fa-icon>
+        }
+        @if (!darkMode()) {
+          <fa-icon
+            [icon]="darkIcon"
+            class="text-frenchBlue text-lg"
+          ></fa-icon>
+        }
       </button>
+    </header>
 
-      <button
-        routerLink="/admin/fifa"
-        type="button"
-        class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+    <section
+      id="admin-content"
+      class="bg-bgLightDarker dark:bg-bgDarkDarker grow overflow-y-scroll py-4"
       >
-        <fa-icon
-          [icon]="ballIcon"
-          class="text-primary dark:text-primaryDark hover:text-frenchBlue"
-        ></fa-icon>
+      <router-outlet></router-outlet>
+    </section>
 
-        <span
-          class="text-primary dark:text-primaryDark hover:text-frenchBlue dark:group-hover:text-frenchBlue text-sm"
-          >FIFA</span
-        >
-      </button>
+    <nav class="bg-bgLight dark:bg-bgDark z-50 h-16 min-h-16 w-full pt-2">
+      <div class="mx-auto grid grid-cols-4 font-medium">
+        <button
+          routerLink="/admin"
+          type="button"
+          class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+          <fa-icon
+            [icon]="homeIcon"
+            class="text-primary dark:text-primaryDark hover:text-frenchBlue"
+          ></fa-icon>
 
-      <button
-        routerLink="/admin/changelog"
-        type="button"
-        class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
-      >
-        <fa-icon
-          [icon]="changelogIcon"
-          class="text-primary dark:text-primaryDark hover:text-frenchBlue"
-        ></fa-icon>
+          <span
+            class="text-primary dark:text-primaryDark hover:text-frenchBlue dark:group-hover:text-frenchBlue text-sm"
+            >Accueil</span
+            >
+          </button>
 
-        <span
-          class="text-primary dark:text-primaryDark hover:text-frenchBlue dark:group-hover:text-frenchBlue text-sm"
-          >Changelog</span
-        >
-      </button>
+          <button
+            routerLink="/admin/fifa"
+            type="button"
+            class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+            >
+            <fa-icon
+              [icon]="ballIcon"
+              class="text-primary dark:text-primaryDark hover:text-frenchBlue"
+            ></fa-icon>
 
-      <button
-        routerLink="/"
-        type="button"
-        class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
-      >
-        <fa-icon [icon]="logoutIcon" class="text-frenchRed"></fa-icon>
+            <span
+              class="text-primary dark:text-primaryDark hover:text-frenchBlue dark:group-hover:text-frenchBlue text-sm"
+              >FIFA</span
+              >
+            </button>
 
-        <span class="text-frenchRed dark:group-hover:text-frenchBlue text-sm"
-          >Retour</span
-        >
-      </button>
-    </div>
-  </nav>
-</div>
+            <button
+              routerLink="/admin/changelog"
+              type="button"
+              class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+              >
+              <fa-icon
+                [icon]="changelogIcon"
+                class="text-primary dark:text-primaryDark hover:text-frenchBlue"
+              ></fa-icon>
+
+              <span
+                class="text-primary dark:text-primaryDark hover:text-frenchBlue dark:group-hover:text-frenchBlue text-sm"
+                >Changelog</span
+                >
+              </button>
+
+              <button
+                routerLink="/"
+                type="button"
+                class="group inline-flex cursor-pointer flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                <fa-icon [icon]="logoutIcon" class="text-frenchRed"></fa-icon>
+
+                <span class="text-frenchRed dark:group-hover:text-frenchBlue text-sm"
+                  >Retour</span
+                  >
+                </button>
+              </div>
+            </nav>
+          </div>

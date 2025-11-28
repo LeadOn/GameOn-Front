@@ -1,37 +1,40 @@
 <div
   class="border-bgLightDarker bg-bgLight dark:border-bgLight dark:bg-bgDark mt-2 flex cursor-pointer flex-row rounded-lg border px-4 drop-shadow-lg"
   [routerLink]="['/lol/summoner', player.id]"
->
+  >
   <div class="flex items-center justify-center">
-    <img
-      *ngIf="player.lolIconId != null"
+    @if (player.lolIconId != null) {
+      <img
       src="https://ddragon.leagueoflegends.com/cdn/{{
         currentLoLPatch
       }}/img/profileicon/{{ player.lolIconId }}.png"
-      width="32"
-      class="rounded-full"
-    />
+        width="32"
+        class="rounded-full"
+        />
+    }
 
-    <img
-      *ngIf="
-        player.profilePictureUrl != null &&
-        player.profilePictureUrl != '' &&
-        player.lolIconId == null
-      "
-      src="{{ apiUrl }}/player/{{ player.id }}/pp"
-      width="32"
-      class="aspect-square rounded-full object-cover"
-    />
+    @if (
+      player.profilePictureUrl != null &&
+      player.profilePictureUrl != '' &&
+      player.lolIconId == null
+      ) {
+      <img
+        src="{{ apiUrl }}/player/{{ player.id }}/pp"
+        width="32"
+        class="aspect-square rounded-full object-cover"
+        />
+    }
 
-    <img
-      *ngIf="
-        player.profilePictureUrl == null ||
-        (player.profilePictureUrl == '' && player.lolIconId == null)
-      "
-      class="rounded-full"
-      src="assets/img/gameon-logo.webp"
-      width="32"
-    />
+    @if (
+      player.profilePictureUrl == null ||
+      (player.profilePictureUrl == '' && player.lolIconId == null)
+      ) {
+      <img
+        class="rounded-full"
+        src="assets/img/gameon-logo.webp"
+        width="32"
+        />
+    }
   </div>
 
   <div class="text-primary dark:text-primaryDark mx-4 flex grow flex-col">
@@ -39,61 +42,66 @@
 
     <div
       class="flex items-center justify-start text-gray-500 dark:text-gray-400"
-    >
-      <img
-        src="assets/img/svg/lol.svg"
-        class="h-6 w-6"
-        *ngIf="player.riotGamesPUUID != null"
-      />
-      <span class="text-sm" *ngIf="player.riotGamesPUUID != null"
-        >{{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }} - niveau
-        {{ player.lolSummonerLevel }}</span
       >
+      @if (player.riotGamesPUUID != null) {
+        <img
+          src="assets/img/svg/lol.svg"
+          class="h-6 w-6"
+          />
+      }
+      @if (player.riotGamesPUUID != null) {
+        <span class="text-sm"
+          >{{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }} - niveau
+          {{ player.lolSummonerLevel }}</span
+          >
+        }
+      </div>
     </div>
-  </div>
 
-  <div
-    class="text-primary dark:text-primaryDark flex flex-col items-center justify-evenly"
-  >
     <div
-      *ngIf="player.leagueOfLegendsSoloRank != null"
-      class="flex flex-row items-center justify-center space-x-2"
-    >
-      <img
+      class="text-primary dark:text-primaryDark flex flex-col items-center justify-evenly"
+      >
+      @if (player.leagueOfLegendsSoloRank != null) {
+        <div
+          class="flex flex-row items-center justify-center space-x-2"
+          >
+          <img
         src="assets/img/lol/rank/{{
           player.leagueOfLegendsSoloRank.tier | lowercase
         }}.png"
-        class="h-10 w-10"
-      />
-      <div class="flex flex-col items-center justify-center">
-        <span class="text-xs"
-          >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
-          {{ player.leagueOfLegendsSoloRank.rank }}</span
-        >
-        <span class="text-xs"
-          >Solo - {{ player.leagueOfLegendsSoloRank.leaguePoints }}LP</span
-        >
-      </div>
-    </div>
-    <div
-      *ngIf="player.leagueOfLegendsFlexRank != null"
-      class="flex flex-row items-center justify-center space-x-2"
-    >
-      <img
+            class="h-10 w-10"
+            />
+          <div class="flex flex-col items-center justify-center">
+            <span class="text-xs"
+              >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
+              {{ player.leagueOfLegendsSoloRank.rank }}</span
+              >
+              <span class="text-xs"
+                >Solo - {{ player.leagueOfLegendsSoloRank.leaguePoints }}LP</span
+                >
+              </div>
+            </div>
+          }
+          @if (player.leagueOfLegendsFlexRank != null) {
+            <div
+              class="flex flex-row items-center justify-center space-x-2"
+              >
+              <img
         src="assets/img/lol/rank/{{
           player.leagueOfLegendsFlexRank.tier | lowercase
         }}.png"
-        class="h-10 w-10"
-      />
-      <div class="flex flex-col items-center justify-center">
-        <span class="text-xs"
-          >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
-          {{ player.leagueOfLegendsFlexRank.rank }}</span
-        >
-        <span class="text-xs"
-          >Flex - {{ player.leagueOfLegendsFlexRank.leaguePoints }}LP</span
-        >
-      </div>
-    </div>
-  </div>
-</div>
+                class="h-10 w-10"
+                />
+              <div class="flex flex-col items-center justify-center">
+                <span class="text-xs"
+                  >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
+                  {{ player.leagueOfLegendsFlexRank.rank }}</span
+                  >
+                  <span class="text-xs"
+                    >Flex - {{ player.leagueOfLegendsFlexRank.leaguePoints }}LP</span
+                    >
+                  </div>
+                </div>
+              }
+            </div>
+          </div>

@@ -2,7 +2,9 @@
   <span class="text-primary dark:text-primaryDark text-lg font-semibold"
     >Édition tournoi
   </span>
-  <app-loading-spinner-tiny *ngIf="loading == true"></app-loading-spinner-tiny>
+  @if (loading == true) {
+    <app-loading-spinner-tiny></app-loading-spinner-tiny>
+  }
 </div>
 
 <section class="bg-bgDarker mt-4 space-x-4 px-4">
@@ -10,7 +12,7 @@
     <form
       [formGroup]="editTournamentForm"
       class="flex w-full flex-col space-y-4"
-    >
+      >
       <div class="bg-bgLight dark:bg-bgDark rounded-lg p-8">
         <div class="group relative z-0 mb-6 w-full">
           <input
@@ -18,11 +20,11 @@
             id="name"
             class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="name"
-          />
+            />
           <label
             for="name"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Nom
             <span class="text-customRed">*</span>
           </label>
@@ -40,7 +42,7 @@
           <label
             for="description"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Description
             <span class="text-customRed">*</span>
           </label>
@@ -50,7 +52,7 @@
           <label
             for="state"
             class="mb-2 block text-sm font-medium text-gray-400"
-          >
+            >
             État
           </label>
 
@@ -58,14 +60,15 @@
             id="state"
             formControlName="state"
             class="border-secondary block w-full rounded-lg border bg-gray-800/40 p-2.5 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
-          >
-            <option
-              *ngFor="let state of states"
-              value="{{ state.value }}"
-              selected
             >
-              {{ state.label }}
-            </option>
+            @for (state of states; track state) {
+              <option
+                value="{{ state.value }}"
+                selected
+                >
+                {{ state.label }}
+              </option>
+            }
           </select>
         </div>
 
@@ -75,11 +78,11 @@
             id="phase2ChallongeUrl"
             class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="phase2ChallongeUrl"
-          />
+            />
           <label
             for="phase2ChallongeUrl"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             URL du Challonge (Phase 2)
           </label>
         </div>
@@ -91,11 +94,11 @@
             id="winnerId"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="winnerId"
-          />
+            />
           <label
             for="winnerId"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Identifiant du gagnant
           </label>
         </div>
@@ -106,11 +109,11 @@
             id="plannedFrom"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="plannedFrom"
-          />
+            />
           <label
             for="plannedFrom"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Planifié du
             <span class="text-customRed">*</span>
           </label>
@@ -122,11 +125,11 @@
             id="plannedTo"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="plannedTo"
-          />
+            />
           <label
             for="plannedTo"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Au
             <span class="text-customRed">*</span>
           </label>
@@ -139,11 +142,11 @@
             id="winPoints"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="winPoints"
-          />
+            />
           <label
             for="winPoints"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Score lors d'une victoire <span class="text-customRed">*</span>
           </label>
         </div>
@@ -155,11 +158,11 @@
             id="loosePoints"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="loosePoints"
-          />
+            />
           <label
             for="loosePoints"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Score lors d'une défaite <span class="text-customRed">*</span>
           </label>
         </div>
@@ -171,11 +174,11 @@
             id="drawPoints"
             class="peer focus:border-secondary text-primary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
             formControlName="drawPoints"
-          />
+            />
           <label
             for="drawPoints"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-300 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Score lors d'un nul <span class="text-customRed">*</span>
           </label>
         </div>
@@ -192,7 +195,7 @@
           <label
             for="rules"
             class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
+            >
             Règles (HTML)
             <span class="text-customRed">*</span>
           </label>
@@ -202,7 +205,7 @@
           <label
             for="featured"
             class="mb-2 block scale-100 text-sm font-medium text-gray-400"
-          >
+            >
             Mis en avant
           </label>
 
@@ -213,7 +216,7 @@
           <label
             for="featured"
             class="mb-2 block scale-100 text-sm font-medium text-gray-400"
-          >
+            >
             Matchs aller-retour en phase de poules
           </label>
 
@@ -223,17 +226,18 @@
         <button
           (click)="editTournament()"
           class="bg-customYellow focus:ring-customYellow w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
-        >
+          >
           Modifier
         </button>
 
-        <button
-          (click)="goToPhase1(tournamentId)"
-          *ngIf="tournament != null && tournament.state < 2"
-          class="bg-customGreen focus:ring-customGreen mt-2 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
-        >
-          Passer en phase 1
-        </button>
+        @if (tournament != null && tournament.state < 2) {
+          <button
+            (click)="goToPhase1(tournamentId)"
+            class="bg-customGreen focus:ring-customGreen mt-2 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
+            >
+            Passer en phase 1
+          </button>
+        }
       </div>
     </form>
   </div>
@@ -247,67 +251,69 @@
           class="text-primary dark:text-primaryDark mb-2 block text-xs font-medium"
           for="file_input"
           >Photo de profil</label
-        >
-        <input
-          class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-          aria-describedby="file_input_help"
-          id="file_input"
-          type="file"
-          (change)="uploadProfilePicture($event)"
-        />
-        <p
-          class="mt-2 text-sm text-gray-500 dark:text-gray-500"
-          id="file_input_help"
-        >
-          Formats PNG, JPG, WebP ou GIF autorisés.
-        </p>
-      </div>
+          >
+          <input
+            class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+            aria-describedby="file_input_help"
+            id="file_input"
+            type="file"
+            (change)="uploadProfilePicture($event)"
+            />
+          <p
+            class="mt-2 text-sm text-gray-500 dark:text-gray-500"
+            id="file_input_help"
+            >
+            Formats PNG, JPG, WebP ou GIF autorisés.
+          </p>
+        </div>
 
-      <button
-        (click)="updateTournamentLogo()"
-        class="bg-customYellow focus:ring-customYellow w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
-      >
-        Modifier
-      </button>
-    </form>
+        <button
+          (click)="updateTournamentLogo()"
+          class="bg-customYellow focus:ring-customYellow w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-800 focus:ring-4 focus:outline-none"
+          >
+          Modifier
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <div class="mt-4 flex flex-col items-center">
+    @if (loading == false && tournament != null) {
+      <table
+        class="mt-4 w-2/3 text-left text-sm text-gray-400"
+        >
+        <thead class="bg-primary text-xs text-white uppercase">
+          <tr>
+            <th scope="col" class="px-6 py-3">#</th>
+            <th scope="col" class="px-6 py-3">Nom</th>
+            <th scope="col" class="px-6 py-3">Pseudo</th>
+            <th scope="col" class="px-6 py-3">Équipe</th>
+            <th scope="col" class="px-6 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (player of tournament.players; track player) {
+            <tr
+              class="bg-secondaryDarker border-secondary border-b text-white"
+              >
+              <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
+                {{ player.player.id }}
+              </th>
+              <td class="px-6 py-4">{{ player.player.fullName }}</td>
+              <td class="px-6 py-4">
+                {{ player.player.nickname }}
+              </td>
+              <td class="px-6 py-4">
+                {{ player.team.name }}
+              </td>
+              <td class="flex flex-row px-6 py-4">
+                <button (click)="deleteUser(player.player.id)">
+                  <img src="assets/img/svg/trash.svg" class="w-8" />
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   </div>
-</section>
-
-<div class="mt-4 flex flex-col items-center">
-  <table
-    class="mt-4 w-2/3 text-left text-sm text-gray-400"
-    *ngIf="loading == false && tournament != null"
-  >
-    <thead class="bg-primary text-xs text-white uppercase">
-      <tr>
-        <th scope="col" class="px-6 py-3">#</th>
-        <th scope="col" class="px-6 py-3">Nom</th>
-        <th scope="col" class="px-6 py-3">Pseudo</th>
-        <th scope="col" class="px-6 py-3">Équipe</th>
-        <th scope="col" class="px-6 py-3">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        class="bg-secondaryDarker border-secondary border-b text-white"
-        *ngFor="let player of tournament.players"
-      >
-        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">
-          {{ player.player.id }}
-        </th>
-        <td class="px-6 py-4">{{ player.player.fullName }}</td>
-        <td class="px-6 py-4">
-          {{ player.player.nickname }}
-        </td>
-        <td class="px-6 py-4">
-          {{ player.team.name }}
-        </td>
-        <td class="flex flex-row px-6 py-4">
-          <button (click)="deleteUser(player.player.id)">
-            <img src="assets/img/svg/trash.svg" class="w-8" />
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>

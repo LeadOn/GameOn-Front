@@ -1,49 +1,51 @@
 <section class="bg-bgDarker h-screen px-4 pt-4">
-  <app-loading-spinner
-    [@inOutAnimation]
-    *ngIf="loading == true"
-  ></app-loading-spinner>
+  @if (loading == true) {
+    <app-loading-spinner
+      [@inOutAnimation]
+    ></app-loading-spinner>
+  }
 
-  <app-common-page-header
-    *ngIf="loading == false && platform.id != 0"
-    [icon]="platformIcon"
-    [title]="'Plateforme ' + platform.name"
-    [@inOutAnimation]
-  ></app-common-page-header>
+  @if (loading == false && platform.id != 0) {
+    <app-common-page-header
+      [icon]="platformIcon"
+      [title]="'Plateforme ' + platform.name"
+      [@inOutAnimation]
+    ></app-common-page-header>
+  }
 
-  <div
-    class="mt-4 flex flex-col items-center"
-    *ngIf="loading == false && platform.id != 0"
-    [@inOutAnimation]
-  >
-    <form
-      [formGroup]="updatePlatformForm"
-      class="w-full rounded-lg bg-bgLight p-8 dark:bg-bgDark"
-    >
-      <div class="group relative z-0 mb-6 w-full">
-        <input
-          type="text"
-          id="name"
-          class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
-          formControlName="name"
-          maxlength="50"
-          required
-        />
-        <label
-          for="name"
-          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
-        >
-          Nom
-          <span class="text-customRed">*</span>
-        </label>
-      </div>
-
-      <button
-        (click)="updatePlatform()"
-        class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
+  @if (loading == false && platform.id != 0) {
+    <div
+      class="mt-4 flex flex-col items-center"
+      [@inOutAnimation]
       >
-        Mettre à jour
-      </button>
-    </form>
-  </div>
+      <form
+        [formGroup]="updatePlatformForm"
+        class="w-full rounded-lg bg-bgLight p-8 dark:bg-bgDark"
+        >
+        <div class="group relative z-0 mb-6 w-full">
+          <input
+            type="text"
+            id="name"
+            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+            formControlName="name"
+            maxlength="50"
+            required
+            />
+          <label
+            for="name"
+            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
+            >
+            Nom
+            <span class="text-customRed">*</span>
+          </label>
+        </div>
+        <button
+          (click)="updatePlatform()"
+          class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
+          >
+          Mettre à jour
+        </button>
+      </form>
+    </div>
+  }
 </section>

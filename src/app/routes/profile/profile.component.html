@@ -1,315 +1,312 @@
 <section id="profile-popups" class="mt-4 px-4">
-  <app-success-alert
-    *ngIf="showSuccess == true"
+  @if (showSuccess == true) {
+    <app-success-alert
     [text]="
       'Mise à jour réussie ! Vous devez rafraîchir la page pour voir les changements.'
     "
-    [(show)]="showSuccess"
-  ></app-success-alert>
+      [(show)]="showSuccess"
+    ></app-success-alert>
+  }
 </section>
 
 <section id="profile-head" class="z-50">
-  <div
-    class="mt-8 flex items-center justify-between px-4"
-    *ngIf="loading == true"
-  >
-    <div class="flex space-x-4">
-      <div
-        class="flex h-32 w-32 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
+  @if (loading == true) {
+    <div
+      class="mt-8 flex items-center justify-between px-4"
       >
-        <svg
-          class="h-10 w-10 text-gray-200 dark:text-gray-600"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 16 20"
+      <div class="flex space-x-4">
+        <div
+          class="flex h-32 w-32 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
+          >
+          <svg
+            class="h-10 w-10 text-gray-200 dark:text-gray-600"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 16 20"
+            >
+            <path
+              d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"
+              />
+            <path
+              d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"
+              />
+          </svg>
+        </div>
+        <div class="flex flex-col justify-center space-y-4">
+          <span
+            class="flex h-6 w-32 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
+          ></span>
+          <span
+            class="flex h-4 w-32 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
+          ></span>
+        </div>
+      </div>
+      <div>
+        <span
+          class="flex h-16 w-16 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
+        ></span>
+      </div>
+    </div>
+  }
+
+  @if (loading == false && (player$ | async); as currentPlayer) {
+    <div
+      class="mt-8 flex items-center justify-between px-4"
+      >
+      <div class="flex space-x-4">
+        @if (currentPlayer.profilePictureUrl != null) {
+          <img
+            class="aspect-square w-32 rounded-full object-cover drop-shadow-lg"
+            src="{{ apiUrl }}/player/{{ currentPlayer.id }}/pp"
+            />
+        }
+        <div class="flex flex-col justify-center">
+          <span class="text-primary dark:text-primaryDark text-xl font-bold">{{
+            currentPlayer.nickname
+          }}</span>
+          <span class="font-semibold text-gray-500 dark:text-gray-400">{{
+            currentPlayer.fullName
+          }}</span>
+        </div>
+      </div>
+      <button
+        class="align-center bg-bgLight/40 dark:bg-bgDark/40 text-frenchRed flex h-16 w-16 cursor-pointer items-center justify-center rounded-full text-center backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+        (click)="logout()"
         >
-          <path
-            d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"
-          />
-          <path
-            d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"
-          />
-        </svg>
-      </div>
-
-      <div class="flex flex-col justify-center space-y-4">
-        <span
-          class="flex h-6 w-32 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
-        ></span>
-        <span
-          class="flex h-4 w-32 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
-        ></span>
-      </div>
+        <fa-icon [icon]="logoutIcon"></fa-icon>
+      </button>
     </div>
-
-    <div>
-      <span
-        class="flex h-16 w-16 animate-pulse items-center justify-center rounded-full bg-gray-500 dark:bg-gray-600"
-      ></span>
-    </div>
-  </div>
-
-  <div
-    *ngIf="loading == false && (player$ | async) as currentPlayer"
-    class="mt-8 flex items-center justify-between px-4"
-  >
-    <div class="flex space-x-4">
-      <img
-        class="aspect-square w-32 rounded-full object-cover drop-shadow-lg"
-        *ngIf="currentPlayer.profilePictureUrl != null"
-        src="{{ apiUrl }}/player/{{ currentPlayer.id }}/pp"
-      />
-
-      <div class="flex flex-col justify-center">
-        <span class="text-primary dark:text-primaryDark text-xl font-bold">{{
-          currentPlayer.nickname
-        }}</span>
-        <span class="font-semibold text-gray-500 dark:text-gray-400">{{
-          currentPlayer.fullName
-        }}</span>
-      </div>
-    </div>
-
-    <button
-      class="align-center bg-bgLight/40 dark:bg-bgDark/40 text-frenchRed flex h-16 w-16 cursor-pointer items-center justify-center rounded-full text-center backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-      (click)="logout()"
-    >
-      <fa-icon [icon]="logoutIcon"></fa-icon>
-    </button>
-  </div>
+  }
 </section>
 
 <div class="mt-8">
-  <div
-    class="animate-fade mt-4 flex justify-between px-4"
-    *ngIf="
-      loading == false && isAdmin == true && (player$ | async) as currentPlayer
-    "
-  >
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >Administration</span
-    >
-  </div>
-
-  <section
-    id="player-admin"
-    class="animate-fade mt-4 px-4"
-    *ngIf="
-      loading == false && isAdmin == true && (player$ | async) as currentPlayer
-    "
-  >
+  @if (
+    loading == false && isAdmin == true && (player$ | async); as currentPlayer
+    ) {
     <div
-      class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-    >
-      <div
-        class="text-customRed flex cursor-pointer flex-row justify-between"
-        [routerLink]="['/admin']"
+      class="animate-fade mt-4 flex justify-between px-4"
       >
-        <a
-          ><fa-icon [icon]="adminIcon" class="mr-2"></fa-icon> Accéder à
-          l'espace d'administration
-        </a>
-
-        <fa-icon [icon]="arrowRightIcon"></fa-icon>
-      </div>
-
-      <hr class="my-4 border-gray-400" />
-
-      <div
-        class="text-customYellow flex cursor-pointer flex-row justify-between"
-        [cdkCopyToClipboard]="token"
-      >
-        <a
-          ><fa-icon [icon]="keyIcon" class="mr-2"></fa-icon> Copier le token
-        </a>
-
-        <fa-icon [icon]="externalIcon"></fa-icon>
-      </div>
-    </div>
-  </section>
-
-  <div
-    class="animate-fade mt-4 flex justify-between px-4"
-    *ngIf="loading == false && (player$ | async) as currentPlayer"
-  >
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >FIFA</span
-    >
-  </div>
-
-  <section
-    id="player-fifa"
-    class="animate-fade mt-4 px-4"
-    *ngIf="loading == false && (player$ | async) as currentPlayer"
-  >
-    <div
-      class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-    >
-      <div
-        class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
-        [routerLink]="['/player', currentPlayer.id]"
-      >
-        <a
-          ><fa-icon [icon]="soccerIcon" class="mr-2"></fa-icon> Mes
-          statistiques</a
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+        >Administration</span
         >
-
-        <fa-icon [icon]="arrowRightIcon"></fa-icon>
       </div>
-    </div>
-  </section>
+    }
 
-  <div
-    class="animate-fade mt-4 flex justify-between px-4"
-    *ngIf="loading == false && (player$ | async) as currentPlayer"
-  >
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >League of Legends</span
-    >
-  </div>
+    @if (
+      loading == false && isAdmin == true && (player$ | async); as currentPlayer
+      ) {
+      <section
+        id="player-admin"
+        class="animate-fade mt-4 px-4"
+        >
+        <div
+          class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+          >
+          <div
+            class="text-customRed flex cursor-pointer flex-row justify-between"
+            [routerLink]="['/admin']"
+            >
+            <a
+              ><fa-icon [icon]="adminIcon" class="mr-2"></fa-icon> Accéder à
+              l'espace d'administration
+            </a>
+            <fa-icon [icon]="arrowRightIcon"></fa-icon>
+          </div>
+          <hr class="my-4 border-gray-400" />
+          <div
+            class="text-customYellow flex cursor-pointer flex-row justify-between"
+            [cdkCopyToClipboard]="token"
+            >
+            <a
+              ><fa-icon [icon]="keyIcon" class="mr-2"></fa-icon> Copier le token
+            </a>
+            <fa-icon [icon]="externalIcon"></fa-icon>
+          </div>
+        </div>
+      </section>
+    }
 
-  <section
-    id="player-lol"
-    class="animate-fade mt-4"
-    *ngIf="loading == false && (player$ | async) as currentPlayer"
-  >
-    <app-info-message
-      *ngIf="currentPlayer.riotGamesNickname == null"
+    @if (loading == false && (player$ | async); as currentPlayer) {
+      <div
+        class="animate-fade mt-4 flex justify-between px-4"
+        >
+        <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+          >FIFA</span
+          >
+        </div>
+      }
+
+      @if (loading == false && (player$ | async); as currentPlayer) {
+        <section
+          id="player-fifa"
+          class="animate-fade mt-4 px-4"
+          >
+          <div
+            class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+            >
+            <div
+              class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
+              [routerLink]="['/player', currentPlayer.id]"
+              >
+              <a
+                ><fa-icon [icon]="soccerIcon" class="mr-2"></fa-icon> Mes
+                statistiques</a
+                >
+                <fa-icon [icon]="arrowRightIcon"></fa-icon>
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (loading == false && (player$ | async); as currentPlayer) {
+          <div
+            class="animate-fade mt-4 flex justify-between px-4"
+            >
+            <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+              >League of Legends</span
+              >
+            </div>
+          }
+
+          @if (loading == false && (player$ | async); as currentPlayer) {
+            <section
+              id="player-lol"
+              class="animate-fade mt-4"
+              >
+              @if (currentPlayer.riotGamesNickname == null) {
+                <app-info-message
       [title]="
         'Vous pouvez renseigner votre compte Riot Games au niveau des préférences de votre profil !'
       "
-    ></app-info-message>
+                ></app-info-message>
+              }
+              <div
+                class="bg-bgLight/40 dark:bg-bgDark/40 mx-4 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+                >
+                <div
+                  class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
+                  [routerLink]="['/lol/summoner', currentPlayer.id]"
+                  >
+                  <div class="flex items-center space-x-2">
+                    <img src="assets/img/svg/lol.svg" class="w-8" />
+                    <span>Voir mon profil</span>
+                  </div>
+                  <fa-icon [icon]="arrowRightIcon"></fa-icon>
+                </div>
+              </div>
+            </section>
+          }
 
-    <div
-      class="bg-bgLight/40 dark:bg-bgDark/40 mx-4 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-    >
-      <div
-        class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
-        [routerLink]="['/lol/summoner', currentPlayer.id]"
-      >
-        <div class="flex items-center space-x-2">
-          <img src="assets/img/svg/lol.svg" class="w-8" />
-          <span>Voir mon profil</span>
-        </div>
+          @if (loading == false && (player$ | async); as currentPlayer) {
+            <div
+              class="animate-fade mt-4 flex justify-between px-4"
+              >
+              <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+                >Préférences</span
+                >
+              </div>
+            }
 
-        <fa-icon [icon]="arrowRightIcon"></fa-icon>
-      </div>
-    </div>
-  </section>
-
-  <div
-    class="animate-fade mt-4 flex justify-between px-4"
-    *ngIf="loading == false && (player$ | async) as currentPlayer"
-  >
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >Préférences</span
-    >
-  </div>
-
-  <section
-    id="player-preferences"
-    class="animate-fade mt-4 px-4"
-    *ngIf="loading == false && (player$ | async) as currentPlayer"
-  >
-    <div
-      class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-    >
-      <form [formGroup]="updatePlayerForm">
-        <div class="group relative z-0 mb-6 w-full">
-          <input
-            type="text"
-            id="fullname"
-            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-            required
-            formControlName="fullName"
-          />
-          <label
-            for="fullname"
-            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
-            Nom complet
-            <span class="text-customRed">*</span>
-          </label>
-        </div>
-
-        <div class="group relative z-0 mb-6 w-full">
-          <input
-            type="text"
-            id="nickname"
-            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-            required
-            formControlName="nickname"
-          />
-          <label
-            for="nickname"
-            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
-            Pseudo
-            <span class="text-customRed">*</span>
-          </label>
-        </div>
-
-        <div class="group relative z-0 mb-6 w-full">
-          <input
-            type="text"
-            id="riotGamesNickname"
-            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-            required
-            formControlName="riotGamesNickname"
-          />
-          <label
-            for="riotGamesNickname"
-            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
-            Nom de compte Riot Games
-          </label>
-        </div>
-
-        <div class="group relative z-0 mb-6 w-full">
-          <input
-            type="text"
-            id="riotGamesTagLine"
-            class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-            required
-            formControlName="riotGamesTagLine"
-          />
-          <label
-            for="riotGamesTagLine"
-            class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-          >
-            Tag (exemple: EUW)
-          </label>
-        </div>
-
-        <div class="group relative z-0 mb-6 w-full">
-          <label
-            class="text-primary dark:text-primaryDark mb-2 block text-xs font-medium"
-            for="file_input"
-            >Photo de profil</label
-          >
-          <input
-            class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-            aria-describedby="file_input_help"
-            id="file_input"
-            type="file"
-            (change)="uploadProfilePicture($event)"
-          />
-          <p
-            class="mt-2 text-sm text-gray-500 dark:text-gray-500"
-            id="file_input_help"
-          >
-            Formats PNG, JPG, WebP ou GIF autorisés.
-          </p>
-        </div>
-
-        <button
-          (click)="updateUser()"
-          class="border-customGreen bg-bgLight/50 text-customGreen hover:bg-customGreen focus:ring-customGreen dark:bg-bgDark/50 w-full cursor-pointer rounded-lg border px-5 py-2.5 text-center text-sm transition delay-50 ease-in-out hover:text-white focus:ring-4 focus:outline-none"
-        >
-          Mettre à jour
-        </button>
-      </form>
-    </div>
-  </section>
-</div>
+            @if (loading == false && (player$ | async); as currentPlayer) {
+              <section
+                id="player-preferences"
+                class="animate-fade mt-4 px-4"
+                >
+                <div
+                  class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+                  >
+                  <form [formGroup]="updatePlayerForm">
+                    <div class="group relative z-0 mb-6 w-full">
+                      <input
+                        type="text"
+                        id="fullname"
+                        class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+                        required
+                        formControlName="fullName"
+                        />
+                      <label
+                        for="fullname"
+                        class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+                        >
+                        Nom complet
+                        <span class="text-customRed">*</span>
+                      </label>
+                    </div>
+                    <div class="group relative z-0 mb-6 w-full">
+                      <input
+                        type="text"
+                        id="nickname"
+                        class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+                        required
+                        formControlName="nickname"
+                        />
+                      <label
+                        for="nickname"
+                        class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+                        >
+                        Pseudo
+                        <span class="text-customRed">*</span>
+                      </label>
+                    </div>
+                    <div class="group relative z-0 mb-6 w-full">
+                      <input
+                        type="text"
+                        id="riotGamesNickname"
+                        class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+                        required
+                        formControlName="riotGamesNickname"
+                        />
+                      <label
+                        for="riotGamesNickname"
+                        class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+                        >
+                        Nom de compte Riot Games
+                      </label>
+                    </div>
+                    <div class="group relative z-0 mb-6 w-full">
+                      <input
+                        type="text"
+                        id="riotGamesTagLine"
+                        class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
+                        required
+                        formControlName="riotGamesTagLine"
+                        />
+                      <label
+                        for="riotGamesTagLine"
+                        class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
+                        >
+                        Tag (exemple: EUW)
+                      </label>
+                    </div>
+                    <div class="group relative z-0 mb-6 w-full">
+                      <label
+                        class="text-primary dark:text-primaryDark mb-2 block text-xs font-medium"
+                        for="file_input"
+                        >Photo de profil</label
+                        >
+                        <input
+                          class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                          aria-describedby="file_input_help"
+                          id="file_input"
+                          type="file"
+                          (change)="uploadProfilePicture($event)"
+                          />
+                        <p
+                          class="mt-2 text-sm text-gray-500 dark:text-gray-500"
+                          id="file_input_help"
+                          >
+                          Formats PNG, JPG, WebP ou GIF autorisés.
+                        </p>
+                      </div>
+                      <button
+                        (click)="updateUser()"
+                        class="border-customGreen bg-bgLight/50 text-customGreen hover:bg-customGreen focus:ring-customGreen dark:bg-bgDark/50 w-full cursor-pointer rounded-lg border px-5 py-2.5 text-center text-sm transition delay-50 ease-in-out hover:text-white focus:ring-4 focus:outline-none"
+                        >
+                        Mettre à jour
+                      </button>
+                    </form>
+                  </div>
+                </section>
+              }
+            </div>

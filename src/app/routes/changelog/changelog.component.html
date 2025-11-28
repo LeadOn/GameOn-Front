@@ -4,16 +4,20 @@
     [title]="'Changelogs'"
   ></app-common-page-header>
 
-  <app-changelog-card
-    *ngIf="loading == true"
-    [loading]="true"
-  ></app-changelog-card>
-
-  <div *ngIf="loading == false">
+  @if (loading == true) {
     <app-changelog-card
-      *ngFor="let changelog of changelogs"
-      [changelog]="changelog"
-      [loading]="false"
+      [loading]="true"
     ></app-changelog-card>
-  </div>
+  }
+
+  @if (loading == false) {
+    <div>
+      @for (changelog of changelogs; track changelog) {
+        <app-changelog-card
+          [changelog]="changelog"
+          [loading]="false"
+        ></app-changelog-card>
+      }
+    </div>
+  }
 </section>

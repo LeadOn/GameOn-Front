@@ -1,8 +1,9 @@
 <section class="bg-bgDarker h-screen px-4 pt-4">
-  <app-loading-spinner
-    [@inOutAnimation]
-    *ngIf="loading == true"
-  ></app-loading-spinner>
+  @if (loading == true) {
+    <app-loading-spinner
+      [@inOutAnimation]
+    ></app-loading-spinner>
+  }
 
   <app-common-page-header
     [icon]="seasonIcon"
@@ -10,29 +11,32 @@
     [@inOutAnimation]
   ></app-common-page-header>
 
-  <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
-    <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
-      <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
-        <tr>
-          <th scope="col" class="px-6 py-3">#</th>
-          <th scope="col" class="px-6 py-3">Nom</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <tr
-          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
-          *ngFor="let season of seasons"
-        >
-          <th
-            class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
-          >
-            {{ season.id }}
-          </th>
-          <td class="px-6 py-4">
-            {{ season.name }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  @if (loading == false) {
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
+        <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">#</th>
+            <th scope="col" class="px-6 py-3">Nom</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          @for (season of seasons; track season) {
+            <tr
+              class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
+              >
+              <th
+                class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+                >
+                {{ season.id }}
+              </th>
+              <td class="px-6 py-4">
+                {{ season.name }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </section>

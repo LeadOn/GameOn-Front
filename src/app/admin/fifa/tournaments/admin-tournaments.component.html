@@ -1,92 +1,94 @@
 <section class="bg-bgDarker h-screen px-4 pt-4">
-  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+  @if (loading == true) {
+    <app-loading-spinner></app-loading-spinner>
+  }
 
   <app-common-page-header
     [icon]="tournamentIcon"
     [title]="'Tournois'"
   ></app-common-page-header>
 
-  <a
-    class="bg-customGreen animate-fade mt-4 flex cursor-pointer flex-row justify-center space-x-2 rounded-lg p-2 transition delay-50 ease-in-out hover:bg-green-800"
-    *ngIf="loading == false"
-    routerLink="/admin/fifa/tournaments/create"
-  >
-    <div
-      class="bg-secondary flex w-8 flex-col items-center justify-center rounded-full"
-    >
-      +
-    </div>
-    <span class="text-white">Créer un tournoi</span>
-  </a>
-
-  <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
-    <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
-      <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
-        <tr>
-          <th scope="col" class="px-6 py-3">Nom</th>
-          <th scope="col" class="px-6 py-3">Du</th>
-          <th scope="col" class="px-6 py-3">Au</th>
-          <th scope="col" class="px-6 py-3">État</th>
-          <th scope="col" class="px-6 py-3">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <tr
-          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
-          *ngFor="let tournament of tournaments"
+  @if (loading == false) {
+    <a
+      class="bg-customGreen animate-fade mt-4 flex cursor-pointer flex-row justify-center space-x-2 rounded-lg p-2 transition delay-50 ease-in-out hover:bg-green-800"
+      routerLink="/admin/fifa/tournaments/create"
+      >
+      <div
+        class="bg-secondary flex w-8 flex-col items-center justify-center rounded-full"
         >
-          <th
-            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
-          >
-            {{ tournament.name }}
-          </th>
+        +
+      </div>
+      <span class="text-white">Créer un tournoi</span>
+    </a>
+  }
 
-          <th
-            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
-          >
-            {{ tournament.plannedFrom.toString().split("T")[0] }}
-          </th>
-
-          <th
-            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
-          >
-            {{ tournament.plannedTo.toString().split("T")[0] }}
-          </th>
-
-          <th
-            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
-          >
-            {{ getState(tournament.state) }}
-          </th>
-          <td class="flex flex-row justify-center space-x-2 px-6 py-4">
-            <fa-icon
-              [icon]="editIcon"
-              class="text-primary dark:text-primaryDark cursor-pointer text-xl"
-              [routerLink]="['/admin/fifa/tournaments/edit', tournament.id]"
-            ></fa-icon>
-
-            <button
-              *ngIf="tournament.state < 2"
-              (click)="goToPhase1(tournament.id)"
-            >
-              P1
-            </button>
-
-            <fa-icon
-              *ngIf="tournament.state == 2"
-              (click)="savePhase1Score(tournament.id)"
-              [icon]="saveIcon"
-              class="text-primary dark:text-primaryDark cursor-pointer text-xl"
-            ></fa-icon>
-
-            <fa-icon
-              [icon]="trashIcon"
-              class="text-frenchRed cursor-pointer text-xl"
-              (click)="delete(tournament.id)"
-            ></fa-icon>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  @if (loading == false) {
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
+        <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nom</th>
+            <th scope="col" class="px-6 py-3">Du</th>
+            <th scope="col" class="px-6 py-3">Au</th>
+            <th scope="col" class="px-6 py-3">État</th>
+            <th scope="col" class="px-6 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          @for (tournament of tournaments; track tournament) {
+            <tr
+              class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
+              >
+              <th
+                class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
+                >
+                {{ tournament.name }}
+              </th>
+              <th
+                class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
+                >
+                {{ tournament.plannedFrom.toString().split("T")[0] }}
+              </th>
+              <th
+                class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
+                >
+                {{ tournament.plannedTo.toString().split("T")[0] }}
+              </th>
+              <th
+                class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
+                >
+                {{ getState(tournament.state) }}
+              </th>
+              <td class="flex flex-row justify-center space-x-2 px-6 py-4">
+                <fa-icon
+                  [icon]="editIcon"
+                  class="text-primary dark:text-primaryDark cursor-pointer text-xl"
+                  [routerLink]="['/admin/fifa/tournaments/edit', tournament.id]"
+                ></fa-icon>
+                @if (tournament.state < 2) {
+                  <button
+                    (click)="goToPhase1(tournament.id)"
+                    >
+                    P1
+                  </button>
+                }
+                @if (tournament.state == 2) {
+                  <fa-icon
+                    (click)="savePhase1Score(tournament.id)"
+                    [icon]="saveIcon"
+                    class="text-primary dark:text-primaryDark cursor-pointer text-xl"
+                  ></fa-icon>
+                }
+                <fa-icon
+                  [icon]="trashIcon"
+                  class="text-frenchRed cursor-pointer text-xl"
+                  (click)="delete(tournament.id)"
+                ></fa-icon>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </section>

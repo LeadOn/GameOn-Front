@@ -2,24 +2,28 @@
   <div class="flex items-center justify-center space-x-2">
     <span class="dark:text-primaryDark text-primary text-lg font-semibold"
       >Nouveautés</span
-    >
+      >
+    </div>
+
+    @if (loading == true && error == false) {
+      <app-loading-spinner-tiny
+      ></app-loading-spinner-tiny>
+    }
   </div>
 
-  <app-loading-spinner-tiny
-    *ngIf="loading == true && error == false"
-  ></app-loading-spinner-tiny>
-</div>
+  @if (error == true) {
+    <app-info-message
+      [type]="'error'"
+      [icon]="errorIcon"
+      [title]="'Une erreur est survenue lors de la récupération des nouveautés.'"
+    ></app-info-message>
+  }
 
-<app-info-message
-  [type]="'error'"
-  [icon]="errorIcon"
-  [title]="'Une erreur est survenue lors de la récupération des nouveautés.'"
-  *ngIf="error == true"
-></app-info-message>
-
-<div class="cursor-pointer px-4" *ngIf="error == false" routerLink="/changelog">
-  <app-changelog-card
-    [changelog]="changelog"
-    [loading]="loading"
-  ></app-changelog-card>
-</div>
+  @if (error == false) {
+    <div class="cursor-pointer px-4" routerLink="/changelog">
+      <app-changelog-card
+        [changelog]="changelog"
+        [loading]="loading"
+      ></app-changelog-card>
+    </div>
+  }

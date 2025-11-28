@@ -1,56 +1,55 @@
 <section class="px-4 pt-4">
-  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+  @if (loading == true) {
+    <app-loading-spinner></app-loading-spinner>
+  }
 </section>
 
-<div
-  class="animate-fade flex space-x-2 px-4"
-  *ngIf="loading == false && stats.currentUser.id != 0"
->
-  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-    >Général
-  </span>
-</div>
-
-<section
-  id="admin-home-general"
-  class="animate-fade mt-4 flex w-full flex-col space-y-2 space-x-2 px-4"
-  *ngIf="loading == false && stats.currentUser.id != 0"
->
+@if (loading == false && stats.currentUser.id != 0) {
   <div
-    routerLink="/admin/general/platforms"
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
-  >
-    <span class="font-semibold">Plateformes</span>
-
-    <div class="flex justify-between">
-      <span class="text-lg font-semibold">{{ stats.platforms }}</span>
-      <fa-icon [icon]="platformIcon" class="text-2xl"></fa-icon>
-    </div>
-  </div>
-
-  <div
-    routerLink="/admin/general/players"
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
-  >
-    <span class="font-semibold">Joueurs</span>
-
-    <div class="flex justify-between">
-      <span class="text-lg font-semibold">{{ stats.players }}</span>
-      <fa-icon [icon]="playerIcon" class="text-2xl"></fa-icon>
-    </div>
-  </div>
-
-  <div class="flex space-x-2">
-    <div
-      routerLink="/admin/general/seasons"
-      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+    class="animate-fade flex space-x-2 px-4"
     >
-      <span class="font-semibold">Saisons</span>
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+      >Général
+    </span>
+  </div>
+}
 
+@if (loading == false && stats.currentUser.id != 0) {
+  <section
+    id="admin-home-general"
+    class="animate-fade mt-4 flex w-full flex-col space-y-2 space-x-2 px-4"
+    >
+    <div
+      routerLink="/admin/general/platforms"
+      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+      >
+      <span class="font-semibold">Plateformes</span>
       <div class="flex justify-between">
-        <span class="text-lg font-semibold">{{ stats.seasons }}</span>
-        <fa-icon [icon]="seasonIcon" class="text-2xl"></fa-icon>
+        <span class="text-lg font-semibold">{{ stats.platforms }}</span>
+        <fa-icon [icon]="platformIcon" class="text-2xl"></fa-icon>
       </div>
     </div>
-  </div>
-</section>
+    <div
+      routerLink="/admin/general/players"
+      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+      >
+      <span class="font-semibold">Joueurs</span>
+      <div class="flex justify-between">
+        <span class="text-lg font-semibold">{{ stats.players }}</span>
+        <fa-icon [icon]="playerIcon" class="text-2xl"></fa-icon>
+      </div>
+    </div>
+    <div class="flex space-x-2">
+      <div
+        routerLink="/admin/general/seasons"
+        class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+        >
+        <span class="font-semibold">Saisons</span>
+        <div class="flex justify-between">
+          <span class="text-lg font-semibold">{{ stats.seasons }}</span>
+          <fa-icon [icon]="seasonIcon" class="text-2xl"></fa-icon>
+        </div>
+      </div>
+    </div>
+  </section>
+}
