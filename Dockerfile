@@ -1,7 +1,7 @@
 FROM node:alpine AS gameon-front-build
 WORKDIR /app
 COPY . .
-RUN npm ci && npm run build
+RUN npm ci --legacy-peer-deps && npm run build
 
 FROM nginx:alpine
 
