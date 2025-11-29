@@ -54,7 +54,7 @@ export const routes: Routes = [
   {
     path: 'halterodatapoc',
     loadChildren: () =>
-      import('./halterodata-poc/halterodata-poc.module').then(
+      import('./routes/halterodata-poc/halterodata-poc.module').then(
         (m) => m.HalterodataPocModule,
       ),
   },

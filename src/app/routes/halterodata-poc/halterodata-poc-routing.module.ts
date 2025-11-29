@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { canActivateAuthRole } from '../core/guards/auth.guard';
 import { HalterodataPocLayoutComponent } from './halterodata-poc-layout.component';
 import { HalterodataPocHomeComponent } from './home/halterodata-poc-home.component';
+import { canActivateAuthRole } from '../../core/guards/auth.guard';
+import { HalterodataPocAthleteComponent } from './athlete/halterodata-poc-athlete.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
       {
         path: '',
         component: HalterodataPocHomeComponent,
+      },
+      {
+        path: 'athlete/:id',
+        component: HalterodataPocAthleteComponent,
       },
     ],
   },
