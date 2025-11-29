@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   gameOnApiUrl: 'http://localhost:5184',
+  halterodataApiUrl: 'http://localhost:5184',
   keycloak: {
     url: 'https://auth.valentinvirot.fr',
     realm: 'gameon',

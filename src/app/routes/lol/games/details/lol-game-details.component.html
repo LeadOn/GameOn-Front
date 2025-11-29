@@ -2,11 +2,12 @@
   <app-common-page-header [title]="'Partie ' + gameId"></app-common-page-header>
 </section>
 
-<app-info-message
-  [type]="'error'"
-  [title]="'Une erreur est survenue lors de la récupération du match.'"
-  *ngIf="gameError == true"
-></app-info-message>
+@if (gameError == true) {
+  <app-info-message
+    [type]="'error'"
+    [title]="'Une erreur est survenue lors de la récupération du match.'"
+  ></app-info-message>
+}
 
 <app-info-message
   [title]="
@@ -14,136 +15,152 @@
   "
 ></app-info-message>
 
-<app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
+@if (isLoading == true) {
+  <app-loading-spinner></app-loading-spinner>
+}
 
-<section id="game-pill" class="px-4" *ngIf="isLoading == false">
-  <div class="flex justify-between pt-4">
-    <app-pill
-      *ngIf="game != null && game.endOfGameResult != null"
-      [title]="game.endOfGameResult"
-      [bgStyle]="'green'"
-    ></app-pill>
-
-    <app-pill
-      *ngIf="game != null && game.endOfGameResult == null"
-      [title]="'Partie non synchronisée'"
-    ></app-pill>
-
-    <app-pill
-      *ngIf="game != null"
-      [icon]="calendarIcon"
-      [iconColor]="'white'"
-      [title]="game.retrievedOn.toString()"
-    ></app-pill>
-
-    <app-pill
-      [icon]="refreshIcon"
-      [iconColor]="'white'"
-      (click)="updateGame()"
-      [title]="'Synchroniser'"
-    >
-    </app-pill>
-
-    <app-pill *ngIf="game != null" [title]="patchTitle"></app-pill>
-  </div>
-</section>
+@if (isLoading == false) {
+  <section id="game-pill" class="px-4">
+    <div class="flex justify-between pt-4">
+      @if (game != null && game.endOfGameResult != null) {
+        <app-pill
+          [title]="game.endOfGameResult"
+          [bgStyle]="'green'"
+        ></app-pill>
+      }
+      @if (game != null && game.endOfGameResult == null) {
+        <app-pill
+          [title]="'Partie non synchronisée'"
+        ></app-pill>
+      }
+      @if (game != null) {
+        <app-pill
+          [icon]="calendarIcon"
+          [iconColor]="'white'"
+          [title]="game.retrievedOn.toString()"
+        ></app-pill>
+      }
+      <app-pill
+        [icon]="refreshIcon"
+        [iconColor]="'white'"
+        (click)="updateGame()"
+        [title]="'Synchroniser'"
+        >
+      </app-pill>
+      @if (game != null) {
+        <app-pill [title]="patchTitle"></app-pill>
+      }
+    </div>
+  </section>
+}
 
 <div class="mt-4 px-4">
-  <app-lol-game-card
-    [game]="game"
-    [playerId]="playerId"
-    *ngIf="game != null && isLoading == false"
-  ></app-lol-game-card>
+  @if (game != null && isLoading == false) {
+    <app-lol-game-card
+      [game]="game"
+      [playerId]="playerId"
+    ></app-lol-game-card>
+  }
 </div>
 
-<section id="lol-team-1-header" class="mt-4 px-4" *ngIf="game != null">
-  <div class="flex animate-fade-up items-center justify-between">
-    <div class="flex items-center justify-center">
-      <img src="assets/img/svg/lol.svg" class="w-8" />
-
-      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-        >Equipe 1 -
-        <span
-          *ngIf="
+@if (game != null) {
+  <section id="lol-team-1-header" class="mt-4 px-4">
+    <div class="flex animate-fade-up items-center justify-between">
+      <div class="flex items-center justify-center">
+        <img src="assets/img/svg/lol.svg" class="w-8" />
+        <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+          >Equipe 1 -
+          @if (
             game != null && game.winningTeamId != 0 && game.winningTeamId == 100
-          "
-          class="text-customGreen"
-        >
-          Victoire</span
-        >
-        <span
-          *ngIf="
-            game != null && game.winningTeamId != 0 && game.winningTeamId != 100
-          "
-          class="text-frenchRed"
-        >
-          Défaite</span
-        >
-      </span>
-    </div>
+            ) {
+            <span
+              class="text-customGreen"
+              >
+              Victoire</span
+              >
+            }
+            @if (
+              game != null && game.winningTeamId != 0 && game.winningTeamId != 100
+              ) {
+              <span
+                class="text-frenchRed"
+                >
+                Défaite</span
+                >
+              }
+            </span>
+          </div>
+          @if (isLoading == true) {
+            <app-loading-spinner-tiny
+            ></app-loading-spinner-tiny>
+          }
+        </div>
+      </section>
+    }
 
-    <app-loading-spinner-tiny
-      *ngIf="isLoading == true"
-    ></app-loading-spinner-tiny>
-  </div>
-</section>
-
-<section
-  id="lol-team1"
-  class="mt-4 px-4"
-  *ngIf="game != null && team1.length > 0"
->
-  <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
-    <app-lol-game-details-player
-      *ngFor="let player of team1"
-      [player]="player"
-      [timeline]="timeline"
-    ></app-lol-game-details-player>
-  </div>
-</section>
-
-<section id="lol-team-2-header" class="mt-4 px-4" *ngIf="game != null">
-  <div class="flex animate-fade-up items-center justify-between">
-    <div class="flex items-center justify-center">
-      <img src="assets/img/svg/lol.svg" class="w-8" />
-
-      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-        >Equipe 2 -
-        <span
-          *ngIf="
-            game != null && game.winningTeamId != 0 && game.winningTeamId == 200
-          "
-          class="text-customGreen"
+    @if (game != null && team1.length > 0) {
+      <section
+        id="lol-team1"
+        class="mt-4 px-4"
         >
-          Victoire</span
-        >
-        <span
-          *ngIf="
-            game != null && game.winningTeamId != 0 && game.winningTeamId != 200
-          "
-          class="text-frenchRed"
-        >
-          Défaite</span
-        >
-      </span>
-    </div>
+        <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
+          @for (player of team1; track player) {
+            <app-lol-game-details-player
+              [player]="player"
+              [timeline]="timeline"
+            ></app-lol-game-details-player>
+          }
+        </div>
+      </section>
+    }
 
-    <app-loading-spinner-tiny
-      *ngIf="isLoading == true"
-    ></app-loading-spinner-tiny>
-  </div>
-</section>
+    @if (game != null) {
+      <section id="lol-team-2-header" class="mt-4 px-4">
+        <div class="flex animate-fade-up items-center justify-between">
+          <div class="flex items-center justify-center">
+            <img src="assets/img/svg/lol.svg" class="w-8" />
+            <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+              >Equipe 2 -
+              @if (
+                game != null && game.winningTeamId != 0 && game.winningTeamId == 200
+                ) {
+                <span
+                  class="text-customGreen"
+                  >
+                  Victoire</span
+                  >
+                }
+                @if (
+                  game != null && game.winningTeamId != 0 && game.winningTeamId != 200
+                  ) {
+                  <span
+                    class="text-frenchRed"
+                    >
+                    Défaite</span
+                    >
+                  }
+                </span>
+              </div>
+              @if (isLoading == true) {
+                <app-loading-spinner-tiny
+                ></app-loading-spinner-tiny>
+              }
+            </div>
+          </section>
+        }
 
-<section
-  id="lol-team2"
-  class="mt-4 px-4"
-  *ngIf="game != null && team2.length > 0"
->
-  <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
-    <app-lol-game-details-player
-      *ngFor="let player of team2"
-      [player]="player"
-      [timeline]="timeline"
-    ></app-lol-game-details-player>
-  </div>
-</section>
+        @if (game != null && team2.length > 0) {
+          <section
+            id="lol-team2"
+            class="mt-4 px-4"
+            >
+            <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
+              @for (player of team2; track player) {
+                <app-lol-game-details-player
+                  [player]="player"
+                  [timeline]="timeline"
+                ></app-lol-game-details-player>
+              }
+            </div>
+          </section>
+        }

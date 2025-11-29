@@ -1,28 +1,33 @@
 <section class="bg-bgDarker h-screen px-4 pt-4">
-  <app-loading-spinner
-    *ngIf="loading == true"
-    [@inOutAnimation]
-  ></app-loading-spinner>
+  @if (loading == true) {
+    <app-loading-spinner
+      [@inOutAnimation]
+    ></app-loading-spinner>
+  }
 
   <div class="m-4 mt-8 overflow-x-auto">
-    <div
-      class="mb-4 flex flex-row justify-center space-x-2 rounded-lg bg-primary p-4"
-      *ngIf="loading == false"
-    >
+    @if (loading == false) {
       <div
-        class="flex w-8 flex-col items-center justify-center rounded-full bg-customRed"
-      >
-        <img src="assets/img/svg/fifagame.svg" class="w-4" />
+        class="mb-4 flex flex-row justify-center space-x-2 rounded-lg bg-primary p-4"
+        >
+        <div
+          class="flex w-8 flex-col items-center justify-center rounded-full bg-customRed"
+          >
+          <img src="assets/img/svg/fifagame.svg" class="w-4" />
+        </div>
+        <span class="text-white">Matchs joués (FIFA)</span>
       </div>
-      <span class="text-white">Matchs joués (FIFA)</span>
-    </div>
+    }
 
-    <div class="mt-4 flex flex-col space-y-4" *ngIf="loading == false">
-      <app-fifa-game-history-card
-        *ngFor="let game of games"
-        [game]="game"
-        [admin]="isAdmin"
-      ></app-fifa-game-history-card>
-    </div>
+    @if (loading == false) {
+      <div class="mt-4 flex flex-col space-y-4">
+        @for (game of games; track game) {
+          <app-fifa-game-history-card
+            [game]="game"
+            [admin]="isAdmin"
+          ></app-fifa-game-history-card>
+        }
+      </div>
+    }
   </div>
 </section>

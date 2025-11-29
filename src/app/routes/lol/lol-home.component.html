@@ -6,41 +6,49 @@
 </section>
 
 <section id="lol-messages">
-  <app-info-message
-    *ngIf="isLoggedIn == false"
+  @if (isLoggedIn == false) {
+    <app-info-message
     [title]="
       'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'
     "
-    [clickable]="true"
-    (click)="login()"
-  ></app-info-message>
+      [clickable]="true"
+      (click)="login()"
+    ></app-info-message>
+  }
 
-  <div *ngIf="isLoggedIn == true && (player$ | async) as currentPlayer">
-    <app-info-message
-      *ngIf="currentPlayer.lolSummonerId == null"
+  @if (isLoggedIn == true && (player$ | async); as currentPlayer) {
+    <div>
+      @if (currentPlayer.lolSummonerId == null) {
+        <app-info-message
       [title]="
         'Vous n\'avez pas encore ajouté votre identifiant Riot Games. Ajoutez-le pour apparaître dans la liste !'
       "
-    ></app-info-message>
-  </div>
+        ></app-info-message>
+      }
+    </div>
+  }
 </section>
 
 <section id="home-players" class="mt-4 animate-fade-up px-4 py-4">
   <div class="flex items-center justify-between">
     <span class="text-lg font-semibold text-primary dark:text-primaryDark"
       >Joueurs League of Legends actifs</span
-    >
+      >
 
-    <app-loading-spinner-tiny
-      *ngIf="isLoading == true"
-    ></app-loading-spinner-tiny>
-  </div>
+      @if (isLoading == true) {
+        <app-loading-spinner-tiny
+        ></app-loading-spinner-tiny>
+      }
+    </div>
 
-  <div *ngIf="isLoading == false" class="mt-4">
-    <app-lol-player-card
-      ng-if="players.length > 0"
-      *ngFor="let player of leaguePlayers"
-      [player]="player"
-    ></app-lol-player-card>
-  </div>
-</section>
+    @if (isLoading == false) {
+      <div class="mt-4">
+        @for (player of leaguePlayers; track player) {
+          <app-lol-player-card
+            ng-if="players.length > 0"
+            [player]="player"
+          ></app-lol-player-card>
+        }
+      </div>
+    }
+  </section>

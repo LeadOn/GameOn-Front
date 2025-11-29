@@ -6,192 +6,190 @@
 </section>
 
 <section id="top-card" class="mt-4 px-4">
-  <app-loading-spinner *ngIf="isLoading == true"></app-loading-spinner>
+  @if (isLoading == true) {
+    <app-loading-spinner></app-loading-spinner>
+  }
 </section>
 
-<form
-  [formGroup]="createGameForm"
-  class="flex flex-col"
-  *ngIf="isLoading == false"
->
-  <div class="mt-4 flex px-4">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-      >Équipe #1</span
+@if (isLoading == false) {
+  <form
+    [formGroup]="createGameForm"
+    class="flex flex-col"
     >
-  </div>
-
-  <div
-    class="m-4 flex flex-col space-y-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
-  >
-    <div class="group relative z-0 mb-6 mt-2 flex w-full flex-row">
-      <div class="w-full">
-        <input
-          type="text"
-          id="fifaTeam1"
-          class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
-          formControlName="teamFifa1"
-          list="fifaTeam1List"
-        />
-
-        <datalist id="fifaTeam1List">
-          <option
-            *ngFor="let team of fifaTeams"
-            value="{{ team.name }}"
-          ></option>
-        </datalist>
-
-        <label
-          for="fifaTeam1"
-          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
+    <div class="mt-4 flex px-4">
+      <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+        >Équipe #1</span
         >
-          Équipe <span class="text-customRed">*</span>
-        </label>
       </div>
-    </div>
-
-    <div class="flex flex-col">
-      <div class="group relative z-0 mb-6 w-full">
-        <input
-          type="number"
-          id="teamScore1"
-          min="0"
-          class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
-          formControlName="teamScore1"
-          required
-        />
-        <label
-          for="teamScore1"
-          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
+      <div
+        class="m-4 flex flex-col space-y-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
         >
-          Score
-          <span class="text-customRed">*</span>
-        </label>
+        <div class="group relative z-0 mb-6 mt-2 flex w-full flex-row">
+          <div class="w-full">
+            <input
+              type="text"
+              id="fifaTeam1"
+              class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+              formControlName="teamFifa1"
+              list="fifaTeam1List"
+              />
+            <datalist id="fifaTeam1List">
+              @for (team of fifaTeams; track team) {
+                <option
+                  value="{{ team.name }}"
+                ></option>
+              }
+            </datalist>
+            <label
+              for="fifaTeam1"
+              class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
+              >
+              Équipe <span class="text-customRed">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="group relative z-0 mb-6 w-full">
+            <input
+              type="number"
+              id="teamScore1"
+              min="0"
+              class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+              formControlName="teamScore1"
+              required
+              />
+            <label
+              for="teamScore1"
+              class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
+              >
+              Score
+              <span class="text-customRed">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="group relative z-0 mb-6 w-full">
+          <label
+            for="team1"
+            class="mb-2 block text-sm font-medium text-primary dark:text-primaryDark"
+            >
+            Joueurs <span class="text-customRed">*</span>
+          </label>
+          <select
+            multiple
+            id="team1"
+            formControlName="team1"
+            class="block w-full rounded-lg border border-secondary p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDarkDarker dark:text-primaryDark"
+            >
+            @for (player of players; track player) {
+              <option value="{{ player.id }}">
+                {{ player.fullName }}
+              </option>
+            }
+          </select>
+        </div>
       </div>
-    </div>
+      <div class="mt-4 flex px-4">
+        <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+          >Équipe #2</span
+          >
+        </div>
+        <div
+          class="m-4 flex flex-col space-y-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+          >
+          <div class="group relative z-0 mb-6 mt-2 flex w-full flex-row">
+            <div class="w-full">
+              <input
+                type="text"
+                id="fifaTeam2"
+                class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+                formControlName="teamFifa2"
+                list="fifaTeam2List"
+                />
+              <datalist id="fifaTeam2List">
+                @for (team of fifaTeams; track team) {
+                  <option
+                    value="{{ team.name }}"
+                  ></option>
+                }
+              </datalist>
+              <label
+                for="fifaTeam2"
+                class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
+                >
+                Équipe <span class="text-customRed">*</span>
+              </label>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <div class="group relative z-0 mb-6 w-full">
+              <input
+                type="number"
+                id="teamScore2"
+                min="0"
+                class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
+                formControlName="teamScore1"
+                required
+                />
+              <label
+                for="teamScore2"
+                class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
+                >
+                Score
+                <span class="text-customRed">*</span>
+              </label>
+            </div>
+          </div>
+          <div class="group relative z-0 mb-6 w-full">
+            <label
+              for="team2"
+              class="mb-2 block text-sm font-medium text-primary dark:text-primaryDark"
+              >
+              Joueurs <span class="text-customRed">*</span>
+            </label>
+            <select
+              multiple
+              id="team2"
+              formControlName="team2"
+              class="block w-full rounded-lg border border-secondary p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDarkDarker dark:text-primaryDark"
+              >
+              @for (player of players; track player) {
+                <option value="{{ player.id }}">
+                  {{ player.fullName }}
+                </option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="mt-4 flex px-4">
+          <span class="text-lg font-semibold text-primary dark:text-primaryDark"
+            >Plateforme</span
+            >
+          </div>
+          <div
+            class="mx-4 mt-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
+            >
+            <select
+              id="platform"
+              formControlName="platform"
+              class="block w-full rounded-lg border border-secondary p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDarkDarker dark:text-primaryDark"
+              >
+              @for (platform of platforms; track platform) {
+                <option value="{{ platform.id }}">
+                  {{ platform.name }}
+                </option>
+              }
+            </select>
+          </div>
+        </form>
+      }
 
-    <div class="group relative z-0 mb-6 w-full">
-      <label
-        for="team1"
-        class="mb-2 block text-sm font-medium text-primary dark:text-primaryDark"
-      >
-        Joueurs <span class="text-customRed">*</span>
-      </label>
-
-      <select
-        multiple
-        id="team1"
-        formControlName="team1"
-        class="block w-full rounded-lg border border-secondary p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDarkDarker dark:text-primaryDark"
-      >
-        <option *ngFor="let player of players" value="{{ player.id }}">
-          {{ player.fullName }}
-        </option>
-      </select>
-    </div>
-  </div>
-
-  <div class="mt-4 flex px-4">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-      >Équipe #2</span
-    >
-  </div>
-
-  <div
-    class="m-4 flex flex-col space-y-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
-  >
-    <div class="group relative z-0 mb-6 mt-2 flex w-full flex-row">
-      <div class="w-full">
-        <input
-          type="text"
-          id="fifaTeam2"
-          class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
-          formControlName="teamFifa2"
-          list="fifaTeam2List"
-        />
-
-        <datalist id="fifaTeam2List">
-          <option
-            *ngFor="let team of fifaTeams"
-            value="{{ team.name }}"
-          ></option>
-        </datalist>
-
-        <label
-          for="fifaTeam2"
-          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
-        >
-          Équipe <span class="text-customRed">*</span>
-        </label>
-      </div>
-    </div>
-
-    <div class="flex flex-col">
-      <div class="group relative z-0 mb-6 w-full">
-        <input
-          type="number"
-          id="teamScore2"
-          min="0"
-          class="peer block w-full appearance-none border-0 border-b-2 border-gray-500 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
-          formControlName="teamScore1"
-          required
-        />
-        <label
-          for="teamScore2"
-          class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary dark:text-gray-300"
-        >
-          Score
-          <span class="text-customRed">*</span>
-        </label>
-      </div>
-    </div>
-
-    <div class="group relative z-0 mb-6 w-full">
-      <label
-        for="team2"
-        class="mb-2 block text-sm font-medium text-primary dark:text-primaryDark"
-      >
-        Joueurs <span class="text-customRed">*</span>
-      </label>
-
-      <select
-        multiple
-        id="team2"
-        formControlName="team2"
-        class="block w-full rounded-lg border border-secondary p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDarkDarker dark:text-primaryDark"
-      >
-        <option *ngFor="let player of players" value="{{ player.id }}">
-          {{ player.fullName }}
-        </option>
-      </select>
-    </div>
-  </div>
-
-  <div class="mt-4 flex px-4">
-    <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-      >Plateforme</span
-    >
-  </div>
-
-  <div
-    class="mx-4 mt-4 rounded-lg bg-bgLight p-4 drop-shadow-lg dark:bg-bgDark"
-  >
-    <select
-      id="platform"
-      formControlName="platform"
-      class="block w-full rounded-lg border border-secondary p-2.5 text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-bgDarkDarker dark:text-primaryDark"
-    >
-      <option *ngFor="let platform of platforms" value="{{ platform.id }}">
-        {{ platform.name }}
-      </option>
-    </select>
-  </div>
-</form>
-
-<div class="mt-4 flex px-4" *ngIf="isLoading == false">
-  <button
-    (click)="createGame()"
-    class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white drop-shadow-lg hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
-  >
-    Créer le match
-  </button>
-</div>
+      @if (isLoading == false) {
+        <div class="mt-4 flex px-4">
+          <button
+            (click)="createGame()"
+            class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white drop-shadow-lg hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
+            >
+            Créer le match
+          </button>
+        </div>
+      }

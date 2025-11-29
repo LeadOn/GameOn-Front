@@ -1,78 +1,77 @@
-<div
-  *ngIf="game != null"
-  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex w-full cursor-pointer justify-between rounded-lg p-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-  [routerLink]="['/fifa/details', game.id]"
->
-  <div class="align-center flex w-2/5 flex-col items-center justify-center">
-    <img
-      *ngIf="game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0"
-      src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.png"
-      class="h-8 w-8 rounded-full"
-    />
-
-    <span
-      *ngFor="let player of game.team1.players"
-      class="text-primary dark:text-primaryDark text-xs font-semibold"
-      >{{ player.nickname }}</span
+@if (game != null) {
+  <div
+    class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex w-full cursor-pointer justify-between rounded-lg p-2 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    [routerLink]="['/fifa/details', game.id]"
     >
-  </div>
+    <div class="align-center flex w-2/5 flex-col items-center justify-center">
+      @if (game.team1.fifaTeamId != null && game.team1.fifaTeamId != 0) {
+        <img
+          src="assets/img/fifa/teams/{{ game.team1.fifaTeamId }}.png"
+          class="h-8 w-8 rounded-full"
+          />
+      }
+      @for (player of game.team1.players; track player) {
+        <span
+          class="text-primary dark:text-primaryDark text-xs font-semibold"
+          >{{ player.nickname }}</span
+          >
+        }
+      </div>
+      <div class="flex flex-col items-center justify-center text-center">
+        @if (game != null && game.isPlayed == false) {
+          <span
+            class="text-gray-500 dark:text-gray-300"
+            >Planifié</span
+            >
+          }
+          @if (game != null && game.isPlayed == true) {
+            <span
+              class="text-primary dark:text-primaryDark font-semibold"
+              >{{ game.team1.score }} - {{ game.team2.score }}</span
+              >
+            }
+            @if (game != null && game.isPlayed == true) {
+              <span
+                class="text-xs text-gray-500 dark:text-gray-300"
+                >{{ game.platform }}</span
+                >
+              }
+            </div>
+            <div class="flex w-2/5 flex-col items-center justify-center">
+              @if (game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0) {
+                <img
+                  src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.png"
+                  class="h-8 w-8 rounded-full"
+                  />
+              }
+              @for (player of game.team2.players; track player) {
+                <span
+                  class="text-primary dark:text-primaryDark text-xs font-semibold"
+                  >{{ player.nickname }}</span
+                  >
+                }
+              </div>
+            </div>
+          }
 
-  <div class="flex flex-col items-center justify-center text-center">
-    <span
-      *ngIf="game != null && game.isPlayed == false"
-      class="text-gray-500 dark:text-gray-300"
-      >Planifié</span
-    >
-
-    <span
-      *ngIf="game != null && game.isPlayed == true"
-      class="text-primary dark:text-primaryDark font-semibold"
-      >{{ game.team1.score }} - {{ game.team2.score }}</span
-    >
-
-    <span
-      *ngIf="game != null && game.isPlayed == true"
-      class="text-xs text-gray-500 dark:text-gray-300"
-      >{{ game.platform }}</span
-    >
-  </div>
-
-  <div class="flex w-2/5 flex-col items-center justify-center">
-    <img
-      *ngIf="game.team2.fifaTeamId != null && game.team2.fifaTeamId != 0"
-      src="assets/img/fifa/teams/{{ game.team2.fifaTeamId }}.png"
-      class="h-8 w-8 rounded-full"
-    />
-
-    <span
-      *ngFor="let player of game.team2.players"
-      class="text-primary dark:text-primaryDark text-xs font-semibold"
-      >{{ player.nickname }}</span
-    >
-  </div>
-</div>
-
-<div
-  *ngIf="game == null"
-  class="bg-bgLight dark:bg-bgDark flex w-full animate-pulse cursor-pointer justify-between rounded-lg p-2 drop-shadow-lg"
->
-  <div class="align-center flex w-2/5 flex-col items-center justify-center">
-    <span class="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-
-    <span
-      class="mt-1 h-2 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
-    ></span>
-  </div>
-
-  <div class="flex flex-col items-center justify-center text-center">
-    <span class="h-4 w-16 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-  </div>
-
-  <div class="flex w-2/5 flex-col items-center justify-center">
-    <span class="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-
-    <span
-      class="mt-1 h-2 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
-    ></span>
-  </div>
-</div>
+          @if (game == null) {
+            <div
+              class="bg-bgLight dark:bg-bgDark flex w-full animate-pulse cursor-pointer justify-between rounded-lg p-2 drop-shadow-lg"
+              >
+              <div class="align-center flex w-2/5 flex-col items-center justify-center">
+                <span class="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                <span
+                  class="mt-1 h-2 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
+                ></span>
+              </div>
+              <div class="flex flex-col items-center justify-center text-center">
+                <span class="h-4 w-16 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+              </div>
+              <div class="flex w-2/5 flex-col items-center justify-center">
+                <span class="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                <span
+                  class="mt-1 h-2 w-12 rounded-full bg-gray-300 dark:bg-gray-700"
+                ></span>
+              </div>
+            </div>
+          }

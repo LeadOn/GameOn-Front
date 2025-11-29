@@ -1,54 +1,53 @@
 <section class="px-4 pt-4">
-  <app-loading-spinner *ngIf="loading == true"></app-loading-spinner>
+  @if (loading == true) {
+    <app-loading-spinner></app-loading-spinner>
+  }
 </section>
 
-<div
-  class="animate-fade flex space-x-2 px-4"
-  *ngIf="loading == false && stats.currentUser.id != 0"
->
-  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-    >FIFA
-  </span>
-</div>
-
-<section
-  id="admin-home-fifa"
-  class="animate-fade mt-4 flex w-full flex-col space-y-2 space-x-2 px-4"
-  *ngIf="loading == false && stats.currentUser.id != 0"
->
+@if (loading == false && stats.currentUser.id != 0) {
   <div
-    routerLink="/admin/fifa/games"
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-48 w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
-  >
-    <span class="font-semibold">Matchs joués</span>
-
-    <div class="flex justify-between">
-      <span class="text-lg font-semibold">{{ stats.fifaGames }}</span>
-      <fa-icon [icon]="soccerIcon" class="text-2xl"></fa-icon>
-    </div>
+    class="animate-fade flex space-x-2 px-4"
+    >
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+      >FIFA
+    </span>
   </div>
+}
 
-  <div
-    routerLink="/admin/fifa/highlights"
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-48 w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
-  >
-    <span class="font-semibold">Temps forts</span>
-
-    <div class="flex justify-between">
-      <span class="text-lg font-semibold">{{ stats.highlights }}</span>
-      <fa-icon [icon]="hightlightIcon" class="text-2xl"></fa-icon>
+@if (loading == false && stats.currentUser.id != 0) {
+  <section
+    id="admin-home-fifa"
+    class="animate-fade mt-4 flex w-full flex-col space-y-2 space-x-2 px-4"
+    >
+    <div
+      routerLink="/admin/fifa/games"
+      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-48 w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+      >
+      <span class="font-semibold">Matchs joués</span>
+      <div class="flex justify-between">
+        <span class="text-lg font-semibold">{{ stats.fifaGames }}</span>
+        <fa-icon [icon]="soccerIcon" class="text-2xl"></fa-icon>
+      </div>
     </div>
-  </div>
-
-  <div
-    routerLink="/admin/fifa/tournaments"
-    class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-48 w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
-  >
-    <span class="font-semibold">Tournois</span>
-
-    <div class="flex justify-between">
-      <span class="text-lg font-semibold">{{ stats.tournaments }}</span>
-      <fa-icon [icon]="tournamentIcon" class="text-2xl"></fa-icon>
+    <div
+      routerLink="/admin/fifa/highlights"
+      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-48 w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+      >
+      <span class="font-semibold">Temps forts</span>
+      <div class="flex justify-between">
+        <span class="text-lg font-semibold">{{ stats.highlights }}</span>
+        <fa-icon [icon]="hightlightIcon" class="text-2xl"></fa-icon>
+      </div>
     </div>
-  </div>
-</section>
+    <div
+      routerLink="/admin/fifa/tournaments"
+      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-48 w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+      >
+      <span class="font-semibold">Tournois</span>
+      <div class="flex justify-between">
+        <span class="text-lg font-semibold">{{ stats.tournaments }}</span>
+        <fa-icon [icon]="tournamentIcon" class="text-2xl"></fa-icon>
+      </div>
+    </div>
+  </section>
+}

@@ -9,14 +9,14 @@
   <button
     (click)="createMatch()"
     class="animate-fade border-customGreen bg-bgLight/40 dark:bg-bgDark/40 text-customGreen hover:bg-customGreen focus:ring-customGreen w-full rounded-lg border px-5 py-2.5 text-center text-sm transition delay-50 ease-in-out hover:text-white focus:ring-4 focus:outline-none"
-  >
+    >
     Ajouter un match
   </button>
 
   <button
     routerLink="/fifa/global-stats"
     class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 dark:blue-600 mt-4 w-full rounded-lg border border-blue-600 px-5 py-2.5 text-center text-sm text-blue-600 transition delay-50 ease-in-out hover:bg-blue-600 hover:text-white focus:ring-4 focus:ring-blue-600 focus:outline-none dark:hover:text-blue-600"
-  >
+    >
     Voir les statistiques globales
   </button>
 </div>
@@ -27,166 +27,184 @@
       <div
         class="animate-fade text-primary dark:text-primaryDark flex cursor-pointer justify-between"
         (click)="showFiltersClick()"
-      >
+        >
         <span class="text-lg font-semibold">Filtres</span>
         <span class="text-lg font-semibold">
-          <fa-icon [icon]="downChevronIcon" *ngIf="showFilters()"></fa-icon>
-          <fa-icon [icon]="rightChevronIcon" *ngIf="!showFilters()"></fa-icon>
+          @if (showFilters()) {
+            <fa-icon [icon]="downChevronIcon"></fa-icon>
+          }
+          @if (!showFilters()) {
+            <fa-icon [icon]="rightChevronIcon"></fa-icon>
+          }
         </span>
       </div>
 
-      <div
-        *ngIf="showFilters()"
-        class="animate-fade text-primary dark:text-primaryDark bg-bgLight/40 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-      >
-        <div>
-          <span class="text-sm">Nombre de matchs</span>
-          <select
-            [(ngModel)]="numberOfGames"
-            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
+      @if (showFilters()) {
+        <div
+          class="animate-fade text-primary dark:text-primaryDark bg-bgLight/40 dark:bg-bgDark/40 mt-4 mb-4 flex cursor-pointer flex-col rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
           >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="40">40</option>
-            <option value="50">50</option>
-          </select>
-        </div>
-
-        <div class="mt-2">
-          <div class="flex w-full flex-row justify-between">
-            <span class="text-sm">Platforme</span>
-            <fa-icon
-              [icon]="errorIcon"
-              class="mr-1 animate-pulse text-sm text-red-500"
-              title="Impossible de récupérer la liste des plateformes."
-              *ngIf="platformLoadingError == true"
-            ></fa-icon>
+          <div>
+            <span class="text-sm">Nombre de matchs</span>
+            <select
+              [(ngModel)]="numberOfGames"
+              class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
+              >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
           </div>
-
-          <select
-            [(ngModel)]="platformId"
-            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
-          >
-            <option value="0">--- Plateforme ---</option>
-            <option
-              *ngFor="let platform of platforms"
-              value="{{ platform.id }}"
+          <div class="mt-2">
+            <div class="flex w-full flex-row justify-between">
+              <span class="text-sm">Platforme</span>
+              @if (platformLoadingError == true) {
+                <fa-icon
+                  [icon]="errorIcon"
+                  class="mr-1 animate-pulse text-sm text-red-500"
+                  title="Impossible de récupérer la liste des plateformes."
+                ></fa-icon>
+              }
+            </div>
+            <select
+              [(ngModel)]="platformId"
+              class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
+              >
+              <option value="0">--- Plateforme ---</option>
+              @for (platform of platforms; track platform) {
+                <option
+                  value="{{ platform.id }}"
+                  >
+                  {{ platform.name }}
+                </option>
+              }
+            </select>
+          </div>
+          <div class="mt-2">
+            <span class="block text-sm">Entre le :</span>
+            <input
+              [(ngModel)]="startDate"
+              type="date"
+              class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
+              />
+          </div>
+          <div class="mt-2">
+            <span class="block text-sm">et le :</span>
+            <input
+              [(ngModel)]="endDate"
+              type="date"
+              class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
+              />
+          </div>
+          <button
+            (click)="searchGame()"
+            class="border-secondary mt-4 w-full rounded-lg border py-2"
             >
-              {{ platform.name }}
-            </option>
-          </select>
+            Filtrer
+          </button>
         </div>
-
-        <div class="mt-2">
-          <span class="block text-sm">Entre le :</span>
-          <input
-            [(ngModel)]="startDate"
-            type="date"
-            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
-          />
-        </div>
-
-        <div class="mt-2">
-          <span class="block text-sm">et le :</span>
-          <input
-            [(ngModel)]="endDate"
-            type="date"
-            class="focus:border-secondary focus:ring-secondary bg-bgLight/50 dark:bg-bgDark/50 w-full rounded-lg border-0"
-          />
-        </div>
-        <button
-          (click)="searchGame()"
-          class="border-secondary mt-4 w-full rounded-lg border py-2"
-        >
-          Filtrer
-        </button>
-      </div>
+      }
     </section>
 
     <section id="game-players" class="mt-4 px-4">
       <div
         class="animate-fade text-primary dark:text-primaryDark flex cursor-pointer justify-between"
         (click)="showPlayersClick()"
-      >
+        >
         <span class="text-lg font-semibold">Joueurs</span>
         <span class="text-lg font-semibold">
-          <app-loading-spinner-tiny
-            *ngIf="playersLoading == true"
-          ></app-loading-spinner-tiny>
-          <fa-icon
-            [icon]="downChevronIcon"
-            *ngIf="playersLoading == false && showPlayers()"
-          ></fa-icon>
-          <fa-icon
-            [icon]="rightChevronIcon"
-            *ngIf="playersLoading == false && !showPlayers()"
-          ></fa-icon>
+          @if (playersLoading == true) {
+            <app-loading-spinner-tiny
+            ></app-loading-spinner-tiny>
+          }
+          @if (playersLoading == false && showPlayers()) {
+            <fa-icon
+              [icon]="downChevronIcon"
+            ></fa-icon>
+          }
+          @if (playersLoading == false && !showPlayers()) {
+            <fa-icon
+              [icon]="rightChevronIcon"
+            ></fa-icon>
+          }
         </span>
       </div>
 
-      <div class="mt-4" *ngIf="playersLoadingError == true && showPlayers()">
-        <app-info-message
-          [type]="'error'"
+      @if (playersLoadingError == true && showPlayers()) {
+        <div class="mt-4">
+          <app-info-message
+            [type]="'error'"
           [title]="
             'Une erreur est survenue lors de la récupération des joueurs.'
           "
-          [applyMargin]="false"
-        ></app-info-message>
-      </div>
+            [applyMargin]="false"
+          ></app-info-message>
+        </div>
+      }
 
-      <div
-        *ngIf="
-          showPlayers() &&
-          playersLoading == true &&
-          playersLoadingError == false
-        "
-      >
-        <app-player-card [loading]="true"></app-player-card
-        ><app-player-card [loading]="true"></app-player-card
-        ><app-player-card [loading]="true"></app-player-card>
-      </div>
+      @if (
+        showPlayers() &&
+        playersLoading == true &&
+        playersLoadingError == false
+        ) {
+        <div
+          >
+          <app-player-card [loading]="true"></app-player-card
+            ><app-player-card [loading]="true"></app-player-card
+            ><app-player-card [loading]="true"></app-player-card>
+          </div>
+        }
 
-      <div
-        *ngIf="
+        @if (
           showPlayers() &&
           playersLoading == false &&
           playersLoadingError == false
-        "
-        class="mt-4"
-      >
-        <app-player-card
-          ng-if="players.length > 0"
-          *ngFor="let player of players"
-          [player]="player"
-        ></app-player-card>
-      </div>
+          ) {
+          <div
+            class="mt-4"
+            >
+            @for (player of players; track player) {
+              <app-player-card
+                ng-if="players.length > 0"
+                [player]="player"
+              ></app-player-card>
+            }
+          </div>
+        }
+      </section>
+    </div>
+
+    <section id="fifa-game-played" class="px-4 pt-4 md:w-2/3">
+      @if (gamesLoading == true) {
+        <div class="flex flex-col space-y-2">
+          <app-fifa-game-history-card></app-fifa-game-history-card>
+          <app-fifa-game-history-card></app-fifa-game-history-card>
+          <app-fifa-game-history-card></app-fifa-game-history-card>
+        </div>
+      }
+
+      @if (gamesLoadingError == true) {
+        <div class="mt-4">
+          <app-info-message
+            [type]="'error'"
+            [title]="'Une erreur est survenue lors de la récupération des matchs.'"
+            [applyMargin]="false"
+          ></app-info-message>
+        </div>
+      }
+
+      @if (gamesLoading == false) {
+        <div>
+          <div class="mt-4 flex w-full flex-col space-y-4">
+            @for (game of games; track game) {
+              <app-fifa-game-history-card
+                [game]="game"
+              ></app-fifa-game-history-card>
+            }
+          </div>
+        </div>
+      }
     </section>
   </div>
-
-  <section id="fifa-game-played" class="px-4 pt-4 md:w-2/3">
-    <div class="flex flex-col space-y-2" *ngIf="gamesLoading == true">
-      <app-fifa-game-history-card></app-fifa-game-history-card>
-      <app-fifa-game-history-card></app-fifa-game-history-card>
-      <app-fifa-game-history-card></app-fifa-game-history-card>
-    </div>
-
-    <div class="mt-4" *ngIf="gamesLoadingError == true">
-      <app-info-message
-        [type]="'error'"
-        [title]="'Une erreur est survenue lors de la récupération des matchs.'"
-        [applyMargin]="false"
-      ></app-info-message>
-    </div>
-
-    <div *ngIf="gamesLoading == false">
-      <div class="mt-4 flex w-full flex-col space-y-4">
-        <app-fifa-game-history-card
-          *ngFor="let game of games"
-          [game]="game"
-        ></app-fifa-game-history-card>
-      </div>
-    </div>
-  </section>
-</div>

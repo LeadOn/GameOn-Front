@@ -4,18 +4,21 @@
     [title]="'Statistiques globales'"
   ></app-common-page-header>
 
-  <div class="md:hidden" *ngIf="loading == true">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
+  @if (loading == true) {
+    <div class="md:hidden">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  }
 </section>
 
-<app-info-message
-  [type]="'error'"
+@if (errorLoading == true) {
+  <app-info-message
+    [type]="'error'"
   [title]="
     'Une erreur est survenue lors de la récupération des statistiques globales.'
   "
-  *ngIf="errorLoading == true"
-></app-info-message>
+  ></app-info-message>
+}
 
 <section id="stat-number-games" class="mt-4 px-4">
   <div class="animate-fade-up flex items-center justify-between">
@@ -27,93 +30,99 @@
 
       <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >Nombre de matchs joués</span
-      >
-    </div>
+        >
+      </div>
 
-    <app-loading-spinner-tiny
-      *ngIf="loading == true"
-    ></app-loading-spinner-tiny>
+      @if (loading == true) {
+        <app-loading-spinner-tiny
+        ></app-loading-spinner-tiny>
+      }
 
-    <span
-      class="text-primary dark:text-primaryDark"
-      *ngIf="loading == false && globalStats != null"
-      >{{ globalStats.numberOfGames }}</span
-    >
-  </div>
-</section>
+      @if (loading == false && globalStats != null) {
+        <span
+          class="text-primary dark:text-primaryDark"
+          >{{ globalStats.numberOfGames }}</span
+          >
+        }
+      </div>
+    </section>
 
-<section id="best-player-header" class="mt-4 px-4">
-  <div class="animate-fade-up flex items-center justify-between">
-    <div class="flex items-center justify-center space-x-2">
-      <fa-icon [icon]="trophyIcon" class="text-customGreen"></fa-icon>
+    <section id="best-player-header" class="mt-4 px-4">
+      <div class="animate-fade-up flex items-center justify-between">
+        <div class="flex items-center justify-center space-x-2">
+          <fa-icon [icon]="trophyIcon" class="text-customGreen"></fa-icon>
 
-      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-        >Meilleur joueur</span
-      >
-    </div>
+          <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+            >Meilleur joueur</span
+            >
+          </div>
 
-    <app-loading-spinner-tiny
-      *ngIf="loading == true"
-    ></app-loading-spinner-tiny>
-  </div>
-</section>
+          @if (loading == true) {
+            <app-loading-spinner-tiny
+            ></app-loading-spinner-tiny>
+          }
+        </div>
+      </section>
 
-<section
-  id="best-player"
-  *ngIf="
-    loading == false && globalStats != null && globalStats.bestPlayer != null
-  "
-  class="mt-4 px-4"
->
-  <app-player-card [player]="globalStats.bestPlayer"></app-player-card>
+      @if (
+        loading == false && globalStats != null && globalStats.bestPlayer != null
+        ) {
+        <section
+          id="best-player"
+          class="mt-4 px-4"
+          >
+          <app-player-card [player]="globalStats.bestPlayer"></app-player-card>
+          @if (
+            globalStats.bestPlayerStats != null &&
+            globalStats.bestPlayerStats.statsPerPlatform.length > 0
+            ) {
+            <div
+              class="animate-fade-left bg-bgLight/40 dark:bg-bgDark/40 mt-4 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
+              >
+              <app-fifa-stat
+                [stat]="globalStats.bestPlayerStats.statsPerPlatform[0]"
+              ></app-fifa-stat>
+            </div>
+          }
+        </section>
+      }
 
-  <div
-    class="animate-fade-left bg-bgLight/40 dark:bg-bgDark/40 mt-4 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
-    *ngIf="
-      globalStats.bestPlayerStats != null &&
-      globalStats.bestPlayerStats.statsPerPlatform.length > 0
-    "
-  >
-    <app-fifa-stat
-      [stat]="globalStats.bestPlayerStats.statsPerPlatform[0]"
-    ></app-fifa-stat>
-  </div>
-</section>
+      <section id="worst-player-header" class="mt-4 px-4">
+        <div class="animate-fade-up flex items-center justify-between">
+          <div class="flex items-center justify-center space-x-2">
+            <fa-icon [icon]="trophyIcon" class="text-frenchRed"></fa-icon>
 
-<section id="worst-player-header" class="mt-4 px-4">
-  <div class="animate-fade-up flex items-center justify-between">
-    <div class="flex items-center justify-center space-x-2">
-      <fa-icon [icon]="trophyIcon" class="text-frenchRed"></fa-icon>
+            <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+              >Pire joueur</span
+              >
+            </div>
 
-      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-        >Pire joueur</span
-      >
-    </div>
+            @if (loading == true) {
+              <app-loading-spinner-tiny
+              ></app-loading-spinner-tiny>
+            }
+          </div>
+        </section>
 
-    <app-loading-spinner-tiny
-      *ngIf="loading == true"
-    ></app-loading-spinner-tiny>
-  </div>
-</section>
-
-<section
-  id="worst-player"
-  *ngIf="
-    loading == false && globalStats != null && globalStats.worstPlayer != null
-  "
-  class="mt-4 px-4"
->
-  <app-player-card [player]="globalStats.worstPlayer"></app-player-card>
-
-  <div
-    class="animate-fade-left bg-bgLight/40 dark:bg-bgDark/40 mt-4 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
-    *ngIf="
-      globalStats.worstPlayerStats != null &&
-      globalStats.worstPlayerStats.statsPerPlatform.length > 0
-    "
-  >
-    <app-fifa-stat
-      [stat]="globalStats.worstPlayerStats.statsPerPlatform[0]"
-    ></app-fifa-stat>
-  </div>
-</section>
+        @if (
+          loading == false && globalStats != null && globalStats.worstPlayer != null
+          ) {
+          <section
+            id="worst-player"
+            class="mt-4 px-4"
+            >
+            <app-player-card [player]="globalStats.worstPlayer"></app-player-card>
+            @if (
+              globalStats.worstPlayerStats != null &&
+              globalStats.worstPlayerStats.statsPerPlatform.length > 0
+              ) {
+              <div
+                class="animate-fade-left bg-bgLight/40 dark:bg-bgDark/40 mt-4 flex w-full flex-col space-y-2 rounded-lg px-8 py-2 drop-shadow-lg"
+                >
+                <app-fifa-stat
+                  [stat]="globalStats.worstPlayerStats.statsPerPlatform[0]"
+                ></app-fifa-stat>
+              </div>
+            }
+          </section>
+        }

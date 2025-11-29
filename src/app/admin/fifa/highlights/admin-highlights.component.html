@@ -1,52 +1,56 @@
 <div class="m-4 mt-8 overflow-x-auto">
-  <div
-    class="flex flex-row items-center rounded-lg bg-primary p-4"
-    *ngIf="loading == true"
-  >
-    <app-loading-spinner></app-loading-spinner>
-    <span class="text-white">Chargement...</span>
-  </div>
-
-  <div
-    class="flex flex-row justify-center space-x-2 rounded-lg bg-primary p-4"
-    *ngIf="loading == false"
-  >
+  @if (loading == true) {
     <div
-      class="flex w-8 flex-col items-center justify-center rounded-full bg-customRed"
-    >
-      <img src="assets/img/svg/highlight.svg" class="w-4" />
-    </div>
-    <span class="text-white">Temps forts</span>
-  </div>
-
-  <table
-    class="mt-4 w-full text-left text-sm text-gray-400"
-    *ngIf="loading == false"
-  >
-    <thead class="bg-primary text-xs uppercase text-white">
-      <tr>
-        <th scope="col" class="px-6 py-3">Titre</th>
-        <th scope="col" class="px-6 py-3">Lien externe</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        class="bg-secondaryDarker border-b border-secondary text-white"
-        *ngFor="let highlight of highlights"
+      class="flex flex-row items-center rounded-lg bg-primary p-4"
       >
-        <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium">
-          {{ highlight.name }}
-        </th>
-        <td class="px-6 py-4">
-          <a
-            href="{{ highlight.externalUrl }}"
-            target="_blank"
-            class="underline"
-          >
-            Lien
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <app-loading-spinner></app-loading-spinner>
+      <span class="text-white">Chargement...</span>
+    </div>
+  }
+
+  @if (loading == false) {
+    <div
+      class="flex flex-row justify-center space-x-2 rounded-lg bg-primary p-4"
+      >
+      <div
+        class="flex w-8 flex-col items-center justify-center rounded-full bg-customRed"
+        >
+        <img src="assets/img/svg/highlight.svg" class="w-4" />
+      </div>
+      <span class="text-white">Temps forts</span>
+    </div>
+  }
+
+  @if (loading == false) {
+    <table
+      class="mt-4 w-full text-left text-sm text-gray-400"
+      >
+      <thead class="bg-primary text-xs uppercase text-white">
+        <tr>
+          <th scope="col" class="px-6 py-3">Titre</th>
+          <th scope="col" class="px-6 py-3">Lien externe</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (highlight of highlights; track highlight) {
+          <tr
+            class="bg-secondaryDarker border-b border-secondary text-white"
+            >
+            <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium">
+              {{ highlight.name }}
+            </th>
+            <td class="px-6 py-4">
+              <a
+                href="{{ highlight.externalUrl }}"
+                target="_blank"
+                class="underline"
+                >
+                Lien
+              </a>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
 </div>

@@ -1,8 +1,9 @@
 <section class="bg-bgDarker h-screen px-4 pt-4">
-  <app-loading-spinner
-    [@inOutAnimation]
-    *ngIf="loading == true"
-  ></app-loading-spinner>
+  @if (loading == true) {
+    <app-loading-spinner
+      [@inOutAnimation]
+    ></app-loading-spinner>
+  }
 
   <app-common-page-header
     [icon]="playerIcon"
@@ -10,35 +11,38 @@
     [@inOutAnimation]
   ></app-common-page-header>
 
-  <div class="mt-4 overflow-x-auto" *ngIf="loading == false">
-    <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
-      <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
-        <tr>
-          <th scope="col" class="px-6 py-3">Nom complet</th>
-          <th scope="col" class="px-6 py-3">Surnom</th>
-          <th scope="col" class="px-6 py-3">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        <tr
-          class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
-          *ngFor="let player of players"
-        >
-          <th
-            class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
-          >
-            {{ player.fullName }}
-          </th>
-          <td class="px-6 py-4">{{ player.nickname }}</td>
-          <td class="px-6 py-4">
-            <fa-icon
-              [icon]="editIcon"
-              class="text-primary dark:text-primaryDark cursor-pointer text-xl"
-              [routerLink]="['/admin/general/players/edit', player.id]"
-            ></fa-icon>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  @if (loading == false) {
+    <div class="mt-4 overflow-x-auto">
+      <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
+        <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" class="px-6 py-3">Nom complet</th>
+            <th scope="col" class="px-6 py-3">Surnom</th>
+            <th scope="col" class="px-6 py-3">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          @for (player of players; track player) {
+            <tr
+              class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
+              >
+              <th
+                class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
+                >
+                {{ player.fullName }}
+              </th>
+              <td class="px-6 py-4">{{ player.nickname }}</td>
+              <td class="px-6 py-4">
+                <fa-icon
+                  [icon]="editIcon"
+                  class="text-primary dark:text-primaryDark cursor-pointer text-xl"
+                  [routerLink]="['/admin/general/players/edit', player.id]"
+                ></fa-icon>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
 </section>
