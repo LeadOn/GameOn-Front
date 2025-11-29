@@ -1,1 +1,107 @@
-<h1>Athelete_</h1>
+<div class="flex w-full flex-col">
+  @if (athlete != null && athleteId == 3798) {
+    <img
+      class="object-cover backdrop-blur-lg"
+      src="assets/img/halterodata-poc/gregoire-aubertin.jpg"
+      alt="Grégoire Aubertin"
+    />
+  } @else if (athlete != null && athleteId == 1321) {
+    <img
+      class="object-cover backdrop-blur-lg"
+      src="assets/img/halterodata-poc/bastien-bonnamant.png"
+      alt="Bastien Bonnamant"
+    />
+  } @else {
+    <div class="h-64 w-full animate-pulse bg-gray-300"></div>
+  }
+
+  <div
+    class="z-50 mx-8 -mt-32 flex h-24 flex-col items-center justify-center rounded-xl bg-[#0c1c3c]/70 text-white backdrop-blur-lg"
+  >
+    @if (athlete != null) {
+      <span class="text-2xl font-bold uppercase">{{ athlete.fullName }}</span>
+      <span class="mt-2"
+        >{{ athlete.countryCode }} - {{ athlete.currentClub }}</span
+      >
+      <span class="text-xs"
+        >{{ athlete.birthDate }} - {{ athlete.lastBodyWeight }}kg -
+        {{ athlete.lastIwf }} IWF</span
+      >
+    } @else {
+      <span class="text-2xl font-bold uppercase">Chargement...</span>
+      <span class="mt-2">Chargement...</span>
+      <span class="mt-2">Chargement...</span>
+    }
+  </div>
+</div>
+
+<div
+  class="mx-8 mt-16 flex flex-col items-center justify-center rounded-xl bg-[#0c1c3c]/70 py-4 text-white backdrop-blur-lg"
+>
+  <span class="text-2xl font-bold text-[#a8b2d2] uppercase">Snatch</span>
+
+  <div class="mt-4 flex w-full flex-row justify-evenly">
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Last</span>
+
+      @if (athlete != null && athlete.lastSnatch != null) {
+        <span class="mt-2 text-2xl font-bold">{{ athlete.lastSnatch }}kg</span>
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
+    </div>
+    <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Best</span
+      ><span class="mt-2 text-2xl font-bold">N/A</span>
+    </div>
+  </div>
+</div>
+
+<div
+  class="mx-8 mt-16 flex flex-col items-center justify-center rounded-xl bg-[#0c1c3c]/70 py-4 text-white backdrop-blur-lg"
+>
+  <span class="text-2xl font-bold text-[#a8b2d2] uppercase"
+    >Clean and Jerk</span
+  >
+
+  <div class="mt-4 flex w-full flex-row justify-evenly">
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Last</span>
+
+      @if (athlete != null && athlete.lastCj != null) {
+        <span class="mt-2 text-2xl font-bold">{{ athlete.lastCj }}kg</span>
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
+    </div>
+    <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Best</span
+      ><span class="mt-2 text-2xl font-bold">N/A</span>
+    </div>
+  </div>
+</div>
+
+<div
+  class="mx-8 mt-16 flex flex-col items-center justify-center rounded-xl bg-[#0c1c3c]/70 py-4 text-white backdrop-blur-lg"
+>
+  <span class="text-2xl font-bold text-[#a8b2d2] uppercase">Total</span>
+
+  <div class="mt-4 flex w-full flex-row justify-evenly">
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Last</span>
+
+      @if (athlete != null && athlete.lastTotal != null) {
+        <span class="mt-2 text-2xl font-bold">{{ athlete.lastTotal }}kg</span>
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
+    </div>
+    <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Best</span
+      ><span class="mt-2 text-2xl font-bold">N/A</span>
+    </div>
+  </div>
+</div>
