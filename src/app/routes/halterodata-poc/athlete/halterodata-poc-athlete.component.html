@@ -24,8 +24,8 @@
         >{{ athlete.countryCode }} - {{ athlete.currentClub }}</span
       >
       <span class="text-xs"
-        >{{ athlete.birthDate }} - {{ athlete.lastBodyWeight }}kg -
-        {{ athlete.lastIwf }} IWF</span
+        >{{ athlete.birthDate }} - {{ athlete.lastStats.bodyWeight }}kg -
+        {{ athlete.lastStats.iwf }} IWF</span
       >
     } @else {
       <span class="text-2xl font-bold uppercase">Chargement...</span>
@@ -44,16 +44,25 @@
     <div class="mt-2 flex flex-col text-center">
       <span class="text-2xl text-[#a8b2d2]">Last</span>
 
-      @if (athlete != null && athlete.lastSnatch != null) {
-        <span class="mt-2 text-2xl font-bold">{{ athlete.lastSnatch }}kg</span>
+      @if (athlete != null && athlete.lastStats != null) {
+        <span class="mt-2 text-2xl font-bold"
+          >{{ athlete.lastStats.snatch }}kg</span
+        >
       } @else {
         <span class="mt-2 text-2xl font-bold">...</span>
       }
     </div>
     <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
     <div class="mt-2 flex flex-col text-center">
-      <span class="text-2xl text-[#a8b2d2]">Best</span
-      ><span class="mt-2 text-2xl font-bold">N/A</span>
+      <span class="text-2xl text-[#a8b2d2]">Best</span>
+
+      @if (athlete != null && athlete.bestStats != null) {
+        <span class="mt-2 text-2xl font-bold"
+          >{{ athlete.bestStats.snatch }}kg</span
+        >
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
     </div>
   </div>
 </div>
@@ -69,16 +78,25 @@
     <div class="mt-2 flex flex-col text-center">
       <span class="text-2xl text-[#a8b2d2]">Last</span>
 
-      @if (athlete != null && athlete.lastCj != null) {
-        <span class="mt-2 text-2xl font-bold">{{ athlete.lastCj }}kg</span>
+      @if (athlete != null && athlete.lastStats.cj != null) {
+        <span class="mt-2 text-2xl font-bold"
+          >{{ athlete.lastStats.cj }}kg</span
+        >
       } @else {
         <span class="mt-2 text-2xl font-bold">...</span>
       }
     </div>
     <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
     <div class="mt-2 flex flex-col text-center">
-      <span class="text-2xl text-[#a8b2d2]">Best</span
-      ><span class="mt-2 text-2xl font-bold">N/A</span>
+      <span class="text-2xl text-[#a8b2d2]">Best</span>
+
+      @if (athlete != null && athlete.bestStats.cj != null) {
+        <span class="mt-2 text-2xl font-bold"
+          >{{ athlete.bestStats.cj }}kg</span
+        >
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
     </div>
   </div>
 </div>
@@ -92,16 +110,53 @@
     <div class="mt-2 flex flex-col text-center">
       <span class="text-2xl text-[#a8b2d2]">Last</span>
 
-      @if (athlete != null && athlete.lastTotal != null) {
-        <span class="mt-2 text-2xl font-bold">{{ athlete.lastTotal }}kg</span>
+      @if (athlete != null && athlete.lastStats.total != null) {
+        <span class="mt-2 text-2xl font-bold"
+          >{{ athlete.lastStats.total }}kg</span
+        >
       } @else {
         <span class="mt-2 text-2xl font-bold">...</span>
       }
     </div>
     <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
     <div class="mt-2 flex flex-col text-center">
-      <span class="text-2xl text-[#a8b2d2]">Best</span
-      ><span class="mt-2 text-2xl font-bold">N/A</span>
+      <span class="text-2xl text-[#a8b2d2]">Best</span>
+
+      @if (athlete != null && athlete.bestStats.total != null) {
+        <span class="mt-2 text-2xl font-bold"
+          >{{ athlete.bestStats.total }}kg</span
+        >
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
+    </div>
+  </div>
+</div>
+
+<div
+  class="mx-8 mt-16 flex flex-col items-center justify-center rounded-xl bg-[#0c1c3c]/70 py-4 text-white backdrop-blur-lg"
+>
+  <span class="text-2xl font-bold text-[#a8b2d2] uppercase">IWF</span>
+
+  <div class="mt-4 flex w-full flex-row justify-evenly">
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Last</span>
+
+      @if (athlete != null && athlete.lastStats.iwf != null) {
+        <span class="mt-2 text-2xl font-bold">{{ athlete.lastStats.iwf }}</span>
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
+    </div>
+    <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
+    <div class="mt-2 flex flex-col text-center">
+      <span class="text-2xl text-[#a8b2d2]">Best</span>
+
+      @if (athlete != null && athlete.bestStats.iwf != null) {
+        <span class="mt-2 text-2xl font-bold">{{ athlete.bestStats.iwf }}</span>
+      } @else {
+        <span class="mt-2 text-2xl font-bold">...</span>
+      }
     </div>
   </div>
 </div>
