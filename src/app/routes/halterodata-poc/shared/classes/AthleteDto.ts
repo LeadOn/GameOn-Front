@@ -1,3 +1,5 @@
+import { StatRecapDto } from './StatRecapDto';
+
 export class AthleteDto {
   id: number = 0;
   licenceId: number = 0;
@@ -6,9 +8,6 @@ export class AthleteDto {
   type: number = 0;
   countryCode: string = 'FR';
   currentClub?: string;
-  lastSnatch?: number;
-  lastCj?: number;
-  lastTotal?: number;
-  lastIwf?: number;
-  lastBodyWeight?: number;
+  lastStats: StatRecapDto = new StatRecapDto();
+  bestStats: StatRecapDto = new StatRecapDto();
 }
