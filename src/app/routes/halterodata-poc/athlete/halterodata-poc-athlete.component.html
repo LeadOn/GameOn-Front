@@ -1,11 +1,11 @@
 <div class="flex w-full flex-col">
-  @if (athlete != null && athleteId == 3798) {
+  @if (athlete != null && athleteId == 1179) {
     <img
       class="object-cover backdrop-blur-lg"
       src="assets/img/halterodata-poc/gregoire-aubertin.jpg"
       alt="Grégoire Aubertin"
     />
-  } @else if (athlete != null && athleteId == 1321) {
+  } @else if (athlete != null && athleteId == 1178) {
     <img
       class="object-cover backdrop-blur-lg"
       src="assets/img/halterodata-poc/bastien-bonnamant.png"
@@ -54,7 +54,7 @@
     </div>
     <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
     <div class="mt-2 flex flex-col text-center">
-      <span class="text-2xl text-[#a8b2d2]">Best</span>
+      <span class="text-2xl text-[#a8b2d2]">ATH</span>
 
       @if (athlete != null && athlete.bestStats != null) {
         <span class="mt-2 text-2xl font-bold"
@@ -88,7 +88,7 @@
     </div>
     <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
     <div class="mt-2 flex flex-col text-center">
-      <span class="text-2xl text-[#a8b2d2]">Best</span>
+      <span class="text-2xl text-[#a8b2d2]">ATH</span>
 
       @if (athlete != null && athlete.bestStats.cj != null) {
         <span class="mt-2 text-2xl font-bold"
@@ -120,7 +120,7 @@
     </div>
     <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
     <div class="mt-2 flex flex-col text-center">
-      <span class="text-2xl text-[#a8b2d2]">Best</span>
+      <span class="text-2xl text-[#a8b2d2]">ATH</span>
 
       @if (athlete != null && athlete.bestStats.total != null) {
         <span class="mt-2 text-2xl font-bold"
@@ -150,7 +150,7 @@
     </div>
     <div class="h-24 border-r-2 border-[#a8b2d2]"></div>
     <div class="mt-2 flex flex-col text-center">
-      <span class="text-2xl text-[#a8b2d2]">Best</span>
+      <span class="text-2xl text-[#a8b2d2]">ATH</span>
 
       @if (athlete != null && athlete.bestStats.iwf != null) {
         <span class="mt-2 text-2xl font-bold">{{ athlete.bestStats.iwf }}</span>
