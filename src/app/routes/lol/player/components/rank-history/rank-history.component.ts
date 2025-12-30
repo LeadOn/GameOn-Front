@@ -243,7 +243,9 @@ export class RankHistoryComponent implements OnInit, OnChanges {
           tooltip: {
             callbacks: {
               label: function (context) {
-                let numericValue = parseInt(context.parsed.y.toString());
+                let numericValue = parseInt(
+                  context.parsed?.y?.toString() ?? '0',
+                );
 
                 if (numericValue < 400) {
                   if (numericValue <= 99) {
