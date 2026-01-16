@@ -15,6 +15,7 @@ import {
   faArrowRightFromBracket,
   faCalendar,
   faCog,
+  faDumbbell,
   faExternalLink,
   faKey,
   faLockOpen,
@@ -54,6 +55,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
   soccerIcon = faSoccerBall;
   apiUrl = environment.gameOnApiUrl;
   currentFile?: File;
+  halteroIcon = faDumbbell;
 
   @Input()
   player: Player = new Player();
