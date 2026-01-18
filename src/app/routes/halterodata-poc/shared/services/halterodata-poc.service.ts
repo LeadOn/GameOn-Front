@@ -19,9 +19,14 @@ export class HalterodataPocService {
     );
   }
 
-  getCompetitions(page: number = 1, size: number = 10) {
+  getCompetitions(page: number = 1, size: number = 10, keywords?: string) {
     return this.client.get<CompetitionSearchResultDto>(
-      environment.halterodataApiUrl + '/competition?page=' + page + '&size=' + size,
+      environment.halterodataApiUrl +
+        '/competition?page=' +
+        page +
+        '&size=' +
+        size +
+        (keywords ? '&keywords=' + keywords : ''),
     );
   }
 }

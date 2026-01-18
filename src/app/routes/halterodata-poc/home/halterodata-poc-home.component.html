@@ -188,11 +188,13 @@
       <input
         type="text"
         [(ngModel)]="searchTerm"
+        (keyup.enter)="loadCompetitions()"
         placeholder="Rechercher une compétition, un lieu, un type..."
         class="block w-full rounded-xl border-2 border-[#212e56] bg-[#050811]/60 py-4 pr-32 pl-12 text-base text-white placeholder-[#a8b2d2]/40 shadow-inner transition-all duration-200 focus:border-[#4a9eff] focus:bg-[#050811]/80 focus:ring-4 focus:ring-[#4a9eff]/20 focus:outline-none"
       />
       <div class="absolute inset-y-0 right-0 flex items-center pr-2">
         <button
+          (click)="loadCompetitions()"
           class="rounded-lg bg-[#4a9eff] px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:bg-[#3a8eef] hover:shadow-xl active:scale-95"
         >
           Rechercher
@@ -534,7 +536,7 @@
           </div>
           
           <button
-            [disabled]="currentPage >= totalPages - 1"
+            [disabled]="currentPage >= totalPages"
             (click)="changePage(currentPage + 1)"
             class="group relative flex items-center gap-2 rounded-lg border border-[#4a9eff]/30 bg-gradient-to-br from-[#4a9eff]/15 to-[#4a9eff]/5 px-3 py-2.5 text-xs font-semibold text-[#4a9eff] shadow-lg transition-all duration-200 hover:border-[#4a9eff]/60 hover:from-[#4a9eff]/25 hover:to-[#4a9eff]/15 hover:shadow-[0_0_20px_rgba(74,158,255,0.3)] disabled:cursor-not-allowed disabled:border-[#212e56] disabled:bg-[#050811]/40 disabled:text-[#a8b2d2]/40 disabled:shadow-none disabled:hover:shadow-none sm:px-4 sm:text-sm"
           >

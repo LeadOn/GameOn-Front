@@ -54,7 +54,7 @@ export class HalterodataPocHomeComponent implements OnInit {
   }
 
   changePage(page: number): void {
-    if (page <= 0 || page >= this.totalPages) return;
+    if (page <= 0 || page > this.totalPages) return;
 
     this.currentPage = page;
     this.loadCompetitions();
@@ -70,7 +70,11 @@ export class HalterodataPocHomeComponent implements OnInit {
     this.loading = true;
 
     this.halterodataPocService
-      .getCompetitions(this.currentPage, this.pageSize)
+      .getCompetitions(
+        this.currentPage,
+        this.pageSize,
+        this.searchTerm != '' ? this.searchTerm : undefined,
+      )
       .subscribe(
         (data) => {
           this.currentPage = data.page;
