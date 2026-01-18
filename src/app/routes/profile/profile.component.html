@@ -93,6 +93,7 @@
       </div>
     }
 
+    
     @if (
       loading == false && isAdmin == true && (player$ | async); as currentPlayer
       ) {
@@ -125,6 +126,42 @@
           </div>
         </div>
       </section>
+    }
+
+    @if (
+    loading == false && (player$ | async); as currentPlayer
+    ) {
+    <div
+      class="animate-fade mt-4 flex justify-between px-4"
+      >
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+        >Haltérophilie (pré-alpha)</span
+        >
+      </div>
+    }
+
+    
+    @if (
+      loading == false && (player$ | async); as currentPlayer
+      ) {
+      <section
+          id="player-halterodata"
+          class="animate-fade mt-4 px-4"
+          >
+          <div
+            class="bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+            >
+            <div
+              class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
+              [routerLink]="['/halterodatapoc']"
+              >
+              <a
+                ><fa-icon [icon]="halteroIcon" class="mr-2"></fa-icon> Accéder aux données d'haltérophilie</a
+                >
+                <fa-icon [icon]="arrowRightIcon"></fa-icon>
+              </div>
+            </div>
+          </section>
     }
 
     @if (loading == false && (player$ | async); as currentPlayer) {
