@@ -16,9 +16,9 @@ export class HalterodataPocHomeComponent implements OnInit {
   displayedCompetitions: CompetitionDto[] = [];
   loading: boolean = false;
   searchTerm: string = '';
-  
+
   // Pagination
-  currentPage: number = 0;
+  currentPage: number = 1;
   pageSize: number = 20;
   totalItems: number = 0;
   totalPages: number = 0;
@@ -53,23 +53,37 @@ export class HalterodataPocHomeComponent implements OnInit {
     );
   }
 
+  changePage(page: number): void {
+    if (page <= 0 || page >= this.totalPages) return;
+
+    this.currentPage = page;
+    this.loadCompetitions();
+  }
+
+  onPageSizeChange(newPageSize: number): void {
+    this.pageSize = newPageSize;
+    this.currentPage = 1;
+    this.loadCompetitions();
+  }
+
   loadCompetitions(): void {
     this.loading = true;
 
-    this.halterodataPocService.getCompetitions(this.currentPage + 1, this.pageSize + 1).subscribe(
-      (data) => {
-        this.currentPage = data.page;
-        this.pageSize = data.resultsPerPage;
-        this.totalItems = data.total;
-        this.totalPages = Math.ceil(data.total / data.resultsPerPage);
-        this.competitions = data.results;
-        this.loading = false;
-      },
-      (err) => {
-        console.error('Error fetching competitions:', err);
-      },
-    );
-
+    this.halterodataPocService
+      .getCompetitions(this.currentPage, this.pageSize)
+      .subscribe(
+        (data) => {
+          this.currentPage = data.page;
+          this.pageSize = data.resultsPerPage;
+          this.totalItems = data.total;
+          this.totalPages = Math.ceil(data.total / data.resultsPerPage);
+          this.competitions = data.results;
+          this.loading = false;
+        },
+        (err) => {
+          console.error('Error fetching competitions:', err);
+        },
+      );
   }
 
   formatDate(date?: Date | string): string {
@@ -132,23 +146,23 @@ export class HalterodataPocHomeComponent implements OnInit {
 
     if (total <= 7) {
       // Si moins de 7 pages, afficher toutes
-      return Array.from({ length: total }, (_, i) => i);
+      return Array.from({ length: total }, (_, i) => i + 1);
     }
 
     // Toujours afficher la première page
-    pages.push(0);
+    pages.push(1);
 
     if (current <= 3) {
       // Près du début
-      for (let i = 1; i <= 4; i++) {
+      for (let i = 2; i <= 5; i++) {
         pages.push(i);
       }
       pages.push('ellipsis');
-      pages.push(total - 1);
-    } else if (current >= total - 4) {
+      pages.push(total);
+    } else if (current >= total - 3) {
       // Près de la fin
       pages.push('ellipsis');
-      for (let i = total - 5; i < total; i++) {
+      for (let i = total - 4; i <= total; i++) {
         pages.push(i);
       }
     } else {
@@ -158,13 +172,13 @@ export class HalterodataPocHomeComponent implements OnInit {
         pages.push(i);
       }
       pages.push('ellipsis');
-      pages.push(total - 1);
+      pages.push(total);
     }
 
     return pages;
   }
 
   getEndIndex(): number {
-    return Math.min((this.currentPage + 1) * this.pageSize, this.totalItems);
+    return Math.min(this.currentPage * this.pageSize, this.totalItems);
   }
 }
