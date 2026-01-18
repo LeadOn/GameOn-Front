@@ -361,34 +361,118 @@
         <thead class="border-b border-[#212e56] bg-[#050811]/30">
           <tr>
             <th
-              class="px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase sm:px-6 sm:py-4 sm:text-sm"
+              (click)="sortBy('name')"
+              class="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase transition-colors hover:text-white hover:bg-[#050811]/50 sm:px-6 sm:py-4 sm:text-sm"
             >
-              Compétition
+              <div class="flex items-center gap-2">
+                Compétition
+                @if (sortField === 'name') {
+                  @if (sortOrder === 'asc') {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m0 0l4 4m10-4v12m0 0l4-4m0 0l-4-4" />
+                    </svg>
+                  } @else {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  }
+                }
+              </div>
             </th>
             <th
-              class="px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase sm:px-6 sm:py-4 sm:text-sm"
+              (click)="sortBy('date')"
+              class="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase transition-colors hover:text-white hover:bg-[#050811]/50 sm:px-6 sm:py-4 sm:text-sm"
             >
-              Date
+              <div class="flex items-center gap-2">
+                Date
+                @if (sortField === 'date') {
+                  @if (sortOrder === 'asc') {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m0 0l4 4m10-4v12m0 0l4-4m0 0l-4-4" />
+                    </svg>
+                  } @else {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  }
+                }
+              </div>
             </th>
             <th
-              class="px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase sm:px-6 sm:py-4 sm:text-sm"
+              (click)="sortBy('league')"
+              class="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase transition-colors hover:text-white hover:bg-[#050811]/50 sm:px-6 sm:py-4 sm:text-sm"
             >
-              Ligue
+              <div class="flex items-center gap-2">
+                Ligue
+                @if (sortField === 'league') {
+                  @if (sortOrder === 'asc') {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m0 0l4 4m10-4v12m0 0l4-4m0 0l-4-4" />
+                    </svg>
+                  } @else {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  }
+                }
+              </div>
             </th>
             <th
-              class="px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase sm:px-6 sm:py-4 sm:text-sm"
+              (click)="sortBy('gender')"
+              class="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase transition-colors hover:text-white hover:bg-[#050811]/50 sm:px-6 sm:py-4 sm:text-sm"
             >
-              Genre
+              <div class="flex items-center gap-2">
+                Genre
+                @if (sortField === 'gender') {
+                  @if (sortOrder === 'asc') {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m0 0l4 4m10-4v12m0 0l4-4m0 0l-4-4" />
+                    </svg>
+                  } @else {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  }
+                }
+              </div>
             </th>
             <th
-              class="px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase sm:px-6 sm:py-4 sm:text-sm"
+              (click)="sortBy('type')"
+              class="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase transition-colors hover:text-white hover:bg-[#050811]/50 sm:px-6 sm:py-4 sm:text-sm"
             >
-              Type
+              <div class="flex items-center gap-2">
+                Type
+                @if (sortField === 'type') {
+                  @if (sortOrder === 'asc') {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m0 0l4 4m10-4v12m0 0l4-4m0 0l-4-4" />
+                    </svg>
+                  } @else {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  }
+                }
+              </div>
             </th>
             <th
-              class="px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase sm:px-6 sm:py-4 sm:text-sm"
+              (click)="sortBy('state')"
+              class="cursor-pointer select-none px-4 py-3 text-left text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase transition-colors hover:text-white hover:bg-[#050811]/50 sm:px-6 sm:py-4 sm:text-sm"
             >
-              Statut
+              <div class="flex items-center gap-2">
+                Statut
+                @if (sortField === 'state') {
+                  @if (sortOrder === 'asc') {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m0 0l4 4m10-4v12m0 0l4-4m0 0l-4-4" />
+                    </svg>
+                  } @else {
+                    <svg class="h-4 w-4 text-[#4a9eff]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  }
+                }
+              </div>
             </th>
             <th
               class="px-4 py-3 text-right text-xs font-semibold tracking-wider text-[#a8b2d2] uppercase sm:px-6 sm:py-4 sm:text-sm"

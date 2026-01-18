@@ -23,6 +23,10 @@ export class HalterodataPocHomeComponent implements OnInit {
   totalItems: number = 0;
   totalPages: number = 0;
 
+  // Tri
+  sortField: string = 'date'; // Colonne de tri par défaut
+  sortOrder: 'asc' | 'desc' = 'desc'; // Ordre de tri par défaut (du plus récent au plus ancien)
+
   // Athlètes épinglés
   pinnedAthletes: AthleteDto[] = [];
   allCompetitions: CompetitionDto[] = [];
@@ -82,12 +86,69 @@ export class HalterodataPocHomeComponent implements OnInit {
           this.totalItems = data.total;
           this.totalPages = Math.ceil(data.total / data.resultsPerPage);
           this.competitions = data.results;
+          this.sortCompetitions();
           this.loading = false;
         },
         (err) => {
           console.error('Error fetching competitions:', err);
         },
       );
+  }
+
+  sortCompetitions(): void {
+    this.competitions.sort((a, b) => {
+      let aValue: any;
+      let bValue: any;
+
+      switch (this.sortField) {
+        case 'name':
+          aValue = a.name.toLowerCase();
+          bValue = b.name.toLowerCase();
+          break;
+        case 'date':
+          aValue = new Date(a.date).getTime();
+          bValue = new Date(b.date).getTime();
+          break;
+        case 'league':
+          aValue = a.league.toLowerCase();
+          bValue = b.league.toLowerCase();
+          break;
+        case 'gender':
+          aValue = a.gender;
+          bValue = b.gender;
+          break;
+        case 'type':
+          aValue = a.type ? 1 : 0;
+          bValue = b.type ? 1 : 0;
+          break;
+        case 'state':
+          aValue = a.state;
+          bValue = b.state;
+          break;
+        default:
+          return 0;
+      }
+
+      if (aValue < bValue) {
+        return this.sortOrder === 'asc' ? -1 : 1;
+      } else if (aValue > bValue) {
+        return this.sortOrder === 'asc' ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+
+  sortBy(field: string): void {
+    // Si on clique sur la même colonne, inverser l'ordre
+    if (this.sortField === field) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Sinon, définir le nouveau champ de tri avec l'ordre ascendant par défaut
+      this.sortField = field;
+      this.sortOrder = 'asc';
+    }
+    // Trier les compétitions localement sans recharger les données
+    this.sortCompetitions();
   }
 
   formatDate(date?: Date | string): string {
