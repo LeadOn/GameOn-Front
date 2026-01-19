@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AthleteDto } from '../../shared/classes/AthleteDto';
+import { AthleteDto } from '../../classes/AthleteDto';
 
 @Component({
   selector: 'app-pinned-athlete-card',

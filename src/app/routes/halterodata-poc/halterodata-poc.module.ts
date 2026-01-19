@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HalterodataPocRoutingModule } from './halterodata-poc-routing.module';
 import { HalterodataPocLayoutComponent } from './halterodata-poc-layout.component';
 import { HalterodataPocHomeComponent } from './home/halterodata-poc-home.component';
-import { PinnedAthleteCardComponent } from './athlete/pinned-athlete-card/pinned-athlete-card.component';
+import { PinnedAthleteCardComponent } from './shared/components/pinned-athlete-card/pinned-athlete-card.component';
 import { HalterodataPocAthleteComponent } from './athlete/halterodata-poc-athlete.component';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { CompetitionsTableComponent } from './shared/components/competitions-table/competitions-table.component';
