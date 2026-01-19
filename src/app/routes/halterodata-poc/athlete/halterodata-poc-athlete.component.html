@@ -26,3 +26,93 @@
     </div>
   }
 </div>
+
+<div
+  class="mb-6 rounded-2xl border border-[#212e56]/50 bg-[#0c1c3c]/80 p-6 shadow-2xl backdrop-blur-xl sm:mb-8"
+>
+  <div class="mb-6">
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-4">
+        <svg
+          class="h-5 w-5 text-[#a8b2d2]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="loadCompetitions()"
+        placeholder="Rechercher une compétition, une league..."
+        class="block w-full rounded-xl border-2 border-[#212e56] bg-[#050811]/60 py-4 pr-32 pl-12 text-base text-white placeholder-[#a8b2d2]/40 shadow-inner transition-all duration-200 focus:border-[#4a9eff] focus:bg-[#050811]/80 focus:ring-4 focus:ring-[#4a9eff]/20 focus:outline-none"
+      />
+      <div class="absolute inset-y-0 right-0 flex items-center pr-2">
+        <button
+          (click)="loadCompetitions()"
+          class="rounded-lg bg-[#4a9eff] px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:bg-[#3a8eef] hover:shadow-xl active:scale-95"
+        >
+          Rechercher
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="flex flex-col gap-4 border-t border-[#212e56]/30 pt-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+  >
+    <div class="flex items-center gap-3">
+      <span class="text-sm font-medium text-[#a8b2d2]">Affichage:</span>
+      <select
+        [ngModel]="pageSize"
+        (ngModelChange)="onPageSizeChange($event)"
+        class="rounded-lg border border-[#212e56] bg-[#050811]/60 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all focus:border-[#4a9eff] focus:ring-2 focus:ring-[#4a9eff]/20 focus:outline-none"
+      >
+        <option [value]="5">5 par page</option>
+        <option [value]="10">10 par page</option>
+        <option [value]="20">20 par page</option>
+        <option [value]="50">50 par page</option>
+      </select>
+    </div>
+    @if (searchTerm) {
+      <button
+        class="flex items-center gap-2 rounded-lg border border-[#212e56] bg-[#050811]/40 px-4 py-2 text-sm font-medium text-[#a8b2d2] transition-all hover:border-[#a8b2d2]/50 hover:bg-[#050811]/60"
+      >
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+        Effacer
+      </button>
+    }
+  </div>
+</div>
+
+<app-competitions-table
+  [competitions]="competitions"
+  [loading]="loading"
+  [currentPage]="currentPage"
+  [pageSize]="pageSize"
+  [totalItems]="totalItems"
+  [totalPages]="totalPages"
+  [sortField]="sortField"
+  [sortOrder]="sortOrder"
+  (pageChange)="changePage($event)"
+  (sortChange)="sortBy($event)"
+></app-competitions-table>
