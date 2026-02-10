@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HalterodataPocLayoutComponent } from './halterodata-poc-layout.component';
 import { HalterodataPocHomeComponent } from './home/halterodata-poc-home.component';
 import { HalterodataPocAthleteComponent } from './athlete/halterodata-poc-athlete.component';
+import { HalterodataPocCompetitionComponent } from './competition/halterodata-poc-competition.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'athlete/:id',
         component: HalterodataPocAthleteComponent,
+      },
+      {
+        path: 'competition/:id',
+        component: HalterodataPocCompetitionComponent,
       },
     ],
   },

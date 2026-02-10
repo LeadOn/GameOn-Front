@@ -1,3 +1,5 @@
+import { CompetitionDetail } from "./CompetitionDetail";
+
 export class CompetitionDto {
   id: number = 0;
   scoresheetId: number = 0;
@@ -8,4 +10,5 @@ export class CompetitionDto {
   type: boolean = false;
   date: Date = new Date();
   state: number = 0;
+  details?: CompetitionDetail[];
 }

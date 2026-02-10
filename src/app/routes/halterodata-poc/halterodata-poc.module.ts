@@ -9,6 +9,7 @@ import { PinnedAthleteCardComponent } from './shared/components/pinned-athlete-c
 import { HalterodataPocAthleteComponent } from './athlete/halterodata-poc-athlete.component';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { CompetitionsTableComponent } from './shared/components/competitions-table/competitions-table.component';
+import { HalterodataPocCompetitionComponent } from './competition/halterodata-poc-competition.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CompetitionsTableComponent } from './shared/components/competitions-tab
     PinnedAthleteCardComponent,
     HalterodataPocAthleteComponent,
     CompetitionsTableComponent,
+    HalterodataPocCompetitionComponent
   ],
   imports: [
     CommonModule,

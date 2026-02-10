@@ -42,4 +42,12 @@ export class HalterodataPocService {
         (keywords ? '&keywords=' + keywords : ''),
     );
   }
+
+  getCompetitionById(competitionId: number) {
+    return this.client.get<CompetitionDto>(
+      environment.halterodataApiUrl +
+        '/competition/' +
+        competitionId,
+    );
+  }
 }
