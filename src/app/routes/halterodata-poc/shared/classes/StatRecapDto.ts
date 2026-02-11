@@ -4,4 +4,6 @@ export class StatRecapDto {
   total?: number;
   iwf?: number;
   bodyWeight?: number;
+  serie?: string;
+  category?: string;
 }

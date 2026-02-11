@@ -29,4 +29,25 @@ export class HalterodataPocService {
         (keywords ? '&keywords=' + keywords : ''),
     );
   }
+
+  getCompetitionsByAthleteId(athleteId: number, page: number = 1, size: number = 10, keywords?: string) {
+    return this.client.get<CompetitionSearchResultDto>(
+      environment.halterodataApiUrl +
+        '/athlete/' +
+        athleteId +
+        '/competition?page=' +
+        page +
+        '&size=' +
+        size +
+        (keywords ? '&keywords=' + keywords : ''),
+    );
+  }
+
+  getCompetitionById(competitionId: number) {
+    return this.client.get<CompetitionDto>(
+      environment.halterodataApiUrl +
+        '/competition/' +
+        competitionId,
+    );
+  }
 }

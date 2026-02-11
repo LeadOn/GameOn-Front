@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompetitionDto } from '../shared/classes/CompetitionDto';
 import { AthleteDto } from '../shared/classes/AthleteDto';
-import { StatRecapDto } from '../shared/classes/StatRecapDto';
 import { HalterodataPocService } from '../shared/services/halterodata-poc.service';
 
 @Component({
