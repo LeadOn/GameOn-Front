@@ -112,18 +112,63 @@
     <div class="overflow-x-auto">
       <table class="min-w-full divide-y divide-[#2b3658]">
         <thead class="bg-[#0b172b]/60">
-          <tr class="text-sm text-[#a8b2d2]">
-            <th class="px-3 py-2 text-left">Licence</th>
-            <th class="px-3 py-2 text-left">Nom</th>
-            <th class="px-3 py-2 text-left">Club</th>
-            <th class="px-3 py-2 text-left">Nation</th>
-            <th class="px-3 py-2 text-left">Poids</th>
-            <th class="px-3 py-2 text-left">Snatch 1</th>
-            <th class="px-3 py-2 text-left">Snatch 2</th>
-            <th class="px-3 py-2 text-left">Snatch 3</th>
-            <th class="px-3 py-2 text-left">CJ 1</th>
-            <th class="px-3 py-2 text-left">CJ 2</th>
-            <th class="px-3 py-2 text-left">CJ 3</th>
+          <tr class="text-xs text-[#a8b2d2] sm:text-sm">
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">
+              Licence
+            </th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">Nom</th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              Année
+            </th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              Club
+            </th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              Nation
+            </th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              P.C
+            </th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">S1</th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">S2</th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">S3</th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              Arraché
+            </th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">C1</th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">C2</th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">C3</th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              Epaulé jeté
+            </th>
+            <th class="whitespace-nowrap px-2 py-2 text-left sm:px-3">Total</th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              Série
+            </th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              Catégorie
+            </th>
+            <th
+              class="mobile-hide whitespace-nowrap px-2 py-2 text-left sm:px-3"
+            >
+              IWF
+            </th>
           </tr>
         </thead>
         <tbody
@@ -134,8 +179,10 @@
             *ngFor="let entry of competition.details || []; trackBy: trackById"
             class="text-sm hover:bg-[#07122a]/30"
           >
-            <td class="px-3 py-3">{{ entry.athlete?.licenceId || "—" }}</td>
-            <td class="px-3 py-3">
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              {{ entry.athlete?.licenceId || "—" }}
+            </td>
+            <td class="px-2 py-2 sm:px-3 sm:py-3">
               <a
                 [routerLink]="['/halterodatapoc/athlete', entry.athlete?.id]"
                 class="text-[#4a9eff] hover:underline"
@@ -143,49 +190,166 @@
                 {{ entry.athlete?.fullName || "—" }}
               </a>
             </td>
-            <td class="px-3 py-3">{{ entry.club || "—" }}</td>
-            <td class="px-3 py-3">{{ entry.countryCode || "—" }}</td>
-            <td class="px-3 py-3">
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              {{ getYear(entry) || "—" }}
+            </td>
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              {{ entry.club || "—" }}
+            </td>
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              {{ entry.countryCode || "—" }}
+            </td>
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
               {{
                 entry.bodyWeight !== null && entry.bodyWeight !== undefined
                   ? entry.bodyWeight
                   : "—"
               }}
             </td>
-            <td class="px-3 py-3">
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              <span
+                *ngIf="
+                  entry.snatch1 !== null && entry.snatch1 !== undefined;
+                  else snatch1Empty
+                "
+                class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold"
+                [ngClass]="
+                  entry.snatch1 > 0
+                    ? 'border-[#22c55e]/40 bg-[#22c55e]/20 text-[#22c55e]'
+                    : entry.snatch1 < 0
+                      ? 'border-[#ef4444]/40 bg-[#ef4444]/20 text-[#ef4444]'
+                      : 'border-[#64748b]/40 bg-[#64748b]/10 text-[#a8b2d2]'
+                "
+              >
+                {{ entry.snatch1 }}
+              </span>
+              <ng-template #snatch1Empty>—</ng-template>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              <span
+                *ngIf="
+                  entry.snatch2 !== null && entry.snatch2 !== undefined;
+                  else snatch2Empty
+                "
+                class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold"
+                [ngClass]="
+                  entry.snatch2 > 0
+                    ? 'border-[#22c55e]/40 bg-[#22c55e]/20 text-[#22c55e]'
+                    : entry.snatch2 < 0
+                      ? 'border-[#ef4444]/40 bg-[#ef4444]/20 text-[#ef4444]'
+                      : 'border-[#64748b]/40 bg-[#64748b]/10 text-[#a8b2d2]'
+                "
+              >
+                {{ entry.snatch2 }}
+              </span>
+              <ng-template #snatch2Empty>—</ng-template>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              <span
+                *ngIf="
+                  entry.snatch3 !== null && entry.snatch3 !== undefined;
+                  else snatch3Empty
+                "
+                class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold"
+                [ngClass]="
+                  entry.snatch3 > 0
+                    ? 'border-[#22c55e]/40 bg-[#22c55e]/20 text-[#22c55e]'
+                    : entry.snatch3 < 0
+                      ? 'border-[#ef4444]/40 bg-[#ef4444]/20 text-[#ef4444]'
+                      : 'border-[#64748b]/40 bg-[#64748b]/10 text-[#a8b2d2]'
+                "
+              >
+                {{ entry.snatch3 }}
+              </span>
+              <ng-template #snatch3Empty>—</ng-template>
+            </td>
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
               {{
-                entry.snatch1 !== null && entry.snatch1 !== undefined
-                  ? entry.snatch1
+                entry.bestSnatch !== null && entry.bestSnatch !== undefined
+                  ? entry.bestSnatch
                   : "—"
               }}
             </td>
-            <td class="px-3 py-3">
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              <span
+                *ngIf="
+                  entry.cj1 !== null && entry.cj1 !== undefined;
+                  else cj1Empty
+                "
+                class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold"
+                [ngClass]="
+                  entry.cj1 > 0
+                    ? 'border-[#22c55e]/40 bg-[#22c55e]/20 text-[#22c55e]'
+                    : entry.cj1 < 0
+                      ? 'border-[#ef4444]/40 bg-[#ef4444]/20 text-[#ef4444]'
+                      : 'border-[#64748b]/40 bg-[#64748b]/10 text-[#a8b2d2]'
+                "
+              >
+                {{ entry.cj1 }}
+              </span>
+              <ng-template #cj1Empty>—</ng-template>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              <span
+                *ngIf="
+                  entry.cj2 !== null && entry.cj2 !== undefined;
+                  else cj2Empty
+                "
+                class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold"
+                [ngClass]="
+                  entry.cj2 > 0
+                    ? 'border-[#22c55e]/40 bg-[#22c55e]/20 text-[#22c55e]'
+                    : entry.cj2 < 0
+                      ? 'border-[#ef4444]/40 bg-[#ef4444]/20 text-[#ef4444]'
+                      : 'border-[#64748b]/40 bg-[#64748b]/10 text-[#a8b2d2]'
+                "
+              >
+                {{ entry.cj2 }}
+              </span>
+              <ng-template #cj2Empty>—</ng-template>
+            </td>
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              <span
+                *ngIf="
+                  entry.cj3 !== null && entry.cj3 !== undefined;
+                  else cj3Empty
+                "
+                class="inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold"
+                [ngClass]="
+                  entry.cj3 > 0
+                    ? 'border-[#22c55e]/40 bg-[#22c55e]/20 text-[#22c55e]'
+                    : entry.cj3 < 0
+                      ? 'border-[#ef4444]/40 bg-[#ef4444]/20 text-[#ef4444]'
+                      : 'border-[#64748b]/40 bg-[#64748b]/10 text-[#a8b2d2]'
+                "
+              >
+                {{ entry.cj3 }}
+              </span>
+              <ng-template #cj3Empty>—</ng-template>
+            </td>
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
               {{
-                entry.snatch2 !== null && entry.snatch2 !== undefined
-                  ? entry.snatch2
+                entry.bestCj !== null && entry.bestCj !== undefined
+                  ? entry.bestCj
                   : "—"
               }}
             </td>
-            <td class="px-3 py-3">
+            <td class="whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
               {{
-                entry.snatch3 !== null && entry.snatch3 !== undefined
-                  ? entry.snatch3
+                entry.total !== null && entry.total !== undefined
+                  ? entry.total
                   : "—"
               }}
             </td>
-            <td class="px-3 py-3">
-              {{
-                entry.cj1 !== null && entry.cj1 !== undefined ? entry.cj1 : "—"
-              }}
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              {{ entry.serie || "—" }}
             </td>
-            <td class="px-3 py-3">
-              {{
-                entry.cj2 !== null && entry.cj2 !== undefined ? entry.cj2 : "—"
-              }}
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
+              {{ entry.category || "—" }}
             </td>
-            <td class="px-3 py-3">
+            <td class="mobile-hide whitespace-nowrap px-2 py-2 sm:px-3 sm:py-3">
               {{
-                entry.cj3 !== null && entry.cj3 !== undefined ? entry.cj3 : "—"
+                entry.iwf !== null && entry.iwf !== undefined ? entry.iwf : "—"
               }}
             </td>
           </tr>
@@ -193,7 +357,7 @@
             *ngIf="(competition.details || []).length === 0"
             class="text-sm text-[#a8b2d2]"
           >
-            <td class="p-4" colspan="12">Aucune inscription trouvée.</td>
+            <td class="p-4" colspan="18">Aucune inscription trouvée.</td>
           </tr>
         </tbody>
       </table>
