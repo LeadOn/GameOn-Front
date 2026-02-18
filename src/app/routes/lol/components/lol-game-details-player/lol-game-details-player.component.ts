@@ -29,7 +29,8 @@ export class LolGameDetailsPlayerComponent implements OnChanges {
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.showPlayerTimeline();
+    this.showTimeline = false;
+    this.personalTimeline = undefined;
   }
 
   showPlayerTimeline() {

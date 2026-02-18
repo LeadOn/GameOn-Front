@@ -1,9 +1,12 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   Input,
   OnChanges,
-  OnInit,
+  OnDestroy,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
@@ -15,38 +18,64 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
   templateUrl: './lol-game-details-player-graph.component.html',
   styleUrl: './lol-game-details-player-graph.component.css',
 })
-export class LolGameDetailsPlayerGraphComponent implements OnInit, OnChanges {
-  randomId = 'damage-history-' + (Math.random() * 10000).toFixed(0).toString();
-  randomId2 = 'gold-history-' + (Math.random() * 10000).toFixed(0).toString();
-  randomId3 = 'xp-history-' + (Math.random() * 10000).toFixed(0).toString();
+export class LolGameDetailsPlayerGraphComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
+  @ViewChild('damageChart')
+  damageChartCanvas?: ElementRef<HTMLCanvasElement>;
+
+  @ViewChild('goldChart')
+  goldChartCanvas?: ElementRef<HTMLCanvasElement>;
+
+  @ViewChild('xpChart')
+  xpChartCanvas?: ElementRef<HTMLCanvasElement>;
 
   @Input()
   timeline?: LoLGameTimelineFrame[];
 
-  chart: any;
-  chart2: any;
-  chart3: any;
+  chart?: Chart;
+  chart2?: Chart;
+  chart3?: Chart;
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.buildChart();
-    }, 500);
+  ngAfterViewInit(): void {
+    this.buildChart();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.rebuildChart();
-  }
-
-  rebuildChart() {
-    if (this.chart != null) {
-      this.chart.destroy();
-      this.chart2.destroy();
-      this.chart3.destroy();
-      this.buildChart();
+    if (changes['timeline']) {
+      this.rebuildChart();
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroyCharts();
+  }
+
+  rebuildChart() {
+    this.destroyCharts();
+    this.buildChart();
+  }
+
+  private destroyCharts() {
+    this.chart?.destroy();
+    this.chart2?.destroy();
+    this.chart3?.destroy();
+    this.chart = undefined;
+    this.chart2 = undefined;
+    this.chart3 = undefined;
+  }
+
   buildChart() {
+    if (
+      this.timeline == null ||
+      this.timeline.length == 0 ||
+      this.damageChartCanvas == null ||
+      this.goldChartCanvas == null ||
+      this.xpChartCanvas == null
+    ) {
+      return;
+    }
+
     // First chart
     let labels: any[] = [];
     let totalDamageDone: any[] = [];
@@ -142,82 +171,285 @@ export class LolGameDetailsPlayerGraphComponent implements OnInit, OnChanges {
       });
     }
 
-    this.chart = new Chart(this.randomId, {
+    const gridColor = 'rgba(255, 255, 255, 0.08)';
+    const tickColor = 'rgba(226, 232, 240, 0.85)';
+
+    this.chart = new Chart(this.damageChartCanvas.nativeElement, {
       type: 'line',
       data: {
         // values on X-Axis
         labels: labels,
         datasets: [
-          { label: 'Total dégats infligés', data: totalDamageDone },
-          { label: 'Total dégats reçus', data: totalDamageTaken },
           {
-            label: 'Total dégats infligés aux champions',
+            label: 'Total dégâts infligés',
+            data: totalDamageDone,
+            borderColor: '#38bdf8',
+            backgroundColor: 'rgba(56, 189, 248, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Total dégâts reçus',
+            data: totalDamageTaken,
+            borderColor: '#f43f5e',
+            backgroundColor: 'rgba(244, 63, 94, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Dégâts infligés aux champions',
             data: totalDamageDoneToChampions,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245, 158, 11, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
           },
-          { label: 'Dégats magiques infligés', data: magicDamageDone },
-          { label: 'Dégats magiques reçus', data: magicDamageTaken },
           {
-            label: 'Dégats magiques infligés aux champions',
+            label: 'Dégâts magiques infligés',
+            data: magicDamageDone,
+            hidden: true,
+            borderColor: '#eab308',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Dégâts magiques reçus',
+            data: magicDamageTaken,
+            hidden: true,
+            borderColor: '#06b6d4',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Dégâts magiques aux champions',
             data: magicDamageDoneToChampions,
+            hidden: true,
+            borderColor: '#8b5cf6',
+            tension: 0.25,
+            pointRadius: 0,
           },
-          { label: 'Dégats physiques infligés', data: physicalDamageDone },
-          { label: 'Dégats physiques reçus', data: physicalDamageTaken },
           {
-            label: 'Dégats physiques infligés aux champions',
+            label: 'Dégâts physiques infligés',
+            data: physicalDamageDone,
+            hidden: true,
+            borderColor: '#22c55e',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Dégâts physiques reçus',
+            data: physicalDamageTaken,
+            hidden: true,
+            borderColor: '#f97316',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Dégâts physiques aux champions',
             data: physicalDamageDoneToChampions,
+            hidden: true,
+            borderColor: '#14b8a6',
+            tension: 0.25,
+            pointRadius: 0,
           },
-          { label: 'Dégats bruts infligés', data: trueDamageDone },
-          { label: 'Dégats bruts reçus', data: trueDamageTaken },
           {
-            label: 'Dégats bruts infligés aux champions',
+            label: 'Dégâts bruts infligés',
+            data: trueDamageDone,
+            hidden: true,
+            borderColor: '#a855f7',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Dégâts bruts reçus',
+            data: trueDamageTaken,
+            hidden: true,
+            borderColor: '#ec4899',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Dégâts bruts aux champions',
             data: trueDamageDoneToChampions,
+            hidden: true,
+            borderColor: '#64748b',
+            tension: 0.25,
+            pointRadius: 0,
           },
         ],
       },
       options: {
-        aspectRatio: 1,
         responsive: true,
-        maintainAspectRatio: true,
-        plugins: {},
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: tickColor,
+              boxWidth: 14,
+              boxHeight: 8,
+              font: {
+                size: 10,
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: { color: tickColor, maxTicksLimit: 7 },
+            grid: { color: gridColor },
+          },
+          y: {
+            ticks: { color: tickColor },
+            grid: { color: gridColor },
+          },
+        },
       },
     });
 
-    this.chart2 = new Chart(this.randomId2, {
+    this.chart2 = new Chart(this.goldChartCanvas.nativeElement, {
       type: 'line',
       data: {
         // values on X-Axis
         labels: labels,
         datasets: [
-          { label: 'Total des golds', data: totalGold },
-          { label: 'Golds par seconde', data: goldPerSecond },
-          { label: 'Golds actuels', data: currentGold },
-          { label: 'CS tués', data: minionsKilled },
-          { label: 'CS tués en jungle', data: jungleMinionsKilled },
+          {
+            label: 'Total des golds',
+            data: totalGold,
+            borderColor: '#38bdf8',
+            backgroundColor: 'rgba(56, 189, 248, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Golds actuels',
+            data: currentGold,
+            borderColor: '#fb7185',
+            backgroundColor: 'rgba(251, 113, 133, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Golds par seconde',
+            data: goldPerSecond,
+            borderColor: '#f59e0b',
+            backgroundColor: 'rgba(245, 158, 11, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
+            yAxisID: 'y1',
+          },
+          {
+            label: 'CS tués',
+            data: minionsKilled,
+            borderColor: '#facc15',
+            hidden: true,
+            tension: 0.25,
+            pointRadius: 0,
+            yAxisID: 'y1',
+          },
+          {
+            label: 'CS jungle',
+            data: jungleMinionsKilled,
+            borderColor: '#2dd4bf',
+            hidden: true,
+            tension: 0.25,
+            pointRadius: 0,
+            yAxisID: 'y1',
+          },
         ],
       },
       options: {
-        aspectRatio: 1,
         responsive: true,
-        maintainAspectRatio: true,
-        plugins: {},
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: tickColor,
+              boxWidth: 14,
+              boxHeight: 8,
+              font: {
+                size: 10,
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: { color: tickColor, maxTicksLimit: 7 },
+            grid: { color: gridColor },
+          },
+          y: {
+            ticks: { color: tickColor },
+            grid: { color: gridColor },
+          },
+          y1: {
+            position: 'right',
+            ticks: { color: tickColor },
+            grid: { drawOnChartArea: false },
+          },
+        },
       },
     });
 
-    this.chart3 = new Chart(this.randomId3, {
+    this.chart3 = new Chart(this.xpChartCanvas.nativeElement, {
       type: 'line',
       data: {
         // values on X-Axis
         labels: labels,
         datasets: [
-          { label: 'Total XP', data: xp },
-          { label: 'Niveau', data: level },
+          {
+            label: 'Total XP',
+            data: xp,
+            borderColor: '#38bdf8',
+            backgroundColor: 'rgba(56, 189, 248, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
+          },
+          {
+            label: 'Niveau',
+            data: level,
+            borderColor: '#f43f5e',
+            backgroundColor: 'rgba(244, 63, 94, 0.2)',
+            tension: 0.25,
+            pointRadius: 0,
+            yAxisID: 'y1',
+          },
         ],
       },
       options: {
-        aspectRatio: 1,
         responsive: true,
-        maintainAspectRatio: true,
-        plugins: {},
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              color: tickColor,
+              boxWidth: 14,
+              boxHeight: 8,
+              font: {
+                size: 10,
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: { color: tickColor, maxTicksLimit: 7 },
+            grid: { color: gridColor },
+          },
+          y: {
+            ticks: { color: tickColor },
+            grid: { color: gridColor },
+          },
+          y1: {
+            min: 0,
+            max: 18,
+            position: 'right',
+            ticks: { color: tickColor, stepSize: 2 },
+            grid: { drawOnChartArea: false },
+          },
+        },
       },
     });
   }

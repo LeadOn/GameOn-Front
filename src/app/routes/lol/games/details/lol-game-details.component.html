@@ -10,9 +10,7 @@
 }
 
 <app-info-message
-  [title]="
-    'Cette partie de l\'application est en cours de développement. Faites-nous vos retours afin d\'améliorer l\'expérience finale !'
-  "
+  [title]="'Cette partie de l\'application est en cours de développement. Faites-nous vos retours afin d\'améliorer l\'expérience finale !'"
 ></app-info-message>
 
 @if (isLoading == true) {
@@ -23,15 +21,10 @@
   <section id="game-pill" class="px-4">
     <div class="flex justify-between pt-4">
       @if (game != null && game.endOfGameResult != null) {
-        <app-pill
-          [title]="game.endOfGameResult"
-          [bgStyle]="'green'"
-        ></app-pill>
+        <app-pill [title]="game.endOfGameResult" [bgStyle]="'green'"></app-pill>
       }
       @if (game != null && game.endOfGameResult == null) {
-        <app-pill
-          [title]="'Partie non synchronisée'"
-        ></app-pill>
+        <app-pill [title]="'Partie non synchronisée'"></app-pill>
       }
       @if (game != null) {
         <app-pill
@@ -45,7 +38,7 @@
         [iconColor]="'white'"
         (click)="updateGame()"
         [title]="'Synchroniser'"
-        >
+      >
       </app-pill>
       @if (game != null) {
         <app-pill [title]="patchTitle"></app-pill>
@@ -56,111 +49,112 @@
 
 <div class="mt-4 px-4">
   @if (game != null && isLoading == false) {
-    <app-lol-game-card
-      [game]="game"
-      [playerId]="playerId"
-    ></app-lol-game-card>
+    <app-lol-game-card [game]="game" [playerId]="playerId"></app-lol-game-card>
   }
 </div>
 
 @if (game != null) {
-  <section id="lol-team-1-header" class="mt-4 px-4">
-    <div class="flex animate-fade-up items-center justify-between">
-      <div class="flex items-center justify-center">
-        <img src="assets/img/svg/lol.svg" class="w-8" />
-        <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-          >Equipe 1 -
-          @if (
-            game != null && game.winningTeamId != 0 && game.winningTeamId == 100
-            ) {
-            <span
-              class="text-customGreen"
-              >
-              Victoire</span
-              >
-            }
-            @if (
-              game != null && game.winningTeamId != 0 && game.winningTeamId != 100
-              ) {
-              <span
-                class="text-frenchRed"
-                >
-                Défaite</span
-                >
-              }
-            </span>
-          </div>
-          @if (isLoading == true) {
-            <app-loading-spinner-tiny
-            ></app-loading-spinner-tiny>
-          }
-        </div>
-      </section>
-    }
+  <section id="lol-team1" class="mt-4 px-4">
+    <div
+      class="animate-fade-up mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+    >
+      <div
+        class="w-1.5"
+        [ngClass]="{
+          'bg-slate-500': game.winningTeamId == 0,
+          'bg-blue-600': game.winningTeamId == 100,
+          'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 100,
+        }"
+      ></div>
 
-    @if (game != null && team1.length > 0) {
-      <section
-        id="lol-team1"
-        class="mt-4 px-4"
+      <div class="w-full">
+        <div
+          class="flex items-center justify-between border-b border-white/25 px-3 py-2"
         >
-        <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
-          @for (player of team1; track player) {
-            <app-lol-game-details-player
-              [player]="player"
-              [timeline]="timeline"
-            ></app-lol-game-details-player>
+          <div class="flex items-center gap-2">
+            <img src="assets/img/svg/lol.svg" class="w-7" />
+            <span class="text-base font-semibold text-slate-100">Equipe 1</span>
+            @if (game.winningTeamId != 0) {
+              <span
+                class="text-sm font-semibold"
+                [ngClass]="{
+                  'text-customGreen': game.winningTeamId == 100,
+                  'text-frenchRed': game.winningTeamId != 100,
+                }"
+              >
+                {{ game.winningTeamId == 100 ? "Victoire" : "Défaite" }}
+              </span>
+            }
+          </div>
+
+          @if (isLoading == true) {
+            <app-loading-spinner-tiny></app-loading-spinner-tiny>
           }
         </div>
-      </section>
-    }
 
-    @if (game != null) {
-      <section id="lol-team-2-header" class="mt-4 px-4">
-        <div class="flex animate-fade-up items-center justify-between">
-          <div class="flex items-center justify-center">
-            <img src="assets/img/svg/lol.svg" class="w-8" />
-            <span class="text-lg font-semibold text-primary dark:text-primaryDark"
-              >Equipe 2 -
-              @if (
-                game != null && game.winningTeamId != 0 && game.winningTeamId == 200
-                ) {
-                <span
-                  class="text-customGreen"
-                  >
-                  Victoire</span
-                  >
-                }
-                @if (
-                  game != null && game.winningTeamId != 0 && game.winningTeamId != 200
-                  ) {
-                  <span
-                    class="text-frenchRed"
-                    >
-                    Défaite</span
-                    >
-                  }
-                </span>
-              </div>
-              @if (isLoading == true) {
-                <app-loading-spinner-tiny
-                ></app-loading-spinner-tiny>
-              }
-            </div>
-          </section>
+        @if (team1.length > 0) {
+          <div class="divide-y divide-white/15">
+            @for (player of team1; track player) {
+              <app-lol-game-details-player
+                [player]="player"
+                [timeline]="timeline"
+              ></app-lol-game-details-player>
+            }
+          </div>
         }
+      </div>
+    </div>
+  </section>
 
-        @if (game != null && team2.length > 0) {
-          <section
-            id="lol-team2"
-            class="mt-4 px-4"
-            >
-            <div class="flex animate-fade-up flex-col divide-y-2 divide-gray-400">
-              @for (player of team2; track player) {
-                <app-lol-game-details-player
-                  [player]="player"
-                  [timeline]="timeline"
-                ></app-lol-game-details-player>
-              }
-            </div>
-          </section>
+  <section id="lol-team2" class="px-4">
+    <div
+      class="animate-fade-up mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+    >
+      <div
+        class="w-1.5"
+        [ngClass]="{
+          'bg-slate-500': game.winningTeamId == 0,
+          'bg-blue-600': game.winningTeamId == 200,
+          'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 200,
+        }"
+      ></div>
+
+      <div class="w-full">
+        <div
+          class="flex items-center justify-between border-b border-white/25 px-3 py-2"
+        >
+          <div class="flex items-center gap-2">
+            <img src="assets/img/svg/lol.svg" class="w-7" />
+            <span class="text-base font-semibold text-slate-100">Equipe 2</span>
+            @if (game.winningTeamId != 0) {
+              <span
+                class="text-sm font-semibold"
+                [ngClass]="{
+                  'text-customGreen': game.winningTeamId == 200,
+                  'text-frenchRed': game.winningTeamId != 200,
+                }"
+              >
+                {{ game.winningTeamId == 200 ? "Victoire" : "Défaite" }}
+              </span>
+            }
+          </div>
+
+          @if (isLoading == true) {
+            <app-loading-spinner-tiny></app-loading-spinner-tiny>
+          }
+        </div>
+
+        @if (team2.length > 0) {
+          <div class="divide-y divide-white/15">
+            @for (player of team2; track player) {
+              <app-lol-game-details-player
+                [player]="player"
+                [timeline]="timeline"
+              ></app-lol-game-details-player>
+            }
+          </div>
         }
+      </div>
+    </div>
+  </section>
+}
