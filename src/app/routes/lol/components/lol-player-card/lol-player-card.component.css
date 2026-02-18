@@ -1,0 +1,16 @@
+.lol-player-card {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  height: 100%;
+}
+
+.lol-player-card:hover {
+  transform: translateY(-1px);
+}
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
