@@ -1,7 +1,49 @@
-<button (click)="rebuildChart()">Regénérer les graphiques</button>
+<div class="rounded-lg border border-white/15 bg-slate-900/20 p-3">
+  <div class="mb-3 flex items-center justify-between">
+    <p class="text-sm font-semibold text-slate-100">Détails de performance</p>
+    <button
+      class="rounded-md border border-white/20 bg-slate-900/30 px-2 py-1 text-xs text-slate-200 transition-colors duration-200 hover:bg-slate-900/50"
+      type="button"
+      (click)="rebuildChart()"
+    >
+      Régénérer
+    </button>
+  </div>
 
-<canvas [attr.id]="randomId"></canvas>
+  <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
+    <section class="rounded-lg border border-white/10 bg-slate-900/20 p-3">
+      <h4
+        class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
+      >
+        Dégâts
+      </h4>
+      <div class="h-64 w-full">
+        <canvas class="h-full w-full" #damageChart></canvas>
+      </div>
+    </section>
 
-<canvas [attr.id]="randomId2"></canvas>
+    <section class="rounded-lg border border-white/10 bg-slate-900/20 p-3">
+      <h4
+        class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
+      >
+        Gold & CS
+      </h4>
+      <div class="h-64 w-full">
+        <canvas class="h-full w-full" #goldChart></canvas>
+      </div>
+    </section>
 
-<canvas [attr.id]="randomId3"></canvas>
+    <section
+      class="rounded-lg border border-white/10 bg-slate-900/20 p-3 lg:col-span-2"
+    >
+      <h4
+        class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
+      >
+        XP & Niveau
+      </h4>
+      <div class="h-64 w-full">
+        <canvas class="h-full w-full" #xpChart></canvas>
+      </div>
+    </section>
+  </div>
+</div>

@@ -34,6 +34,7 @@ export class LolGameCardComponent implements OnChanges {
   item4 = 0;
   item5 = 0;
   item6 = 0;
+  itemSlots: number[] = [0, 0, 0, 0, 0, 0];
 
   refreshIcon = faRefresh;
 
@@ -62,8 +63,6 @@ export class LolGameCardComponent implements OnChanges {
             this.deaths = player.deaths;
             this.assists = player.assists;
 
-            this.kda = ((this.kills + this.assists) / this.deaths).toFixed(2);
-
             this.item0 = player.item0;
             this.item1 = player.item1;
             this.item2 = player.item2;
@@ -71,6 +70,19 @@ export class LolGameCardComponent implements OnChanges {
             this.item4 = player.item4;
             this.item5 = player.item5;
             this.item6 = player.item6;
+            this.itemSlots = [
+              this.item0,
+              this.item1,
+              this.item2,
+              this.item3,
+              this.item4,
+              this.item5,
+            ];
+
+            const kdaDenominator = this.deaths === 0 ? 1 : this.deaths;
+            this.kda = ((this.kills + this.assists) / kdaDenominator).toFixed(
+              2,
+            );
 
             if (player.win != null) {
               this.won = player.win;
@@ -105,5 +117,33 @@ export class LolGameCardComponent implements OnChanges {
         console.error(err);
       },
     );
+  }
+
+  get statusLabel(): string {
+    if (this.game.endOfGameResult == null) {
+      return 'Inconnu';
+    }
+
+    return this.won ? 'Victoire' : 'Défaite';
+  }
+
+  get statusClass(): string {
+    if (this.game.endOfGameResult == null) {
+      return 'text-slate-600';
+    }
+
+    return this.won ? 'text-blue-700' : 'text-red-700';
+  }
+
+  get queueLabel(): string {
+    if (this.game.queueType == 'RANKED_SOLO_DUO') {
+      return 'Classée en solo/duo';
+    }
+
+    if (this.game.queueType == 'RANKED_FLEX') {
+      return 'Classée flexible';
+    }
+
+    return 'File inconnue';
   }
 }

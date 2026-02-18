@@ -1,129 +1,115 @@
 <div class="flex flex-col justify-between space-x-4 bg-gray-600/40 p-4">
-  <div class="flex w-full">
-    <div class="flex w-full justify-between">
-      <div class="flex space-x-2">
-        <div class="flex w-16 flex-col items-center">
-          @if (player.championName == null || player.championName == '') {
-            <img
-              class="w-16 rounded-full"
-              src="assets/img/gameon-logo.webp"
-              />
-          }
+  <div class="flex w-full items-center justify-between gap-3">
+    <div class="flex min-w-0 items-center gap-3">
+      <div class="relative flex w-16 justify-center">
+        @if (player.championName == null || player.championName == "") {
+          <img
+            class="h-16 w-16 rounded-full border-2 border-white/40 object-cover"
+            src="assets/img/gameon-logo.webp"
+          />
+        }
 
-          @if (player.championName != null && player.championName != '') {
-            <img
-              class="w-16 rounded-full"
+        @if (player.championName != null && player.championName != "") {
+          <img
+            class="h-16 w-16 rounded-full border-2 border-white/40 object-cover"
             src="https://ddragon.leagueoflegends.com/cdn/{{
               currentLoLPatch
             }}/img/champion/{{ player.championName }}.png"
+          />
+        }
+
+        @if (player.champLevel == null || player.champLevel == 0) {
+          <span
+            class="absolute -bottom-1 rounded-full bg-slate-900 px-1.5 text-xs font-semibold text-white"
+            >??</span
+          >
+        }
+
+        @if (player.champLevel != null && player.champLevel != 0) {
+          <span
+            class="absolute -bottom-1 rounded-full bg-slate-900 px-1.5 text-xs font-semibold text-white"
+            >{{ player.champLevel }}</span
+          >
+        }
+      </div>
+
+      <div class="flex min-w-0 flex-col justify-center">
+        <span class="truncate text-sm font-semibold text-white">{{
+          player.riotIdGameName
+        }}</span>
+        <a
+          class="text-sm text-gray-300"
+          href="https://www.op.gg/summoners/euw/{{ player.riotIdGameName }}-{{
+            player.riotIdTagLine
+          }}"
+          ><fa-icon [icon]="externalIcon"></fa-icon> OP.GG</a
+        >
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center text-sm text-slate-100">
+      <div class="flex flex-col items-center leading-tight">
+        <span class="font-semibold"
+          >{{ player.kills }} / {{ player.deaths }} / {{ player.assists }}</span
+        >
+        <span class="text-xs text-slate-300">K / D / A</span>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-end gap-1.5">
+      <div class="grid grid-cols-4 gap-1.5">
+        @for (
+          item of [player.item0, player.item1, player.item2, player.item3];
+          track $index
+        ) {
+          <div
+            class="h-7 w-7 overflow-hidden rounded-md border border-white/25 bg-slate-900/30"
+          >
+            @if (item != 0) {
+              <img
+                class="h-full w-full object-cover"
+                src="https://ddragon.leagueoflegends.com/cdn/{{
+                  currentLoLPatch
+                }}/img/item/{{ item }}.png"
               />
-          }
-
-          @if (player.champLevel == null || player.champLevel == 0) {
-            <span
-              class="z-50 -mt-2 rounded-full bg-gray-800 text-xs text-white"
-              >??</span
-              >
             }
-
-            @if (player.champLevel != null && player.champLevel != 0) {
-              <span
-                class="z-50 -mt-2 rounded-full bg-gray-800 px-1 text-xs text-white"
-                >{{ player.champLevel }}</span
-                >
-              }
-            </div>
-
-            <div class="flex flex-col justify-center">
-              <span class="text-sm text-white">{{ player.riotIdGameName }}</span>
-              <a
-                class="text-sm text-gray-300"
-            href="https://www.op.gg/summoners/euw/{{ player.riotIdGameName }}-{{
-              player.riotIdTagLine
-            }}"
-                ><fa-icon [icon]="externalIcon"></fa-icon> OP.GG</a
-                >
-              </div>
-            </div>
-
-            <div class="flex items-center justify-center">
-              <span class="text-sm text-white"
-                >{{ player.kills }} / {{ player.deaths }} / {{ player.assists }}</span
-                >
-              </div>
-
-              <div class="flex flex-col">
-                <div class="flex">
-                  @if (player.item0 != 0) {
-                    <img
-                      class="w-6"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/item/{{ player.item0 }}.png"
-                      />
-                    }@if (player.item1 != 0) {
-                    <img
-                      class="w-6"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/item/{{ player.item1 }}.png"
-                      />
-                    }@if (player.item2 != 0) {
-                    <img
-                      class="w-6"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/item/{{ player.item2 }}.png"
-                      />
-                  }
-                </div>
-                <div class="flex">
-                  @if (player.item3 != 0) {
-                    <img
-                      class="w-6"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/item/{{ player.item3 }}.png"
-                      />
-                    }@if (player.item4 != 0) {
-                    <img
-                      class="w-6"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/item/{{ player.item4 }}.png"
-                      />
-                    }@if (player.item5 != 0) {
-                    <img
-                      class="w-6"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/item/{{ player.item5 }}.png"
-                      />
-                    }@if (player.item6 != 0) {
-                    <img
-                      class="w-6"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/item/{{ player.item6 }}.png"
-                      />
-                  }
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="flex w-8 cursor-pointer items-center justify-center text-white"
-              (click)="showPlayerTimeline()"
-              >
-              <fa-icon [icon]="detailsIcon"></fa-icon>
-            </div>
           </div>
+        }
 
-          @if (showTimeline == true) {
-            <div class="mt-4 text-white">
-              <app-lol-game-details-player-graph
-                [timeline]="personalTimeline"
-              ></app-lol-game-details-player-graph>
-            </div>
-          }
-        </div>
+        @for (
+          item of [player.item4, player.item5, player.item6, 0];
+          track $index
+        ) {
+          <div
+            class="h-7 w-7 overflow-hidden rounded-md border border-white/25 bg-slate-900/30"
+          >
+            @if (item != 0) {
+              <img
+                class="h-full w-full object-cover"
+                src="https://ddragon.leagueoflegends.com/cdn/{{
+                  currentLoLPatch
+                }}/img/item/{{ item }}.png"
+              />
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border border-white/25 bg-slate-900/30 text-white transition-colors duration-200 hover:bg-slate-900/50"
+        type="button"
+        (click)="showPlayerTimeline()"
+      >
+        <fa-icon [icon]="detailsIcon"></fa-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+@if (showTimeline == true) {
+  <div class="mt-4 text-white">
+    <app-lol-game-details-player-graph
+      [timeline]="personalTimeline"
+    ></app-lol-game-details-player-graph>
+  </div>
+}
