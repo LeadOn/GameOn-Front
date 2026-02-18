@@ -157,4 +157,108 @@
       </div>
     </div>
   </section>
+
+  @if (isLoading == false) {
+    <section id="lol-game-comparisons" class="px-4 pb-4">
+      <div
+        class="animate-fade-up mt-2 w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+      >
+        <div class="border-b border-white/25 px-3 py-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <img src="assets/img/svg/lol.svg" class="w-7" />
+              <span class="text-base font-semibold text-slate-100"
+                >Comparaison des joueurs</span
+              >
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                class="rounded-md border px-2 py-1 text-xs font-medium transition-colors duration-200"
+                [ngClass]="{
+                  'border-white/30 bg-slate-900/50 text-white':
+                    selectedComparisonFilter == 'all',
+                  'border-white/15 bg-slate-900/20 text-slate-300 hover:bg-slate-900/40':
+                    selectedComparisonFilter != 'all',
+                }"
+                (click)="setComparisonFilter('all')"
+              >
+                Tous
+              </button>
+
+              <button
+                type="button"
+                class="rounded-md border px-2 py-1 text-xs font-medium transition-colors duration-200"
+                [ngClass]="{
+                  'border-white/30 bg-blue-900/45 text-blue-100':
+                    selectedComparisonFilter == 'team1',
+                  'border-white/15 bg-slate-900/20 text-slate-300 hover:bg-slate-900/40':
+                    selectedComparisonFilter != 'team1',
+                }"
+                (click)="setComparisonFilter('team1')"
+              >
+                Équipe 1
+              </button>
+
+              <button
+                type="button"
+                class="rounded-md border px-2 py-1 text-xs font-medium transition-colors duration-200"
+                [ngClass]="{
+                  'border-white/30 bg-red-900/45 text-red-100':
+                    selectedComparisonFilter == 'team2',
+                  'border-white/15 bg-slate-900/20 text-slate-300 hover:bg-slate-900/40':
+                    selectedComparisonFilter != 'team2',
+                }"
+                (click)="setComparisonFilter('team2')"
+              >
+                Équipe 2
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-3 p-3 lg:grid-cols-2">
+          <section
+            class="rounded-lg border border-white/10 bg-slate-900/20 p-3"
+          >
+            <h4
+              class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
+            >
+              KDA
+            </h4>
+            <div class="h-64 w-full">
+              <canvas class="h-full w-full" #kdaComparisonChart></canvas>
+            </div>
+          </section>
+
+          <section
+            class="rounded-lg border border-white/10 bg-slate-900/20 p-3"
+          >
+            <h4
+              class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
+            >
+              Dégâts aux champions
+            </h4>
+            <div class="h-64 w-full">
+              <canvas class="h-full w-full" #damageComparisonChart></canvas>
+            </div>
+          </section>
+
+          <section
+            class="rounded-lg border border-white/10 bg-slate-900/20 p-3 lg:col-span-2"
+          >
+            <h4
+              class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
+            >
+              Économie (Gold / CS)
+            </h4>
+            <div class="h-72 w-full">
+              <canvas class="h-full w-full" #economyComparisonChart></canvas>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  }
 }
