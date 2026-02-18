@@ -35,6 +35,7 @@ export class LolGameDetailsComponent
   kdaChart?: Chart;
   damageChart?: Chart;
   economyChart?: Chart;
+  comparisonChartsBuildTimer?: ReturnType<typeof setTimeout>;
 
   gameId: any;
   playerId: any;
@@ -71,6 +72,10 @@ export class LolGameDetailsComponent
   }
 
   ngOnDestroy(): void {
+    if (this.comparisonChartsBuildTimer != null) {
+      clearTimeout(this.comparisonChartsBuildTimer);
+      this.comparisonChartsBuildTimer = undefined;
+    }
     this.destroyComparisonCharts();
   }
 
@@ -150,9 +155,40 @@ export class LolGameDetailsComponent
   }
 
   private scheduleComparisonChartsRebuild() {
-    setTimeout(() => {
-      this.rebuildComparisonCharts();
+    if (this.comparisonChartsBuildTimer != null) {
+      clearTimeout(this.comparisonChartsBuildTimer);
+      this.comparisonChartsBuildTimer = undefined;
+    }
+
+    this.comparisonChartsBuildTimer = setTimeout(() => {
+      this.tryRebuildComparisonCharts(0);
     }, 0);
+  }
+
+  private tryRebuildComparisonCharts(attempt: number) {
+    if (this.canBuildComparisonCharts()) {
+      this.rebuildComparisonCharts();
+      return;
+    }
+
+    if (attempt >= 12) {
+      return;
+    }
+
+    this.comparisonChartsBuildTimer = setTimeout(() => {
+      this.tryRebuildComparisonCharts(attempt + 1);
+    }, 80);
+  }
+
+  private canBuildComparisonCharts(): boolean {
+    const hasPlayers = this.team1.length + this.team2.length > 0;
+    return (
+      this.isLoading == false &&
+      hasPlayers &&
+      this.kdaComparisonChartCanvas != null &&
+      this.damageComparisonChartCanvas != null &&
+      this.economyComparisonChartCanvas != null
+    );
   }
 
   private rebuildComparisonCharts() {
@@ -404,5 +440,15 @@ export class LolGameDetailsComponent
         },
       },
     );
+
+    setTimeout(() => {
+      this.kdaChart?.resize();
+      this.damageChart?.resize();
+      this.economyChart?.resize();
+
+      this.kdaChart?.update();
+      this.damageChart?.update();
+      this.economyChart?.update();
+    }, 50);
   }
 }
