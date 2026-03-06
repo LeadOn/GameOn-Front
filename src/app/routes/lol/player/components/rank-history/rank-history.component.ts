@@ -1,9 +1,12 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   Input,
   OnChanges,
-  OnInit,
+  OnDestroy,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
@@ -14,24 +17,58 @@ import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/Le
   styleUrl: './rank-history.component.css',
   standalone: false,
 })
-export class RankHistoryComponent implements OnInit, OnChanges {
+export class RankHistoryComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input()
   rankHistory: LeagueOfLegendsRankHistory[] = [];
 
-  chart: any;
+  @ViewChild('rankHistoryChart')
+  rankHistoryChart?: ElementRef<HTMLCanvasElement>;
 
-  ngOnInit(): void {
-    this.buildChart();
+  chart: any;
+  ngAfterViewInit(): void {
+    this.rebuildChart();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.chart != null) {
-      this.chart.destroy();
-      this.buildChart();
+    if (changes['rankHistory']) {
+      queueMicrotask(() => this.rebuildChart());
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroyChart();
+  }
+
+  destroyChart() {
+    if (this.chart != null) {
+      this.chart.destroy();
+      this.chart = null;
+    }
+  }
+
+  rebuildChart() {
+    this.destroyChart();
+
+    if (this.rankHistory == null || this.rankHistory.length === 0) {
+      return;
+    }
+
+    this.buildChart();
+  }
+
   buildChart() {
+    if (this.rankHistoryChart == null) {
+      return;
+    }
+
+    const existingChart = Chart.getChart(this.rankHistoryChart.nativeElement);
+
+    if (existingChart != null) {
+      existingChart.destroy();
+    }
+
     let soloRankedHistory = this.rankHistory.filter(
       (history) => history.queueType === 'RANKED_SOLO_5x5',
     );
@@ -41,6 +78,7 @@ export class RankHistoryComponent implements OnInit, OnChanges {
     );
 
     let fiveLabels: string[] = [];
+    let flexLabels: string[] = [];
     let fiveValues: string[] = [];
     let flexValues: string[] = [];
 
@@ -119,6 +157,8 @@ export class RankHistoryComponent implements OnInit, OnChanges {
     });
 
     flexRankedHistory.forEach((history) => {
+      flexLabels.push(history.createdOn.toString().split('T')[0]);
+
       let points = 0;
 
       switch (history.tier) {
@@ -188,6 +228,10 @@ export class RankHistoryComponent implements OnInit, OnChanges {
       flexValues.push(points.toString());
     });
 
+    if (fiveLabels.length === 0 && flexLabels.length > 0) {
+      fiveLabels = flexLabels;
+    }
+
     // Now adding values if length isn't equal between queues
     if (fiveValues.length > flexValues.length) {
       while (flexValues.length < fiveValues.length) {
@@ -217,7 +261,7 @@ export class RankHistoryComponent implements OnInit, OnChanges {
       });
     }
 
-    this.chart = new Chart('rank-history-chart', {
+    this.chart = new Chart(this.rankHistoryChart.nativeElement, {
       type: 'line',
       data: {
         // values on X-Axis

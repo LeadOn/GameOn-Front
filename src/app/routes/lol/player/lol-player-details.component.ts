@@ -100,6 +100,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   }
 
   getLastGamesPlayed() {
+    this.gameHistoryLoading = true;
     this.lolService.getLastGamesPlayed(this.playerId).subscribe(
       (data) => {
         this.gamesPlayed = data;
@@ -107,16 +108,17 @@ export class LolPlayerDetailsComponent implements OnInit {
       },
       (err) => {
         console.error(err);
+        this.gameHistoryLoading = false;
       },
     );
   }
 
   refreshSummoner() {
     this.loading = true;
+    this.gameHistoryLoading = true;
     this.lolService.refreshById(this.playerId).subscribe(
       () => {
         this.getSummoner();
-        this.getLastGamesPlayed();
       },
       (err) => {
         console.error(err);
@@ -134,5 +136,9 @@ export class LolPlayerDetailsComponent implements OnInit {
         console.error(err);
       },
     );
+  }
+
+  onGameRefreshStarted() {
+    this.gameHistoryLoading = true;
   }
 }

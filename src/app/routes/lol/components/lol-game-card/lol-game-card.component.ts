@@ -1,4 +1,11 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
 import { environment } from '../../../../../environments/environment';
@@ -17,6 +24,12 @@ export class LolGameCardComponent implements OnChanges {
 
   @Input()
   playerId?: number;
+
+  @Output()
+  gameRefreshed = new EventEmitter<void>();
+
+  @Output()
+  gameRefreshStarted = new EventEmitter<void>();
 
   won?: boolean;
   gameDuration?: string;
@@ -37,6 +50,7 @@ export class LolGameCardComponent implements OnChanges {
   itemSlots: number[] = [0, 0, 0, 0, 0, 0];
 
   refreshIcon = faRefresh;
+  isRefreshing = false;
 
   currentLoLPatch: string = environment.currentLoLPatch;
 
@@ -44,6 +58,10 @@ export class LolGameCardComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.calculateValues();
+
+    if (changes['game'] && this.isRefreshing) {
+      this.isRefreshing = false;
+    }
   }
 
   calculateValues() {
@@ -107,14 +125,21 @@ export class LolGameCardComponent implements OnChanges {
   }
 
   updateGame(): void {
+    if (this.isRefreshing) {
+      return;
+    }
+
     let matchId = this.game.matchId;
+    this.isRefreshing = true;
+    this.gameRefreshStarted.emit();
 
     this.lolService.refreshGame(matchId).subscribe(
       (x) => {
-        alert('Merci de rafraichir la page pour voir les changements.');
+        this.gameRefreshed.emit();
       },
       (err) => {
         console.error(err);
+        this.isRefreshing = false;
       },
     );
   }
