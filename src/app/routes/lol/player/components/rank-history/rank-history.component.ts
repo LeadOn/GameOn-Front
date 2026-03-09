@@ -249,7 +249,16 @@ export class RankHistoryComponent
       datasets.push({
         label: 'Solo 5v5',
         data: fiveValues,
-        backgroundColor: '#73C3E9',
+        backgroundColor: 'rgba(115, 195, 233, 0.2)',
+        borderColor: '#73C3E9',
+        borderWidth: 2,
+        pointBackgroundColor: '#73C3E9',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        tension: 0.4,
+        fill: true,
       });
     }
 
@@ -257,7 +266,16 @@ export class RankHistoryComponent
       datasets.push({
         label: 'Flex 5v5',
         data: flexValues,
-        backgroundColor: '#59958c',
+        backgroundColor: 'rgba(89, 149, 140, 0.2)',
+        borderColor: '#59958c',
+        borderWidth: 2,
+        pointBackgroundColor: '#59958c',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        tension: 0.4,
+        fill: true,
       });
     }
 
@@ -269,14 +287,38 @@ export class RankHistoryComponent
         datasets: datasets,
       },
       options: {
-        aspectRatio: 1,
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
+        aspectRatio: 2.5,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
         scales: {
+          x: {
+            grid: {
+              display: true,
+              color: 'rgba(156, 163, 175, 0.2)',
+            },
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+              font: {
+                size: 11,
+              },
+            },
+          },
           y: {
             beginAtZero: true,
+            grid: {
+              display: true,
+              color: 'rgba(156, 163, 175, 0.2)',
+            },
             ticks: {
-              maxTicksLimit: 5,
+              maxTicksLimit: 8,
+              font: {
+                size: 11,
+              },
               callback: (tickValue, index) => {
                 return this.generateDisplayValue(tickValue.toString());
               },
@@ -284,9 +326,36 @@ export class RankHistoryComponent
           },
         },
         plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 15,
+              font: {
+                size: 12,
+              },
+            },
+          },
           tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 10,
+            titleFont: {
+              size: 13,
+            },
+            bodyFont: {
+              size: 12,
+            },
+            cornerRadius: 6,
+            displayColors: true,
             callbacks: {
+              title: function (context) {
+                return context[0].label;
+              },
               label: function (context) {
+                const label = context.dataset.label || '';
                 let numericValue = parseInt(
                   context.parsed?.y?.toString() ?? '0',
                 );
