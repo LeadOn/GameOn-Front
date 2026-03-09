@@ -1,9 +1,12 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   Input,
   OnChanges,
-  OnInit,
+  OnDestroy,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
@@ -14,24 +17,58 @@ import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/Le
   styleUrl: './rank-history.component.css',
   standalone: false,
 })
-export class RankHistoryComponent implements OnInit, OnChanges {
+export class RankHistoryComponent
+  implements AfterViewInit, OnChanges, OnDestroy
+{
   @Input()
   rankHistory: LeagueOfLegendsRankHistory[] = [];
 
-  chart: any;
+  @ViewChild('rankHistoryChart')
+  rankHistoryChart?: ElementRef<HTMLCanvasElement>;
 
-  ngOnInit(): void {
-    this.buildChart();
+  chart: any;
+  ngAfterViewInit(): void {
+    this.rebuildChart();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.chart != null) {
-      this.chart.destroy();
-      this.buildChart();
+    if (changes['rankHistory']) {
+      queueMicrotask(() => this.rebuildChart());
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroyChart();
+  }
+
+  destroyChart() {
+    if (this.chart != null) {
+      this.chart.destroy();
+      this.chart = null;
+    }
+  }
+
+  rebuildChart() {
+    this.destroyChart();
+
+    if (this.rankHistory == null || this.rankHistory.length === 0) {
+      return;
+    }
+
+    this.buildChart();
+  }
+
   buildChart() {
+    if (this.rankHistoryChart == null) {
+      return;
+    }
+
+    const existingChart = Chart.getChart(this.rankHistoryChart.nativeElement);
+
+    if (existingChart != null) {
+      existingChart.destroy();
+    }
+
     let soloRankedHistory = this.rankHistory.filter(
       (history) => history.queueType === 'RANKED_SOLO_5x5',
     );
@@ -41,6 +78,7 @@ export class RankHistoryComponent implements OnInit, OnChanges {
     );
 
     let fiveLabels: string[] = [];
+    let flexLabels: string[] = [];
     let fiveValues: string[] = [];
     let flexValues: string[] = [];
 
@@ -119,6 +157,8 @@ export class RankHistoryComponent implements OnInit, OnChanges {
     });
 
     flexRankedHistory.forEach((history) => {
+      flexLabels.push(history.createdOn.toString().split('T')[0]);
+
       let points = 0;
 
       switch (history.tier) {
@@ -188,6 +228,10 @@ export class RankHistoryComponent implements OnInit, OnChanges {
       flexValues.push(points.toString());
     });
 
+    if (fiveLabels.length === 0 && flexLabels.length > 0) {
+      fiveLabels = flexLabels;
+    }
+
     // Now adding values if length isn't equal between queues
     if (fiveValues.length > flexValues.length) {
       while (flexValues.length < fiveValues.length) {
@@ -205,7 +249,16 @@ export class RankHistoryComponent implements OnInit, OnChanges {
       datasets.push({
         label: 'Solo 5v5',
         data: fiveValues,
-        backgroundColor: '#73C3E9',
+        backgroundColor: 'rgba(115, 195, 233, 0.2)',
+        borderColor: '#73C3E9',
+        borderWidth: 2,
+        pointBackgroundColor: '#73C3E9',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        tension: 0.4,
+        fill: true,
       });
     }
 
@@ -213,11 +266,20 @@ export class RankHistoryComponent implements OnInit, OnChanges {
       datasets.push({
         label: 'Flex 5v5',
         data: flexValues,
-        backgroundColor: '#59958c',
+        backgroundColor: 'rgba(89, 149, 140, 0.2)',
+        borderColor: '#59958c',
+        borderWidth: 2,
+        pointBackgroundColor: '#59958c',
+        pointBorderColor: '#ffffff',
+        pointBorderWidth: 2,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        tension: 0.4,
+        fill: true,
       });
     }
 
-    this.chart = new Chart('rank-history-chart', {
+    this.chart = new Chart(this.rankHistoryChart.nativeElement, {
       type: 'line',
       data: {
         // values on X-Axis
@@ -225,14 +287,38 @@ export class RankHistoryComponent implements OnInit, OnChanges {
         datasets: datasets,
       },
       options: {
-        aspectRatio: 1,
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
+        aspectRatio: 2.5,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
         scales: {
+          x: {
+            grid: {
+              display: true,
+              color: 'rgba(156, 163, 175, 0.2)',
+            },
+            ticks: {
+              maxRotation: 45,
+              minRotation: 45,
+              font: {
+                size: 11,
+              },
+            },
+          },
           y: {
             beginAtZero: true,
+            grid: {
+              display: true,
+              color: 'rgba(156, 163, 175, 0.2)',
+            },
             ticks: {
-              maxTicksLimit: 5,
+              maxTicksLimit: 8,
+              font: {
+                size: 11,
+              },
               callback: (tickValue, index) => {
                 return this.generateDisplayValue(tickValue.toString());
               },
@@ -240,9 +326,36 @@ export class RankHistoryComponent implements OnInit, OnChanges {
           },
         },
         plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            align: 'end',
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 15,
+              font: {
+                size: 12,
+              },
+            },
+          },
           tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 10,
+            titleFont: {
+              size: 13,
+            },
+            bodyFont: {
+              size: 12,
+            },
+            cornerRadius: 6,
+            displayColors: true,
             callbacks: {
+              title: function (context) {
+                return context[0].label;
+              },
               label: function (context) {
+                const label = context.dataset.label || '';
                 let numericValue = parseInt(
                   context.parsed?.y?.toString() ?? '0',
                 );

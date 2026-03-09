@@ -1,0 +1,8 @@
+.chart-container {
+  position: relative;
+  width: 100%;
+}
+
+#rank-history-chart {
+  max-height: 400px;
+}

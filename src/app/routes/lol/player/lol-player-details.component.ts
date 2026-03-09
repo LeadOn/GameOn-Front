@@ -6,6 +6,8 @@ import { LeagueOfLegendsRankHistory } from '../../../shared/classes/lol/LeagueOf
 import { LoLGame } from '../../../shared/classes/lol/LoLGame';
 import { environment } from '../../../../environments/environment';
 import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameon-lol.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-lol-player-details',
@@ -14,6 +16,8 @@ import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameo
   standalone: false,
 })
 export class LolPlayerDetailsComponent implements OnInit {
+  lolVersion$: Observable<string>;
+
   playerId: any;
   loading = true;
   gameHistoryLoading = true;
@@ -28,7 +32,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   flexWinRate = 0.0;
   overAllWinRate = 0.0;
   gamesPlayed: LoLGame[] = [];
-  currentLoLPatch: string = environment.currentLoLPatch;
+  currentLoLPatch: string = '';
   syncIcon = faSync;
   externalIcon = faExternalLink;
   apiUrl = environment.gameOnApiUrl;
@@ -36,11 +40,18 @@ export class LolPlayerDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private lolService: GameOnLoLService,
-  ) {}
+    private lolStore: Store<{ lolVersion: string }>,
+  ) {
+    this.lolVersion$ = this.lolStore.select('lolVersion');
+  }
 
   ngOnInit(): void {
     this.playerId = this.route.snapshot.paramMap.get('id');
     this.getSummoner();
+
+    this.lolVersion$.subscribe((version) => {
+      this.currentLoLPatch = version;
+    });
   }
 
   getSummoner() {
@@ -100,6 +111,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   }
 
   getLastGamesPlayed() {
+    this.gameHistoryLoading = true;
     this.lolService.getLastGamesPlayed(this.playerId).subscribe(
       (data) => {
         this.gamesPlayed = data;
@@ -107,16 +119,17 @@ export class LolPlayerDetailsComponent implements OnInit {
       },
       (err) => {
         console.error(err);
+        this.gameHistoryLoading = false;
       },
     );
   }
 
   refreshSummoner() {
     this.loading = true;
+    this.gameHistoryLoading = true;
     this.lolService.refreshById(this.playerId).subscribe(
       () => {
         this.getSummoner();
-        this.getLastGamesPlayed();
       },
       (err) => {
         console.error(err);
@@ -134,5 +147,9 @@ export class LolPlayerDetailsComponent implements OnInit {
         console.error(err);
       },
     );
+  }
+
+  onGameRefreshStarted() {
+    this.gameHistoryLoading = true;
   }
 }
