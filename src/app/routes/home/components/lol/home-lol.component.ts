@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
-import { environment } from '../../../../../environments/environment';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-home-lol',
@@ -8,7 +9,19 @@ import { environment } from '../../../../../environments/environment';
   styleUrl: './home-lol.component.css',
   standalone: false,
 })
-export class HomeLolComponent {
-  lolVersion = environment.currentLoLPatch;
+export class HomeLolComponent implements OnInit {
+  lolVersion$: Observable<string>;
+
+  lolVersion = '';
   externalIcon = faExternalLink;
+
+  constructor(private lolStore: Store<{ lolVersion: string }>) {
+    this.lolVersion$ = this.lolStore.select('lolVersion');
+  }
+
+  ngOnInit(): void {
+    this.lolVersion$.subscribe((version) => {
+      this.lolVersion = version;
+    });
+  }
 }

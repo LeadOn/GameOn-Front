@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -10,6 +11,8 @@ import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
 import { environment } from '../../../../../environments/environment';
 import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/gameon-lol.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-lol-game-card',
@@ -18,7 +21,7 @@ import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/ga
   templateUrl: './lol-game-card.component.html',
   styleUrl: './lol-game-card.component.css',
 })
-export class LolGameCardComponent implements OnChanges {
+export class LolGameCardComponent implements OnInit, OnChanges {
   @Input()
   game: LoLGame = new LoLGame();
 
@@ -30,6 +33,8 @@ export class LolGameCardComponent implements OnChanges {
 
   @Output()
   gameRefreshStarted = new EventEmitter<void>();
+
+  lolVersion$: Observable<string>;
 
   won?: boolean;
   gameDuration?: string;
@@ -52,9 +57,14 @@ export class LolGameCardComponent implements OnChanges {
   refreshIcon = faRefresh;
   isRefreshing = false;
 
-  currentLoLPatch: string = environment.currentLoLPatch;
+  currentLoLPatch: string = '';
 
-  constructor(private lolService: GameOnLoLService) {}
+  constructor(
+    private lolService: GameOnLoLService,
+    private lolStore: Store<{ lolVersion: string }>,
+  ) {
+    this.lolVersion$ = this.lolStore.select('lolVersion');
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.calculateValues();
@@ -62,6 +72,12 @@ export class LolGameCardComponent implements OnChanges {
     if (changes['game'] && this.isRefreshing) {
       this.isRefreshing = false;
     }
+  }
+
+  ngOnInit(): void {
+    this.lolVersion$.subscribe((version) => {
+      this.currentLoLPatch = version;
+    });
   }
 
   calculateValues() {
