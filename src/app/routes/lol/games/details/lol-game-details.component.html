@@ -30,7 +30,7 @@
         <app-pill
           [icon]="calendarIcon"
           [iconColor]="'white'"
-          [title]="game.retrievedOn.toString()"
+          [title]="formatRetrievedOn(game.retrievedOn)"
         ></app-pill>
       }
       <app-pill

@@ -29,6 +29,7 @@ import { HomeChangelogComponent } from './routes/home/components/changelog/home-
 import { HomeFifaComponent } from './routes/home/components/fifa/home-fifa.component';
 import { HomeLolComponent } from './routes/home/components/lol/home-lol.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
+import { lolVersionReducer } from './core/store/reducers/lol.reducer';
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -60,6 +61,7 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     StoreModule.forRoot({
       player: playerReducer,
       globalStats: playerStatsReducer,
+      lolVersion: lolVersionReducer,
     }),
     ClipboardModule,
     AdminModule,

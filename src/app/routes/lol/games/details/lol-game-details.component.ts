@@ -154,6 +154,42 @@ export class LolGameDetailsComponent
     this.scheduleComparisonChartsRebuild();
   }
 
+  formatRetrievedOn(date?: Date | string): string {
+    if (!date) {
+      return 'Date inconnue';
+    }
+
+    if (date instanceof Date) {
+      if (Number.isNaN(date.getTime())) {
+        return 'Date inconnue';
+      }
+
+      return new Intl.DateTimeFormat('fr-FR', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }).format(date);
+    }
+
+    const normalizedDate = date.match(
+      /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/,
+    );
+
+    if (normalizedDate) {
+      const [, year, month, day, hours, minutes] = normalizedDate;
+      return `${day}/${month}/${year} à ${hours}:${minutes}`;
+    }
+
+    const parsedDate = new Date(date);
+    if (!Number.isNaN(parsedDate.getTime())) {
+      return new Intl.DateTimeFormat('fr-FR', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }).format(parsedDate);
+    }
+
+    return date;
+  }
+
   private scheduleComparisonChartsRebuild() {
     if (this.comparisonChartsBuildTimer != null) {
       clearTimeout(this.comparisonChartsBuildTimer);
