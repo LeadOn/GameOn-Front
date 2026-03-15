@@ -63,6 +63,10 @@ export class RankHistoryComponent
       return;
     }
 
+    const isMobileViewport =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 768px)').matches;
+
     const existingChart = Chart.getChart(this.rankHistoryChart.nativeElement);
 
     if (existingChart != null) {
@@ -288,8 +292,8 @@ export class RankHistoryComponent
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 2.5,
+        maintainAspectRatio: !isMobileViewport,
+        aspectRatio: isMobileViewport ? 1.4 : 2.5,
         interaction: {
           mode: 'index',
           intersect: false,
@@ -301,10 +305,12 @@ export class RankHistoryComponent
               color: 'rgba(156, 163, 175, 0.2)',
             },
             ticks: {
-              maxRotation: 45,
-              minRotation: 45,
+              autoSkip: true,
+              maxTicksLimit: isMobileViewport ? 5 : 10,
+              maxRotation: isMobileViewport ? 0 : 45,
+              minRotation: 0,
               font: {
-                size: 11,
+                size: isMobileViewport ? 10 : 11,
               },
             },
           },
@@ -315,9 +321,9 @@ export class RankHistoryComponent
               color: 'rgba(156, 163, 175, 0.2)',
             },
             ticks: {
-              maxTicksLimit: 8,
+              maxTicksLimit: isMobileViewport ? 6 : 8,
               font: {
-                size: 11,
+                size: isMobileViewport ? 10 : 11,
               },
               callback: (tickValue, index) => {
                 return this.generateDisplayValue(tickValue.toString());
@@ -328,14 +334,14 @@ export class RankHistoryComponent
         plugins: {
           legend: {
             display: true,
-            position: 'top',
-            align: 'end',
+            position: isMobileViewport ? 'bottom' : 'top',
+            align: isMobileViewport ? 'center' : 'end',
             labels: {
               usePointStyle: true,
               pointStyle: 'circle',
-              padding: 15,
+              padding: isMobileViewport ? 10 : 15,
               font: {
-                size: 12,
+                size: isMobileViewport ? 11 : 12,
               },
             },
           },
