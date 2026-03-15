@@ -64,7 +64,8 @@ export class RankHistoryComponent
     }
 
     const isMobileViewport =
-      typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+      typeof window !== 'undefined' &&
+      window.matchMedia('(max-width: 768px)').matches;
 
     const existingChart = Chart.getChart(this.rankHistoryChart.nativeElement);
 
