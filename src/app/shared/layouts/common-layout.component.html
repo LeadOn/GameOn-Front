@@ -1,17 +1,19 @@
-<div class="bg-bgLightDarker dark:bg-bgDarkDarker h-screen overflow-x-hidden">
-  <div class="background h-screen overflow-x-hidden">
+<div
+  class="bg-bgLightDarker dark:bg-bgDarkDarker min-h-screen overflow-x-hidden"
+>
+  <div class="background min-h-screen overflow-x-hidden">
     <header
-      class="bg-bgLight/40 dark:bg-bgDark/40 sticky top-0 z-50 flex h-16 items-center justify-between self-center px-4 backdrop-blur-xs backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-      >
+      class="bg-bgLight/40 dark:bg-bgDark/40 backdrop-blur-xs sticky top-0 z-50 flex h-16 items-center justify-between self-center px-4 backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    >
       <a
         routerLink=""
         class="text-primaryDarker flex items-center justify-center self-center text-xl font-bold"
         ><img
-        class="h-8 w-8"
-        src="assets/img/gameon-logo.webp"
-        alt="GameOn!'s logo"
+          class="h-8 w-8"
+          src="assets/img/gameon-logo.webp"
+          alt="GameOn!'s logo"
         />
-      <span class="dark:text-primaryDark ml-2">GameOn!</span></a
+        <span class="dark:text-primaryDark ml-2">GameOn!</span></a
       >
 
       <div class="flex items-center justify-center space-x-4">
@@ -32,7 +34,7 @@
       </div>
     </header>
 
-    <div>
+    <div class="bubble-layer" aria-hidden="true">
       <span class="bubble"></span>
       <span class="bubble"></span>
       <span class="bubble"></span>
@@ -50,15 +52,15 @@
     </div>
 
     <nav
-      class="border-l-frenchBlue border-r-frenchRed bg-bgLight/50 dark:border-y-bgLight dark:bg-bgDark/50 fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-r-2 border-l-2 border-t-gray-300 border-b-gray-300 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-      >
+      class="border-l-frenchBlue border-r-frenchRed bg-bgLight/50 dark:border-y-bgLight dark:bg-bgDark/50 fixed bottom-4 left-1/2 z-50 h-16 w-11/12 max-w-lg -translate-x-1/2 rounded-full border border-l-2 border-r-2 border-b-gray-300 border-t-gray-300 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    >
       <div
         class="flex h-full w-full grow basis-1 items-center justify-around align-middle"
-        >
+      >
         <div
           routerLink=""
           class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full"
-          >
+        >
           <fa-icon
             [icon]="homeIcon"
             class="text-primary dark:text-primaryDark text-lg"
@@ -68,7 +70,7 @@
         <div
           routerLink="/fifa"
           class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full"
-          >
+        >
           <fa-icon
             [icon]="ballIcon"
             class="text-primary dark:text-primaryDark text-lg"
@@ -77,22 +79,22 @@
 
         <div
           class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full"
-          >
+        >
           <img
             src="assets/img/svg/lol.svg"
             routerLink="/lol"
             class="w-10 min-w-10"
-            />
+          />
         </div>
 
         <div
           class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full"
-          >
+        >
           <button
             routerLink="/fifa/tournaments"
             type="button"
             class="cursor-pointer"
-            >
+          >
             <fa-icon
               [icon]="trophyIcon"
               class="text-primary dark:text-primaryDark text-lg"
@@ -102,13 +104,13 @@
 
         <div
           class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-s-full"
-          >
+        >
           @if (isLoggedIn == true) {
             <button
               routerLink="/player/me"
               type="button"
               class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-e-full"
-              >
+            >
               <fa-icon
                 [icon]="userIcon"
                 class="text-primary dark:text-primaryDark text-lg"
@@ -121,7 +123,7 @@
               (click)="login()"
               type="button"
               class="group inline-flex cursor-pointer flex-col items-center justify-center rounded-e-full"
-              >
+            >
               <fa-icon
                 [icon]="userIcon"
                 class="text-primary dark:text-primaryDark text-lg"
@@ -134,8 +136,8 @@
 
     <div>
       <div
-        class="3xl:px-96 bg-bgLightDarker dark:bg-bgDarkDarker px-0 pb-24 md:px-16 lg:overflow-y-scroll lg:px-32 lg:pb-0 xl:px-64 2xl:px-80"
-        >
+        class="3xl:px-96 px-0 pb-24 md:px-16 lg:overflow-y-scroll lg:px-32 lg:pb-0 xl:px-64 2xl:px-80"
+      >
         <router-outlet></router-outlet>
       </div>
     </div>

@@ -96,20 +96,17 @@
       </div>
 
       <button
-        class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border border-white/25 bg-slate-900/30 text-white transition-colors duration-200 hover:bg-slate-900/50"
+        class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border text-white transition-colors duration-200"
+        [ngClass]="{
+          'border-white/40 bg-slate-200/20': isSelected,
+          'border-white/25 bg-slate-900/30 hover:bg-slate-900/50':
+            isSelected == false,
+        }"
         type="button"
-        (click)="showPlayerTimeline()"
+        (click)="selectPlayer()"
       >
         <fa-icon [icon]="detailsIcon"></fa-icon>
       </button>
     </div>
   </div>
 </div>
-
-@if (showTimeline == true) {
-  <div class="mt-4 text-white">
-    <app-lol-game-details-player-graph
-      [timeline]="personalTimeline"
-    ></app-lol-game-details-player-graph>
-  </div>
-}

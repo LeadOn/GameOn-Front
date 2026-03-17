@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
@@ -21,7 +22,7 @@ import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/ga
   standalone: false,
 })
 export class LolGameDetailsComponent
-  implements OnInit, AfterViewInit, OnDestroy
+  implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy
 {
   @ViewChild('kdaComparisonChart')
   kdaComparisonChartCanvas?: ElementRef<HTMLCanvasElement>;
@@ -31,6 +32,9 @@ export class LolGameDetailsComponent
 
   @ViewChild('economyComparisonChart')
   economyComparisonChartCanvas?: ElementRef<HTMLCanvasElement>;
+
+  @ViewChild('playerHighlight')
+  playerHighlight?: ElementRef<HTMLDivElement>;
 
   kdaChart?: Chart;
   damageChart?: Chart;
@@ -45,6 +49,8 @@ export class LolGameDetailsComponent
   team2: LoLGameParticipant[] = [];
 
   timeline?: LoLGameTimelineFrame[];
+  selectedPlayer?: LoLGameParticipant;
+  selectedPlayerTimeline?: LoLGameTimelineFrame[];
   selectedComparisonFilter: 'all' | 'team1' | 'team2' = 'all';
 
   patchTitle = 'Patch inconnu';
@@ -54,6 +60,7 @@ export class LolGameDetailsComponent
 
   isLoading = true;
   gameError = false;
+  private shouldFocusPlayerHighlight = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,6 +76,25 @@ export class LolGameDetailsComponent
 
   ngAfterViewInit(): void {
     this.rebuildComparisonCharts();
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.shouldFocusPlayerHighlight == false) {
+      return;
+    }
+
+    const highlight = this.playerHighlight?.nativeElement;
+    if (highlight == null) {
+      return;
+    }
+
+    highlight.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+
+    highlight.focus({ preventScroll: true });
+    this.shouldFocusPlayerHighlight = false;
   }
 
   ngOnDestroy(): void {
@@ -139,6 +165,11 @@ export class LolGameDetailsComponent
     this.lolService.getGameTimeline(this.gameId).subscribe(
       (timeline) => {
         this.timeline = timeline;
+        if (this.selectedPlayer != null) {
+          this.selectedPlayerTimeline = this.buildPersonalTimeline(
+            this.selectedPlayer,
+          );
+        }
         this.isLoading = false;
         this.scheduleComparisonChartsRebuild();
       },
@@ -188,6 +219,40 @@ export class LolGameDetailsComponent
     }
 
     return date;
+  }
+
+  onPlayerSelected(player: LoLGameParticipant) {
+    this.selectedPlayer = player;
+    this.selectedPlayerTimeline = this.buildPersonalTimeline(player);
+    this.shouldFocusPlayerHighlight = true;
+  }
+
+  private buildPersonalTimeline(
+    player: LoLGameParticipant,
+  ): LoLGameTimelineFrame[] | undefined {
+    if (this.timeline == null) {
+      return undefined;
+    }
+
+    const personalTimeline: LoLGameTimelineFrame[] = [];
+
+    this.timeline.forEach((frame) => {
+      const personalFrame = new LoLGameTimelineFrame();
+      personalFrame.timestamp = frame.timestamp;
+      personalFrame.matchId = frame.matchId;
+      personalFrame.id = frame.id;
+      personalFrame.loLGameTimelineFrameParticipants = [];
+
+      frame.loLGameTimelineFrameParticipants.forEach((participant) => {
+        if (participant.participantPUUID == player.puuid) {
+          personalFrame.loLGameTimelineFrameParticipants.push(participant);
+        }
+      });
+
+      personalTimeline.push(personalFrame);
+    });
+
+    return personalTimeline;
   }
 
   private scheduleComparisonChartsRebuild() {
