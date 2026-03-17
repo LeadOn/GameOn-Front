@@ -16,6 +16,9 @@ import { Store } from '@ngrx/store';
   standalone: false,
 })
 export class LolPlayerDetailsComponent implements OnInit {
+  private readonly autoRankSyncThresholdMs = 60 * 60 * 1000;
+  private hasAutoRankSynced = false;
+
   lolVersion$: Observable<string>;
 
   playerId: any;
@@ -58,12 +61,34 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.lolService.getById(this.playerId).subscribe(
       (player) => {
         this.player = player;
+
+        if (this.shouldAutoSyncRank(player)) {
+          this.hasAutoRankSynced = true;
+          this.refreshSummoner();
+          return;
+        }
+
         this.getRankHistory();
         this.getLastGamesPlayed();
       },
       (err) => {
         console.error(err);
       },
+    );
+  }
+
+  shouldAutoSyncRank(player: PlayerDto): boolean {
+    if (this.hasAutoRankSynced || player.lolRefreshedOn == null) {
+      return false;
+    }
+
+    const lastRefreshDate = new Date(player.lolRefreshedOn);
+    if (Number.isNaN(lastRefreshDate.getTime())) {
+      return false;
+    }
+
+    return (
+      Date.now() - lastRefreshDate.getTime() > this.autoRankSyncThresholdMs
     );
   }
 

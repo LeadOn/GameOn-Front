@@ -14,34 +14,118 @@
 ></app-info-message>
 
 @if (isLoading == true) {
-  <app-loading-spinner></app-loading-spinner>
+  <section id="game-pill-skeleton" class="px-4">
+    <div class="flex justify-between pt-4">
+      @for (pill of [1, 2, 3, 4, 5]; track pill) {
+        <div class="skeleton-pill h-8 w-24"></div>
+      }
+    </div>
+  </section>
+
+  <div class="mt-4 px-4">
+    <div class="skeleton-soft h-24 w-full rounded-lg"></div>
+  </div>
+
+  <div class="mt-4 grid grid-cols-1 gap-4 px-4 xl:grid-cols-2">
+    @for (team of [1, 2]; track team) {
+      <section>
+        <div
+          class="mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+        >
+          <div class="w-1.5 bg-slate-500"></div>
+          <div class="w-full">
+            <div
+              class="flex items-center justify-between border-b border-white/25 px-3 py-2"
+            >
+              <div class="skeleton-slate h-5 w-24"></div>
+              <div class="skeleton-slate h-5 w-16"></div>
+            </div>
+
+            <div class="space-y-2 p-3">
+              @for (row of [1, 2, 3, 4, 5]; track row) {
+                <div class="flex items-center gap-3">
+                  <div class="skeleton-slate h-10 w-10 rounded-full"></div>
+                  <div class="flex-1 space-y-2">
+                    <div class="skeleton-slate h-3 w-2/3"></div>
+                    <div class="skeleton-slate-soft h-3 w-1/2"></div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+    }
+  </div>
+
+  <section class="px-4 pb-4">
+    <div
+      class="mt-2 w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+    >
+      <div class="border-b border-white/25 px-3 py-2">
+        <div class="skeleton-slate h-5 w-52"></div>
+      </div>
+      <div class="grid grid-cols-1 gap-3 p-3 lg:grid-cols-2">
+        <div class="rounded-lg border border-white/10 bg-slate-900/20 p-3">
+          <div class="skeleton-slate-soft mb-2 h-4 w-20"></div>
+          <div class="skeleton-slate-faint h-64 w-full"></div>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-slate-900/20 p-3">
+          <div class="skeleton-slate-soft mb-2 h-4 w-40"></div>
+          <div class="skeleton-slate-faint h-64 w-full"></div>
+        </div>
+        <div
+          class="rounded-lg border border-white/10 bg-slate-900/20 p-3 lg:col-span-2"
+        >
+          <div class="skeleton-slate-soft mb-2 h-4 w-44"></div>
+          <div class="skeleton-slate-faint h-72 w-full"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 }
 
 @if (isLoading == false) {
   <section id="game-pill" class="px-4">
-    <div class="flex justify-between pt-4">
-      @if (game != null && game.endOfGameResult != null) {
-        <app-pill [title]="game.endOfGameResult" [bgStyle]="'green'"></app-pill>
-      }
-      @if (game != null && game.endOfGameResult == null) {
-        <app-pill [title]="'Partie non synchronisée'"></app-pill>
-      }
+    <div class="flex flex-wrap items-center gap-2 pt-4">
       @if (game != null) {
-        <app-pill
-          [icon]="calendarIcon"
-          [iconColor]="'white'"
-          [title]="formatRetrievedOn(game.retrievedOn)"
-        ></app-pill>
-      }
-      <app-pill
-        [icon]="refreshIcon"
-        [iconColor]="'white'"
-        (click)="updateGame()"
-        [title]="'Synchroniser'"
-      >
-      </app-pill>
-      @if (game != null) {
-        <app-pill [title]="patchTitle"></app-pill>
+        <span
+          class="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur-md"
+          [ngClass]="{
+            'border-customGreen/45 bg-customGreen/30 text-white':
+              game.endOfGameResult != null,
+            'border-white/25 bg-slate-900/45 text-slate-50':
+              game.endOfGameResult == null,
+          }"
+        >
+          {{
+            game.endOfGameResult != null
+              ? game.endOfGameResult
+              : "Partie non synchronisée"
+          }}
+        </span>
+
+        <span
+          class="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-slate-900/45 px-3 py-1 text-xs font-medium text-slate-50 shadow-sm backdrop-blur-md"
+        >
+          <fa-icon [icon]="calendarIcon" class="text-slate-200"></fa-icon>
+          <span>{{ formatRetrievedOn(game.retrievedOn) }}</span>
+        </span>
+
+        <button
+          type="button"
+          class="inline-flex items-center gap-1.5 rounded-full border border-blue-300/45 bg-blue-600/35 px-3 py-1 text-xs font-semibold text-blue-50 shadow-sm backdrop-blur-md transition hover:bg-blue-600/45"
+          (click)="updateGame()"
+        >
+          <fa-icon [icon]="refreshIcon" class="text-blue-200"></fa-icon>
+          <span>Synchroniser</span>
+        </button>
+
+        <span
+          class="inline-flex items-center rounded-full border border-white/25 bg-slate-900/45 px-3 py-1 text-xs font-medium text-slate-50 shadow-sm backdrop-blur-md"
+        >
+          {{ patchTitle }}
+        </span>
       }
     </div>
   </section>
@@ -53,115 +137,145 @@
   }
 </div>
 
-@if (game != null) {
-  <section id="lol-team1" class="mt-4 px-4">
-    <div
-      class="animate-fade-up mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
-    >
+@if (game != null && isLoading == false) {
+  <div class="mt-4 grid grid-cols-1 gap-4 px-4 xl:grid-cols-2">
+    <section id="lol-team1">
       <div
-        class="w-1.5"
-        [ngClass]="{
-          'bg-slate-500': game.winningTeamId == 0,
-          'bg-blue-600': game.winningTeamId == 100,
-          'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 100,
-        }"
-      ></div>
-
-      <div class="w-full">
+        class="mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+      >
         <div
-          class="flex items-center justify-between border-b border-white/25 px-3 py-2"
-        >
-          <div class="flex items-center gap-2">
-            <img src="assets/img/svg/lol.svg" class="w-7" />
-            <span class="text-base font-semibold text-slate-100">Equipe 1</span>
-            @if (game.winningTeamId != 0) {
-              <span
-                class="text-sm font-semibold"
-                [ngClass]="{
-                  'text-customGreen': game.winningTeamId == 100,
-                  'text-frenchRed': game.winningTeamId != 100,
-                }"
+          class="w-1.5"
+          [ngClass]="{
+            'bg-slate-500': game.winningTeamId == 0,
+            'bg-blue-600': game.winningTeamId == 100,
+            'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 100,
+          }"
+        ></div>
+
+        <div class="w-full">
+          <div
+            class="flex items-center justify-between border-b border-white/25 px-3 py-2"
+          >
+            <div class="flex items-center gap-2">
+              <img src="assets/img/svg/lol.svg" class="w-7" />
+              <span class="text-base font-semibold text-slate-100"
+                >Equipe 1</span
               >
-                {{ game.winningTeamId == 100 ? "Victoire" : "Défaite" }}
-              </span>
-            }
+              @if (game.winningTeamId != 0) {
+                <span
+                  class="text-sm font-semibold"
+                  [ngClass]="{
+                    'text-customGreen': game.winningTeamId == 100,
+                    'text-frenchRed': game.winningTeamId != 100,
+                  }"
+                >
+                  {{ game.winningTeamId == 100 ? "Victoire" : "Défaite" }}
+                </span>
+              }
+            </div>
           </div>
 
-          @if (isLoading == true) {
-            <app-loading-spinner-tiny></app-loading-spinner-tiny>
+          @if (team1.length > 0) {
+            <div class="divide-y divide-white/15">
+              @for (player of team1; track player) {
+                <app-lol-game-details-player
+                  [player]="player"
+                  [isSelected]="selectedPlayer?.puuid == player.puuid"
+                  (playerSelected)="onPlayerSelected($event)"
+                ></app-lol-game-details-player>
+              }
+            </div>
           }
         </div>
-
-        @if (team1.length > 0) {
-          <div class="divide-y divide-white/15">
-            @for (player of team1; track player) {
-              <app-lol-game-details-player
-                [player]="player"
-                [timeline]="timeline"
-              ></app-lol-game-details-player>
-            }
-          </div>
-        }
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="lol-team2" class="px-4">
-    <div
-      class="animate-fade-up mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
-    >
+    <section id="lol-team2">
       <div
-        class="w-1.5"
-        [ngClass]="{
-          'bg-slate-500': game.winningTeamId == 0,
-          'bg-blue-600': game.winningTeamId == 200,
-          'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 200,
-        }"
-      ></div>
-
-      <div class="w-full">
+        class="mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+      >
         <div
-          class="flex items-center justify-between border-b border-white/25 px-3 py-2"
-        >
-          <div class="flex items-center gap-2">
-            <img src="assets/img/svg/lol.svg" class="w-7" />
-            <span class="text-base font-semibold text-slate-100">Equipe 2</span>
-            @if (game.winningTeamId != 0) {
-              <span
-                class="text-sm font-semibold"
-                [ngClass]="{
-                  'text-customGreen': game.winningTeamId == 200,
-                  'text-frenchRed': game.winningTeamId != 200,
-                }"
+          class="w-1.5"
+          [ngClass]="{
+            'bg-slate-500': game.winningTeamId == 0,
+            'bg-blue-600': game.winningTeamId == 200,
+            'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 200,
+          }"
+        ></div>
+
+        <div class="w-full">
+          <div
+            class="flex items-center justify-between border-b border-white/25 px-3 py-2"
+          >
+            <div class="flex items-center gap-2">
+              <img src="assets/img/svg/lol.svg" class="w-7" />
+              <span class="text-base font-semibold text-slate-100"
+                >Equipe 2</span
               >
-                {{ game.winningTeamId == 200 ? "Victoire" : "Défaite" }}
-              </span>
-            }
+              @if (game.winningTeamId != 0) {
+                <span
+                  class="text-sm font-semibold"
+                  [ngClass]="{
+                    'text-customGreen': game.winningTeamId == 200,
+                    'text-frenchRed': game.winningTeamId != 200,
+                  }"
+                >
+                  {{ game.winningTeamId == 200 ? "Victoire" : "Défaite" }}
+                </span>
+              }
+            </div>
           </div>
 
-          @if (isLoading == true) {
-            <app-loading-spinner-tiny></app-loading-spinner-tiny>
+          @if (team2.length > 0) {
+            <div class="divide-y divide-white/15">
+              @for (player of team2; track player) {
+                <app-lol-game-details-player
+                  [player]="player"
+                  [isSelected]="selectedPlayer?.puuid == player.puuid"
+                  (playerSelected)="onPlayerSelected($event)"
+                ></app-lol-game-details-player>
+              }
+            </div>
           }
         </div>
-
-        @if (team2.length > 0) {
-          <div class="divide-y divide-white/15">
-            @for (player of team2; track player) {
-              <app-lol-game-details-player
-                [player]="player"
-                [timeline]="timeline"
-              ></app-lol-game-details-player>
-            }
-          </div>
-        }
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
+
+  @if (selectedPlayer != null) {
+    <section id="lol-player-highlight" class="px-4 pb-2">
+      <div
+        #playerHighlight
+        tabindex="-1"
+        class="w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+      >
+        <div class="border-b border-white/25 px-3 py-2">
+          <div class="flex items-center gap-2">
+            <img src="assets/img/svg/lol.svg" class="w-7" />
+            <span class="text-base font-semibold text-slate-100"
+              >Focus joueur</span
+            >
+            <span class="text-sm text-slate-300"
+              >{{ selectedPlayer.riotIdGameName }}#{{
+                selectedPlayer.riotIdTagLine
+              }}</span
+            >
+          </div>
+        </div>
+
+        <div class="p-3 text-white">
+          <app-lol-game-details-player-graph
+            [timeline]="selectedPlayerTimeline"
+          ></app-lol-game-details-player-graph>
+        </div>
+      </div>
+    </section>
+  }
 
   @if (isLoading == false) {
     <section id="lol-game-comparisons" class="px-4 pb-4">
       <div
-        class="animate-fade-up mt-2 w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+        class="mt-2 w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
       >
         <div class="border-b border-white/25 px-3 py-2">
           <div class="flex flex-wrap items-center justify-between gap-2">

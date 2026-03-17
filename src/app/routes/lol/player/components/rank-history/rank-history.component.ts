@@ -292,8 +292,7 @@ export class RankHistoryComponent
       },
       options: {
         responsive: true,
-        maintainAspectRatio: !isMobileViewport,
-        aspectRatio: isMobileViewport ? 1.4 : 2.5,
+        maintainAspectRatio: false,
         interaction: {
           mode: 'index',
           intersect: false,

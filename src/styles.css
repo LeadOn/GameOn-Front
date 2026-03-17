@@ -43,6 +43,46 @@
   --color-frenchRed: #ed2939;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+@layer components {
+  .skeleton-base {
+    @apply bg-bgLightDarker dark:bg-bgDarkDarker animate-pulse rounded;
+  }
+
+  .skeleton-soft {
+    @apply bg-bgLight dark:bg-bgDark animate-pulse rounded;
+  }
+
+  .skeleton-pill {
+    @apply bg-bgLight dark:bg-bgDark animate-pulse rounded-full;
+  }
+
+  .skeleton-circle {
+    @apply bg-bgLightDarker dark:bg-bgDarkDarker animate-pulse rounded-full;
+  }
+
+  .skeleton-slate {
+    @apply animate-pulse rounded bg-slate-300/40;
+  }
+
+  .skeleton-slate-soft {
+    @apply animate-pulse rounded bg-slate-300/30;
+  }
+
+  .skeleton-slate-faint {
+    @apply animate-pulse rounded bg-slate-300/20;
+  }
+}
+
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
