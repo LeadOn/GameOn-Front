@@ -7,7 +7,7 @@ import { PlayerDto } from '../../classes/common/PlayerDto';
 import { LeagueOfLegendsRankHistory } from '../../classes/lol/LeagueOfLegendsRankHistory';
 import { LoLGame } from '../../classes/lol/LoLGame';
 import { LoLGameTimelineFrame } from '../../classes/lol/LoLGameTimelineFrame';
-import { ListResultDto } from '../../classes/common/ListResultdto';
+import { ListResultDto } from '../../classes/common/ListResultDto';
 
 @Injectable({
   providedIn: 'root',
