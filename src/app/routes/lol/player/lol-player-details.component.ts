@@ -40,6 +40,13 @@ export class LolPlayerDetailsComponent implements OnInit {
   externalIcon = faExternalLink;
   apiUrl = environment.gameOnApiUrl;
 
+  currentPage = 1;
+  pageSize = 5;
+  totalItems = 0;
+  totalPages = 1;
+  hasNextPage = false;
+  rankedOnly = true;
+
   constructor(
     private route: ActivatedRoute,
     private lolService: GameOnLoLService,
@@ -136,17 +143,134 @@ export class LolPlayerDetailsComponent implements OnInit {
   }
 
   getLastGamesPlayed() {
+    const requestedPage = this.currentPage;
     this.gameHistoryLoading = true;
-    this.lolService.getLastGamesPlayed(this.playerId).subscribe(
-      (data) => {
-        this.gamesPlayed = data;
-        this.gameHistoryLoading = false;
-      },
-      (err) => {
-        console.error(err);
-        this.gameHistoryLoading = false;
-      },
-    );
+    this.lolService
+      .getLastGamesPlayedByPlayer(
+        this.playerId,
+        requestedPage,
+        this.pageSize,
+        this.rankedOnly,
+      )
+      .subscribe(
+        (data) => {
+          const resultsPerPage = data.resultsPerPage || this.pageSize || 1;
+
+          this.gamesPlayed = data.results;
+          this.pageSize = resultsPerPage;
+          this.totalItems = data.total;
+          this.totalPages = Math.max(
+            1,
+            Math.ceil(this.totalItems / resultsPerPage),
+          );
+
+          const normalizedPage = Math.min(
+            Math.max(1, requestedPage),
+            this.totalPages,
+          );
+
+          if (normalizedPage !== requestedPage) {
+            this.currentPage = normalizedPage;
+            this.getLastGamesPlayed();
+            return;
+          }
+
+          this.currentPage = normalizedPage;
+          this.hasNextPage = this.currentPage < this.totalPages;
+          this.gameHistoryLoading = false;
+        },
+        (err) => {
+          console.error(err);
+          this.gameHistoryLoading = false;
+        },
+      );
+  }
+
+  onPageSizeChange(event: Event) {
+    this.pageSize = Number((event.target as HTMLSelectElement).value);
+    this.currentPage = 1;
+    this.getLastGamesPlayed();
+  }
+
+  onRankedOnlyChange(event: Event) {
+    this.rankedOnly = (event.target as HTMLInputElement).checked;
+    this.currentPage = 1;
+    this.getLastGamesPlayed();
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getLastGamesPlayed();
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getLastGamesPlayed();
+    }
+  }
+
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages || page === this.currentPage) {
+      return;
+    }
+
+    this.currentPage = page;
+    this.getLastGamesPlayed();
+  }
+
+  get compactPageItems(): {
+    label: string;
+    page: number | null;
+    isCurrent: boolean;
+    isEllipsis: boolean;
+  }[] {
+    const pagesToShow = new Set<number>([1, this.totalPages]);
+    const siblingCount = 2;
+
+    for (
+      let page = this.currentPage - siblingCount;
+      page <= this.currentPage + siblingCount;
+      page++
+    ) {
+      if (page >= 1 && page <= this.totalPages) {
+        pagesToShow.add(page);
+      }
+    }
+
+    const orderedPages = Array.from(pagesToShow).sort((a, b) => a - b);
+    const items: {
+      label: string;
+      page: number | null;
+      isCurrent: boolean;
+      isEllipsis: boolean;
+    }[] = [];
+
+    let previousPage: number | null = null;
+
+    for (const page of orderedPages) {
+      if (previousPage != null && page - previousPage > 1) {
+        items.push({
+          label: '…',
+          page: null,
+          isCurrent: false,
+          isEllipsis: true,
+        });
+      }
+
+      items.push({
+        label: String(page),
+        page,
+        isCurrent: page === this.currentPage,
+        isEllipsis: false,
+      });
+
+      previousPage = page;
+    }
+
+    return items;
   }
 
   refreshSummoner() {
@@ -175,6 +299,6 @@ export class LolPlayerDetailsComponent implements OnInit {
   }
 
   onGameRefreshStarted() {
-    this.gameHistoryLoading = true;
+    // La card gère son propre état isRefreshing
   }
 }

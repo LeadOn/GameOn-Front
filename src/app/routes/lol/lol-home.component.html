@@ -25,17 +25,17 @@
 
 <section class="mx-auto mt-4 w-full max-w-6xl px-4 pb-6">
   <div
-    class="border-bgLightDarker dark:border-bgLight bg-bgLight dark:bg-bgDark overflow-hidden rounded-2xl border"
+    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 overflow-hidden rounded-2xl border shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
   >
     <div
-      class="border-bgLightDarker dark:border-bgLight flex items-center justify-between border-b px-4 py-3 sm:px-5"
+      class="border-bgLightDarker dark:border-bgDarkDarker flex items-center justify-between border-b px-4 py-3 sm:px-5"
     >
       <div>
         <h2 class="text-primary dark:text-primaryDark text-lg font-semibold">
           Joueurs League of Legends actifs
         </h2>
         @if (isLoading == false) {
-          <p class="text-sm text-gray-500 dark:text-gray-400">
+          <p class="text-sm text-gray-500 dark:text-gray-300">
             {{ leaguePlayers.length }} joueur(s) visible(s)
           </p>
         }
@@ -43,52 +43,244 @@
           <div class="skeleton-base mt-1 h-4 w-36"></div>
         }
       </div>
-
       @if (isLoading == true) {
         <div class="skeleton-circle h-7 w-7"></div>
       }
     </div>
 
     @if (isLoading == true) {
-      <div class="p-3 sm:p-4">
-        <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-          @for (skeleton of [1, 2, 3, 4, 5, 6]; track skeleton) {
-            <div
-              class="border-bgLightDarker dark:border-bgLight rounded-xl border p-3"
-            >
-              <div class="mb-3 flex items-center gap-3">
-                <div class="skeleton-circle h-12 w-12"></div>
-                <div class="flex-1 space-y-2">
-                  <div class="skeleton-base h-4 w-2/3"></div>
-                  <div class="skeleton-base h-3 w-1/2"></div>
-                </div>
-              </div>
-              <div class="space-y-2">
-                <div class="skeleton-base h-3 w-full"></div>
-                <div class="skeleton-base h-3 w-5/6"></div>
-              </div>
+      <div class="divide-bgLightDarker dark:divide-bgDarkDarker divide-y">
+        @for (skeleton of [1, 2, 3, 4, 5, 6]; track skeleton) {
+          <div class="flex items-center gap-3 px-4 py-3">
+            <div class="skeleton-base h-4 w-5 shrink-0"></div>
+            <div class="skeleton-circle h-8 w-8 shrink-0"></div>
+            <div class="flex-1 space-y-1.5">
+              <div class="skeleton-base h-3.5 w-1/3"></div>
+              <div class="skeleton-base h-3 w-1/4"></div>
             </div>
-          }
-        </div>
+            <div class="skeleton-base h-4 w-28 shrink-0"></div>
+            <div class="skeleton-base hidden h-4 w-28 shrink-0 sm:block"></div>
+          </div>
+        }
       </div>
     }
 
     @if (isLoading == false) {
-      <div class="p-3 sm:p-4">
-        @if (leaguePlayers.length > 0) {
-          <div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-            @for (player of leaguePlayers; track player) {
-              <app-lol-player-card [player]="player"></app-lol-player-card>
-            }
-          </div>
-        } @else {
-          <div
-            class="text-primary dark:text-primaryDark border-bgLightDarker dark:border-bgLight rounded-xl border border-dashed px-4 py-8 text-center"
-          >
-            Aucun joueur actif pour le moment.
-          </div>
-        }
-      </div>
+      @if (leaguePlayers.length > 0) {
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm dark:text-white">
+            <thead>
+              <tr
+                class="border-bgLightDarker dark:border-bgDarkDarker border-b text-xs text-gray-500 dark:text-gray-300"
+              >
+                <th class="w-8 px-2 py-2 text-left font-medium sm:w-10 sm:px-4">
+                  #
+                </th>
+                <th
+                  class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
+                  (click)="setSort('name')"
+                >
+                  <div class="flex items-center gap-1">
+                    Joueur
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      class="h-3.5 w-3.5 shrink-0"
+                    >
+                      @if (sortColumn !== "name") {
+                        <path
+                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                          opacity="0.4"
+                        />
+                      } @else if (sortDirection === "asc") {
+                        <path d="M5 10L8 4L11 10" />
+                      } @else {
+                        <path d="M5 6L8 12L11 6" />
+                      }
+                    </svg>
+                  </div>
+                </th>
+                <th
+                  class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
+                  (click)="setSort('solo')"
+                >
+                  <div class="flex items-center gap-1">
+                    Solo Queue
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      class="h-3.5 w-3.5 shrink-0"
+                    >
+                      @if (sortColumn !== "solo") {
+                        <path
+                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                          opacity="0.4"
+                        />
+                      } @else if (sortDirection === "asc") {
+                        <path d="M5 10L8 4L11 10" />
+                      } @else {
+                        <path d="M5 6L8 12L11 6" />
+                      }
+                    </svg>
+                  </div>
+                </th>
+                <th
+                  class="cursor-pointer select-none px-4 py-2 text-left font-medium hover:text-gray-700 max-sm:hidden dark:hover:text-white"
+                  (click)="setSort('flex')"
+                >
+                  <div class="flex items-center gap-1">
+                    Flex
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      class="h-3.5 w-3.5 shrink-0"
+                    >
+                      @if (sortColumn !== "flex") {
+                        <path
+                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                          opacity="0.4"
+                        />
+                      } @else if (sortDirection === "asc") {
+                        <path d="M5 10L8 4L11 10" />
+                      } @else {
+                        <path d="M5 6L8 12L11 6" />
+                      }
+                    </svg>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (player of sortedPlayers; track player.id; let i = $index) {
+                <tr
+                  class="border-bgLightDarker dark:border-bgDarkDarker cursor-pointer border-b transition-colors last:border-0 hover:bg-black/5 dark:hover:bg-white/5"
+                  [routerLink]="['/lol/summoner', player.id]"
+                >
+                  <td
+                    class="w-8 px-2 py-3 font-medium text-gray-400 sm:w-10 sm:px-4 dark:text-gray-400"
+                  >
+                    {{ i + 1 }}
+                  </td>
+                  <td class="px-2 py-2 sm:px-4 sm:py-3">
+                    <div class="flex items-center gap-2">
+                      <div
+                        class="h-7 w-7 shrink-0 overflow-hidden rounded-full sm:h-8 sm:w-8"
+                      >
+                        @if (player.lolIconId != null) {
+                          <img
+                            src="https://ddragon.leagueoflegends.com/cdn/{{
+                              currentLoLPatch
+                            }}/img/profileicon/{{ player.lolIconId }}.png"
+                            class="h-full w-full object-cover"
+                          />
+                        } @else if (
+                          player.profilePictureUrl != null &&
+                          player.profilePictureUrl != ""
+                        ) {
+                          <img
+                            src="{{ apiUrl }}/player/{{ player.id }}/pp"
+                            class="h-full w-full object-cover"
+                          />
+                        } @else {
+                          <img
+                            src="assets/img/gameon-logo.webp"
+                            class="h-full w-full object-cover"
+                          />
+                        }
+                      </div>
+                      <div class="min-w-0">
+                        <p class="truncate font-medium">
+                          {{ player.fullName }}
+                        </p>
+                        @if (player.riotGamesPUUID != null) {
+                          <p
+                            class="truncate text-xs text-gray-500 dark:text-gray-300"
+                          >
+                            {{ player.riotGamesNickname }}#{{
+                              player.riotGamesTagLine
+                            }}
+                          </p>
+                        }
+                      </div>
+                    </div>
+                  </td>
+                  <!-- Solo Queue -->
+                  <td class="px-2 py-2 sm:px-4 sm:py-3">
+                    @if (player.leagueOfLegendsSoloRank != null) {
+                      <div class="flex items-center gap-2">
+                        <img
+                          src="assets/img/lol/rank/{{
+                            player.leagueOfLegendsSoloRank.tier | lowercase
+                          }}.png"
+                          class="h-7 w-7 shrink-0"
+                        />
+                        <div class="leading-tight">
+                          <p class="font-medium">
+                            {{
+                              player.leagueOfLegendsSoloRank.tier | titlecase
+                            }}
+                            {{ player.leagueOfLegendsSoloRank.rank }}
+                          </p>
+                          <p class="text-xs text-gray-500 dark:text-gray-300">
+                            {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
+                            &middot;
+                            {{ getWinRate(player.leagueOfLegendsSoloRank) }}%
+                          </p>
+                        </div>
+                      </div>
+                    } @else {
+                      <span class="text-gray-500 dark:text-gray-300">—</span>
+                    }
+                  </td>
+                  <!-- Flex -->
+                  <td class="px-4 py-3 max-sm:hidden">
+                    @if (player.leagueOfLegendsFlexRank != null) {
+                      <div class="flex items-center gap-2">
+                        <img
+                          src="assets/img/lol/rank/{{
+                            player.leagueOfLegendsFlexRank.tier | lowercase
+                          }}.png"
+                          class="h-7 w-7 shrink-0"
+                        />
+                        <div class="leading-tight">
+                          <p class="font-medium">
+                            {{
+                              player.leagueOfLegendsFlexRank.tier | titlecase
+                            }}
+                            {{ player.leagueOfLegendsFlexRank.rank }}
+                          </p>
+                          <p class="text-xs text-gray-500 dark:text-gray-300">
+                            {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP
+                            &middot;
+                            {{ getWinRate(player.leagueOfLegendsFlexRank) }}%
+                          </p>
+                        </div>
+                      </div>
+                    } @else {
+                      <span class="text-gray-500 dark:text-gray-300">—</span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <div
+          class="text-primary dark:text-primaryDark border-bgLightDarker dark:border-bgDarkDarker m-3 rounded-xl border border-dashed px-4 py-8 text-center"
+        >
+          Aucun joueur actif pour le moment.
+        </div>
+      }
     }
   </div>
 </section>
