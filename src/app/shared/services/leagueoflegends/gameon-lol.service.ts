@@ -7,6 +7,7 @@ import { PlayerDto } from '../../classes/common/PlayerDto';
 import { LeagueOfLegendsRankHistory } from '../../classes/lol/LeagueOfLegendsRankHistory';
 import { LoLGame } from '../../classes/lol/LoLGame';
 import { LoLGameTimelineFrame } from '../../classes/lol/LoLGameTimelineFrame';
+import { ListResultDto } from '../../classes/common/ListResultdto';
 
 @Injectable({
   providedIn: 'root',
@@ -61,9 +62,22 @@ export class GameOnLoLService {
     );
   }
 
-  getLastGamesPlayed(id: number): Observable<LoLGame[]> {
-    return this.client.get<LoLGame[]>(
-      environment.gameOnApiUrl + '/lol/match/player/' + id,
+  getLastGamesPlayedByPlayer(
+    playerId: number,
+    page: number = 1,
+    size: number = 10,
+    rankedOnly: boolean = false,
+  ): Observable<ListResultDto<LoLGame>> {
+    return this.client.get<ListResultDto<LoLGame>>(
+      environment.gameOnApiUrl +
+        '/lol/match/player/' +
+        playerId +
+        '?page=' +
+        page +
+        '&size=' +
+        size +
+        '&rankedOnly=' +
+        rankedOnly,
     );
   }
 

@@ -262,35 +262,142 @@
   <app-rank-history [rankHistory]="rankHistory"></app-rank-history>
 }
 
-<section id="games-played" class="mt-4 py-4">
-  <div class="flex items-center justify-between px-4">
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >Historique de parties</span
-    >
-
-    @if (gameHistoryLoading == true) {
-      <div class="skeleton-soft h-5 w-20"></div>
-    }
+<section id="games-played" class="mt-4 pb-6">
+  <!-- En-tête -->
+  <div
+    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mx-4 mb-3 flex items-center justify-between rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+  >
+    <div>
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+        >Historique de parties</span
+      >
+      @if (gameHistoryLoading == false) {
+        <p class="text-sm text-gray-500 dark:text-gray-300">
+          Page {{ currentPage }} / {{ totalPages }} &middot; {{ totalItems }}
+          partie(s)
+        </p>
+      }
+      @if (gameHistoryLoading == true) {
+        <div class="skeleton-base mt-1 h-4 w-36"></div>
+      }
+    </div>
+    <div class="flex items-center gap-3">
+      <label class="flex cursor-pointer items-center gap-2">
+        <input
+          type="checkbox"
+          [checked]="rankedOnly"
+          (change)="onRankedOnlyChange($event)"
+          [disabled]="gameHistoryLoading"
+          class="text-primary dark:text-primaryDark accent-primary dark:accent-primaryDark h-4 w-4 rounded border-gray-300"
+        />
+        <span class="text-primary dark:text-primaryDark text-sm font-medium">
+          Classées seulement
+        </span>
+      </label>
+      <select
+        class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pl-3 pr-7 text-sm backdrop-blur-sm"
+        [value]="pageSize"
+        (change)="onPageSizeChange($event)"
+        [disabled]="gameHistoryLoading"
+      >
+        <option value="5">5 / page</option>
+        <option value="10">10 / page</option>
+        <option value="20">20 / page</option>
+        <option value="50">50 / page</option>
+      </select>
+    </div>
   </div>
 
-  @if (loading == true) {
-    <div class="mb-4 mt-4 w-full space-y-3 px-4">
-      <div class="skeleton-soft h-24 w-full rounded-lg"></div>
-      <div class="skeleton-soft h-24 w-full rounded-lg"></div>
-      <div class="skeleton-soft h-24 w-full rounded-lg"></div>
+  <!-- Pagination haute -->
+  @if (loading == false) {
+    <div
+      class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mx-4 mb-3 flex items-center justify-between rounded-2xl border px-4 py-2 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    >
+      <button
+        class="text-primary dark:text-primaryDark flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-white/10"
+        (click)="prevPage()"
+        [disabled]="currentPage === 1 || gameHistoryLoading"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          class="h-4 w-4"
+        >
+          <path d="M10 3L5 8L10 13" />
+        </svg>
+        Précédent
+      </button>
+      <div class="flex items-center gap-1">
+        @for (item of compactPageItems; track $index) {
+          @if (item.isEllipsis) {
+            <span class="px-1 text-sm text-gray-500 dark:text-gray-300">{{
+              item.label
+            }}</span>
+          } @else {
+            <button
+              class="text-primary dark:text-primaryDark rounded-lg px-2.5 py-1 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-default disabled:opacity-100 dark:hover:bg-white/10"
+              (click)="goToPage(item.page!)"
+              [disabled]="item.isCurrent || gameHistoryLoading"
+              [ngClass]="
+                item.isCurrent
+                  ? 'bg-primary/15 dark:bg-primaryDark/20'
+                  : 'bg-transparent'
+              "
+            >
+              {{ item.label }}
+            </button>
+          }
+        }
+      </div>
+      <button
+        class="text-primary dark:text-primaryDark flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-white/10"
+        (click)="nextPage()"
+        [disabled]="currentPage >= totalPages || gameHistoryLoading"
+      >
+        Suivant
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          class="h-4 w-4"
+        >
+          <path d="M6 3L11 8L6 13" />
+        </svg>
+      </button>
     </div>
   }
 
-  @if (loading == false) {
-    <div class="mb-4 mt-4 w-full px-4">
-      @for (game of gamesPlayed; track game) {
-        <app-lol-game-card
-          [game]="game"
-          [playerId]="player?.id"
-          (gameRefreshStarted)="onGameRefreshStarted()"
-          (gameRefreshed)="getLastGamesPlayed()"
-        ></app-lol-game-card>
+  <!-- Skeleton -->
+  @if (loading == true || gameHistoryLoading == true) {
+    <div class="space-y-3 px-4">
+      @for (s of [1, 2, 3, 4, 5]; track s) {
+        <div class="skeleton-soft h-24 w-full rounded-xl"></div>
       }
     </div>
+  }
+
+  <!-- Parties -->
+  @if (loading == false && gameHistoryLoading == false) {
+    @if (gamesPlayed.length == 0) {
+      <app-info-message
+        [title]="'Aucune partie enregistrée.'"
+      ></app-info-message>
+    } @else {
+      <div class="px-4">
+        @for (game of gamesPlayed; track game.matchId) {
+          <app-lol-game-card
+            [game]="game"
+            [playerId]="player?.id"
+            (gameRefreshStarted)="onGameRefreshStarted()"
+            (gameRefreshed)="getLastGamesPlayed()"
+          ></app-lol-game-card>
+        }
+      </div>
+    }
   }
 </section>
