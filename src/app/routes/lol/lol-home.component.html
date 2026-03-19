@@ -25,17 +25,17 @@
 
 <section class="mx-auto mt-4 w-full max-w-6xl px-4 pb-6">
   <div
-    class="border-bgLightDarker dark:border-bgLight bg-bgLight dark:bg-bgDark overflow-hidden rounded-2xl border"
+    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 overflow-hidden rounded-2xl border shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
   >
     <div
-      class="border-bgLightDarker dark:border-bgLight flex items-center justify-between border-b px-4 py-3 sm:px-5"
+      class="border-bgLightDarker dark:border-bgDarkDarker flex items-center justify-between border-b px-4 py-3 sm:px-5"
     >
       <div>
         <h2 class="text-primary dark:text-primaryDark text-lg font-semibold">
           Joueurs League of Legends actifs
         </h2>
         @if (isLoading == false) {
-          <p class="text-sm text-gray-500 dark:text-gray-400">
+          <p class="text-sm text-gray-500 dark:text-gray-300">
             {{ leaguePlayers.length }} joueur(s) visible(s)
           </p>
         }
@@ -49,7 +49,7 @@
     </div>
 
     @if (isLoading == true) {
-      <div class="divide-bgLightDarker dark:divide-bgLight divide-y">
+      <div class="divide-bgLightDarker dark:divide-bgDarkDarker divide-y">
         @for (skeleton of [1, 2, 3, 4, 5, 6]; track skeleton) {
           <div class="flex items-center gap-3 px-4 py-3">
             <div class="skeleton-base h-4 w-5 shrink-0"></div>
@@ -68,32 +68,112 @@
     @if (isLoading == false) {
       @if (leaguePlayers.length > 0) {
         <div class="overflow-x-auto">
-          <table class="w-full text-sm">
+          <table class="w-full text-sm dark:text-white">
             <thead>
               <tr
-                class="border-bgLightDarker dark:border-bgLight border-b text-xs text-gray-500 dark:text-gray-400"
+                class="border-bgLightDarker dark:border-bgDarkDarker border-b text-xs text-gray-500 dark:text-gray-300"
               >
-                <th class="w-10 px-4 py-2 text-left font-medium">#</th>
-                <th class="px-4 py-2 text-left font-medium">Joueur</th>
-                <th class="px-4 py-2 text-left font-medium">Solo Queue</th>
-                <th class="px-4 py-2 text-left font-medium">Flex</th>
+                <th class="w-8 px-2 py-2 text-left font-medium sm:w-10 sm:px-4">
+                  #
+                </th>
+                <th
+                  class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
+                  (click)="setSort('name')"
+                >
+                  <div class="flex items-center gap-1">
+                    Joueur
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      class="h-3.5 w-3.5 shrink-0"
+                    >
+                      @if (sortColumn !== "name") {
+                        <path
+                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                          opacity="0.4"
+                        />
+                      } @else if (sortDirection === "asc") {
+                        <path d="M5 10L8 4L11 10" />
+                      } @else {
+                        <path d="M5 6L8 12L11 6" />
+                      }
+                    </svg>
+                  </div>
+                </th>
+                <th
+                  class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
+                  (click)="setSort('solo')"
+                >
+                  <div class="flex items-center gap-1">
+                    Solo Queue
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      class="h-3.5 w-3.5 shrink-0"
+                    >
+                      @if (sortColumn !== "solo") {
+                        <path
+                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                          opacity="0.4"
+                        />
+                      } @else if (sortDirection === "asc") {
+                        <path d="M5 10L8 4L11 10" />
+                      } @else {
+                        <path d="M5 6L8 12L11 6" />
+                      }
+                    </svg>
+                  </div>
+                </th>
+                <th
+                  class="cursor-pointer select-none px-4 py-2 text-left font-medium hover:text-gray-700 max-sm:hidden dark:hover:text-white"
+                  (click)="setSort('flex')"
+                >
+                  <div class="flex items-center gap-1">
+                    Flex
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      class="h-3.5 w-3.5 shrink-0"
+                    >
+                      @if (sortColumn !== "flex") {
+                        <path
+                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                          opacity="0.4"
+                        />
+                      } @else if (sortDirection === "asc") {
+                        <path d="M5 10L8 4L11 10" />
+                      } @else {
+                        <path d="M5 6L8 12L11 6" />
+                      }
+                    </svg>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody>
-              @for (player of sortedBySolo; track player.id; let i = $index) {
+              @for (player of sortedPlayers; track player.id; let i = $index) {
                 <tr
-                  class="border-bgLightDarker dark:border-bgLight cursor-pointer border-b transition-colors last:border-0 hover:bg-black/5 dark:hover:bg-white/5"
+                  class="border-bgLightDarker dark:border-bgDarkDarker cursor-pointer border-b transition-colors last:border-0 hover:bg-black/5 dark:hover:bg-white/5"
                   [routerLink]="['/lol/summoner', player.id]"
                 >
                   <td
-                    class="px-4 py-3 font-medium text-gray-400 dark:text-gray-500"
+                    class="w-8 px-2 py-3 font-medium text-gray-400 sm:w-10 sm:px-4 dark:text-gray-400"
                   >
                     {{ i + 1 }}
                   </td>
-                  <td class="px-4 py-3">
+                  <td class="px-2 py-2 sm:px-4 sm:py-3">
                     <div class="flex items-center gap-2">
                       <div
-                        class="h-8 w-8 shrink-0 overflow-hidden rounded-full"
+                        class="h-7 w-7 shrink-0 overflow-hidden rounded-full sm:h-8 sm:w-8"
                       >
                         @if (player.lolIconId != null) {
                           <img
@@ -123,7 +203,7 @@
                         </p>
                         @if (player.riotGamesPUUID != null) {
                           <p
-                            class="truncate text-xs text-gray-500 dark:text-gray-400"
+                            class="truncate text-xs text-gray-500 dark:text-gray-300"
                           >
                             {{ player.riotGamesNickname }}#{{
                               player.riotGamesTagLine
@@ -134,7 +214,7 @@
                     </div>
                   </td>
                   <!-- Solo Queue -->
-                  <td class="px-4 py-3">
+                  <td class="px-2 py-2 sm:px-4 sm:py-3">
                     @if (player.leagueOfLegendsSoloRank != null) {
                       <div class="flex items-center gap-2">
                         <img
@@ -150,7 +230,7 @@
                             }}
                             {{ player.leagueOfLegendsSoloRank.rank }}
                           </p>
-                          <p class="text-xs text-gray-500 dark:text-gray-400">
+                          <p class="text-xs text-gray-500 dark:text-gray-300">
                             {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
                             &middot;
                             {{ getWinRate(player.leagueOfLegendsSoloRank) }}%
@@ -158,11 +238,11 @@
                         </div>
                       </div>
                     } @else {
-                      <span class="text-gray-500 dark:text-gray-400">—</span>
+                      <span class="text-gray-500 dark:text-gray-300">—</span>
                     }
                   </td>
                   <!-- Flex -->
-                  <td class="px-4 py-3">
+                  <td class="px-4 py-3 max-sm:hidden">
                     @if (player.leagueOfLegendsFlexRank != null) {
                       <div class="flex items-center gap-2">
                         <img
@@ -178,7 +258,7 @@
                             }}
                             {{ player.leagueOfLegendsFlexRank.rank }}
                           </p>
-                          <p class="text-xs text-gray-500 dark:text-gray-400">
+                          <p class="text-xs text-gray-500 dark:text-gray-300">
                             {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP
                             &middot;
                             {{ getWinRate(player.leagueOfLegendsFlexRank) }}%
@@ -186,7 +266,7 @@
                         </div>
                       </div>
                     } @else {
-                      <span class="text-gray-500 dark:text-gray-400">—</span>
+                      <span class="text-gray-500 dark:text-gray-300">—</span>
                     }
                   </td>
                 </tr>
@@ -196,7 +276,7 @@
         </div>
       } @else {
         <div
-          class="text-primary dark:text-primaryDark border-bgLightDarker dark:border-bgLight m-3 rounded-xl border border-dashed px-4 py-8 text-center"
+          class="text-primary dark:text-primaryDark border-bgLightDarker dark:border-bgDarkDarker m-3 rounded-xl border border-dashed px-4 py-8 text-center"
         >
           Aucun joueur actif pour le moment.
         </div>

@@ -38,6 +38,9 @@ export class LolHomeComponent implements OnInit {
   currentLoLPatch = '';
   apiUrl = environment.gameOnApiUrl;
 
+  sortColumn: 'name' | 'solo' | 'flex' = 'solo';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
   constructor(
     private lolService: GameOnLoLService,
     private store: Store<{ player: Player; lolVersion: string }>,
@@ -65,6 +68,33 @@ export class LolHomeComponent implements OnInit {
         console.error(err);
       },
     );
+  }
+
+  setSort(col: 'name' | 'solo' | 'flex') {
+    if (this.sortColumn === col) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = col;
+      this.sortDirection = 'asc';
+    }
+  }
+
+  get sortedPlayers(): PlayerDto[] {
+    const dir = this.sortDirection === 'asc' ? 1 : -1;
+    return [...this.leaguePlayers].sort((a, b) => {
+      if (this.sortColumn === 'name') {
+        return dir * (a.fullName ?? '').localeCompare(b.fullName ?? '');
+      }
+      const rankA =
+        this.sortColumn === 'solo'
+          ? a.leagueOfLegendsSoloRank
+          : a.leagueOfLegendsFlexRank;
+      const rankB =
+        this.sortColumn === 'solo'
+          ? b.leagueOfLegendsSoloRank
+          : b.leagueOfLegendsFlexRank;
+      return dir * (this.getRankScore(rankA) - this.getRankScore(rankB));
+    });
   }
 
   private getRankScore(rank?: LeagueOfLegendsRankHistory): number {
