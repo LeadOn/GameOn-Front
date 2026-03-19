@@ -6,7 +6,7 @@
 
 .background {
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .background .bubble-layer {

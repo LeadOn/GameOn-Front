@@ -1,7 +1,7 @@
 <div
-  class="bg-bgLightDarker dark:bg-bgDarkDarker min-h-screen overflow-x-hidden"
+  class="bg-bgLightDarker dark:bg-bgDarkDarker min-h-screen overflow-x-clip"
 >
-  <div class="background min-h-screen overflow-x-hidden">
+  <div class="background min-h-screen overflow-x-clip">
     <header
       class="bg-bgLight/40 dark:bg-bgDark/40 backdrop-blur-xs sticky top-0 z-50 flex h-16 items-center justify-between self-center px-4 backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
     >
@@ -136,7 +136,7 @@
 
     <div>
       <div
-        class="3xl:px-96 px-0 pb-24 md:px-16 lg:overflow-y-scroll lg:px-32 lg:pb-0 xl:px-64 2xl:px-80"
+        class="3xl:px-96 px-0 pb-28 md:px-16 lg:h-[calc(100vh-4rem)] lg:overflow-y-auto lg:px-32 lg:pb-28 xl:px-64 2xl:px-80"
       >
         <router-outlet></router-outlet>
       </div>
