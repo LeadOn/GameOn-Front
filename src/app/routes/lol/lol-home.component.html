@@ -85,18 +85,27 @@
                   class="border-bgLightDarker dark:border-bgLight cursor-pointer border-b transition-colors last:border-0 hover:bg-black/5 dark:hover:bg-white/5"
                   [routerLink]="['/lol/summoner', player.id]"
                 >
-                  <td class="px-4 py-3 font-medium text-gray-400 dark:text-gray-500">
+                  <td
+                    class="px-4 py-3 font-medium text-gray-400 dark:text-gray-500"
+                  >
                     {{ i + 1 }}
                   </td>
                   <td class="px-4 py-3">
                     <div class="flex items-center gap-2">
-                      <div class="h-8 w-8 shrink-0 overflow-hidden rounded-full">
+                      <div
+                        class="h-8 w-8 shrink-0 overflow-hidden rounded-full"
+                      >
                         @if (player.lolIconId != null) {
                           <img
-                            src="https://ddragon.leagueoflegends.com/cdn/{{ currentLoLPatch }}/img/profileicon/{{ player.lolIconId }}.png"
+                            src="https://ddragon.leagueoflegends.com/cdn/{{
+                              currentLoLPatch
+                            }}/img/profileicon/{{ player.lolIconId }}.png"
                             class="h-full w-full object-cover"
                           />
-                        } @else if (player.profilePictureUrl != null && player.profilePictureUrl != '') {
+                        } @else if (
+                          player.profilePictureUrl != null &&
+                          player.profilePictureUrl != ""
+                        ) {
                           <img
                             src="{{ apiUrl }}/player/{{ player.id }}/pp"
                             class="h-full w-full object-cover"
@@ -109,10 +118,16 @@
                         }
                       </div>
                       <div class="min-w-0">
-                        <p class="truncate font-medium">{{ player.fullName }}</p>
+                        <p class="truncate font-medium">
+                          {{ player.fullName }}
+                        </p>
                         @if (player.riotGamesPUUID != null) {
-                          <p class="truncate text-xs text-gray-500 dark:text-gray-400">
-                            {{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }}
+                          <p
+                            class="truncate text-xs text-gray-500 dark:text-gray-400"
+                          >
+                            {{ player.riotGamesNickname }}#{{
+                              player.riotGamesTagLine
+                            }}
                           </p>
                         }
                       </div>
@@ -123,12 +138,16 @@
                     @if (player.leagueOfLegendsSoloRank != null) {
                       <div class="flex items-center gap-2">
                         <img
-                          src="assets/img/lol/rank/{{ player.leagueOfLegendsSoloRank.tier | lowercase }}.png"
+                          src="assets/img/lol/rank/{{
+                            player.leagueOfLegendsSoloRank.tier | lowercase
+                          }}.png"
                           class="h-7 w-7 shrink-0"
                         />
                         <div class="leading-tight">
                           <p class="font-medium">
-                            {{ player.leagueOfLegendsSoloRank.tier | titlecase }}
+                            {{
+                              player.leagueOfLegendsSoloRank.tier | titlecase
+                            }}
                             {{ player.leagueOfLegendsSoloRank.rank }}
                           </p>
                           <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -147,12 +166,16 @@
                     @if (player.leagueOfLegendsFlexRank != null) {
                       <div class="flex items-center gap-2">
                         <img
-                          src="assets/img/lol/rank/{{ player.leagueOfLegendsFlexRank.tier | lowercase }}.png"
+                          src="assets/img/lol/rank/{{
+                            player.leagueOfLegendsFlexRank.tier | lowercase
+                          }}.png"
                           class="h-7 w-7 shrink-0"
                         />
                         <div class="leading-tight">
                           <p class="font-medium">
-                            {{ player.leagueOfLegendsFlexRank.tier | titlecase }}
+                            {{
+                              player.leagueOfLegendsFlexRank.tier | titlecase
+                            }}
                             {{ player.leagueOfLegendsFlexRank.rank }}
                           </p>
                           <p class="text-xs text-gray-500 dark:text-gray-400">
