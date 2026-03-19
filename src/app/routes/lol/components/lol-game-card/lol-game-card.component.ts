@@ -185,6 +185,13 @@ export class LolGameCardComponent implements OnInit, OnChanges {
       return 'Classée flexible';
     }
 
-    return 'File inconnue';
+    if (
+      this.game.queueType == '5v5 Draft Pick games' ||
+      this.game.queueType == 'NORMAL_5V5'
+    ) {
+      return 'Normale';
+    }
+
+    return this.game.queueType;
   }
 }
