@@ -52,13 +52,6 @@ export const routes: Routes = [
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
   {
-    path: 'halterodatapoc',
-    loadChildren: () =>
-      import('./routes/halterodata-poc/halterodata-poc.module').then(
-        (m) => m.HalterodataPocModule,
-      ),
-  },
-  {
     path: '**',
     component: CommonLayoutComponent,
     children: [
