@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {
   faBitcoinSign,
   faCog,
+  faDumbbell,
   faHome,
   faMoon,
   faPlus,
@@ -29,6 +30,7 @@ export class CommonLayoutComponent {
 
   lightIcon = faSun;
   darkIcon = faMoon;
+  dumbbellIcon = faDumbbell;
 
   isLoggedIn = false;
   isAdmin = false;
