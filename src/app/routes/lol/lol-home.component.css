@@ -1,0 +1,36 @@
+.global-refresh-button {
+	position: relative;
+	overflow: hidden;
+}
+
+.global-refresh-button.is-refreshing {
+	animation: refreshButtonPulse 1.2s ease-in-out infinite;
+}
+
+.global-refresh-icon.is-refreshing {
+	animation: refreshIconSpin 0.9s linear infinite;
+}
+
+@keyframes refreshIconSpin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes refreshButtonPulse {
+	0% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.35);
+	}
+	70% {
+		transform: scale(1.06);
+		box-shadow: 0 0 0 8px rgba(20, 184, 166, 0);
+	}
+	100% {
+		transform: scale(1);
+		box-shadow: 0 0 0 0 rgba(20, 184, 166, 0);
+	}
+}
