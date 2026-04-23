@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
 import Keycloak from 'keycloak-js';
 import { PlayerDto } from '../../shared/classes/common/PlayerDto';
 import { Player } from '../../shared/classes/common/Player';
@@ -38,6 +39,9 @@ export class LolHomeComponent implements OnInit {
   currentLoLPatch = '';
   apiUrl = environment.gameOnApiUrl;
 
+  isRefreshing = false;
+  refreshIcon = faSync;
+
   sortColumn: 'name' | 'solo' | 'flex' = 'solo';
   sortDirection: 'asc' | 'desc' = 'asc';
 
@@ -68,6 +72,22 @@ export class LolHomeComponent implements OnInit {
         console.error(err);
       },
     );
+  }
+
+  refreshAll() {
+    this.isRefreshing = true;
+    this.lolService.refreshAllRanks().subscribe({
+      next: () => {
+        this.lolService.getAll().subscribe((players) => {
+          this.leaguePlayers = players;
+          this.isRefreshing = false;
+        });
+      },
+      error: (err) => {
+        console.error(err);
+        this.isRefreshing = false;
+      },
+    });
   }
 
   setSort(col: 'name' | 'solo' | 'flex') {

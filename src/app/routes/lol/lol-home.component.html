@@ -46,6 +46,21 @@
       @if (isLoading == true) {
         <div class="skeleton-circle h-7 w-7"></div>
       }
+      @if (isLoading == false) {
+        <button
+          class="global-refresh-button text-primary dark:text-primaryDark flex h-8 w-8 items-center justify-center rounded-full transition-colors hover:bg-gray-100 disabled:opacity-50 dark:hover:bg-gray-700"
+          (click)="refreshAll()"
+          [disabled]="isRefreshing"
+          [class.is-refreshing]="isRefreshing"
+          title="Rafraîchir tous les ranks"
+        >
+          <fa-icon
+            class="global-refresh-icon"
+            [icon]="refreshIcon"
+            [class.is-refreshing]="isRefreshing"
+          ></fa-icon>
+        </button>
+      }
     </div>
 
     @if (isLoading == true) {
