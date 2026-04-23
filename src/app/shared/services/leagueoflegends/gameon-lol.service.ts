@@ -47,7 +47,10 @@ export class GameOnLoLService {
   }
 
   refreshAllRanks(): Observable<any> {
-    return this.client.patch<any>(this.baseUrl + '/lol/summoner/ranks', null);
+    return this.client.patch<any>(
+      environment.gameOnApiUrl + '/lol/summoner/ranks',
+      null,
+    );
   }
 
   refreshCurrent(): Observable<Player> {
