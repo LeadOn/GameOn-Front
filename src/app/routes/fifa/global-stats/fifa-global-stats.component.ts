@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   faFileExcel,
   faHashtag,
@@ -11,6 +11,7 @@ import { GameOnCommonService } from '../../../shared/services/common/gameon-comm
   selector: 'app-fifa-global-stats',
   templateUrl: './fifa-global-stats.component.html',
   styleUrl: './fifa-global-stats.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FifaGlobalStatsComponent implements OnInit {

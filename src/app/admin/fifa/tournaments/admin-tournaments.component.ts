@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   faEdit,
   faSave,
@@ -13,6 +13,7 @@ import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
   selector: 'app-admin-tournaments',
   templateUrl: './admin-tournaments.component.html',
   styleUrls: ['./admin-tournaments.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminTournamentsComponent implements OnInit {

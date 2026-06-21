@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Highlight } from '../../../shared/classes/common/Highlight';
 import { GameOnHighlightService } from '../../../shared/services/common/gameon-highlight.service';
 
@@ -6,6 +6,7 @@ import { GameOnHighlightService } from '../../../shared/services/common/gameon-h
   selector: 'app-admin-highlights',
   templateUrl: './admin-highlights.component.html',
   styleUrls: ['./admin-highlights.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminHighlightsComponent implements OnInit {

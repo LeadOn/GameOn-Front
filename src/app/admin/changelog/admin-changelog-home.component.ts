@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AdminDashboard } from '../shared/classes/AdminDashboard';
 import {
   faComputer,
@@ -16,6 +16,7 @@ import { Changelog } from '../../shared/classes/common/Changelog';
   selector: 'app-admin-changelog-home',
   templateUrl: './admin-changelog-home.component.html',
   styleUrls: ['./admin-changelog-home.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminChangelogHomeComponent implements OnInit {

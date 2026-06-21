@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import {
   faInfoCircle,
   IconDefinition,
@@ -8,6 +8,7 @@ import {
   selector: 'app-info-message',
   templateUrl: './info-message.component.html',
   styleUrl: './info-message.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class InfoMessageComponent {

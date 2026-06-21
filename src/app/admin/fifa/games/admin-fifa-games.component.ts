@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FifaGamePlayed } from '../../../shared/classes/fifa/FifaGamePlayed';
 import { GameOnGameService } from '../../../shared/services/fifa/gameon-game.service';
 import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
@@ -7,6 +7,7 @@ import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
   selector: 'app-admin-fifa-games',
   templateUrl: './admin-fifa-games.component.html',
   styleUrls: ['./admin-fifa-games.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminFifaGamesComponent implements OnInit {

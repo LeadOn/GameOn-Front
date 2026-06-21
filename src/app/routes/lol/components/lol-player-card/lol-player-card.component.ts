@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { PlayerDto } from '../../../../shared/classes/common/PlayerDto';
 import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -8,6 +13,7 @@ import { Store } from '@ngrx/store';
   selector: 'app-lol-player-card',
   templateUrl: './lol-player-card.component.html',
   styleUrl: './lol-player-card.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LolPlayerCardComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faRankingStar } from '@fortawesome/free-solid-svg-icons';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Season } from '../../../shared/classes/fifa/Season';
@@ -20,6 +20,7 @@ import { GameOnSeasonService } from '../../../shared/services/fifa/gameon-season
       ]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminSeasonsComponent implements OnInit {

@@ -12,7 +12,11 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/modules/shared.module';
 import { CommonLayoutComponent } from './shared/layouts/common-layout.component';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptors,
+  withXhr,
+} from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
@@ -82,7 +86,10 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
       provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
       useValue: [devCondition, prodCondition],
     },
-    provideHttpClient(withInterceptors([includeBearerTokenInterceptor])),
+    provideHttpClient(
+      withXhr(),
+      withInterceptors([includeBearerTokenInterceptor]),
+    ),
   ],
   bootstrap: [AppComponent],
 })

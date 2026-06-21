@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -14,6 +14,7 @@ import { GameOnChangelogService } from '../../../shared/services/common/gameon-c
   selector: 'app-admin-changelog-edit',
   templateUrl: './admin-changelog-edit.component.html',
   styleUrls: ['./admin-changelog-edit.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminChangelogEditComponent implements OnInit {

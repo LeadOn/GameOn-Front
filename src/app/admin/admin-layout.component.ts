@@ -1,4 +1,11 @@
-import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  HostBinding,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
   faClock,
@@ -31,6 +38,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
       ]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminLayoutComponent {

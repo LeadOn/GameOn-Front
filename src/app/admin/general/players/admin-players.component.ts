@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { faEdit, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Player } from '../../../shared/classes/common/Player';
@@ -20,6 +20,7 @@ import { GameOnPlayerService } from '../../../shared/services/common/gameon-play
       ]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminPlayersComponent implements OnInit {

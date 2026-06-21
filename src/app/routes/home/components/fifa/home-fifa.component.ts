@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   faExclamationCircle,
   faFutbol,
@@ -20,6 +26,7 @@ import { environment } from '../../../../../environments/environment';
   selector: 'app-home-fifa',
   templateUrl: './home-fifa.component.html',
   styleUrl: './home-fifa.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeFifaComponent implements OnChanges {

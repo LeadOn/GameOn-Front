@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
 import { AdminDashboard } from '../shared/classes/AdminDashboard';
 import {
@@ -14,6 +14,7 @@ import {
   selector: 'app-admin-fifa-home',
   templateUrl: './admin-fifa-home.component.html',
   styleUrls: ['./admin-fifa-home.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminFifaHomeComponent implements OnInit {

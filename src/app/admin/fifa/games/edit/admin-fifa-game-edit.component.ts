@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
@@ -14,6 +14,7 @@ import { GameOnFifaTeamService } from '../../../../shared/services/fifa/gameon-f
   selector: 'app-admin-fifa-game-edit',
   templateUrl: './admin-fifa-game-edit.component.html',
   styleUrls: ['./admin-fifa-game-edit.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminFifaGameEditComponent implements OnInit {

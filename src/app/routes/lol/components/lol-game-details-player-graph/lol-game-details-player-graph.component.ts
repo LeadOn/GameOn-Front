@@ -7,6 +7,7 @@ import {
   OnDestroy,
   SimpleChanges,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
@@ -16,6 +17,7 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
   standalone: false,
 
   templateUrl: './lol-game-details-player-graph.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './lol-game-details-player-graph.component.css',
 })
 export class LolGameDetailsPlayerGraphComponent

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { faExternalLink, faList } from '@fortawesome/free-solid-svg-icons';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { Observable } from 'rxjs';
@@ -9,6 +16,7 @@ import { Store } from '@ngrx/store';
   standalone: false,
 
   templateUrl: './lol-game-details-player.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './lol-game-details-player.component.css',
 })
 export class LolGameDetailsPlayerComponent implements OnInit {
