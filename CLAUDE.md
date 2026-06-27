@@ -18,7 +18,7 @@ GameOn! is an Angular front-end for tracking cross-game (and IRL) player perform
 
 ## Architecture
 
-### NgModules, not standalone, despite Angular 21
+### NgModules, not standalone, despite Angular 22
 
 `angular.json` explicitly sets `standalone: false` as the default for generated components/directives/pipes. This is an intentional, NgModule-based codebase (`AppModule`, `SharedModule`, feature modules) — don't generate standalone components by default; follow the existing module-declaration pattern.
 
