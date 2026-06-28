@@ -1,56 +1,60 @@
-<div class="m-4 mt-8 overflow-x-auto">
-  @if (loading == true) {
-    <div
-      class="flex flex-row items-center rounded-lg bg-primary p-4"
-      >
+<section id="admin-highlights" class="px-4 pt-4">
+  <div class="mb-4">
+    <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+      Temps forts
+    </h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      Liens vers les meilleurs moments capturés en jeu.
+    </p>
+  </div>
+
+  <div class="bg-bgLight dark:bg-bgDark rounded-2xl p-4 shadow-sm">
+    @if (loading == true) {
       <app-loading-spinner></app-loading-spinner>
-      <span class="text-white">Chargement...</span>
-    </div>
-  }
+    }
 
-  @if (loading == false) {
-    <div
-      class="flex flex-row justify-center space-x-2 rounded-lg bg-primary p-4"
-      >
-      <div
-        class="flex w-8 flex-col items-center justify-center rounded-full bg-customRed"
-        >
-        <img src="assets/img/svg/highlight.svg" class="w-4" />
-      </div>
-      <span class="text-white">Temps forts</span>
-    </div>
-  }
+    @if (loading == false && highlights.length == 0) {
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Aucun temps fort trouvé.
+      </p>
+    }
 
-  @if (loading == false) {
-    <table
-      class="mt-4 w-full text-left text-sm text-gray-400"
-      >
-      <thead class="bg-primary text-xs uppercase text-white">
-        <tr>
-          <th scope="col" class="px-6 py-3">Titre</th>
-          <th scope="col" class="px-6 py-3">Lien externe</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (highlight of highlights; track highlight) {
-          <tr
-            class="bg-secondaryDarker border-b border-secondary text-white"
-            >
-            <th scope="row" class="whitespace-nowrap px-6 py-4 font-medium">
-              {{ highlight.name }}
-            </th>
-            <td class="px-6 py-4">
-              <a
-                href="{{ highlight.externalUrl }}"
-                target="_blank"
-                class="underline"
+    @if (loading == false && highlights.length > 0) {
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr
+              class="border-bgLightDarker dark:border-bgDarkDarker border-b text-xs font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500"
+              >
+              <th scope="col" class="px-3 py-2">Titre</th>
+              <th scope="col" class="px-3 py-2">Lien externe</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (highlight of highlights; track highlight.id) {
+              <tr
+                class="border-bgLightDarker dark:border-bgDarkDarker hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker border-b last:border-0"
                 >
-                Lien
-              </a>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  }
-</div>
+                <td
+                  class="text-primary dark:text-primaryDark px-3 py-3 font-medium"
+                  >
+                  {{ highlight.name }}
+                </td>
+                <td class="px-3 py-3">
+                  @if (highlight.externalUrl) {
+                    <a
+                      href="{{ highlight.externalUrl }}"
+                      target="_blank"
+                      class="text-secondary hover:underline"
+                      >Voir le lien</a
+                      >
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>

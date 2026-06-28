@@ -1,42 +1,55 @@
-<section class="bg-bgDarker h-screen px-4 pt-4">
+<section id="admin-seasons" class="px-4 pt-4">
   @if (loading == true) {
-    <app-loading-spinner
-      [@inOutAnimation]
-    ></app-loading-spinner>
+    <app-loading-spinner></app-loading-spinner>
   }
 
-  <app-common-page-header
-    [icon]="seasonIcon"
-    [title]="'Saisons'"
-    [@inOutAnimation]
-  ></app-common-page-header>
-
   @if (loading == false) {
-    <div class="mt-4 overflow-x-auto">
-      <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
-        <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="px-6 py-3">#</th>
-            <th scope="col" class="px-6 py-3">Nom</th>
-          </tr>
-        </thead>
-        <tbody class="text-center">
-          @for (season of seasons; track season) {
-            <tr
-              class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
-              >
-              <th
-                class="whitespace-nowrap px-6 py-4 text-center font-medium text-gray-900 dark:text-gray-300"
+    <div class="mb-4">
+      <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+        Saisons
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Saisons FIFA suivies sur la plateforme.
+      </p>
+    </div>
+
+    <div class="bg-bgLight dark:bg-bgDark rounded-2xl p-4 shadow-sm">
+      @if (seasons.length == 0) {
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Aucune saison trouvée.
+        </p>
+      }
+
+      @if (seasons.length > 0) {
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr
+                class="border-bgLightDarker dark:border-bgDarkDarker border-b text-xs font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500"
                 >
-                {{ season.id }}
-              </th>
-              <td class="px-6 py-4">
-                {{ season.name }}
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+                <th scope="col" class="px-3 py-2">#</th>
+                <th scope="col" class="px-3 py-2">Nom</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (season of seasons; track season.id) {
+                <tr
+                  class="border-bgLightDarker dark:border-bgDarkDarker hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker border-b last:border-0"
+                  >
+                  <td class="px-3 py-3 text-gray-500 dark:text-gray-400">
+                    {{ season.id }}
+                  </td>
+                  <td
+                    class="text-primary dark:text-primaryDark px-3 py-3 font-medium"
+                    >
+                    {{ season.name }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
     </div>
   }
 </section>

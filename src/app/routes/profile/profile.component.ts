@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -34,6 +35,7 @@ import { setPlayer } from '../../core/store/actions/player.actions';
   selector: 'app-profile-page',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ProfilePageComponent implements OnInit, OnChanges {

@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +32,7 @@ const RANK_ORDER = ['I', 'II', 'III', 'IV'];
   selector: 'app-lol-home',
   templateUrl: './lol-home.component.html',
   styleUrl: './lol-home.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LolHomeComponent implements OnInit {

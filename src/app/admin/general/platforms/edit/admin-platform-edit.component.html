@@ -1,51 +1,56 @@
-<section class="bg-bgDarker h-screen px-4 pt-4">
+<section id="admin-platform-edit" class="px-4 pt-4">
   @if (loading == true) {
-    <app-loading-spinner
-      [@inOutAnimation]
-    ></app-loading-spinner>
+    <app-loading-spinner></app-loading-spinner>
   }
 
   @if (loading == false && platform.id != 0) {
-    <app-common-page-header
-      [icon]="platformIcon"
-      [title]="'Plateforme ' + platform.name"
-      [@inOutAnimation]
-    ></app-common-page-header>
-  }
+    <div class="mb-4">
+      <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+        Plateforme {{ platform.name }}
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Modifier le nom de la plateforme.
+      </p>
+    </div>
 
-  @if (loading == false && platform.id != 0) {
-    <div
-      class="mt-4 flex flex-col items-center"
-      [@inOutAnimation]
+    <form
+      [formGroup]="updatePlatformForm"
+      class="flex flex-col items-center"
       >
-      <form
-        [formGroup]="updatePlatformForm"
-        class="w-full rounded-lg bg-bgLight p-8 dark:bg-bgDark"
+      <div
+        class="bg-bgLight dark:bg-bgDark w-full max-w-xl rounded-2xl p-6 shadow-sm"
         >
-        <div class="group relative z-0 mb-6 w-full">
+        <div class="flex flex-col gap-1">
+          <label
+            for="name"
+            class="text-xs font-medium text-gray-500 dark:text-gray-400"
+            >Nom <span class="text-customRed">*</span></label
+            >
           <input
             type="text"
             id="name"
-            class="peer block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm text-primary focus:border-secondary focus:outline-none focus:ring-0 dark:text-primaryDark"
             formControlName="name"
             maxlength="50"
-            required
+            class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
             />
-          <label
-            for="name"
-            class="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium peer-focus:text-secondary"
-            >
-            Nom
-            <span class="text-customRed">*</span>
-          </label>
         </div>
+
         <button
+          type="button"
           (click)="updatePlatform()"
-          class="w-full rounded-lg bg-customGreen px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-customGreen"
+          class="bg-frenchRed mt-6 w-full cursor-pointer rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-90"
           >
           Mettre à jour
         </button>
-      </form>
-    </div>
+      </div>
+    </form>
   }
 </section>
+
+<app-feedback-modal
+  [open]="feedbackOpen"
+  [type]="feedbackType"
+  [title]="feedbackTitle"
+  [message]="feedbackMessage"
+  (closed)="closeFeedback()"
+></app-feedback-modal>

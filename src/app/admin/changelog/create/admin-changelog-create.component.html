@@ -1,199 +1,254 @@
 @if (loading == true) {
-  <div classs="mx-4">
+  <div class="px-4 pt-4">
     <app-loading-spinner></app-loading-spinner>
   </div>
 }
 
 @if (loading == false) {
-  <div class="animate-fade flex space-x-2 px-4">
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >Création changelog
-    </span>
-  </div>
-}
+  <section id="admin-create-changelog" class="px-4 pt-4">
+    <div class="mb-4">
+      <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+        Nouveau changelog
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Renseigne les informations de la nouvelle version.
+      </p>
+    </div>
 
-@if (loading == false) {
-  <section class="bg-bgDarker mt-4 space-x-4 px-4">
-    <div class="animate-fade flex flex-col items-center">
-      <form
-        [formGroup]="createChangelogForm"
-        class="flex w-full flex-col space-y-4"
-        >
-        <div class="bg-bgLight dark:bg-bgDark rounded-lg p-8">
-          <div class="group relative z-0 mb-6 w-full">
-            <input
-              type="text"
-              id="name"
-              class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-              formControlName="name"
-              />
-            <label
-              for="name"
-              class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-              >
-              Nom
-            </label>
-          </div>
-          <div class="group relative z-0 mb-6 w-full">
-            <input
-              type="text"
-              id="version"
-              class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-              formControlName="version"
-              />
-            <label
-              for="version"
-              class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-              >
-              Version
-              <span class="text-customRed">*</span>
-            </label>
-          </div>
-          <div class="group relative z-0 mb-6 w-full">
-            <input
-              type="text"
-              id="context"
-              class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-              formControlName="context"
-              />
-            <label
-              for="context"
-              class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-              >
-              Contexte
-            </label>
-          </div>
-          <div class="group relative z-0 mb-6 w-full">
-            <label
-              for="type"
-              class="mb-2 block text-sm font-medium text-gray-400"
-              >
-              Type
-            </label>
-            <select
-              id="type"
-              formControlName="type"
-              class="border-secondary block w-full rounded-lg border bg-gray-800/40 p-2.5 text-sm text-white focus:border-blue-500 focus:ring-blue-500"
-              >
-              <option value="0">Majeure</option>
-              <option value="1">Mineure</option>
-              <option value="2">Correction de bugs</option>
-            </select>
-          </div>
-          <div class="group relative z-0 mt-6 mb-6 w-full">
-            <label
-              for="published"
-              class="mb-2 block scale-100 text-sm font-medium text-gray-400"
-              >
-              Publié ?
-            </label>
-            <input type="checkbox" formControlName="published" />
+    <div class="flex flex-col gap-4">
+      <form [formGroup]="createChangelogForm">
+        <div class="bg-bgLight dark:bg-bgDark rounded-2xl p-6 shadow-sm">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div class="flex flex-col gap-1">
+              <label
+                for="name"
+                class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >Nom</label
+                >
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+                />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label
+                for="version"
+                class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >Version <span class="text-customRed">*</span></label
+                >
+              <input
+                type="text"
+                id="version"
+                formControlName="version"
+                class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+                />
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <label
+                for="type"
+                class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >Type</label
+                >
+              <select
+                id="type"
+                formControlName="type"
+                class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+                >
+                <option [ngValue]="0">Majeure</option>
+                <option [ngValue]="1">Mineure</option>
+                <option [ngValue]="2">Correction de bugs</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-1">
+              <span class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >&nbsp;</span
+                >
+              <label
+                for="published"
+                class="mt-1 inline-flex cursor-pointer items-center gap-2"
+                >
+                <input
+                  type="checkbox"
+                  id="published"
+                  formControlName="published"
+                  class="accent-frenchRed h-4 w-4 cursor-pointer rounded"
+                  />
+                <span class="text-primary dark:text-primaryDark text-sm"
+                  >Publié</span
+                  >
+              </label>
+            </div>
+
+            <div class="flex flex-col gap-1 sm:col-span-2 lg:col-span-4">
+              <label
+                for="context"
+                class="text-xs font-medium text-gray-500 dark:text-gray-400"
+                >Contexte</label
+                >
+              <input
+                type="text"
+                id="context"
+                formControlName="context"
+                class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+                />
+            </div>
           </div>
         </div>
       </form>
-      <div class="mt-4 flex w-full flex-col space-y-4">
-        <div class="flex flex-col">
-          <div
-            class="text-primary dark:text-primaryDark flex justify-between text-lg font-semibold"
-            >
-            <span class="">Nouveautés</span>
-            <fa-icon
-              [icon]="plusIcon"
-              class="cursor-pointer text-green-400"
-              (click)="add('new')"
-            ></fa-icon>
-          </div>
-          @for (
-            new of changelog.newFeatures; track trackByIdxNew(i,
-            new); let i = $index) {
-            <div
-              class="bg-bgLight dark:bg-bgDark mt-4 flex space-x-4 rounded-lg p-4"
-              >
-              @if (changelog.newFeatures != null) {
-                <input
-                  type="text"
-                  [(ngModel)]="changelog.newFeatures[i]"
-                  class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-                  />
+
+      <div class="flex flex-col gap-4">
+        <div class="bg-bgLight dark:bg-bgDark rounded-2xl p-6 shadow-sm">
+          <div class="flex flex-col gap-6">
+            <div>
+              <div class="mb-3 flex items-center justify-between">
+                <span class="text-primary dark:text-primaryDark font-semibold"
+                  >Nouveautés</span
+                  >
+                <button
+                  type="button"
+                  (click)="add('new')"
+                  class="bg-customGreen flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-white hover:opacity-90"
+                  >
+                  <fa-icon [icon]="plusIcon" class="text-sm"></fa-icon>
+                </button>
+              </div>
+              @if (
+                changelog.newFeatures == null ||
+                changelog.newFeatures.length == 0
+              ) {
+                <p class="text-xs text-gray-400 dark:text-gray-500">
+                  Aucun élément.
+                </p>
               }
-              <div
-                class="align-center align-center flex cursor-pointer items-center justify-center"
-                (click)="remove('new', i)"
-                >
-                <fa-icon [icon]="minusIcon" class="text-red-400"></fa-icon>
+              <div class="flex flex-col gap-2">
+                @for (
+                  new of changelog.newFeatures; track trackByIdxNew(i, new);
+                  let i = $index) {
+                  <div class="flex items-center gap-2">
+                    @if (changelog.newFeatures != null) {
+                      <input
+                        type="text"
+                        [(ngModel)]="changelog.newFeatures[i]"
+                        class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary w-full rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+                        />
+                    }
+                    <button
+                      type="button"
+                      (click)="remove('new', i)"
+                      class="text-frenchRed hover:bg-frenchRed/10 flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full"
+                      >
+                      <fa-icon [icon]="minusIcon"></fa-icon>
+                    </button>
+                  </div>
+                }
               </div>
             </div>
-          }
-        </div>
-        <div class="flex flex-col">
-          <div
-            class="text-primary dark:text-primaryDark flex justify-between text-lg font-semibold"
-            >
-            <span class="">Changements</span>
-            <fa-icon
-              [icon]="plusIcon"
-              class="cursor-pointer text-yellow-400"
-              (click)="add('updated')"
-            ></fa-icon>
-          </div>
-          @for (
-            updated of changelog.updatedFeatures; track trackByIdxUpdated(i,
-            updated); let i = $index) {
+
             <div
-              class="bg-bgLight dark:bg-bgDark mt-4 flex space-x-4 rounded-lg p-4"
+              class="border-bgLightDarker dark:border-bgDarkDarker border-t pt-6"
               >
-              @if (changelog.updatedFeatures != null) {
-                <input
-                  type="text"
-                  [(ngModel)]="changelog.updatedFeatures[i]"
-                  class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-                  />
+              <div class="mb-3 flex items-center justify-between">
+                <span class="text-primary dark:text-primaryDark font-semibold"
+                  >Changements</span
+                  >
+                <button
+                  type="button"
+                  (click)="add('updated')"
+                  class="bg-customYellow flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-white hover:opacity-90"
+                  >
+                  <fa-icon [icon]="plusIcon" class="text-sm"></fa-icon>
+                </button>
+              </div>
+              @if (
+                changelog.updatedFeatures == null ||
+                changelog.updatedFeatures.length == 0
+              ) {
+                <p class="text-xs text-gray-400 dark:text-gray-500">
+                  Aucun élément.
+                </p>
               }
-              <div
-                class="align-center align-center flex cursor-pointer items-center justify-center"
-                (click)="remove('updated', i)"
-                >
-                <fa-icon [icon]="minusIcon" class="text-red-400"></fa-icon>
+              <div class="flex flex-col gap-2">
+                @for (
+                  updated of changelog.updatedFeatures; track
+                  trackByIdxUpdated(i, updated); let i = $index) {
+                  <div class="flex items-center gap-2">
+                    @if (changelog.updatedFeatures != null) {
+                      <input
+                        type="text"
+                        [(ngModel)]="changelog.updatedFeatures[i]"
+                        class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary w-full rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+                        />
+                    }
+                    <button
+                      type="button"
+                      (click)="remove('updated', i)"
+                      class="text-frenchRed hover:bg-frenchRed/10 flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full"
+                      >
+                      <fa-icon [icon]="minusIcon"></fa-icon>
+                    </button>
+                  </div>
+                }
               </div>
             </div>
-          }
-        </div>
-        <div class="flex flex-col">
-          <div
-            class="text-primary dark:text-primaryDark flex justify-between text-lg font-semibold"
-            >
-            <span class="">Suppressions</span>
-            <fa-icon
-              [icon]="plusIcon"
-              class="cursor-pointer text-red-400"
-              (click)="add('removed')"
-            ></fa-icon>
-          </div>
-          @for (
-            removed of changelog.removedFeatures; track trackByIdxRemoved(i,
-            removed); let i = $index) {
+
             <div
-              class="bg-bgLight dark:bg-bgDark mt-4 flex space-x-4 rounded-lg p-4"
+              class="border-bgLightDarker dark:border-bgDarkDarker border-t pt-6"
               >
-              @if (changelog.removedFeatures != null) {
-                <input
-                  type="text"
-                  [(ngModel)]="changelog.removedFeatures[i]"
-                  class="peer text-primary focus:border-secondary dark:text-primaryDark block w-full appearance-none border-0 border-b-2 border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:ring-0 focus:outline-none"
-                  />
+              <div class="mb-3 flex items-center justify-between">
+                <span class="text-primary dark:text-primaryDark font-semibold"
+                  >Suppressions</span
+                  >
+                <button
+                  type="button"
+                  (click)="add('removed')"
+                  class="bg-frenchRed flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-white hover:opacity-90"
+                  >
+                  <fa-icon [icon]="plusIcon" class="text-sm"></fa-icon>
+                </button>
+              </div>
+              @if (
+                changelog.removedFeatures == null ||
+                changelog.removedFeatures.length == 0
+              ) {
+                <p class="text-xs text-gray-400 dark:text-gray-500">
+                  Aucun élément.
+                </p>
               }
-              <div
-                class="align-center align-center flex cursor-pointer items-center justify-center"
-                (click)="remove('removed', i)"
-                >
-                <fa-icon [icon]="minusIcon" class="text-red-400"></fa-icon>
+              <div class="flex flex-col gap-2">
+                @for (
+                  removed of changelog.removedFeatures; track
+                  trackByIdxRemoved(i, removed); let i = $index) {
+                  <div class="flex items-center gap-2">
+                    @if (changelog.removedFeatures != null) {
+                      <input
+                        type="text"
+                        [(ngModel)]="changelog.removedFeatures[i]"
+                        class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary w-full rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+                        />
+                    }
+                    <button
+                      type="button"
+                      (click)="remove('removed', i)"
+                      class="text-frenchRed hover:bg-frenchRed/10 flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full"
+                      >
+                      <fa-icon [icon]="minusIcon"></fa-icon>
+                    </button>
+                  </div>
+                }
               </div>
             </div>
-          }
+          </div>
         </div>
+
         <button
+          type="button"
           (click)="createChangelog()"
-          class="bg-customGreen focus:ring-customGreen w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:ring-4 focus:outline-none"
+          class="bg-frenchRed w-full cursor-pointer rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-90"
           >
           Créer le changelog
         </button>

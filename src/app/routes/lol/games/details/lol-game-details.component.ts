@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faCalendar, faSync } from '@fortawesome/free-solid-svg-icons';
@@ -19,6 +20,7 @@ import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/ga
   selector: 'app-lol-game-details',
   templateUrl: './lol-game-details.component.html',
   styleUrl: './lol-game-details.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LolGameDetailsComponent

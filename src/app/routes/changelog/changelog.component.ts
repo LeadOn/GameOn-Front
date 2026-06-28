@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { Changelog } from '../../shared/classes/common/Changelog';
 import { GameOnChangelogService } from '../../shared/services/common/gameon-changelog.service';
@@ -7,6 +7,7 @@ import { GameOnChangelogService } from '../../shared/services/common/gameon-chan
   selector: 'app-changelog',
   templateUrl: './changelog.component.html',
   styleUrl: './changelog.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class ChangelogComponent implements OnInit {

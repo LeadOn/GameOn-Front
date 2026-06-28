@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   faArrowRight,
@@ -18,6 +18,7 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-fifa-player-details',
   templateUrl: './fifa-player-details.component.html',
   styleUrls: ['./fifa-player-details.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FifaPlayerDetailsComponent implements OnInit {

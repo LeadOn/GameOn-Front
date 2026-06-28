@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { faEdit, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Player } from '../../../shared/classes/common/Player';
 import { GameOnPlayerService } from '../../../shared/services/common/gameon-player.service';
 
@@ -8,24 +7,12 @@ import { GameOnPlayerService } from '../../../shared/services/common/gameon-play
   selector: 'app-admin-players',
   templateUrl: './admin-players.component.html',
   styleUrls: ['./admin-players.component.css'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminPlayersComponent implements OnInit {
   players: Player[] = [];
   loading = true;
-  playerIcon = faUserCircle;
   editIcon = faEdit;
 
   constructor(private playerService: GameOnPlayerService) {}

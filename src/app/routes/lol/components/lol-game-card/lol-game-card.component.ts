@@ -6,6 +6,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
@@ -19,6 +20,7 @@ import { Store } from '@ngrx/store';
   standalone: false,
 
   templateUrl: './lol-game-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './lol-game-card.component.css',
 })
 export class LolGameCardComponent implements OnInit, OnChanges {

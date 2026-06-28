@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faSoccerBall } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ import { GameOnFifaTeamService } from '../../../shared/services/fifa/gameon-fifa
   selector: 'app-fifa-create-game',
   templateUrl: './fifa-create-game.component.html',
   styleUrls: ['./fifa-create-game.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FifaCreateGameComponent implements OnInit {

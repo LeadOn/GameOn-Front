@@ -1,6 +1,6 @@
-<section id="home-changelog" class="mt-4 mb-4">
+<section id="home-changelog" class="mb-4 mt-4">
   <app-home-changelog
-    [changelog]="homeData?.latestChangelog"
+    [changelog]="$safeNavigationMigration(homeData?.latestChangelog)"
     [loading]="loading"
     [error]="error"
   ></app-home-changelog>
@@ -8,9 +8,9 @@
 
 <section id="home-fifa" class="mt-4 px-4">
   <app-home-fifa
-    [season]="homeData?.currentSeason"
+    [season]="$safeNavigationMigration(homeData?.currentSeason)"
     [loading]="loading"
-    [tournaments]="homeData?.featuredTournaments"
+    [tournaments]="$safeNavigationMigration(homeData?.featuredTournaments)"
     [isLoggedIn]="isLoggedIn"
   ></app-home-fifa>
 </section>

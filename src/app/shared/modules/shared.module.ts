@@ -14,6 +14,7 @@ import { InfoMessageComponent } from '../components/info-message/info-message.co
 import { PillComponent } from '../components/pill/pill.component';
 import { LoadingSpinnerTinyComponent } from '../components/loading-spinner-tiny/loading-spinner-tiny.component';
 import { ChangelogCardComponent } from '../components/changelog-card/changelog-card.component';
+import { FeedbackModalComponent } from '../components/feedback-modal/feedback-modal.component';
 import { SafePipe } from '../../core/pipes/safe.pipe';
 import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-game-history-card/fifa-game-history-card.component';
 
@@ -37,6 +38,7 @@ import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-
     PillComponent,
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
+    FeedbackModalComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +73,7 @@ import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-
     PillComponent,
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
+    FeedbackModalComponent,
   ],
 })
 export class SharedModule {}

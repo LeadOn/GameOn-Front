@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   faChevronDown,
   faChevronRight,
@@ -19,6 +25,7 @@ import { GameOnPlayerService } from '../../shared/services/common/gameon-player.
   selector: 'app-fifa-home',
   templateUrl: './fifa-home.component.html',
   styleUrls: ['./fifa-home.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FifaHomeComponent implements OnInit {

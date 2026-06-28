@@ -4,6 +4,7 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
@@ -11,6 +12,7 @@ import { Chart } from 'chart.js/auto';
   selector: 'app-win-rate-chart',
   templateUrl: './win-rate-chart.component.html',
   styleUrl: './win-rate-chart.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class WinRateChartComponent implements OnInit, OnChanges {

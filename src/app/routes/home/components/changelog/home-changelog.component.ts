@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Changelog } from '../../../../shared/classes/common/Changelog';
 import {
   faCircleExclamation,
@@ -9,6 +15,7 @@ import {
   selector: 'app-home-changelog',
   templateUrl: './home-changelog.component.html',
   styleUrl: './home-changelog.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeChangelogComponent implements OnChanges {

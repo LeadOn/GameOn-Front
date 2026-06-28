@@ -1,4 +1,11 @@
-import { Component, HostBinding, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faBitcoinSign,
@@ -21,6 +28,7 @@ import Keycloak from 'keycloak-js';
   selector: 'app-common-layout',
   templateUrl: './common-layout.component.html',
   styleUrls: ['./common-layout.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CommonLayoutComponent {

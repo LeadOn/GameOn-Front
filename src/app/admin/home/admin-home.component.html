@@ -5,49 +5,138 @@
 </section>
 
 @if (loading == false && stats.currentUser.id != 0) {
-  <div
-    class="animate-fade flex space-x-2 px-4"
-    >
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >Général
-    </span>
-  </div>
-}
+  <section id="admin-home-general" class="px-4">
+    <div class="mb-4">
+      <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+        Vue d'ensemble
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Bon retour, {{ stats.currentUser.nickname }} — voici l'activité de la
+        plateforme.
+      </p>
+    </div>
 
-@if (loading == false && stats.currentUser.id != 0) {
-  <section
-    id="admin-home-general"
-    class="animate-fade mt-4 flex w-full flex-col space-y-2 space-x-2 px-4"
-    >
-    <div
-      routerLink="/admin/general/platforms"
-      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        routerLink="/admin/general/platforms"
+        class="bg-bgLight dark:bg-bgDark flex cursor-pointer items-center gap-4 rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
       >
-      <span class="font-semibold">Plateformes</span>
-      <div class="flex justify-between">
-        <span class="text-lg font-semibold">{{ stats.platforms }}</span>
-        <fa-icon [icon]="platformIcon" class="text-2xl"></fa-icon>
+        <span
+          class="bg-secondary/15 flex h-12 w-12 min-w-12 items-center justify-center rounded-xl"
+        >
+          <fa-icon
+            [icon]="platformIcon"
+            class="text-secondary text-xl"
+          ></fa-icon>
+        </span>
+        <div class="flex flex-col">
+          <span class="text-primary dark:text-primaryDark text-2xl font-bold">{{
+            stats.platforms
+          }}</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400"
+            >Plateformes</span
+          >
+        </div>
       </div>
-    </div>
-    <div
-      routerLink="/admin/general/players"
-      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+
+      <div
+        routerLink="/admin/general/players"
+        class="bg-bgLight dark:bg-bgDark flex cursor-pointer items-center gap-4 rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
       >
-      <span class="font-semibold">Joueurs</span>
-      <div class="flex justify-between">
-        <span class="text-lg font-semibold">{{ stats.players }}</span>
-        <fa-icon [icon]="playerIcon" class="text-2xl"></fa-icon>
+        <span
+          class="bg-frenchBlue/10 flex h-12 w-12 min-w-12 items-center justify-center rounded-xl"
+        >
+          <fa-icon
+            [icon]="playerIcon"
+            class="text-frenchBlue text-xl"
+          ></fa-icon>
+        </span>
+        <div class="flex flex-col">
+          <span class="text-primary dark:text-primaryDark text-2xl font-bold">{{
+            stats.players
+          }}</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Joueurs</span>
+        </div>
       </div>
-    </div>
-    <div class="flex space-x-2">
+
       <div
         routerLink="/admin/general/seasons"
-        class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-full flex-col space-y-4 rounded-lg p-4 drop-shadow-lg"
+        class="bg-bgLight dark:bg-bgDark flex cursor-pointer items-center gap-4 rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+      >
+        <span
+          class="bg-customGreen/15 flex h-12 w-12 min-w-12 items-center justify-center rounded-xl"
         >
-        <span class="font-semibold">Saisons</span>
-        <div class="flex justify-between">
-          <span class="text-lg font-semibold">{{ stats.seasons }}</span>
-          <fa-icon [icon]="seasonIcon" class="text-2xl"></fa-icon>
+          <fa-icon
+            [icon]="seasonIcon"
+            class="text-customGreen text-xl"
+          ></fa-icon>
+        </span>
+        <div class="flex flex-col">
+          <span class="text-primary dark:text-primaryDark text-2xl font-bold">{{
+            stats.seasons
+          }}</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Saisons</span>
+        </div>
+      </div>
+
+      <div
+        routerLink="/admin/fifa/games"
+        class="bg-bgLight dark:bg-bgDark flex cursor-pointer items-center gap-4 rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+      >
+        <span
+          class="bg-frenchRed/10 flex h-12 w-12 min-w-12 items-center justify-center rounded-xl"
+        >
+          <fa-icon [icon]="soccerIcon" class="text-frenchRed text-xl"></fa-icon>
+        </span>
+        <div class="flex flex-col">
+          <span class="text-primary dark:text-primaryDark text-2xl font-bold">{{
+            stats.fifaGames
+          }}</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400"
+            >Matchs FIFA</span
+          >
+        </div>
+      </div>
+
+      <div
+        routerLink="/admin/fifa/tournaments"
+        class="bg-bgLight dark:bg-bgDark flex cursor-pointer items-center gap-4 rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+      >
+        <span
+          class="bg-customYellow/15 flex h-12 w-12 min-w-12 items-center justify-center rounded-xl"
+        >
+          <fa-icon
+            [icon]="tournamentIcon"
+            class="text-customYellow text-xl"
+          ></fa-icon>
+        </span>
+        <div class="flex flex-col">
+          <span class="text-primary dark:text-primaryDark text-2xl font-bold">{{
+            stats.tournaments
+          }}</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Tournois</span>
+        </div>
+      </div>
+
+      <div
+        routerLink="/admin/fifa/highlights"
+        class="bg-bgLight dark:bg-bgDark flex cursor-pointer items-center gap-4 rounded-2xl p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
+      >
+        <span
+          class="bg-customRed/15 flex h-12 w-12 min-w-12 items-center justify-center rounded-xl"
+        >
+          <fa-icon
+            [icon]="hightlightIcon"
+            class="text-customRed text-xl"
+          ></fa-icon>
+        </span>
+        <div class="flex flex-col">
+          <span class="text-primary dark:text-primaryDark text-2xl font-bold">{{
+            stats.highlights
+          }}</span>
+          <span class="text-sm text-gray-500 dark:text-gray-400"
+            >Highlights</span
+          >
         </div>
       </div>
     </div>

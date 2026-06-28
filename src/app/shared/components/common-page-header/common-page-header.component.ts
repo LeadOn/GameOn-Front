@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faClock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
@@ -6,6 +6,7 @@ import { faClock, IconDefinition } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-common-page-header',
   templateUrl: './common-page-header.component.html',
   styleUrl: './common-page-header.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class CommonPageHeaderComponent {

@@ -252,7 +252,8 @@
   @if (loading == false && rankHistory.length == 0) {
     <app-info-message
       [title]="
-        player?.riotGamesNickname + ' n\'a pas encore joué de partie classée.'
+        $safeNavigationMigration(player?.riotGamesNickname) +
+        ' n\'a pas encore joué de partie classée.'
       "
     ></app-info-message>
   }
@@ -392,7 +393,7 @@
         @for (game of gamesPlayed; track game.matchId) {
           <app-lol-game-card
             [game]="game"
-            [playerId]="player?.id"
+            [playerId]="$safeNavigationMigration(player?.id)"
             (gameRefreshStarted)="onGameRefreshStarted()"
             (gameRefreshed)="getLastGamesPlayed()"
           ></app-lol-game-card>
