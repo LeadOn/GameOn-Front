@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Tournament } from '../../../../shared/classes/fifa/Tournament';
 import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
 import { GameOnTournamentService } from '../../../../shared/services/fifa/gameon-tournament.service';
@@ -16,8 +17,15 @@ export class AdminEditTournamentComponent implements OnInit {
   tournamentId: any;
   tournament?: Tournament;
   states: any[] = [];
+  trashIcon = faTrash;
 
   currentFile?: File;
+
+  feedbackOpen = false;
+  feedbackType: 'success' | 'error' = 'success';
+  feedbackTitle = '';
+  feedbackMessage = '';
+  feedbackAction: (() => void) | null = null;
 
   editTournamentForm = new FormGroup({
     name: new FormControl('', [Validators.maxLength(100), Validators.required]),
@@ -102,10 +110,38 @@ export class AdminEditTournamentComponent implements OnInit {
         this.loading = false;
       },
       (err) => {
-        alert('Une erreur est survenue lors de la récupération du tournoi.');
         console.error(err);
+        this.loading = false;
+        this.showFeedback(
+          'error',
+          'Erreur',
+          'Une erreur est survenue lors de la récupération du tournoi.',
+        );
       },
     );
+  }
+
+  showFeedback(
+    type: 'success' | 'error',
+    title: string,
+    message: string,
+    action: (() => void) | null = null,
+  ) {
+    this.feedbackType = type;
+    this.feedbackTitle = title;
+    this.feedbackMessage = message;
+    this.feedbackAction = action;
+    this.feedbackOpen = true;
+  }
+
+  closeFeedback() {
+    this.feedbackOpen = false;
+    const action = this.feedbackAction;
+    this.feedbackAction = null;
+
+    if (action != null) {
+      action();
+    }
   }
 
   uploadProfilePicture(event: any) {
@@ -122,18 +158,30 @@ export class AdminEditTournamentComponent implements OnInit {
         .updateTournamentLogo(this.tournamentId, this.currentFile)
         .subscribe(
           (data) => {
-            alert('Tournoi mis à jour !');
             this.loading = false;
-            this.router.navigate(['/admin/fifa/tournaments']);
+            this.showFeedback(
+              'success',
+              'Logo mis à jour',
+              'Le logo du tournoi a été mis à jour avec succès.',
+              () => this.router.navigate(['/admin/fifa/tournaments']),
+            );
           },
           (err) => {
-            alert('Erreur lors de la mise à jour du tournoi !');
             console.error(err);
             this.loading = false;
+            this.showFeedback(
+              'error',
+              'Erreur',
+              'Une erreur est survenue lors de la mise à jour du logo.',
+            );
           },
         );
     } else {
-      alert('Certaines informations sont manquantes !');
+      this.showFeedback(
+        'error',
+        'Fichier manquant',
+        'Veuillez sélectionner une image.',
+      );
     }
   }
 
@@ -238,18 +286,30 @@ export class AdminEditTournamentComponent implements OnInit {
         )
         .subscribe(
           (data) => {
-            alert('Tournoi mis à jour !');
             this.loading = false;
-            this.router.navigate(['/admin/fifa/tournaments']);
+            this.showFeedback(
+              'success',
+              'Tournoi mis à jour',
+              'Les informations du tournoi ont été enregistrées avec succès.',
+              () => this.router.navigate(['/admin/fifa/tournaments']),
+            );
           },
           (err) => {
-            alert('Erreur lors de la mise à jour du tournoi !');
             console.error(err);
             this.loading = false;
+            this.showFeedback(
+              'error',
+              'Erreur',
+              'Une erreur est survenue lors de la mise à jour du tournoi.',
+            );
           },
         );
     } else {
-      alert('Certaines informations sont manquantes !');
+      this.showFeedback(
+        'error',
+        'Informations manquantes',
+        'Certaines informations obligatoires sont manquantes.',
+      );
     }
   }
 
@@ -260,7 +320,11 @@ export class AdminEditTournamentComponent implements OnInit {
       },
       (err) => {
         console.error(err);
-        alert('Une erreur est survenue lors du passage en phase 1.');
+        this.showFeedback(
+          'error',
+          'Erreur',
+          'Une erreur est survenue lors du passage en phase 1.',
+        );
       },
     );
   }
@@ -273,14 +337,22 @@ export class AdminEditTournamentComponent implements OnInit {
         .removeTournamentSubscription(this.tournamentId, userId)
         .subscribe(
           (data) => {
-            alert('Utilisateur supprimé !');
             this.loading = false;
-            this.router.navigate(['/admin/fifa/tournaments']);
+            this.showFeedback(
+              'success',
+              'Participant retiré',
+              'Le participant a été retiré du tournoi.',
+              () => this.router.navigate(['/admin/fifa/tournaments']),
+            );
           },
           (err) => {
-            alert("Erreur lors de la suppression de l'utilisateur !");
             console.error(err);
             this.loading = false;
+            this.showFeedback(
+              'error',
+              'Erreur',
+              "Une erreur est survenue lors de la suppression de l'utilisateur.",
+            );
           },
         );
     }

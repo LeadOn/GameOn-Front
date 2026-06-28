@@ -1,0 +1,51 @@
+@if (open) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 p-4"
+    (click)="close()"
+    >
+    <div
+      class="bg-bgLight dark:bg-bgDark animate-fade-up animate-duration-200 w-full max-w-sm rounded-2xl p-6 text-center shadow-lg"
+      (click)="$event.stopPropagation()"
+      >
+      <span
+        class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full"
+        [ngClass]="{
+          'bg-customGreen/15': type === 'success',
+          'bg-frenchRed/10': type === 'error',
+        }"
+        >
+        @if (type === 'success') {
+          <fa-icon
+            [icon]="successIcon"
+            class="text-customGreen text-2xl"
+          ></fa-icon>
+        }
+        @if (type === 'error') {
+          <fa-icon
+            [icon]="errorIcon"
+            class="text-frenchRed text-2xl"
+          ></fa-icon>
+        }
+      </span>
+
+      <h2 class="text-primary dark:text-primaryDark mb-1 text-lg font-bold">
+        {{ title }}
+      </h2>
+      <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
+        {{ message }}
+      </p>
+
+      <button
+        type="button"
+        (click)="close()"
+        class="w-full cursor-pointer rounded-lg px-5 py-2.5 text-sm font-medium text-white"
+        [ngClass]="{
+          'bg-customGreen hover:opacity-90': type === 'success',
+          'bg-frenchRed hover:opacity-90': type === 'error',
+        }"
+        >
+        OK
+      </button>
+    </div>
+  </div>
+}

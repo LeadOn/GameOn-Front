@@ -1,14 +1,18 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { GameOnAdminService } from '../shared/services/gameon-admin.service';
+import { GameOnGameService } from '../../shared/services/fifa/gameon-game.service';
 import { AdminDashboard } from '../shared/classes/AdminDashboard';
+import { FifaGamePlayed } from '../../shared/classes/fifa/FifaGamePlayed';
 import {
-  faComputer,
-  faRankingStar,
+  faChevronLeft,
+  faChevronRight,
   faSoccerBall,
   faTrophy,
-  faUserCircle,
   faVideo,
 } from '@fortawesome/free-solid-svg-icons';
+
+const HISTORY_LIMIT = 50;
+const HISTORY_PAGE_SIZE = 5;
 
 @Component({
   selector: 'app-admin-fifa-home',
@@ -19,16 +23,24 @@ import {
 })
 export class AdminFifaHomeComponent implements OnInit {
   loading = true;
-  platformIcon = faComputer;
-  playerIcon = faUserCircle;
+  historyLoading = true;
+
   soccerIcon = faSoccerBall;
   hightlightIcon = faVideo;
-  seasonIcon = faRankingStar;
   tournamentIcon = faTrophy;
+  previousIcon = faChevronLeft;
+  nextIcon = faChevronRight;
 
   stats: AdminDashboard = new AdminDashboard();
 
-  constructor(private adminService: GameOnAdminService) {}
+  games: FifaGamePlayed[] = [];
+  page = 1;
+  pageSize = HISTORY_PAGE_SIZE;
+
+  constructor(
+    private adminService: GameOnAdminService,
+    private gameService: GameOnGameService,
+  ) {}
 
   ngOnInit(): void {
     this.adminService.getDashboardStats().subscribe(
@@ -44,5 +56,38 @@ export class AdminFifaHomeComponent implements OnInit {
         console.error(err);
       },
     );
+
+    this.gameService.getLast(HISTORY_LIMIT).subscribe(
+      (data) => {
+        this.games = data;
+        this.historyLoading = false;
+      },
+      (err) => {
+        this.historyLoading = false;
+        alert('Une erreur est survenue lors de la récupération des matchs.');
+        console.error(err);
+      },
+    );
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.games.length / this.pageSize));
+  }
+
+  get pagedGames(): FifaGamePlayed[] {
+    const start = (this.page - 1) * this.pageSize;
+    return this.games.slice(start, start + this.pageSize);
+  }
+
+  previousPage() {
+    if (this.page > 1) {
+      this.page--;
+    }
+  }
+
+  nextPage() {
+    if (this.page < this.totalPages) {
+      this.page++;
+    }
   }
 }

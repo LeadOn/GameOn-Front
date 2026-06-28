@@ -1,46 +1,59 @@
-<section class="bg-bgDarker h-screen px-4 pt-4">
+<section id="admin-platforms" class="px-4 pt-4">
   @if (loading == true) {
-    <app-loading-spinner
-      [@inOutAnimation]
-    ></app-loading-spinner>
+    <app-loading-spinner></app-loading-spinner>
   }
 
-  <app-common-page-header
-    [icon]="platformIcon"
-    [title]="'Plateformes'"
-    [@inOutAnimation]
-  ></app-common-page-header>
-
   @if (loading == false) {
-    <div class="mt-4 overflow-x-auto">
-      <table class="w-full text-left text-sm text-gray-500 dark:text-gray-300">
-        <thead class="text-center text-xs text-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" class="px-6 py-3">Nom</th>
-            <th scope="col" class="px-6 py-3">Actions</th>
-          </tr>
-        </thead>
-        <tbody class="text-center">
-          @for (platform of platforms; track platform) {
-            <tr
-              class="border-b odd:bg-white even:bg-gray-50 odd:dark:bg-gray-900 even:dark:bg-gray-800"
-              >
-              <th
-                class="px-6 py-4 text-center font-medium whitespace-nowrap text-gray-900 dark:text-gray-300"
+    <div class="mb-4">
+      <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+        Plateformes
+      </h1>
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Plateformes de jeu disponibles sur la plateforme.
+      </p>
+    </div>
+
+    <div class="bg-bgLight dark:bg-bgDark rounded-2xl p-4 shadow-sm">
+      @if (platforms.length == 0) {
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Aucune plateforme trouvée.
+        </p>
+      }
+
+      @if (platforms.length > 0) {
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr
+                class="border-bgLightDarker dark:border-bgDarkDarker border-b text-xs font-semibold tracking-wider text-gray-400 uppercase dark:text-gray-500"
                 >
-                {{ platform.name }}
-              </th>
-              <td class="px-6 py-4">
-                <fa-icon
-                  [icon]="editIcon"
-                  class="text-primary dark:text-primaryDark cursor-pointer text-xl"
-                  [routerLink]="['/admin/general/platforms/edit', platform.id]"
-                ></fa-icon>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+                <th scope="col" class="px-3 py-2">Nom</th>
+                <th scope="col" class="px-3 py-2 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (platform of platforms; track platform.id) {
+                <tr
+                  class="border-bgLightDarker dark:border-bgDarkDarker hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker border-b last:border-0"
+                  >
+                  <td
+                    class="text-primary dark:text-primaryDark px-3 py-3 font-medium"
+                    >
+                    {{ platform.name }}
+                  </td>
+                  <td class="px-3 py-3 text-right">
+                    <fa-icon
+                      [icon]="editIcon"
+                      class="text-primary dark:text-primaryDark hover:text-secondary cursor-pointer"
+                      [routerLink]="['/admin/general/platforms/edit', platform.id]"
+                    ></fa-icon>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
     </div>
   }
 </section>

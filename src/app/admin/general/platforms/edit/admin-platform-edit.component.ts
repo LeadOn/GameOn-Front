@@ -1,8 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { faComputer } from '@fortawesome/free-solid-svg-icons';
 import { Platform } from '../../../../shared/classes/common/Platform';
 import { GameOnPlatformService } from '../../../../shared/services/common/gameon-platform.service';
 import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
@@ -11,18 +9,6 @@ import { GameOnAdminService } from '../../../shared/services/gameon-admin.servic
   selector: 'app-admin-platform-edit',
   templateUrl: './admin-platform-edit.component.html',
   styleUrls: ['./admin-platform-edit.component.css'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
@@ -30,7 +16,12 @@ export class AdminPlatformEditComponent implements OnInit {
   platformId: any;
   platform: Platform = new Platform();
   loading = true;
-  platformIcon = faComputer;
+
+  feedbackOpen = false;
+  feedbackType: 'success' | 'error' = 'success';
+  feedbackTitle = '';
+  feedbackMessage = '';
+  feedbackAction: (() => void) | null = null;
 
   updatePlatformForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -50,13 +41,16 @@ export class AdminPlatformEditComponent implements OnInit {
       (data) => {
         this.loading = false;
         this.platform = data;
+        this.updatePlatformForm.controls['name'].setValue(data.name);
       },
       (err) => {
         console.error(err);
-        alert(
+        this.loading = false;
+        this.showFeedback(
+          'error',
+          'Erreur',
           'Une erreur est survenue lors de la récupération de la plateforme.',
         );
-        this.loading = false;
       },
     );
   }
@@ -79,17 +73,52 @@ export class AdminPlatformEditComponent implements OnInit {
       this.adminService.updatePlatform(platform).subscribe(
         (data) => {
           this.loading = false;
-          this.router.navigate(['/admin/general/platforms']);
+          this.showFeedback(
+            'success',
+            'Plateforme mise à jour',
+            'Les informations de la plateforme ont été enregistrées avec succès.',
+            () => this.router.navigate(['/admin/general/platforms']),
+          );
         },
         (err) => {
-          alert(
-            'Erreur lors de la mise à jour de la plateforme ! Erreur : ' + err,
-          );
+          console.error(err);
           this.loading = false;
+          this.showFeedback(
+            'error',
+            'Erreur',
+            'Une erreur est survenue lors de la mise à jour de la plateforme.',
+          );
         },
       );
     } else {
-      alert('Certaines informations sont manquantes !');
+      this.showFeedback(
+        'error',
+        'Informations manquantes',
+        'Certaines informations obligatoires sont manquantes.',
+      );
+    }
+  }
+
+  showFeedback(
+    type: 'success' | 'error',
+    title: string,
+    message: string,
+    action: (() => void) | null = null,
+  ) {
+    this.feedbackType = type;
+    this.feedbackTitle = title;
+    this.feedbackMessage = message;
+    this.feedbackAction = action;
+    this.feedbackOpen = true;
+  }
+
+  closeFeedback() {
+    this.feedbackOpen = false;
+    const action = this.feedbackAction;
+    this.feedbackAction = null;
+
+    if (action != null) {
+      action();
     }
   }
 }

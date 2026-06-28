@@ -7,8 +7,10 @@ import { Platform } from '../../../../shared/classes/common/Platform';
 import { GameOnPlatformService } from '../../../../shared/services/common/gameon-platform.service';
 import { FifaGamePlayed } from '../../../../shared/classes/fifa/FifaGamePlayed';
 import { FifaTeam } from '../../../../shared/classes/fifa/FifaTeam';
+import { Tournament } from '../../../../shared/classes/fifa/Tournament';
 import { GameOnGameService } from '../../../../shared/services/fifa/gameon-game.service';
 import { GameOnFifaTeamService } from '../../../../shared/services/fifa/gameon-fifateam.service';
+import { GameOnTournamentService } from '../../../../shared/services/fifa/gameon-tournament.service';
 
 @Component({
   selector: 'app-admin-fifa-game-edit',
@@ -22,7 +24,13 @@ export class AdminFifaGameEditComponent implements OnInit {
   game: FifaGamePlayed = new FifaGamePlayed();
   platforms: Platform[] = [];
   fifaTeams: FifaTeam[] = [];
+  tournaments: Tournament[] = [];
   loading = true;
+
+  feedbackOpen = false;
+  feedbackType: 'success' | 'error' = 'success';
+  feedbackTitle = '';
+  feedbackMessage = '';
 
   updateGameForm = new FormGroup({
     teamFifa1: new FormControl(0, Validators.required),
@@ -40,6 +48,7 @@ export class AdminFifaGameEditComponent implements OnInit {
     private gameService: GameOnGameService,
     private platformService: GameOnPlatformService,
     private fifaTeamService: GameOnFifaTeamService,
+    private tournamentService: GameOnTournamentService,
     private adminService: GameOnAdminService,
     private router: Router,
   ) {}
@@ -108,12 +117,27 @@ export class AdminFifaGameEditComponent implements OnInit {
     this.fifaTeamService.getAll().subscribe(
       (data) => {
         this.fifaTeams = data;
-        this.getGame();
+        this.getTournaments();
       },
       (err) => {
         console.error(err);
         alert(
           'Une erreur est survenue lors de la récupération des plateformes.',
+        );
+      },
+    );
+  }
+
+  getTournaments() {
+    this.tournamentService.getAll().subscribe(
+      (data) => {
+        this.tournaments = data;
+        this.getGame();
+      },
+      (err) => {
+        console.error(err);
+        alert(
+          'Une erreur est survenue lors de la récupération des tournois.',
         );
       },
     );
@@ -166,17 +190,44 @@ export class AdminFifaGameEditComponent implements OnInit {
       this.loading = true;
       this.adminService.updateGame(updateGame).subscribe(
         (data) => {
-          alert('Match mis à jour !');
           this.loading = false;
-          this.router.navigate(['/admin/fifa/games']);
+          this.showFeedback(
+            'success',
+            'Match mis à jour',
+            'Les informations du match ont été enregistrées avec succès.',
+          );
         },
         (err) => {
-          alert('Erreur lors de la mise à jour du match ! Erreur : ' + err);
+          console.error(err);
           this.loading = false;
+          this.showFeedback(
+            'error',
+            'Erreur',
+            'Une erreur est survenue lors de la mise à jour du match.',
+          );
         },
       );
     } else {
-      alert('Certaines informations sont manquantes !');
+      this.showFeedback(
+        'error',
+        'Informations manquantes',
+        'Certaines informations obligatoires sont manquantes.',
+      );
+    }
+  }
+
+  showFeedback(type: 'success' | 'error', title: string, message: string) {
+    this.feedbackType = type;
+    this.feedbackTitle = title;
+    this.feedbackMessage = message;
+    this.feedbackOpen = true;
+  }
+
+  closeFeedback() {
+    this.feedbackOpen = false;
+
+    if (this.feedbackType == 'success') {
+      this.router.navigate(['/admin/fifa/games']);
     }
   }
 }

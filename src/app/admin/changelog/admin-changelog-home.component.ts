@@ -1,14 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AdminDashboard } from '../shared/classes/AdminDashboard';
-import {
-  faComputer,
-  faEdit,
-  faRankingStar,
-  faSoccerBall,
-  faTrophy,
-  faUserCircle,
-  faVideo,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { GameOnChangelogService } from '../../shared/services/common/gameon-changelog.service';
 import { Changelog } from '../../shared/classes/common/Changelog';
 
@@ -21,13 +12,8 @@ import { Changelog } from '../../shared/classes/common/Changelog';
 })
 export class AdminChangelogHomeComponent implements OnInit {
   loading = true;
-  platformIcon = faComputer;
-  playerIcon = faUserCircle;
-  soccerIcon = faSoccerBall;
-  hightlightIcon = faVideo;
-  seasonIcon = faRankingStar;
-  tournamentIcon = faTrophy;
   editIcon = faEdit;
+  plusIcon = faPlus;
 
   changelogs: Changelog[] = [];
 
