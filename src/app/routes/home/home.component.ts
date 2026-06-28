@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import Keycloak from 'keycloak-js';
 import { HomeDataDto } from '../../shared/classes/common/HomeDataDto';
@@ -8,6 +13,7 @@ import { GameOnCommonService } from '../../shared/services/common/gameon-common.
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeComponent implements OnInit {

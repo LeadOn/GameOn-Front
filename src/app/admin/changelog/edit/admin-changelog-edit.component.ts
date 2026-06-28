@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  faClock,
   faMinusCircle,
   faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -14,15 +13,21 @@ import { GameOnChangelogService } from '../../../shared/services/common/gameon-c
   selector: 'app-admin-changelog-edit',
   templateUrl: './admin-changelog-edit.component.html',
   styleUrls: ['./admin-changelog-edit.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminChangelogEditComponent implements OnInit {
   changelogId: any;
   changelog: Changelog = new Changelog();
   loading = true;
-  changelogIcon = faClock;
   plusIcon = faPlusCircle;
   minusIcon = faMinusCircle;
+
+  feedbackOpen = false;
+  feedbackType: 'success' | 'error' = 'success';
+  feedbackTitle = '';
+  feedbackMessage = '';
+  feedbackAction: (() => void) | null = null;
 
   updateChangelogForm = new FormGroup({
     name: new FormControl('', [Validators.maxLength(100)]),
@@ -70,15 +75,15 @@ export class AdminChangelogEditComponent implements OnInit {
         this.updateChangelogForm.controls['published'].setValue(
           this.changelog.published,
         );
-
-        this.changelog.newFeatures = this.changelog.newFeatures;
-        this.changelog.updatedFeatures = this.changelog.updatedFeatures;
-        this.changelog.removedFeatures = this.changelog.removedFeatures;
       },
       (err) => {
         console.error(err);
-        alert('Une erreur est survenue lors de la récupération du changelog.');
         this.loading = false;
+        this.showFeedback(
+          'error',
+          'Erreur',
+          'Une erreur est survenue lors de la récupération du changelog.',
+        );
       },
     );
   }
@@ -118,23 +123,34 @@ export class AdminChangelogEditComponent implements OnInit {
           this.updateChangelogForm.controls['published'].value;
       }
 
-      console.log(this.changelog);
-
       this.loading = true;
 
       this.adminService.updateChangelog(this.changelog).subscribe(
         (data) => {
           this.loading = false;
-          this.router.navigate(['/admin/changelog']);
+          this.showFeedback(
+            'success',
+            'Changelog mis à jour',
+            'Les informations du changelog ont été enregistrées avec succès.',
+            () => this.router.navigate(['/admin/changelog']),
+          );
         },
         (err) => {
-          alert('Erreur lors de la création du changelog !');
           console.error(err);
           this.loading = false;
+          this.showFeedback(
+            'error',
+            'Erreur',
+            'Une erreur est survenue lors de la mise à jour du changelog.',
+          );
         },
       );
     } else {
-      alert('Certaines informations sont manquantes !');
+      this.showFeedback(
+        'error',
+        'Informations manquantes',
+        'Certaines informations obligatoires sont manquantes.',
+      );
     }
   }
 
@@ -145,14 +161,46 @@ export class AdminChangelogEditComponent implements OnInit {
       this.adminService.deleteChangelog(this.changelogId).subscribe(
         (data) => {
           this.loading = false;
-          this.router.navigate(['/admin/changelog']);
+          this.showFeedback(
+            'success',
+            'Changelog supprimé',
+            'Le changelog a été supprimé avec succès.',
+            () => this.router.navigate(['/admin/changelog']),
+          );
         },
         (err) => {
           console.error(err);
-          alert('Erreur lors de la suppression du changelog !');
           this.loading = false;
+          this.showFeedback(
+            'error',
+            'Erreur',
+            'Une erreur est survenue lors de la suppression du changelog.',
+          );
         },
       );
+    }
+  }
+
+  showFeedback(
+    type: 'success' | 'error',
+    title: string,
+    message: string,
+    action: (() => void) | null = null,
+  ) {
+    this.feedbackType = type;
+    this.feedbackTitle = title;
+    this.feedbackMessage = message;
+    this.feedbackAction = action;
+    this.feedbackOpen = true;
+  }
+
+  closeFeedback() {
+    this.feedbackOpen = false;
+    const action = this.feedbackAction;
+    this.feedbackAction = null;
+
+    if (action != null) {
+      action();
     }
   }
 

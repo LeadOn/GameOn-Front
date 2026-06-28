@@ -7,6 +7,7 @@ import {
   OnDestroy,
   SimpleChanges,
   ViewChild,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
@@ -15,6 +16,7 @@ import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/Le
   selector: 'app-rank-history',
   templateUrl: './rank-history.component.html',
   styleUrl: './rank-history.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class RankHistoryComponent

@@ -1,16 +1,19 @@
-<div class="animate-fade flex space-x-2 px-4">
-  <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-    >Création tournoi
-  </span>
-</div>
+<section id="admin-create-tournament" class="px-4 pt-4">
+  <div class="mb-4">
+    <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+      Nouveau tournoi
+    </h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      Renseigne les informations du tournoi à créer.
+    </p>
+  </div>
 
-<section class="bg-bgDarker mt-4 space-x-4 px-4">
-  <div class="animate-fade flex flex-col items-center">
+  <div class="flex flex-col items-center">
     <form
       [formGroup]="createTournamentForm"
-      class="flex w-full flex-col space-y-4"
+      class="flex w-full max-w-xl flex-col space-y-4"
       >
-      <div class="bg-bgLight dark:bg-bgDark rounded-lg p-8">
+      <div class="bg-bgLight dark:bg-bgDark rounded-2xl p-6 shadow-sm">
         <div class="group relative z-0 mb-6 w-full">
           <input
             type="text"
@@ -103,7 +106,7 @@
 
         <button
           (click)="createTournament()"
-          class="bg-customGreen focus:ring-customGreen w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:ring-4 focus:outline-none"
+          class="bg-frenchRed w-full cursor-pointer rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:opacity-90"
           >
           Créer le tournoi
         </button>

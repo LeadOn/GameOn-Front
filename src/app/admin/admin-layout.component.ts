@@ -1,19 +1,41 @@
-import { Component, effect, HostBinding, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  HostBinding,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { environment } from '../../environments/environment';
 import {
+  faBars,
+  faCalendarDays,
+  faChevronUp,
   faClock,
-  faCog,
   faComputer,
+  faGamepad,
   faHome,
+  faImage,
   faMoon,
-  faPlus,
   faRightFromBracket,
   faSoccerBall,
   faSun,
   faTrophy,
-  faUserCircle,
+  faUsers,
+  IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { animate, style, transition, trigger } from '@angular/animations';
+import Keycloak from 'keycloak-js';
+
+interface AdminNavItem {
+  label: string;
+  route: string;
+  icon: IconDefinition;
+}
+
+interface AdminNavGroup {
+  label: string;
+  items: AdminNavItem[];
+}
 
 @Component({
   selector: 'app-admin-layout',
@@ -31,25 +53,48 @@ import { animate, style, transition, trigger } from '@angular/animations';
       ]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminLayoutComponent {
-  userIcon = faUserCircle;
-  homeIcon = faHome;
-  ballIcon = faSoccerBall;
-  plusIcon = faPlus;
-  trophyIcon = faTrophy;
-  adminIcon = faCog;
-  isLoggedIn = false;
-  isAdmin = false;
-  platformIcon = faComputer;
-  changelogIcon = faClock;
+  private readonly keycloak = inject(Keycloak);
 
+  menuIcon = faBars;
   logoutIcon = faRightFromBracket;
-  generalIcon = faCog;
-
   lightIcon = faSun;
   darkIcon = faMoon;
+  chevronIcon = faChevronUp;
+
+  navGroups: AdminNavGroup[] = [
+    {
+      label: 'Pilotage',
+      items: [{ label: "Vue d'ensemble", route: '/admin', icon: faHome }],
+    },
+    {
+      label: 'Gestion',
+      items: [
+        { label: 'FIFA', route: '/admin/fifa', icon: faSoccerBall },
+        { label: 'Joueurs', route: '/admin/general/players', icon: faUsers },
+        {
+          label: 'Saisons',
+          route: '/admin/general/seasons',
+          icon: faCalendarDays,
+        },
+        {
+          label: 'Plateformes',
+          route: '/admin/general/platforms',
+          icon: faComputer,
+        },
+      ],
+    },
+    {
+      label: 'Système',
+      items: [{ label: 'Changelog', route: '/admin/changelog', icon: faClock }],
+    },
+  ];
+
+  sidebarOpen = signal<boolean>(false);
+  userMenuOpen = signal<boolean>(false);
 
   darkMode = signal<boolean>(
     JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false'),
@@ -59,20 +104,32 @@ export class AdminLayoutComponent {
     return this.darkMode();
   }
 
-  constructor() {
-    effect(() => {
-      window.localStorage.setItem(
-        'gameon-dark-theme',
-        JSON.stringify(this.darkMode()),
-      );
-    });
+  get userName(): string {
+    const tokenParsed = this.keycloak.tokenParsed;
+    return (
+      tokenParsed?.['name'] ?? tokenParsed?.['preferred_username'] ?? 'Admin'
+    );
   }
 
-  logout() {
-    window.location.replace(
-      environment.keycloak.url +
-        '/realms/gameon/protocol/openid-connect/logout',
-    );
+  get userInitials(): string {
+    return this.userName
+      .split(' ')
+      .map((part) => part.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
+  toggleSidebar() {
+    this.sidebarOpen.update((prev) => !prev);
+  }
+
+  closeSidebar() {
+    this.sidebarOpen.set(false);
+  }
+
+  toggleUserMenu() {
+    this.userMenuOpen.update((prev) => !prev);
   }
 
   toggleDarkMode() {
@@ -80,6 +137,13 @@ export class AdminLayoutComponent {
     window.localStorage.setItem(
       'gameon-dark-theme',
       JSON.stringify(this.darkMode()),
+    );
+  }
+
+  logout() {
+    window.location.replace(
+      environment.keycloak.url +
+        '/realms/gameon/protocol/openid-connect/logout',
     );
   }
 }

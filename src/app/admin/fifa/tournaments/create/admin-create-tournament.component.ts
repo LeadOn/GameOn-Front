@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
@@ -8,6 +8,7 @@ import { GameOnTournamentService } from '../../../../shared/services/fifa/gameon
   selector: 'app-admin-create-tournament-edit',
   templateUrl: './admin-create-tournament.component.html',
   styleUrls: ['./admin-create-tournament.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminCreateTournamentComponent implements OnInit {

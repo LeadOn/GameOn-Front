@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
   faEdit,
+  faPlus,
   faSave,
   faTrash,
-  faTrophy,
 } from '@fortawesome/free-solid-svg-icons';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
@@ -13,16 +13,17 @@ import { GameOnAdminService } from '../../shared/services/gameon-admin.service';
   selector: 'app-admin-tournaments',
   templateUrl: './admin-tournaments.component.html',
   styleUrls: ['./admin-tournaments.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminTournamentsComponent implements OnInit {
   tournaments: Tournament[] = [];
-  tournamentIcon = faTrophy;
   states: any[] = [];
   loading = true;
   editIcon = faEdit;
   saveIcon = faSave;
   trashIcon = faTrash;
+  plusIcon = faPlus;
 
   constructor(
     private tournamentService: GameOnTournamentService,
@@ -54,6 +55,19 @@ export class AdminTournamentsComponent implements OnInit {
     });
 
     return label;
+  }
+
+  stateClasses(stateId: number): string {
+    switch (stateId) {
+      case 1:
+        return 'bg-secondary/15 text-secondary';
+      case 2:
+        return 'bg-customYellow/15 text-customYellow';
+      case 3:
+        return 'bg-customGreen/15 text-customGreen';
+      default:
+        return 'bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300';
+    }
   }
 
   goToPhase1(id: number) {

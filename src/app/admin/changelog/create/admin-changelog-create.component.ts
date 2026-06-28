@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -15,6 +15,7 @@ import { CreateChangelogDto } from '../../shared/classes/CreateChangelogDto';
   selector: 'app-admin-changelog-create',
   templateUrl: './admin-changelog-create.component.html',
   styleUrls: ['./admin-changelog-create.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminChangelogCreateComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
   selector: 'app-home-lol',
   templateUrl: './home-lol.component.html',
   styleUrl: './home-lol.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeLolComponent implements OnInit {

@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { Player } from '../../../../shared/classes/common/Player';
 import { GameOnPlayerService } from '../../../../shared/services/common/gameon-player.service';
 import { GameOnAdminService } from '../../../shared/services/gameon-admin.service';
@@ -11,25 +9,18 @@ import { GameOnAdminService } from '../../../shared/services/gameon-admin.servic
   selector: 'app-admin-player-edit',
   templateUrl: './admin-player-edit.component.html',
   styleUrls: ['./admin-player-edit.component.css'],
-  animations: [
-    trigger('inOutAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate(200, style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate(200, style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AdminPlayerEditComponent implements OnInit {
   playerId: any;
   player: Player = new Player();
   loading = true;
-  playerIcon = faUserCircle;
+
+  feedbackOpen = false;
+  feedbackType: 'success' | 'error' = 'success';
+  feedbackTitle = '';
+  feedbackMessage = '';
 
   updatePlayerForm = new FormGroup({
     keycloakId: new FormControl('', [Validators.maxLength(50)]),
@@ -130,16 +121,43 @@ export class AdminPlayerEditComponent implements OnInit {
         .subscribe(
           (data) => {
             this.loading = false;
-            this.router.navigate(['/admin/general/players']);
+            this.showFeedback(
+              'success',
+              'Joueur mis à jour',
+              'Les informations du joueur ont été enregistrées avec succès.',
+            );
           },
           (err) => {
-            alert('Erreur lors de la mise à jour du joueur !');
             console.error(err);
             this.loading = false;
+            this.showFeedback(
+              'error',
+              'Erreur',
+              'Une erreur est survenue lors de la mise à jour du joueur.',
+            );
           },
         );
     } else {
-      alert('Certaines informations sont manquantes !');
+      this.showFeedback(
+        'error',
+        'Informations manquantes',
+        'Certaines informations obligatoires sont manquantes.',
+      );
+    }
+  }
+
+  showFeedback(type: 'success' | 'error', title: string, message: string) {
+    this.feedbackType = type;
+    this.feedbackTitle = title;
+    this.feedbackMessage = message;
+    this.feedbackOpen = true;
+  }
+
+  closeFeedback() {
+    this.feedbackOpen = false;
+
+    if (this.feedbackType == 'success') {
+      this.router.navigate(['/admin/general/players']);
     }
   }
 }

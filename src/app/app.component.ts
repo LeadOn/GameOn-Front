@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Player } from './shared/classes/common/Player';
 import { GameOnPlayerService } from './shared/services/common/gameon-player.service';
@@ -11,6 +16,7 @@ import { setLoLVersion } from './core/store/actions/lol.actions';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent implements OnInit {

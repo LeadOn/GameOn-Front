@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 import { Tournament } from '../../../shared/classes/fifa/Tournament';
 import { GameOnTournamentService } from '../../../shared/services/fifa/gameon-tournament.service';
@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
   selector: 'app-tournaments-home',
   templateUrl: './tournaments-home.component.html',
   styleUrls: ['./tournaments-home.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TournamentsHomeComponent implements OnInit {

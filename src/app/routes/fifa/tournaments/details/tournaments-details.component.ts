@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
@@ -22,6 +28,7 @@ import { environment } from '../../../../../environments/environment';
   selector: 'app-tournaments-details',
   templateUrl: './tournaments-details.component.html',
   styleUrls: ['./tournaments-details.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class TournamentsDetailsComponent implements OnInit {

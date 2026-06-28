@@ -1,4 +1,9 @@
-import { Component, inject, Input } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   faEdit,
   faExternalLinkAlt,
@@ -12,6 +17,7 @@ import { GameOnAdminService } from '../../../../admin/shared/services/gameon-adm
   selector: 'app-fifa-game-history-card',
   templateUrl: './fifa-game-history-card.component.html',
   styleUrls: ['./fifa-game-history-card.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FifaGameHistoryCardComponent {

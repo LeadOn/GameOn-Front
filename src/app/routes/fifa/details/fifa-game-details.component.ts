@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   faClock,
@@ -20,6 +25,7 @@ import { CreateHighlightDto } from '../../../shared/classes/common/CreateHighlig
   templateUrl: './fifa-game-details.component.html',
   styleUrls: ['./fifa-game-details.component.css'],
 
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FifaGameDetailsComponent implements OnInit {

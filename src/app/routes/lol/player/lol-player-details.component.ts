@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faExternalLink, faSync } from '@fortawesome/free-solid-svg-icons';
 import { PlayerDto } from '../../../shared/classes/common/PlayerDto';
@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
   selector: 'app-lol-player-details',
   templateUrl: './lol-player-details.component.html',
   styleUrl: './lol-player-details.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class LolPlayerDetailsComponent implements OnInit {

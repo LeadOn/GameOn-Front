@@ -1,4 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   faExternalLink,
   IconDefinition,
@@ -8,6 +13,7 @@ import {
   selector: 'app-pill',
   templateUrl: './pill.component.html',
   styleUrl: './pill.component.css',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class PillComponent implements OnInit {

@@ -1,32 +1,135 @@
-<section class="bg-bgDarker h-screen px-4 pt-4">
-  @if (loading == true) {
-    <app-loading-spinner
-      [@inOutAnimation]
-    ></app-loading-spinner>
-  }
+<section id="admin-fifa-games" class="px-4 pt-4">
+  <div class="mb-4">
+    <h1 class="text-primary dark:text-primaryDark text-xl font-bold">
+      Matchs FIFA
+    </h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      Historique complet des matchs joués et planifiés.
+    </p>
+  </div>
 
-  <div class="m-4 mt-8 overflow-x-auto">
-    @if (loading == false) {
-      <div
-        class="mb-4 flex flex-row justify-center space-x-2 rounded-lg bg-primary p-4"
-        >
-        <div
-          class="flex w-8 flex-col items-center justify-center rounded-full bg-customRed"
+  <div class="bg-bgLight dark:bg-bgDark mb-4 rounded-2xl p-4 shadow-sm">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="flex flex-col gap-1">
+        <label
+          for="platformFilter"
+          class="text-xs font-medium text-gray-500 dark:text-gray-400"
+          >Plateforme</label
           >
-          <img src="assets/img/svg/fifagame.svg" class="w-4" />
-        </div>
-        <span class="text-white">Matchs joués (FIFA)</span>
+        <select
+          id="platformFilter"
+          [(ngModel)]="platformId"
+          class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+          >
+          <option [value]="0">Toutes les plateformes</option>
+          @for (platform of platforms; track platform.id) {
+            <option [value]="platform.id">{{ platform.name }}</option>
+          }
+        </select>
       </div>
+
+      <div class="flex flex-col gap-1">
+        <label
+          for="startDate"
+          class="text-xs font-medium text-gray-500 dark:text-gray-400"
+          >Du</label
+          >
+        <input
+          id="startDate"
+          type="date"
+          [(ngModel)]="startDate"
+          class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+          />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label
+          for="endDate"
+          class="text-xs font-medium text-gray-500 dark:text-gray-400"
+          >Au</label
+          >
+        <input
+          id="endDate"
+          type="date"
+          [(ngModel)]="endDate"
+          class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary rounded-lg border-0 px-3 py-2 text-sm focus:ring-2"
+          />
+      </div>
+
+      <div class="flex items-end gap-2">
+        <button
+          type="button"
+          (click)="getGames()"
+          class="bg-frenchRed flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-white hover:opacity-90"
+          >
+          <fa-icon [icon]="searchIcon"></fa-icon>
+          <span>Rechercher</span>
+        </button>
+        <button
+          type="button"
+          (click)="resetFilters()"
+          class="text-primary dark:text-primaryDark hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker cursor-pointer rounded-lg px-3 py-2 text-sm font-medium"
+          >
+          Réinitialiser
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-bgLight dark:bg-bgDark rounded-2xl p-4 shadow-sm">
+    <div class="mb-3 flex items-center justify-between">
+      <span class="text-primary dark:text-primaryDark font-semibold"
+        >Matchs</span
+        >
+      <span class="text-xs text-gray-500 dark:text-gray-400"
+        >{{ games.length }} résultats</span
+        >
+    </div>
+
+    @if (loading == true) {
+      <app-loading-spinner></app-loading-spinner>
     }
 
-    @if (loading == false) {
-      <div class="mt-4 flex flex-col space-y-4">
-        @for (game of games; track game) {
+    @if (loading == false && pagedGames.length == 0) {
+      <p class="text-sm text-gray-500 dark:text-gray-400">
+        Aucun match trouvé.
+      </p>
+    }
+
+    @if (loading == false && pagedGames.length > 0) {
+      <div class="flex flex-col space-y-2">
+        @for (game of pagedGames; track game.id) {
           <app-fifa-game-history-card
             [game]="game"
             [admin]="isAdmin"
           ></app-fifa-game-history-card>
         }
+      </div>
+
+      <div class="mt-4 flex items-center justify-between">
+        <button
+          type="button"
+          (click)="previousPage()"
+          [disabled]="page === 1"
+          class="text-primary dark:text-primaryDark hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-40"
+          >
+          <fa-icon [icon]="previousIcon"></fa-icon>
+          <span>Précédent</span>
+        </button>
+
+        <span class="text-sm text-gray-500 dark:text-gray-400"
+          >Page {{ page }} / {{ totalPages }}</span
+          >
+
+        <button
+          type="button"
+          (click)="nextPage()"
+          [disabled]="page === totalPages"
+          class="text-primary dark:text-primaryDark hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-40"
+          >
+          <span>Suivant</span>
+          <fa-icon [icon]="nextIcon"></fa-icon>
+        </button>
       </div>
     }
   </div>
