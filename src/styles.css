@@ -33,12 +33,12 @@
   --color-primaryDark: #ffffff;
   --color-bgLight: #ffffff;
   --color-bgLightDarker: #e6e7eb;
-  --color-bgDark: #474e68;
-  --color-bgDarkDarker: #404258;
-  --color-secondary: #73c3e9;
-  --color-customRed: #c82d44;
-  --color-customGreen: #1b998b;
-  --color-customYellow: #d4ac0c;
+  --color-bgDark: #1e2229;
+  --color-bgDarkDarker: #0f1117;
+  --color-secondary: #4ade80;
+  --color-customRed: #f43f5e;
+  --color-customGreen: #4ade80;
+  --color-customYellow: #facc15;
   --color-frenchBlue: #071d90;
   --color-frenchRed: #ed2939;
 }

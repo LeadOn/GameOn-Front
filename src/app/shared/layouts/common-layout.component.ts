@@ -1,9 +1,7 @@
 import {
   Component,
-  HostBinding,
   inject,
   OnInit,
-  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -12,10 +10,8 @@ import {
   faCog,
   faDumbbell,
   faHome,
-  faMoon,
   faPlus,
   faSoccerBall,
-  faSun,
   faTrophy,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -36,8 +32,6 @@ export class CommonLayoutComponent {
 
   player$: Observable<Player>;
 
-  lightIcon = faSun;
-  darkIcon = faMoon;
   dumbbellIcon = faDumbbell;
 
   isLoggedIn = false;
@@ -50,13 +44,6 @@ export class CommonLayoutComponent {
   adminIcon = faCog;
   btcIcon = faBitcoinSign;
 
-  darkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false'),
-  );
-
-  @HostBinding('class.dark') get mode() {
-    return this.darkMode();
-  }
   constructor(
     private router: Router,
     private store: Store<{ player: Player }>,
@@ -80,13 +67,5 @@ export class CommonLayoutComponent {
     } else {
       this.router.navigate(['/fifa/create']);
     }
-  }
-
-  toggleDarkMode() {
-    this.darkMode.update((prev) => !prev);
-    window.localStorage.setItem(
-      'gameon-dark-theme',
-      JSON.stringify(this.darkMode()),
-    );
   }
 }

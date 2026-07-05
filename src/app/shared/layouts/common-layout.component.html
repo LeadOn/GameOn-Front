@@ -24,20 +24,6 @@
         >
           <fa-icon [icon]="dumbbellIcon" class="text-lg"></fa-icon>
         </a>
-        <button type="button" class="cursor-pointer" (click)="toggleDarkMode()">
-          @if (darkMode()) {
-            <fa-icon
-              [icon]="lightIcon"
-              class="text-customYellow text-lg"
-            ></fa-icon>
-          }
-          @if (!darkMode()) {
-            <fa-icon
-              [icon]="darkIcon"
-              class="text-frenchBlue text-lg"
-            ></fa-icon>
-          }
-        </button>
       </div>
     </header>
 
