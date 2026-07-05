@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import {
   faBitcoinSign,
   faCog,
+  faClockRotateLeft,
   faDumbbell,
   faHome,
   faPlus,
@@ -33,6 +34,7 @@ export class CommonLayoutComponent {
   player$: Observable<Player>;
 
   dumbbellIcon = faDumbbell;
+  changelogIcon = faClockRotateLeft;
 
   isLoggedIn = false;
   isAdmin = false;

@@ -6,7 +6,7 @@
 
 .background {
   position: relative;
-  overflow-x: clip;
+  overflow: hidden;
 }
 
 .background .bubble-layer {
@@ -19,10 +19,26 @@
   transform: translateZ(0);
 }
 
-.background > header,
+.background > header {
+  position: relative;
+  z-index: 1;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .background > div:last-child {
   position: relative;
   z-index: 1;
+}
+
+@media (min-width: 1024px) {
+  .background > header {
+    display: none !important;
+    height: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+  }
 }
 
 .background .bubble {
