@@ -1,272 +1,333 @@
-@if (loading == true) {
-  <section
-    id="header-pills-skeleton"
-    class="[&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar]:h-2"
+<section class="mx-auto w-full max-w-6xl px-4 pt-4">
+  <a
+    routerLink="/lol"
+    class="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-primary dark:text-gray-300 dark:hover:text-primaryDark"
   >
-    <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
-      <div class="skeleton-pill h-7 w-24"></div>
-      <div class="skeleton-pill h-7 w-20"></div>
-    </div>
-  </section>
-
-  <section id="player-detail-card-skeleton" class="flex space-x-4 px-4">
-    <div
-      class="bg-bgLight dark:bg-bgDark flex w-3/4 items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      class="h-3.5 w-3.5 shrink-0"
     >
-      <div class="flex flex-col items-center">
-        <div class="skeleton-circle h-16 w-16"></div>
-        <div class="skeleton-circle -mt-2 h-5 w-10"></div>
-      </div>
-      <div class="min-w-55 flex flex-col space-y-2">
-        <div class="skeleton-base h-6 w-52"></div>
-        <div class="skeleton-base h-4 w-36"></div>
-        <div class="skeleton-base h-4 w-44"></div>
-      </div>
-    </div>
-    <div
-      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-1/4 flex-col items-center justify-center rounded-lg p-4 align-middle drop-shadow-lg"
-    >
-      <div class="skeleton-base mb-2 h-8 w-8"></div>
-      <div class="skeleton-base hidden h-4 w-24 md:block"></div>
-    </div>
-  </section>
-
-  <section id="player-rank-skeleton" class="mt-4 flex space-x-4 px-4">
-    <div
-      class="bg-bgLight dark:bg-bgDark flex w-1/2 flex-row items-center justify-evenly space-y-2 rounded-lg p-4 align-middle drop-shadow-lg"
-    >
-      <div class="skeleton-base h-16 w-16"></div>
-      <div class="flex flex-col items-center space-y-2 text-center">
-        <div class="skeleton-circle h-7 w-20"></div>
-        <div class="skeleton-base h-4 w-28"></div>
-        <div class="skeleton-base h-4 w-32"></div>
-      </div>
-    </div>
-    <div
-      class="bg-bgLight dark:bg-bgDark flex w-1/2 flex-row items-center justify-evenly space-y-2 rounded-lg p-4 align-middle drop-shadow-lg"
-    >
-      <div class="skeleton-base h-16 w-16"></div>
-      <div class="flex flex-col items-center space-y-2 text-center">
-        <div class="skeleton-circle h-7 w-20"></div>
-        <div class="skeleton-base h-4 w-28"></div>
-        <div class="skeleton-base h-4 w-32"></div>
-      </div>
-    </div>
-  </section>
-}
-
-@if (loading == false && player != null) {
-  <section
-    id="header-pills"
-    class="[&::-webkit-scrollbar-track]:bg-bgLightDarker dark:[&::-webkit-scrollbar-track]:bg-bgDarkDarker overflow-x-scroll p-4 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar]:h-2"
-  >
-    <div class="flex w-full flex-row flex-nowrap space-x-2 whitespace-nowrap">
-      @if (player.archived == true) {
-        <app-pill
-          [title]="'Archivé'"
-          [bgStyle]="'gray'"
-          [borderStyle]="'gray'"
-        ></app-pill>
-      }
-    </div>
-  </section>
-}
-
-@if (loading == false && player != null) {
-  <section id="player-detail-card" class="flex space-x-4 px-4">
-    <div
-      class="bg-bgLight dark:bg-bgDark flex w-3/4 items-center justify-evenly rounded-lg p-4 align-middle drop-shadow-lg"
-    >
-      <div class="flex flex-col items-center">
-        @if (player.lolIconId != null) {
-          <img
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/profileicon/{{ player.lolIconId }}.png"
-            width="64"
-            class="rounded-full"
-          />
-        }
-        @if (
-          player.profilePictureUrl != null &&
-          player.profilePictureUrl != "" &&
-          player.lolIconId == null
-        ) {
-          <img
-            src="{{ apiUrl }}/player/{{ player.id }}/pp"
-            width="64"
-            class="aspect-square rounded-full object-cover"
-          />
-        }
-        @if (
-          (player.profilePictureUrl == null ||
-            player.profilePictureUrl == "") &&
-          player.lolIconId == null
-        ) {
-          <img
-            class="rounded-full"
-            src="assets/img/gameon-logo.webp"
-            width="64"
-          />
-        }
-        <span
-          class="bg-secondary text-bgLight z-50 -mt-2 rounded-full px-2 text-xs"
-          >{{ player.lolSummonerLevel }}</span
-        >
-      </div>
-      <div class="flex flex-col">
-        <span
-          class="text-primary dark:text-primaryDark flex items-center text-xl font-semibold"
-          >{{ player.riotGamesNickname
-          }}<span class="text-xs text-gray-500 dark:text-gray-400"
-            >#{{ player.riotGamesTagLine }}</span
-          >
-        </span>
-        <div
-          class="flex items-center justify-start text-gray-500 dark:text-gray-400"
-        >
-          <span class="text-xs">{{ player.fullName }}</span>
-        </div>
-        <div
-          class="flex items-center justify-start text-gray-500 dark:text-gray-400"
-        >
-          <a
-            href="https://www.op.gg/summoners/euw/{{
-              player.riotGamesNickname
-            }}-{{ player.riotGamesTagLine }}"
-            class="text-xs"
-            target="_blank"
-            >Accéder à OP.GG
-            <fa-icon class="text-xs" [icon]="externalIcon"></fa-icon
-          ></a>
-        </div>
-      </div>
-    </div>
-    <div
-      class="bg-bgLight text-primary dark:bg-bgDark dark:text-primaryDark flex w-1/4 cursor-pointer flex-col items-center justify-center rounded-lg p-4 align-middle drop-shadow-lg"
-      (click)="refreshSummoner()"
-    >
-      <fa-icon [icon]="refreshIcon" class="text-2xl"></fa-icon>
-      <span class="hidden text-xs md:block">{{
-        player.lolRefreshedOn | date: "short"
-      }}</span>
-    </div>
-  </section>
-}
-
-@if (loading == false && player != null) {
-  <section id="player-rank" class="mt-4 flex space-x-4 px-4">
-    <div
-      class="bg-bgLight dark:bg-bgDark flex w-1/2 flex-row items-center justify-evenly space-y-2 rounded-lg p-4 align-middle drop-shadow-lg"
-    >
-      @if (player.leagueOfLegendsSoloRank == null) {
-        <img src="assets/img/gameon-logo.webp" class="h-16 w-16" />
-      }
-      @if (player.leagueOfLegendsSoloRank != null) {
-        <img
-          src="assets/img/lol/rank/{{
-            player.leagueOfLegendsSoloRank.tier | lowercase
-          }}.png"
-          class="h-16 w-16"
-        />
-      }
-      <div class="flex flex-col space-y-1 text-center">
-        <app-pill [title]="'Solo 5v5'" [bgStyle]="'secondary'"></app-pill>
-        @if (player.leagueOfLegendsSoloRank == null) {
-          <span class="text-primary dark:text-primaryDark">Non classé</span>
-        }
-        @if (player.leagueOfLegendsSoloRank != null) {
-          <span class="text-primary dark:text-primaryDark text-sm"
-            >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
-            {{ player.leagueOfLegendsSoloRank.rank }}
-            {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP</span
-          >
-        }
-        @if (player.leagueOfLegendsSoloRank != null) {
-          <span class="text-primary dark:text-primaryDark text-sm"
-            ><span class="text-customGreen">{{ soloWins }}V</span> -
-            <span class="text-frenchRed">{{ soloLosses }}D</span> ({{
-              soloWinRate.toFixed(2)
-            }}%)</span
-          >
-        }
-      </div>
-    </div>
-    <div
-      class="bg-bgLight dark:bg-bgDark flex w-1/2 flex-row items-center justify-evenly space-y-2 rounded-lg p-4 align-middle drop-shadow-lg"
-    >
-      @if (player.leagueOfLegendsFlexRank == null) {
-        <img src="assets/img/gameon-logo.webp" class="h-16 w-16" />
-      }
-      @if (player.leagueOfLegendsFlexRank != null) {
-        <img
-          src="assets/img/lol/rank/{{
-            player.leagueOfLegendsFlexRank.tier | lowercase
-          }}.png"
-          class="h-16 w-16"
-        />
-      }
-      <div class="flex flex-col space-y-1 text-center">
-        <app-pill [title]="'Flex 5v5'" [bgStyle]="'green'"></app-pill>
-        @if (player.leagueOfLegendsFlexRank == null) {
-          <span class="text-primary dark:text-primaryDark">Non classé</span>
-        }
-        @if (player.leagueOfLegendsFlexRank != null) {
-          <span class="text-primary dark:text-primaryDark text-sm"
-            >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
-            {{ player.leagueOfLegendsFlexRank.rank }}
-            {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP</span
-          >
-        }
-        @if (player.leagueOfLegendsSoloRank != null) {
-          <span class="text-primary dark:text-primaryDark text-sm"
-            ><span class="text-customGreen">{{ flexWins }}V</span> -
-            <span class="text-frenchRed">{{ flexLosses }}D</span> ({{
-              flexWinRate.toFixed(2)
-            }}%)</span
-          >
-        }
-      </div>
-    </div>
-  </section>
-}
-
-<section id="rank-history" class="mt-4 py-4">
-  <div class="flex items-center justify-between px-4">
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-      >Historique des rangs</span
-    >
-
-    @if (loading == true && player != null) {
-      <div class="skeleton-soft h-5 w-20"></div>
-    }
-  </div>
-
-  @if (loading == true) {
-    <div class="mt-4 space-y-3 px-4">
-      <div class="skeleton-soft h-14 w-full rounded-lg"></div>
-      <div class="skeleton-soft h-14 w-full rounded-lg"></div>
-    </div>
-  }
-
-  @if (loading == false && rankHistory.length == 0) {
-    <app-info-message
-      [title]="
-        $safeNavigationMigration(player?.riotGamesNickname) +
-        ' n\'a pas encore joué de partie classée.'
-      "
-    ></app-info-message>
-  }
+      <path d="M10 3L5 8L10 13" />
+    </svg>
+    Classement League of Legends
+  </a>
 </section>
 
-@if (rankHistory.length > 0 && loading == false) {
-  <app-rank-history [rankHistory]="rankHistory"></app-rank-history>
+@if (loading == true) {
+  <section class="mx-auto mt-4 w-full max-w-6xl px-4">
+    <div
+      class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-5 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    >
+      <div class="flex items-center gap-4">
+        <div class="skeleton-circle h-16 w-16"></div>
+        <div class="space-y-2">
+          <div class="skeleton-base h-6 w-52"></div>
+          <div class="skeleton-base h-4 w-36"></div>
+          <div class="skeleton-base h-4 w-28"></div>
+        </div>
+      </div>
+      <div class="skeleton-base h-9 w-36 rounded-full"></div>
+    </div>
+  </section>
+
+  <section class="mx-auto mt-4 w-full max-w-6xl px-4">
+    <div class="grid gap-4 sm:grid-cols-2">
+      @for (s of [1, 2]; track s) {
+        <div
+          class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 flex items-center gap-4 rounded-2xl border p-5 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+        >
+          <div class="skeleton-circle h-16 w-16 shrink-0"></div>
+          <div class="w-full space-y-2">
+            <div class="skeleton-pill h-5 w-20"></div>
+            <div class="skeleton-base h-5 w-32"></div>
+            <div class="skeleton-base h-4 w-40"></div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
 }
 
-<section id="games-played" class="mt-4 pb-6">
+@if (loading == false && player != null) {
+  <section class="mx-auto mt-4 w-full max-w-6xl px-4">
+    <div class="relative">
+      <div
+        class="bg-secondary/25 pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] blur-3xl"
+      ></div>
+      <div
+        class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 flex flex-wrap items-center justify-between gap-4 rounded-2xl border p-5 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      >
+        <div class="flex items-center gap-4">
+          <div class="relative shrink-0">
+            @if (player.lolIconId != null) {
+              <img
+                src="https://ddragon.leagueoflegends.com/cdn/{{
+                  currentLoLPatch
+                }}/img/profileicon/{{ player.lolIconId }}.png"
+                class="drop-shadow-[0_0_12px_rgba(115,195,233,0.65)] h-16 w-16 rounded-full object-cover"
+              />
+            } @else if (
+              player.profilePictureUrl != null &&
+              player.profilePictureUrl != ""
+            ) {
+              <img
+                src="{{ apiUrl }}/player/{{ player.id }}/pp"
+                class="drop-shadow-[0_0_12px_rgba(115,195,233,0.65)] h-16 w-16 rounded-full object-cover"
+              />
+            } @else {
+              <img
+                src="assets/img/gameon-logo.webp"
+                class="drop-shadow-[0_0_12px_rgba(115,195,233,0.65)] h-16 w-16 rounded-full object-cover"
+              />
+            }
+            <span
+              class="bg-secondary text-bgLight absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full px-2 text-xs font-semibold whitespace-nowrap"
+              >{{ player.lolSummonerLevel }}</span
+            >
+          </div>
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-baseline gap-1.5">
+              <span
+                class="text-primary dark:text-primaryDark truncate text-xl font-semibold"
+                >{{ player.riotGamesNickname }}</span
+              >
+              <span class="text-sm text-gray-500 dark:text-gray-400"
+                >#{{ player.riotGamesTagLine }}</span
+              >
+              @if (player.archived == true) {
+                <span
+                  class="bg-gray-600/80 rounded-full px-2 py-0.5 text-[10px] font-semibold text-white uppercase tracking-wide"
+                  >Archivé</span
+                >
+              }
+            </div>
+            <p class="truncate text-sm text-gray-500 dark:text-gray-300">
+              {{ player.fullName }}
+              @if (rankPositionLabel != null) {
+                &middot; {{ rankPositionLabel }}
+              }
+            </p>
+            <a
+              href="https://www.op.gg/summoners/euw/{{
+                player.riotGamesNickname
+              }}-{{ player.riotGamesTagLine }}"
+              target="_blank"
+              class="text-secondary inline-flex items-center gap-1 text-sm hover:underline"
+            >
+              Accéder à OP.GG
+              <fa-icon class="text-xs" [icon]="externalIcon"></fa-icon>
+            </a>
+          </div>
+        </div>
+
+        <button
+          class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+          (click)="refreshSummoner()"
+          title="Rafraîchir le profil"
+        >
+          <fa-icon [icon]="refreshIcon"></fa-icon>
+          {{ syncedAgoLabel }}
+        </button>
+      </div>
+    </div>
+  </section>
+}
+
+@if (loading == false && player != null) {
+  <section class="mx-auto mt-4 w-full max-w-6xl px-4">
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="relative">
+        <div
+          class="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] blur-3xl"
+          [style.background]="
+            getTierGlowBackground(player.leagueOfLegendsSoloRank)
+          "
+        ></div>
+        <div
+          class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 flex items-center gap-4 rounded-2xl border p-5 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+        >
+          @if (player.leagueOfLegendsSoloRank == null) {
+            <img
+              src="assets/img/gameon-logo.webp"
+              class="h-16 w-16 shrink-0"
+            />
+          } @else {
+            <img
+              src="assets/img/lol/rank/{{
+                player.leagueOfLegendsSoloRank.tier | lowercase
+              }}.png"
+              class="h-16 w-16 shrink-0"
+              [style.filter]="
+                getTierGlowShadow(player.leagueOfLegendsSoloRank)
+              "
+            />
+          }
+          <div class="min-w-0">
+            <span
+              class="bg-secondary/15 text-secondary inline-block rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide"
+              >Solo 5v5</span
+            >
+            @if (player.leagueOfLegendsSoloRank == null) {
+              <p class="text-primary dark:text-primaryDark mt-2 text-sm">
+                Non classé
+              </p>
+            } @else {
+              <p
+                class="text-primary dark:text-primaryDark mt-2 truncate text-lg font-semibold"
+              >
+                {{ player.leagueOfLegendsSoloRank.tier | titlecase }}
+                {{ player.leagueOfLegendsSoloRank.rank }}
+                &middot;
+                {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-300">
+                <span class="text-customGreen font-semibold"
+                  >{{ soloWins }} V</span
+                >
+                —
+                <span class="text-frenchRed font-semibold"
+                  >{{ soloLosses }} D</span
+                >
+                &middot; {{ soloWinRate.toFixed(0) }}% de winrate
+              </p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="relative">
+        <div
+          class="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] blur-3xl"
+          [style.background]="
+            getTierGlowBackground(player.leagueOfLegendsFlexRank)
+          "
+        ></div>
+        <div
+          class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 flex items-center gap-4 rounded-2xl border p-5 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+        >
+          @if (player.leagueOfLegendsFlexRank == null) {
+            <img
+              src="assets/img/gameon-logo.webp"
+              class="h-16 w-16 shrink-0"
+            />
+          } @else {
+            <img
+              src="assets/img/lol/rank/{{
+                player.leagueOfLegendsFlexRank.tier | lowercase
+              }}.png"
+              class="h-16 w-16 shrink-0"
+              [style.filter]="
+                getTierGlowShadow(player.leagueOfLegendsFlexRank)
+              "
+            />
+          }
+          <div class="min-w-0">
+            <span
+              class="bg-customYellow/15 text-customYellow inline-block rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide"
+              >Flex 5v5</span
+            >
+            @if (player.leagueOfLegendsFlexRank == null) {
+              <p class="text-primary dark:text-primaryDark mt-2 text-sm">
+                Non classé
+              </p>
+            } @else {
+              <p
+                class="text-primary dark:text-primaryDark mt-2 truncate text-lg font-semibold"
+              >
+                {{ player.leagueOfLegendsFlexRank.tier | titlecase }}
+                {{ player.leagueOfLegendsFlexRank.rank }}
+                &middot;
+                {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP
+              </p>
+              <p class="text-sm text-gray-500 dark:text-gray-300">
+                <span class="text-customGreen font-semibold"
+                  >{{ flexWins }} V</span
+                >
+                —
+                <span class="text-frenchRed font-semibold"
+                  >{{ flexLosses }} D</span
+                >
+                &middot; {{ flexWinRate.toFixed(0) }}% de winrate
+              </p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+}
+
+<section class="mx-auto mt-6 w-full max-w-6xl px-4">
+  <div
+    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight dark:bg-bgDark rounded-2xl border p-5 shadow-sm"
+  >
+    <div class="flex items-center justify-between">
+      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+        >Historique des rangs</span
+      >
+
+      @if (loading == false && rankHistory.length > 0) {
+        <span class="text-sm text-gray-500 dark:text-gray-300"
+          >{{ rankHistory.length }} derniers relevés</span
+        >
+      }
+
+      @if (loading == true) {
+        <div class="skeleton-soft h-5 w-32"></div>
+      }
+    </div>
+
+    @if (loading == true) {
+      <div class="mt-4 space-y-3">
+        <div class="skeleton-soft h-14 w-full rounded-lg"></div>
+        <div class="skeleton-soft h-14 w-full rounded-lg"></div>
+      </div>
+    }
+
+    @if (loading == false && rankHistory.length == 0) {
+      <div class="mt-4">
+        <app-info-message
+          [title]="
+            $safeNavigationMigration(player?.riotGamesNickname) +
+            ' n\'a pas encore joué de partie classée.'
+          "
+        ></app-info-message>
+      </div>
+    }
+
+    @if (loading == false && rankHistory.length > 0) {
+      <app-rank-history [rankHistory]="rankHistory"></app-rank-history>
+
+      <div
+        class="mt-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400"
+      >
+        <span>
+          @if (firstSoloRankEntry != null) {
+            {{ firstSoloRankEntry.tier | titlecase }}
+            {{ firstSoloRankEntry.rank }} &middot;
+            {{ formatRelativeDate(firstSoloRankEntry.createdOn) }}
+          }
+        </span>
+        <span class="text-primary dark:text-primaryDark font-medium">
+          @if (lastSoloRankEntry != null) {
+            {{ lastSoloRankEntry.tier | titlecase }}
+            {{ lastSoloRankEntry.rank }} &middot;
+            {{ lastSoloRankEntry.leaguePoints }} LP aujourd'hui
+          }
+        </span>
+      </div>
+    }
+  </div>
+</section>
+
+<section class="mx-auto mt-6 w-full max-w-6xl px-4 pb-6">
   <!-- En-tête -->
   <div
-    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mx-4 mb-3 flex items-center justify-between rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mb-3 flex items-center justify-between rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
   >
     <div>
       <span class="text-primary dark:text-primaryDark text-lg font-semibold"
@@ -286,17 +347,20 @@
       <label class="flex cursor-pointer items-center gap-2">
         <input
           type="checkbox"
+          class="peer sr-only"
           [checked]="rankedOnly"
           (change)="onRankedOnlyChange($event)"
           [disabled]="gameHistoryLoading"
-          class="text-primary dark:text-primaryDark accent-primary dark:accent-primaryDark h-4 w-4 rounded border-gray-300"
         />
+        <div
+          class="peer-checked:bg-customGreen relative h-5 w-9 rounded-full bg-gray-300 transition-colors after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-4 dark:bg-bgDarkDarker"
+        ></div>
         <span class="text-primary dark:text-primaryDark text-sm font-medium">
           Classées seulement
         </span>
       </label>
       <select
-        class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pl-3 pr-7 text-sm backdrop-blur-sm"
+        class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pr-7 pl-3 text-sm backdrop-blur-sm"
         [value]="pageSize"
         (change)="onPageSizeChange($event)"
         [disabled]="gameHistoryLoading"
@@ -312,7 +376,7 @@
   <!-- Pagination haute -->
   @if (loading == false) {
     <div
-      class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mx-4 mb-3 flex items-center justify-between rounded-2xl border px-4 py-2 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mb-3 flex items-center justify-between rounded-2xl border px-4 py-2 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
     >
       <button
         class="text-primary dark:text-primaryDark flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-white/10"
@@ -375,7 +439,7 @@
 
   <!-- Skeleton -->
   @if (loading == true || gameHistoryLoading == true) {
-    <div class="space-y-3 px-4">
+    <div class="space-y-3">
       @for (s of [1, 2, 3, 4, 5]; track s) {
         <div class="skeleton-soft h-24 w-full rounded-xl"></div>
       }
@@ -389,16 +453,14 @@
         [title]="'Aucune partie enregistrée.'"
       ></app-info-message>
     } @else {
-      <div class="px-4">
-        @for (game of gamesPlayed; track game.matchId) {
-          <app-lol-game-card
-            [game]="game"
-            [playerId]="$safeNavigationMigration(player?.id)"
-            (gameRefreshStarted)="onGameRefreshStarted()"
-            (gameRefreshed)="getLastGamesPlayed()"
-          ></app-lol-game-card>
-        }
-      </div>
+      @for (game of gamesPlayed; track game.matchId) {
+        <app-lol-game-card
+          [game]="game"
+          [playerId]="$safeNavigationMigration(player?.id)"
+          (gameRefreshStarted)="onGameRefreshStarted()"
+          (gameRefreshed)="getLastGamesPlayed()"
+        ></app-lol-game-card>
+      }
     }
   }
 </section>

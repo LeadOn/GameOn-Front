@@ -9,6 +9,34 @@ import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameo
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+const TIER_ORDER = [
+  'CHALLENGER',
+  'GRANDMASTER',
+  'MASTER',
+  'DIAMOND',
+  'EMERALD',
+  'PLATINUM',
+  'GOLD',
+  'SILVER',
+  'BRONZE',
+  'IRON',
+];
+const RANK_ORDER = ['I', 'II', 'III', 'IV'];
+
+const TIER_GLOW_COLORS: Record<string, string> = {
+  IRON: '119, 119, 119',
+  BRONZE: '169, 128, 90',
+  SILVER: '178, 191, 200',
+  GOLD: '212, 172, 12',
+  PLATINUM: '55, 187, 178',
+  EMERALD: '27, 153, 139',
+  DIAMOND: '99, 179, 237',
+  MASTER: '168, 85, 247',
+  GRANDMASTER: '237, 41, 57',
+  CHALLENGER: '132, 231, 240',
+};
+const DEFAULT_GLOW_COLOR = '115, 195, 233';
+
 @Component({
   selector: 'app-lol-player-details',
   templateUrl: './lol-player-details.component.html',
@@ -48,6 +76,8 @@ export class LolPlayerDetailsComponent implements OnInit {
   hasNextPage = false;
   rankedOnly = true;
 
+  rankPosition: number | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private lolService: GameOnLoLService,
@@ -78,11 +108,114 @@ export class LolPlayerDetailsComponent implements OnInit {
 
         this.getRankHistory();
         this.getLastGamesPlayed();
+        this.loadRankPosition();
       },
       (err) => {
         console.error(err);
       },
     );
+  }
+
+  loadRankPosition() {
+    if (this.player?.leagueOfLegendsSoloRank == null) {
+      this.rankPosition = null;
+      return;
+    }
+
+    this.lolService.getAll().subscribe(
+      (players) => {
+        const ranked = players
+          .filter((p) => p.leagueOfLegendsSoloRank != null)
+          .sort(
+            (a, b) =>
+              this.getRankScore(a.leagueOfLegendsSoloRank) -
+              this.getRankScore(b.leagueOfLegendsSoloRank),
+          );
+        const index = ranked.findIndex((p) => p.id === this.player!.id);
+        this.rankPosition = index >= 0 ? index + 1 : null;
+      },
+      (err) => {
+        console.error(err);
+      },
+    );
+  }
+
+  private getRankScore(rank?: LeagueOfLegendsRankHistory): number {
+    if (!rank) return Number.MAX_SAFE_INTEGER;
+    const tierScore = TIER_ORDER.indexOf(rank.tier.toUpperCase());
+    const divScore = RANK_ORDER.indexOf(rank.rank.toUpperCase());
+    const t = tierScore < 0 ? 99 : tierScore;
+    const d = divScore < 0 ? 0 : divScore;
+    return t * 10000 + d * 1000 - rank.leaguePoints;
+  }
+
+  get rankPositionLabel(): string | null {
+    if (this.rankPosition == null) {
+      return null;
+    }
+
+    return this.rankPosition === 1
+      ? '1er du classement'
+      : `${this.rankPosition}e du classement`;
+  }
+
+  get syncedAgoLabel(): string {
+    if (this.player?.lolRefreshedOn == null) {
+      return 'Jamais synchronisé';
+    }
+
+    return (
+      'Synchro ' + this.formatRelativeDate(new Date(this.player.lolRefreshedOn))
+    );
+  }
+
+  getTierGlowRgb(rank?: LeagueOfLegendsRankHistory): string {
+    const tier = rank?.tier?.toUpperCase();
+    return (tier != null && TIER_GLOW_COLORS[tier]) || DEFAULT_GLOW_COLOR;
+  }
+
+  getTierGlowShadow(rank?: LeagueOfLegendsRankHistory): string {
+    return `drop-shadow(0 0 12px rgba(${this.getTierGlowRgb(rank)}, 0.65))`;
+  }
+
+  getTierGlowBackground(rank?: LeagueOfLegendsRankHistory): string {
+    return `rgba(${this.getTierGlowRgb(rank)}, 0.25)`;
+  }
+
+  get soloRankHistoryEntries(): LeagueOfLegendsRankHistory[] {
+    return this.rankHistory.filter(
+      (history) => history.queueType === 'RANKED_SOLO_5x5',
+    );
+  }
+
+  get firstSoloRankEntry(): LeagueOfLegendsRankHistory | null {
+    const entries = this.soloRankHistoryEntries;
+    return entries.length > 0 ? entries[0] : null;
+  }
+
+  get lastSoloRankEntry(): LeagueOfLegendsRankHistory | null {
+    const entries = this.soloRankHistoryEntries;
+    return entries.length > 0 ? entries[entries.length - 1] : null;
+  }
+
+  formatRelativeDate(date: Date): string {
+    const diffMs = Date.now() - new Date(date).getTime();
+    const minutes = Math.floor(diffMs / 60000);
+
+    if (minutes < 1) return "à l'instant";
+    if (minutes < 60) return `il y a ${minutes} min`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `il y a ${hours} h`;
+
+    const days = Math.floor(hours / 24);
+    if (days < 30) return `il y a ${days} j`;
+
+    const months = Math.floor(days / 30);
+    if (months < 12) return `il y a ${months} mois`;
+
+    const years = Math.floor(months / 12);
+    return `il y a ${years} an${years > 1 ? 's' : ''}`;
   }
 
   shouldAutoSyncRank(player: PlayerDto): boolean {
