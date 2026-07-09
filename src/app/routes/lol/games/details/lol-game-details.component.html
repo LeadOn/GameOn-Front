@@ -1,378 +1,348 @@
-<section id="game-header" class="mt-4 px-4">
-  <app-common-page-header [title]="'Partie ' + gameId"></app-common-page-header>
+<section class="mx-auto w-full max-w-6xl px-4 pt-4">
+  <a
+    [routerLink]="['/lol/summoner', playerId]"
+    class="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-primary dark:text-gray-300 dark:hover:text-primaryDark"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      class="h-3.5 w-3.5 shrink-0"
+    >
+      <path d="M10 3L5 8L10 13" />
+    </svg>
+    Profil de {{ heroPlayer?.riotIdGameName || "joueur" }}
+  </a>
 </section>
 
 @if (gameError == true) {
-  <app-info-message
-    [type]="'error'"
-    [title]="'Une erreur est survenue lors de la récupération du match.'"
-  ></app-info-message>
+  <section class="mx-auto w-full max-w-6xl px-4">
+    <app-info-message
+      [type]="'error'"
+      [title]="'Une erreur est survenue lors de la récupération du match.'"
+    ></app-info-message>
+  </section>
 }
-
-<app-info-message
-  [title]="'Cette partie de l\'application est en cours de développement. Faites-nous vos retours afin d\'améliorer l\'expérience finale !'"
-></app-info-message>
 
 @if (isLoading == true) {
-  <section id="game-pill-skeleton" class="px-4">
-    <div class="flex justify-between pt-4">
-      @for (pill of [1, 2, 3, 4, 5]; track pill) {
-        <div class="skeleton-pill h-8 w-24"></div>
-      }
-    </div>
+  <section class="mx-auto mt-3 w-full max-w-6xl px-4">
+    <div class="skeleton-soft h-28 w-full rounded-2xl"></div>
   </section>
 
-  <div class="mt-4 px-4">
-    <div class="skeleton-soft h-24 w-full rounded-lg"></div>
-  </div>
-
-  <div class="mt-4 grid grid-cols-1 gap-4 px-4 xl:grid-cols-2">
-    @for (team of [1, 2]; track team) {
-      <section>
-        <div
-          class="mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
-        >
-          <div class="w-1.5 bg-slate-500"></div>
-          <div class="w-full">
-            <div
-              class="flex items-center justify-between border-b border-white/25 px-3 py-2"
-            >
-              <div class="skeleton-slate h-5 w-24"></div>
-              <div class="skeleton-slate h-5 w-16"></div>
-            </div>
-
-            <div class="space-y-2 p-3">
-              @for (row of [1, 2, 3, 4, 5]; track row) {
-                <div class="flex items-center gap-3">
-                  <div class="skeleton-slate h-10 w-10 rounded-full"></div>
-                  <div class="flex-1 space-y-2">
-                    <div class="skeleton-slate h-3 w-2/3"></div>
-                    <div class="skeleton-slate-soft h-3 w-1/2"></div>
-                  </div>
+  <section class="mx-auto mt-4 w-full max-w-6xl px-4">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      @for (team of [1, 2]; track team) {
+        <div class="overflow-hidden rounded-2xl border border-bgLightDarker bg-bgLight/80 shadow-sm dark:border-bgDarkDarker dark:bg-bgDark/80">
+          <div class="flex items-center justify-between border-b border-bgLightDarker px-4 py-3 dark:border-bgDarkDarker">
+            <div class="skeleton-base h-5 w-24"></div>
+            <div class="skeleton-base h-5 w-16"></div>
+          </div>
+          <div class="space-y-3 p-4">
+            @for (row of [1, 2, 3, 4, 5]; track row) {
+              <div class="flex items-center gap-3">
+                <div class="skeleton-circle h-11 w-11"></div>
+                <div class="flex-1 space-y-2">
+                  <div class="skeleton-base h-3 w-2/3"></div>
+                  <div class="skeleton-soft h-3 w-1/2"></div>
                 </div>
-              }
-            </div>
+              </div>
+            }
           </div>
         </div>
-      </section>
-    }
-  </div>
-
-  <section class="px-4 pb-4">
-    <div
-      class="mt-2 w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
-    >
-      <div class="border-b border-white/25 px-3 py-2">
-        <div class="skeleton-slate h-5 w-52"></div>
-      </div>
-      <div class="grid grid-cols-1 gap-3 p-3 lg:grid-cols-2">
-        <div class="rounded-lg border border-white/10 bg-slate-900/20 p-3">
-          <div class="skeleton-slate-soft mb-2 h-4 w-20"></div>
-          <div class="skeleton-slate-faint h-64 w-full"></div>
-        </div>
-        <div class="rounded-lg border border-white/10 bg-slate-900/20 p-3">
-          <div class="skeleton-slate-soft mb-2 h-4 w-40"></div>
-          <div class="skeleton-slate-faint h-64 w-full"></div>
-        </div>
-        <div
-          class="rounded-lg border border-white/10 bg-slate-900/20 p-3 lg:col-span-2"
-        >
-          <div class="skeleton-slate-soft mb-2 h-4 w-44"></div>
-          <div class="skeleton-slate-faint h-72 w-full"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-}
-
-@if (isLoading == false) {
-  <section id="game-pill" class="px-4">
-    <div class="flex flex-wrap items-center gap-2 pt-4">
-      @if (game != null) {
-        <span
-          class="inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold shadow-sm backdrop-blur-md"
-          [ngClass]="{
-            'border-customGreen/45 bg-customGreen/30 text-white':
-              game.endOfGameResult != null,
-            'border-white/25 bg-slate-900/45 text-slate-50':
-              game.endOfGameResult == null,
-          }"
-        >
-          {{
-            game.endOfGameResult != null
-              ? game.endOfGameResult
-              : "Partie non synchronisée"
-          }}
-        </span>
-
-        <span
-          class="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-slate-900/45 px-3 py-1 text-xs font-medium text-slate-50 shadow-sm backdrop-blur-md"
-        >
-          <fa-icon [icon]="calendarIcon" class="text-slate-200"></fa-icon>
-          <span>{{ formatRetrievedOn(game.retrievedOn) }}</span>
-        </span>
-
-        <button
-          type="button"
-          class="inline-flex items-center gap-1.5 rounded-full border border-blue-300/45 bg-blue-600/35 px-3 py-1 text-xs font-semibold text-blue-50 shadow-sm backdrop-blur-md transition hover:bg-blue-600/45"
-          (click)="updateGame()"
-        >
-          <fa-icon [icon]="refreshIcon" class="text-blue-200"></fa-icon>
-          <span>Synchroniser</span>
-        </button>
-
-        <span
-          class="inline-flex items-center rounded-full border border-white/25 bg-slate-900/45 px-3 py-1 text-xs font-medium text-slate-50 shadow-sm backdrop-blur-md"
-        >
-          {{ patchTitle }}
-        </span>
       }
     </div>
   </section>
 }
 
-<div class="mt-4 px-4">
-  @if (game != null && isLoading == false) {
-    <app-lol-game-card [game]="game" [playerId]="playerId"></app-lol-game-card>
-  }
-</div>
-
-@if (game != null && isLoading == false) {
-  <div class="mt-4 grid grid-cols-1 gap-4 px-4 xl:grid-cols-2">
-    <section id="lol-team1">
-      <div
-        class="mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
-      >
-        <div
-          class="w-1.5"
-          [ngClass]="{
-            'bg-slate-500': game.winningTeamId == 0,
-            'bg-blue-600': game.winningTeamId == 100,
-            'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 100,
-          }"
-        ></div>
-
-        <div class="w-full">
-          <div
-            class="flex items-center justify-between border-b border-white/25 px-3 py-2"
-          >
-            <div class="flex items-center gap-2">
-              <img src="assets/img/svg/lol.svg" class="w-7" />
-              <span class="text-base font-semibold text-slate-100"
-                >Equipe 1</span
-              >
-              @if (game.winningTeamId != 0) {
-                <span
-                  class="text-sm font-semibold"
-                  [ngClass]="{
-                    'text-customGreen': game.winningTeamId == 100,
-                    'text-frenchRed': game.winningTeamId != 100,
-                  }"
-                >
-                  {{ game.winningTeamId == 100 ? "Victoire" : "Défaite" }}
-                </span>
-              }
-            </div>
+@if (isLoading == false && game != null) {
+  <section class="mx-auto mt-3 w-full max-w-6xl px-4">
+    <div
+      class="rounded-2xl border p-5 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter transition-colors"
+      [ngClass]="heroCardClass"
+    >
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex min-w-0 items-center gap-4">
+          <div class="relative shrink-0">
+            <img
+              [src]="championIconUrl(heroPlayer)"
+              class="h-16 w-16 rounded-full border-2 border-white/30 object-cover"
+            />
+            <span
+              class="bg-secondary text-primary absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full px-1.5 text-[11px] font-semibold whitespace-nowrap"
+            >
+              {{ heroPlayer?.champLevel || "??" }}
+            </span>
           </div>
 
-          @if (team1.length > 0) {
-            <div class="divide-y divide-white/15">
-              @for (player of team1; track player) {
-                <app-lol-game-details-player
-                  [player]="player"
-                  [isSelected]="selectedPlayer?.puuid == player.puuid"
-                  (playerSelected)="onPlayerSelected($event)"
-                ></app-lol-game-details-player>
-              }
-            </div>
+          <div class="min-w-0">
+            <p class="text-2xl font-semibold" [ngClass]="heroStatusClass">
+              {{ heroStatusLabel }}
+            </p>
+            <p class="truncate text-sm text-primary dark:text-primaryDark">
+              {{ heroPlayer?.riotIdGameName }} sur
+              {{ heroPlayer?.championName }} &middot;
+              {{ heroPlayer?.kills || 0 }} / {{ heroPlayer?.deaths || 0 }} /
+              {{ heroPlayer?.assists || 0 }} &middot; {{ heroKda }} KDA
+            </p>
+            <p class="truncate text-sm text-gray-500 dark:text-gray-300">
+              {{ queueLabel }} &middot; {{ gameDurationLabel }} &middot;
+              {{ formatRetrievedOn(game.retrievedOn) }}
+            </p>
+          </div>
+        </div>
+
+        <div class="flex shrink-0 items-center gap-2">
+          <span
+            class="border-secondary/40 bg-secondary/20 text-secondary rounded-full border px-3 py-1.5 text-sm font-semibold shadow-sm backdrop-blur-md"
+          >
+            {{ patchTitle }}
+          </span>
+
+          <button
+            type="button"
+            class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+            (click)="updateGame()"
+          >
+            <fa-icon [icon]="refreshIcon"></fa-icon>
+            Synchroniser
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto mt-4 w-full max-w-6xl px-4">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div class="overflow-hidden rounded-2xl border border-bgLightDarker bg-bgLight/80 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter dark:border-bgDarkDarker dark:bg-bgDark/80">
+        <div class="flex items-center justify-between border-b border-bgLightDarker px-4 py-3 dark:border-bgDarkDarker">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-customGreen"></span>
+            <span class="text-primary dark:text-primaryDark font-semibold">Équipe 1</span>
+          </div>
+          @if (game.winningTeamId != 0) {
+            <span
+              class="text-sm font-semibold"
+              [ngClass]="
+                game.winningTeamId == 100 ? 'text-customGreen' : 'text-frenchRed'
+              "
+            >
+              {{ game.winningTeamId == 100 ? "Victoire" : "Défaite" }}
+            </span>
+          }
+        </div>
+
+        <div class="divide-y divide-bgLightDarker/60 dark:divide-bgDarkDarker/60">
+          @for (player of team1; track player.puuid) {
+            <app-lol-game-details-player
+              [player]="player"
+              [isSelected]="selectedPlayer?.puuid == player.puuid"
+              (playerSelected)="onPlayerSelected($event)"
+            ></app-lol-game-details-player>
           }
         </div>
       </div>
-    </section>
 
-    <section id="lol-team2">
-      <div
-        class="mb-4 flex w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
-      >
-        <div
-          class="w-1.5"
-          [ngClass]="{
-            'bg-slate-500': game.winningTeamId == 0,
-            'bg-blue-600': game.winningTeamId == 200,
-            'bg-red-600': game.winningTeamId != 0 && game.winningTeamId != 200,
-          }"
-        ></div>
-
-        <div class="w-full">
-          <div
-            class="flex items-center justify-between border-b border-white/25 px-3 py-2"
-          >
-            <div class="flex items-center gap-2">
-              <img src="assets/img/svg/lol.svg" class="w-7" />
-              <span class="text-base font-semibold text-slate-100"
-                >Equipe 2</span
-              >
-              @if (game.winningTeamId != 0) {
-                <span
-                  class="text-sm font-semibold"
-                  [ngClass]="{
-                    'text-customGreen': game.winningTeamId == 200,
-                    'text-frenchRed': game.winningTeamId != 200,
-                  }"
-                >
-                  {{ game.winningTeamId == 200 ? "Victoire" : "Défaite" }}
-                </span>
-              }
-            </div>
+      <div class="overflow-hidden rounded-2xl border border-bgLightDarker bg-bgLight/80 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter dark:border-bgDarkDarker dark:bg-bgDark/80">
+        <div class="flex items-center justify-between border-b border-bgLightDarker px-4 py-3 dark:border-bgDarkDarker">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 shrink-0 rounded-full bg-frenchRed"></span>
+            <span class="text-primary dark:text-primaryDark font-semibold">Équipe 2</span>
           </div>
+          @if (game.winningTeamId != 0) {
+            <span
+              class="text-sm font-semibold"
+              [ngClass]="
+                game.winningTeamId == 200 ? 'text-customGreen' : 'text-frenchRed'
+              "
+            >
+              {{ game.winningTeamId == 200 ? "Victoire" : "Défaite" }}
+            </span>
+          }
+        </div>
 
-          @if (team2.length > 0) {
-            <div class="divide-y divide-white/15">
-              @for (player of team2; track player) {
-                <app-lol-game-details-player
-                  [player]="player"
-                  [isSelected]="selectedPlayer?.puuid == player.puuid"
-                  (playerSelected)="onPlayerSelected($event)"
-                ></app-lol-game-details-player>
-              }
-            </div>
+        <div class="divide-y divide-bgLightDarker/60 dark:divide-bgDarkDarker/60">
+          @for (player of team2; track player.puuid) {
+            <app-lol-game-details-player
+              [player]="player"
+              [isSelected]="selectedPlayer?.puuid == player.puuid"
+              (playerSelected)="onPlayerSelected($event)"
+            ></app-lol-game-details-player>
           }
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
   @if (selectedPlayer != null) {
-    <section id="lol-player-highlight" class="px-4 pb-2">
+    <section class="mx-auto mt-4 w-full max-w-6xl px-4">
       <div
         #playerHighlight
         tabindex="-1"
-        class="w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
+        class="overflow-hidden rounded-2xl border border-bgLightDarker bg-bgLight/80 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter dark:border-bgDarkDarker dark:bg-bgDark/80"
       >
-        <div class="border-b border-white/25 px-3 py-2">
-          <div class="flex items-center gap-2">
-            <img src="assets/img/svg/lol.svg" class="w-7" />
-            <span class="text-base font-semibold text-slate-100"
-              >Focus joueur</span
-            >
-            <span class="text-sm text-slate-300"
-              >{{ selectedPlayer.riotIdGameName }}#{{
-                selectedPlayer.riotIdTagLine
-              }}</span
-            >
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-bgLightDarker px-4 py-3 dark:border-bgDarkDarker">
+          <div class="flex min-w-0 items-center gap-3">
+            <img
+              [src]="championIconUrl(selectedPlayer)"
+              class="h-10 w-10 rounded-full border-2 border-white/20 object-cover"
+            />
+            <div class="min-w-0">
+              <p class="truncate text-sm font-semibold text-primary dark:text-primaryDark">
+                Focus joueur — {{ selectedPlayer.riotIdGameName }}
+              </p>
+              <p class="truncate text-xs text-gray-500 dark:text-gray-300">
+                Or cumulé au fil de la partie &middot; cliquez un joueur pour changer
+              </p>
+            </div>
           </div>
+
+          <span class="text-customYellow shrink-0 text-lg font-semibold">
+            {{ selectedPlayerGoldLabel }} or
+          </span>
         </div>
 
-        <div class="p-3 text-white">
+        <div class="p-4">
           <app-lol-game-details-player-graph
             [timeline]="selectedPlayerTimeline"
           ></app-lol-game-details-player-graph>
+
+          <div class="mt-1 flex items-center justify-between text-xs text-gray-500 dark:text-gray-300">
+            <span>Début de partie</span>
+            <span>{{ gameDurationLabel }}</span>
+          </div>
         </div>
       </div>
     </section>
   }
 
-  @if (isLoading == false) {
-    <section id="lol-game-comparisons" class="px-4 pb-4">
-      <div
-        class="mt-2 w-full overflow-hidden rounded-xl border border-white/20 bg-slate-500/25 shadow-lg"
-      >
-        <div class="border-b border-white/25 px-3 py-2">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div class="flex items-center gap-2">
-              <img src="assets/img/svg/lol.svg" class="w-7" />
-              <span class="text-base font-semibold text-slate-100"
-                >Comparaison des joueurs</span
-              >
-            </div>
+  <section class="mx-auto mt-4 w-full max-w-6xl px-4 pb-6">
+    <div class="overflow-hidden rounded-2xl border border-bgLightDarker bg-bgLight/80 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter dark:border-bgDarkDarker dark:bg-bgDark/80">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-bgLightDarker px-4 py-3 dark:border-bgDarkDarker">
+        <span class="text-primary dark:text-primaryDark font-semibold">Comparaison des joueurs</span>
 
-            <div class="flex items-center gap-1.5">
-              <button
-                type="button"
-                class="rounded-md border px-2 py-1 text-xs font-medium transition-colors duration-200"
-                [ngClass]="{
-                  'border-white/30 bg-slate-900/50 text-white':
-                    selectedComparisonFilter == 'all',
-                  'border-white/15 bg-slate-900/20 text-slate-300 hover:bg-slate-900/40':
-                    selectedComparisonFilter != 'all',
-                }"
-                (click)="setComparisonFilter('all')"
-              >
-                Tous
-              </button>
+        <div class="flex items-center gap-1.5">
+          <button
+            type="button"
+            class="rounded-full border px-3 py-1 text-xs font-medium transition-colors"
+            [ngClass]="
+              selectedComparisonFilter == 'all'
+                ? 'border-secondary/50 bg-secondary/20 text-secondary'
+                : 'border-bgLightDarker text-gray-500 hover:bg-black/5 dark:border-bgDarkDarker dark:text-gray-300 dark:hover:bg-white/10'
+            "
+            (click)="setComparisonFilter('all')"
+          >
+            Tous
+          </button>
 
-              <button
-                type="button"
-                class="rounded-md border px-2 py-1 text-xs font-medium transition-colors duration-200"
-                [ngClass]="{
-                  'border-white/30 bg-blue-900/45 text-blue-100':
-                    selectedComparisonFilter == 'team1',
-                  'border-white/15 bg-slate-900/20 text-slate-300 hover:bg-slate-900/40':
-                    selectedComparisonFilter != 'team1',
-                }"
-                (click)="setComparisonFilter('team1')"
-              >
-                Équipe 1
-              </button>
+          <button
+            type="button"
+            class="rounded-full border px-3 py-1 text-xs font-medium transition-colors"
+            [ngClass]="
+              selectedComparisonFilter == 'team1'
+                ? 'border-customGreen/50 bg-customGreen/20 text-customGreen'
+                : 'border-bgLightDarker text-gray-500 hover:bg-black/5 dark:border-bgDarkDarker dark:text-gray-300 dark:hover:bg-white/10'
+            "
+            (click)="setComparisonFilter('team1')"
+          >
+            Équipe 1
+          </button>
 
-              <button
-                type="button"
-                class="rounded-md border px-2 py-1 text-xs font-medium transition-colors duration-200"
-                [ngClass]="{
-                  'border-white/30 bg-red-900/45 text-red-100':
-                    selectedComparisonFilter == 'team2',
-                  'border-white/15 bg-slate-900/20 text-slate-300 hover:bg-slate-900/40':
-                    selectedComparisonFilter != 'team2',
-                }"
-                (click)="setComparisonFilter('team2')"
-              >
-                Équipe 2
-              </button>
-            </div>
+          <button
+            type="button"
+            class="rounded-full border px-3 py-1 text-xs font-medium transition-colors"
+            [ngClass]="
+              selectedComparisonFilter == 'team2'
+                ? 'border-frenchRed/50 bg-frenchRed/20 text-frenchRed'
+                : 'border-bgLightDarker text-gray-500 hover:bg-black/5 dark:border-bgDarkDarker dark:text-gray-300 dark:hover:bg-white/10'
+            "
+            (click)="setComparisonFilter('team2')"
+          >
+            Équipe 2
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-6 p-4">
+        <div>
+          <h4 class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
+            Dégâts aux champions
+          </h4>
+          <div class="space-y-2">
+            @for (row of damageComparisonRows; track row.player.puuid) {
+              <div class="flex items-center gap-3">
+                <div class="w-32 shrink-0">
+                  <p class="truncate text-sm text-primary dark:text-primaryDark">{{ row.player.riotIdGameName }}</p>
+                  <p class="truncate text-xs text-gray-500 dark:text-gray-300">{{ row.player.championName }}</p>
+                </div>
+                <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-bgLightDarker/60 dark:bg-bgDarkDarker/60">
+                  <div
+                    class="h-full rounded-full transition-all"
+                    [ngClass]="teamBarClass(row.player)"
+                    [style.width.%]="row.widthPercent"
+                  ></div>
+                </div>
+                <span class="w-14 shrink-0 text-right text-sm font-medium text-primary dark:text-primaryDark">
+                  {{ formatCompact(row.value) }}
+                </span>
+              </div>
+            }
           </div>
         </div>
 
-        <div class="grid grid-cols-1 gap-3 p-3 lg:grid-cols-2">
-          <section
-            class="rounded-lg border border-white/10 bg-slate-900/20 p-3"
-          >
-            <h4
-              class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
-            >
-              KDA
-            </h4>
-            <div class="h-64 w-full">
-              <canvas class="h-full w-full" #kdaComparisonChart></canvas>
-            </div>
-          </section>
+        <div>
+          <h4 class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
+            Or total
+          </h4>
+          <div class="space-y-2">
+            @for (row of goldComparisonRows; track row.player.puuid) {
+              <div class="flex items-center gap-3">
+                <div class="w-32 shrink-0">
+                  <p class="truncate text-sm text-primary dark:text-primaryDark">{{ row.player.riotIdGameName }}</p>
+                  <p class="truncate text-xs text-gray-500 dark:text-gray-300">{{ row.player.championName }}</p>
+                </div>
+                <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-bgLightDarker/60 dark:bg-bgDarkDarker/60">
+                  <div
+                    class="h-full rounded-full transition-all"
+                    [ngClass]="teamBarClass(row.player)"
+                    [style.width.%]="row.widthPercent"
+                  ></div>
+                </div>
+                <span class="w-14 shrink-0 text-right text-sm font-medium text-primary dark:text-primaryDark">
+                  {{ formatCompact(row.value) }}
+                </span>
+              </div>
+            }
+          </div>
+        </div>
 
-          <section
-            class="rounded-lg border border-white/10 bg-slate-900/20 p-3"
-          >
-            <h4
-              class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
-            >
-              Dégâts aux champions
-            </h4>
-            <div class="h-64 w-full">
-              <canvas class="h-full w-full" #damageComparisonChart></canvas>
-            </div>
-          </section>
-
-          <section
-            class="rounded-lg border border-white/10 bg-slate-900/20 p-3 lg:col-span-2"
-          >
-            <h4
-              class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-300"
-            >
-              Économie (Gold / CS)
-            </h4>
-            <div class="h-72 w-full">
-              <canvas class="h-full w-full" #economyComparisonChart></canvas>
-            </div>
-          </section>
+        <div>
+          <h4 class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-300">
+            KDA
+          </h4>
+          <div class="space-y-2">
+            @for (row of kdaComparisonRows; track row.player.puuid) {
+              <div class="flex items-center gap-3">
+                <div class="w-32 shrink-0">
+                  <p class="truncate text-sm text-primary dark:text-primaryDark">{{ row.player.riotIdGameName }}</p>
+                  <p class="truncate text-xs text-gray-500 dark:text-gray-300">{{ row.player.championName }}</p>
+                </div>
+                <div class="h-2.5 flex-1 overflow-hidden rounded-full bg-bgLightDarker/60 dark:bg-bgDarkDarker/60">
+                  <div
+                    class="h-full rounded-full transition-all"
+                    [ngClass]="teamBarClass(row.player)"
+                    [style.width.%]="row.widthPercent"
+                  ></div>
+                </div>
+                <span class="w-14 shrink-0 text-right text-sm font-medium text-primary dark:text-primaryDark">
+                  {{ formatKda(row.value) }}
+                </span>
+              </div>
+            }
+          </div>
         </div>
       </div>
-    </section>
-  }
+    </div>
+  </section>
 }
