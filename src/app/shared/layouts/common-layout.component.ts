@@ -20,6 +20,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Player } from '../classes/common/Player';
 import Keycloak from 'keycloak-js';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-common-layout',
@@ -32,6 +33,7 @@ export class CommonLayoutComponent {
   private readonly keycloak = inject(Keycloak);
 
   player$: Observable<Player>;
+  apiUrl = environment.gameOnApiUrl;
 
   dumbbellIcon = faDumbbell;
   changelogIcon = faClockRotateLeft;
