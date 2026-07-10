@@ -6,7 +6,10 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Changelog } from '../../../../shared/classes/common/Changelog';
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleExclamation,
+  faArrowRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home-news-panel',
@@ -25,6 +28,7 @@ export class HomeNewsPanelComponent implements OnChanges {
   error = false;
 
   errorIcon = faCircleExclamation;
+  arrowIcon = faArrowRight;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loading =

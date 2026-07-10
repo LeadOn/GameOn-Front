@@ -4,7 +4,7 @@
     linear-gradient(to right, rgba(12, 16, 29, 0.85), rgba(12, 16, 29, 0.2)),
     url('../../../../../../public/assets/img/background.webp');
   background-size: cover;
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat;
   box-sizing: border-box;
 }

@@ -1,26 +1,119 @@
 <div
-  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex h-full flex-col justify-between rounded-lg p-4 backdrop-blur-sm"
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex h-full flex-col rounded-lg p-5 backdrop-blur-sm"
 >
   <div class="flex items-center justify-between">
-    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+    <span
+      class="text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400"
       >Ma saison LoL</span
     >
-    <fa-icon [icon]="rankIcon" class="text-secondary"></fa-icon>
+    <fa-icon [icon]="historyIcon" class="text-gray-500"></fa-icon>
   </div>
 
-  <div class="mt-4 flex items-center gap-3">
-    <div
-      class="from-secondary flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br to-purple-500"
-    >
-      <fa-icon [icon]="rankIcon" class="text-2xl text-white"></fa-icon>
-    </div>
-    <div>
-      <p class="text-primary dark:text-primaryDark text-xl font-bold">
-        {{ tier }}
-      </p>
+  <div class="flex flex-1 flex-col justify-center">
+    @if (isLoggedIn == false) {
       <p class="text-sm text-gray-500 dark:text-gray-400">
-        {{ lp }} LP · {{ queueType }}
+        Connecte-toi pour voir ton rang.
       </p>
-    </div>
+    } @else if (loading == true) {
+      <div class="flex flex-col gap-3">
+        @for (i of [1, 2]; track i) {
+          <div class="flex items-center gap-3">
+            <span class="h-11 w-11 shrink-0 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            <div class="flex flex-col gap-2">
+              <span class="block h-4 w-24 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"></span>
+              <span class="block h-3 w-20 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="flex flex-col gap-2">
+        <div
+          class="border-bgLightDarker/60 dark:border-bgDarkDarker/60 flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+          [routerLink]="['/lol/summoner', playerId]"
+        >
+          <img
+            [src]="tierEmblemUrl(soloRank)"
+            class="h-11 w-11 shrink-0"
+            [style.filter]="tierGlowShadow(soloRank)"
+          />
+          <div class="min-w-0 flex-1">
+            <p class="text-primary dark:text-primaryDark truncate text-sm font-bold">
+              {{ tierLabel(soloRank) }}
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              @if (soloRank) {
+                {{ soloRank.leaguePoints }} LP · Solo Queue
+              } @else {
+                Solo Queue
+              }
+            </p>
+          </div>
+          @if (soloRank) {
+            <div class="shrink-0 text-right">
+              <p
+                class="text-sm font-bold"
+                [ngClass]="{
+                  'text-customGreen': tierWinRate(soloRank) >= 50,
+                  'text-customRed': tierWinRate(soloRank) < 50,
+                }"
+              >
+                {{ tierWinRate(soloRank) }}%
+              </p>
+              <p class="text-[10px] whitespace-nowrap text-gray-500 dark:text-gray-400">
+                {{ soloGamesPlayed }} games
+              </p>
+            </div>
+          }
+        </div>
+
+        <div
+          class="border-bgLightDarker/60 dark:border-bgDarkDarker/60 flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+          [routerLink]="['/lol/summoner', playerId]"
+        >
+          <img
+            [src]="tierEmblemUrl(flexRank)"
+            class="h-11 w-11 shrink-0"
+            [style.filter]="tierGlowShadow(flexRank)"
+          />
+          <div class="min-w-0 flex-1">
+            <p class="text-primary dark:text-primaryDark truncate text-sm font-bold">
+              {{ tierLabel(flexRank) }}
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              @if (flexRank) {
+                {{ flexRank.leaguePoints }} LP · Flex Queue
+              } @else {
+                Flex Queue
+              }
+            </p>
+          </div>
+          @if (flexRank) {
+            <div class="shrink-0 text-right">
+              <p
+                class="text-sm font-bold"
+                [ngClass]="{
+                  'text-customGreen': tierWinRate(flexRank) >= 50,
+                  'text-customRed': tierWinRate(flexRank) < 50,
+                }"
+              >
+                {{ tierWinRate(flexRank) }}%
+              </p>
+              <p class="text-[10px] whitespace-nowrap text-gray-500 dark:text-gray-400">
+                {{ flexGamesPlayed }} games
+              </p>
+            </div>
+          }
+        </div>
+      </div>
+    }
   </div>
+
+  @if (isLoggedIn == true && loading == false) {
+    <a
+      [routerLink]="['/lol/summoner', playerId]"
+      class="text-customGreen mt-4 text-sm font-semibold"
+      >Voir mon historique de rang →</a
+    >
+  }
 </div>

@@ -69,7 +69,9 @@
       <div class="lg:col-span-2">
         <app-home-lol-leaderboard></app-home-lol-leaderboard>
       </div>
-      <app-home-lol-season-card></app-home-lol-season-card>
+      <app-home-lol-season-card
+        [isLoggedIn]="isLoggedIn"
+      ></app-home-lol-season-card>
     </div>
   </section>
 </div>

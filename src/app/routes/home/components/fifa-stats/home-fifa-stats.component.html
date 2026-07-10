@@ -3,7 +3,7 @@
     @if (globalStats$ | async; as stat) {
       <!-- Ma saison FIFA -->
       <div
-        class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 backdrop-blur-sm"
+        class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-5 backdrop-blur-sm"
       >
         <div class="flex items-center justify-between">
           <span
@@ -72,9 +72,9 @@
         </div>
       </div>
 
-      <!-- Forme récente (placeholder, pas de notion de série côté API) -->
+      <!-- Forme récente : calculée à partir des 5 derniers matchs joués par le joueur. -->
       <div
-        class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 backdrop-blur-sm"
+        class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-5 backdrop-blur-sm"
       >
         <div class="flex items-center justify-between">
           <span
@@ -84,15 +84,31 @@
           <fa-icon [icon]="formIcon" class="text-customYellow"></fa-icon>
         </div>
 
-        <p class="text-primary dark:text-primaryDark mt-3 text-3xl font-bold">
-          +{{ mockStreak }}
-        </p>
-        <p class="text-xs text-gray-500 dark:text-gray-400">
-          victoires de suite
-        </p>
+        @if (form.length > 0) {
+          <p
+            class="mt-3 text-3xl font-bold"
+            [ngClass]="{
+              'text-customGreen': streakType === 'V',
+              'text-customRed': streakType === 'D',
+              'text-customYellow': streakType === 'N',
+            }"
+          >
+            {{ streakType === 'V' ? '+' : '' }}{{ streak }}
+          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            {{ streakLabel }}
+          </p>
+        } @else {
+          <p class="text-primary dark:text-primaryDark mt-3 text-3xl font-bold">
+            —
+          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            aucun match joué
+          </p>
+        }
 
         <div class="mt-4 flex gap-1.5">
-          @for (result of mockForm; track $index) {
+          @for (result of form; track $index) {
             <span
               class="flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold text-white"
               [ngClass]="{
@@ -108,7 +124,7 @@
 
       <!-- Buts -->
       <div
-        class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 backdrop-blur-sm"
+        class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-5 backdrop-blur-sm"
       >
         <div class="flex items-center justify-between">
           <span

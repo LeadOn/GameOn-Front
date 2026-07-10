@@ -1,4 +1,5 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Season } from '../../../../shared/classes/fifa/Season';
@@ -20,6 +21,8 @@ export class HomeHeaderComponent {
   player$: Observable<Player>;
 
   today = new Date();
+
+  seasonIcon = faCalendarDays;
 
   constructor(private playerStore: Store<{ player: Player }>) {
     this.player$ = this.playerStore.select('player');

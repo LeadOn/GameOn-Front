@@ -6,36 +6,14 @@ import { LeagueOfLegendsRankHistory } from '../../../shared/classes/lol/LeagueOf
 import { LoLGame } from '../../../shared/classes/lol/LoLGame';
 import { environment } from '../../../../environments/environment';
 import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameon-lol.service';
+import {
+  tierRankScore,
+  tierGlowShadow,
+  tierGlowBackground,
+  tierEmblemUrl,
+} from '../../../shared/classes/lol/lol-tier.util';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-
-const TIER_ORDER = [
-  'CHALLENGER',
-  'GRANDMASTER',
-  'MASTER',
-  'DIAMOND',
-  'EMERALD',
-  'PLATINUM',
-  'GOLD',
-  'SILVER',
-  'BRONZE',
-  'IRON',
-];
-const RANK_ORDER = ['I', 'II', 'III', 'IV'];
-
-const TIER_GLOW_COLORS: Record<string, string> = {
-  IRON: '119, 119, 119',
-  BRONZE: '169, 128, 90',
-  SILVER: '178, 191, 200',
-  GOLD: '212, 172, 12',
-  PLATINUM: '55, 187, 178',
-  EMERALD: '27, 153, 139',
-  DIAMOND: '99, 179, 237',
-  MASTER: '168, 85, 247',
-  GRANDMASTER: '237, 41, 57',
-  CHALLENGER: '132, 231, 240',
-};
-const DEFAULT_GLOW_COLOR = '115, 195, 233';
 
 @Component({
   selector: 'app-lol-player-details',
@@ -77,6 +55,8 @@ export class LolPlayerDetailsComponent implements OnInit {
   rankedOnly = true;
 
   rankPosition: number | null = null;
+
+  tierEmblemUrl = tierEmblemUrl;
 
   constructor(
     private route: ActivatedRoute,
@@ -128,8 +108,8 @@ export class LolPlayerDetailsComponent implements OnInit {
           .filter((p) => p.leagueOfLegendsSoloRank != null)
           .sort(
             (a, b) =>
-              this.getRankScore(a.leagueOfLegendsSoloRank) -
-              this.getRankScore(b.leagueOfLegendsSoloRank),
+              tierRankScore(a.leagueOfLegendsSoloRank) -
+              tierRankScore(b.leagueOfLegendsSoloRank),
           );
         const index = ranked.findIndex((p) => p.id === this.player!.id);
         this.rankPosition = index >= 0 ? index + 1 : null;
@@ -138,15 +118,6 @@ export class LolPlayerDetailsComponent implements OnInit {
         console.error(err);
       },
     );
-  }
-
-  private getRankScore(rank?: LeagueOfLegendsRankHistory): number {
-    if (!rank) return Number.MAX_SAFE_INTEGER;
-    const tierScore = TIER_ORDER.indexOf(rank.tier.toUpperCase());
-    const divScore = RANK_ORDER.indexOf(rank.rank.toUpperCase());
-    const t = tierScore < 0 ? 99 : tierScore;
-    const d = divScore < 0 ? 0 : divScore;
-    return t * 10000 + d * 1000 - rank.leaguePoints;
   }
 
   get rankPositionLabel(): string | null {
@@ -169,17 +140,12 @@ export class LolPlayerDetailsComponent implements OnInit {
     );
   }
 
-  getTierGlowRgb(rank?: LeagueOfLegendsRankHistory): string {
-    const tier = rank?.tier?.toUpperCase();
-    return (tier != null && TIER_GLOW_COLORS[tier]) || DEFAULT_GLOW_COLOR;
-  }
-
   getTierGlowShadow(rank?: LeagueOfLegendsRankHistory): string {
-    return `drop-shadow(0 0 12px rgba(${this.getTierGlowRgb(rank)}, 0.65))`;
+    return tierGlowShadow(rank);
   }
 
   getTierGlowBackground(rank?: LeagueOfLegendsRankHistory): string {
-    return `rgba(${this.getTierGlowRgb(rank)}, 0.25)`;
+    return tierGlowBackground(rank);
   }
 
   get soloRankHistoryEntries(): LeagueOfLegendsRankHistory[] {

@@ -14,8 +14,18 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Player } from '../../../../shared/classes/common/Player';
 import { PlatformStatsDto } from '../../../../shared/classes/common/PlatformStatsDto';
+import { FifaGamePlayed } from '../../../../shared/classes/fifa/FifaGamePlayed';
 import { GameOnPlayerService } from '../../../../shared/services/common/gameon-player.service';
+import { GameOnGameService } from '../../../../shared/services/fifa/gameon-game.service';
 import { setPlayerStats } from '../../../../core/store/actions/player.actions';
+
+type GameResult = 'V' | 'D' | 'N';
+
+const STREAK_LABELS: Record<GameResult, string> = {
+  V: 'victoires de suite',
+  D: 'défaites de suite',
+  N: 'matchs nuls de suite',
+};
 
 @Component({
   selector: 'app-home-fifa-stats',
@@ -37,14 +47,16 @@ export class HomeFifaStatsComponent implements OnChanges {
   formIcon = faFire;
   goalsIcon = faBullseye;
 
-  // Placeholder : pas de notion de "série en cours" côté API pour le moment.
-  mockStreak = 3;
-  mockForm: ('V' | 'D' | 'N')[] = ['V', 'V', 'V', 'N', 'D'];
+  form: GameResult[] = [];
+  streak = 0;
+  streakType: GameResult = 'V';
+  streakLabel = STREAK_LABELS.V;
 
   constructor(
     private playerStore: Store<{ player: Player }>,
     private statsStore: Store<{ globalStats: PlatformStatsDto }>,
     private playerService: GameOnPlayerService,
+    private gameService: GameOnGameService,
   ) {
     this.player$ = this.playerStore.select('player');
     this.globalStats$ = statsStore.select('globalStats');
@@ -55,6 +67,7 @@ export class HomeFifaStatsComponent implements OnChanges {
       this.isLoggedIn = changes['isLoggedIn'].currentValue;
 
     this.getPlayerStats();
+    this.getRecentForm();
   }
 
   getPlayerStats() {
@@ -73,6 +86,40 @@ export class HomeFifaStatsComponent implements OnChanges {
         });
       });
     }
+  }
+
+  getRecentForm() {
+    if (this.isLoggedIn) {
+      this.player$.subscribe((x) => {
+        this.gameService.getLastByPlayer(x.id, 5).subscribe((games) => {
+          const results = games
+            .filter((game) => game.isPlayed)
+            .map((game) => this.resultForPlayer(game, x.id));
+
+          this.form = [...results].reverse();
+
+          if (results.length === 0) {
+            this.streak = 0;
+            return;
+          }
+
+          this.streakType = results[0];
+          this.streak = results.findIndex((r) => r !== this.streakType);
+          this.streak = this.streak === -1 ? results.length : this.streak;
+          this.streakLabel = STREAK_LABELS[this.streakType];
+        });
+      });
+    }
+  }
+
+  resultForPlayer(game: FifaGamePlayed, playerId: number): GameResult {
+    const onTeam1 = game.team1.players.some((p) => p.id === playerId);
+    const myScore = onTeam1 ? game.team1.score : game.team2.score;
+    const opponentScore = onTeam1 ? game.team2.score : game.team1.score;
+
+    if (myScore > opponentScore) return 'V';
+    if (myScore < opponentScore) return 'D';
+    return 'N';
   }
 
   totalMatches(stat: PlatformStatsDto): number {

@@ -1,5 +1,5 @@
 <div
-  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 backdrop-blur-sm"
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-5 backdrop-blur-sm"
 >
   <table class="w-full text-left text-sm">
     <thead>
@@ -13,42 +13,102 @@
       </tr>
     </thead>
     <tbody>
-      @for (entry of entries; track entry.rank) {
-        <tr class="border-t border-gray-500/10">
-          <td class="py-3">
-            <span
-              class="bg-secondary text-primaryDark flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
-              >{{ entry.rank }}</span
-            >
-          </td>
-          <td class="py-3">
-            <div class="flex items-center gap-2">
+      @if (loading == false) {
+        @for (player of rankedPlayers; track player.id; let i = $index) {
+          <tr
+            class="hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-t border-gray-500/10 transition-colors"
+            [routerLink]="['/lol/summoner', player.id]"
+          >
+            <td class="py-3">
               <span
-                class="bg-primary dark:bg-primaryDark text-primaryDark dark:text-primary flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold"
-                >{{ entry.nickname.charAt(0) }}</span
+                class="bg-secondary text-primaryDark flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
+                >{{ i + 1 }}</span
               >
-              <div>
-                <p class="text-primary dark:text-primaryDark font-semibold">
-                  {{ entry.nickname }}
-                </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  {{ entry.tag }}
-                </p>
+            </td>
+            <td class="py-3">
+              <div class="flex items-center gap-2">
+                <div class="h-8 w-8 shrink-0 overflow-hidden rounded-full">
+                  @if (player.lolIconId != null) {
+                    <img
+                      src="https://ddragon.leagueoflegends.com/cdn/{{
+                        currentLoLPatch
+                      }}/img/profileicon/{{ player.lolIconId }}.png"
+                      class="h-full w-full object-cover"
+                    />
+                  } @else if (
+                    player.profilePictureUrl != null &&
+                    player.profilePictureUrl != ''
+                  ) {
+                    <img
+                      src="{{ apiUrl }}/player/{{ player.id }}/pp"
+                      class="h-full w-full object-cover"
+                    />
+                  } @else {
+                    <img
+                      src="assets/img/gameon-logo.webp"
+                      class="h-full w-full object-cover"
+                    />
+                  }
+                </div>
+                <div>
+                  <p class="text-primary dark:text-primaryDark font-semibold">
+                    {{ player.nickname }}
+                  </p>
+                  @if (player.riotGamesNickname) {
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                      {{ player.riotGamesNickname }}#{{
+                        player.riotGamesTagLine
+                      }}
+                    </p>
+                  }
+                </div>
               </div>
-            </div>
-          </td>
-          <td class="py-3">
-            <p class="text-primary dark:text-primaryDark font-semibold">
-              {{ entry.tier }}
-            </p>
-            <p class="text-xs text-gray-500 dark:text-gray-400">
-              {{ entry.lp }} LP
-            </p>
-          </td>
-          <td class="text-customGreen py-3 text-right font-semibold">
-            {{ entry.winRate }}%
-          </td>
-        </tr>
+            </td>
+            <td class="py-3">
+              <p class="text-primary dark:text-primaryDark font-semibold">
+                {{ tierLabel(player.leagueOfLegendsSoloRank) }}
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                {{ player.leagueOfLegendsSoloRank?.leaguePoints }} LP
+              </p>
+            </td>
+            <td
+              class="py-3 text-right font-semibold"
+              [ngClass]="{
+                'text-customGreen':
+                  winRate(player.leagueOfLegendsSoloRank) > 50,
+                'text-customYellow':
+                  winRate(player.leagueOfLegendsSoloRank) === 50,
+                'text-customRed': winRate(player.leagueOfLegendsSoloRank) < 50,
+              }"
+            >
+              {{ winRate(player.leagueOfLegendsSoloRank) }}%
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="py-6 text-center text-gray-500 dark:text-gray-400">
+              Aucun joueur classé pour l'instant.
+            </td>
+          </tr>
+        }
+      } @else {
+        @for (i of [1, 2, 3, 4, 5]; track i) {
+          <tr class="animate-pulse border-t border-gray-500/10">
+            <td class="py-3">
+              <span class="block h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            </td>
+            <td class="py-3">
+              <span class="block h-8 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            </td>
+            <td class="py-3">
+              <span class="block h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            </td>
+            <td class="py-3 text-right">
+              <span class="ml-auto block h-4 w-10 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            </td>
+          </tr>
+        }
       }
     </tbody>
   </table>

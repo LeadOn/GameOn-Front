@@ -12,21 +12,11 @@ import { PlayerDto } from '../../shared/classes/common/PlayerDto';
 import { Player } from '../../shared/classes/common/Player';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { LeagueOfLegendsRankHistory } from '../../shared/classes/lol/LeagueOfLegendsRankHistory';
+import {
+  tierRankScore,
+  tierWinRate,
+} from '../../shared/classes/lol/lol-tier.util';
 import { environment } from '../../../environments/environment';
-
-const TIER_ORDER = [
-  'CHALLENGER',
-  'GRANDMASTER',
-  'MASTER',
-  'DIAMOND',
-  'EMERALD',
-  'PLATINUM',
-  'GOLD',
-  'SILVER',
-  'BRONZE',
-  'IRON',
-];
-const RANK_ORDER = ['I', 'II', 'III', 'IV'];
 
 @Component({
   selector: 'app-lol-home',
@@ -138,7 +128,7 @@ export class LolHomeComponent implements OnInit {
         this.sortColumn === 'solo'
           ? b.leagueOfLegendsSoloRank
           : b.leagueOfLegendsFlexRank;
-      return dir * (this.getRankScore(rankA) - this.getRankScore(rankB));
+      return dir * (tierRankScore(rankA) - tierRankScore(rankB));
     });
   }
 
@@ -147,19 +137,10 @@ export class LolHomeComponent implements OnInit {
       .filter((p) => p.leagueOfLegendsSoloRank != null)
       .sort(
         (a, b) =>
-          this.getRankScore(a.leagueOfLegendsSoloRank) -
-          this.getRankScore(b.leagueOfLegendsSoloRank),
+          tierRankScore(a.leagueOfLegendsSoloRank) -
+          tierRankScore(b.leagueOfLegendsSoloRank),
       )
       .slice(0, 3);
-  }
-
-  private getRankScore(rank?: LeagueOfLegendsRankHistory): number {
-    if (!rank) return Number.MAX_SAFE_INTEGER;
-    const tierScore = TIER_ORDER.indexOf(rank.tier.toUpperCase());
-    const divScore = RANK_ORDER.indexOf(rank.rank.toUpperCase());
-    const t = tierScore < 0 ? 99 : tierScore;
-    const d = divScore < 0 ? 0 : divScore;
-    return t * 10000 + d * 1000 - rank.leaguePoints;
   }
 
   private getWinRateScore(player: PlayerDto): number {
@@ -178,8 +159,7 @@ export class LolHomeComponent implements OnInit {
   }
 
   getWinRate(rank: LeagueOfLegendsRankHistory): number {
-    const total = rank.wins + rank.losses;
-    return total === 0 ? 0 : Math.round((rank.wins / total) * 100);
+    return tierWinRate(rank);
   }
 
   winRateClass(value: number): string {

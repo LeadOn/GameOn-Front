@@ -25,6 +25,7 @@ GameOn! is an Angular front-end for tracking cross-game (and IRL) player perform
 ### Module layout
 
 - `src/app/routes/` — public-facing feature areas: `home`, `fifa`, `lol`, `profile`, `changelog`. `fifa` and `lol` are lazy-loaded (`loadChildren`) via their own `*-routing.module.ts` + `*.module.ts`, each with a `components/` subfolder for area-local components.
+- `src/app/routes/home/` — the landing page, assembled from small focused components in `components/`: `header`, `tournament-banner`, `fifa-stats`, `matches-list`, `news-panel`, `lol-leaderboard`, `lol-season-card`. All declared directly in `app.module.ts` (the home route is not lazy-loaded, unlike `fifa`/`lol`). Everything on it is backed by real data except the tournament banner's background image (a generic reused asset — `Tournament` has no photo field) and its "Classement" button (no dedicated ranking view exists yet, so it links to the same tournament page as "Voir le tournoi").
 - `src/app/admin/` — the admin portal, also lazy-loaded under `/admin`. Mirrors backend domains: `fifa/{games,highlights,tournaments}`, `general/{platforms,players,seasons}`, `changelog`. Has its own layout (`admin-layout.component`) and its own guard requirement (role `gameon_admin`).
 - `src/app/shared/` — cross-cutting: `layouts/` (`CommonLayoutComponent` for public pages vs `AdminLayoutComponent`), `components/`, `services/{common,fifa,leagueoflegends}/`, `classes/{common,fifa,lol}/` (plain TS DTO/model classes mirroring backend payloads), `modules/shared.module.ts` (declares/exports the shared components, pipes, and Angular form/router modules used app-wide).
 - `src/app/core/` — `guards/auth.guard.ts`, `pipes/safe.pipe.ts`, and the NgRx `store/{actions,reducers}`.
@@ -56,12 +57,6 @@ Custom Angular component tags default to `display: inline` in this codebase (no 
 
 `app.module.ts` registers French locale data (`registerLocaleData(localeFr)` from `@angular/common/locales/fr`) and provides `{ provide: LOCALE_ID, useValue: 'fr' }`, so `DatePipe` and other locale-aware pipes format dates in French app-wide.
 
-## In-progress: home page rework
+### LoL tier/rank logic
 
-The public home page (`src/app/routes/home/`) is being reworked in 3 phases: (1) layout + placeholders, (2) rework each component's visuals/data once phase 1 is validated, (3) build any genuinely new components the redesign needs. Phase 1 is done; phases 2 and 3 have not started.
-
-What phase 1 changed: the old 3-component structure (`home-fifa`, `home-lol`, `home-changelog`) was replaced by 7 focused components under `routes/home/components/`: `header`, `tournament-banner`, `fifa-stats`, `matches-list`, `news-panel`, `lol-leaderboard`, `lol-season-card`, each declared directly in `app.module.ts` (the home route isn't lazy-loaded).
-
-Data status per component, for whoever picks up phase 2:
-- **Real data**: `header` (player from the NgRx `player` store, season from `HomeDataDto`), `tournament-banner` (tournament name/link/player count from `HomeDataDto.featuredTournaments[0]`), `fifa-stats`'s "Ma saison" and "Buts" cards (real `PlatformStatsDto` via `GameOnPlayerService.getStats`), `matches-list` (real planned + last games via `GameOnGameService`), `news-panel` (real changelog, same as the old `home-changelog`).
-- **Static placeholder, no backing data yet**: `fifa-stats`'s "Forme récente" card (no win/loss streak concept anywhere in the API — would need computing from a player's recent games), `lol-leaderboard` (no LoL leaderboard endpoint exists on `GameOnLolService`), `lol-season-card` (not confirmed whether a per-player current-rank endpoint already exists elsewhere, e.g. the LoL profile page — check there first), the tournament banner's subtitle text and background image (the `Tournament` model has no "phase"/"next match" fields).
+`src/app/shared/classes/lol/lol-tier.util.ts` is the single source of truth for League of Legends tier logic: rank ordering/scoring for sorting (`tierRankScore`), win rate (`tierWinRate`), display label (`tierLabel`, e.g. "Platinum I"), rank emblem image URL (`tierEmblemUrl`, falls back to the GameOn logo when unranked), and tier glow color (`tierGlowShadow`/`tierGlowBackground`, used as a `drop-shadow`/background glow keyed by tier). Used by `lol-home.component.ts`, `lol-player-details.component.ts`, and the home page's `lol-leaderboard`/`lol-season-card` — put any new tier-related logic here rather than reimplementing it locally.
