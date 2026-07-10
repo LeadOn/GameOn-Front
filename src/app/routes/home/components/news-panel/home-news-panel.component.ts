@@ -6,19 +6,15 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Changelog } from '../../../../shared/classes/common/Changelog';
-import {
-  faCircleExclamation,
-  faClock,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-home-changelog',
-  templateUrl: './home-changelog.component.html',
-  styleUrl: './home-changelog.component.css',
+  selector: 'app-home-news-panel',
+  templateUrl: './home-news-panel.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class HomeChangelogComponent implements OnChanges {
+export class HomeNewsPanelComponent implements OnChanges {
   @Input()
   loading: boolean = true;
 

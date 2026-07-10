@@ -1,13 +1,13 @@
-<div class="animate-fade flex items-center justify-between px-4">
-  <div class="flex items-center justify-center space-x-2">
-    <span class="dark:text-primaryDark text-primary text-lg font-semibold"
+<div
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex h-full flex-col rounded-lg p-4 backdrop-blur-sm"
+>
+  <div class="flex items-center justify-between">
+    <span class="text-primary dark:text-primaryDark text-lg font-semibold"
       >Nouveautés</span
-      >
-    </div>
+    >
 
     @if (loading == true && error == false) {
-      <app-loading-spinner-tiny
-      ></app-loading-spinner-tiny>
+      <app-loading-spinner-tiny></app-loading-spinner-tiny>
     }
   </div>
 
@@ -20,10 +20,11 @@
   }
 
   @if (error == false) {
-    <div class="cursor-pointer px-4" routerLink="/changelog">
+    <div class="mt-4 cursor-pointer" routerLink="/changelog">
       <app-changelog-card
         [changelog]="changelog"
         [loading]="loading"
       ></app-changelog-card>
     </div>
   }
+</div>

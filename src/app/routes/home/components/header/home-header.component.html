@@ -1,0 +1,22 @@
+<div class="animate-fade flex items-center justify-between">
+  <div>
+    <p class="text-sm text-gray-500 capitalize dark:text-gray-400">
+      {{ today | date: 'EEEE d MMMM' }}
+    </p>
+    <h1 class="text-primary dark:text-primaryDark text-3xl font-bold">
+      @if (isLoggedIn == true && (player$ | async); as player) {
+        Salut, {{ player.nickname }}
+      } @else {
+        Bienvenue sur GameOn !
+      }
+    </h1>
+  </div>
+
+  @if (season != null) {
+    <app-pill
+      [title]="season.name"
+      [bgStyle]="'primary-dark'"
+      [borderStyle]="'primary'"
+    ></app-pill>
+  }
+</div>

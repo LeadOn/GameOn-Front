@@ -4,7 +4,10 @@ import {
   OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faInfoCircle,
+  faFutbol,
+} from '@fortawesome/free-solid-svg-icons';
 import Keycloak from 'keycloak-js';
 import { HomeDataDto } from '../../shared/classes/common/HomeDataDto';
 import { GameOnCommonService } from '../../shared/services/common/gameon-common.service';
@@ -28,6 +31,7 @@ export class HomeComponent implements OnInit {
   loadingActivePlayers = true;
 
   infoIcon = faInfoCircle;
+  soccerIcon = faFutbol;
 
   constructor(private commonService: GameOnCommonService) {
     this.isLoggedIn =

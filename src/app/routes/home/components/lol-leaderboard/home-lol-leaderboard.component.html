@@ -1,0 +1,55 @@
+<div
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-4 backdrop-blur-sm"
+>
+  <table class="w-full text-left text-sm">
+    <thead>
+      <tr
+        class="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400"
+      >
+        <th class="pb-2 font-medium">#</th>
+        <th class="pb-2 font-medium">Joueur</th>
+        <th class="pb-2 font-medium">Solo Queue</th>
+        <th class="pb-2 text-right font-medium">Winrate</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (entry of entries; track entry.rank) {
+        <tr class="border-t border-gray-500/10">
+          <td class="py-3">
+            <span
+              class="bg-secondary text-primaryDark flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
+              >{{ entry.rank }}</span
+            >
+          </td>
+          <td class="py-3">
+            <div class="flex items-center gap-2">
+              <span
+                class="bg-primary dark:bg-primaryDark text-primaryDark dark:text-primary flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold"
+                >{{ entry.nickname.charAt(0) }}</span
+              >
+              <div>
+                <p class="text-primary dark:text-primaryDark font-semibold">
+                  {{ entry.nickname }}
+                </p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">
+                  {{ entry.tag }}
+                </p>
+              </div>
+            </div>
+          </td>
+          <td class="py-3">
+            <p class="text-primary dark:text-primaryDark font-semibold">
+              {{ entry.tier }}
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              {{ entry.lp }} LP
+            </p>
+          </td>
+          <td class="text-customGreen py-3 text-right font-semibold">
+            {{ entry.winRate }}%
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

@@ -1,6 +1,6 @@
-# CLAUDE.md
+# Copilot Instructions
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to GitHub Copilot when working with code in this repository. It mirrors `CLAUDE.md` at the repo root — keep both in sync when either changes.
 
 ## Project
 
