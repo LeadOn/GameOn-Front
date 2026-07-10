@@ -1,0 +1,29 @@
+<div
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-5 backdrop-blur-sm"
+>
+  <h3 class="text-primary dark:text-primaryDark text-lg font-semibold">
+    Derniers matchs
+  </h3>
+
+  @if (error == true) {
+    <app-info-message
+      [type]="'error'"
+      [title]="'Une erreur est survenue lors de la récupération des matchs.'"
+      [icon]="errorIcon"
+    ></app-info-message>
+  }
+
+  <div class="mt-4 flex flex-col gap-3">
+    @if (loading == true) {
+      @for (i of [1, 2, 3]; track i) {
+        <app-fifa-game-history-card></app-fifa-game-history-card>
+      }
+    }
+
+    @if (loading == false) {
+      @for (game of games; track game.id) {
+        <app-fifa-game-history-card [game]="game"></app-fifa-game-history-card>
+      }
+    }
+  </div>
+</div>

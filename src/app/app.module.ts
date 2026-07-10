@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
 import { BrowserModule } from '@angular/platform-browser';
 import {
   createInterceptorCondition,
@@ -29,11 +31,17 @@ import {
   playerStatsReducer,
 } from './core/store/reducers/player.reducer';
 import { HomeComponent } from './routes/home/home.component';
-import { HomeChangelogComponent } from './routes/home/components/changelog/home-changelog.component';
-import { HomeFifaComponent } from './routes/home/components/fifa/home-fifa.component';
-import { HomeLolComponent } from './routes/home/components/lol/home-lol.component';
+import { HomeHeaderComponent } from './routes/home/components/header/home-header.component';
+import { HomeTournamentBannerComponent } from './routes/home/components/tournament-banner/home-tournament-banner.component';
+import { HomeFifaStatsComponent } from './routes/home/components/fifa-stats/home-fifa-stats.component';
+import { HomeMatchesListComponent } from './routes/home/components/matches-list/home-matches-list.component';
+import { HomeNewsPanelComponent } from './routes/home/components/news-panel/home-news-panel.component';
+import { HomeLolLeaderboardComponent } from './routes/home/components/lol-leaderboard/home-lol-leaderboard.component';
+import { HomeLolSeasonCardComponent } from './routes/home/components/lol-season-card/home-lol-season-card.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
 import { lolVersionReducer } from './core/store/reducers/lol.reducer';
+
+registerLocaleData(localeFr);
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -52,9 +60,13 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     HomeComponent,
     ProfilePageComponent,
     ChangelogComponent,
-    HomeChangelogComponent,
-    HomeFifaComponent,
-    HomeLolComponent,
+    HomeHeaderComponent,
+    HomeTournamentBannerComponent,
+    HomeFifaStatsComponent,
+    HomeMatchesListComponent,
+    HomeNewsPanelComponent,
+    HomeLolLeaderboardComponent,
+    HomeLolSeasonCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +94,7 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
         silentCheckSsoRedirectUri: `${window.location.origin}/assets/silent-check-sso.html`,
       },
     }),
+    { provide: LOCALE_ID, useValue: 'fr' },
     {
       provide: INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
       useValue: [devCondition, prodCondition],

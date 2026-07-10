@@ -1,20 +1,25 @@
 import {
   AfterViewChecked,
-  AfterViewInit,
   Component,
   ElementRef,
-  OnDestroy,
   OnInit,
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faCalendar, faSync } from '@fortawesome/free-solid-svg-icons';
-import { Chart } from 'chart.js/auto';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/gameon-lol.service';
+
+interface ComparisonRow {
+  player: LoLGameParticipant;
+  value: number;
+  widthPercent: number;
+}
 
 @Component({
   selector: 'app-lol-game-details',
@@ -23,25 +28,9 @@ import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/ga
   changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
-export class LolGameDetailsComponent
-  implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy
-{
-  @ViewChild('kdaComparisonChart')
-  kdaComparisonChartCanvas?: ElementRef<HTMLCanvasElement>;
-
-  @ViewChild('damageComparisonChart')
-  damageComparisonChartCanvas?: ElementRef<HTMLCanvasElement>;
-
-  @ViewChild('economyComparisonChart')
-  economyComparisonChartCanvas?: ElementRef<HTMLCanvasElement>;
-
+export class LolGameDetailsComponent implements OnInit, AfterViewChecked {
   @ViewChild('playerHighlight')
   playerHighlight?: ElementRef<HTMLDivElement>;
-
-  kdaChart?: Chart;
-  damageChart?: Chart;
-  economyChart?: Chart;
-  comparisonChartsBuildTimer?: ReturnType<typeof setTimeout>;
 
   gameId: any;
   playerId: any;
@@ -56,9 +45,10 @@ export class LolGameDetailsComponent
   selectedComparisonFilter: 'all' | 'team1' | 'team2' = 'all';
 
   patchTitle = 'Patch inconnu';
+  currentLoLPatch = '';
+  lolVersion$: Observable<string>;
 
   refreshIcon = faSync;
-  calendarIcon = faCalendar;
 
   isLoading = true;
   gameError = false;
@@ -67,17 +57,20 @@ export class LolGameDetailsComponent
   constructor(
     private route: ActivatedRoute,
     private lolService: GameOnLoLService,
-  ) {}
+    private lolStore: Store<{ lolVersion: string }>,
+  ) {
+    this.lolVersion$ = this.lolStore.select('lolVersion');
+  }
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get('id');
     this.playerId = this.route.snapshot.paramMap.get('playerId');
 
-    this.loadGame();
-  }
+    this.lolVersion$.subscribe((version) => {
+      this.currentLoLPatch = version;
+    });
 
-  ngAfterViewInit(): void {
-    this.rebuildComparisonCharts();
+    this.loadGame();
   }
 
   ngAfterViewChecked(): void {
@@ -99,14 +92,6 @@ export class LolGameDetailsComponent
     this.shouldFocusPlayerHighlight = false;
   }
 
-  ngOnDestroy(): void {
-    if (this.comparisonChartsBuildTimer != null) {
-      clearTimeout(this.comparisonChartsBuildTimer);
-      this.comparisonChartsBuildTimer = undefined;
-    }
-    this.destroyComparisonCharts();
-  }
-
   loadGame() {
     this.isLoading = true;
     this.lolService.getGame(this.gameId).subscribe(
@@ -114,7 +99,8 @@ export class LolGameDetailsComponent
         this.game = game;
 
         if (this.game.gameVersion) {
-          this.patchTitle = `Patch ${this.game.gameVersion}`;
+          const [major, minor] = this.game.gameVersion.split('.');
+          this.patchTitle = `Patch ${major}.${minor}`;
         }
 
         let teams = game.leagueOfLegendsGameParticipants.reduce(
@@ -138,8 +124,6 @@ export class LolGameDetailsComponent
             }
           });
         }
-
-        this.scheduleComparisonChartsRebuild();
 
         this.getTimeline();
       },
@@ -173,7 +157,6 @@ export class LolGameDetailsComponent
           );
         }
         this.isLoading = false;
-        this.scheduleComparisonChartsRebuild();
       },
       (err) => {
         this.gameError = true;
@@ -184,43 +167,26 @@ export class LolGameDetailsComponent
 
   setComparisonFilter(filter: 'all' | 'team1' | 'team2') {
     this.selectedComparisonFilter = filter;
-    this.scheduleComparisonChartsRebuild();
   }
 
   formatRetrievedOn(date?: Date | string): string {
-    if (!date) {
+    const parsedDate = date instanceof Date ? date : date ? new Date(date) : undefined;
+
+    if (parsedDate == null || Number.isNaN(parsedDate.getTime())) {
       return 'Date inconnue';
     }
 
-    if (date instanceof Date) {
-      if (Number.isNaN(date.getTime())) {
-        return 'Date inconnue';
-      }
+    const datePart = new Intl.DateTimeFormat('fr-FR', {
+      day: 'numeric',
+      month: 'short',
+    }).format(parsedDate);
 
-      return new Intl.DateTimeFormat('fr-FR', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      }).format(date);
-    }
+    const timePart = new Intl.DateTimeFormat('fr-FR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(parsedDate);
 
-    const normalizedDate = date.match(
-      /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/,
-    );
-
-    if (normalizedDate) {
-      const [, year, month, day, hours, minutes] = normalizedDate;
-      return `${day}/${month}/${year} à ${hours}:${minutes}`;
-    }
-
-    const parsedDate = new Date(date);
-    if (!Number.isNaN(parsedDate.getTime())) {
-      return new Intl.DateTimeFormat('fr-FR', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      }).format(parsedDate);
-    }
-
-    return date;
+    return `${datePart} à ${timePart}`;
   }
 
   onPlayerSelected(player: LoLGameParticipant) {
@@ -257,301 +223,186 @@ export class LolGameDetailsComponent
     return personalTimeline;
   }
 
-  private scheduleComparisonChartsRebuild() {
-    if (this.comparisonChartsBuildTimer != null) {
-      clearTimeout(this.comparisonChartsBuildTimer);
-      this.comparisonChartsBuildTimer = undefined;
+  // --- Hero header ---
+
+  get heroPlayer(): LoLGameParticipant | undefined {
+    if (this.playerId == null) {
+      return undefined;
     }
 
-    this.comparisonChartsBuildTimer = setTimeout(() => {
-      this.tryRebuildComparisonCharts(0);
-    }, 0);
-  }
-
-  private tryRebuildComparisonCharts(attempt: number) {
-    if (this.canBuildComparisonCharts()) {
-      this.rebuildComparisonCharts();
-      return;
-    }
-
-    if (attempt >= 12) {
-      return;
-    }
-
-    this.comparisonChartsBuildTimer = setTimeout(() => {
-      this.tryRebuildComparisonCharts(attempt + 1);
-    }, 80);
-  }
-
-  private canBuildComparisonCharts(): boolean {
-    const hasPlayers = this.team1.length + this.team2.length > 0;
-    return (
-      this.isLoading == false &&
-      hasPlayers &&
-      this.kdaComparisonChartCanvas != null &&
-      this.damageComparisonChartCanvas != null &&
-      this.economyComparisonChartCanvas != null
+    return this.game.leagueOfLegendsGameParticipants.find(
+      (p) => p.playerId == this.playerId,
     );
   }
 
-  private rebuildComparisonCharts() {
-    this.destroyComparisonCharts();
-    this.buildComparisonCharts();
+  get heroWon(): boolean | undefined {
+    return this.heroPlayer?.win;
   }
 
-  private destroyComparisonCharts() {
-    this.kdaChart?.destroy();
-    this.damageChart?.destroy();
-    this.economyChart?.destroy();
-    this.kdaChart = undefined;
-    this.damageChart = undefined;
-    this.economyChart = undefined;
+  get heroKda(): string {
+    const player = this.heroPlayer;
+    if (player == null) {
+      return '0,00';
+    }
+
+    const denominator = player.deaths === 0 ? 1 : player.deaths;
+    return this.formatKda((player.kills + player.assists) / denominator);
   }
 
-  private buildComparisonCharts() {
+  get heroStatusLabel(): string {
+    if (this.game.endOfGameResult == null || this.game.endOfGameResult === '') {
+      return 'Partie non synchronisée';
+    }
+
+    return this.heroWon ? 'Victoire' : 'Défaite';
+  }
+
+  get heroStatusClass(): string {
+    if (this.game.endOfGameResult == null || this.game.endOfGameResult === '') {
+      return 'text-gray-500 dark:text-gray-300';
+    }
+
+    return this.heroWon ? 'text-customGreen' : 'text-frenchRed';
+  }
+
+  get heroCardClass(): string {
+    if (this.game.endOfGameResult == null || this.game.endOfGameResult === '') {
+      return 'border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80';
+    }
+
+    return this.heroWon
+      ? 'border-customGreen/40 bg-customGreen/10'
+      : 'border-frenchRed/40 bg-frenchRed/10';
+  }
+
+  get queueLabel(): string {
+    if (this.game.queueType == 'RANKED_SOLO_DUO') {
+      return 'Classée Solo/Duo';
+    }
+
+    if (this.game.queueType == 'RANKED_FLEX') {
+      return 'Classée Flex';
+    }
+
     if (
-      this.kdaComparisonChartCanvas == null ||
-      this.damageComparisonChartCanvas == null ||
-      this.economyComparisonChartCanvas == null
+      this.game.queueType == '5v5 Draft Pick games' ||
+      this.game.queueType == 'NORMAL_5V5'
     ) {
-      return;
+      return 'Normale';
     }
 
-    const allPlayers = [...this.team1, ...this.team2];
-    if (allPlayers.length == 0) {
-      return;
+    return this.game.queueType;
+  }
+
+  get gameDurationLabel(): string {
+    const gameStart = new Date(this.game.gameStart);
+    const gameEnd = new Date(this.game.gameEnd);
+    const duration = (gameEnd.getTime() - gameStart.getTime()) / 1000;
+
+    if (Number.isNaN(duration) || duration <= 0) {
+      return '00:00';
     }
 
-    const filteredPlayers =
-      this.selectedComparisonFilter == 'team1'
-        ? this.team1
-        : this.selectedComparisonFilter == 'team2'
-          ? this.team2
-          : allPlayers;
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
 
-    if (filteredPlayers.length == 0) {
-      return;
+  championIconUrl(player?: LoLGameParticipant): string {
+    if (player?.championName) {
+      return `https://ddragon.leagueoflegends.com/cdn/${this.currentLoLPatch}/img/champion/${player.championName}.png`;
     }
 
+    return 'assets/img/gameon-logo.webp';
+  }
+
+  // --- Focus player panel ---
+
+  private latestFrameStats(puuid?: string) {
     const latestFrame = this.timeline
       ?.slice()
       .sort((a, b) => a.timestamp - b.timestamp)
       .at(-1);
 
-    const finalStatsByPuuid = new Map<string, any>();
-    latestFrame?.loLGameTimelineFrameParticipants?.forEach((participant) => {
-      finalStatsByPuuid.set(participant.participantPUUID, participant);
-    });
-
-    const labels = filteredPlayers.map(
-      (player, index) => player.riotIdGameName || `Joueur ${index + 1}`,
+    return latestFrame?.loLGameTimelineFrameParticipants?.find(
+      (p) => p.participantPUUID == puuid,
     );
+  }
 
-    const teamColors = filteredPlayers.map((player) =>
-      player.teamId == 100
-        ? 'rgba(37, 99, 235, 0.7)'
-        : 'rgba(220, 38, 38, 0.7)',
+  get selectedPlayerGoldLabel(): string {
+    if (this.selectedPlayer == null) {
+      return '0';
+    }
+
+    const stats = this.latestFrameStats(this.selectedPlayer.puuid);
+    return this.formatCompact(stats?.totalGold || 0);
+  }
+
+  // --- Comparisons ---
+
+  get comparisonPlayers(): LoLGameParticipant[] {
+    if (this.selectedComparisonFilter == 'team1') {
+      return this.team1;
+    }
+
+    if (this.selectedComparisonFilter == 'team2') {
+      return this.team2;
+    }
+
+    return [...this.team1, ...this.team2];
+  }
+
+  get damageComparisonRows(): ComparisonRow[] {
+    return this.buildComparisonRows(
+      (player) =>
+        this.latestFrameStats(player.puuid)?.totalDamageDoneToChampions || 0,
     );
+  }
 
-    const kills = filteredPlayers.map((player) => player.kills || 0);
-    const deaths = filteredPlayers.map((player) => player.deaths || 0);
-    const assists = filteredPlayers.map((player) => player.assists || 0);
-
-    const totalDamageToChampions = filteredPlayers.map((player) => {
-      const stats = finalStatsByPuuid.get(player.puuid || '');
-      return stats?.totalDamageDoneToChampions || 0;
-    });
-
-    const totalDamageTaken = filteredPlayers.map((player) => {
-      const stats = finalStatsByPuuid.get(player.puuid || '');
-      return stats?.totalDamageTaken || 0;
-    });
-
-    const totalGold = filteredPlayers.map((player) => {
-      const stats = finalStatsByPuuid.get(player.puuid || '');
-      return stats?.totalGold || 0;
-    });
-
-    const totalCs = filteredPlayers.map((player) => {
-      const stats = finalStatsByPuuid.get(player.puuid || '');
-      const laneCs = stats?.minionsKilled || 0;
-      const jungleCs = stats?.jungleMinionsKilled || 0;
-      return laneCs + jungleCs;
-    });
-
-    const gridColor = 'rgba(255, 255, 255, 0.08)';
-    const tickColor = 'rgba(226, 232, 240, 0.85)';
-
-    this.kdaChart = new Chart(this.kdaComparisonChartCanvas.nativeElement, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'Kills',
-            data: kills,
-            backgroundColor: 'rgba(56, 189, 248, 0.8)',
-            borderRadius: 4,
-          },
-          {
-            label: 'Deaths',
-            data: deaths,
-            backgroundColor: 'rgba(244, 63, 94, 0.8)',
-            borderRadius: 4,
-          },
-          {
-            label: 'Assists',
-            data: assists,
-            backgroundColor: 'rgba(245, 158, 11, 0.8)',
-            borderRadius: 4,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: tickColor,
-              font: { size: 10 },
-              boxWidth: 14,
-              boxHeight: 8,
-            },
-          },
-        },
-        scales: {
-          x: {
-            ticks: { color: tickColor, maxRotation: 45, minRotation: 0 },
-            grid: { color: gridColor },
-          },
-          y: {
-            beginAtZero: true,
-            ticks: { color: tickColor },
-            grid: { color: gridColor },
-          },
-        },
-      },
-    });
-
-    this.damageChart = new Chart(
-      this.damageComparisonChartCanvas.nativeElement,
-      {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Dégâts aux champions',
-              data: totalDamageToChampions,
-              backgroundColor: teamColors,
-              borderRadius: 4,
-            },
-            {
-              label: 'Dégâts reçus',
-              data: totalDamageTaken,
-              backgroundColor: 'rgba(148, 163, 184, 0.7)',
-              borderRadius: 4,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: tickColor,
-                font: { size: 10 },
-                boxWidth: 14,
-                boxHeight: 8,
-              },
-            },
-          },
-          scales: {
-            x: {
-              ticks: { color: tickColor, maxRotation: 45, minRotation: 0 },
-              grid: { color: gridColor },
-            },
-            y: {
-              beginAtZero: true,
-              ticks: { color: tickColor },
-              grid: { color: gridColor },
-            },
-          },
-        },
-      },
+  get goldComparisonRows(): ComparisonRow[] {
+    return this.buildComparisonRows(
+      (player) => this.latestFrameStats(player.puuid)?.totalGold || 0,
     );
+  }
 
-    this.economyChart = new Chart(
-      this.economyComparisonChartCanvas.nativeElement,
-      {
-        type: 'bar',
-        data: {
-          labels,
-          datasets: [
-            {
-              label: 'Total Gold',
-              data: totalGold,
-              backgroundColor: teamColors,
-              borderRadius: 4,
-              yAxisID: 'y',
-            },
-            {
-              label: 'Total CS',
-              data: totalCs,
-              backgroundColor: 'rgba(45, 212, 191, 0.8)',
-              borderRadius: 4,
-              yAxisID: 'y1',
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                color: tickColor,
-                font: { size: 10 },
-                boxWidth: 14,
-                boxHeight: 8,
-              },
-            },
-          },
-          scales: {
-            x: {
-              ticks: { color: tickColor, maxRotation: 45, minRotation: 0 },
-              grid: { color: gridColor },
-            },
-            y: {
-              beginAtZero: true,
-              position: 'left',
-              ticks: { color: tickColor },
-              grid: { color: gridColor },
-            },
-            y1: {
-              beginAtZero: true,
-              position: 'right',
-              ticks: { color: tickColor },
-              grid: { drawOnChartArea: false },
-            },
-          },
-        },
-      },
-    );
+  get kdaComparisonRows(): ComparisonRow[] {
+    return this.buildComparisonRows((player) => {
+      const denominator = player.deaths === 0 ? 1 : player.deaths;
+      return (player.kills + player.assists) / denominator;
+    });
+  }
 
-    setTimeout(() => {
-      this.kdaChart?.resize();
-      this.damageChart?.resize();
-      this.economyChart?.resize();
+  private buildComparisonRows(
+    valueFn: (player: LoLGameParticipant) => number,
+  ): ComparisonRow[] {
+    const rows = this.comparisonPlayers.map((player) => ({
+      player,
+      value: valueFn(player),
+    }));
 
-      this.kdaChart?.update();
-      this.damageChart?.update();
-      this.economyChart?.update();
-    }, 50);
+    rows.sort((a, b) => b.value - a.value);
+
+    const max = rows.reduce((m, row) => Math.max(m, row.value), 0) || 1;
+
+    return rows.map((row) => ({
+      ...row,
+      widthPercent: Math.max(4, (row.value / max) * 100),
+    }));
+  }
+
+  teamBarClass(player: LoLGameParticipant): string {
+    return player.teamId == 100 ? 'bg-customGreen' : 'bg-frenchRed';
+  }
+
+  formatCompact(value: number): string {
+    if (value >= 1000) {
+      return (value / 1000).toFixed(1) + 'k';
+    }
+
+    return value.toFixed(0);
+  }
+
+  formatKda(value: number): string {
+    return value.toFixed(2).replace('.', ',');
   }
 }

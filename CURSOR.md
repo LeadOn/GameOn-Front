@@ -1,6 +1,8 @@
-# CLAUDE.md
+# CURSOR.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Cursor when working with code in this repository. It mirrors `CLAUDE.md` at the repo root — keep both in sync when either changes.
+
+> Note: Cursor's own auto-loaded convention is `.cursor/rules/*.mdc` (or the legacy `.cursorrules`), not `CURSOR.md`. This file is kept under that name on request; if you want it picked up automatically by Cursor without manually attaching it, mirror it into `.cursor/rules/` as well.
 
 ## Project
 

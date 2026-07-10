@@ -2,8 +2,8 @@
   class="mb-2 flex w-full overflow-hidden rounded-xl border border-white/20 shadow-lg transition-all duration-300"
   [ngClass]="{
     'bg-slate-500/35': game.endOfGameResult == null,
-    'bg-blue-500/35': game.endOfGameResult != null && won == true,
-    'bg-red-500/35': game.endOfGameResult != null && won == false,
+    'bg-customGreen/20': game.endOfGameResult != null && won == true,
+    'bg-frenchRed/20': game.endOfGameResult != null && won == false,
     'animate-pulse': isRefreshing,
     'opacity-80': isRefreshing,
   }"
@@ -13,95 +13,73 @@
     [routerLink]="['/lol/game', game.matchId, playerId]"
     [ngClass]="{
       'bg-slate-500': game.endOfGameResult == null,
-      'bg-blue-600': game.endOfGameResult != null && won == true,
-      'bg-red-600': game.endOfGameResult != null && won == false,
+      'bg-customGreen': game.endOfGameResult != null && won == true,
+      'bg-frenchRed': game.endOfGameResult != null && won == false,
     }"
   ></div>
 
   <div
-    class="flex w-full cursor-pointer flex-col px-3 py-2"
+    class="flex w-full cursor-pointer items-center gap-4 px-4 py-3"
     [routerLink]="['/lol/game', game.matchId, playerId]"
   >
-    <div
-      class="flex items-center justify-between border-b border-white/25 pb-2 text-sm"
-    >
-      <div class="flex items-center gap-2">
-        <span class="font-semibold" [ngClass]="statusClass">{{
-          statusLabel
-        }}</span>
-        @if (gameDuration != null) {
-          <span class="text-slate-200">{{ gameDuration }}</span>
-        }
-      </div>
+    <div class="relative shrink-0">
+      @if (championName == null || championName == "") {
+        <img
+          class="h-14 w-14 rounded-full border-2 border-white/30 object-cover"
+          src="assets/img/gameon-logo.webp"
+        />
+      }
 
-      <span class="text-slate-100">{{ queueLabel }}</span>
+      @if (championName != null && championName != "") {
+        <img
+          class="h-14 w-14 rounded-full border-2 border-white/30 object-cover"
+          src="https://ddragon.leagueoflegends.com/cdn/{{
+            currentLoLPatch
+          }}/img/champion/{{ championName }}.png"
+        />
+      }
+
+      <span
+        class="absolute -bottom-1 -right-1 rounded-full bg-slate-900 px-1.5 text-[10px] font-semibold text-white"
+      >
+        {{ champLevel != null && champLevel != 0 ? champLevel : "??" }}
+      </span>
     </div>
 
-    <div class="grid grid-cols-[76px_1fr_auto] items-center gap-3 pt-2">
-      <div class="relative flex justify-center">
-        @if (championName == null || championName == "") {
-          <img
-            class="h-16 w-16 rounded-full border-2 border-white/40 object-cover"
-            src="assets/img/gameon-logo.webp"
-          />
+    <div class="min-w-0 flex-1">
+      <p class="text-sm font-semibold" [ngClass]="statusClass">
+        {{ statusLabel }}
+      </p>
+      <p class="truncate text-xs text-slate-300">
+        {{ queueLabel }}
+        @if (gameDuration != null) {
+          &middot; {{ gameDuration }}
         }
+      </p>
+    </div>
 
-        @if (championName != null && championName != "") {
-          <img
-            class="h-16 w-16 rounded-full border-2 border-white/40 object-cover"
-            src="https://ddragon.leagueoflegends.com/cdn/{{
-              currentLoLPatch
-            }}/img/champion/{{ championName }}.png"
-          />
-        }
+    <div class="flex shrink-0 flex-col items-center text-sm text-slate-100">
+      <span class="font-semibold"
+        >{{ kills }} / {{ deaths }} / {{ assists }}</span
+      >
+      <span class="text-xs text-slate-300">{{ kda }} KDA</span>
+    </div>
 
-        <span
-          class="absolute -bottom-1 rounded-full bg-slate-900 px-1.5 text-xs font-semibold text-white"
+    <div class="flex shrink-0 gap-1">
+      @for (item of itemSlots; track $index) {
+        <div
+          class="h-7 w-7 overflow-hidden rounded-md border border-white/25 bg-slate-900/30"
         >
-          {{ champLevel != null && champLevel != 0 ? champLevel : "??" }}
-        </span>
-      </div>
-
-      <div class="flex flex-col items-center text-sm text-slate-100">
-        <span class="font-semibold"
-          >{{ kills }} / {{ deaths }} / {{ assists }}</span
-        >
-        <span class="text-slate-200">{{ kda }} KDA</span>
-      </div>
-
-      <div class="grid grid-cols-3 gap-1.5">
-        @for (item of itemSlots; track $index) {
-          <div
-            class="h-7 w-7 overflow-hidden rounded-md border border-white/25 bg-slate-900/30"
-          >
-            @if (item != 0) {
-              <img
-                class="h-full w-full object-cover"
-                src="https://ddragon.leagueoflegends.com/cdn/{{
-                  currentLoLPatch
-                }}/img/item/{{ item }}.png"
-              />
-            }
-          </div>
-        }
-      </div>
+          @if (item != 0) {
+            <img
+              class="h-full w-full object-cover"
+              src="https://ddragon.leagueoflegends.com/cdn/{{
+                currentLoLPatch
+              }}/img/item/{{ item }}.png"
+            />
+          }
+        </div>
+      }
     </div>
   </div>
-
-  <button
-    class="flex w-9 items-center justify-center text-white transition-colors duration-200 hover:bg-black/10 disabled:cursor-not-allowed disabled:opacity-70"
-    type="button"
-    (click)="updateGame()"
-    [disabled]="isRefreshing"
-    [ngClass]="{
-      'bg-slate-500': game.endOfGameResult == null,
-      'bg-blue-600': game.endOfGameResult != null && won == true,
-      'bg-red-600': game.endOfGameResult != null && won == false,
-    }"
-  >
-    <fa-icon
-      [icon]="refreshIcon"
-      [ngClass]="{ 'animate-spin': isRefreshing }"
-    ></fa-icon>
-  </button>
 </div>

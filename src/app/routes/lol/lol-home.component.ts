@@ -6,27 +6,17 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { faSync, faCrown } from '@fortawesome/free-solid-svg-icons';
 import Keycloak from 'keycloak-js';
 import { PlayerDto } from '../../shared/classes/common/PlayerDto';
 import { Player } from '../../shared/classes/common/Player';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { LeagueOfLegendsRankHistory } from '../../shared/classes/lol/LeagueOfLegendsRankHistory';
+import {
+  tierRankScore,
+  tierWinRate,
+} from '../../shared/classes/lol/lol-tier.util';
 import { environment } from '../../../environments/environment';
-
-const TIER_ORDER = [
-  'CHALLENGER',
-  'GRANDMASTER',
-  'MASTER',
-  'DIAMOND',
-  'EMERALD',
-  'PLATINUM',
-  'GOLD',
-  'SILVER',
-  'BRONZE',
-  'IRON',
-];
-const RANK_ORDER = ['I', 'II', 'III', 'IV'];
 
 @Component({
   selector: 'app-lol-home',
@@ -47,8 +37,9 @@ export class LolHomeComponent implements OnInit {
 
   isRefreshing = false;
   refreshIcon = faSync;
+  crownIcon = faCrown;
 
-  sortColumn: 'name' | 'solo' | 'flex' = 'solo';
+  sortColumn: 'name' | 'solo' | 'flex' | 'winrate' = 'solo';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   constructor(
@@ -96,12 +87,25 @@ export class LolHomeComponent implements OnInit {
     });
   }
 
-  setSort(col: 'name' | 'solo' | 'flex') {
+  setSort(col: 'name' | 'solo' | 'flex' | 'winrate') {
     if (this.sortColumn === col) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
       this.sortColumn = col;
       this.sortDirection = 'asc';
+    }
+  }
+
+  get sortLabel(): string {
+    switch (this.sortColumn) {
+      case 'name':
+        return 'nom';
+      case 'solo':
+        return 'rang Solo Queue';
+      case 'flex':
+        return 'rang Flex';
+      case 'winrate':
+        return 'winrate';
     }
   }
 
@@ -111,6 +115,11 @@ export class LolHomeComponent implements OnInit {
       if (this.sortColumn === 'name') {
         return dir * (a.fullName ?? '').localeCompare(b.fullName ?? '');
       }
+      if (this.sortColumn === 'winrate') {
+        return (
+          dir * (this.getWinRateScore(a) - this.getWinRateScore(b))
+        );
+      }
       const rankA =
         this.sortColumn === 'solo'
           ? a.leagueOfLegendsSoloRank
@@ -119,37 +128,63 @@ export class LolHomeComponent implements OnInit {
         this.sortColumn === 'solo'
           ? b.leagueOfLegendsSoloRank
           : b.leagueOfLegendsFlexRank;
-      return dir * (this.getRankScore(rankA) - this.getRankScore(rankB));
+      return dir * (tierRankScore(rankA) - tierRankScore(rankB));
     });
   }
 
-  private getRankScore(rank?: LeagueOfLegendsRankHistory): number {
-    if (!rank) return Number.MAX_SAFE_INTEGER;
-    const tierScore = TIER_ORDER.indexOf(rank.tier.toUpperCase());
-    const divScore = RANK_ORDER.indexOf(rank.rank.toUpperCase());
-    const t = tierScore < 0 ? 99 : tierScore;
-    const d = divScore < 0 ? 0 : divScore;
-    return t * 10000 + d * 1000 - rank.leaguePoints;
+  get topThreePlayers(): PlayerDto[] {
+    return [...this.leaguePlayers]
+      .filter((p) => p.leagueOfLegendsSoloRank != null)
+      .sort(
+        (a, b) =>
+          tierRankScore(a.leagueOfLegendsSoloRank) -
+          tierRankScore(b.leagueOfLegendsSoloRank),
+      )
+      .slice(0, 3);
   }
 
-  get sortedBySolo(): PlayerDto[] {
-    return [...this.leaguePlayers].sort(
-      (a, b) =>
-        this.getRankScore(a.leagueOfLegendsSoloRank) -
-        this.getRankScore(b.leagueOfLegendsSoloRank),
-    );
+  private getWinRateScore(player: PlayerDto): number {
+    const winRate = this.getPlayerWinRate(player);
+    return winRate == null ? Number.MAX_SAFE_INTEGER : -winRate;
   }
 
-  get sortedByFlex(): PlayerDto[] {
-    return [...this.leaguePlayers].sort(
-      (a, b) =>
-        this.getRankScore(a.leagueOfLegendsFlexRank) -
-        this.getRankScore(b.leagueOfLegendsFlexRank),
-    );
+  getPlayerWinRate(player: PlayerDto): number | null {
+    if (player.leagueOfLegendsSoloRank != null) {
+      return this.getWinRate(player.leagueOfLegendsSoloRank);
+    }
+    if (player.leagueOfLegendsFlexRank != null) {
+      return this.getWinRate(player.leagueOfLegendsFlexRank);
+    }
+    return null;
   }
 
   getWinRate(rank: LeagueOfLegendsRankHistory): number {
-    const total = rank.wins + rank.losses;
-    return total === 0 ? 0 : Math.round((rank.wins / total) * 100);
+    return tierWinRate(rank);
+  }
+
+  winRateClass(value: number): string {
+    if (value > 50) return 'text-customGreen';
+    if (value === 50) return 'text-customYellow';
+    return 'text-customRed';
+  }
+
+  podiumCardClass(i: number): string {
+    return i === 0
+      ? 'border-customYellow/60 bg-customYellow/5'
+      : 'border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80';
+  }
+
+  podiumRankBadgeClass(i: number): string {
+    return i === 0
+      ? 'bg-customYellow/20 text-customYellow'
+      : 'bg-bgLightDarker dark:bg-bgDarkDarker text-gray-500 dark:text-gray-300';
+  }
+
+  podiumAccentClass(i: number): string {
+    return i === 0 ? 'text-customYellow' : 'text-customGreen';
+  }
+
+  podiumBarClass(i: number): string {
+    return i === 0 ? 'bg-customYellow' : 'bg-customGreen';
   }
 }

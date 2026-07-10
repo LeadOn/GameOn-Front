@@ -1,25 +1,26 @@
-<div class="bg-bgLightDarker dark:bg-bgDarkDarker flex h-screen lg:gap-4 lg:p-4">
+<div
+  class="bg-bgLightDarker dark:bg-bgDarkDarker flex h-screen lg:gap-4 lg:p-4"
+>
   <aside
     class="bg-bgLight dark:bg-bgDark fixed inset-y-0 left-0 z-40 flex h-full w-64 flex-col shadow-lg transition-transform duration-200 lg:relative lg:rounded-2xl lg:shadow-sm"
-    [ngClass]="sidebarOpen() ? 'max-lg:translate-x-0' : 'max-lg:-translate-x-full'"
-    >
-    <a
-      routerLink="/admin"
-      class="flex items-center gap-3 px-4 py-4"
-      >
+    [ngClass]="
+      sidebarOpen() ? 'max-lg:translate-x-0' : 'max-lg:-translate-x-full'
+    "
+  >
+    <a routerLink="/admin" class="flex items-center gap-3 px-4 py-4">
       <span
         class="bg-frenchRed/10 dark:bg-frenchRed/20 flex h-9 w-9 min-w-9 items-center justify-center rounded-xl"
-        >
+      >
         <img
           class="h-6 w-6"
           src="assets/img/gameon-logo.webp"
           alt="GameOn!'s logo"
-          />
+        />
       </span>
       <span class="flex flex-col leading-tight">
         <span class="text-primary dark:text-primaryDark text-sm font-bold"
           >GameOn! Admin</span
-          >
+        >
         <span class="text-xs text-gray-500 dark:text-gray-400">Console</span>
       </span>
     </a>
@@ -27,8 +28,8 @@
     <nav class="flex-1 overflow-y-auto px-3 py-2">
       @for (group of navGroups; track group.label) {
         <p
-          class="mt-4 mb-1 px-3 text-xs font-semibold tracking-wider text-gray-400 uppercase first:mt-0 dark:text-gray-500"
-          >
+          class="mb-1 mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-400 first:mt-0 dark:text-gray-500"
+        >
           {{ group.label }}
         </p>
         @for (item of group.items; track item.route) {
@@ -37,8 +38,8 @@
             routerLinkActive="bg-frenchRed text-white shadow-sm"
             [routerLinkActiveOptions]="{ exact: true }"
             (click)="closeSidebar()"
-            class="text-primary dark:text-primaryDark mb-1 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker"
-            >
+            class="text-primary dark:text-primaryDark hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker mb-1 flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium"
+          >
             <fa-icon [icon]="item.icon" class="w-4"></fa-icon>
             <span>{{ item.label }}</span>
           </a>
@@ -46,30 +47,18 @@
       }
     </nav>
 
-    <div class="relative border-t border-bgLightDarker px-4 py-4 dark:border-bgDarkDarker">
+    <div
+      class="border-bgLightDarker dark:border-bgDarkDarker relative border-t px-4 py-4"
+    >
       @if (userMenuOpen()) {
         <div
           class="bg-bgLight dark:bg-bgDark absolute inset-x-3 bottom-full mb-2 overflow-hidden rounded-xl shadow-lg"
-          >
-          <button
-            type="button"
-            (click)="toggleDarkMode()"
-            class="hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-primary dark:text-primaryDark"
-            >
-            @if (darkMode()) {
-              <fa-icon [icon]="lightIcon" class="text-customYellow w-4"></fa-icon>
-              <span>Mode clair</span>
-            }
-            @if (!darkMode()) {
-              <fa-icon [icon]="darkIcon" class="text-frenchBlue w-4"></fa-icon>
-              <span>Mode sombre</span>
-            }
-          </button>
+        >
           <button
             type="button"
             (click)="logout()"
             class="hover:bg-bgLightDarker dark:hover:bg-bgDarkDarker text-frenchRed flex w-full items-center gap-2 px-3 py-2 text-left text-sm"
-            >
+          >
             <fa-icon [icon]="logoutIcon" class="w-4"></fa-icon>
             <span>Déconnexion</span>
           </button>
@@ -79,24 +68,24 @@
         type="button"
         (click)="toggleUserMenu()"
         class="flex w-full cursor-pointer items-center gap-3"
-        >
+      >
         <span
           class="bg-frenchRed flex h-9 w-9 min-w-9 items-center justify-center rounded-full text-sm font-bold text-white"
-          >
+        >
           {{ userInitials }}
         </span>
-        <span class="flex min-w-0 flex-col leading-tight text-left">
+        <span class="flex min-w-0 flex-col text-left leading-tight">
           <span
             class="text-primary dark:text-primaryDark truncate text-sm font-medium"
             >{{ userName }}</span
-            >
+          >
           <span class="text-xs text-gray-500 dark:text-gray-400"
             >Administrateur</span
-            >
+          >
         </span>
         <fa-icon
           [icon]="chevronIcon"
-          class="text-gray-400 ml-auto transition-transform"
+          class="ml-auto text-gray-400 transition-transform"
           [class.rotate-180]="!userMenuOpen()"
         ></fa-icon>
       </button>
@@ -112,10 +101,10 @@
 
   <div
     class="flex h-full min-w-0 flex-1 flex-col lg:overflow-hidden lg:rounded-2xl"
-    >
+  >
     <header
       class="bg-bgLight dark:bg-bgDark flex h-14 min-h-14 items-center gap-3 px-4 lg:hidden"
-      >
+    >
       <button type="button" (click)="toggleSidebar()" class="cursor-pointer">
         <fa-icon
           [icon]="menuIcon"
@@ -124,13 +113,13 @@
       </button>
       <span class="text-primary dark:text-primaryDark font-bold"
         >GameOn! Admin</span
-        >
+      >
     </header>
 
     <section
       id="admin-content"
       class="bg-bgLightDarker dark:bg-bgDarkDarker grow overflow-y-scroll py-4"
-      >
+    >
       <router-outlet></router-outlet>
     </section>
   </div>

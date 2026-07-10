@@ -1,0 +1,80 @@
+<div
+  class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 flex h-full flex-col rounded-lg p-5 backdrop-blur-sm"
+>
+  <div class="flex items-center justify-between">
+    <span
+      class="text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400"
+      >Nouveautés</span
+    >
+
+    @if (loading == true && error == false) {
+      <app-loading-spinner-tiny></app-loading-spinner-tiny>
+    }
+
+    @if (loading == false && error == false && changelog != null) {
+      <span
+        class="rounded-full border-2 px-3 py-0.5 text-xs font-bold"
+        [ngClass]="{
+          'border-gray-300 text-gray-300': changelog.type == 2,
+          'border-green-500 text-green-500': changelog.type == 1,
+          'border-red-600 text-red-600': changelog.type == 0,
+        }"
+        >{{ changelog.version }}</span
+      >
+    }
+  </div>
+
+  @if (error == true) {
+    <app-info-message
+      [type]="'error'"
+      [icon]="errorIcon"
+      [title]="'Une erreur est survenue lors de la récupération des nouveautés.'"
+    ></app-info-message>
+  }
+
+  @if (error == false) {
+    @if (loading == true || changelog == null) {
+      <div class="mt-4 flex flex-col gap-2">
+        <span class="h-5 w-40 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"></span>
+        <span class="h-4 w-full animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"></span>
+        <span class="h-4 w-5/6 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"></span>
+        <span class="h-4 w-2/3 animate-pulse rounded-full bg-gray-300 dark:bg-gray-700"></span>
+      </div>
+    } @else {
+      @if (changelog.name != null) {
+        <p class="text-primary dark:text-primaryDark mt-4 text-lg font-bold">
+          « {{ changelog.name }} »
+        </p>
+      }
+
+      <ul class="mt-3 flex flex-col gap-2">
+        @for (feature of changelog.newFeatures; track feature) {
+          <li class="flex items-start gap-2 text-sm">
+            <span class="text-customGreen mt-0.5 shrink-0 font-bold">+</span>
+            <span class="text-gray-600 dark:text-gray-300">{{ feature }}</span>
+          </li>
+        }
+        @for (feature of changelog.updatedFeatures; track feature) {
+          <li class="flex items-start gap-2 text-sm">
+            <span class="bg-customYellow mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"></span>
+            <span class="text-gray-600 dark:text-gray-300">{{ feature }}</span>
+          </li>
+        }
+        @for (feature of changelog.removedFeatures; track feature) {
+          <li class="flex items-start gap-2 text-sm">
+            <span class="text-customRed mt-0.5 shrink-0 font-bold">−</span>
+            <span class="text-gray-600 dark:text-gray-300">{{ feature }}</span>
+          </li>
+        }
+      </ul>
+    }
+
+    <a
+      routerLink="/changelog"
+      class="text-customGreen mt-4 flex items-center gap-1.5 text-sm font-semibold"
+    >
+      Voir tout le changelog
+      <fa-icon [icon]="arrowIcon" class="text-xs"></fa-icon>
+    </a>
+  }
+</div>

@@ -1,21 +1,18 @@
 import {
   Component,
-  HostBinding,
   inject,
   OnInit,
-  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   faBitcoinSign,
   faCog,
+  faClockRotateLeft,
   faDumbbell,
   faHome,
-  faMoon,
   faPlus,
   faSoccerBall,
-  faSun,
   faTrophy,
   faUserCircle,
 } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +20,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Player } from '../classes/common/Player';
 import Keycloak from 'keycloak-js';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-common-layout',
@@ -35,10 +33,10 @@ export class CommonLayoutComponent {
   private readonly keycloak = inject(Keycloak);
 
   player$: Observable<Player>;
+  apiUrl = environment.gameOnApiUrl;
 
-  lightIcon = faSun;
-  darkIcon = faMoon;
   dumbbellIcon = faDumbbell;
+  changelogIcon = faClockRotateLeft;
 
   isLoggedIn = false;
   isAdmin = false;
@@ -50,13 +48,6 @@ export class CommonLayoutComponent {
   adminIcon = faCog;
   btcIcon = faBitcoinSign;
 
-  darkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false'),
-  );
-
-  @HostBinding('class.dark') get mode() {
-    return this.darkMode();
-  }
   constructor(
     private router: Router,
     private store: Store<{ player: Player }>,
@@ -80,13 +71,5 @@ export class CommonLayoutComponent {
     } else {
       this.router.navigate(['/fifa/create']);
     }
-  }
-
-  toggleDarkMode() {
-    this.darkMode.update((prev) => !prev);
-    window.localStorage.setItem(
-      'gameon-dark-theme',
-      JSON.stringify(this.darkMode()),
-    );
   }
 }

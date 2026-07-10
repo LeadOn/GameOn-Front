@@ -6,7 +6,7 @@ import {
   Output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { faExternalLink, faList } from '@fortawesome/free-solid-svg-icons';
+import { faList } from '@fortawesome/free-solid-svg-icons';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -32,7 +32,6 @@ export class LolGameDetailsPlayerComponent implements OnInit {
   lolVersion$: Observable<string>;
 
   currentLoLPatch = '';
-  externalIcon = faExternalLink;
   detailsIcon = faList;
 
   constructor(private lolStore: Store<{ lolVersion: string }>) {
@@ -47,5 +46,42 @@ export class LolGameDetailsPlayerComponent implements OnInit {
 
   selectPlayer() {
     this.playerSelected.emit(this.player);
+  }
+
+  get itemSlots(): number[] {
+    return [
+      this.player.item0,
+      this.player.item1,
+      this.player.item2,
+      this.player.item3,
+      this.player.item4,
+      this.player.item5,
+      this.player.item6,
+    ];
+  }
+
+  get kda(): number {
+    const denominator = this.player.deaths === 0 ? 1 : this.player.deaths;
+    return (this.player.kills + this.player.assists) / denominator;
+  }
+
+  get kdaLabel(): string {
+    return this.kda.toFixed(2).replace('.', ',');
+  }
+
+  get kdaColorClass(): string {
+    if (this.kda >= 4) {
+      return 'text-customGreen';
+    }
+
+    if (this.kda >= 2) {
+      return 'text-customYellow';
+    }
+
+    return 'text-frenchRed';
+  }
+
+  itemIconUrl(item: number): string {
+    return `https://ddragon.leagueoflegends.com/cdn/${this.currentLoLPatch}/img/item/${item}.png`;
   }
 }
