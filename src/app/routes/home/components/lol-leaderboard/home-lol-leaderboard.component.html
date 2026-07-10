@@ -1,7 +1,13 @@
 <div
   class="animate-fade bg-bgLight/40 dark:bg-bgDark/40 rounded-lg p-5 backdrop-blur-sm"
 >
-  <table class="w-full text-left text-sm">
+  <table class="w-full table-fixed text-left text-sm">
+    <colgroup>
+      <col class="w-8 sm:w-10" />
+      <col />
+      <col class="w-24 sm:w-32" />
+      <col class="w-14 sm:w-20" />
+    </colgroup>
     <thead>
       <tr
         class="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400"
@@ -19,13 +25,13 @@
             class="hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer border-t border-gray-500/10 transition-colors"
             [routerLink]="['/lol/summoner', player.id]"
           >
-            <td class="py-3">
+            <td class="py-2 sm:py-3">
               <span
                 class="bg-secondary text-primaryDark flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
                 >{{ i + 1 }}</span
               >
             </td>
-            <td class="py-3">
+            <td class="py-2 sm:py-3">
               <div class="flex items-center gap-2">
                 <div class="h-8 w-8 shrink-0 overflow-hidden rounded-full">
                   @if (player.lolIconId != null) {
@@ -50,12 +56,16 @@
                     />
                   }
                 </div>
-                <div>
-                  <p class="text-primary dark:text-primaryDark font-semibold">
+                <div class="min-w-0">
+                  <p
+                    class="text-primary dark:text-primaryDark truncate font-semibold"
+                  >
                     {{ player.nickname }}
                   </p>
                   @if (player.riotGamesNickname) {
-                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                    <p
+                      class="truncate text-xs text-gray-500 dark:text-gray-400"
+                    >
                       {{ player.riotGamesNickname }}#{{
                         player.riotGamesTagLine
                       }}
@@ -64,8 +74,10 @@
                 </div>
               </div>
             </td>
-            <td class="py-3">
-              <p class="text-primary dark:text-primaryDark font-semibold">
+            <td class="truncate py-2 sm:py-3">
+              <p
+                class="text-primary dark:text-primaryDark truncate font-semibold"
+              >
                 {{ tierLabel(player.leagueOfLegendsSoloRank) }}
               </p>
               <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -73,7 +85,7 @@
               </p>
             </td>
             <td
-              class="py-3 text-right font-semibold"
+              class="py-2 text-right font-semibold sm:py-3"
               [ngClass]="{
                 'text-customGreen':
                   winRate(player.leagueOfLegendsSoloRank) > 50,
@@ -95,16 +107,16 @@
       } @else {
         @for (i of [1, 2, 3, 4, 5]; track i) {
           <tr class="animate-pulse border-t border-gray-500/10">
-            <td class="py-3">
+            <td class="py-2 sm:py-3">
               <span class="block h-6 w-6 rounded-full bg-gray-300 dark:bg-gray-700"></span>
             </td>
-            <td class="py-3">
-              <span class="block h-8 w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            <td class="py-2 sm:py-3">
+              <span class="block h-8 w-full max-w-32 rounded-full bg-gray-300 dark:bg-gray-700"></span>
             </td>
-            <td class="py-3">
-              <span class="block h-4 w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+            <td class="py-2 sm:py-3">
+              <span class="block h-4 w-full max-w-20 rounded-full bg-gray-300 dark:bg-gray-700"></span>
             </td>
-            <td class="py-3 text-right">
+            <td class="py-2 text-right sm:py-3">
               <span class="ml-auto block h-4 w-10 rounded-full bg-gray-300 dark:bg-gray-700"></span>
             </td>
           </tr>

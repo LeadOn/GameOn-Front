@@ -1,5 +1,5 @@
-<div class="animate-fade flex items-center justify-between">
-  <div>
+<div class="animate-fade flex items-start justify-between gap-3">
+  <div class="min-w-0">
     <p class="text-sm text-gray-500 capitalize dark:text-gray-400">
       {{ today | date: 'EEEE d MMMM' }}
     </p>
@@ -13,12 +13,14 @@
   </div>
 
   @if (season != null) {
-    <app-pill
-      [title]="season.name"
-      [icon]="seasonIcon"
-      [iconColor]="'text-primary dark:text-primaryDark'"
-      [bgStyle]="'primary-dark'"
-      [borderStyle]="'primary'"
-    ></app-pill>
+    <div class="mt-6 shrink-0">
+      <app-pill
+        [title]="season.name"
+        [icon]="seasonIcon"
+        [iconColor]="'text-primary dark:text-primaryDark'"
+        [bgStyle]="'primary-dark'"
+        [borderStyle]="'primary'"
+      ></app-pill>
+    </div>
   }
 </div>
