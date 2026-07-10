@@ -8,10 +8,7 @@ import {
   SimpleChanges,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
-import { environment } from '../../../../../environments/environment';
-import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/gameon-lol.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -56,15 +53,11 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   item6 = 0;
   itemSlots: number[] = [0, 0, 0, 0, 0, 0];
 
-  refreshIcon = faRefresh;
   isRefreshing = false;
 
   currentLoLPatch: string = '';
 
-  constructor(
-    private lolService: GameOnLoLService,
-    private lolStore: Store<{ lolVersion: string }>,
-  ) {
+  constructor(private lolStore: Store<{ lolVersion: string }>) {
     this.lolVersion$ = this.lolStore.select('lolVersion');
   }
 
@@ -142,26 +135,6 @@ export class LolGameCardComponent implements OnInit, OnChanges {
     }
   }
 
-  updateGame(): void {
-    if (this.isRefreshing) {
-      return;
-    }
-
-    let matchId = this.game.matchId;
-    this.isRefreshing = true;
-    this.gameRefreshStarted.emit();
-
-    this.lolService.refreshGame(matchId).subscribe(
-      (x) => {
-        this.gameRefreshed.emit();
-      },
-      (err) => {
-        console.error(err);
-        this.isRefreshing = false;
-      },
-    );
-  }
-
   get statusLabel(): string {
     if (this.game.endOfGameResult == null) {
       return 'Inconnu';
@@ -175,7 +148,7 @@ export class LolGameCardComponent implements OnInit, OnChanges {
       return 'text-slate-600';
     }
 
-    return this.won ? 'text-blue-700' : 'text-red-700';
+    return this.won ? 'text-customGreen' : 'text-frenchRed';
   }
 
   get queueLabel(): string {

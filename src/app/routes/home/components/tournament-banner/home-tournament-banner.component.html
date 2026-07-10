@@ -1,0 +1,40 @@
+@if (tournament != null) {
+  <div
+    class="tournament-banner animate-fade relative flex min-h-65 cursor-pointer flex-col justify-between overflow-hidden rounded-xl p-7 text-white shadow-xl"
+    routerLink="/fifa/tournaments/{{ tournament.id }}"
+  >
+    <div>
+      <span
+        class="bg-frenchRed inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold tracking-wide uppercase shadow"
+      >
+        <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-white"></span>
+        Tournoi en cours
+      </span>
+
+      <h2 class="mt-3 text-3xl font-bold drop-shadow-md md:text-4xl">
+        {{ tournament.name }}
+      </h2>
+      <p class="mt-1.5 text-sm text-white/80 drop-shadow-sm">
+        {{ tournament.players.length }} joueurs
+      </p>
+    </div>
+
+    <div class="mt-4 flex gap-2">
+      <button
+        class="bg-customGreen hover:bg-customGreen/90 rounded-lg px-4 py-2 text-sm font-semibold text-white shadow-md transition-colors"
+        (click)="$event.stopPropagation()"
+        routerLink="/fifa/tournaments/{{ tournament.id }}"
+      >
+        Voir le tournoi →
+      </button>
+      <!-- Placeholder : pas de vue "classement" dédiée, pointe pour l'instant sur la même page tournoi. -->
+      <button
+        class="rounded-lg bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+        (click)="$event.stopPropagation()"
+        routerLink="/fifa/tournaments/{{ tournament.id }}"
+      >
+        Classement
+      </button>
+    </div>
+  </div>
+}

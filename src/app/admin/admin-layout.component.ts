@@ -1,6 +1,5 @@
 import {
   Component,
-  HostBinding,
   inject,
   signal,
   ChangeDetectionStrategy,
@@ -15,10 +14,8 @@ import {
   faGamepad,
   faHome,
   faImage,
-  faMoon,
   faRightFromBracket,
   faSoccerBall,
-  faSun,
   faTrophy,
   faUsers,
   IconDefinition,
@@ -61,8 +58,6 @@ export class AdminLayoutComponent {
 
   menuIcon = faBars;
   logoutIcon = faRightFromBracket;
-  lightIcon = faSun;
-  darkIcon = faMoon;
   chevronIcon = faChevronUp;
 
   navGroups: AdminNavGroup[] = [
@@ -96,14 +91,6 @@ export class AdminLayoutComponent {
   sidebarOpen = signal<boolean>(false);
   userMenuOpen = signal<boolean>(false);
 
-  darkMode = signal<boolean>(
-    JSON.parse(window.localStorage.getItem('gameon-dark-theme') ?? 'false'),
-  );
-
-  @HostBinding('class.dark') get mode() {
-    return this.darkMode();
-  }
-
   get userName(): string {
     const tokenParsed = this.keycloak.tokenParsed;
     return (
@@ -130,14 +117,6 @@ export class AdminLayoutComponent {
 
   toggleUserMenu() {
     this.userMenuOpen.update((prev) => !prev);
-  }
-
-  toggleDarkMode() {
-    this.darkMode.update((prev) => !prev);
-    window.localStorage.setItem(
-      'gameon-dark-theme',
-      JSON.stringify(this.darkMode()),
-    );
   }
 
   logout() {

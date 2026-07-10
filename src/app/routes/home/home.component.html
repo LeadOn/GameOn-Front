@@ -1,20 +1,77 @@
-<section id="home-changelog" class="mb-4 mt-4">
-  <app-home-changelog
-    [changelog]="$safeNavigationMigration(homeData?.latestChangelog)"
-    [loading]="loading"
-    [error]="error"
-  ></app-home-changelog>
-</section>
+<div class="animate-fade mx-auto w-full max-w-6xl space-y-8 px-4 pt-4 pb-6">
+  <div>
+    <app-home-header
+      [season]="$safeNavigationMigration(homeData?.currentSeason)"
+      [isLoggedIn]="isLoggedIn"
+    ></app-home-header>
+  </div>
 
-<section id="home-fifa" class="mt-4 px-4">
-  <app-home-fifa
-    [season]="$safeNavigationMigration(homeData?.currentSeason)"
-    [loading]="loading"
-    [tournaments]="$safeNavigationMigration(homeData?.featuredTournaments)"
-    [isLoggedIn]="isLoggedIn"
-  ></app-home-fifa>
-</section>
+  @if (
+    homeData?.featuredTournaments != null &&
+    homeData!.featuredTournaments.length > 0
+  ) {
+    <div>
+      <app-home-tournament-banner
+        [tournament]="homeData!.featuredTournaments[0]"
+      ></app-home-tournament-banner>
+    </div>
+  }
 
-<section id="home-lol" class="my-4 px-4">
-  <app-home-lol></app-home-lol>
-</section>
+  <section id="home-fifa">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <fa-icon [icon]="soccerIcon" class="text-primary dark:text-primaryDark"></fa-icon>
+        <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+          >FIFA</span
+        >
+      </div>
+      <a
+        routerLink="/fifa"
+        class="text-customGreen cursor-pointer text-sm font-semibold"
+        >Tout voir</a
+      >
+    </div>
+
+    <app-home-fifa-stats
+      [isLoggedIn]="isLoggedIn"
+      [loading]="loading"
+    ></app-home-fifa-stats>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <app-home-matches-list
+          [isLoggedIn]="isLoggedIn"
+        ></app-home-matches-list>
+      </div>
+      <app-home-news-panel
+        [changelog]="$safeNavigationMigration(homeData?.latestChangelog)"
+        [loading]="loading"
+        [error]="error"
+      ></app-home-news-panel>
+    </div>
+  </section>
+
+  <section id="home-lol">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+          >Classement League of Legends</span
+        >
+      </div>
+      <a
+        routerLink="/lol"
+        class="text-customGreen cursor-pointer text-sm font-semibold"
+        >Tout voir</a
+      >
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <app-home-lol-leaderboard></app-home-lol-leaderboard>
+      </div>
+      <app-home-lol-season-card
+        [isLoggedIn]="isLoggedIn"
+      ></app-home-lol-season-card>
+    </div>
+  </section>
+</div>
