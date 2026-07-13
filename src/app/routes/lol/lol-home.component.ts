@@ -6,7 +6,12 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { faSync, faCrown } from '@fortawesome/free-solid-svg-icons';
+import {
+  faSync,
+  faCrown,
+  faRankingStar,
+  faTrophy,
+} from '@fortawesome/free-solid-svg-icons';
 import Keycloak from 'keycloak-js';
 import { PlayerDto } from '../../shared/classes/common/PlayerDto';
 import { Player } from '../../shared/classes/common/Player';
@@ -38,6 +43,10 @@ export class LolHomeComponent implements OnInit {
   isRefreshing = false;
   refreshIcon = faSync;
   crownIcon = faCrown;
+  rankingIcon = faRankingStar;
+  funStatsIcon = faTrophy;
+
+  view: 'ranking' | 'funstats' = 'ranking';
 
   sortColumn: 'name' | 'solo' | 'flex' | 'winrate' = 'solo';
   sortDirection: 'asc' | 'desc' = 'asc';
@@ -116,9 +125,7 @@ export class LolHomeComponent implements OnInit {
         return dir * (a.fullName ?? '').localeCompare(b.fullName ?? '');
       }
       if (this.sortColumn === 'winrate') {
-        return (
-          dir * (this.getWinRateScore(a) - this.getWinRateScore(b))
-        );
+        return dir * (this.getWinRateScore(a) - this.getWinRateScore(b));
       }
       const rankA =
         this.sortColumn === 'solo'

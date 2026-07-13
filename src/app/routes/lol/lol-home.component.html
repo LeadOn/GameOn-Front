@@ -37,385 +37,434 @@
       </button>
     </div>
   </div>
+
+  <div
+    class="border-bgLightDarker dark:border-bgDarkDarker mt-4 inline-flex items-center gap-1 rounded-full border p-1"
+  >
+    <button
+      class="flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors"
+      [ngClass]="
+        view === 'ranking'
+          ? 'bg-primary text-primaryDark dark:bg-primaryDark dark:text-primary'
+          : 'text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
+      "
+      (click)="view = 'ranking'"
+    >
+      <fa-icon [icon]="rankingIcon"></fa-icon>
+      Classement
+    </button>
+    <button
+      class="flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors"
+      [ngClass]="
+        view === 'funstats'
+          ? 'bg-primary text-primaryDark dark:bg-primaryDark dark:text-primary'
+          : 'text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
+      "
+      (click)="view = 'funstats'"
+    >
+      <fa-icon [icon]="funStatsIcon"></fa-icon>
+      Stats marrantes
+    </button>
+  </div>
 </section>
 
-@if (isLoading == true) {
+@if (isLoading == true && view === "ranking") {
   <section class="mx-auto flex w-full max-w-6xl justify-center px-4 py-16">
     <app-loading-spinner></app-loading-spinner>
   </section>
 }
 
-<section class="mx-auto mt-5 w-full max-w-6xl px-4">
-  @if (isLoading == false && topThreePlayers.length > 0) {
-    <div class="grid gap-4 sm:grid-cols-3">
-      @for (player of topThreePlayers; track player.id; let i = $index) {
-        <article
-          class="animate-fade cursor-pointer rounded-2xl border p-4 transition-colors"
-          [ngClass]="podiumCardClass(i)"
-          [routerLink]="['/lol/summoner', player.id]"
-        >
-          <div class="flex items-center justify-between">
-            <span
-              class="flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
-              [ngClass]="podiumRankBadgeClass(i)"
-            >
-              {{ i + 1 }}
-            </span>
-            @if (i === 0) {
-              <fa-icon [icon]="crownIcon" class="text-customYellow"></fa-icon>
-            }
-          </div>
-
-          <div class="mt-3 flex items-center gap-3">
-            <div class="h-12 w-12 shrink-0 overflow-hidden rounded-full">
-              @if (player.lolIconId != null) {
-                <img
-                  src="https://ddragon.leagueoflegends.com/cdn/{{
-                    currentLoLPatch
-                  }}/img/profileicon/{{ player.lolIconId }}.png"
-                  class="h-full w-full object-cover"
-                />
-              } @else if (
-                player.profilePictureUrl != null &&
-                player.profilePictureUrl != ""
-              ) {
-                <img
-                  src="{{ apiUrl }}/player/{{ player.id }}/pp"
-                  class="h-full w-full object-cover"
-                />
-              } @else {
-                <img
-                  src="assets/img/gameon-logo.webp"
-                  class="h-full w-full object-cover"
-                />
-              }
-            </div>
-            <div class="min-w-0">
-              <p
-                class="text-primary dark:text-primaryDark truncate text-base font-semibold"
-              >
-                {{ player.fullName }}
-              </p>
-              @if (player.leagueOfLegendsSoloRank != null) {
-                <p class="truncate text-xs text-gray-500 dark:text-gray-300">
-                  {{ player.leagueOfLegendsSoloRank.tier | titlecase }}
-                  {{ player.leagueOfLegendsSoloRank.rank }}
-                  &middot;
-                  {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
-                </p>
-              }
-              @if (player.riotGamesPUUID != null) {
-                <p class="truncate text-xs text-gray-500 dark:text-gray-400">
-                  {{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }}
-                </p>
-              }
-            </div>
-          </div>
-
-          @if (player.leagueOfLegendsSoloRank != null) {
-            <div class="mt-4 flex items-center gap-2">
-              <div
-                class="bg-bgLightDarker dark:bg-bgDarkDarker h-1.5 flex-1 overflow-hidden rounded-full"
-              >
-                <div
-                  class="h-full rounded-full"
-                  [ngClass]="podiumBarClass(i)"
-                  [style.width.%]="getWinRate(player.leagueOfLegendsSoloRank)"
-                ></div>
-              </div>
+@if (view === "ranking") {
+  <section class="mx-auto mt-5 w-full max-w-6xl px-4">
+    @if (isLoading == false && topThreePlayers.length > 0) {
+      <div class="grid gap-4 sm:grid-cols-3">
+        @for (player of topThreePlayers; track player.id; let i = $index) {
+          <article
+            class="animate-fade cursor-pointer rounded-2xl border p-4 transition-colors"
+            [ngClass]="podiumCardClass(i)"
+            [routerLink]="['/lol/summoner', player.id]"
+          >
+            <div class="flex items-center justify-between">
               <span
-                class="text-xs font-semibold"
-                [ngClass]="podiumAccentClass(i)"
+                class="flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold"
+                [ngClass]="podiumRankBadgeClass(i)"
               >
-                {{ getWinRate(player.leagueOfLegendsSoloRank) }}%
+                {{ i + 1 }}
               </span>
-            </div>
-          }
-        </article>
-      }
-    </div>
-  }
-</section>
-
-@if (isLoading == false) {
-  <section class="mx-auto mt-6 w-full max-w-6xl px-4 pb-6">
-    <div class="mb-3 flex items-end justify-between">
-      <h2 class="text-primary dark:text-primaryDark text-lg font-semibold">
-        Classement complet
-      </h2>
-    </div>
-
-    <div
-      class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 overflow-hidden rounded-2xl border shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-    >
-      @if (leaguePlayers.length > 0) {
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm dark:text-white">
-            <thead>
-              <tr
-                class="border-bgLightDarker dark:border-bgDarkDarker border-b text-xs text-gray-500 dark:text-gray-300"
-              >
-                <th class="w-8 px-2 py-2 text-left font-medium sm:w-10 sm:px-4">
-                  #
-                </th>
-                <th
-                  class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
-                  (click)="setSort('name')"
-                >
-                  <div class="flex items-center gap-1">
-                    Joueur
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      class="h-3.5 w-3.5 shrink-0"
-                    >
-                      @if (sortColumn !== "name") {
-                        <path
-                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
-                          opacity="0.4"
-                        />
-                      } @else if (sortDirection === "asc") {
-                        <path d="M5 10L8 4L11 10" />
-                      } @else {
-                        <path d="M5 6L8 12L11 6" />
-                      }
-                    </svg>
-                  </div>
-                </th>
-                <th
-                  class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
-                  (click)="setSort('solo')"
-                >
-                  <div class="flex items-center gap-1">
-                    Solo Queue
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      class="h-3.5 w-3.5 shrink-0"
-                    >
-                      @if (sortColumn !== "solo") {
-                        <path
-                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
-                          opacity="0.4"
-                        />
-                      } @else if (sortDirection === "asc") {
-                        <path d="M5 10L8 4L11 10" />
-                      } @else {
-                        <path d="M5 6L8 12L11 6" />
-                      }
-                    </svg>
-                  </div>
-                </th>
-                <th
-                  class="cursor-pointer select-none px-4 py-2 text-left font-medium hover:text-gray-700 max-sm:hidden dark:hover:text-white"
-                  (click)="setSort('flex')"
-                >
-                  <div class="flex items-center gap-1">
-                    Flex
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      class="h-3.5 w-3.5 shrink-0"
-                    >
-                      @if (sortColumn !== "flex") {
-                        <path
-                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
-                          opacity="0.4"
-                        />
-                      } @else if (sortDirection === "asc") {
-                        <path d="M5 10L8 4L11 10" />
-                      } @else {
-                        <path d="M5 6L8 12L11 6" />
-                      }
-                    </svg>
-                  </div>
-                </th>
-                <th
-                  class="cursor-pointer select-none px-4 py-2 text-left font-medium hover:text-gray-700 max-sm:hidden dark:hover:text-white"
-                  (click)="setSort('winrate')"
-                >
-                  <div class="flex items-center gap-1">
-                    Winrate
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.5"
-                      class="h-3.5 w-3.5 shrink-0"
-                    >
-                      @if (sortColumn !== "winrate") {
-                        <path
-                          d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
-                          opacity="0.4"
-                        />
-                      } @else if (sortDirection === "asc") {
-                        <path d="M5 10L8 4L11 10" />
-                      } @else {
-                        <path d="M5 6L8 12L11 6" />
-                      }
-                    </svg>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (player of sortedPlayers; track player.id; let i = $index) {
-                <tr
-                  class="border-bgLightDarker dark:border-bgDarkDarker cursor-pointer border-b transition-colors last:border-0 hover:bg-black/5 dark:hover:bg-white/5"
-                  [routerLink]="['/lol/summoner', player.id]"
-                >
-                  <td
-                    class="w-8 px-2 py-3 font-medium text-gray-400 sm:w-10 sm:px-4 dark:text-gray-400"
-                  >
-                    {{ i + 1 }}
-                  </td>
-                  <td class="px-2 py-2 sm:px-4 sm:py-3">
-                    <div class="flex items-center gap-2">
-                      <div
-                        class="h-7 w-7 shrink-0 overflow-hidden rounded-full sm:h-8 sm:w-8"
-                      >
-                        @if (player.lolIconId != null) {
-                          <img
-                            src="https://ddragon.leagueoflegends.com/cdn/{{
-                              currentLoLPatch
-                            }}/img/profileicon/{{ player.lolIconId }}.png"
-                            class="h-full w-full object-cover"
-                          />
-                        } @else if (
-                          player.profilePictureUrl != null &&
-                          player.profilePictureUrl != ""
-                        ) {
-                          <img
-                            src="{{ apiUrl }}/player/{{ player.id }}/pp"
-                            class="h-full w-full object-cover"
-                          />
-                        } @else {
-                          <img
-                            src="assets/img/gameon-logo.webp"
-                            class="h-full w-full object-cover"
-                          />
-                        }
-                      </div>
-                      <div class="min-w-0">
-                        <p class="truncate font-medium">
-                          {{ player.fullName }}
-                        </p>
-                        @if (player.riotGamesPUUID != null) {
-                          <p
-                            class="truncate text-xs text-gray-500 dark:text-gray-300"
-                          >
-                            {{ player.riotGamesNickname }}#{{
-                              player.riotGamesTagLine
-                            }}
-                          </p>
-                        }
-                      </div>
-                    </div>
-                  </td>
-                  <!-- Solo Queue -->
-                  <td class="px-2 py-2 sm:px-4 sm:py-3">
-                    @if (player.leagueOfLegendsSoloRank != null) {
-                      <div class="flex items-center gap-2">
-                        <img
-                          src="assets/img/lol/rank/{{
-                            player.leagueOfLegendsSoloRank.tier | lowercase
-                          }}.png"
-                          class="h-7 w-7 shrink-0"
-                        />
-                        <div class="leading-tight">
-                          <p class="font-medium">
-                            {{
-                              player.leagueOfLegendsSoloRank.tier | titlecase
-                            }}
-                            {{ player.leagueOfLegendsSoloRank.rank }}
-                          </p>
-                          <p class="text-xs text-gray-500 dark:text-gray-300">
-                            {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
-                          </p>
-                        </div>
-                      </div>
-                    } @else {
-                      <span class="text-gray-500 dark:text-gray-300">—</span>
-                    }
-                  </td>
-                  <!-- Flex -->
-                  <td class="px-4 py-3 max-sm:hidden">
-                    @if (player.leagueOfLegendsFlexRank != null) {
-                      <div class="flex items-center gap-2">
-                        <img
-                          src="assets/img/lol/rank/{{
-                            player.leagueOfLegendsFlexRank.tier | lowercase
-                          }}.png"
-                          class="h-7 w-7 shrink-0"
-                        />
-                        <div class="leading-tight">
-                          <p class="font-medium">
-                            {{
-                              player.leagueOfLegendsFlexRank.tier | titlecase
-                            }}
-                            {{ player.leagueOfLegendsFlexRank.rank }}
-                          </p>
-                          <p class="text-xs text-gray-500 dark:text-gray-300">
-                            {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP
-                          </p>
-                        </div>
-                      </div>
-                    } @else {
-                      <span class="text-gray-500 dark:text-gray-300">—</span>
-                    }
-                  </td>
-                  <!-- Winrate -->
-                  <td class="px-4 py-3 max-sm:hidden">
-                    @if (getPlayerWinRate(player) !== null) {
-                      <span
-                        class="font-semibold"
-                        [ngClass]="winRateClass(getPlayerWinRate(player)!)"
-                        >{{ getPlayerWinRate(player) }}%</span
-                      >
-                    } @else {
-                      <span class="text-gray-500 dark:text-gray-300">—</span>
-                    }
-                  </td>
-                </tr>
+              @if (i === 0) {
+                <fa-icon [icon]="crownIcon" class="text-customYellow"></fa-icon>
               }
-            </tbody>
-          </table>
-        </div>
-      } @else {
-        <div
-          class="text-primary dark:text-primaryDark border-bgLightDarker dark:border-bgDarkDarker m-3 rounded-xl border border-dashed px-4 py-8 text-center"
-        >
-          Aucun joueur actif pour le moment.
-        </div>
-      }
-    </div>
+            </div>
 
-    <div class="mt-4">
-      @if (isLoggedIn == false) {
-        <app-info-message
-          [title]="'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'"
-          [clickable]="true"
-          (click)="login()"
-        ></app-info-message>
-      }
+            <div class="mt-3 flex items-center gap-3">
+              <div class="h-12 w-12 shrink-0 overflow-hidden rounded-full">
+                @if (player.lolIconId != null) {
+                  <img
+                    src="https://ddragon.leagueoflegends.com/cdn/{{
+                      currentLoLPatch
+                    }}/img/profileicon/{{ player.lolIconId }}.png"
+                    class="h-full w-full object-cover"
+                  />
+                } @else if (
+                  player.profilePictureUrl != null &&
+                  player.profilePictureUrl != ""
+                ) {
+                  <img
+                    src="{{ apiUrl }}/player/{{ player.id }}/pp"
+                    class="h-full w-full object-cover"
+                  />
+                } @else {
+                  <img
+                    src="assets/img/gameon-logo.webp"
+                    class="h-full w-full object-cover"
+                  />
+                }
+              </div>
+              <div class="min-w-0">
+                <p
+                  class="text-primary dark:text-primaryDark truncate text-base font-semibold"
+                >
+                  {{ player.fullName }}
+                </p>
+                @if (player.leagueOfLegendsSoloRank != null) {
+                  <p class="truncate text-xs text-gray-500 dark:text-gray-300">
+                    {{ player.leagueOfLegendsSoloRank.tier | titlecase }}
+                    {{ player.leagueOfLegendsSoloRank.rank }}
+                    &middot;
+                    {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
+                  </p>
+                }
+                @if (player.riotGamesPUUID != null) {
+                  <p class="truncate text-xs text-gray-500 dark:text-gray-400">
+                    {{ player.riotGamesNickname }}#{{ player.riotGamesTagLine }}
+                  </p>
+                }
+              </div>
+            </div>
 
-      @if (isLoggedIn == true && (player$ | async); as currentPlayer) {
-        @if (currentPlayer.riotGamesPUUID == null) {
+            @if (player.leagueOfLegendsSoloRank != null) {
+              <div class="mt-4 flex items-center gap-2">
+                <div
+                  class="bg-bgLightDarker dark:bg-bgDarkDarker h-1.5 flex-1 overflow-hidden rounded-full"
+                >
+                  <div
+                    class="h-full rounded-full"
+                    [ngClass]="podiumBarClass(i)"
+                    [style.width.%]="getWinRate(player.leagueOfLegendsSoloRank)"
+                  ></div>
+                </div>
+                <span
+                  class="text-xs font-semibold"
+                  [ngClass]="podiumAccentClass(i)"
+                >
+                  {{ getWinRate(player.leagueOfLegendsSoloRank) }}%
+                </span>
+              </div>
+            }
+          </article>
+        }
+      </div>
+    }
+  </section>
+
+  @if (isLoading == false) {
+    <section class="mx-auto mt-6 w-full max-w-6xl px-4 pb-6">
+      <div class="mb-3 flex items-end justify-between">
+        <h2 class="text-primary dark:text-primaryDark text-lg font-semibold">
+          Classement complet
+        </h2>
+      </div>
+
+      <div
+        class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 overflow-hidden rounded-2xl border shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      >
+        @if (leaguePlayers.length > 0) {
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm dark:text-white">
+              <thead>
+                <tr
+                  class="border-bgLightDarker dark:border-bgDarkDarker border-b text-xs text-gray-500 dark:text-gray-300"
+                >
+                  <th
+                    class="w-8 px-2 py-2 text-left font-medium sm:w-10 sm:px-4"
+                  >
+                    #
+                  </th>
+                  <th
+                    class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
+                    (click)="setSort('name')"
+                  >
+                    <div class="flex items-center gap-1">
+                      Joueur
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        class="h-3.5 w-3.5 shrink-0"
+                      >
+                        @if (sortColumn !== "name") {
+                          <path
+                            d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                            opacity="0.4"
+                          />
+                        } @else if (sortDirection === "asc") {
+                          <path d="M5 10L8 4L11 10" />
+                        } @else {
+                          <path d="M5 6L8 12L11 6" />
+                        }
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    class="cursor-pointer select-none px-2 py-2 text-left font-medium hover:text-gray-700 sm:px-4 dark:hover:text-white"
+                    (click)="setSort('solo')"
+                  >
+                    <div class="flex items-center gap-1">
+                      Solo Queue
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        class="h-3.5 w-3.5 shrink-0"
+                      >
+                        @if (sortColumn !== "solo") {
+                          <path
+                            d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                            opacity="0.4"
+                          />
+                        } @else if (sortDirection === "asc") {
+                          <path d="M5 10L8 4L11 10" />
+                        } @else {
+                          <path d="M5 6L8 12L11 6" />
+                        }
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    class="cursor-pointer select-none px-4 py-2 text-left font-medium hover:text-gray-700 max-sm:hidden dark:hover:text-white"
+                    (click)="setSort('flex')"
+                  >
+                    <div class="flex items-center gap-1">
+                      Flex
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        class="h-3.5 w-3.5 shrink-0"
+                      >
+                        @if (sortColumn !== "flex") {
+                          <path
+                            d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                            opacity="0.4"
+                          />
+                        } @else if (sortDirection === "asc") {
+                          <path d="M5 10L8 4L11 10" />
+                        } @else {
+                          <path d="M5 6L8 12L11 6" />
+                        }
+                      </svg>
+                    </div>
+                  </th>
+                  <th
+                    class="cursor-pointer select-none px-4 py-2 text-left font-medium hover:text-gray-700 max-sm:hidden dark:hover:text-white"
+                    (click)="setSort('winrate')"
+                  >
+                    <div class="flex items-center gap-1">
+                      Winrate
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        class="h-3.5 w-3.5 shrink-0"
+                      >
+                        @if (sortColumn !== "winrate") {
+                          <path
+                            d="M5 5.5L8 2.5L11 5.5M5 10.5L8 13.5L11 10.5"
+                            opacity="0.4"
+                          />
+                        } @else if (sortDirection === "asc") {
+                          <path d="M5 10L8 4L11 10" />
+                        } @else {
+                          <path d="M5 6L8 12L11 6" />
+                        }
+                      </svg>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (
+                  player of sortedPlayers;
+                  track player.id;
+                  let i = $index
+                ) {
+                  <tr
+                    class="border-bgLightDarker dark:border-bgDarkDarker cursor-pointer border-b transition-colors last:border-0 hover:bg-black/5 dark:hover:bg-white/5"
+                    [routerLink]="['/lol/summoner', player.id]"
+                  >
+                    <td
+                      class="w-8 px-2 py-3 font-medium text-gray-400 sm:w-10 sm:px-4 dark:text-gray-400"
+                    >
+                      {{ i + 1 }}
+                    </td>
+                    <td class="px-2 py-2 sm:px-4 sm:py-3">
+                      <div class="flex items-center gap-2">
+                        <div
+                          class="h-7 w-7 shrink-0 overflow-hidden rounded-full sm:h-8 sm:w-8"
+                        >
+                          @if (player.lolIconId != null) {
+                            <img
+                              src="https://ddragon.leagueoflegends.com/cdn/{{
+                                currentLoLPatch
+                              }}/img/profileicon/{{ player.lolIconId }}.png"
+                              class="h-full w-full object-cover"
+                            />
+                          } @else if (
+                            player.profilePictureUrl != null &&
+                            player.profilePictureUrl != ""
+                          ) {
+                            <img
+                              src="{{ apiUrl }}/player/{{ player.id }}/pp"
+                              class="h-full w-full object-cover"
+                            />
+                          } @else {
+                            <img
+                              src="assets/img/gameon-logo.webp"
+                              class="h-full w-full object-cover"
+                            />
+                          }
+                        </div>
+                        <div class="min-w-0">
+                          <p class="truncate font-medium">
+                            {{ player.fullName }}
+                          </p>
+                          @if (player.riotGamesPUUID != null) {
+                            <p
+                              class="truncate text-xs text-gray-500 dark:text-gray-300"
+                            >
+                              {{ player.riotGamesNickname }}#{{
+                                player.riotGamesTagLine
+                              }}
+                            </p>
+                          }
+                        </div>
+                      </div>
+                    </td>
+                    <!-- Solo Queue -->
+                    <td class="px-2 py-2 sm:px-4 sm:py-3">
+                      @if (player.leagueOfLegendsSoloRank != null) {
+                        <div class="flex items-center gap-2">
+                          <img
+                            src="assets/img/lol/rank/{{
+                              player.leagueOfLegendsSoloRank.tier | lowercase
+                            }}.png"
+                            class="h-7 w-7 shrink-0"
+                          />
+                          <div class="leading-tight">
+                            <p class="font-medium">
+                              {{
+                                player.leagueOfLegendsSoloRank.tier | titlecase
+                              }}
+                              {{ player.leagueOfLegendsSoloRank.rank }}
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-gray-300">
+                              {{
+                                player.leagueOfLegendsSoloRank.leaguePoints
+                              }}
+                              LP
+                            </p>
+                          </div>
+                        </div>
+                      } @else {
+                        <span class="text-gray-500 dark:text-gray-300">—</span>
+                      }
+                    </td>
+                    <!-- Flex -->
+                    <td class="px-4 py-3 max-sm:hidden">
+                      @if (player.leagueOfLegendsFlexRank != null) {
+                        <div class="flex items-center gap-2">
+                          <img
+                            src="assets/img/lol/rank/{{
+                              player.leagueOfLegendsFlexRank.tier | lowercase
+                            }}.png"
+                            class="h-7 w-7 shrink-0"
+                          />
+                          <div class="leading-tight">
+                            <p class="font-medium">
+                              {{
+                                player.leagueOfLegendsFlexRank.tier | titlecase
+                              }}
+                              {{ player.leagueOfLegendsFlexRank.rank }}
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-gray-300">
+                              {{
+                                player.leagueOfLegendsFlexRank.leaguePoints
+                              }}
+                              LP
+                            </p>
+                          </div>
+                        </div>
+                      } @else {
+                        <span class="text-gray-500 dark:text-gray-300">—</span>
+                      }
+                    </td>
+                    <!-- Winrate -->
+                    <td class="px-4 py-3 max-sm:hidden">
+                      @if (getPlayerWinRate(player) !== null) {
+                        <span
+                          class="font-semibold"
+                          [ngClass]="winRateClass(getPlayerWinRate(player)!)"
+                          >{{ getPlayerWinRate(player) }}%</span
+                        >
+                      } @else {
+                        <span class="text-gray-500 dark:text-gray-300">—</span>
+                      }
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        } @else {
+          <div
+            class="text-primary dark:text-primaryDark border-bgLightDarker dark:border-bgDarkDarker m-3 rounded-xl border border-dashed px-4 py-8 text-center"
+          >
+            Aucun joueur actif pour le moment.
+          </div>
+        }
+      </div>
+
+      <div class="mt-4">
+        @if (isLoggedIn == false) {
           <app-info-message
-            [title]="'Vous n\'avez pas encore ajouté votre identifiant Riot Games. Ajoutez-le pour apparaître dans la liste !'"
+            [title]="'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'"
+            [clickable]="true"
+            (click)="login()"
           ></app-info-message>
         }
-      }
-    </div>
+
+        @if (isLoggedIn == true && (player$ | async); as currentPlayer) {
+          @if (currentPlayer.riotGamesPUUID == null) {
+            <app-info-message
+              [title]="'Vous n\'avez pas encore ajouté votre identifiant Riot Games. Ajoutez-le pour apparaître dans la liste !'"
+            ></app-info-message>
+          }
+        }
+      </div>
+    </section>
+  }
+}
+
+@if (view === "funstats") {
+  <section class="mx-auto mt-5 w-full max-w-6xl px-4 pb-6">
+    <app-lol-fun-stats></app-lol-fun-stats>
   </section>
 }
