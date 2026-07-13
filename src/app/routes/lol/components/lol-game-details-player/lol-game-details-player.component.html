@@ -1,12 +1,12 @@
 <div
-  class="flex w-full items-center justify-between gap-3 px-4 py-3 transition-colors"
+  class="flex w-full items-center gap-3 px-4 py-3 transition-colors"
   [ngClass]="
     isSelected
       ? 'bg-secondary/10'
       : 'hover:bg-black/5 dark:hover:bg-white/5'
   "
 >
-  <div class="flex min-w-0 items-center gap-3">
+  <div class="flex min-w-0 flex-1 items-center gap-3">
     <div class="relative flex w-11 shrink-0 justify-center">
       @if (player.championName == null || player.championName == "") {
         <img
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="flex shrink-0 flex-col items-center text-sm">
+  <div class="flex w-24 shrink-0 flex-col items-center text-sm">
     <span class="font-semibold text-primary dark:text-primaryDark">
       {{ player.kills }} / {{ player.deaths }} / {{ player.assists }}
     </span>

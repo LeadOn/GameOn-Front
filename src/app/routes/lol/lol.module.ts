@@ -10,6 +10,7 @@ import { LolGameDetailsComponent } from './games/details/lol-game-details.compon
 import { LolPlayerDetailsComponent } from './player/lol-player-details.component';
 import { RankHistoryComponent } from './player/components/rank-history/rank-history.component';
 import { WinRateChartComponent } from './player/components/win-rate-chart/win-rate-chart.component';
+import { LolFunStatsComponent } from './components/lol-fun-stats/lol-fun-stats.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { WinRateChartComponent } from './player/components/win-rate-chart/win-ra
     LolGameCardComponent,
     RankHistoryComponent,
     WinRateChartComponent,
+    LolFunStatsComponent,
   ],
   imports: [LolRoutingModule, SharedModule],
 })

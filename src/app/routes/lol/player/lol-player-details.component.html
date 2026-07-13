@@ -305,7 +305,7 @@
 <section class="mx-auto mt-6 w-full max-w-6xl px-4 pb-6">
   <!-- En-tête -->
   <div
-    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mb-3 flex items-center justify-between rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mb-3 flex flex-col gap-3 rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter sm:flex-row sm:items-center sm:justify-between"
   >
     <div>
       <span class="text-primary dark:text-primaryDark text-lg font-semibold"
@@ -321,7 +321,7 @@
         <div class="skeleton-base mt-1 h-4 w-36"></div>
       }
     </div>
-    <div class="flex items-center gap-3">
+    <div class="flex flex-wrap items-center justify-between gap-3 sm:justify-end">
       <label class="flex cursor-pointer items-center gap-2">
         <input
           type="checkbox"
@@ -354,10 +354,10 @@
   <!-- Pagination haute -->
   @if (loading == false) {
     <div
-      class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mb-3 flex items-center justify-between rounded-2xl border px-4 py-2 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+      class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mb-3 flex flex-wrap items-center justify-between gap-2 rounded-2xl border px-2 py-2 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter sm:px-4"
     >
       <button
-        class="text-primary dark:text-primaryDark flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-white/10"
+        class="text-primary dark:text-primaryDark flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 sm:px-3 dark:hover:bg-white/10"
         (click)="prevPage()"
         [disabled]="currentPage === 1 || gameHistoryLoading"
       >
@@ -367,13 +367,13 @@
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
-          class="h-4 w-4"
+          class="h-4 w-4 shrink-0"
         >
           <path d="M10 3L5 8L10 13" />
         </svg>
-        Précédent
+        <span class="hidden sm:inline">Précédent</span>
       </button>
-      <div class="flex items-center gap-1">
+      <div class="flex flex-wrap items-center justify-center gap-1">
         @for (item of compactPageItems; track $index) {
           @if (item.isEllipsis) {
             <span class="px-1 text-sm text-gray-500 dark:text-gray-300">{{
@@ -381,7 +381,7 @@
             }}</span>
           } @else {
             <button
-              class="text-primary dark:text-primaryDark rounded-lg px-2.5 py-1 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-default disabled:opacity-100 dark:hover:bg-white/10"
+              class="text-primary dark:text-primaryDark rounded-lg px-2 py-1 text-xs font-medium transition-colors hover:bg-black/5 disabled:cursor-default disabled:opacity-100 sm:px-2.5 sm:text-sm dark:hover:bg-white/10"
               (click)="goToPage(item.page!)"
               [disabled]="item.isCurrent || gameHistoryLoading"
               [ngClass]="
@@ -396,18 +396,18 @@
         }
       </div>
       <button
-        class="text-primary dark:text-primaryDark flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 dark:hover:bg-white/10"
+        class="text-primary dark:text-primaryDark flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-40 sm:px-3 dark:hover:bg-white/10"
         (click)="nextPage()"
         [disabled]="currentPage >= totalPages || gameHistoryLoading"
       >
-        Suivant
+        <span class="hidden sm:inline">Suivant</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
-          class="h-4 w-4"
+          class="h-4 w-4 shrink-0"
         >
           <path d="M6 3L11 8L6 13" />
         </svg>
