@@ -45,7 +45,7 @@
       class="flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors"
       [ngClass]="
         view === 'ranking'
-          ? 'bg-primary text-primaryDark dark:bg-primaryDark dark:text-primary'
+          ? 'bg-primary text-primaryDark'
           : 'text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
       "
       (click)="view = 'ranking'"
@@ -57,7 +57,7 @@
       class="flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors"
       [ngClass]="
         view === 'funstats'
-          ? 'bg-primary text-primaryDark dark:bg-primaryDark dark:text-primary'
+          ? 'bg-primary text-primaryDark'
           : 'text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
       "
       (click)="view = 'funstats'"
@@ -376,9 +376,7 @@
                               {{ player.leagueOfLegendsSoloRank.rank }}
                             </p>
                             <p class="text-xs text-gray-500 dark:text-gray-300">
-                              {{
-                                player.leagueOfLegendsSoloRank.leaguePoints
-                              }}
+                              {{ player.leagueOfLegendsSoloRank.leaguePoints }}
                               LP
                             </p>
                           </div>
@@ -405,9 +403,7 @@
                               {{ player.leagueOfLegendsFlexRank.rank }}
                             </p>
                             <p class="text-xs text-gray-500 dark:text-gray-300">
-                              {{
-                                player.leagueOfLegendsFlexRank.leaguePoints
-                              }}
+                              {{ player.leagueOfLegendsFlexRank.leaguePoints }}
                               LP
                             </p>
                           </div>
@@ -447,6 +443,7 @@
           <app-info-message
             [title]="'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'"
             [clickable]="true"
+            [applyMargin]="false"
             (click)="login()"
           ></app-info-message>
         }
@@ -455,6 +452,7 @@
           @if (currentPlayer.riotGamesPUUID == null) {
             <app-info-message
               [title]="'Vous n\'avez pas encore ajouté votre identifiant Riot Games. Ajoutez-le pour apparaître dans la liste !'"
+              [applyMargin]="false"
             ></app-info-message>
           }
         }

@@ -1,0 +1,63 @@
+<div class="p-5">
+  <div class="mb-4 flex items-center gap-3">
+    <button
+      type="button"
+      class="bg-mpYellow text-mpBg flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-transform hover:scale-105"
+      (click)="togglePlay()"
+    >
+      <fa-icon [icon]="isPlaying ? pauseIcon : playIcon"></fa-icon>
+    </button>
+
+    <input
+      type="range"
+      class="accent-mpYellow h-1.5 w-full flex-1 cursor-pointer"
+      min="0"
+      [max]="frames.length - 1 < 0 ? 0 : frames.length - 1"
+      [value]="currentFrameIndex"
+      (input)="onSliderInput($event)"
+    />
+
+    <span
+      class="text-mpTextSecondary w-14 shrink-0 text-right text-sm font-semibold"
+    >
+      {{ currentTimeLabel }}
+    </span>
+  </div>
+
+  <div class="relative" [style.height.px]="rows.length * rowHeight">
+    @for (row of rows; track row.player.puuid) {
+      <div
+        class="absolute left-0 flex w-full items-center gap-3 transition-[top] duration-300"
+        [style.top.px]="row.rank * rowHeight"
+        [style.height.px]="rowHeight"
+      >
+        <span class="text-mpTextMuted w-5 shrink-0 text-right text-xs">
+          {{ row.rank + 1 }}
+        </span>
+
+        <img
+          [src]="championIconUrl(row.player)"
+          class="h-6 w-6 shrink-0 rounded-full border border-white/20 object-cover"
+        />
+
+        <span class="text-mpText w-28 shrink-0 truncate text-xs font-medium">
+          {{ row.player.riotIdGameName }}
+        </span>
+
+        <div class="h-4 flex-1 overflow-hidden rounded-full bg-white/5">
+          <div
+            class="h-full rounded-full transition-all duration-300"
+            [ngClass]="row.player.teamId == 100 ? 'bg-mpGreen' : 'bg-mpRed'"
+            [style.width.%]="row.widthPercent"
+          ></div>
+        </div>
+
+        <span
+          class="text-mpTextSecondary w-16 shrink-0 text-right text-xs font-semibold"
+        >
+          {{ row.value | number: "1.0-0" }}
+        </span>
+      </div>
+    }
+  </div>
+</div>

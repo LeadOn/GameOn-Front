@@ -1,48 +1,70 @@
 <div
-  class="flex w-full items-center gap-3 px-4 py-3 transition-colors"
-  [ngClass]="
-    isSelected
-      ? 'bg-secondary/10'
-      : 'hover:bg-black/5 dark:hover:bg-white/5'
-  "
+  class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 transition-colors"
+  [ngClass]="isSelected ? 'bg-white/10' : 'hover:bg-white/5'"
+  (click)="selectPlayer()"
 >
   <div class="flex min-w-0 flex-1 items-center gap-3">
     <div class="relative flex w-11 shrink-0 justify-center">
-      @if (player.championName == null || player.championName == "") {
-        <img
-          class="h-11 w-11 rounded-full border-2 border-white/20 object-cover"
-          src="assets/img/gameon-logo.webp"
-        />
-      }
-
-      @if (player.championName != null && player.championName != "") {
-        <img
-          class="h-11 w-11 rounded-full border-2 border-white/20 object-cover"
-          src="https://ddragon.leagueoflegends.com/cdn/{{
-            currentLoLPatch
-          }}/img/champion/{{ player.championName }}.png"
-        />
-      }
+      <img
+        class="h-11 w-11 rounded-full border-2 border-white/20 object-cover"
+        [src]="championIconUrl()"
+      />
 
       <span
-        class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark absolute -bottom-1 rounded-full px-1.5 text-[10px] font-semibold"
+        class="bg-mpBg text-mpText absolute -bottom-1 rounded-full border border-[rgba(255,255,255,0.09)] px-1.5 text-[10px] font-semibold"
       >
-        {{ player.champLevel == null || player.champLevel == 0 ? "??" : player.champLevel }}
+        {{
+          player.champLevel == null || player.champLevel == 0
+            ? "??"
+            : player.champLevel
+        }}
       </span>
     </div>
 
     <div class="min-w-0">
-      <p class="truncate text-sm font-semibold text-primary dark:text-primaryDark">
-        {{ player.riotIdGameName }}
-      </p>
-      <p class="truncate text-xs text-gray-500 dark:text-gray-300">
-        {{ player.championName }}
+      <div class="flex flex-wrap items-center gap-1.5">
+        <p class="text-mpText truncate text-sm font-semibold">
+          {{ player.riotIdGameName
+          }}<span class="text-mpTextMuted font-normal"
+            >#{{ player.riotIdTagLine }}</span
+          >
+        </p>
+
+        @if (isLinkedToGameOn) {
+          <span
+            class="bg-mpGreen/15 text-mpGreen whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-semibold"
+          >
+            {{ displayName }}
+          </span>
+        }
+
+        @if (isMvp) {
+          <span
+            class="bg-mpYellow/20 text-mpYellow whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-bold"
+          >
+            MVP
+          </span>
+        }
+
+        @if (isAce) {
+          <span
+            class="whitespace-nowrap rounded-full bg-purple-500/20 px-1.5 py-0.5 text-[10px] font-bold text-purple-300"
+          >
+            ACE
+          </span>
+        }
+      </div>
+
+      <p class="text-mpTextMuted mt-0.5 truncate text-xs">
+        {{ player.championName }} &middot; {{ cs }} CS &middot;
+        {{ currentGold | number: "1.0-0" }} or &middot; KP
+        {{ killParticipation }}%
       </p>
     </div>
   </div>
 
-  <div class="flex w-24 shrink-0 flex-col items-center text-sm">
-    <span class="font-semibold text-primary dark:text-primaryDark">
+  <div class="flex w-20 shrink-0 flex-col items-center text-sm">
+    <span class="text-mpText font-semibold">
       {{ player.kills }} / {{ player.deaths }} / {{ player.assists }}
     </span>
     <span class="text-xs font-medium" [ngClass]="kdaColorClass">
@@ -50,33 +72,15 @@
     </span>
   </div>
 
-  <div class="flex shrink-0 items-center gap-2">
-    <div class="flex gap-1">
-      @for (item of itemSlots; track $index) {
-        <div
-          class="border-bgLightDarker bg-bgLightDarker/40 dark:border-bgDarkDarker dark:bg-bgDarkDarker/40 h-6 w-6 overflow-hidden rounded-md border"
-        >
-          @if (item != 0) {
-            <img
-              class="h-full w-full object-cover"
-              [src]="itemIconUrl(item)"
-            />
-          }
-        </div>
-      }
-    </div>
-
-    <button
-      class="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center rounded-md border text-xs transition-colors duration-200"
-      [ngClass]="
-        isSelected
-          ? 'border-secondary bg-secondary/20 text-secondary'
-          : 'border-bgLightDarker text-primary hover:bg-black/5 dark:border-bgDarkDarker dark:text-primaryDark dark:hover:bg-white/10'
-      "
-      type="button"
-      (click)="selectPlayer()"
-    >
-      <fa-icon [icon]="detailsIcon"></fa-icon>
-    </button>
+  <div class="hidden shrink-0 items-center gap-1 md:flex">
+    @for (item of itemSlots; track $index) {
+      <div
+        class="h-6 w-6 overflow-hidden rounded-md border border-[rgba(255,255,255,0.09)] bg-white/5"
+      >
+        @if (item != 0) {
+          <img class="h-full w-full object-cover" [src]="itemIconUrl(item)" />
+        }
+      </div>
+    }
   </div>
 </div>
