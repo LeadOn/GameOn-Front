@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudio,visualstudiocode,angular,node,git,windows,linux,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudio,visualstudiocode,angular,node,git,windows,linux,macos
 
+### Playwright results ###
+.playwright-mcp/
+
 ### Angular ###
 ## Angular ##
 # compiled output

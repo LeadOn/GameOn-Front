@@ -1,0 +1,66 @@
+<div class="p-5">
+  <svg
+    [attr.viewBox]="'0 0 ' + width + ' ' + height"
+    preserveAspectRatio="none"
+    class="h-56 w-full"
+  >
+    @if (mode == "team") {
+      <line
+        x1="0"
+        [attr.y1]="midY"
+        [attr.x2]="width"
+        [attr.y2]="midY"
+        stroke="rgba(255,255,255,0.12)"
+        stroke-width="1"
+      />
+      <clipPath id="gold-clip-above">
+        <rect x="0" y="0" [attr.width]="width" [attr.height]="midY" />
+      </clipPath>
+      <clipPath id="gold-clip-below">
+        <rect
+          x="0"
+          [attr.y]="midY"
+          [attr.width]="width"
+          [attr.height]="height - midY"
+        />
+      </clipPath>
+      <path
+        [attr.d]="areaPath"
+        fill="rgba(45,224,165,0.35)"
+        clip-path="url(#gold-clip-above)"
+      />
+      <path
+        [attr.d]="areaPath"
+        fill="rgba(255,92,116,0.35)"
+        clip-path="url(#gold-clip-below)"
+      />
+      <path
+        [attr.d]="linePath"
+        fill="none"
+        stroke="rgba(237,240,250,0.6)"
+        stroke-width="2"
+      />
+    } @else {
+      <path [attr.d]="areaPath" fill="rgba(240,190,78,0.35)" />
+      <path [attr.d]="linePath" fill="none" stroke="#f0be4e" stroke-width="2" />
+    }
+
+    @if (frames.length > 1) {
+      <line
+        [attr.x1]="playheadX"
+        [attr.x2]="playheadX"
+        y1="0"
+        [attr.y2]="height"
+        stroke="rgba(255,255,255,0.45)"
+        stroke-width="1.5"
+        stroke-dasharray="4 4"
+      />
+    }
+  </svg>
+
+  <div class="text-mpTextMuted mt-1 flex items-center justify-between text-xs">
+    <span>{{ startLabel }}</span>
+    <span class="text-mpTextSecondary font-medium">{{ centerLabel }}</span>
+    <span>{{ endLabel }}</span>
+  </div>
+</div>

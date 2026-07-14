@@ -3,8 +3,11 @@ import { SharedModule } from '../../shared/modules/shared.module';
 import { LolRoutingModule } from './lol-routing.module';
 import { LolPlayerCardComponent } from './components/lol-player-card/lol-player-card.component';
 import { LolHomeComponent } from './lol-home.component';
-import { LolGameDetailsPlayerGraphComponent } from './components/lol-game-details-player-graph/lol-game-details-player-graph.component';
 import { LolGameDetailsPlayerComponent } from './components/lol-game-details-player/lol-game-details-player.component';
+import { LolGameGoldChartComponent } from './components/lol-game-gold-chart/lol-game-gold-chart.component';
+import { LolGameGoldRaceComponent } from './components/lol-game-gold-race/lol-game-gold-race.component';
+import { LolGameDamageChartComponent } from './components/lol-game-damage-chart/lol-game-damage-chart.component';
+import { LolGameHighlightsComponent } from './components/lol-game-highlights/lol-game-highlights.component';
 import { LolGameCardComponent } from './components/lol-game-card/lol-game-card.component';
 import { LolGameDetailsComponent } from './games/details/lol-game-details.component';
 import { LolPlayerDetailsComponent } from './player/lol-player-details.component';
@@ -21,8 +24,11 @@ import { LolFunStatsComponent } from './components/lol-fun-stats/lol-fun-stats.c
 
     /* Components */
     LolPlayerCardComponent,
-    LolGameDetailsPlayerGraphComponent,
     LolGameDetailsPlayerComponent,
+    LolGameGoldChartComponent,
+    LolGameGoldRaceComponent,
+    LolGameDamageChartComponent,
+    LolGameHighlightsComponent,
     LolGameCardComponent,
     RankHistoryComponent,
     WinRateChartComponent,

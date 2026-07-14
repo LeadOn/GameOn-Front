@@ -8,8 +8,21 @@ import {
 } from '@angular/core';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
+import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import {
+  championIconUrl,
+  csFor,
+  itemIconUrl,
+  itemSlots,
+  kda,
+  kdaColorClass,
+  kdaLabel,
+  killParticipation,
+  latestStatsFor,
+  playerDisplayName,
+} from '../../../../shared/classes/lol/lol-match.util';
 
 @Component({
   selector: 'app-lol-game-details-player',
@@ -24,7 +37,19 @@ export class LolGameDetailsPlayerComponent implements OnInit {
   player: LoLGameParticipant = new LoLGameParticipant();
 
   @Input()
+  team: LoLGameParticipant[] = [];
+
+  @Input()
+  timeline?: LoLGameTimelineFrame[];
+
+  @Input()
   isSelected = false;
+
+  @Input()
+  isMvp = false;
+
+  @Input()
+  isAce = false;
 
   @Output()
   playerSelected = new EventEmitter<LoLGameParticipant>();
@@ -49,39 +74,46 @@ export class LolGameDetailsPlayerComponent implements OnInit {
   }
 
   get itemSlots(): number[] {
-    return [
-      this.player.item0,
-      this.player.item1,
-      this.player.item2,
-      this.player.item3,
-      this.player.item4,
-      this.player.item5,
-      this.player.item6,
-    ];
+    return itemSlots(this.player);
   }
 
-  get kda(): number {
-    const denominator = this.player.deaths === 0 ? 1 : this.player.deaths;
-    return (this.player.kills + this.player.assists) / denominator;
+  get cs(): number {
+    return csFor(this.timeline, this.player.puuid);
+  }
+
+  get currentGold(): number {
+    return latestStatsFor(this.timeline, this.player.puuid)?.totalGold ?? 0;
+  }
+
+  get killParticipation(): number {
+    return killParticipation(this.player, this.team);
+  }
+
+  get kdaValue(): number {
+    return kda(this.player);
   }
 
   get kdaLabel(): string {
-    return this.kda.toFixed(2).replace('.', ',');
+    return kdaLabel(this.player);
   }
 
   get kdaColorClass(): string {
-    if (this.kda >= 4) {
-      return 'text-customGreen';
-    }
+    return kdaColorClass(this.kdaValue);
+  }
 
-    if (this.kda >= 2) {
-      return 'text-customYellow';
-    }
+  get displayName(): string {
+    return playerDisplayName(this.player);
+  }
 
-    return 'text-frenchRed';
+  get isLinkedToGameOn(): boolean {
+    return this.player.player != null;
+  }
+
+  championIconUrl(): string {
+    return championIconUrl(this.player.championName, this.currentLoLPatch);
   }
 
   itemIconUrl(item: number): string {
-    return `https://ddragon.leagueoflegends.com/cdn/${this.currentLoLPatch}/img/item/${item}.png`;
+    return itemIconUrl(item, this.currentLoLPatch);
   }
 }

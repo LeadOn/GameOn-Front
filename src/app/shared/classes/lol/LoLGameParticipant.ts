@@ -23,4 +23,10 @@ export class LoLGameParticipant {
   item5: number = 0;
   item6: number = 0;
   win?: boolean;
+  allInPings: number = 0;
+  assistMePings: number = 0;
+  commandPings: number = 0;
+  baronKills: number = 0;
+  bountyLevel: number = 0;
+  consumablesPurchased: number = 0;
 }

@@ -41,6 +41,17 @@
   --color-customYellow: #d4ac0c;
   --color-frenchBlue: #071d90;
   --color-frenchRed: #ed2939;
+
+  --color-mpBg: #0a0d18;
+  --color-mpText: #edf0fa;
+  --color-mpTextSecondary: #b8bfd4;
+  --color-mpTextMuted: #8b93ac;
+  --color-mpGreen: #2de0a5;
+  --color-mpRed: #ff5c74;
+  --color-mpBlue: #6b8afb;
+  --color-mpYellow: #f0be4e;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Instrument Sans", sans-serif;
 }
 
 html,
