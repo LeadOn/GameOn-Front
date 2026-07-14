@@ -1,13 +1,22 @@
 <div
-  class="animate-fade m-4 flex space-x-2 rounded-lg p-4 backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
+  class="animate-fade flex items-center gap-3 rounded-2xl border border-dashed p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
   [ngClass]="{
-    'bg-secondary/40': type == 'info',
-    'bg-frenchRed/40': type == 'error',
-    'bg-customGreen/40': type == 'success',
-    'cursor-pointer': clickable == true,
+    'border-secondary/30 bg-secondary/5': type == 'info',
+    'border-frenchRed/30 bg-frenchRed/5': type == 'error',
+    'border-customGreen/30 bg-customGreen/5': type == 'success',
+    'cursor-pointer hover:bg-white/5': clickable == true,
     'm-4': applyMargin == true,
   }"
 >
-  <fa-icon [icon]="icon" class="text-primaryDark"></fa-icon>
-  <span class="text-primaryDark font-bold">{{ title }}</span>
+  <span
+    class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+    [ngClass]="{
+      'bg-secondary/20 text-secondary': type == 'info',
+      'bg-frenchRed/20 text-frenchRed': type == 'error',
+      'bg-customGreen/20 text-customGreen': type == 'success',
+    }"
+  >
+    <fa-icon [icon]="icon" class="text-xs"></fa-icon>
+  </span>
+  <span class="text-gray-300">{{ title }}</span>
 </div>

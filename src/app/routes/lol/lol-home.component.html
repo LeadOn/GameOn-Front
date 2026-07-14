@@ -443,6 +443,7 @@
           <app-info-message
             [title]="'Connectez-vous pour ajouter votre identifiant Riot Games et apparaître dans la liste !'"
             [clickable]="true"
+            [applyMargin]="false"
             (click)="login()"
           ></app-info-message>
         }
@@ -451,6 +452,7 @@
           @if (currentPlayer.riotGamesPUUID == null) {
             <app-info-message
               [title]="'Vous n\'avez pas encore ajouté votre identifiant Riot Games. Ajoutez-le pour apparaître dans la liste !'"
+              [applyMargin]="false"
             ></app-info-message>
           }
         }
