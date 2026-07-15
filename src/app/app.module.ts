@@ -43,8 +43,11 @@ import { HomeLolLeaderboardComponent } from './routes/home/components/lol-leader
 import { HomeLolSeasonCardComponent } from './routes/home/components/lol-season-card/home-lol-season-card.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
 import { lolVersionReducer } from './core/store/reducers/lol.reducer';
+import { readStoredKeycloakTokens } from './core/keycloak/keycloak-offline-tokens';
 
 registerLocaleData(localeFr);
+
+const storedKeycloakTokens = readStoredKeycloakTokens();
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -95,6 +98,12 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
       initOptions: {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: `${window.location.origin}/assets/silent-check-sso.html`,
+        // Disabled so a restored offline refresh token (see below) is used
+        // via a direct token-endpoint refresh instead of being silently
+        // dropped when the browser's SSO session cookie is stale/gone.
+        checkLoginIframe: false,
+        scope: 'offline_access',
+        ...storedKeycloakTokens,
       },
       features: [
         withAutoRefreshToken({

@@ -11,6 +11,7 @@ import Keycloak from 'keycloak-js';
 import { setPlayer, setPlayerStats } from './core/store/actions/player.actions';
 import { RiotLoLService } from './shared/services/leagueoflegends/riot-lol.service';
 import { setLoLVersion } from './core/store/actions/lol.actions';
+import { KeycloakOfflinePersistenceService } from './core/keycloak/keycloak-offline-persistence.service';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,11 @@ import { setLoLVersion } from './core/store/actions/lol.actions';
 })
 export class AppComponent implements OnInit {
   private readonly keycloak = inject(Keycloak);
+  // Injected only to force eager instantiation at bootstrap; it wires itself
+  // up via the Keycloak event signal and isn't otherwise called directly.
+  private readonly keycloakOfflinePersistence = inject(
+    KeycloakOfflinePersistenceService,
+  );
 
   isLoggedIn = false;
 
