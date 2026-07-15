@@ -3,11 +3,14 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { BrowserModule } from '@angular/platform-browser';
 import {
+  AutoRefreshTokenService,
   createInterceptorCondition,
   INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
   IncludeBearerTokenCondition,
   includeBearerTokenInterceptor,
   provideKeycloak,
+  UserActivityService,
+  withAutoRefreshToken,
 } from 'keycloak-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -93,6 +96,13 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: `${window.location.origin}/assets/silent-check-sso.html`,
       },
+      features: [
+        withAutoRefreshToken({
+          sessionTimeout: 30 * 60 * 1000,
+          onInactivityTimeout: 'login',
+        }),
+      ],
+      providers: [AutoRefreshTokenService, UserActivityService],
     }),
     { provide: LOCALE_ID, useValue: 'fr' },
     {
