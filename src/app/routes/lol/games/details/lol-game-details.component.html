@@ -37,10 +37,10 @@
     >
       @for (team of [1, 2]; track team) {
         <div
-          class="overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.09)]"
+          class="border-mpBorder overflow-hidden rounded-[20px] border"
         >
           <div
-            class="flex items-center justify-between border-b border-[rgba(255,255,255,0.09)] px-4 py-3"
+            class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
           >
             <div class="skeleton-base h-5 w-24"></div>
             <div class="skeleton-base h-5 w-16"></div>
@@ -84,13 +84,13 @@
       ></div>
 
       <div
-        class="flex flex-wrap items-center justify-between gap-4 rounded-[20px] border p-5 shadow-[0_18px_44px_rgba(0,0,0,0.35)]"
+        class="mp-card flex flex-wrap items-center justify-between gap-4 p-5"
         [ngClass]="
           heroWon == true
             ? 'border-mpGreen/35 bg-[linear-gradient(180deg,rgba(45,224,165,0.14),rgba(255,255,255,0.02))]'
             : heroWon == false
               ? 'border-mpRed/35 bg-[linear-gradient(180deg,rgba(255,92,116,0.14),rgba(255,255,255,0.02))]'
-              : 'border-[rgba(255,255,255,0.09)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))]'
+              : ''
         "
       >
         <div class="flex min-w-0 items-center gap-4">
@@ -100,7 +100,7 @@
               class="h-16 w-16 rounded-full border-2 border-white/25 object-cover"
             />
             <span
-              class="bg-mpBg text-mpText absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[rgba(255,255,255,0.09)] px-2 text-[11px] font-semibold"
+              class="bg-mpBg text-mpText border-mpBorder absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border px-2 text-[11px] font-semibold"
             >
               {{ heroPlayer?.champLevel || "??" }}
             </span>
@@ -111,9 +111,9 @@
               class="font-heading text-2xl font-bold"
               [ngClass]="
                 heroWon == true
-                  ? 'text-mpGreen'
+                  ? 'text-mpGreenInk'
                   : heroWon == false
-                    ? 'text-mpRed'
+                    ? 'text-mpRedInk'
                     : 'text-mpTextSecondary'
               "
             >
@@ -134,14 +134,14 @@
 
         <div class="flex shrink-0 items-center gap-2">
           <span
-            class="border-mpBlue/40 bg-mpBlue/15 text-mpBlue whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-semibold"
+            class="border-mpBlue/40 bg-mpBlue/15 text-mpBlueInk whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-semibold"
           >
             {{ patchTitle }}
           </span>
 
           <button
             type="button"
-            class="text-mpText flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.09)] bg-white/5 px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+            class="text-mpText border-mpBorder light:bg-[rgba(23,30,54,0.03)] light:hover:bg-[rgba(23,30,54,0.06)] flex items-center gap-2 rounded-full border bg-white/5 px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
             [disabled]="isSyncing"
             (click)="syncGame()"
           >
@@ -161,17 +161,17 @@
       class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))]"
     >
       <div
-        class="overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.09)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-[0_18px_44px_rgba(0,0,0,0.35)]"
+        class="mp-card"
       >
         <div
-          class="flex items-center justify-between border-b border-[rgba(255,255,255,0.09)] px-4 py-3"
+          class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
         >
           <div class="flex items-center gap-2">
             <span class="bg-mpGreen h-2.5 w-2.5 shrink-0 rounded-full"></span>
             <span class="text-mpText font-semibold">Équipe bleue</span>
             @if (team1BaronKills > 0) {
               <span
-                class="bg-mpBlue/15 text-mpBlue rounded-full px-2 py-0.5 text-[11px] font-semibold"
+                class="bg-mpBlue/15 text-mpBlueInk rounded-full px-2 py-0.5 text-[11px] font-semibold"
               >
                 🔮 {{ team1BaronKills }} Baron{{
                   team1BaronKills > 1 ? "s" : ""
@@ -183,7 +183,7 @@
             <span
               class="text-sm font-semibold"
               [ngClass]="
-                game.winningTeamId == 100 ? 'text-mpGreen' : 'text-mpRed'
+                game.winningTeamId == 100 ? 'text-mpGreenInk' : 'text-mpRedInk'
               "
             >
               {{ game.winningTeamId == 100 ? "Victoire" : "Défaite" }}
@@ -191,7 +191,7 @@
           }
         </div>
 
-        <div class="divide-y divide-[rgba(255,255,255,0.09)]">
+        <div class="divide-mpBorder divide-y">
           @for (player of team1; track player.puuid) {
             <app-lol-game-details-player
               [player]="player"
@@ -207,17 +207,17 @@
       </div>
 
       <div
-        class="overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.09)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-[0_18px_44px_rgba(0,0,0,0.35)]"
+        class="mp-card"
       >
         <div
-          class="flex items-center justify-between border-b border-[rgba(255,255,255,0.09)] px-4 py-3"
+          class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
         >
           <div class="flex items-center gap-2">
             <span class="bg-mpRed h-2.5 w-2.5 shrink-0 rounded-full"></span>
             <span class="text-mpText font-semibold">Équipe rouge</span>
             @if (team2BaronKills > 0) {
               <span
-                class="bg-mpBlue/15 text-mpBlue rounded-full px-2 py-0.5 text-[11px] font-semibold"
+                class="bg-mpBlue/15 text-mpBlueInk rounded-full px-2 py-0.5 text-[11px] font-semibold"
               >
                 🔮 {{ team2BaronKills }} Baron{{
                   team2BaronKills > 1 ? "s" : ""
@@ -229,7 +229,7 @@
             <span
               class="text-sm font-semibold"
               [ngClass]="
-                game.winningTeamId == 200 ? 'text-mpGreen' : 'text-mpRed'
+                game.winningTeamId == 200 ? 'text-mpGreenInk' : 'text-mpRedInk'
               "
             >
               {{ game.winningTeamId == 200 ? "Victoire" : "Défaite" }}
@@ -237,7 +237,7 @@
           }
         </div>
 
-        <div class="divide-y divide-[rgba(255,255,255,0.09)]">
+        <div class="divide-mpBorder divide-y">
           @for (player of team2; track player.puuid) {
             <app-lol-game-details-player
               [player]="player"
@@ -256,10 +256,10 @@
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
     <div
-      class="overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.09)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-[0_18px_44px_rgba(0,0,0,0.35)]"
+      class="mp-card"
     >
       <div
-        class="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(255,255,255,0.09)] px-5 py-4"
+        class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
       >
         <div>
           <p class="font-heading text-mpText text-base font-semibold">
@@ -283,10 +283,10 @@
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
     <div
-      class="overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.09)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-[0_18px_44px_rgba(0,0,0,0.35)]"
+      class="mp-card"
     >
       <div
-        class="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(255,255,255,0.09)] px-5 py-4"
+        class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
       >
         <div>
           <p class="font-heading text-mpText text-base font-semibold">
@@ -302,14 +302,14 @@
         </div>
 
         <div
-          class="inline-flex items-center gap-1 rounded-full border border-[rgba(255,255,255,0.09)] p-1"
+          class="border-mpBorder inline-flex items-center gap-1 rounded-full border p-1"
         >
           <button
             type="button"
             class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
             [ngClass]="
               goldChartMode == 'team'
-                ? 'text-mpText bg-white/10'
+                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
                 : 'text-mpTextMuted hover:text-mpText'
             "
             (click)="setGoldChartMode('team')"
@@ -321,7 +321,7 @@
             class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
             [ngClass]="
               goldChartMode == 'player'
-                ? 'text-mpText bg-white/10'
+                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
                 : 'text-mpTextMuted hover:text-mpText'
             "
             (click)="setGoldChartMode('player')"
@@ -344,24 +344,24 @@
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
     <div
-      class="overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.09)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-[0_18px_44px_rgba(0,0,0,0.35)]"
+      class="mp-card"
     >
       <div
-        class="flex flex-wrap items-center justify-between gap-3 border-b border-[rgba(255,255,255,0.09)] px-5 py-4"
+        class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
       >
         <p class="font-heading text-mpText text-base font-semibold">
           Dégâts aux champions
         </p>
 
         <div
-          class="inline-flex items-center gap-1 rounded-full border border-[rgba(255,255,255,0.09)] p-1"
+          class="border-mpBorder inline-flex items-center gap-1 rounded-full border p-1"
         >
           <button
             type="button"
             class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
             [ngClass]="
               damageMode == 'dealt'
-                ? 'text-mpText bg-white/10'
+                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
                 : 'text-mpTextMuted hover:text-mpText'
             "
             (click)="setDamageMode('dealt')"
@@ -373,7 +373,7 @@
             class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
             [ngClass]="
               damageMode == 'taken'
-                ? 'text-mpText bg-white/10'
+                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
                 : 'text-mpTextMuted hover:text-mpText'
             "
             (click)="setDamageMode('taken')"
@@ -396,9 +396,9 @@
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
     <div
-      class="overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.09)] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] shadow-[0_18px_44px_rgba(0,0,0,0.35)]"
+      class="mp-card"
     >
-      <div class="border-b border-[rgba(255,255,255,0.09)] px-5 py-4">
+      <div class="border-mpBorder border-b px-5 py-4">
         <p class="font-heading text-mpText text-base font-semibold">
           Mentions spéciales
         </p>

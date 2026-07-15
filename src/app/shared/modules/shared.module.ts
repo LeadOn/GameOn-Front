@@ -17,6 +17,7 @@ import { ChangelogCardComponent } from '../components/changelog-card/changelog-c
 import { FeedbackModalComponent } from '../components/feedback-modal/feedback-modal.component';
 import { SafePipe } from '../../core/pipes/safe.pipe';
 import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-game-history-card/fifa-game-history-card.component';
+import { ThemeToggleComponent } from '../components/theme-toggle/theme-toggle.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
     FeedbackModalComponent,
+    ThemeToggleComponent,
   ],
   imports: [
     CommonModule,
@@ -74,6 +76,7 @@ import { FifaGameHistoryCardComponent } from '../../routes/fifa/components/fifa-
     LoadingSpinnerTinyComponent,
     ChangelogCardComponent,
     FeedbackModalComponent,
+    ThemeToggleComponent,
   ],
 })
 export class SharedModule {}

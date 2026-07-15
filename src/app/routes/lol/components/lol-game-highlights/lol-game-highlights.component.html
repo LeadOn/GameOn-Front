@@ -1,8 +1,6 @@
 <div class="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-3">
   @for (card of cards; track card.config.key) {
-    <div
-      class="rounded-[16px] border border-[rgba(255,255,255,0.09)] bg-white/[0.03] p-4"
-    >
+    <div class="mp-panel p-4">
       <div class="flex items-center gap-3">
         <div
           class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-lg"
@@ -31,14 +29,14 @@
         </p>
 
         <div
-          class="mt-4 flex items-center gap-2 border-t border-[rgba(255,255,255,0.09)] pt-3"
+          class="border-mpBorder mt-4 flex items-center gap-2 border-t pt-3"
         >
           <img
             [src]="championIconUrl(card.player)"
             class="h-6 w-6 shrink-0 rounded-full border border-white/20 object-cover"
           />
           @if (isLinked(card.player)) {
-            <span class="text-mpGreen truncate text-sm font-medium">
+            <span class="text-mpGreenInk truncate text-sm font-medium">
               {{ displayName(card.player) }}
             </span>
           } @else {

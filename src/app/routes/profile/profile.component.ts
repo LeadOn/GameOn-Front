@@ -133,8 +133,7 @@ export class ProfilePageComponent implements OnInit, OnChanges {
 
   logout() {
     window.location.replace(
-      environment.keycloak.url +
-        '/realms/gameon/protocol/openid-connect/logout',
+      environment.keycloak.url + 'realms/gameon/protocol/openid-connect/logout',
     );
   }
 

@@ -13,8 +13,8 @@ export function kdaLabel(player: LoLGameParticipant): string {
 }
 
 export function kdaColorClass(value: number): string {
-  if (value >= 3) return 'text-mpGreen';
-  if (value >= 2) return 'text-mpYellow';
+  if (value >= 3) return 'text-mpGreenInk';
+  if (value >= 2) return 'text-mpYellowInk';
   return 'text-mpTextSecondary';
 }
 
