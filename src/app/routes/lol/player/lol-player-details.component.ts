@@ -53,6 +53,17 @@ export class LolPlayerDetailsComponent implements OnInit {
   totalPages = 1;
   hasNextPage = false;
   rankedOnly = true;
+  queueType: string | null = null;
+
+  readonly queueTypeOptions: { value: string; label: string }[] = [
+    { value: 'RANKED_SOLO_DUO', label: 'Solo/Duo' },
+    { value: 'RANKED_FLEX', label: 'Flex' },
+    { value: 'ARAM', label: 'ARAM' },
+    { value: 'NORMAL_DRAFT', label: 'Normal (Draft)' },
+    { value: 'NORMAL_BLIND', label: 'Normal (Blind)' },
+    { value: 'CLASH', label: 'Clash' },
+    { value: 'ARENA', label: 'Arena' },
+  ];
 
   rankPosition: number | null = null;
 
@@ -251,6 +262,7 @@ export class LolPlayerDetailsComponent implements OnInit {
         requestedPage,
         this.pageSize,
         this.rankedOnly,
+        this.queueType,
       )
       .subscribe(
         (data) => {
@@ -294,6 +306,13 @@ export class LolPlayerDetailsComponent implements OnInit {
 
   onRankedOnlyChange(event: Event) {
     this.rankedOnly = (event.target as HTMLInputElement).checked;
+    this.currentPage = 1;
+    this.getLastGamesPlayed();
+  }
+
+  onQueueTypeChange(event: Event) {
+    const value = (event.target as HTMLSelectElement).value;
+    this.queueType = value === '' ? null : value;
     this.currentPage = 1;
     this.getLastGamesPlayed();
   }
