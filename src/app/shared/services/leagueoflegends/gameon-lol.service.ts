@@ -7,6 +7,7 @@ import { PlayerDto } from '../../classes/common/PlayerDto';
 import { LeagueOfLegendsRankHistory } from '../../classes/lol/LeagueOfLegendsRankHistory';
 import { LoLGame } from '../../classes/lol/LoLGame';
 import { LoLGameTimelineFrame } from '../../classes/lol/LoLGameTimelineFrame';
+import { LoLQueue } from '../../classes/lol/LoLQueue';
 import { ListResultDto } from '../../classes/common/ListResultDto';
 import {
   GlobalStatsFilters,
@@ -78,7 +79,7 @@ export class GameOnLoLService {
     page: number = 1,
     size: number = 10,
     rankedOnly: boolean = false,
-    queueType?: string | null,
+    queueIds?: number[] | null,
   ): Observable<ListResultDto<LoLGame>> {
     let url =
       environment.gameOnApiUrl +
@@ -91,11 +92,23 @@ export class GameOnLoLService {
       '&rankedOnly=' +
       rankedOnly;
 
-    if (queueType != null) {
-      url += '&queueType=' + encodeURIComponent(queueType);
+    if (queueIds != null && queueIds.length > 0) {
+      url += '&queues=' + queueIds.join(',');
     }
 
     return this.client.get<ListResultDto<LoLGame>>(url);
+  }
+
+  getQueues(): Observable<LoLQueue[]> {
+    return this.client.get<LoLQueue[]>(
+      environment.gameOnApiUrl + '/lol/queue',
+    );
+  }
+
+  getQueuesForPlayer(playerId: number): Observable<LoLQueue[]> {
+    return this.client.get<LoLQueue[]>(
+      environment.gameOnApiUrl + '/lol/queue/player/' + playerId,
+    );
   }
 
   refreshGame(matchId: string): Observable<LoLGame> {

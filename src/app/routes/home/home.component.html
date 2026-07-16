@@ -17,6 +17,30 @@
     </div>
   }
 
+  <section id="home-lol">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-primary dark:text-primaryDark text-lg font-semibold"
+          >Classement League of Legends</span
+        >
+      </div>
+      <a
+        routerLink="/lol"
+        class="text-customGreen cursor-pointer text-sm font-semibold"
+        >Tout voir</a
+      >
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <app-home-lol-leaderboard></app-home-lol-leaderboard>
+      </div>
+      <app-home-lol-season-card
+        [isLoggedIn]="isLoggedIn"
+      ></app-home-lol-season-card>
+    </div>
+  </section>
+
   <section id="home-fifa">
     <div class="flex items-center justify-between">
       <div class="flex items-center gap-2">
@@ -48,30 +72,6 @@
         [loading]="loading"
         [error]="error"
       ></app-home-news-panel>
-    </div>
-  </section>
-
-  <section id="home-lol">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-          >Classement League of Legends</span
-        >
-      </div>
-      <a
-        routerLink="/lol"
-        class="text-customGreen cursor-pointer text-sm font-semibold"
-        >Tout voir</a
-      >
-    </div>
-
-    <div class="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
-      <div class="lg:col-span-2">
-        <app-home-lol-leaderboard></app-home-lol-leaderboard>
-      </div>
-      <app-home-lol-season-card
-        [isLoggedIn]="isLoggedIn"
-      ></app-home-lol-season-card>
     </div>
   </section>
 </div>

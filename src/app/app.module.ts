@@ -42,7 +42,10 @@ import { HomeNewsPanelComponent } from './routes/home/components/news-panel/home
 import { HomeLolLeaderboardComponent } from './routes/home/components/lol-leaderboard/home-lol-leaderboard.component';
 import { HomeLolSeasonCardComponent } from './routes/home/components/lol-season-card/home-lol-season-card.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
-import { lolVersionReducer } from './core/store/reducers/lol.reducer';
+import {
+  lolQueuesReducer,
+  lolVersionReducer,
+} from './core/store/reducers/lol.reducer';
 import { readStoredKeycloakTokens } from './core/keycloak/keycloak-offline-tokens';
 
 registerLocaleData(localeFr);
@@ -84,6 +87,7 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
       player: playerReducer,
       globalStats: playerStatsReducer,
       lolVersion: lolVersionReducer,
+      lolQueues: lolQueuesReducer,
     }),
     ClipboardModule,
     AdminModule,
