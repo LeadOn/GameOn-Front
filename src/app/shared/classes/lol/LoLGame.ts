@@ -10,6 +10,7 @@ export class LoLGame {
   winningTeamId: number | null = 0;
   gameStart: Date = new Date();
   gameEnd: Date = new Date();
+  queueId: number | null = null;
   queueType: string = '';
   isRemake: boolean = false;
 }

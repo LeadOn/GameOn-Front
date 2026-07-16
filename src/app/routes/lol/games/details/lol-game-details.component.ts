@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
+import { LoLQueue } from '../../../../shared/classes/lol/LoLQueue';
 import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/gameon-lol.service';
 import {
   bestParticipant,
@@ -14,6 +15,7 @@ import {
   gameDurationSeconds,
   kda,
 } from '../../../../shared/classes/lol/lol-match.util';
+import { queueLabel } from '../../../../shared/classes/lol/lol-queue.util';
 
 @Component({
   selector: 'app-lol-game-details',
@@ -40,6 +42,8 @@ export class LolGameDetailsComponent implements OnInit {
   patchTitle = 'Patch inconnu';
   currentLoLPatch = '';
   lolVersion$: Observable<string>;
+  lolQueues$: Observable<LoLQueue[]>;
+  lolQueues: LoLQueue[] = [];
 
   refreshIcon = faSync;
 
@@ -50,9 +54,10 @@ export class LolGameDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private lolService: GameOnLoLService,
-    private lolStore: Store<{ lolVersion: string }>,
+    private lolStore: Store<{ lolVersion: string; lolQueues: LoLQueue[] }>,
   ) {
     this.lolVersion$ = this.lolStore.select('lolVersion');
+    this.lolQueues$ = this.lolStore.select('lolQueues');
   }
 
   ngOnInit(): void {
@@ -61,6 +66,10 @@ export class LolGameDetailsComponent implements OnInit {
 
     this.lolVersion$.subscribe((version) => {
       this.currentLoLPatch = version;
+    });
+
+    this.lolQueues$.subscribe((queues) => {
+      this.lolQueues = queues;
     });
 
     this.loadGame();
@@ -211,22 +220,7 @@ export class LolGameDetailsComponent implements OnInit {
   }
 
   get queueLabel(): string {
-    if (this.game.queueType == 'RANKED_SOLO_DUO') {
-      return 'Classée Solo/Duo';
-    }
-
-    if (this.game.queueType == 'RANKED_FLEX') {
-      return 'Classée Flex';
-    }
-
-    if (
-      this.game.queueType == '5v5 Draft Pick games' ||
-      this.game.queueType == 'NORMAL_5V5'
-    ) {
-      return 'Normale';
-    }
-
-    return this.game.queueType;
+    return queueLabel(this.lolQueues, this.game.queueId, this.game.queueType);
   }
 
   get durationSeconds(): number {

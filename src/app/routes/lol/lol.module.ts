@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { SharedModule } from '../../shared/modules/shared.module';
 import { LolRoutingModule } from './lol-routing.module';
 import { LolPlayerCardComponent } from './components/lol-player-card/lol-player-card.component';
@@ -14,6 +15,9 @@ import { LolPlayerDetailsComponent } from './player/lol-player-details.component
 import { RankHistoryComponent } from './player/components/rank-history/rank-history.component';
 import { WinRateChartComponent } from './player/components/win-rate-chart/win-rate-chart.component';
 import { LolFunStatsComponent } from './components/lol-fun-stats/lol-fun-stats.component';
+import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
+import { setLoLQueues } from '../../core/store/actions/lol.actions';
+import { LoLQueue } from '../../shared/classes/lol/LoLQueue';
 
 @NgModule({
   declarations: [
@@ -36,4 +40,18 @@ import { LolFunStatsComponent } from './components/lol-fun-stats/lol-fun-stats.c
   ],
   imports: [LolRoutingModule, SharedModule],
 })
-export class LolModule {}
+export class LolModule {
+  constructor(
+    private lolService: GameOnLoLService,
+    private store: Store<{ lolQueues: LoLQueue[] }>,
+  ) {
+    this.lolService.getQueues().subscribe(
+      (queues) => {
+        this.store.dispatch(setLoLQueues({ queues }));
+      },
+      (err) => {
+        console.error('[LolModule]', err);
+      },
+    );
+  }
+}
