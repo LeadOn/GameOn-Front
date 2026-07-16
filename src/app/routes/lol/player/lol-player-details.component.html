@@ -305,7 +305,7 @@
 <section class="mx-auto mt-6 w-full max-w-6xl px-4 pb-6">
   <!-- En-tête -->
   <div
-    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 mb-3 flex flex-col gap-3 rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter sm:flex-row sm:items-center sm:justify-between"
+    class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight/80 dark:bg-bgDark/80 relative z-10 mb-3 flex flex-col gap-3 rounded-2xl border px-4 py-3 shadow-sm backdrop-blur-md backdrop-contrast-100 backdrop-saturate-100 backdrop-filter sm:flex-row sm:items-center sm:justify-between"
   >
     <div>
       <span class="text-primary dark:text-primaryDark text-lg font-semibold"
@@ -322,6 +322,59 @@
       }
     </div>
     <div class="flex flex-wrap items-center justify-between gap-3 sm:justify-end">
+      @if (queueOptions.length > 0) {
+        <div class="relative">
+          <button
+            type="button"
+            class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 flex items-center gap-1.5 rounded-lg border py-1 pl-3 pr-2 text-sm backdrop-blur-sm disabled:cursor-not-allowed disabled:opacity-60"
+            (click)="toggleQueueFilter()"
+            [disabled]="gameHistoryLoading"
+          >
+            <span class="max-w-40 truncate">{{ queueFilterLabel }}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              class="h-3.5 w-3.5 shrink-0"
+            >
+              <path d="M4 6L8 10L12 6" />
+            </svg>
+          </button>
+
+          @if (queueFilterOpen) {
+            <div
+              class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight dark:bg-bgDark absolute right-0 z-20 mt-2 max-h-72 w-64 overflow-y-auto rounded-xl border p-2 shadow-lg"
+            >
+              @for (queue of queueOptions; track queue.id) {
+                <label
+                  class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1.5 text-sm hover:bg-black/5 dark:hover:bg-white/10"
+                >
+                  <input
+                    type="checkbox"
+                    class="text-primary focus:ring-primary h-4 w-4 rounded border-gray-300"
+                    [checked]="isQueueSelected(queue.id)"
+                    (change)="toggleQueue(queue.id, $event)"
+                  />
+                  <span class="text-primary dark:text-primaryDark truncate">
+                    {{ queueLabel(queue) }}
+                  </span>
+                </label>
+              }
+              @if (selectedQueueIds.length > 0) {
+                <button
+                  type="button"
+                  class="text-secondary mt-1 w-full rounded-lg px-2 py-1.5 text-left text-xs font-medium hover:bg-black/5 dark:hover:bg-white/10"
+                  (click)="clearQueueFilter()"
+                >
+                  Réinitialiser
+                </button>
+              }
+            </div>
+          }
+        </div>
+      }
       <label class="flex cursor-pointer items-center gap-2">
         <input
           type="checkbox"

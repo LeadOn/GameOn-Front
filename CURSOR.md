@@ -45,7 +45,7 @@ Any change to the UI (a component's `.html`/`.ts`/styles, layout, or anything vi
 
 ### State management is partial, not the default
 
-NgRx (`StoreModule.forRoot`) is wired up in `app.module.ts` with exactly three reducers: `player`, `globalStats` (`playerStatsReducer`), `lolVersion`. Most components do **not** go through the store — they inject services directly and `.subscribe()` in `ngOnInit`/handlers. Only use the store for state that's already modeled there (current player, global stats, LoL version); don't assume every piece of state is store-backed.
+NgRx (`StoreModule.forRoot`) is wired up in `app.module.ts` with four reducers: `player`, `globalStats` (`playerStatsReducer`), `lolVersion`, `lolQueues`. Most components do **not** go through the store — they inject services directly and `.subscribe()` in `ngOnInit`/handlers. Only use the store for state that's already modeled there (current player, global stats, LoL version, LoL queue catalog); don't assume every piece of state is store-backed. `lolVersion` is populated once at app bootstrap (`app.component.ts`'s `ngOnInit`, via `RiotLoLService`), while `lolQueues` is populated once when the lazy `LolModule` is first instantiated (its constructor calls `GameOnLoLService.getQueues()` and dispatches `setLoLQueues`) — `lolQueues` is LoL-specific and never needed outside `/lol/**`, so it's loaded lazily with that feature module instead of eagerly at the root.
 
 ### Environments
 
@@ -66,3 +66,9 @@ Custom Angular component tags default to `display: inline` in this codebase (no 
 ### LoL tier/rank logic
 
 `src/app/shared/classes/lol/lol-tier.util.ts` is the single source of truth for League of Legends tier logic: rank ordering/scoring for sorting (`tierRankScore`), win rate (`tierWinRate`), display label (`tierLabel`, e.g. "Platinum I"), rank emblem image URL (`tierEmblemUrl`, falls back to the GameOn logo when unranked), and tier glow color (`tierGlowShadow`/`tierGlowBackground`, used as a `drop-shadow`/background glow keyed by tier). Used by `lol-home.component.ts`, `lol-player-details.component.ts`, and the home page's `lol-leaderboard`/`lol-season-card` — put any new tier-related logic here rather than reimplementing it locally.
+
+### LoL queue catalog
+
+`GameOnLoLService.getQueues()` fetches the full GameOn queue catalog (`GET /lol/queue` — `{ id, map, description, notes }` per queue) and is cached in the NgRx `lolQueues` store slice (populated once by `LolModule`'s constructor, see above). `src/app/shared/classes/lol/lol-queue.util.ts`'s `queueLabel(queues, queueId, fallback)` is the single source of truth for turning a `LoLGame.queueId` into a display string — it falls back to an empty string (or an explicit `fallback` argument) when the id isn't in the catalog or the game predates `queueId` being populated by the backend. Used by `lol-game-card.component.ts` and `lol-game-details.component.ts`; put any new queue-label logic here. `LoLGame` no longer has a `queueType` field — it's been decommissioned in favor of `queueId`, don't reintroduce string-based queue matching.
+
+Separately, `GameOnLoLService.getQueuesForPlayer(playerId)` (`GET /lol/queue/player/{id}`) returns only the queues a given player has actually played, used to populate the multi-select queue filter on the player profile page (`lol-player-details.component.ts`) without offering queues they've never touched. This is a per-player fetch, not stored in NgRx (it's scoped to whichever profile is open, unlike the global catalog). Selecting queues in that filter feeds `GameOnLoLService.getLastGamesPlayedByPlayer`'s `queueIds` param, sent as `queues=<id1>,<id2>` on `GET /lol/match/player/{id}` (the param is omitted entirely when no queue is selected, meaning "all queues").

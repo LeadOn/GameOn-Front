@@ -9,6 +9,8 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
+import { LoLQueue } from '../../../../shared/classes/lol/LoLQueue';
+import { queueLabel } from '../../../../shared/classes/lol/lol-queue.util';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -34,6 +36,8 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   gameRefreshStarted = new EventEmitter<void>();
 
   lolVersion$: Observable<string>;
+  lolQueues$: Observable<LoLQueue[]>;
+  lolQueues: LoLQueue[] = [];
 
   won?: boolean;
   gameDuration?: string;
@@ -57,8 +61,11 @@ export class LolGameCardComponent implements OnInit, OnChanges {
 
   currentLoLPatch: string = '';
 
-  constructor(private lolStore: Store<{ lolVersion: string }>) {
+  constructor(
+    private lolStore: Store<{ lolVersion: string; lolQueues: LoLQueue[] }>,
+  ) {
     this.lolVersion$ = this.lolStore.select('lolVersion');
+    this.lolQueues$ = this.lolStore.select('lolQueues');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -72,6 +79,10 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.lolVersion$.subscribe((version) => {
       this.currentLoLPatch = version;
+    });
+
+    this.lolQueues$.subscribe((queues) => {
+      this.lolQueues = queues;
     });
   }
 
@@ -160,21 +171,6 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   }
 
   get queueLabel(): string {
-    if (this.game.queueType == 'RANKED_SOLO_DUO') {
-      return 'Classée en solo/duo';
-    }
-
-    if (this.game.queueType == 'RANKED_FLEX') {
-      return 'Classée flexible';
-    }
-
-    if (
-      this.game.queueType == '5v5 Draft Pick games' ||
-      this.game.queueType == 'NORMAL_5V5'
-    ) {
-      return 'Normale';
-    }
-
-    return this.game.queueType;
+    return queueLabel(this.lolQueues, this.game.queueId);
   }
 }

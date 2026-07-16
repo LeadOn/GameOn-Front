@@ -1,9 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ElementRef,
+  HostListener,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { faExternalLink, faSync } from '@fortawesome/free-solid-svg-icons';
 import { PlayerDto } from '../../../shared/classes/common/PlayerDto';
 import { LeagueOfLegendsRankHistory } from '../../../shared/classes/lol/LeagueOfLegendsRankHistory';
 import { LoLGame } from '../../../shared/classes/lol/LoLGame';
+import { LoLQueue } from '../../../shared/classes/lol/LoLQueue';
 import { environment } from '../../../../environments/environment';
 import { GameOnLoLService } from '../../../shared/services/leagueoflegends/gameon-lol.service';
 import {
@@ -53,7 +60,9 @@ export class LolPlayerDetailsComponent implements OnInit {
   totalPages = 1;
   hasNextPage = false;
   rankedOnly = true;
-  queueType: string | null = null;
+  queueOptions: LoLQueue[] = [];
+  selectedQueueIds: number[] = [];
+  queueFilterOpen = false;
 
   rankPosition: number | null = null;
 
@@ -63,6 +72,7 @@ export class LolPlayerDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private lolService: GameOnLoLService,
     private lolStore: Store<{ lolVersion: string }>,
+    private elementRef: ElementRef,
   ) {
     this.lolVersion$ = this.lolStore.select('lolVersion');
   }
@@ -70,10 +80,82 @@ export class LolPlayerDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.playerId = this.route.snapshot.paramMap.get('id');
     this.getSummoner();
+    this.loadQueueOptions();
 
     this.lolVersion$.subscribe((version) => {
       this.currentLoLPatch = version;
     });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    if (
+      this.queueFilterOpen &&
+      !this.elementRef.nativeElement.contains(event.target)
+    ) {
+      this.queueFilterOpen = false;
+    }
+  }
+
+  loadQueueOptions() {
+    this.lolService.getQueuesForPlayer(this.playerId).subscribe(
+      (queues) => {
+        this.queueOptions = queues;
+      },
+      (err) => {
+        console.error(err);
+      },
+    );
+  }
+
+  queueLabel(queue: LoLQueue): string {
+    return queue.description || `${queue.map} #${queue.id}`;
+  }
+
+  isQueueSelected(id: number): boolean {
+    return this.selectedQueueIds.includes(id);
+  }
+
+  get queueFilterLabel(): string {
+    if (this.selectedQueueIds.length === 0) {
+      return 'Toutes les files';
+    }
+
+    if (this.selectedQueueIds.length === 1) {
+      const queue = this.queueOptions.find(
+        (q) => q.id === this.selectedQueueIds[0],
+      );
+      return queue != null ? this.queueLabel(queue) : '1 file sélectionnée';
+    }
+
+    return `${this.selectedQueueIds.length} files sélectionnées`;
+  }
+
+  toggleQueueFilter() {
+    this.queueFilterOpen = !this.queueFilterOpen;
+  }
+
+  toggleQueue(id: number, event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+
+    this.selectedQueueIds = checked
+      ? [...this.selectedQueueIds, id]
+      : this.selectedQueueIds.filter((queueId) => queueId !== id);
+
+    this.currentPage = 1;
+    this.getLastGamesPlayed();
+  }
+
+  clearQueueFilter() {
+    if (this.selectedQueueIds.length === 0) {
+      this.queueFilterOpen = false;
+      return;
+    }
+
+    this.selectedQueueIds = [];
+    this.queueFilterOpen = false;
+    this.currentPage = 1;
+    this.getLastGamesPlayed();
   }
 
   getSummoner() {
@@ -252,7 +334,7 @@ export class LolPlayerDetailsComponent implements OnInit {
         requestedPage,
         this.pageSize,
         this.rankedOnly,
-        this.queueType,
+        this.selectedQueueIds,
       )
       .subscribe(
         (data) => {
