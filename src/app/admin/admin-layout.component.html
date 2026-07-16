@@ -50,6 +50,12 @@
     <div
       class="border-bgLightDarker dark:border-bgDarkDarker relative border-t px-4 py-4"
     >
+      <div class="mb-2 flex items-center justify-between px-1">
+        <span class="light:text-gray-500 text-xs font-medium text-gray-400"
+          >Thème</span
+        >
+        <app-theme-toggle></app-theme-toggle>
+      </div>
       @if (userMenuOpen()) {
         <div
           class="bg-bgLight dark:bg-bgDark absolute inset-x-3 bottom-full mb-2 overflow-hidden rounded-xl shadow-lg"

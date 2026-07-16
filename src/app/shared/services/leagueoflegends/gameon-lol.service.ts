@@ -78,18 +78,24 @@ export class GameOnLoLService {
     page: number = 1,
     size: number = 10,
     rankedOnly: boolean = false,
+    queueType?: string | null,
   ): Observable<ListResultDto<LoLGame>> {
-    return this.client.get<ListResultDto<LoLGame>>(
+    let url =
       environment.gameOnApiUrl +
-        '/lol/match/player/' +
-        playerId +
-        '?page=' +
-        page +
-        '&size=' +
-        size +
-        '&rankedOnly=' +
-        rankedOnly,
-    );
+      '/lol/match/player/' +
+      playerId +
+      '?page=' +
+      page +
+      '&size=' +
+      size +
+      '&rankedOnly=' +
+      rankedOnly;
+
+    if (queueType != null) {
+      url += '&queueType=' + encodeURIComponent(queueType);
+    }
+
+    return this.client.get<ListResultDto<LoLGame>>(url);
   }
 
   refreshGame(matchId: string): Observable<LoLGame> {

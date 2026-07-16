@@ -2,6 +2,16 @@
 <html lang="fr" class="dark scroll-smooth">
   <head>
     <meta charset="utf-8" />
+    <script>
+      // Applies the persisted theme before first paint to avoid a flash of
+      // the wrong theme (Angular bootstrap/ThemeService run too late for this).
+      (function () {
+        try {
+          var theme = localStorage.getItem('gameon-theme');
+          document.documentElement.classList.toggle('dark', theme !== 'light');
+        } catch (e) {}
+      })();
+    </script>
     <title>GameOn!</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

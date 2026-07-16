@@ -1,0 +1,17 @@
+<button
+  type="button"
+  (click)="toggle()"
+  class="light:text-gray-500 light:hover:bg-black/5 light:hover:text-gray-900 cursor-pointer rounded-full p-1.5 text-gray-400 transition-colors hover:bg-white/5 hover:text-white"
+  [attr.aria-label]="
+    (themeService.theme$ | async) === 'dark'
+      ? 'Passer au thème clair'
+      : 'Passer au thème sombre'
+  "
+  title="Changer de thème"
+>
+  @if ((themeService.theme$ | async) === "dark") {
+    <fa-icon [icon]="sunIcon" class="text-lg"></fa-icon>
+  } @else {
+    <fa-icon [icon]="moonIcon" class="text-lg"></fa-icon>
+  }
+</button>

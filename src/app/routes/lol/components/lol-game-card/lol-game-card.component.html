@@ -1,9 +1,11 @@
 <div
   class="mb-2 flex w-full overflow-hidden rounded-xl border border-white/20 shadow-lg transition-all duration-300"
   [ngClass]="{
-    'bg-slate-500/35': game.endOfGameResult == null,
-    'bg-customGreen/20': game.endOfGameResult != null && won == true,
-    'bg-frenchRed/20': game.endOfGameResult != null && won == false,
+    'bg-slate-500/35': game.isRemake || game.endOfGameResult == null,
+    'bg-customGreen/20':
+      !game.isRemake && game.endOfGameResult != null && won == true,
+    'bg-frenchRed/20':
+      !game.isRemake && game.endOfGameResult != null && won == false,
     'animate-pulse': isRefreshing,
     'opacity-80': isRefreshing,
   }"
@@ -12,9 +14,11 @@
     class="w-1.5"
     [routerLink]="['/lol/game', game.matchId, playerId]"
     [ngClass]="{
-      'bg-slate-500': game.endOfGameResult == null,
-      'bg-customGreen': game.endOfGameResult != null && won == true,
-      'bg-frenchRed': game.endOfGameResult != null && won == false,
+      'bg-slate-500': game.isRemake || game.endOfGameResult == null,
+      'bg-customGreen':
+        !game.isRemake && game.endOfGameResult != null && won == true,
+      'bg-frenchRed':
+        !game.isRemake && game.endOfGameResult != null && won == false,
     }"
   ></div>
 

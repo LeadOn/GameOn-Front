@@ -10,7 +10,7 @@
         [attr.y1]="midY"
         [attr.x2]="width"
         [attr.y2]="midY"
-        stroke="rgba(255,255,255,0.12)"
+        class="stroke-[rgba(255,255,255,0.12)] light:stroke-[rgba(23,30,54,0.14)]"
         stroke-width="1"
       />
       <clipPath id="gold-clip-above">
@@ -37,12 +37,17 @@
       <path
         [attr.d]="linePath"
         fill="none"
-        stroke="rgba(237,240,250,0.6)"
+        class="stroke-[rgba(237,240,250,0.6)] light:stroke-[rgba(35,42,64,0.7)]"
         stroke-width="2"
       />
     } @else {
       <path [attr.d]="areaPath" fill="rgba(240,190,78,0.35)" />
-      <path [attr.d]="linePath" fill="none" stroke="#f0be4e" stroke-width="2" />
+      <path
+        [attr.d]="linePath"
+        fill="none"
+        class="stroke-mpYellowInk"
+        stroke-width="2"
+      />
     }
 
     @if (frames.length > 1) {
@@ -51,7 +56,7 @@
         [attr.x2]="playheadX"
         y1="0"
         [attr.y2]="height"
-        stroke="rgba(255,255,255,0.45)"
+        class="stroke-[rgba(255,255,255,0.45)] light:stroke-[rgba(23,30,54,0.5)]"
         stroke-width="1.5"
         stroke-dasharray="4 4"
       />

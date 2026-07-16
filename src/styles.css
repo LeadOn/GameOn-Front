@@ -3,6 +3,7 @@
 @config "../tailwind.config.js";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(:not(.dark, .dark *)));
 
 /**
  * @license
@@ -47,11 +48,79 @@
   --color-mpTextSecondary: #b8bfd4;
   --color-mpTextMuted: #8b93ac;
   --color-mpGreen: #2de0a5;
+  --color-mpGreenInk: #2de0a5;
   --color-mpRed: #ff5c74;
+  --color-mpRedInk: #ff5c74;
   --color-mpBlue: #6b8afb;
+  --color-mpBlueInk: #6b8afb;
   --color-mpYellow: #f0be4e;
+  --color-mpYellowInk: #f0be4e;
+  --color-mpBronze: #b08a5a;
+
+  --color-mpSurfaceFrom: rgba(255, 255, 255, 0.06);
+  --color-mpSurfaceTo: rgba(255, 255, 255, 0.02);
+  --color-mpBorder: rgba(255, 255, 255, 0.09);
+  --color-mpPanelBg: rgba(255, 255, 255, 0.03);
+  --shadow-mpCard: 0 18px 44px rgba(0, 0, 0, 0.35);
+
   --font-heading: "Space Grotesk", sans-serif;
   --font-body: "Instrument Sans", sans-serif;
+}
+
+/*
+ * Light-mode declination of the dark-first palette above. Overrides only the
+ * tokens that need a distinct light value; dark rendering is untouched since
+ * these variables are never consulted while `.dark` is present on <html>.
+ * `:root:not(.dark)` outranks the plain `:root` assignment from `@theme`
+ * regardless of source order (two class-level selectors vs one).
+ */
+:root:not(.dark) {
+  --color-primary: #232a40;
+  --color-bgLight: #ffffff;
+  --color-bgLightDarker: #eef0f6;
+
+  /*
+   * These legacy accents are only ever used as bare (unprefixed) utilities
+   * for icon/text color, with badge/CTA fills at 10-20% alpha of the same
+   * token in a handful of spots — so, unlike the mp* accents below (which
+   * have a dedicated brief-specified "Ink" text-only darkening), darkening
+   * the token itself is the low-risk option: it fixes every call site at
+   * once and only barely deepens the rare low-alpha badge fill.
+   */
+  --color-secondary: #1b7fae;
+  --color-customGreen: #178579;
+  --color-customYellow: #8f7408;
+  --color-frenchRed: #eb1425;
+
+  --color-mpBg: #eef0f6;
+  --color-mpText: #232a40;
+  --color-mpTextSecondary: #4c5570;
+  --color-mpTextMuted: #6a7390;
+  --color-mpGreenInk: #0ea47a;
+  --color-mpRedInk: #e23b55;
+  --color-mpBlueInk: #4d6ce5;
+  --color-mpYellowInk: #b9860f;
+
+  --color-mpSurfaceFrom: #ffffff;
+  --color-mpSurfaceTo: #f8f9fd;
+  --color-mpBorder: rgba(23, 30, 54, 0.08);
+  --color-mpPanelBg: rgba(23, 30, 54, 0.035);
+  --shadow-mpCard: 0 18px 44px rgba(28, 36, 62, 0.16);
+}
+
+/*
+ * common-layout's decorative blurred-orb background (.background .bubble-layer,
+ * see common-layout.component.css) is tuned for the dark page — the saturated
+ * green/purple blobs bleed through the (intentionally translucent) light
+ * cards and read as muddy tie-dye rather than the clean white-card look the
+ * light charte calls for, so it's hidden outright rather than just dimmed.
+ * Lives here (global styles.css) rather than in the component's scoped
+ * stylesheet because Angular's emulated encapsulation would attach a scoping
+ * attribute to `:not(.dark)`, silently breaking the ancestor match against
+ * <html>.
+ */
+:root:not(.dark) .background .bubble-layer {
+  display: none;
 }
 
 html,
@@ -65,6 +134,20 @@ html {
 }
 
 @layer components {
+  .mp-card {
+    @apply shadow-mpCard border-mpBorder overflow-hidden rounded-[20px] border;
+    background: linear-gradient(
+      180deg,
+      var(--color-mpSurfaceFrom),
+      var(--color-mpSurfaceTo)
+    );
+  }
+
+  .mp-panel {
+    @apply border-mpBorder rounded-[16px] border;
+    background: var(--color-mpPanelBg);
+  }
+
   .skeleton-base {
     @apply bg-bgLightDarker dark:bg-bgDarkDarker animate-pulse rounded;
   }

@@ -1,6 +1,10 @@
 <div
   class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 transition-colors"
-  [ngClass]="isSelected ? 'bg-white/10' : 'hover:bg-white/5'"
+  [ngClass]="
+    isSelected
+      ? 'bg-white/10 light:bg-[rgba(23,30,54,0.06)]'
+      : 'hover:bg-white/5 light:hover:bg-[rgba(23,30,54,0.04)]'
+  "
   (click)="selectPlayer()"
 >
   <div class="flex min-w-0 flex-1 items-center gap-3">
@@ -11,7 +15,7 @@
       />
 
       <span
-        class="bg-mpBg text-mpText absolute -bottom-1 rounded-full border border-[rgba(255,255,255,0.09)] px-1.5 text-[10px] font-semibold"
+        class="bg-mpBg text-mpText border-mpBorder absolute -bottom-1 rounded-full border px-1.5 text-[10px] font-semibold"
       >
         {{
           player.champLevel == null || player.champLevel == 0
@@ -32,7 +36,7 @@
 
         @if (isLinkedToGameOn) {
           <span
-            class="bg-mpGreen/15 text-mpGreen whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-semibold"
+            class="bg-mpGreen/15 text-mpGreenInk whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-semibold"
           >
             {{ displayName }}
           </span>
@@ -40,7 +44,7 @@
 
         @if (isMvp) {
           <span
-            class="bg-mpYellow/20 text-mpYellow whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-bold"
+            class="bg-mpYellow/20 text-mpYellowInk whitespace-nowrap rounded-full px-1.5 py-0.5 text-[10px] font-bold"
           >
             MVP
           </span>
@@ -48,7 +52,7 @@
 
         @if (isAce) {
           <span
-            class="whitespace-nowrap rounded-full bg-purple-500/20 px-1.5 py-0.5 text-[10px] font-bold text-purple-300"
+            class="light:text-purple-700 whitespace-nowrap rounded-full bg-purple-500/20 px-1.5 py-0.5 text-[10px] font-bold text-purple-300"
           >
             ACE
           </span>
@@ -75,7 +79,7 @@
   <div class="hidden shrink-0 items-center gap-1 md:flex">
     @for (item of itemSlots; track $index) {
       <div
-        class="h-6 w-6 overflow-hidden rounded-md border border-[rgba(255,255,255,0.09)] bg-white/5"
+        class="border-mpBorder light:bg-[rgba(23,30,54,0.03)] h-6 w-6 overflow-hidden rounded-md border bg-white/5"
       >
         @if (item != 0) {
           <img class="h-full w-full object-cover" [src]="itemIconUrl(item)" />

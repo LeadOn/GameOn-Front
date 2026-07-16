@@ -23,7 +23,9 @@
       <div
         class="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 transition-colors"
         [ngClass]="
-          selectedPuuid == row.player.puuid ? 'bg-white/10' : 'hover:bg-white/5'
+          selectedPuuid == row.player.puuid
+            ? 'bg-white/10 light:bg-[rgba(23,30,54,0.06)]'
+            : 'hover:bg-white/5 light:hover:bg-[rgba(23,30,54,0.04)]'
         "
         (click)="select(row.player)"
       >
@@ -41,7 +43,9 @@
           </span>
         </div>
 
-        <div class="h-4 flex-1 overflow-hidden rounded-full bg-white/5">
+        <div
+          class="light:bg-[rgba(23,30,54,0.06)] h-4 flex-1 overflow-hidden rounded-full bg-white/5"
+        >
           @if (mode == "dealt") {
             <div
               class="flex h-full overflow-hidden rounded-full transition-all duration-500"

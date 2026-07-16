@@ -7,8 +7,9 @@ export class LoLGame {
   gameVersion: string = '';
   retrievedOn: Date = new Date();
   leagueOfLegendsGameParticipants: LoLGameParticipant[] = [];
-  winningTeamId: number = 0;
+  winningTeamId: number | null = 0;
   gameStart: Date = new Date();
   gameEnd: Date = new Date();
   queueType: string = '';
+  isRemake: boolean = false;
 }

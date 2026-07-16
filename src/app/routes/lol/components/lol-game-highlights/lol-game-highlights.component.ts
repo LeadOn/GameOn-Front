@@ -91,10 +91,13 @@ const CONFIGS: HighlightConfig[] = [
 ];
 
 const ACCENT_CLASSES: Record<Accent, { chip: string; value: string }> = {
-  green: { chip: 'bg-mpGreen/15 text-mpGreen', value: 'text-mpGreen' },
-  red: { chip: 'bg-mpRed/15 text-mpRed', value: 'text-mpRed' },
-  blue: { chip: 'bg-mpBlue/15 text-mpBlue', value: 'text-mpBlue' },
-  yellow: { chip: 'bg-mpYellow/15 text-mpYellow', value: 'text-mpYellow' },
+  green: { chip: 'bg-mpGreen/15 text-mpGreenInk', value: 'text-mpGreenInk' },
+  red: { chip: 'bg-mpRed/15 text-mpRedInk', value: 'text-mpRedInk' },
+  blue: { chip: 'bg-mpBlue/15 text-mpBlueInk', value: 'text-mpBlueInk' },
+  yellow: {
+    chip: 'bg-mpYellow/15 text-mpYellowInk',
+    value: 'text-mpYellowInk',
+  },
 };
 
 interface HighlightCard {

@@ -1,8 +1,9 @@
 <div class="p-5">
   <div class="mb-4 flex items-center gap-3">
+    <!-- Fixed dark icon color (not text-mpBg, which is theme-reactive) since it must stay dark for contrast on the yellow fill in both themes -->
     <button
       type="button"
-      class="bg-mpYellow text-mpBg flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-transform hover:scale-105"
+      class="bg-mpYellow flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#0a0d18] transition-transform hover:scale-105"
       (click)="togglePlay()"
     >
       <fa-icon [icon]="isPlaying ? pauseIcon : playIcon"></fa-icon>
@@ -44,7 +45,9 @@
           {{ row.player.riotIdGameName }}
         </span>
 
-        <div class="h-4 flex-1 overflow-hidden rounded-full bg-white/5">
+        <div
+          class="light:bg-[rgba(23,30,54,0.06)] h-4 flex-1 overflow-hidden rounded-full bg-white/5"
+        >
           <div
             class="h-full rounded-full transition-all duration-300"
             [ngClass]="row.player.teamId == 100 ? 'bg-mpGreen' : 'bg-mpRed'"

@@ -3,11 +3,14 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { BrowserModule } from '@angular/platform-browser';
 import {
+  AutoRefreshTokenService,
   createInterceptorCondition,
   INCLUDE_BEARER_TOKEN_INTERCEPTOR_CONFIG,
   IncludeBearerTokenCondition,
   includeBearerTokenInterceptor,
   provideKeycloak,
+  UserActivityService,
+  withAutoRefreshToken,
 } from 'keycloak-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,8 +43,11 @@ import { HomeLolLeaderboardComponent } from './routes/home/components/lol-leader
 import { HomeLolSeasonCardComponent } from './routes/home/components/lol-season-card/home-lol-season-card.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
 import { lolVersionReducer } from './core/store/reducers/lol.reducer';
+import { readStoredKeycloakTokens } from './core/keycloak/keycloak-offline-tokens';
 
 registerLocaleData(localeFr);
+
+const storedKeycloakTokens = readStoredKeycloakTokens();
 
 const devCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:5184)(\/.*)?$/i,
@@ -92,7 +98,20 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
       initOptions: {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: `${window.location.origin}/assets/silent-check-sso.html`,
+        // Disabled so a restored offline refresh token (see below) is used
+        // via a direct token-endpoint refresh instead of being silently
+        // dropped when the browser's SSO session cookie is stale/gone.
+        checkLoginIframe: false,
+        scope: 'offline_access',
+        ...storedKeycloakTokens,
       },
+      features: [
+        withAutoRefreshToken({
+          sessionTimeout: 30 * 60 * 1000,
+          onInactivityTimeout: 'login',
+        }),
+      ],
+      providers: [AutoRefreshTokenService, UserActivityService],
     }),
     { provide: LOCALE_ID, useValue: 'fr' },
     {
