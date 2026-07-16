@@ -48,11 +48,12 @@ export class LolPlayerDetailsComponent implements OnInit {
   apiUrl = environment.gameOnApiUrl;
 
   currentPage = 1;
-  pageSize = 5;
+  pageSize = 10;
   totalItems = 0;
   totalPages = 1;
   hasNextPage = false;
   rankedOnly = true;
+  queueType: string | null = null;
 
   rankPosition: number | null = null;
 
@@ -251,6 +252,7 @@ export class LolPlayerDetailsComponent implements OnInit {
         requestedPage,
         this.pageSize,
         this.rankedOnly,
+        this.queueType,
       )
       .subscribe(
         (data) => {

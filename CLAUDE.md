@@ -16,6 +16,10 @@ GameOn! is an Angular front-end for tracking cross-game (and IRL) player perform
 - Node version is pinned via `.nvmrc` (v23.6.1).
 - Docker: `Dockerfile` builds with `npm ci --legacy-peer-deps` (required — plain `npm ci` may fail on peer deps) then serves `dist/gameon-front/browser` via nginx (`nginx.conf`, port 80).
 
+## Testing UI changes
+
+Any change to the UI (a component's `.html`/`.ts`/styles, layout, or anything visually or behaviorally user-facing) must be verified in a real browser using the Playwright MCP tools before being reported as done. Start the dev server (`npm start`), navigate to the affected page(s) with `mcp__playwright__browser_navigate`, and exercise the golden path plus relevant edge cases (interactions, responsive behavior, loading/error states) using the other `mcp__playwright__*` tools (`browser_click`, `browser_snapshot`, `browser_take_screenshot`, etc.). Passing type-checks or unit tests is not a substitute for this — it verifies correctness, not that the UI actually renders and behaves as intended.
+
 ## Architecture
 
 ### NgModules, not standalone, despite Angular 22

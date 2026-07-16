@@ -72,11 +72,13 @@
       <div
         class="pointer-events-none absolute -inset-10 -z-10 rounded-[2.5rem] blur-3xl"
         [ngClass]="
-          heroWon == true
-            ? 'bg-mpGreen/20'
-            : heroWon == false
-              ? 'bg-mpRed/20'
-              : 'bg-mpBlue/10'
+          game.isRemake
+            ? 'bg-slate-500/15'
+            : heroWon == true
+              ? 'bg-mpGreen/20'
+              : heroWon == false
+                ? 'bg-mpRed/20'
+                : 'bg-mpBlue/10'
         "
       ></div>
       <div
@@ -86,11 +88,13 @@
       <div
         class="mp-card flex flex-wrap items-center justify-between gap-4 p-5"
         [ngClass]="
-          heroWon == true
-            ? 'border-mpGreen/35 bg-[linear-gradient(180deg,rgba(45,224,165,0.14),rgba(255,255,255,0.02))]'
-            : heroWon == false
-              ? 'border-mpRed/35 bg-[linear-gradient(180deg,rgba(255,92,116,0.14),rgba(255,255,255,0.02))]'
-              : ''
+          game.isRemake
+            ? ''
+            : heroWon == true
+              ? 'border-mpGreen/35 bg-[linear-gradient(180deg,rgba(45,224,165,0.14),rgba(255,255,255,0.02))]'
+              : heroWon == false
+                ? 'border-mpRed/35 bg-[linear-gradient(180deg,rgba(255,92,116,0.14),rgba(255,255,255,0.02))]'
+                : ''
         "
       >
         <div class="flex min-w-0 items-center gap-4">
@@ -110,11 +114,13 @@
             <p
               class="font-heading text-2xl font-bold"
               [ngClass]="
-                heroWon == true
-                  ? 'text-mpGreenInk'
-                  : heroWon == false
-                    ? 'text-mpRedInk'
-                    : 'text-mpTextSecondary'
+                game.isRemake
+                  ? 'text-mpTextSecondary'
+                  : heroWon == true
+                    ? 'text-mpGreenInk'
+                    : heroWon == false
+                      ? 'text-mpRedInk'
+                      : 'text-mpTextSecondary'
               "
             >
               {{ heroStatusLabel }}
@@ -179,7 +185,11 @@
               </span>
             }
           </div>
-          @if (game.winningTeamId != 0) {
+          @if (game.isRemake) {
+            <span class="text-mpTextSecondary text-sm font-semibold">
+              Remake
+            </span>
+          } @else if (game.winningTeamId) {
             <span
               class="text-sm font-semibold"
               [ngClass]="
@@ -225,7 +235,11 @@
               </span>
             }
           </div>
-          @if (game.winningTeamId != 0) {
+          @if (game.isRemake) {
+            <span class="text-mpTextSecondary text-sm font-semibold">
+              Remake
+            </span>
+          } @else if (game.winningTeamId) {
             <span
               class="text-sm font-semibold"
               [ngClass]="

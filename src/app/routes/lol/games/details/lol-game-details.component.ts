@@ -185,6 +185,10 @@ export class LolGameDetailsComponent implements OnInit {
   }
 
   get heroWon(): boolean | undefined {
+    if (this.game.isRemake) {
+      return undefined;
+    }
+
     return this.heroPlayer?.win;
   }
 
@@ -195,6 +199,10 @@ export class LolGameDetailsComponent implements OnInit {
   }
 
   get heroStatusLabel(): string {
+    if (this.game.isRemake) {
+      return 'Remake';
+    }
+
     if (this.game.endOfGameResult == null || this.game.endOfGameResult === '') {
       return 'Partie non synchronisée';
     }
