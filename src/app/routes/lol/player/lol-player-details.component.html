@@ -339,17 +339,6 @@
       </label>
       <select
         class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pr-7 pl-3 text-sm backdrop-blur-sm"
-        [value]="queueType ?? ''"
-        (change)="onQueueTypeChange($event)"
-        [disabled]="gameHistoryLoading"
-      >
-        <option value="">Tous les types</option>
-        @for (option of queueTypeOptions; track option.value) {
-          <option [value]="option.value">{{ option.label }}</option>
-        }
-      </select>
-      <select
-        class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pr-7 pl-3 text-sm backdrop-blur-sm"
         [value]="pageSize"
         (change)="onPageSizeChange($event)"
         [disabled]="gameHistoryLoading"
