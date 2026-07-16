@@ -171,6 +171,6 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   }
 
   get queueLabel(): string {
-    return queueLabel(this.lolQueues, this.game.queueId, this.game.queueType);
+    return queueLabel(this.lolQueues, this.game.queueId);
   }
 }

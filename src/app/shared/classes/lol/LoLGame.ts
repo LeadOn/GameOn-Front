@@ -11,6 +11,5 @@ export class LoLGame {
   gameStart: Date = new Date();
   gameEnd: Date = new Date();
   queueId: number | null = null;
-  queueType: string = '';
   isRemake: boolean = false;
 }
