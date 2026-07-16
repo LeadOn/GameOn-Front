@@ -136,6 +136,10 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   }
 
   get statusLabel(): string {
+    if (this.game.isRemake) {
+      return 'Remake';
+    }
+
     if (this.game.endOfGameResult == null) {
       return 'Inconnu';
     }
@@ -144,6 +148,10 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   }
 
   get statusClass(): string {
+    if (this.game.isRemake) {
+      return 'text-slate-400';
+    }
+
     if (this.game.endOfGameResult == null) {
       return 'text-slate-600';
     }
