@@ -30,6 +30,53 @@ export function itemSlots(player: LoLGameParticipant): number[] {
   ];
 }
 
+/**
+ * `LoLGame.gameVersion` is Riot's raw client version (e.g. "14.22.3434.353535"),
+ * which is never itself a valid data dragon asset build. Find the data dragon
+ * version (from the full `versions.json` list) whose patch (major.minor) is
+ * closest to the game's own patch, so old games render assets from the
+ * closest era instead of always falling back to the current patch.
+ */
+export function closestDdragonVersion(
+  gameVersion: string,
+  availableVersions: string[],
+): string {
+  const [gameMajor, gameMinor] = gameVersion.split('.').map(Number);
+
+  if (
+    availableVersions.length === 0 ||
+    Number.isNaN(gameMajor) ||
+    Number.isNaN(gameMinor)
+  ) {
+    return gameVersion;
+  }
+
+  const gameScore = gameMajor * 100 + gameMinor;
+  let closest = availableVersions[0];
+  let closestDistance = Infinity;
+
+  for (const version of availableVersions) {
+    const [major, minor] = version.split('.').map(Number);
+
+    if (Number.isNaN(major) || Number.isNaN(minor)) {
+      continue;
+    }
+
+    const distance = Math.abs(major * 100 + minor - gameScore);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closest = version;
+
+      if (distance === 0) {
+        break;
+      }
+    }
+  }
+
+  return closest;
+}
+
 export function championIconUrl(
   championName: string | undefined,
   patch: string,

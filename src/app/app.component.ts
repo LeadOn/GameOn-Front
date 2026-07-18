@@ -10,7 +10,7 @@ import { GameOnPlayerService } from './shared/services/common/gameon-player.serv
 import Keycloak from 'keycloak-js';
 import { setPlayer, setPlayerStats } from './core/store/actions/player.actions';
 import { RiotLoLService } from './shared/services/leagueoflegends/riot-lol.service';
-import { setLoLVersion } from './core/store/actions/lol.actions';
+import { setLoLVersion, setLoLVersions } from './core/store/actions/lol.actions';
 import { KeycloakOfflinePersistenceService } from './core/keycloak/keycloak-offline-persistence.service';
 
 @Component({
@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   constructor(
     private playerService: GameOnPlayerService,
     private riotLoLService: RiotLoLService,
-    private store: Store<{ player: Player; lolVersion: string }>,
+    private store: Store<{ player: Player; lolVersion: string; lolVersions: string[] }>,
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +67,7 @@ export class AppComponent implements OnInit {
 
     this.riotLoLService.getPatchs().subscribe((data) => {
       this.store.dispatch(setLoLVersion({ version: data[0] }));
+      this.store.dispatch(setLoLVersions({ versions: data }));
       console.log('[AppComponent] LoL version set to ' + data[0]);
     });
   }

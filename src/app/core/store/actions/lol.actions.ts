@@ -6,6 +6,11 @@ export const setLoLVersion = createAction(
   props<{ version: string }>(),
 );
 
+export const setLoLVersions = createAction(
+  'Set League of Legends Versions',
+  props<{ versions: string[] }>(),
+);
+
 export const setLoLQueues = createAction(
   'Set League of Legends Queues',
   props<{ queues: LoLQueue[] }>(),

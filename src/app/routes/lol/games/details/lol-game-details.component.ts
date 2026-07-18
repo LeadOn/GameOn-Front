@@ -10,6 +10,7 @@ import { LoLQueue } from '../../../../shared/classes/lol/LoLQueue';
 import { GameOnLoLService } from '../../../../shared/services/leagueoflegends/gameon-lol.service';
 import {
   bestParticipant,
+  closestDdragonVersion,
   compositeScore,
   formatDuration,
   gameDurationSeconds,
@@ -40,10 +41,11 @@ export class LolGameDetailsComponent implements OnInit {
   damageMode: 'dealt' | 'taken' = 'dealt';
 
   patchTitle = 'Patch inconnu';
-  currentLoLPatch = '';
-  lolVersion$: Observable<string>;
+  gamePatch = '';
   lolQueues$: Observable<LoLQueue[]>;
   lolQueues: LoLQueue[] = [];
+  lolVersions$: Observable<string[]>;
+  lolVersions: string[] = [];
 
   refreshIcon = faSync;
 
@@ -54,22 +56,23 @@ export class LolGameDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private lolService: GameOnLoLService,
-    private lolStore: Store<{ lolVersion: string; lolQueues: LoLQueue[] }>,
+    private lolStore: Store<{ lolQueues: LoLQueue[]; lolVersions: string[] }>,
   ) {
-    this.lolVersion$ = this.lolStore.select('lolVersion');
     this.lolQueues$ = this.lolStore.select('lolQueues');
+    this.lolVersions$ = this.lolStore.select('lolVersions');
   }
 
   ngOnInit(): void {
     this.gameId = this.route.snapshot.paramMap.get('id');
     this.playerId = this.route.snapshot.paramMap.get('playerId');
 
-    this.lolVersion$.subscribe((version) => {
-      this.currentLoLPatch = version;
-    });
-
     this.lolQueues$.subscribe((queues) => {
       this.lolQueues = queues;
+    });
+
+    this.lolVersions$.subscribe((versions) => {
+      this.lolVersions = versions;
+      this.updateGamePatch();
     });
 
     this.loadGame();
@@ -87,6 +90,8 @@ export class LolGameDetailsComponent implements OnInit {
           const [major, minor] = this.game.gameVersion.split('.');
           this.patchTitle = `Patch ${major}.${minor}`;
         }
+
+        this.updateGamePatch();
 
         const teams = game.leagueOfLegendsGameParticipants.reduce(
           (acc: { [teamId: number]: LoLGameParticipant[] }, player) => {
@@ -116,6 +121,17 @@ export class LolGameDetailsComponent implements OnInit {
         this.isSyncing = false;
         console.error(err);
       },
+    );
+  }
+
+  updateGamePatch(): void {
+    if (!this.game.gameVersion || this.lolVersions.length === 0) {
+      return;
+    }
+
+    this.gamePatch = closestDdragonVersion(
+      this.game.gameVersion,
+      this.lolVersions,
     );
   }
 
@@ -268,7 +284,7 @@ export class LolGameDetailsComponent implements OnInit {
 
   championIconUrl(player?: LoLGameParticipant): string {
     if (player?.championName) {
-      return `https://ddragon.leagueoflegends.com/cdn/${this.currentLoLPatch}/img/champion/${player.championName}.png`;
+      return `https://ddragon.leagueoflegends.com/cdn/${this.gamePatch}/img/champion/${player.championName}.png`;
     }
 
     return 'assets/img/gameon-logo.webp';

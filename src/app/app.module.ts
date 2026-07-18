@@ -45,6 +45,7 @@ import { ProfilePageComponent } from './routes/profile/profile.component';
 import {
   lolQueuesReducer,
   lolVersionReducer,
+  lolVersionsReducer,
 } from './core/store/reducers/lol.reducer';
 import { readStoredKeycloakTokens } from './core/keycloak/keycloak-offline-tokens';
 
@@ -87,6 +88,7 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
       player: playerReducer,
       globalStats: playerStatsReducer,
       lolVersion: lolVersionReducer,
+      lolVersions: lolVersionsReducer,
       lolQueues: lolQueuesReducer,
     }),
     ClipboardModule,
