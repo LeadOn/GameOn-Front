@@ -4,7 +4,10 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Player } from '../../classes/common/Player';
 import { PlayerDto } from '../../classes/common/PlayerDto';
-import { LeagueOfLegendsRankHistory } from '../../classes/lol/LeagueOfLegendsRankHistory';
+import {
+  LeagueOfLegendsRankHistory,
+  LoLRankHistoryGranularity,
+} from '../../classes/lol/LeagueOfLegendsRankHistory';
 import { LoLGame } from '../../classes/lol/LoLGame';
 import { LoLGameTimelineFrame } from '../../classes/lol/LoLGameTimelineFrame';
 import { LoLQueue } from '../../classes/lol/LoLQueue';
@@ -41,9 +44,24 @@ export class GameOnLoLService {
   getRankHistory(
     id: number,
     limit: number,
+    granularity?: LoLRankHistoryGranularity,
+    days?: number,
   ): Observable<LeagueOfLegendsRankHistory[]> {
+    let params = new HttpParams();
+
+    if (granularity != null) {
+      params = params.set('granularity', granularity);
+
+      if (days != null) {
+        params = params.set('days', days);
+      }
+    } else {
+      params = params.set('limit', limit);
+    }
+
     return this.client.get<LeagueOfLegendsRankHistory[]>(
-      this.baseUrl + '/' + id + '/rank?limit=' + limit,
+      this.baseUrl + '/' + id + '/rank',
+      { params },
     );
   }
 

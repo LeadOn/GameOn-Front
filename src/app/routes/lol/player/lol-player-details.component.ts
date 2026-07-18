@@ -8,7 +8,10 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { faExternalLink, faSync } from '@fortawesome/free-solid-svg-icons';
 import { PlayerDto } from '../../../shared/classes/common/PlayerDto';
-import { LeagueOfLegendsRankHistory } from '../../../shared/classes/lol/LeagueOfLegendsRankHistory';
+import {
+  LeagueOfLegendsRankHistory,
+  LoLRankHistoryGranularity,
+} from '../../../shared/classes/lol/LeagueOfLegendsRankHistory';
 import { LoLGame } from '../../../shared/classes/lol/LoLGame';
 import { LoLQueue } from '../../../shared/classes/lol/LoLQueue';
 import { environment } from '../../../../environments/environment';
@@ -21,6 +24,8 @@ import {
 } from '../../../shared/classes/lol/lol-tier.util';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+
+type RankHistoryRange = 'recent' | 'day' | 'week' | 'month';
 
 @Component({
   selector: 'app-lol-player-details',
@@ -38,6 +43,9 @@ export class LolPlayerDetailsComponent implements OnInit {
   playerId: any;
   loading = true;
   gameHistoryLoading = true;
+  rankHistoryLoading = false;
+  rankHistoryRange: RankHistoryRange = 'recent';
+  rankHistoryLimit = 25;
   player?: PlayerDto;
   refreshIcon = faSync;
   rankHistory: LeagueOfLegendsRankHistory[] = [];
@@ -312,17 +320,63 @@ export class LolPlayerDetailsComponent implements OnInit {
     }
   }
 
+  onRankHistoryRangeChange(event: Event) {
+    const range = (event.target as HTMLSelectElement).value as RankHistoryRange;
+
+    if (this.rankHistoryRange === range) {
+      return;
+    }
+
+    this.rankHistoryRange = range;
+    this.getRankHistory();
+  }
+
+  onRankHistoryLimitChange(event: Event) {
+    const limit = Number((event.target as HTMLSelectElement).value);
+
+    if (this.rankHistoryLimit === limit) {
+      return;
+    }
+
+    this.rankHistoryLimit = limit;
+    this.getRankHistory();
+  }
+
+  private get rankHistoryGranularity(): LoLRankHistoryGranularity | undefined {
+    switch (this.rankHistoryRange) {
+      case 'day':
+        return 'Day';
+      case 'week':
+        return 'Week';
+      case 'month':
+        return 'Month';
+      default:
+        return undefined;
+    }
+  }
+
   getRankHistory() {
-    this.lolService.getRankHistory(this.playerId, 25).subscribe(
-      (data) => {
-        this.rankHistory = data;
-        this.calculateWinRate();
-        this.loading = false;
-      },
-      (err) => {
-        console.error(err);
-      },
-    );
+    this.rankHistoryLoading = true;
+
+    this.lolService
+      .getRankHistory(
+        this.playerId,
+        this.rankHistoryLimit,
+        this.rankHistoryGranularity,
+      )
+      .subscribe(
+        (data) => {
+          this.rankHistory = data;
+          this.calculateWinRate();
+          this.loading = false;
+          this.rankHistoryLoading = false;
+        },
+        (err) => {
+          console.error(err);
+          this.loading = false;
+          this.rankHistoryLoading = false;
+        },
+      );
   }
 
   getLastGamesPlayed() {

@@ -243,20 +243,51 @@
   <div
     class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight dark:bg-bgDark rounded-2xl border p-5 shadow-sm"
   >
-    <div class="flex items-center justify-between">
+    <div class="flex flex-wrap items-center justify-between gap-3">
       <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >Historique des rangs</span
       >
 
-      @if (loading == false && rankHistory.length > 0) {
-        <span class="text-sm text-gray-500 dark:text-gray-300"
-          >{{ rankHistory.length }} derniers relevés</span
-        >
-      }
+      <div class="flex items-center gap-3">
+        @if (loading == false && rankHistory.length > 0) {
+          <span class="text-sm text-gray-500 dark:text-gray-300">
+            {{ rankHistory.length }}
+            {{ rankHistoryRange == "recent" ? "derniers relevés" : "points" }}
+          </span>
+        }
 
-      @if (loading == true) {
-        <div class="skeleton-soft h-5 w-32"></div>
-      }
+        @if (loading == true) {
+          <div class="skeleton-soft h-5 w-32"></div>
+        }
+
+        @if (loading == false && rankHistoryRange == "recent") {
+          <select
+            class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pr-7 pl-3 text-sm backdrop-blur-sm"
+            [value]="rankHistoryLimit"
+            (change)="onRankHistoryLimitChange($event)"
+            [disabled]="rankHistoryLoading"
+          >
+            <option value="10">10 relevés</option>
+            <option value="25">25 relevés</option>
+            <option value="50">50 relevés</option>
+            <option value="100">100 relevés</option>
+          </select>
+        }
+
+        @if (loading == false) {
+          <select
+            class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pr-7 pl-3 text-sm backdrop-blur-sm"
+            [value]="rankHistoryRange"
+            (change)="onRankHistoryRangeChange($event)"
+            [disabled]="rankHistoryLoading"
+          >
+            <option value="recent">Récent</option>
+            <option value="day">3 semaines</option>
+            <option value="week">3 mois</option>
+            <option value="month">1 an</option>
+          </select>
+        }
+      </div>
     </div>
 
     @if (loading == true) {
