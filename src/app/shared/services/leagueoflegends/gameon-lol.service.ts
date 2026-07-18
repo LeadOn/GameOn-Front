@@ -118,6 +118,13 @@ export class GameOnLoLService {
     );
   }
 
+  importGame(matchId: string): Observable<LoLGame> {
+    return this.client.post<LoLGame>(
+      environment.gameOnApiUrl + '/lol/match/' + matchId + '/import',
+      null,
+    );
+  }
+
   getGlobalStats(filters?: GlobalStatsFilters): Observable<LoLGlobalStatsDto> {
     let params = new HttpParams();
 
