@@ -21,11 +21,13 @@ import {
   tierGlowShadow,
   tierGlowBackground,
   tierEmblemUrl,
+  tierLabel,
 } from '../../../shared/classes/lol/lol-tier.util';
+import { formatRelativeDate } from '../../../shared/classes/lol/lol-match.util';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-type RankHistoryRange = 'recent' | 'day' | 'week' | 'month';
+type RankHistoryRange = 'sevenDays' | 'day' | 'week' | 'month';
 
 @Component({
   selector: 'app-lol-player-details',
@@ -44,8 +46,10 @@ export class LolPlayerDetailsComponent implements OnInit {
   loading = true;
   gameHistoryLoading = true;
   rankHistoryLoading = false;
-  rankHistoryRange: RankHistoryRange = 'recent';
-  rankHistoryLimit = 25;
+  // Always fetched with a granularity: the backend carries the last known
+  // rank forward for periods without a change, so Solo/Flex are always
+  // continuous series and never show a gap against each other.
+  rankHistoryRange: RankHistoryRange = 'day';
   player?: PlayerDto;
   refreshIcon = faSync;
   rankHistory: LeagueOfLegendsRankHistory[] = [];
@@ -75,6 +79,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   rankPosition: number | null = null;
 
   tierEmblemUrl = tierEmblemUrl;
+  tierLabel = tierLabel;
 
   constructor(
     private route: ActivatedRoute,
@@ -226,9 +231,7 @@ export class LolPlayerDetailsComponent implements OnInit {
       return 'Jamais synchronisé';
     }
 
-    return (
-      'Synchro ' + this.formatRelativeDate(new Date(this.player.lolRefreshedOn))
-    );
+    return 'Synchro ' + formatRelativeDate(this.player.lolRefreshedOn);
   }
 
   getTierGlowShadow(rank?: LeagueOfLegendsRankHistory): string {
@@ -237,42 +240,6 @@ export class LolPlayerDetailsComponent implements OnInit {
 
   getTierGlowBackground(rank?: LeagueOfLegendsRankHistory): string {
     return tierGlowBackground(rank);
-  }
-
-  get soloRankHistoryEntries(): LeagueOfLegendsRankHistory[] {
-    return this.rankHistory.filter(
-      (history) => history.queueType === 'RANKED_SOLO_5x5',
-    );
-  }
-
-  get firstSoloRankEntry(): LeagueOfLegendsRankHistory | null {
-    const entries = this.soloRankHistoryEntries;
-    return entries.length > 0 ? entries[0] : null;
-  }
-
-  get lastSoloRankEntry(): LeagueOfLegendsRankHistory | null {
-    const entries = this.soloRankHistoryEntries;
-    return entries.length > 0 ? entries[entries.length - 1] : null;
-  }
-
-  formatRelativeDate(date: Date): string {
-    const diffMs = Date.now() - new Date(date).getTime();
-    const minutes = Math.floor(diffMs / 60000);
-
-    if (minutes < 1) return "à l'instant";
-    if (minutes < 60) return `il y a ${minutes} min`;
-
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `il y a ${hours} h`;
-
-    const days = Math.floor(hours / 24);
-    if (days < 30) return `il y a ${days} j`;
-
-    const months = Math.floor(days / 30);
-    if (months < 12) return `il y a ${months} mois`;
-
-    const years = Math.floor(months / 12);
-    return `il y a ${years} an${years > 1 ? 's' : ''}`;
   }
 
   shouldAutoSyncRank(player: PlayerDto): boolean {
@@ -331,28 +298,22 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.getRankHistory();
   }
 
-  onRankHistoryLimitChange(event: Event) {
-    const limit = Number((event.target as HTMLSelectElement).value);
-
-    if (this.rankHistoryLimit === limit) {
-      return;
-    }
-
-    this.rankHistoryLimit = limit;
-    this.getRankHistory();
-  }
-
-  private get rankHistoryGranularity(): LoLRankHistoryGranularity | undefined {
+  get rankHistoryGranularity(): LoLRankHistoryGranularity {
     switch (this.rankHistoryRange) {
+      case 'sevenDays':
       case 'day':
         return 'Day';
       case 'week':
         return 'Week';
       case 'month':
         return 'Month';
-      default:
-        return undefined;
     }
+  }
+
+  // 'sevenDays' reuses the 'Day' granularity with an explicit 7-day window
+  // instead of its 21-day default, so it doesn't need its own backend enum.
+  private get rankHistoryDays(): number | undefined {
+    return this.rankHistoryRange === 'sevenDays' ? 7 : undefined;
   }
 
   getRankHistory() {
@@ -361,8 +322,8 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.lolService
       .getRankHistory(
         this.playerId,
-        this.rankHistoryLimit,
         this.rankHistoryGranularity,
+        this.rankHistoryDays,
       )
       .subscribe(
         (data) => {

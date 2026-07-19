@@ -43,20 +43,13 @@ export class GameOnLoLService {
 
   getRankHistory(
     id: number,
-    limit: number,
-    granularity?: LoLRankHistoryGranularity,
+    granularity: LoLRankHistoryGranularity,
     days?: number,
   ): Observable<LeagueOfLegendsRankHistory[]> {
-    let params = new HttpParams();
+    let params = new HttpParams().set('granularity', granularity);
 
-    if (granularity != null) {
-      params = params.set('granularity', granularity);
-
-      if (days != null) {
-        params = params.set('days', days);
-      }
-    } else {
-      params = params.set('limit', limit);
+    if (days != null) {
+      params = params.set('days', days);
     }
 
     return this.client.get<LeagueOfLegendsRankHistory[]>(

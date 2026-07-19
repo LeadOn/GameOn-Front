@@ -74,8 +74,7 @@
                 >Solo</span
               >
               <span class="text-xs font-medium"
-                >{{ player.leagueOfLegendsSoloRank.tier | titlecase }}
-                {{ player.leagueOfLegendsSoloRank.rank }}</span
+                >{{ tierLabel(player.leagueOfLegendsSoloRank) }}</span
               >
             </div>
           </div>
@@ -101,8 +100,7 @@
                 >Flex</span
               >
               <span class="text-xs font-medium"
-                >{{ player.leagueOfLegendsFlexRank.tier | titlecase }}
-                {{ player.leagueOfLegendsFlexRank.rank }}</span
+                >{{ tierLabel(player.leagueOfLegendsFlexRank) }}</span
               >
             </div>
           </div>
