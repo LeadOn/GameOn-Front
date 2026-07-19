@@ -205,6 +205,7 @@
           @for (player of team1; track player.puuid) {
             <app-lol-game-details-player
               [player]="player"
+              [patch]="gamePatch"
               [team]="team1"
               [timeline]="timeline"
               [isSelected]="selectedPlayer?.puuid == player.puuid"
@@ -255,6 +256,7 @@
           @for (player of team2; track player.puuid) {
             <app-lol-game-details-player
               [player]="player"
+              [patch]="gamePatch"
               [team]="team2"
               [timeline]="timeline"
               [isSelected]="selectedPlayer?.puuid == player.puuid"
@@ -289,7 +291,7 @@
         [timeline]="timeline"
         [team1]="team1"
         [team2]="team2"
-        [patch]="currentLoLPatch"
+        [patch]="gamePatch"
         [(currentFrameIndex)]="currentFrameIndex"
       ></app-lol-game-gold-race>
     </div>
@@ -400,7 +402,7 @@
       <app-lol-game-damage-chart
         [players]="allPlayers"
         [timeline]="timeline"
-        [patch]="currentLoLPatch"
+        [patch]="gamePatch"
         [mode]="damageMode"
         [selectedPuuid]="selectedPlayer?.puuid"
         (playerSelected)="onPlayerSelected($event)"
@@ -422,7 +424,7 @@
         [players]="allPlayers"
         [timeline]="timeline"
         [durationSeconds]="durationSeconds"
-        [patch]="currentLoLPatch"
+        [patch]="gamePatch"
       ></app-lol-game-highlights>
     </div>
   </section>

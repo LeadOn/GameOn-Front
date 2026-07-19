@@ -168,8 +168,7 @@
               <p
                 class="text-primary dark:text-primaryDark mt-2 truncate text-lg font-semibold"
               >
-                {{ player.leagueOfLegendsSoloRank.tier | titlecase }}
-                {{ player.leagueOfLegendsSoloRank.rank }}
+                {{ tierLabel(player.leagueOfLegendsSoloRank) }}
                 &middot;
                 {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
               </p>
@@ -216,8 +215,7 @@
               <p
                 class="text-primary dark:text-primaryDark mt-2 truncate text-lg font-semibold"
               >
-                {{ player.leagueOfLegendsFlexRank.tier | titlecase }}
-                {{ player.leagueOfLegendsFlexRank.rank }}
+                {{ tierLabel(player.leagueOfLegendsFlexRank) }}
                 &middot;
                 {{ player.leagueOfLegendsFlexRank.leaguePoints }} LP
               </p>
@@ -243,20 +241,36 @@
   <div
     class="border-bgLightDarker dark:border-bgDarkDarker bg-bgLight dark:bg-bgDark rounded-2xl border p-5 shadow-sm"
   >
-    <div class="flex items-center justify-between">
+    <div class="flex flex-wrap items-center justify-between gap-3">
       <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >Historique des rangs</span
       >
 
-      @if (loading == false && rankHistory.length > 0) {
-        <span class="text-sm text-gray-500 dark:text-gray-300"
-          >{{ rankHistory.length }} derniers relevés</span
-        >
-      }
+      <div class="flex items-center gap-3">
+        @if (loading == false && rankHistory.length > 0) {
+          <span class="text-sm text-gray-500 dark:text-gray-300">
+            {{ rankHistory.length }} points
+          </span>
+        }
 
-      @if (loading == true) {
-        <div class="skeleton-soft h-5 w-32"></div>
-      }
+        @if (loading == true) {
+          <div class="skeleton-soft h-5 w-32"></div>
+        }
+
+        @if (loading == false) {
+          <select
+            class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pr-7 pl-3 text-sm backdrop-blur-sm"
+            [value]="rankHistoryRange"
+            (change)="onRankHistoryRangeChange($event)"
+            [disabled]="rankHistoryLoading"
+          >
+            <option value="sevenDays">1 semaine</option>
+            <option value="day">3 semaines</option>
+            <option value="week">3 mois</option>
+            <option value="month">1 an</option>
+          </select>
+        }
+      </div>
     </div>
 
     @if (loading == true) {
@@ -278,26 +292,10 @@
     }
 
     @if (loading == false && rankHistory.length > 0) {
-      <app-rank-history [rankHistory]="rankHistory"></app-rank-history>
-
-      <div
-        class="mt-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400"
-      >
-        <span>
-          @if (firstSoloRankEntry != null) {
-            {{ firstSoloRankEntry.tier | titlecase }}
-            {{ firstSoloRankEntry.rank }} &middot;
-            {{ formatRelativeDate(firstSoloRankEntry.createdOn) }}
-          }
-        </span>
-        <span class="text-primary dark:text-primaryDark font-medium">
-          @if (lastSoloRankEntry != null) {
-            {{ lastSoloRankEntry.tier | titlecase }}
-            {{ lastSoloRankEntry.rank }} &middot;
-            {{ lastSoloRankEntry.leaguePoints }} LP aujourd'hui
-          }
-        </span>
-      </div>
+      <app-rank-history
+        [rankHistory]="rankHistory"
+        [granularity]="rankHistoryGranularity"
+      ></app-rank-history>
     }
   </div>
 </section>

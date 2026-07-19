@@ -14,6 +14,11 @@ export const TIER_ORDER = [
 ];
 export const RANK_ORDER = ['I', 'II', 'III', 'IV'];
 
+// Master/Grandmaster/Challenger have no divisions in LoL — they're ranked
+// purely by LP. Riot's API still fills `rank` with a legacy placeholder
+// ("I") for these tiers, so callers must not display it.
+export const APEX_TIERS = new Set(['MASTER', 'GRANDMASTER', 'CHALLENGER']);
+
 export const TIER_GLOW_COLORS: Record<string, string> = {
   IRON: '119, 119, 119',
   BRONZE: '169, 128, 90',
@@ -45,8 +50,9 @@ export function tierWinRate(rank?: LeagueOfLegendsRankHistory): number {
 
 export function tierLabel(rank?: LeagueOfLegendsRankHistory): string {
   if (!rank) return 'Non classé';
+  const tierUpper = rank.tier.toUpperCase();
   const tier = rank.tier.charAt(0) + rank.tier.slice(1).toLowerCase();
-  return `${tier} ${rank.rank}`;
+  return APEX_TIERS.has(tierUpper) ? tier : `${tier} ${rank.rank}`;
 }
 
 export function tierGlowRgb(rank?: LeagueOfLegendsRankHistory): string {

@@ -9,8 +9,114 @@ import {
   ViewChild,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Chart } from 'chart.js/auto';
-import { LeagueOfLegendsRankHistory } from '../../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
+import { Subscription, skip } from 'rxjs';
+import { Chart, ChartDataset } from 'chart.js/auto';
+import {
+  LeagueOfLegendsRankHistory,
+  LoLRankHistoryGranularity,
+} from '../../../../../shared/classes/lol/LeagueOfLegendsRankHistory';
+import { formatRelativeDate } from '../../../../../shared/classes/lol/lol-match.util';
+import { APEX_TIERS, tierLabel } from '../../../../../shared/classes/lol/lol-tier.util';
+import { ThemeService } from '../../../../../shared/services/common/theme.service';
+
+const SERIES_COLORS = {
+  light: { solo: '#4d6ce5', flex: '#0ea47a' },
+  dark: { solo: '#6b8afb', flex: '#1b998b' },
+};
+
+const GRID_COLOR = 'rgba(156, 163, 175, 0.15)';
+const AVERAGE_LINE_COLOR = 'rgba(156, 163, 175, 0.5)';
+
+// Linear point scale used only to place tiers on an evenly-spaced Y axis.
+const TIER_BASE_POINTS: [string, number][] = [
+  ['IRON', 0],
+  ['BRONZE', 400],
+  ['SILVER', 800],
+  ['GOLD', 1200],
+  ['EMERALD', 1600],
+  ['PLATINUM', 2000],
+  ['DIAMOND', 2400],
+  ['MASTER', 2800],
+  ['GRANDMASTER', 3200],
+  ['CHALLENGER', 3600],
+];
+const DIVISION_POINTS: Record<string, number> = { I: 300, II: 200, III: 100, IV: 0 };
+
+interface RankPoint {
+  x: number;
+  y: number;
+  entry: LeagueOfLegendsRankHistory;
+}
+
+interface QueueSummary {
+  label: string;
+  color: string;
+  oldest: LeagueOfLegendsRankHistory;
+  newest: LeagueOfLegendsRankHistory;
+}
+
+// The backend emits one raw point per period, but real change events keep
+// their exact event timestamp rather than a rounded period boundary. Solo
+// and Flex changes that land in the "same" period can therefore differ by
+// mere milliseconds, which would otherwise plot them as two separate x-axis
+// columns instead of one. Rounding down to the period's start aligns same-
+// period points from both queues onto a single shared column.
+function periodStart(date: Date, granularity: LoLRankHistoryGranularity): number {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+
+  switch (granularity) {
+    case 'Day':
+      return d.getTime();
+    case 'Week': {
+      const mondayOffset = (d.getDay() + 6) % 7;
+      d.setDate(d.getDate() - mondayOffset);
+      return d.getTime();
+    }
+    case 'Month':
+      return new Date(d.getFullYear(), d.getMonth(), 1).getTime();
+  }
+}
+
+function hexToRgba(hex: string, alpha: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+// Draws one dashed horizontal line at the average of all plotted values.
+const averageLinePlugin = {
+  id: 'averageLine',
+  afterDatasetsDraw(chart: any) {
+    const { ctx, chartArea, scales } = chart;
+
+    if (chartArea == null) {
+      return;
+    }
+
+    const values = chart.data.datasets
+      .flatMap((dataset: any) => dataset.data)
+      .filter((value: number | null) => value != null) as number[];
+
+    if (values.length === 0) {
+      return;
+    }
+
+    const average = values.reduce((a, b) => a + b, 0) / values.length;
+    const y = scales['y'].getPixelForValue(average);
+
+    ctx.save();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = AVERAGE_LINE_COLOR;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(chartArea.left, y);
+    ctx.lineTo(chartArea.right, y);
+    ctx.stroke();
+    ctx.restore();
+  },
+};
 
 @Component({
   selector: 'app-rank-history',
@@ -25,21 +131,42 @@ export class RankHistoryComponent
   @Input()
   rankHistory: LeagueOfLegendsRankHistory[] = [];
 
+  @Input()
+  granularity: LoLRankHistoryGranularity = 'Day';
+
   @ViewChild('rankHistoryChart')
   rankHistoryChart?: ElementRef<HTMLCanvasElement>;
 
   chart: any;
+  queueSummaries: QueueSummary[] = [];
+  formatRelativeDate = formatRelativeDate;
+  tierLabel = tierLabel;
+
+  private themeSubscription?: Subscription;
+
+  constructor(private themeService: ThemeService) {}
+
   ngAfterViewInit(): void {
-    this.rebuildChart();
+    queueMicrotask(() => this.rebuildChart());
+
+    // skip(1): theme$ is a BehaviorSubject and replays the current value
+    // immediately on subscribe, which would rebuild synchronously a second
+    // time in this same lifecycle hook. Only react to actual later toggles.
+    this.themeSubscription = this.themeService.theme$
+      .pipe(skip(1))
+      .subscribe(() => {
+        this.rebuildChart();
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['rankHistory']) {
+    if (changes['rankHistory'] || changes['granularity']) {
       queueMicrotask(() => this.rebuildChart());
     }
   }
 
   ngOnDestroy(): void {
+    this.themeSubscription?.unsubscribe();
     this.destroyChart();
   }
 
@@ -52,6 +179,7 @@ export class RankHistoryComponent
 
   rebuildChart() {
     this.destroyChart();
+    this.queueSummaries = [];
 
     if (this.rankHistory == null || this.rankHistory.length === 0) {
       return;
@@ -60,14 +188,30 @@ export class RankHistoryComponent
     this.buildChart();
   }
 
+  private scoreFor(entry: LeagueOfLegendsRankHistory): number {
+    const tier = entry.tier?.toUpperCase() ?? '';
+    const division = entry.rank?.toUpperCase() ?? '';
+    const base = TIER_BASE_POINTS.find(([name]) => name === tier)?.[1] ?? 0;
+    // Master/Grandmaster/Challenger have no real divisions — Riot fills
+    // `rank` with a legacy "I" placeholder there, which must not contribute.
+    const divisionPoints = APEX_TIERS.has(tier) ? 0 : (DIVISION_POINTS[division] ?? 0);
+    return base + divisionPoints + entry.leaguePoints;
+  }
+
+  private toPoints(entries: LeagueOfLegendsRankHistory[]): RankPoint[] {
+    return entries
+      .map((entry) => ({
+        x: periodStart(new Date(entry.createdOn), this.granularity),
+        y: this.scoreFor(entry),
+        entry,
+      }))
+      .sort((a, b) => a.x - b.x);
+  }
+
   buildChart() {
     if (this.rankHistoryChart == null) {
       return;
     }
-
-    const isMobileViewport =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(max-width: 768px)').matches;
 
     const existingChart = Chart.getChart(this.rankHistoryChart.nativeElement);
 
@@ -75,478 +219,190 @@ export class RankHistoryComponent
       existingChart.destroy();
     }
 
-    let soloRankedHistory = this.rankHistory.filter(
-      (history) => history.queueType === 'RANKED_SOLO_5x5',
+    const soloPoints = this.toPoints(
+      this.rankHistory.filter((h) => h.queueType === 'RANKED_SOLO_5x5'),
+    );
+    const flexPoints = this.toPoints(
+      this.rankHistory.filter((h) => h.queueType === 'RANKED_FLEX_SR'),
     );
 
-    let flexRankedHistory = this.rankHistory.filter(
-      (history) => history.queueType === 'RANKED_FLEX_SR',
-    );
+    const theme = this.themeService.theme;
+    const colors = SERIES_COLORS[theme];
 
-    let fiveLabels: string[] = [];
-    let flexLabels: string[] = [];
-    let fiveValues: string[] = [];
-    let flexValues: string[] = [];
+    this.queueSummaries = [
+      soloPoints.length > 0
+        ? {
+            label: 'Solo 5v5',
+            color: colors.solo,
+            oldest: soloPoints[0].entry,
+            newest: soloPoints[soloPoints.length - 1].entry,
+          }
+        : null,
+      flexPoints.length > 0
+        ? {
+            label: 'Flex 5v5',
+            color: colors.flex,
+            oldest: flexPoints[0].entry,
+            newest: flexPoints[flexPoints.length - 1].entry,
+          }
+        : null,
+    ].filter((summary): summary is QueueSummary => summary != null);
 
-    let datasets = [];
+    // Both queues share one x-axis, aligned by their real timestamps rather
+    // than by index, so unrelated events never get forced onto the same tick.
+    const timestamps = Array.from(
+      new Set([...soloPoints, ...flexPoints].map((p) => p.x)),
+    ).sort((a, b) => a - b);
 
-    soloRankedHistory.forEach((history) => {
-      fiveLabels.push(history.createdOn.toString().split('T')[0]);
+    const alignToTimeline = (points: RankPoint[]) => {
+      const byTimestamp = new Map(points.map((p) => [p.x, p]));
+      return {
+        data: timestamps.map((t) => byTimestamp.get(t)?.y ?? null),
+        entries: timestamps.map((t) => byTimestamp.get(t)?.entry ?? null),
+      };
+    };
 
-      let points = 0;
+    const buildDataset = (
+      label: string,
+      points: RankPoint[],
+      color: string,
+    ): ChartDataset<'line'> => {
+      const { data, entries } = alignToTimeline(points);
 
-      switch (history.tier) {
-        case 'IRON':
-          points += 0;
+      let lastIndex = -1;
+      for (let i = data.length - 1; i >= 0; i--) {
+        if (data[i] != null) {
+          lastIndex = i;
           break;
-
-        case 'BRONZE':
-          points += 400;
-          break;
-
-        case 'SILVER':
-          points += 800;
-          break;
-
-        case 'GOLD':
-          points += 1200;
-          break;
-
-        case 'EMERALD':
-          points += 1600;
-          break;
-
-        case 'PLATINUM':
-          points += 2000;
-          break;
-
-        case 'DIAMOND':
-          points += 2400;
-          break;
-
-        case 'MASTER':
-          points += 2800;
-          break;
-
-        case 'CHALLENGER':
-          points += 2800;
-          break;
-
-        default:
-          break;
+        }
       }
 
-      switch (history.rank) {
-        case 'I':
-          points += 300;
-          break;
-
-        case 'II':
-          points += 200;
-          break;
-
-        case 'III':
-          points += 100;
-          break;
-
-        case 'IV':
-          points += 0;
-          break;
-
-        default:
-          break;
-      }
-
-      points += history.leaguePoints;
-
-      fiveValues.push(points.toString());
-    });
-
-    flexRankedHistory.forEach((history) => {
-      flexLabels.push(history.createdOn.toString().split('T')[0]);
-
-      let points = 0;
-
-      switch (history.tier) {
-        case 'IRON':
-          points += 0;
-          break;
-
-        case 'BRONZE':
-          points += 400;
-          break;
-
-        case 'SILVER':
-          points += 800;
-          break;
-
-        case 'GOLD':
-          points += 1200;
-          break;
-
-        case 'EMERALD':
-          points += 1600;
-          break;
-
-        case 'PLATINUM':
-          points += 2000;
-          break;
-
-        case 'DIAMOND':
-          points += 2400;
-          break;
-
-        case 'MASTER':
-          points += 2800;
-          break;
-
-        case 'CHALLENGER':
-          points += 2800;
-          break;
-
-        default:
-          break;
-      }
-
-      switch (history.rank) {
-        case 'I':
-          points += 300;
-          break;
-
-        case 'II':
-          points += 200;
-          break;
-
-        case 'III':
-          points += 100;
-          break;
-
-        case 'IV':
-          points += 0;
-          break;
-
-        default:
-          break;
-      }
-
-      points += history.leaguePoints;
-
-      flexValues.push(points.toString());
-    });
-
-    if (fiveLabels.length === 0 && flexLabels.length > 0) {
-      fiveLabels = flexLabels;
-    }
-
-    // Now adding values if length isn't equal between queues
-    if (fiveValues.length > flexValues.length) {
-      while (flexValues.length < fiveValues.length) {
-        flexValues.unshift('0');
-      }
-    }
-
-    if (flexValues.length > fiveValues.length) {
-      while (fiveValues.length < flexValues.length) {
-        fiveValues.unshift('0');
-      }
-    }
-
-    if (soloRankedHistory.length != 0) {
-      datasets.push({
-        label: 'Solo 5v5',
-        data: fiveValues,
-        backgroundColor: 'rgba(115, 195, 233, 0.2)',
-        borderColor: '#73C3E9',
-        borderWidth: 2,
-        pointBackgroundColor: '#73C3E9',
-        pointBorderColor: '#ffffff',
-        pointBorderWidth: 2,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        tension: 0.4,
+      return {
+        label,
+        data,
+        entries,
+        borderColor: color,
+        backgroundColor: (context: any) => {
+          const { ctx, chartArea } = context.chart;
+          if (!chartArea) return hexToRgba(color, 0.2);
+          const gradient = ctx.createLinearGradient(
+            0,
+            chartArea.top,
+            0,
+            chartArea.bottom,
+          );
+          gradient.addColorStop(0, hexToRgba(color, 0.25));
+          gradient.addColorStop(1, hexToRgba(color, 0));
+          return gradient;
+        },
+        borderWidth: 2.5,
+        pointBackgroundColor: color,
+        pointBorderColor: color,
+        pointBorderWidth: 0,
+        pointRadius: (context: any) =>
+          context.dataIndex === lastIndex ? 4 : 0,
+        pointHoverRadius: 5,
+        tension: 0.35,
+        cubicInterpolationMode: 'monotone',
         fill: true,
-      });
+        spanGaps: true,
+      } as ChartDataset<'line'>;
+    };
+
+    const datasets: ChartDataset<'line'>[] = [];
+
+    if (soloPoints.length > 0) {
+      datasets.push(buildDataset('Solo 5v5', soloPoints, colors.solo));
     }
 
-    if (flexRankedHistory.length != 0) {
-      datasets.push({
-        label: 'Flex 5v5',
-        data: flexValues,
-        backgroundColor: 'rgba(89, 149, 140, 0.2)',
-        borderColor: '#59958c',
-        borderWidth: 2,
-        pointBackgroundColor: '#59958c',
-        pointBorderColor: '#ffffff',
-        pointBorderWidth: 2,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-        tension: 0.4,
-        fill: true,
-      });
+    if (flexPoints.length > 0) {
+      datasets.push(buildDataset('Flex 5v5', flexPoints, colors.flex));
     }
 
     this.chart = new Chart(this.rankHistoryChart.nativeElement, {
       type: 'line',
       data: {
-        // values on X-Axis
-        labels: fiveLabels,
-        datasets: datasets,
+        labels: timestamps,
+        datasets,
       },
+      plugins: [averageLinePlugin],
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        // rebuildChart() destroys and recreates this Chart instance on every
+        // range/theme change, so the default entrance animation replays each
+        // time; disabling it avoids ever rendering (or screenshotting) a
+        // mid-transition frame where gapped points are still easing in.
+        animation: false,
         interaction: {
           mode: 'index',
           intersect: false,
         },
         scales: {
           x: {
-            grid: {
-              display: true,
-              color: 'rgba(156, 163, 175, 0.2)',
-            },
-            ticks: {
-              autoSkip: true,
-              maxTicksLimit: isMobileViewport ? 5 : 10,
-              maxRotation: isMobileViewport ? 0 : 45,
-              minRotation: 0,
-              font: {
-                size: isMobileViewport ? 10 : 11,
-              },
-            },
+            display: false,
           },
           y: {
-            beginAtZero: true,
+            display: true,
             grid: {
               display: true,
-              color: 'rgba(156, 163, 175, 0.2)',
+              color: GRID_COLOR,
+              drawTicks: false,
+            },
+            border: {
+              display: false,
             },
             ticks: {
-              maxTicksLimit: isMobileViewport ? 6 : 8,
-              font: {
-                size: isMobileViewport ? 10 : 11,
-              },
-              callback: (tickValue, index) => {
-                return this.generateDisplayValue(tickValue.toString());
-              },
+              display: false,
+              maxTicksLimit: 3,
             },
           },
         },
         plugins: {
           legend: {
-            display: true,
-            position: isMobileViewport ? 'bottom' : 'top',
-            align: isMobileViewport ? 'center' : 'end',
+            display: datasets.length > 1,
+            position: 'top',
+            align: 'end',
             labels: {
               usePointStyle: true,
               pointStyle: 'circle',
-              padding: isMobileViewport ? 10 : 15,
-              font: {
-                size: isMobileViewport ? 11 : 12,
-              },
+              padding: 12,
+              boxWidth: 6,
+              boxHeight: 6,
+              color: 'rgba(156, 163, 175, 0.9)',
+              font: { size: 11 },
             },
           },
           tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
             padding: 10,
-            titleFont: {
-              size: 13,
-            },
-            bodyFont: {
-              size: 12,
-            },
+            titleFont: { size: 12 },
+            bodyFont: { size: 12 },
             cornerRadius: 6,
             displayColors: true,
             callbacks: {
-              title: function (context) {
-                return context[0].label;
+              title: (context) => {
+                const timestamp = timestamps[context[0].dataIndex];
+                return new Intl.DateTimeFormat('fr-FR', {
+                  day: '2-digit',
+                  month: 'long',
+                }).format(new Date(timestamp));
               },
-              label: function (context) {
-                const label = context.dataset.label || '';
-                let numericValue = parseInt(
-                  context.parsed?.y?.toString() ?? '0',
-                );
+              label: (context) => {
+                const entry = (context.dataset as any).entries?.[
+                  context.dataIndex
+                ] as LeagueOfLegendsRankHistory | null;
 
-                if (numericValue < 400) {
-                  if (numericValue <= 99) {
-                    return 'Iron IV';
-                  } else if (numericValue >= 100 && numericValue < 200) {
-                    return 'Iron III ' + (numericValue - 100) + ' LP';
-                  } else if (numericValue >= 200 && numericValue < 300) {
-                    return 'Iron II ' + (numericValue - 200) + ' LP';
-                  } else if (numericValue >= 300 && numericValue < 400) {
-                    return 'Iron I ' + (numericValue - 300) + ' LP';
-                  }
-                } else if (numericValue >= 400 && numericValue < 800) {
-                  if (numericValue >= 400 && numericValue < 500) {
-                    return 'Bronze IV ' + (numericValue - 400) + ' LP';
-                  } else if (numericValue >= 500 && numericValue < 600) {
-                    return 'Bronze III ' + (numericValue - 500) + ' LP';
-                  } else if (numericValue >= 600 && numericValue < 700) {
-                    return 'Bronze II ' + (numericValue - 600) + ' LP';
-                  } else if (numericValue >= 700 && numericValue < 800) {
-                    return 'Bronze I ' + (numericValue - 700) + ' LP';
-                  }
-                } else if (numericValue >= 800 && numericValue < 1200) {
-                  if (numericValue >= 800 && numericValue < 900) {
-                    return 'Silver IV ' + (numericValue - 800) + ' LP';
-                  } else if (numericValue >= 900 && numericValue < 1000) {
-                    return 'Silver III ' + (numericValue - 900) + ' LP';
-                  } else if (numericValue >= 1000 && numericValue < 1100) {
-                    return 'Silver II ' + (numericValue - 1000) + ' LP';
-                  } else if (numericValue >= 1100 && numericValue < 1200) {
-                    return 'Silver I ' + (numericValue - 1100) + ' LP';
-                  }
-                } else if (numericValue >= 1200 && numericValue < 1600) {
-                  if (numericValue >= 1200 && numericValue < 1300) {
-                    return 'Gold IV ' + (numericValue - 1200) + ' LP';
-                  } else if (numericValue >= 1300 && numericValue < 1400) {
-                    return 'Gold III ' + (numericValue - 1300) + ' LP';
-                  } else if (numericValue >= 1400 && numericValue < 1500) {
-                    return 'Gold II ' + (numericValue - 1400) + ' LP';
-                  } else if (numericValue >= 1500 && numericValue < 1600) {
-                    return 'Gold I ' + (numericValue - 1500) + ' LP';
-                  }
-                } else if (numericValue >= 1600 && numericValue < 2000) {
-                  if (numericValue >= 1600 && numericValue < 1700) {
-                    return 'Emerald IV ' + (numericValue - 1600) + ' LP';
-                  } else if (numericValue >= 1700 && numericValue < 1800) {
-                    return 'Emerald III ' + (numericValue - 1700) + ' LP';
-                  } else if (numericValue >= 1800 && numericValue < 1900) {
-                    return 'Emerald II ' + (numericValue - 1800) + ' LP';
-                  } else if (numericValue >= 1900 && numericValue < 2000) {
-                    return 'Emerald I ' + (numericValue - 1900) + ' LP';
-                  }
-                } else if (numericValue >= 2000 && numericValue < 2400) {
-                  if (numericValue >= 2000 && numericValue < 2100) {
-                    return 'Platinum IV ' + (numericValue - 2000) + ' LP';
-                  } else if (numericValue >= 2100 && numericValue < 2200) {
-                    return 'Platinum III ' + (numericValue - 2100) + ' LP';
-                  } else if (numericValue >= 2200 && numericValue < 2300) {
-                    return 'Platinum II ' + (numericValue - 2200) + ' LP';
-                  } else if (numericValue >= 2300 && numericValue < 2400) {
-                    return 'Platinum I ' + (numericValue - 2300) + ' LP';
-                  }
-                } else if (numericValue >= 2400 && numericValue < 2800) {
-                  if (numericValue >= 2400 && numericValue < 2500) {
-                    return 'Diamond IV ' + (numericValue - 2400) + ' LP';
-                  } else if (numericValue >= 2500 && numericValue < 2600) {
-                    return 'Diamond III ' + (numericValue - 2500) + ' LP';
-                  } else if (numericValue >= 2600 && numericValue < 2700) {
-                    return 'Diamond II ' + (numericValue - 2600) + ' LP';
-                  } else if (numericValue >= 2700 && numericValue < 2800) {
-                    return 'Diamond I ' + (numericValue - 2700) + ' LP';
-                  }
-                } else if (numericValue >= 2800 && numericValue < 3200) {
-                  if (numericValue >= 2800 && numericValue < 2900) {
-                    return 'Master IV ' + (numericValue - 2800) + ' LP';
-                  } else if (numericValue >= 2900 && numericValue < 3000) {
-                    return 'Master III ' + (numericValue - 2900) + ' LP';
-                  } else if (numericValue >= 3000 && numericValue < 3100) {
-                    return 'Master II ' + (numericValue - 3000) + ' LP';
-                  } else if (numericValue >= 3100 && numericValue < 3200) {
-                    return 'Master I ' + (numericValue - 3100) + ' LP';
-                  }
-                } else {
-                  return 'Challenger';
+                if (entry == null) {
+                  return '';
                 }
 
-                return 'Challenger';
+                return `${context.dataset.label}: ${this.tierLabel(entry)} · ${entry.leaguePoints} LP`;
               },
             },
           },
         },
       },
     });
-  }
-
-  generateDisplayValue(tickValue: string) {
-    let numericValue = parseInt(tickValue);
-
-    if (numericValue < 400) {
-      if (numericValue <= 99) {
-        return 'Iron IV';
-      } else if (numericValue >= 100 && numericValue < 200) {
-        return 'Iron III';
-      } else if (numericValue >= 200 && numericValue < 300) {
-        return 'Iron II';
-      } else if (numericValue >= 300 && numericValue < 400) {
-        return 'Iron I';
-      }
-    } else if (numericValue >= 400 && numericValue < 800) {
-      if (numericValue >= 400 && numericValue < 500) {
-        return 'Bronze IV';
-      } else if (numericValue >= 500 && numericValue < 600) {
-        return 'Bronze III';
-      } else if (numericValue >= 600 && numericValue < 700) {
-        return 'Bronze II';
-      } else if (numericValue >= 700 && numericValue < 800) {
-        return 'Bronze I';
-      }
-    } else if (numericValue >= 800 && numericValue < 1200) {
-      if (numericValue >= 800 && numericValue < 900) {
-        return 'Silver IV';
-      } else if (numericValue >= 900 && numericValue < 1000) {
-        return 'Silver III';
-      } else if (numericValue >= 1000 && numericValue < 1100) {
-        return 'Silver II';
-      } else if (numericValue >= 1100 && numericValue < 1200) {
-        return 'Silver I';
-      }
-    } else if (numericValue >= 1200 && numericValue < 1600) {
-      if (numericValue >= 1200 && numericValue < 1300) {
-        return 'Gold IV';
-      } else if (numericValue >= 1300 && numericValue < 1400) {
-        return 'Gold III';
-      } else if (numericValue >= 1400 && numericValue < 1500) {
-        return 'Gold II';
-      } else if (numericValue >= 1500 && numericValue < 1600) {
-        return 'Gold I';
-      }
-    } else if (numericValue >= 1600 && numericValue < 2000) {
-      if (numericValue >= 1600 && numericValue < 1700) {
-        return 'Emerald IV';
-      } else if (numericValue >= 1700 && numericValue < 1800) {
-        return 'Emerald III';
-      } else if (numericValue >= 1800 && numericValue < 1900) {
-        return 'Emerald II';
-      } else if (numericValue >= 1900 && numericValue < 2000) {
-        return 'Emerald I';
-      }
-    } else if (numericValue >= 2000 && numericValue < 2400) {
-      if (numericValue >= 2000 && numericValue < 2100) {
-        return 'Platinum IV';
-      } else if (numericValue >= 2100 && numericValue < 2200) {
-        return 'Platinum III';
-      } else if (numericValue >= 2200 && numericValue < 2300) {
-        return 'Platinum II';
-      } else if (numericValue >= 2300 && numericValue < 2400) {
-        return 'Platinum I';
-      }
-    } else if (numericValue >= 2400 && numericValue < 2800) {
-      if (numericValue >= 2400 && numericValue < 2500) {
-        return 'Diamond IV';
-      } else if (numericValue >= 2500 && numericValue < 2600) {
-        return 'Diamond III';
-      } else if (numericValue >= 2600 && numericValue < 2700) {
-        return 'Diamond II';
-      } else if (numericValue >= 2700 && numericValue < 2800) {
-        return 'Diamond I';
-      }
-    } else if (numericValue >= 2800 && numericValue < 3200) {
-      if (numericValue >= 2800 && numericValue < 2900) {
-        return 'Master IV';
-      } else if (numericValue >= 2900 && numericValue < 3000) {
-        return 'Master III';
-      } else if (numericValue >= 3000 && numericValue < 3100) {
-        return 'Master II';
-      } else if (numericValue >= 3100 && numericValue < 3200) {
-        return 'Master I';
-      }
-    } else {
-      return 'Challenger';
-    }
-
-    return 'Challenger';
   }
 }

@@ -1,0 +1,70 @@
+<button
+  type="button"
+  (click)="openModal()"
+  [disabled]="!isLoggedIn"
+  [title]="isLoggedIn ? '' : 'Réservé aux utilisateurs connectés'"
+  class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent dark:hover:bg-white/10 dark:disabled:hover:bg-transparent"
+>
+  <fa-icon [icon]="importIcon"></fa-icon>
+  Importer une partie
+</button>
+
+<div
+  #overlay
+  class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 p-4"
+  [class.hidden]="!modalOpen"
+  (click)="closeModal()"
+>
+  <div
+    class="bg-bgLight dark:bg-bgDark animate-fade-up animate-duration-200 w-full max-w-sm rounded-2xl p-6 shadow-lg"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-primary dark:text-primaryDark text-lg font-bold">
+      Importer une partie
+    </h2>
+    <p class="mt-1 mb-4 text-sm text-gray-500 dark:text-gray-400">
+      Renseigne l'identifiant de la partie League of Legends à importer (ex :
+      EUW1_1234567890).
+    </p>
+
+    <input
+      type="text"
+      [(ngModel)]="matchId"
+      [disabled]="importing"
+      (keydown.enter)="importGame()"
+      placeholder="EUW1_1234567890"
+      class="bg-bgLightDarker dark:bg-bgDarkDarker text-primary dark:text-primaryDark focus:ring-secondary w-full rounded-lg border-0 px-3 py-2 text-sm focus:ring-2 disabled:opacity-50"
+    />
+
+    <div class="mt-6 flex gap-3">
+      <button
+        type="button"
+        (click)="closeModal()"
+        [disabled]="importing"
+        class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark w-full cursor-pointer rounded-lg border px-5 py-2.5 text-center text-sm font-medium transition-colors hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-50 dark:hover:bg-white/10"
+      >
+        Annuler
+      </button>
+      <button
+        type="button"
+        (click)="importGame()"
+        [disabled]="importing || matchId.trim() === ''"
+        class="bg-customGreen w-full cursor-pointer rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800 disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        @if (importing) {
+          Importation...
+        } @else {
+          Importer
+        }
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-feedback-modal
+  [open]="feedbackOpen"
+  [type]="feedbackType"
+  [title]="feedbackTitle"
+  [message]="feedbackMessage"
+  (closed)="closeFeedback()"
+></app-feedback-modal>
