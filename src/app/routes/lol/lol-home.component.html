@@ -21,6 +21,7 @@
           Patch {{ currentLoLPatch }}
         </span>
       }
+      <app-lol-import-game [isLoggedIn]="isLoggedIn"></app-lol-import-game>
       <button
         class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark global-refresh-button flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-black/5 disabled:opacity-50 dark:hover:bg-white/10"
         (click)="refreshAll()"
@@ -128,8 +129,7 @@
                 </p>
                 @if (player.leagueOfLegendsSoloRank != null) {
                   <p class="truncate text-xs text-gray-500 dark:text-gray-300">
-                    {{ player.leagueOfLegendsSoloRank.tier | titlecase }}
-                    {{ player.leagueOfLegendsSoloRank.rank }}
+                    {{ tierLabel(player.leagueOfLegendsSoloRank) }}
                     &middot;
                     {{ player.leagueOfLegendsSoloRank.leaguePoints }} LP
                   </p>
@@ -370,10 +370,7 @@
                           />
                           <div class="leading-tight">
                             <p class="font-medium">
-                              {{
-                                player.leagueOfLegendsSoloRank.tier | titlecase
-                              }}
-                              {{ player.leagueOfLegendsSoloRank.rank }}
+                              {{ tierLabel(player.leagueOfLegendsSoloRank) }}
                             </p>
                             <p class="text-xs text-gray-500 dark:text-gray-300">
                               {{ player.leagueOfLegendsSoloRank.leaguePoints }}
@@ -397,10 +394,7 @@
                           />
                           <div class="leading-tight">
                             <p class="font-medium">
-                              {{
-                                player.leagueOfLegendsFlexRank.tier | titlecase
-                              }}
-                              {{ player.leagueOfLegendsFlexRank.rank }}
+                              {{ tierLabel(player.leagueOfLegendsFlexRank) }}
                             </p>
                             <p class="text-xs text-gray-500 dark:text-gray-300">
                               {{ player.leagueOfLegendsFlexRank.leaguePoints }}

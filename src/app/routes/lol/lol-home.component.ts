@@ -20,6 +20,7 @@ import { LeagueOfLegendsRankHistory } from '../../shared/classes/lol/LeagueOfLeg
 import {
   tierRankScore,
   tierWinRate,
+  tierLabel,
 } from '../../shared/classes/lol/lol-tier.util';
 import { environment } from '../../../environments/environment';
 
@@ -47,6 +48,8 @@ export class LolHomeComponent implements OnInit {
   funStatsIcon = faTrophy;
 
   view: 'ranking' | 'funstats' = 'ranking';
+
+  tierLabel = tierLabel;
 
   sortColumn: 'name' | 'solo' | 'flex' | 'winrate' = 'solo';
   sortDirection: 'asc' | 'desc' = 'asc';

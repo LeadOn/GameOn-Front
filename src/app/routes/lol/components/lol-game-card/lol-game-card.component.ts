@@ -11,6 +11,7 @@ import {
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
 import { LoLQueue } from '../../../../shared/classes/lol/LoLQueue';
 import { queueLabel } from '../../../../shared/classes/lol/lol-queue.util';
+import { closestDdragonVersion } from '../../../../shared/classes/lol/lol-match.util';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -35,9 +36,10 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   @Output()
   gameRefreshStarted = new EventEmitter<void>();
 
-  lolVersion$: Observable<string>;
   lolQueues$: Observable<LoLQueue[]>;
   lolQueues: LoLQueue[] = [];
+  lolVersions$: Observable<string[]>;
+  lolVersions: string[] = [];
 
   won?: boolean;
   gameDuration?: string;
@@ -59,13 +61,11 @@ export class LolGameCardComponent implements OnInit, OnChanges {
 
   isRefreshing = false;
 
-  currentLoLPatch: string = '';
-
   constructor(
-    private lolStore: Store<{ lolVersion: string; lolQueues: LoLQueue[] }>,
+    private lolStore: Store<{ lolQueues: LoLQueue[]; lolVersions: string[] }>,
   ) {
-    this.lolVersion$ = this.lolStore.select('lolVersion');
     this.lolQueues$ = this.lolStore.select('lolQueues');
+    this.lolVersions$ = this.lolStore.select('lolVersions');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,12 +77,12 @@ export class LolGameCardComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.lolVersion$.subscribe((version) => {
-      this.currentLoLPatch = version;
-    });
-
     this.lolQueues$.subscribe((queues) => {
       this.lolQueues = queues;
+    });
+
+    this.lolVersions$.subscribe((versions) => {
+      this.lolVersions = versions;
     });
   }
 
@@ -172,5 +172,13 @@ export class LolGameCardComponent implements OnInit, OnChanges {
 
   get queueLabel(): string {
     return queueLabel(this.lolQueues, this.game.queueId);
+  }
+
+  get gamePatch(): string {
+    if (!this.game.gameVersion || this.lolVersions.length === 0) {
+      return '';
+    }
+
+    return closestDdragonVersion(this.game.gameVersion, this.lolVersions);
   }
 }

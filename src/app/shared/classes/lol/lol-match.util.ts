@@ -30,6 +30,53 @@ export function itemSlots(player: LoLGameParticipant): number[] {
   ];
 }
 
+/**
+ * `LoLGame.gameVersion` is Riot's raw client version (e.g. "14.22.3434.353535"),
+ * which is never itself a valid data dragon asset build. Find the data dragon
+ * version (from the full `versions.json` list) whose patch (major.minor) is
+ * closest to the game's own patch, so old games render assets from the
+ * closest era instead of always falling back to the current patch.
+ */
+export function closestDdragonVersion(
+  gameVersion: string,
+  availableVersions: string[],
+): string {
+  const [gameMajor, gameMinor] = gameVersion.split('.').map(Number);
+
+  if (
+    availableVersions.length === 0 ||
+    Number.isNaN(gameMajor) ||
+    Number.isNaN(gameMinor)
+  ) {
+    return gameVersion;
+  }
+
+  const gameScore = gameMajor * 100 + gameMinor;
+  let closest = availableVersions[0];
+  let closestDistance = Infinity;
+
+  for (const version of availableVersions) {
+    const [major, minor] = version.split('.').map(Number);
+
+    if (Number.isNaN(major) || Number.isNaN(minor)) {
+      continue;
+    }
+
+    const distance = Math.abs(major * 100 + minor - gameScore);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closest = version;
+
+      if (distance === 0) {
+        break;
+      }
+    }
+  }
+
+  return closest;
+}
+
 export function championIconUrl(
   championName: string | undefined,
   patch: string,
@@ -168,4 +215,24 @@ export function formatCompact(value: number): string {
   }
 
   return Math.round(value).toString();
+}
+
+export function formatRelativeDate(date: Date | string): string {
+  const diffMs = Date.now() - new Date(date).getTime();
+  const minutes = Math.floor(diffMs / 60000);
+
+  if (minutes < 1) return "à l'instant";
+  if (minutes < 60) return `il y a ${minutes} min`;
+
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `il y a ${hours} h`;
+
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `il y a ${days} j`;
+
+  const months = Math.floor(days / 30);
+  if (months < 12) return `il y a ${months} mois`;
+
+  const years = Math.floor(months / 12);
+  return `il y a ${years} an${years > 1 ? 's' : ''}`;
 }

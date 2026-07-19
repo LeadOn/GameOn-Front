@@ -2,15 +2,12 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
-import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 import {
   championIconUrl,
   csFor,
@@ -32,7 +29,7 @@ import {
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './lol-game-details-player.component.css',
 })
-export class LolGameDetailsPlayerComponent implements OnInit {
+export class LolGameDetailsPlayerComponent {
   @Input()
   player: LoLGameParticipant = new LoLGameParticipant();
 
@@ -51,23 +48,13 @@ export class LolGameDetailsPlayerComponent implements OnInit {
   @Input()
   isAce = false;
 
+  @Input()
+  patch = '';
+
   @Output()
   playerSelected = new EventEmitter<LoLGameParticipant>();
 
-  lolVersion$: Observable<string>;
-
-  currentLoLPatch = '';
   detailsIcon = faList;
-
-  constructor(private lolStore: Store<{ lolVersion: string }>) {
-    this.lolVersion$ = this.lolStore.select('lolVersion');
-  }
-
-  ngOnInit(): void {
-    this.lolVersion$.subscribe((version) => {
-      this.currentLoLPatch = version;
-    });
-  }
 
   selectPlayer() {
     this.playerSelected.emit(this.player);
@@ -110,10 +97,10 @@ export class LolGameDetailsPlayerComponent implements OnInit {
   }
 
   championIconUrl(): string {
-    return championIconUrl(this.player.championName, this.currentLoLPatch);
+    return championIconUrl(this.player.championName, this.patch);
   }
 
   itemIconUrl(item: number): string {
-    return itemIconUrl(item, this.currentLoLPatch);
+    return itemIconUrl(item, this.patch);
   }
 }

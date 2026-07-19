@@ -15,6 +15,7 @@ import { LolPlayerDetailsComponent } from './player/lol-player-details.component
 import { RankHistoryComponent } from './player/components/rank-history/rank-history.component';
 import { WinRateChartComponent } from './player/components/win-rate-chart/win-rate-chart.component';
 import { LolFunStatsComponent } from './components/lol-fun-stats/lol-fun-stats.component';
+import { LolImportGameComponent } from './components/import-game/lol-import-game.component';
 import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { setLoLQueues } from '../../core/store/actions/lol.actions';
 import { LoLQueue } from '../../shared/classes/lol/LoLQueue';
@@ -37,6 +38,7 @@ import { LoLQueue } from '../../shared/classes/lol/LoLQueue';
     RankHistoryComponent,
     WinRateChartComponent,
     LolFunStatsComponent,
+    LolImportGameComponent,
   ],
   imports: [LolRoutingModule, SharedModule],
 })

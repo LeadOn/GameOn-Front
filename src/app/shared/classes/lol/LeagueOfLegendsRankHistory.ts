@@ -1,3 +1,5 @@
+export type LoLRankHistoryGranularity = 'Day' | 'Week' | 'Month';
+
 export class LeagueOfLegendsRankHistory {
   id: number = 0;
   playerId: number = 0;

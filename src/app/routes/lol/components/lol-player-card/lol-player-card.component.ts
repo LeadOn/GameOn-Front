@@ -8,6 +8,7 @@ import { PlayerDto } from '../../../../shared/classes/common/PlayerDto';
 import { environment } from '../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { tierLabel } from '../../../../shared/classes/lol/lol-tier.util';
 
 @Component({
   selector: 'app-lol-player-card',
@@ -28,6 +29,7 @@ export class LolPlayerCardComponent implements OnInit {
 
   currentLoLPatch: string = '';
   apiUrl: string = environment.gameOnApiUrl;
+  tierLabel = tierLabel;
 
   ngOnInit(): void {
     this.lolVersion$.subscribe((version) => {
