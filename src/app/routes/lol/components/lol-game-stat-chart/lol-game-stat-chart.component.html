@@ -1,0 +1,53 @@
+<div class="p-5">
+  <div class="mb-4 flex items-center justify-between gap-3">
+    <p class="text-mpTextMuted text-[13px]">
+      Statistique du champion sélectionné, snapshots de la timeline
+    </p>
+
+    <select
+      class="border-mpBorder text-mpText light:bg-[rgba(23,30,54,0.03)] rounded-lg border bg-white/5 px-2.5 py-1.5 text-xs font-medium"
+      [value]="statKey"
+      (change)="onStatKeyChange($event)"
+    >
+      @for (group of groups; track group) {
+        <optgroup [label]="group">
+          @for (option of optionsFor(group); track option.key) {
+            <option [value]="option.key">{{ option.label }}</option>
+          }
+        </optgroup>
+      }
+    </select>
+  </div>
+
+  <svg
+    [attr.viewBox]="'0 0 ' + width + ' ' + height"
+    preserveAspectRatio="none"
+    class="h-56 w-full"
+  >
+    <path [attr.d]="areaPath" fill="rgba(94,163,255,0.3)" />
+    <path
+      [attr.d]="linePath"
+      fill="none"
+      class="stroke-mpBlueInk"
+      stroke-width="2"
+    />
+
+    @if (frames.length > 1) {
+      <line
+        [attr.x1]="playheadX"
+        [attr.x2]="playheadX"
+        y1="0"
+        [attr.y2]="height"
+        class="stroke-[rgba(255,255,255,0.45)] light:stroke-[rgba(23,30,54,0.5)]"
+        stroke-width="1.5"
+        stroke-dasharray="4 4"
+      />
+    }
+  </svg>
+
+  <div class="text-mpTextMuted mt-1 flex items-center justify-between text-xs">
+    <span>{{ startLabel }}</span>
+    <span class="text-mpTextSecondary font-medium">{{ centerLabel }}</span>
+    <span>{{ endLabel }}</span>
+  </div>
+</div>

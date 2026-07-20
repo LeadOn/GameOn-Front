@@ -1,3 +1,4 @@
+import { LoLGameTimelineEvent } from './LoLGameTimelineEvent';
 import { LoLGameTimelineFrameParticipant } from './LoLGameTimelineFrameParticipant';
 
 export class LoLGameTimelineFrame {
@@ -5,4 +6,5 @@ export class LoLGameTimelineFrame {
   matchId: string = '';
   timestamp: number = 0;
   loLGameTimelineFrameParticipants: LoLGameTimelineFrameParticipant[] = [];
+  loLGameTimelineEvents: LoLGameTimelineEvent[] = [];
 }

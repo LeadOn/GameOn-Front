@@ -294,6 +294,55 @@
         [patch]="gamePatch"
         [(currentFrameIndex)]="currentFrameIndex"
       ></app-lol-game-gold-race>
+
+      <app-lol-game-event-timeline
+        [timeline]="timeline"
+        [players]="allPlayers"
+        [(currentFrameIndex)]="currentFrameIndex"
+      ></app-lol-game-event-timeline>
+    </div>
+  </section>
+
+  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+    <div
+      class="mp-card"
+    >
+      <div class="border-mpBorder border-b px-5 py-4">
+        <p class="font-heading text-mpText text-base font-semibold">
+          Mini-carte
+        </p>
+        <p class="text-mpTextMuted mt-0.5 text-[13px]">
+          Positions des joueurs à l'instant sélectionné ci-dessus
+        </p>
+      </div>
+
+      <app-lol-game-minimap
+        [timeline]="timeline"
+        [players]="allPlayers"
+        [currentFrameIndex]="currentFrameIndex"
+        [patch]="gamePatch"
+      ></app-lol-game-minimap>
+    </div>
+  </section>
+
+  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+    <div
+      class="mp-card"
+    >
+      <div class="border-mpBorder border-b px-5 py-4">
+        <p class="font-heading text-mpText text-base font-semibold">
+          Kill feed
+        </p>
+        <p class="text-mpTextMuted mt-0.5 text-[13px]">
+          Éliminations, objectifs et wards en frise chronologique
+        </p>
+      </div>
+
+      <app-lol-game-kill-feed
+        [players]="allPlayers"
+        [timeline]="timeline"
+        [patch]="gamePatch"
+      ></app-lol-game-kill-feed>
     </div>
   </section>
 
@@ -355,6 +404,24 @@
         [currentFrameIndex]="currentFrameIndex"
         [mode]="goldChartMode"
       ></app-lol-game-gold-chart>
+    </div>
+  </section>
+
+  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+    <div
+      class="mp-card"
+    >
+      <div class="border-mpBorder border-b px-5 py-4">
+        <p class="font-heading text-mpText text-base font-semibold">
+          Stats du champion
+        </p>
+      </div>
+
+      <app-lol-game-stat-chart
+        [timeline]="timeline"
+        [selectedPlayer]="selectedPlayer"
+        [currentFrameIndex]="currentFrameIndex"
+      ></app-lol-game-stat-chart>
     </div>
   </section>
 
@@ -427,13 +494,5 @@
         [patch]="gamePatch"
       ></app-lol-game-highlights>
     </div>
-  </section>
-
-  <section class="font-body mx-auto mb-6 mt-4 w-full max-w-6xl px-4">
-    <app-info-message
-      [type]="'info'"
-      [applyMargin]="false"
-      [title]="'Kills, objectifs et wards en frise chronologique ne sont pas encore exposés par l\'API — les courbes ci-dessus viennent des snapshots de la timeline.'"
-    ></app-info-message>
   </section>
 }

@@ -22,7 +22,8 @@ interface RaceRow {
   widthPercent: number;
 }
 
-const FRAME_INTERVAL_MS = 300;
+// How long (ms of wall-clock) it takes to play through one real timeline frame (~1 in-game minute).
+const MS_PER_FRAME = 800;
 
 @Component({
   selector: 'app-lol-game-gold-race',
@@ -55,7 +56,12 @@ export class LolGameGoldRaceComponent implements OnDestroy {
   readonly pauseIcon = faPause;
 
   isPlaying = false;
-  private intervalId?: ReturnType<typeof setInterval>;
+  /** Fractional progress towards the frame after currentFrameIndex, 0 when not playing. */
+  playProgress = 0;
+
+  private rafId?: number;
+  private playStartTime = 0;
+  private playStartIndex = 0;
 
   get frames(): LoLGameTimelineFrame[] {
     return this.timeline ?? [];
@@ -65,8 +71,14 @@ export class LolGameGoldRaceComponent implements OnDestroy {
     return this.frames[this.currentFrameIndex];
   }
 
+  private get nextFrame(): LoLGameTimelineFrame | undefined {
+    return this.frames[this.currentFrameIndex + 1];
+  }
+
   get currentTimeLabel(): string {
-    return formatTimestamp(this.currentFrame?.timestamp ?? 0);
+    const base = this.currentFrame?.timestamp ?? 0;
+    const next = this.nextFrame?.timestamp ?? base;
+    return formatTimestamp(base + (next - base) * this.playProgress);
   }
 
   get rows(): RaceRow[] {
@@ -75,10 +87,17 @@ export class LolGameGoldRaceComponent implements OnDestroy {
       return [];
     }
 
-    const rows = [...this.team1, ...this.team2].map((player) => ({
-      player,
-      value: frameStatsFor(frame, player.puuid)?.totalGold ?? 0,
-    }));
+    const next = this.nextFrame;
+    const t = this.playProgress;
+
+    const rows = [...this.team1, ...this.team2].map((player) => {
+      const base = frameStatsFor(frame, player.puuid)?.totalGold ?? 0;
+      const target = next
+        ? (frameStatsFor(next, player.puuid)?.totalGold ?? base)
+        : base;
+
+      return { player, value: base + (target - base) * t };
+    });
 
     rows.sort((a, b) => b.value - a.value);
 
@@ -118,25 +137,45 @@ export class LolGameGoldRaceComponent implements OnDestroy {
     }
 
     this.isPlaying = true;
-    this.intervalId = setInterval(() => {
-      const next = this.currentFrameIndex + 1;
-
-      if (next >= this.frames.length) {
-        this.stopPlay();
-        return;
-      }
-
-      this.currentFrameIndex = next;
-      this.currentFrameIndexChange.emit(next);
-    }, FRAME_INTERVAL_MS);
+    this.playStartTime = performance.now();
+    this.playStartIndex = this.currentFrameIndex;
+    this.rafId = requestAnimationFrame(this.tick);
   }
+
+  private tick = (now: number): void => {
+    if (!this.isPlaying) {
+      return;
+    }
+
+    const framesElapsed = (now - this.playStartTime) / MS_PER_FRAME;
+    const targetIndex = this.playStartIndex + Math.floor(framesElapsed);
+
+    if (targetIndex >= this.frames.length - 1) {
+      this.playProgress = 0;
+      if (this.currentFrameIndex !== this.frames.length - 1) {
+        this.currentFrameIndex = this.frames.length - 1;
+        this.currentFrameIndexChange.emit(this.currentFrameIndex);
+      }
+      this.stopPlay();
+      return;
+    }
+
+    if (targetIndex !== this.currentFrameIndex) {
+      this.currentFrameIndex = targetIndex;
+      this.currentFrameIndexChange.emit(targetIndex);
+    }
+
+    this.playProgress = framesElapsed - Math.floor(framesElapsed);
+    this.rafId = requestAnimationFrame(this.tick);
+  };
 
   stopPlay(): void {
     this.isPlaying = false;
+    this.playProgress = 0;
 
-    if (this.intervalId != null) {
-      clearInterval(this.intervalId);
-      this.intervalId = undefined;
+    if (this.rafId != null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = undefined;
     }
   }
 

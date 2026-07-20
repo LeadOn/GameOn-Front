@@ -1,0 +1,40 @@
+<div class="p-5">
+  <div class="relative h-10">
+    <div
+      class="light:bg-[rgba(23,30,54,0.08)] absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-white/10"
+    ></div>
+
+    @if (frames.length > 1) {
+      <div
+        class="bg-mpText/60 absolute top-0 h-full w-0.5 -translate-x-1/2"
+        [style.left.%]="playheadPercent"
+      ></div>
+    }
+
+    @for (marker of markers; track marker.entry.event.id) {
+      <button
+        type="button"
+        class="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-mpBg transition-transform hover:scale-125"
+        [ngClass]="dotClass(marker)"
+        [style.left.%]="marker.leftPercent"
+        [title]="tooltipFor(marker)"
+        (click)="selectMarker(marker)"
+      ></button>
+    }
+  </div>
+
+  <div class="text-mpTextMuted mt-2 flex items-center justify-between text-xs">
+    <span>00:00</span>
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1.5">
+        <span class="bg-mpRed h-2 w-2 rounded-full"></span>
+        Éliminations
+      </span>
+      <span class="flex items-center gap-1.5">
+        <span class="bg-mpYellow h-2 w-2 rounded-full"></span>
+        Objectifs
+      </span>
+    </div>
+    <span>{{ endLabel }}</span>
+  </div>
+</div>
