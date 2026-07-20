@@ -1,0 +1,78 @@
+<div class="p-5">
+  <div class="mb-4 flex flex-wrap items-center gap-1 border-mpBorder inline-flex rounded-full border p-1">
+    @for (f of filters; track f.key) {
+      <button
+        type="button"
+        class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+        [ngClass]="
+          filter == f.key
+            ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
+            : 'text-mpTextMuted hover:text-mpText'
+        "
+        (click)="setFilter(f.key)"
+      >
+        {{ f.label }}
+      </button>
+    }
+  </div>
+
+  @if (entries.length === 0) {
+    <p class="text-mpTextMuted py-6 text-center text-sm">
+      Aucun événement pour ce filtre.
+    </p>
+  } @else {
+    <div class="max-h-[420px] space-y-1 overflow-y-auto pr-1">
+      @for (entry of entries; track entry.event.id) {
+        <div
+          class="light:bg-[rgba(23,30,54,0.03)] flex items-center gap-3 rounded-xl bg-white/5 px-3 py-2"
+        >
+          <span class="text-mpTextMuted w-12 shrink-0 text-right text-xs font-semibold">
+            {{ timeLabel(entry) }}
+          </span>
+
+          <span class="w-5 shrink-0 text-center text-sm">{{ entry.icon }}</span>
+
+          @if (entry.killer) {
+            <img
+              [src]="championIconUrl(entry.killer)"
+              class="h-6 w-6 shrink-0 rounded-full border border-white/20 object-cover"
+            />
+          }
+
+          <div class="min-w-0 flex-1 truncate text-sm">
+            @if (entry.killer) {
+              <span class="font-semibold" [ngClass]="accentClass(entry)">
+                {{ displayName(entry.killer) }}
+              </span>
+            }
+            <span class="text-mpTextSecondary">{{ entry.label }}</span>
+            @if (entry.victim) {
+              <span class="text-mpText font-semibold">
+                {{ displayName(entry.victim) }}
+              </span>
+            }
+          </div>
+
+          @if (entry.victim) {
+            <img
+              [src]="championIconUrl(entry.victim)"
+              class="h-6 w-6 shrink-0 rounded-full border border-white/20 object-cover"
+            />
+          }
+
+          @if (entry.assists.length > 0) {
+            <div class="flex shrink-0 -space-x-2">
+              @for (assist of entry.assists; track assist.puuid) {
+                <img
+                  [src]="championIconUrl(assist)"
+                  [title]="displayName(assist)"
+                  class="border-mpBg h-5 w-5 shrink-0 rounded-full border object-cover"
+                />
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

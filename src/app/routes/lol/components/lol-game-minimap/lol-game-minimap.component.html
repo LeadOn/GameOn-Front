@@ -1,0 +1,19 @@
+<div class="p-5">
+  <div class="relative mx-auto aspect-square w-full max-w-[420px] overflow-hidden rounded-2xl">
+    <img
+      [src]="mapUrl"
+      class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
+    />
+
+    @for (dot of dots; track dot.player.puuid) {
+      <img
+        [src]="championIconUrl(dot.player)"
+        [title]="dot.player.riotIdGameName"
+        class="absolute h-6 w-6 -translate-x-1/2 translate-y-1/2 rounded-full border-2 object-cover shadow-[0_0_6px_rgba(0,0,0,0.6)] transition-[left,bottom] duration-300"
+        [ngClass]="teamBorderClass(dot.player)"
+        [style.left.%]="dot.leftPercent"
+        [style.bottom.%]="dot.bottomPercent"
+      />
+    }
+  </div>
+</div>
