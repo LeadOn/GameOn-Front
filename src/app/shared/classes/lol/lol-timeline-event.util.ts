@@ -54,6 +54,21 @@ const WARD_TYPE_LABELS: Record<string, string> = {
   TEEMO_MUSHROOM: 'champignon',
 };
 
+export function monsterIcon(event: LoLGameTimelineEvent): string {
+  switch (event.monsterType) {
+    case 'BARON_NASHOR':
+      return '🔮';
+    case 'RIFTHERALD':
+      return '👁️';
+    case 'HORDE':
+      return '🐛';
+    case 'ATAKHAN':
+      return '👑';
+    default:
+      return '🐉';
+  }
+}
+
 export function monsterLabel(event: LoLGameTimelineEvent): string {
   const base = event.monsterType
     ? (MONSTER_LABELS[event.monsterType] ?? event.monsterType)
@@ -166,7 +181,7 @@ export function describeEvent(
       return {
         event,
         category: 'objectives',
-        icon: event.monsterType === 'BARON_NASHOR' ? '🔮' : '🐉',
+        icon: monsterIcon(event),
         label: `a pris ${monsterLabel(event)}`,
         killer: monsterKiller,
         assists,

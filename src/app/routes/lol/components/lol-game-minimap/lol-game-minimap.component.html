@@ -5,6 +5,25 @@
       class="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
     />
 
+    @for (structure of structures; track $index) {
+      <span
+        class="absolute flex h-4 w-4 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-full text-[9px] leading-none transition-opacity duration-300"
+        [ngClass]="structureClasses(structure)"
+        [style.left.%]="structure.leftPercent"
+        [style.bottom.%]="structure.bottomPercent"
+        [title]="structureTooltip(structure)"
+      >{{ structure.isInhibitor ? "💠" : "🏰" }}</span>
+    }
+
+    @for (marker of objectiveMarkers; track $index) {
+      <span
+        class="absolute -translate-x-1/2 translate-y-1/2 text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+        [style.left.%]="marker.leftPercent"
+        [style.bottom.%]="marker.bottomPercent"
+        [title]="marker.label"
+      >{{ marker.icon }}</span>
+    }
+
     @for (dot of dots; track dot.player.puuid) {
       <img
         [src]="championIconUrl(dot.player)"
@@ -16,4 +35,12 @@
       />
     }
   </div>
+
+  <div class="text-mpTextMuted mt-3 flex items-center justify-center gap-4 text-xs">
+    <span class="text-mpGreenInk font-medium">👁️ {{ wardCounts.blue }} posées</span>
+    <span class="text-mpRedInk font-medium">👁️ {{ wardCounts.red }} posées</span>
+  </div>
+  <p class="text-mpTextMuted mx-auto mt-1 max-w-[420px] text-center text-[11px]">
+    Cumul depuis le début de la partie — l'API ne fournit pas la position des wards.
+  </p>
 </div>

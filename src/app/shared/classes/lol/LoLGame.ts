@@ -12,4 +12,5 @@ export class LoLGame {
   gameEnd: Date = new Date();
   queueId: number | null = null;
   isRemake: boolean = false;
+  frameInterval: number = 60000;
 }
