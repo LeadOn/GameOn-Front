@@ -1,49 +1,87 @@
-<div class="p-5">
-  <div class="mb-4 flex items-center justify-between gap-3">
-    <p class="text-mpTextMuted text-[13px]">
-      Statistique du champion sélectionné, snapshots de la timeline
+<div
+  class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
+>
+  <div>
+    <p class="font-heading text-mpText text-base font-semibold">
+      Stats du champion
     </p>
-
-    <select
-      class="border-mpBorder text-mpText light:bg-[rgba(23,30,54,0.03)] rounded-lg border bg-white/5 px-2.5 py-1.5 text-xs font-medium"
-      [value]="statKey"
-      (change)="onStatKeyChange($event)"
-    >
-      @for (group of groups; track group) {
-        <optgroup [label]="group">
-          @for (option of optionsFor(group); track option.key) {
-            <option [value]="option.key">{{ option.label }}</option>
-          }
-        </optgroup>
-      }
-    </select>
+    <p class="text-mpTextMuted mt-0.5 text-[13px]">
+      {{ selectedPlayerLabel }} — snapshots minute par minute
+    </p>
   </div>
 
-  <svg
-    [attr.viewBox]="'0 0 ' + width + ' ' + height"
-    preserveAspectRatio="none"
-    class="h-56 w-full"
+  <select
+    class="border-mpBorder text-mpText light:bg-[rgba(23,30,54,0.03)] rounded-lg border bg-white/5 px-2.5 py-1.5 text-xs font-medium"
+    [value]="statKey"
+    (change)="onStatKeyChange($event)"
   >
-    <path [attr.d]="areaPath" fill="rgba(94,163,255,0.3)" />
-    <path
-      [attr.d]="linePath"
-      fill="none"
-      class="stroke-mpBlueInk"
-      stroke-width="2"
-    />
-
-    @if (frames.length > 1) {
-      <line
-        [attr.x1]="playheadX"
-        [attr.x2]="playheadX"
-        y1="0"
-        [attr.y2]="height"
-        class="stroke-[rgba(255,255,255,0.45)] light:stroke-[rgba(23,30,54,0.5)]"
-        stroke-width="1.5"
-        stroke-dasharray="4 4"
-      />
+    @for (group of groups; track group) {
+      <optgroup [label]="group">
+        @for (option of optionsFor(group); track option.key) {
+          <option [value]="option.key">{{ option.label }}</option>
+        }
+      </optgroup>
     }
-  </svg>
+  </select>
+</div>
+
+<div class="p-5">
+  <div class="relative">
+    @if (hoverIndex != null) {
+      <div
+        class="border-mpBorder bg-mpBg pointer-events-none absolute top-0 z-10 -translate-x-1/2 whitespace-nowrap rounded-lg border px-2.5 py-1.5 text-xs shadow-lg"
+        [style.left.%]="hoverPercent"
+      >
+        <p class="text-mpTextMuted">{{ hoverTimeLabel }}</p>
+        <p class="text-mpText font-semibold">{{ hoverValueLabel }}</p>
+      </div>
+    }
+
+    <svg
+      [attr.viewBox]="'0 0 ' + width + ' ' + height"
+      preserveAspectRatio="none"
+      class="h-56 w-full cursor-crosshair"
+      (mousemove)="onChartMouseMove($event)"
+      (mouseleave)="onChartMouseLeave()"
+    >
+      <path [attr.d]="areaPath" fill="rgba(94,163,255,0.3)" />
+      <path
+        [attr.d]="linePath"
+        fill="none"
+        class="stroke-mpBlueInk"
+        stroke-width="2"
+      />
+
+      @if (frames.length > 1) {
+        <line
+          [attr.x1]="playheadX"
+          [attr.x2]="playheadX"
+          y1="0"
+          [attr.y2]="height"
+          class="stroke-[rgba(255,255,255,0.45)] light:stroke-[rgba(23,30,54,0.5)]"
+          stroke-width="1.5"
+          stroke-dasharray="4 4"
+        />
+      }
+
+      @if (hoverIndex != null) {
+        <line
+          [attr.x1]="hoverX"
+          [attr.x2]="hoverX"
+          y1="0"
+          [attr.y2]="height"
+          class="stroke-mpYellowInk"
+          stroke-width="1"
+        />
+        <circle
+          [attr.cx]="hoverX"
+          [attr.cy]="hoverY"
+          r="4"
+          class="fill-mpYellowInk"
+        />
+      }
+    </svg>
+  </div>
 
   <div class="text-mpTextMuted mt-1 flex items-center justify-between text-xs">
     <span>{{ startLabel }}</span>

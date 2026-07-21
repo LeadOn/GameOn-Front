@@ -1,9 +1,66 @@
-<div class="p-5">
-  <svg
-    [attr.viewBox]="'0 0 ' + width + ' ' + height"
-    preserveAspectRatio="none"
-    class="h-56 w-full"
+<div
+  class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
+>
+  <div>
+    <p class="font-heading text-mpText text-base font-semibold">
+      {{
+        mode == "team" ? "Écart d'or entre équipes" : "Or du joueur sélectionné"
+      }}
+    </p>
+    <p class="text-mpTextMuted mt-0.5 text-[13px]">
+      En fin de partie : {{ centerLabel }}
+    </p>
+  </div>
+
+  <div
+    class="border-mpBorder inline-flex items-center gap-1 rounded-full border p-1"
   >
+    <button
+      type="button"
+      class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+      [ngClass]="
+        mode == 'team'
+          ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
+          : 'text-mpTextMuted hover:text-mpText'
+      "
+      (click)="setMode('team')"
+    >
+      Écart d'équipes
+    </button>
+    <button
+      type="button"
+      class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+      [ngClass]="
+        mode == 'player'
+          ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
+          : 'text-mpTextMuted hover:text-mpText'
+      "
+      (click)="setMode('player')"
+    >
+      Joueur sélectionné
+    </button>
+  </div>
+</div>
+
+<div class="p-5">
+  <div class="relative">
+    @if (hoverIndex != null) {
+      <div
+        class="border-mpBorder bg-mpBg pointer-events-none absolute top-0 z-10 -translate-x-1/2 whitespace-nowrap rounded-lg border px-2.5 py-1.5 text-xs shadow-lg"
+        [style.left.%]="hoverPercent"
+      >
+        <p class="text-mpTextMuted">{{ hoverTimeLabel }}</p>
+        <p class="text-mpText font-semibold">{{ hoverValueLabel }}</p>
+      </div>
+    }
+
+    <svg
+      [attr.viewBox]="'0 0 ' + width + ' ' + height"
+      preserveAspectRatio="none"
+      class="h-56 w-full cursor-crosshair"
+      (mousemove)="onChartMouseMove($event)"
+      (mouseleave)="onChartMouseLeave()"
+    >
     @if (mode == "team") {
       <line
         x1="0"
@@ -61,7 +118,25 @@
         stroke-dasharray="4 4"
       />
     }
+
+    @if (hoverIndex != null) {
+      <line
+        [attr.x1]="hoverX"
+        [attr.x2]="hoverX"
+        y1="0"
+        [attr.y2]="height"
+        class="stroke-mpYellowInk"
+        stroke-width="1"
+      />
+      <circle
+        [attr.cx]="hoverX"
+        [attr.cy]="hoverY"
+        r="4"
+        class="fill-mpYellowInk"
+      />
+    }
   </svg>
+  </div>
 
   <div class="text-mpTextMuted mt-1 flex items-center justify-between text-xs">
     <span>{{ startLabel }}</span>

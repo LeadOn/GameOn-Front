@@ -1,29 +1,7 @@
 <div class="p-5">
-  <div class="mb-4 flex items-center gap-3">
-    <!-- Fixed dark icon color (not text-mpBg, which is theme-reactive) since it must stay dark for contrast on the yellow fill in both themes -->
-    <button
-      type="button"
-      class="bg-mpYellow flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#0a0d18] transition-transform hover:scale-105"
-      (click)="togglePlay()"
-    >
-      <fa-icon [icon]="isPlaying ? pauseIcon : playIcon"></fa-icon>
-    </button>
-
-    <input
-      type="range"
-      class="accent-mpYellow h-1.5 w-full flex-1 cursor-pointer"
-      min="0"
-      [max]="frames.length - 1 < 0 ? 0 : frames.length - 1"
-      [value]="currentFrameIndex"
-      (input)="onSliderInput($event)"
-    />
-
-    <span
-      class="text-mpTextSecondary w-14 shrink-0 text-right text-sm font-semibold"
-    >
-      {{ currentTimeLabel }}
-    </span>
-  </div>
+  <p class="text-mpYellowInk mb-3 text-xs font-bold uppercase tracking-wide">
+    Course à l'or
+  </p>
 
   <div class="relative" [style.height.px]="rows.length * rowHeight">
     @for (row of rows; track row.player.puuid) {
@@ -41,7 +19,10 @@
           class="h-6 w-6 shrink-0 rounded-full border border-white/20 object-cover"
         />
 
-        <span class="text-mpText w-28 shrink-0 truncate text-xs font-medium">
+        <span
+          class="w-28 shrink-0 truncate text-xs font-semibold"
+          [ngClass]="row.player.teamId == 100 ? 'text-mpGreenInk' : 'text-mpRedInk'"
+        >
           {{ row.player.riotIdGameName }}
         </span>
 

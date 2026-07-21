@@ -282,146 +282,92 @@
             Le film de la partie
           </p>
           <p class="text-mpTextMuted mt-0.5 text-[13px]">
-            Course à l'or, minute par minute — snapshots de la timeline
+            Mini-carte, course à l'or et événements — pilotés par la même
+            timeline
           </p>
         </div>
-      </div>
 
-      <app-lol-game-gold-race
-        [timeline]="timeline"
-        [team1]="team1"
-        [team2]="team2"
-        [patch]="gamePatch"
-        [(currentFrameIndex)]="currentFrameIndex"
-      ></app-lol-game-gold-race>
+        <div class="text-mpTextMuted flex items-center gap-4 text-xs">
+          <span class="flex items-center gap-1.5">
+            <span class="bg-mpRed h-2 w-2 rounded-full"></span>
+            Éliminations
+          </span>
+          <span class="flex items-center gap-1.5">
+            <span class="bg-mpYellow h-2 w-2 rounded-full"></span>
+            Objectifs
+          </span>
+        </div>
+      </div>
 
       <app-lol-game-event-timeline
         [timeline]="timeline"
         [players]="allPlayers"
         [(currentFrameIndex)]="currentFrameIndex"
+        (playProgressChange)="onPlayProgressChange($event)"
       ></app-lol-game-event-timeline>
-    </div>
-  </section>
 
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="mp-card"
-    >
-      <div class="border-mpBorder border-b px-5 py-4">
-        <p class="font-heading text-mpText text-base font-semibold">
-          Mini-carte
-        </p>
-        <p class="text-mpTextMuted mt-0.5 text-[13px]">
-          Positions des joueurs à l'instant sélectionné ci-dessus
-        </p>
-      </div>
-
-      <app-lol-game-minimap
-        [timeline]="timeline"
-        [players]="allPlayers"
-        [currentFrameIndex]="currentFrameIndex"
-        [patch]="gamePatch"
-      ></app-lol-game-minimap>
-    </div>
-  </section>
-
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="mp-card"
-    >
-      <div class="border-mpBorder border-b px-5 py-4">
-        <p class="font-heading text-mpText text-base font-semibold">
-          Kill feed
-        </p>
-        <p class="text-mpTextMuted mt-0.5 text-[13px]">
-          Éliminations, objectifs et wards en frise chronologique
-        </p>
-      </div>
-
-      <app-lol-game-kill-feed
-        [players]="allPlayers"
-        [timeline]="timeline"
-        [patch]="gamePatch"
-      ></app-lol-game-kill-feed>
-    </div>
-  </section>
-
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="mp-card"
-    >
       <div
-        class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
+        class="border-mpBorder grid grid-cols-[repeat(auto-fit,minmax(min(380px,100%),1fr))] border-t"
       >
-        <div>
+        <app-lol-game-minimap
+          [timeline]="timeline"
+          [players]="allPlayers"
+          [currentFrameIndex]="currentFrameIndex"
+          [patch]="gamePatch"
+        ></app-lol-game-minimap>
+
+        <app-lol-game-gold-race
+          [timeline]="timeline"
+          [team1]="team1"
+          [team2]="team2"
+          [patch]="gamePatch"
+          [currentFrameIndex]="currentFrameIndex"
+          [playProgress]="playProgress"
+        ></app-lol-game-gold-race>
+      </div>
+    </div>
+  </section>
+
+  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+    <div
+      class="grid items-start gap-4 grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))]"
+    >
+      <div class="mp-card">
+        <div class="border-mpBorder border-b px-5 py-4">
           <p class="font-heading text-mpText text-base font-semibold">
-            {{
-              goldChartMode == "team"
-                ? "Écart d'or entre équipes"
-                : "Or du joueur sélectionné"
-            }}
+            Kill feed
           </p>
           <p class="text-mpTextMuted mt-0.5 text-[13px]">
-            Snapshots de la timeline
+            Cliquez un événement pour y déplacer le film
           </p>
         </div>
 
-        <div
-          class="border-mpBorder inline-flex items-center gap-1 rounded-full border p-1"
-        >
-          <button
-            type="button"
-            class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
-            [ngClass]="
-              goldChartMode == 'team'
-                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
-                : 'text-mpTextMuted hover:text-mpText'
-            "
-            (click)="setGoldChartMode('team')"
-          >
-            Écart d'équipes
-          </button>
-          <button
-            type="button"
-            class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
-            [ngClass]="
-              goldChartMode == 'player'
-                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
-                : 'text-mpTextMuted hover:text-mpText'
-            "
-            (click)="setGoldChartMode('player')"
-          >
-            Joueur sélectionné
-          </button>
+        <app-lol-game-kill-feed
+          [players]="allPlayers"
+          [timeline]="timeline"
+          [patch]="gamePatch"
+        ></app-lol-game-kill-feed>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="mp-card">
+          <app-lol-game-gold-chart
+            [timeline]="timeline"
+            [team1]="team1"
+            [team2]="team2"
+            [selectedPlayer]="selectedPlayer"
+            [currentFrameIndex]="currentFrameIndex"
+          ></app-lol-game-gold-chart>
+        </div>
+
+        <div class="mp-card">
+          <app-lol-game-stat-chart
+            [timeline]="timeline"
+            [selectedPlayer]="selectedPlayer"
+            [currentFrameIndex]="currentFrameIndex"
+          ></app-lol-game-stat-chart>
         </div>
       </div>
-
-      <app-lol-game-gold-chart
-        [timeline]="timeline"
-        [team1]="team1"
-        [team2]="team2"
-        [selectedPlayer]="selectedPlayer"
-        [currentFrameIndex]="currentFrameIndex"
-        [mode]="goldChartMode"
-      ></app-lol-game-gold-chart>
-    </div>
-  </section>
-
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="mp-card"
-    >
-      <div class="border-mpBorder border-b px-5 py-4">
-        <p class="font-heading text-mpText text-base font-semibold">
-          Stats du champion
-        </p>
-      </div>
-
-      <app-lol-game-stat-chart
-        [timeline]="timeline"
-        [selectedPlayer]="selectedPlayer"
-        [currentFrameIndex]="currentFrameIndex"
-      ></app-lol-game-stat-chart>
     </div>
   </section>
 

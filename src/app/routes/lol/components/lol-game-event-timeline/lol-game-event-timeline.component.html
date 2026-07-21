@@ -1,40 +1,41 @@
 <div class="p-5">
-  <div class="relative h-10">
-    <div
-      class="light:bg-[rgba(23,30,54,0.08)] absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-white/10"
-    ></div>
+  <div class="flex items-center gap-3">
+    <!-- Fixed dark icon color (not text-mpBg, which is theme-reactive) since it must stay dark for contrast on the yellow fill in both themes -->
+    <button
+      type="button"
+      class="bg-mpYellow flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#0a0d18] transition-transform hover:scale-105"
+      (click)="togglePlay()"
+    >
+      <fa-icon [icon]="isPlaying ? pauseIcon : playIcon"></fa-icon>
+    </button>
 
-    @if (frames.length > 1) {
+    <div class="relative h-10 flex-1 cursor-pointer" (click)="onTrackClick($event)">
       <div
-        class="bg-mpText/60 absolute top-0 h-full w-0.5 -translate-x-1/2"
-        [style.left.%]="playheadPercent"
+        class="light:bg-[rgba(23,30,54,0.08)] absolute left-0 right-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-white/10"
       ></div>
-    }
 
-    @for (marker of markers; track marker.entry.event.id) {
-      <button
-        type="button"
-        class="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-mpBg transition-transform hover:scale-125"
-        [ngClass]="dotClass(marker)"
-        [style.left.%]="marker.leftPercent"
-        [title]="tooltipFor(marker)"
-        (click)="selectMarker(marker)"
-      ></button>
-    }
+      @if (frames.length > 1) {
+        <div
+          class="bg-mpText/60 absolute top-0 h-full w-0.5 -translate-x-1/2"
+          [style.left.%]="playheadPercent"
+        ></div>
+      }
+
+      @for (marker of markers; track marker.entry.event.id) {
+        <button
+          type="button"
+          class="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2 ring-mpBg transition-transform hover:scale-125"
+          [ngClass]="dotClass(marker)"
+          [style.left.%]="marker.leftPercent"
+          [title]="tooltipFor(marker)"
+          (click)="selectMarker(marker, $event)"
+        ></button>
+      }
+    </div>
   </div>
 
   <div class="text-mpTextMuted mt-2 flex items-center justify-between text-xs">
     <span>00:00</span>
-    <div class="flex items-center gap-4">
-      <span class="flex items-center gap-1.5">
-        <span class="bg-mpRed h-2 w-2 rounded-full"></span>
-        Éliminations
-      </span>
-      <span class="flex items-center gap-1.5">
-        <span class="bg-mpYellow h-2 w-2 rounded-full"></span>
-        Objectifs
-      </span>
-    </div>
     <span>{{ endLabel }}</span>
   </div>
 </div>

@@ -2,7 +2,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import {
-  formatCompact,
+  formatFull,
   formatTimestamp,
   frameStatsFor,
 } from '../../../../shared/classes/lol/lol-match.util';
@@ -33,8 +33,11 @@ export class LolGameGoldChartComponent {
   @Input()
   currentFrameIndex = 0;
 
-  @Input()
   mode: 'team' | 'player' = 'team';
+
+  setMode(mode: 'team' | 'player'): void {
+    this.mode = mode;
+  }
 
   readonly width = WIDTH;
   readonly height = HEIGHT;
@@ -65,7 +68,65 @@ export class LolGameGoldChartComponent {
     );
   }
 
-  private xFor(index: number): number {
+  hoverIndex: number | null = null;
+
+  onChartMouseMove(event: MouseEvent): void {
+    if (this.frames.length === 0) {
+      return;
+    }
+
+    const svg = event.currentTarget as SVGSVGElement;
+    const rect = svg.getBoundingClientRect();
+    const ratio = Math.min(
+      1,
+      Math.max(0, (event.clientX - rect.left) / rect.width),
+    );
+    const index = Math.round(ratio * (this.frames.length - 1));
+    this.hoverIndex = Math.min(this.frames.length - 1, Math.max(0, index));
+  }
+
+  onChartMouseLeave(): void {
+    this.hoverIndex = null;
+  }
+
+  get hoverX(): number | null {
+    return this.hoverIndex == null ? null : this.xFor(this.hoverIndex);
+  }
+
+  get hoverY(): number | null {
+    return this.hoverIndex == null
+      ? null
+      : this.yFor(this.series[this.hoverIndex]);
+  }
+
+  get hoverPercent(): number {
+    return this.hoverX == null ? 0 : (this.hoverX / this.width) * 100;
+  }
+
+  get hoverTimeLabel(): string {
+    if (this.hoverIndex == null) {
+      return '';
+    }
+    return formatTimestamp(this.frames[this.hoverIndex].timestamp);
+  }
+
+  get hoverValueLabel(): string {
+    if (this.hoverIndex == null) {
+      return '';
+    }
+
+    const value = this.series[this.hoverIndex];
+
+    if (this.mode == 'team') {
+      const side = value >= 0 ? 'équipe bleue' : 'équipe rouge';
+      const sign = value >= 0 ? '+' : '-';
+      return `${sign}${formatFull(Math.abs(value))} pour l'${side}`;
+    }
+
+    return `${formatFull(value)} d'or`;
+  }
+
+  xFor(index: number): number {
     const count = this.frames.length;
     if (count <= 1) {
       return 0;
@@ -86,7 +147,7 @@ export class LolGameGoldChartComponent {
     return (this.height - 16) / max;
   }
 
-  private yFor(value: number): number {
+  yFor(value: number): number {
     if (this.mode == 'team') {
       return this.midY - value * this.scale;
     }
@@ -144,9 +205,10 @@ export class LolGameGoldChartComponent {
 
     if (this.mode == 'team') {
       const side = last >= 0 ? 'équipe bleue' : 'équipe rouge';
-      return `${formatCompact(Math.abs(last))} pour l'${side}`;
+      const sign = last >= 0 ? '+' : '-';
+      return `${sign}${formatFull(Math.abs(last))} pour l'${side}`;
     }
 
-    return `${formatCompact(last)} d'or en fin de partie`;
+    return `${formatFull(last)} d'or`;
   }
 }

@@ -262,6 +262,28 @@ export function describeEvent(
   }
 }
 
+/**
+ * Highest bounty ever paid out for killing this player — the API's post-game
+ * `bountyLevel` field on the participant is always 0 (it only reflects the
+ * live in-game value, which resets away by the time the match ends), so this
+ * is derived from each CHAMPION_KILL timeline event where they were the victim.
+ */
+export function maxBountyOnHead(
+  timeline: LoLGameTimelineFrame[] | undefined,
+  puuid?: string,
+): number {
+  if (!puuid) {
+    return 0;
+  }
+
+  return allTimelineEvents(timeline)
+    .filter(
+      (event) =>
+        event.eventType === 'CHAMPION_KILL' && event.victimPUUID === puuid,
+    )
+    .reduce((max, event) => Math.max(max, event.bounty ?? 0), 0);
+}
+
 export function teamAccentTextClass(teamId?: number | null): string {
   if (teamId === 100) return 'text-mpGreenInk';
   if (teamId === 200) return 'text-mpRedInk';
