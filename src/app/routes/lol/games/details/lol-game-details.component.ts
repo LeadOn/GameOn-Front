@@ -36,8 +36,8 @@ export class LolGameDetailsComponent implements OnInit {
   timeline?: LoLGameTimelineFrame[];
   selectedPlayer?: LoLGameParticipant;
   currentFrameIndex = 0;
+  playProgress = 0;
 
-  goldChartMode: 'team' | 'player' = 'team';
   damageMode: 'dealt' | 'taken' = 'dealt';
 
   patchTitle = 'Patch inconnu';
@@ -170,8 +170,8 @@ export class LolGameDetailsComponent implements OnInit {
     this.selectedPlayer = player;
   }
 
-  setGoldChartMode(mode: 'team' | 'player') {
-    this.goldChartMode = mode;
+  onPlayProgressChange(progress: number) {
+    this.playProgress = progress;
   }
 
   setDamageMode(mode: 'dealt' | 'taken') {

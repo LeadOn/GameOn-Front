@@ -3,9 +3,11 @@ import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGamePartic
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import { LoLGameTimelineFrameParticipant } from '../../../../shared/classes/lol/LoLGameTimelineFrameParticipant';
 import {
-  formatCompact,
+  formatFull,
   formatTimestamp,
   frameStatsFor,
+  isLinkedToGameOn,
+  playerDisplayName,
 } from '../../../../shared/classes/lol/lol-match.util';
 
 type StatKey = keyof Pick<
@@ -109,6 +111,18 @@ export class LolGameStatChartComponent {
     return this.options.filter((o) => o.group === group);
   }
 
+  get selectedPlayerLabel(): string {
+    const player = this.selectedPlayer;
+    if (player == null) {
+      return '';
+    }
+
+    const name = playerDisplayName(player);
+    return isLinkedToGameOn(player) && name !== player.riotIdGameName
+      ? `${name} (${player.riotIdGameName})`
+      : name;
+  }
+
   onStatKeyChange(event: Event): void {
     this.statKey = (event.target as HTMLSelectElement).value as StatKey;
   }
@@ -124,7 +138,7 @@ export class LolGameStatChartComponent {
     );
   }
 
-  private xFor(index: number): number {
+  xFor(index: number): number {
     const count = this.frames.length;
     if (count <= 1) {
       return 0;
@@ -137,8 +151,59 @@ export class LolGameStatChartComponent {
     return (this.height - 16) / max;
   }
 
-  private yFor(value: number): number {
+  yFor(value: number): number {
     return this.height - 6 - value * this.scale;
+  }
+
+  hoverIndex: number | null = null;
+
+  onChartMouseMove(event: MouseEvent): void {
+    if (this.frames.length === 0) {
+      return;
+    }
+
+    const svg = event.currentTarget as SVGSVGElement;
+    const rect = svg.getBoundingClientRect();
+    const ratio = Math.min(
+      1,
+      Math.max(0, (event.clientX - rect.left) / rect.width),
+    );
+    const index = Math.round(ratio * (this.frames.length - 1));
+    this.hoverIndex = Math.min(this.frames.length - 1, Math.max(0, index));
+  }
+
+  onChartMouseLeave(): void {
+    this.hoverIndex = null;
+  }
+
+  get hoverX(): number | null {
+    return this.hoverIndex == null ? null : this.xFor(this.hoverIndex);
+  }
+
+  get hoverY(): number | null {
+    return this.hoverIndex == null
+      ? null
+      : this.yFor(this.series[this.hoverIndex]);
+  }
+
+  get hoverPercent(): number {
+    return this.hoverX == null ? 0 : (this.hoverX / this.width) * 100;
+  }
+
+  get hoverTimeLabel(): string {
+    if (this.hoverIndex == null) {
+      return '';
+    }
+    return formatTimestamp(this.frames[this.hoverIndex].timestamp);
+  }
+
+  get hoverValueLabel(): string {
+    if (this.hoverIndex == null) {
+      return '';
+    }
+
+    const suffix = this.selectedOption.isPercent ? '%' : '';
+    return `${formatFull(this.series[this.hoverIndex])}${suffix}`;
   }
 
   get linePath(): string {
@@ -184,6 +249,6 @@ export class LolGameStatChartComponent {
     }
     const last = values.at(-1) ?? 0;
     const suffix = this.selectedOption.isPercent ? '%' : '';
-    return `${formatCompact(last)}${suffix} en fin de partie`;
+    return `${formatFull(last)}${suffix} en fin de partie`;
   }
 }

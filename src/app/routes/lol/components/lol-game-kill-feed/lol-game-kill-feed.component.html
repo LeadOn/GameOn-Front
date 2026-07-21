@@ -1,5 +1,5 @@
 <div class="p-5">
-  <div class="mb-4 flex flex-wrap items-center gap-1 border-mpBorder inline-flex rounded-full border p-1">
+  <div class="mb-4 flex flex-wrap items-center gap-1 border-mpBorder rounded-full border p-1">
     @for (f of filters; track f.key) {
       <button
         type="button"
@@ -21,7 +21,7 @@
       Aucun événement pour ce filtre.
     </p>
   } @else {
-    <div class="max-h-[420px] space-y-1 overflow-y-auto pr-1">
+    <div class="max-h-130 space-y-1 overflow-y-auto pr-1">
       @for (entry of entries; track entry.event.id) {
         <div
           class="light:bg-[rgba(23,30,54,0.03)] flex items-center gap-3 rounded-xl bg-white/5 px-3 py-2"

@@ -217,6 +217,10 @@ export function formatCompact(value: number): string {
   return Math.round(value).toString();
 }
 
+export function formatFull(value: number): string {
+  return new Intl.NumberFormat('fr-FR').format(Math.round(value));
+}
+
 export function formatRelativeDate(date: Date | string): string {
   const diffMs = Date.now() - new Date(date).getTime();
   const minutes = Math.floor(diffMs / 60000);

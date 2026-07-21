@@ -1,17 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  ChangeDetectionStrategy,
-} from '@angular/core';
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import {
   championIconUrl,
-  formatTimestamp,
   frameStatsFor,
 } from '../../../../shared/classes/lol/lol-match.util';
 
@@ -22,9 +13,6 @@ interface RaceRow {
   widthPercent: number;
 }
 
-// How long (ms of wall-clock) it takes to play through one real timeline frame (~1 in-game minute).
-const MS_PER_FRAME = 800;
-
 @Component({
   selector: 'app-lol-game-gold-race',
   standalone: false,
@@ -32,7 +20,7 @@ const MS_PER_FRAME = 800;
   styleUrl: './lol-game-gold-race.component.css',
   changeDetection: ChangeDetectionStrategy.Eager,
 })
-export class LolGameGoldRaceComponent implements OnDestroy {
+export class LolGameGoldRaceComponent {
   @Input()
   timeline?: LoLGameTimelineFrame[];
 
@@ -48,20 +36,11 @@ export class LolGameGoldRaceComponent implements OnDestroy {
   @Input()
   currentFrameIndex = 0;
 
-  @Output()
-  currentFrameIndexChange = new EventEmitter<number>();
-
-  readonly rowHeight = 40;
-  readonly playIcon = faPlay;
-  readonly pauseIcon = faPause;
-
-  isPlaying = false;
-  /** Fractional progress towards the frame after currentFrameIndex, 0 when not playing. */
+  /** Fractional progress towards the frame after currentFrameIndex, driven by the shared event-timeline playhead. */
+  @Input()
   playProgress = 0;
 
-  private rafId?: number;
-  private playStartTime = 0;
-  private playStartIndex = 0;
+  readonly rowHeight = 40;
 
   get frames(): LoLGameTimelineFrame[] {
     return this.timeline ?? [];
@@ -73,12 +52,6 @@ export class LolGameGoldRaceComponent implements OnDestroy {
 
   private get nextFrame(): LoLGameTimelineFrame | undefined {
     return this.frames[this.currentFrameIndex + 1];
-  }
-
-  get currentTimeLabel(): string {
-    const base = this.currentFrame?.timestamp ?? 0;
-    const next = this.nextFrame?.timestamp ?? base;
-    return formatTimestamp(base + (next - base) * this.playProgress);
   }
 
   get rows(): RaceRow[] {
@@ -112,74 +85,5 @@ export class LolGameGoldRaceComponent implements OnDestroy {
 
   championIconUrl(player: LoLGameParticipant): string {
     return championIconUrl(player.championName, this.patch);
-  }
-
-  onSliderInput(event: Event): void {
-    this.stopPlay();
-    const value = Number((event.target as HTMLInputElement).value);
-    this.currentFrameIndex = value;
-    this.currentFrameIndexChange.emit(value);
-  }
-
-  togglePlay(): void {
-    if (this.isPlaying) {
-      this.stopPlay();
-      return;
-    }
-
-    if (this.frames.length <= 1) {
-      return;
-    }
-
-    if (this.currentFrameIndex >= this.frames.length - 1) {
-      this.currentFrameIndex = 0;
-      this.currentFrameIndexChange.emit(0);
-    }
-
-    this.isPlaying = true;
-    this.playStartTime = performance.now();
-    this.playStartIndex = this.currentFrameIndex;
-    this.rafId = requestAnimationFrame(this.tick);
-  }
-
-  private tick = (now: number): void => {
-    if (!this.isPlaying) {
-      return;
-    }
-
-    const framesElapsed = (now - this.playStartTime) / MS_PER_FRAME;
-    const targetIndex = this.playStartIndex + Math.floor(framesElapsed);
-
-    if (targetIndex >= this.frames.length - 1) {
-      this.playProgress = 0;
-      if (this.currentFrameIndex !== this.frames.length - 1) {
-        this.currentFrameIndex = this.frames.length - 1;
-        this.currentFrameIndexChange.emit(this.currentFrameIndex);
-      }
-      this.stopPlay();
-      return;
-    }
-
-    if (targetIndex !== this.currentFrameIndex) {
-      this.currentFrameIndex = targetIndex;
-      this.currentFrameIndexChange.emit(targetIndex);
-    }
-
-    this.playProgress = framesElapsed - Math.floor(framesElapsed);
-    this.rafId = requestAnimationFrame(this.tick);
-  };
-
-  stopPlay(): void {
-    this.isPlaying = false;
-    this.playProgress = 0;
-
-    if (this.rafId != null) {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = undefined;
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.stopPlay();
   }
 }
