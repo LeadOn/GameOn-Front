@@ -10,6 +10,7 @@ import {
   latestStatsFor,
   playerDisplayName,
 } from '../../../../shared/classes/lol/lol-match.util';
+import { maxBountyOnHead } from '../../../../shared/classes/lol/lol-timeline-event.util';
 
 type Accent = 'green' | 'red' | 'blue' | 'yellow';
 
@@ -73,10 +74,10 @@ const CONFIGS: HighlightConfig[] = [
     key: 'bounty',
     icon: '💰',
     title: 'Tête mise à prix',
-    subtitle: 'Bounty level max',
+    subtitle: 'Prime la plus élevée collectée en le tuant',
     accent: 'yellow',
-    valueFn: (p) => p.bountyLevel,
-    formatFn: (v) => `Niv. ${v.toFixed(0)}`,
+    valueFn: (p, timeline) => maxBountyOnHead(timeline, p.puuid),
+    formatFn: (v) => `${v.toFixed(0)}`,
   },
   {
     key: 'reaper',
