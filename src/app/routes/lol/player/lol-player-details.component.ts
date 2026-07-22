@@ -23,7 +23,10 @@ import {
   tierEmblemUrl,
   tierLabel,
 } from '../../../shared/classes/lol/lol-tier.util';
-import { formatRelativeDate } from '../../../shared/classes/lol/lol-match.util';
+import {
+  formatRelativeDate,
+  parseApiDate,
+} from '../../../shared/classes/lol/lol-match.util';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -247,7 +250,7 @@ export class LolPlayerDetailsComponent implements OnInit {
       return false;
     }
 
-    const lastRefreshDate = new Date(player.lolRefreshedOn);
+    const lastRefreshDate = parseApiDate(player.lolRefreshedOn);
     if (Number.isNaN(lastRefreshDate.getTime())) {
       return false;
     }

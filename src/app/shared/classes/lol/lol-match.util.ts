@@ -221,8 +221,43 @@ export function formatFull(value: number): string {
   return new Intl.NumberFormat('fr-FR').format(Math.round(value));
 }
 
+/**
+ * The API serializes DateTime values without a timezone offset even though
+ * they're stored in UTC. `new Date(...)` on such a string parses it as local
+ * time instead, shifting it by the browser's UTC offset (e.g. 2h in French
+ * summer time). Append 'Z' when no offset is present so it's parsed as UTC.
+ */
+export function parseApiDate(date: Date | string): Date {
+  if (date instanceof Date) {
+    return date;
+  }
+
+  const hasTimezone = /Z$|[+-]\d{2}:?\d{2}$/.test(date);
+  return new Date(hasTimezone ? date : `${date}Z`);
+}
+
+export function formatDateTime(date: Date | string): string {
+  const parsedDate = parseApiDate(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return 'Date inconnue';
+  }
+
+  const datePart = new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+  }).format(parsedDate);
+
+  const timePart = new Intl.DateTimeFormat('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(parsedDate);
+
+  return `${datePart} à ${timePart}`;
+}
+
 export function formatRelativeDate(date: Date | string): string {
-  const diffMs = Date.now() - new Date(date).getTime();
+  const diffMs = Date.now() - parseApiDate(date).getTime();
   const minutes = Math.floor(diffMs / 60000);
 
   if (minutes < 1) return "à l'instant";

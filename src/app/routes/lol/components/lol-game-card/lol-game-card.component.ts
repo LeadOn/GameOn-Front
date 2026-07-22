@@ -11,7 +11,10 @@ import {
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
 import { LoLQueue } from '../../../../shared/classes/lol/LoLQueue';
 import { queueLabel } from '../../../../shared/classes/lol/lol-queue.util';
-import { closestDdragonVersion } from '../../../../shared/classes/lol/lol-match.util';
+import {
+  closestDdragonVersion,
+  formatDateTime,
+} from '../../../../shared/classes/lol/lol-match.util';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -172,6 +175,10 @@ export class LolGameCardComponent implements OnInit, OnChanges {
 
   get queueLabel(): string {
     return queueLabel(this.lolQueues, this.game.queueId);
+  }
+
+  get gamePlayedOn(): string {
+    return formatDateTime(this.game.gameStart);
   }
 
   get gamePatch(): string {
