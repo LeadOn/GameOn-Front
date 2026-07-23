@@ -222,18 +222,16 @@ export function formatFull(value: number): string {
 }
 
 /**
- * The API serializes DateTime values without a timezone offset even though
- * they're stored in UTC. `new Date(...)` on such a string parses it as local
- * time instead, shifting it by the browser's UTC offset (e.g. 2h in French
- * summer time). Append 'Z' when no offset is present so it's parsed as UTC.
+ * Most API DateTime fields (gameStart, gameEnd, retrievedOn, ...) are
+ * serialized without a timezone offset, but — unlike what the field name
+ * might suggest — they're already in server-local (Europe/Paris) time, not
+ * UTC. `new Date(...)` on a date-time string with no offset already parses
+ * it as local time per spec, which happens to match here since this app's
+ * users are in the same timezone as the server. Fields that do carry an
+ * explicit offset (e.g. lolRefreshedOn's "+02:00") parse correctly as-is.
  */
 export function parseApiDate(date: Date | string): Date {
-  if (date instanceof Date) {
-    return date;
-  }
-
-  const hasTimezone = /Z$|[+-]\d{2}:?\d{2}$/.test(date);
-  return new Date(hasTimezone ? date : `${date}Z`);
+  return date instanceof Date ? date : new Date(date);
 }
 
 export function formatDateTime(date: Date | string): string {

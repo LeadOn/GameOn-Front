@@ -37,6 +37,7 @@ import { Store } from '@ngrx/store';
 type RankHistoryRange = 'sevenDays' | 'day' | 'week' | 'month';
 
 interface GameHistoryFilters {
+  currentPage: number;
   pageSize: number;
   rankedOnly: boolean;
   selectedQueueIds: number[];
@@ -123,6 +124,9 @@ export class LolPlayerDetailsComponent implements OnInit {
 
     try {
       const filters = JSON.parse(raw) as Partial<GameHistoryFilters>;
+      if (typeof filters.currentPage === 'number' && filters.currentPage >= 1) {
+        this.currentPage = filters.currentPage;
+      }
       if (typeof filters.pageSize === 'number') {
         this.pageSize = filters.pageSize;
       }
@@ -145,6 +149,7 @@ export class LolPlayerDetailsComponent implements OnInit {
 
   private persistGameHistoryFilters() {
     const filters: GameHistoryFilters = {
+      currentPage: this.currentPage,
       pageSize: this.pageSize,
       rankedOnly: this.rankedOnly,
       selectedQueueIds: this.selectedQueueIds,
@@ -514,6 +519,7 @@ export class LolPlayerDetailsComponent implements OnInit {
 
           if (normalizedPage !== requestedPage) {
             this.currentPage = normalizedPage;
+            this.persistGameHistoryFilters();
             this.getLastGamesPlayed();
             return;
           }
@@ -546,6 +552,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   prevPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      this.persistGameHistoryFilters();
       this.getLastGamesPlayed();
     }
   }
@@ -553,6 +560,7 @@ export class LolPlayerDetailsComponent implements OnInit {
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
+      this.persistGameHistoryFilters();
       this.getLastGamesPlayed();
     }
   }
@@ -563,6 +571,7 @@ export class LolPlayerDetailsComponent implements OnInit {
     }
 
     this.currentPage = page;
+    this.persistGameHistoryFilters();
     this.getLastGamesPlayed();
   }
 
