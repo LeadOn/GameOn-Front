@@ -6,7 +6,11 @@ import {
   HostListener,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faExternalLink, faSync } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCalendarDays,
+  faExternalLink,
+  faSync,
+} from '@fortawesome/free-solid-svg-icons';
 import { PlayerDto } from '../../../shared/classes/common/PlayerDto';
 import {
   LeagueOfLegendsRankHistory,
@@ -36,6 +40,8 @@ interface GameHistoryFilters {
   pageSize: number;
   rankedOnly: boolean;
   selectedQueueIds: number[];
+  startDate: string | null;
+  endDate: string | null;
 }
 
 const GAME_HISTORY_FILTERS_STORAGE_KEY = 'gameon-lol-game-history-filters';
@@ -86,6 +92,10 @@ export class LolPlayerDetailsComponent implements OnInit {
   queueOptions: LoLQueue[] = [];
   selectedQueueIds: number[] = [];
   queueFilterOpen = false;
+  startDate: string | null = null;
+  endDate: string | null = null;
+  dateFilterOpen = false;
+  calendarIcon = faCalendarDays;
 
   rankPosition: number | null = null;
 
@@ -122,6 +132,12 @@ export class LolPlayerDetailsComponent implements OnInit {
       if (Array.isArray(filters.selectedQueueIds)) {
         this.selectedQueueIds = filters.selectedQueueIds;
       }
+      if (typeof filters.startDate === 'string' || filters.startDate === null) {
+        this.startDate = filters.startDate;
+      }
+      if (typeof filters.endDate === 'string' || filters.endDate === null) {
+        this.endDate = filters.endDate;
+      }
     } catch (err) {
       console.error(err);
     }
@@ -132,6 +148,8 @@ export class LolPlayerDetailsComponent implements OnInit {
       pageSize: this.pageSize,
       rankedOnly: this.rankedOnly,
       selectedQueueIds: this.selectedQueueIds,
+      startDate: this.startDate,
+      endDate: this.endDate,
     };
 
     window.localStorage.setItem(
@@ -153,12 +171,12 @@ export class LolPlayerDetailsComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
-    if (
-      this.queueFilterOpen &&
-      !this.elementRef.nativeElement.contains(event.target)
-    ) {
-      this.queueFilterOpen = false;
+    if (this.elementRef.nativeElement.contains(event.target)) {
+      return;
     }
+
+    this.queueFilterOpen = false;
+    this.dateFilterOpen = false;
   }
 
   loadQueueOptions() {
@@ -197,6 +215,7 @@ export class LolPlayerDetailsComponent implements OnInit {
 
   toggleQueueFilter() {
     this.queueFilterOpen = !this.queueFilterOpen;
+    this.dateFilterOpen = false;
   }
 
   toggleQueue(id: number, event: Event) {
@@ -219,6 +238,65 @@ export class LolPlayerDetailsComponent implements OnInit {
 
     this.selectedQueueIds = [];
     this.queueFilterOpen = false;
+    this.currentPage = 1;
+    this.persistGameHistoryFilters();
+    this.getLastGamesPlayed();
+  }
+
+  toggleDateFilter() {
+    this.dateFilterOpen = !this.dateFilterOpen;
+    this.queueFilterOpen = false;
+  }
+
+  // Chrome/Edge only open the native calendar when the small picker icon is
+  // clicked; calling showPicker() lets a click anywhere on the field open it.
+  // Unsupported browsers (Firefox, Safari) already open it on focus/tap.
+  openDatePicker(event: Event) {
+    const input = event.target as HTMLInputElement & {
+      showPicker?: () => void;
+    };
+    input.showPicker?.();
+  }
+
+  get dateFilterLabel(): string {
+    if (this.startDate && this.endDate) {
+      return `${this.formatDateLabel(this.startDate)} → ${this.formatDateLabel(this.endDate)}`;
+    }
+    if (this.startDate) {
+      return `Depuis le ${this.formatDateLabel(this.startDate)}`;
+    }
+    if (this.endDate) {
+      return `Jusqu'au ${this.formatDateLabel(this.endDate)}`;
+    }
+    return 'Toutes les dates';
+  }
+
+  private formatDateLabel(date: string): string {
+    const [year, month, day] = date.split('-');
+    return `${day}/${month}/${year}`;
+  }
+
+  onStartDateChange(event: Event) {
+    this.startDate = (event.target as HTMLInputElement).value || null;
+    this.currentPage = 1;
+    this.persistGameHistoryFilters();
+    this.getLastGamesPlayed();
+  }
+
+  onEndDateChange(event: Event) {
+    this.endDate = (event.target as HTMLInputElement).value || null;
+    this.currentPage = 1;
+    this.persistGameHistoryFilters();
+    this.getLastGamesPlayed();
+  }
+
+  clearDateFilter() {
+    if (this.startDate == null && this.endDate == null) {
+      return;
+    }
+
+    this.startDate = null;
+    this.endDate = null;
     this.currentPage = 1;
     this.persistGameHistoryFilters();
     this.getLastGamesPlayed();
@@ -393,6 +471,17 @@ export class LolPlayerDetailsComponent implements OnInit {
       );
   }
 
+  // The date pickers only carry a calendar day, so the start bound is
+  // widened to the start of that day and the end bound to its end —
+  // otherwise a same-day range would match zero games.
+  private get startDateIso(): string | undefined {
+    return this.startDate ? `${this.startDate}T00:00:00` : undefined;
+  }
+
+  private get endDateIso(): string | undefined {
+    return this.endDate ? `${this.endDate}T23:59:59` : undefined;
+  }
+
   getLastGamesPlayed() {
     const requestedPage = this.currentPage;
     this.gameHistoryLoading = true;
@@ -403,6 +492,8 @@ export class LolPlayerDetailsComponent implements OnInit {
         this.pageSize,
         this.rankedOnly,
         this.selectedQueueIds,
+        this.startDateIso,
+        this.endDateIso,
       )
       .subscribe(
         (data) => {
