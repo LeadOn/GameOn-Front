@@ -32,6 +32,14 @@ import { Store } from '@ngrx/store';
 
 type RankHistoryRange = 'sevenDays' | 'day' | 'week' | 'month';
 
+interface GameHistoryFilters {
+  pageSize: number;
+  rankedOnly: boolean;
+  selectedQueueIds: number[];
+}
+
+const GAME_HISTORY_FILTERS_STORAGE_KEY = 'gameon-lol-game-history-filters';
+
 @Component({
   selector: 'app-lol-player-details',
   templateUrl: './lol-player-details.component.html',
@@ -93,8 +101,48 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.lolVersion$ = this.lolStore.select('lolVersion');
   }
 
+  private get gameHistoryFiltersStorageKey(): string {
+    return `${GAME_HISTORY_FILTERS_STORAGE_KEY}-${this.playerId}`;
+  }
+
+  private loadPersistedGameHistoryFilters() {
+    const raw = window.localStorage.getItem(this.gameHistoryFiltersStorageKey);
+    if (raw == null) {
+      return;
+    }
+
+    try {
+      const filters = JSON.parse(raw) as Partial<GameHistoryFilters>;
+      if (typeof filters.pageSize === 'number') {
+        this.pageSize = filters.pageSize;
+      }
+      if (typeof filters.rankedOnly === 'boolean') {
+        this.rankedOnly = filters.rankedOnly;
+      }
+      if (Array.isArray(filters.selectedQueueIds)) {
+        this.selectedQueueIds = filters.selectedQueueIds;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  private persistGameHistoryFilters() {
+    const filters: GameHistoryFilters = {
+      pageSize: this.pageSize,
+      rankedOnly: this.rankedOnly,
+      selectedQueueIds: this.selectedQueueIds,
+    };
+
+    window.localStorage.setItem(
+      this.gameHistoryFiltersStorageKey,
+      JSON.stringify(filters),
+    );
+  }
+
   ngOnInit(): void {
     this.playerId = this.route.snapshot.paramMap.get('id');
+    this.loadPersistedGameHistoryFilters();
     this.getSummoner();
     this.loadQueueOptions();
 
@@ -159,6 +207,7 @@ export class LolPlayerDetailsComponent implements OnInit {
       : this.selectedQueueIds.filter((queueId) => queueId !== id);
 
     this.currentPage = 1;
+    this.persistGameHistoryFilters();
     this.getLastGamesPlayed();
   }
 
@@ -171,6 +220,7 @@ export class LolPlayerDetailsComponent implements OnInit {
     this.selectedQueueIds = [];
     this.queueFilterOpen = false;
     this.currentPage = 1;
+    this.persistGameHistoryFilters();
     this.getLastGamesPlayed();
   }
 
@@ -391,12 +441,14 @@ export class LolPlayerDetailsComponent implements OnInit {
   onPageSizeChange(event: Event) {
     this.pageSize = Number((event.target as HTMLSelectElement).value);
     this.currentPage = 1;
+    this.persistGameHistoryFilters();
     this.getLastGamesPlayed();
   }
 
   onRankedOnlyChange(event: Event) {
     this.rankedOnly = (event.target as HTMLInputElement).checked;
     this.currentPage = 1;
+    this.persistGameHistoryFilters();
     this.getLastGamesPlayed();
   }
 
