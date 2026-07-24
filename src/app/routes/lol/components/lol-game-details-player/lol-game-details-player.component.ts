@@ -11,7 +11,9 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   championIconUrl,
   creepScoreFor,
+  damageToChampionsFor,
   decimalLabel,
+  formatCompact,
   formatFull,
   goldEarnedFor,
   itemIconUrl,
@@ -20,7 +22,10 @@ import {
   kdaColorClass,
   kdaLabel,
   killParticipationFor,
+  latestStatsFor,
   playerDisplayName,
+  playerRating,
+  ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import {
   roleIconUrl,
@@ -57,6 +62,9 @@ export class LolGameDetailsPlayerComponent {
   @Input()
   patch = '';
 
+  @Input()
+  durationSeconds = 0;
+
   @Output()
   playerSelected = new EventEmitter<LoLGameParticipant>();
 
@@ -80,8 +88,93 @@ export class LolGameDetailsPlayerComponent {
     this.showMoreChallenges = !this.showMoreChallenges;
   }
 
+  /**
+   * The MVP keeps its golden wash even while selected — the two states are
+   * mutually exclusive background utilities, so they're resolved here rather
+   * than stacked in the template where source order would decide the winner.
+   */
+  get rowClass(): string {
+    if (this.isMvp) {
+      return this.isSelected
+        ? 'bg-mpYellow/20'
+        : 'bg-mpYellow/10 hover:bg-mpYellow/15';
+    }
+
+    return this.isSelected
+      ? 'light:bg-[rgba(23,30,54,0.06)] bg-white/10'
+      : 'light:hover:bg-[rgba(23,30,54,0.04)] hover:bg-white/5';
+  }
+
   get itemSlots(): number[] {
     return itemSlots(this.player);
+  }
+
+  get rating(): number {
+    return playerRating(
+      this.player,
+      this.team,
+      this.timeline,
+      this.durationSeconds || (this.player.stats?.gameDurationSeconds ?? 0),
+    );
+  }
+
+  get ratingLabel(): string {
+    return decimalLabel(this.rating, 1);
+  }
+
+  get ratingTone(): string {
+    return ratingToneClass(this.rating);
+  }
+
+  get damageDealt(): number {
+    return damageToChampionsFor(this.player, this.timeline);
+  }
+
+  get damageLabel(): string {
+    return formatCompact(this.damageDealt);
+  }
+
+  /** Bar length, relative to the biggest damage dealer of the same team. */
+  get damageBarPercent(): number {
+    const max = this.team.reduce(
+      (m, p) => Math.max(m, damageToChampionsFor(p, this.timeline)),
+      0,
+    );
+    return max <= 0 ? 0 : Math.max(2, (this.damageDealt / max) * 100);
+  }
+
+  /** Physical / magic / true split, as a share of this player's own damage. */
+  get damageSplit(): { physical: number; magic: number; trueDamage: number } {
+    const stats = latestStatsFor(this.timeline, this.player.puuid);
+    const physical = stats?.physicalDamageDoneToChampions ?? 0;
+    const magic = stats?.magicDamageDoneToChampions ?? 0;
+    const trueDamage = stats?.trueDamageDoneToChampions ?? 0;
+    const total = physical + magic + trueDamage;
+
+    if (total <= 0) {
+      return { physical: 100, magic: 0, trueDamage: 0 };
+    }
+
+    return {
+      physical: (physical / total) * 100,
+      magic: (magic / total) * 100,
+      trueDamage: (trueDamage / total) * 100,
+    };
+  }
+
+  get goldLabel(): string {
+    return formatCompact(this.currentGold);
+  }
+
+  /** The bar only shows a total; the split lives in its native tooltip. */
+  get damageTitle(): string {
+    const stats = latestStatsFor(this.timeline, this.player.puuid);
+
+    return [
+      `Physique ${formatFull(stats?.physicalDamageDoneToChampions ?? 0)}`,
+      `Magique ${formatFull(stats?.magicDamageDoneToChampions ?? 0)}`,
+      `Brut ${formatFull(stats?.trueDamageDoneToChampions ?? 0)}`,
+    ].join(' · ');
   }
 
   get cs(): number {
@@ -138,6 +231,17 @@ export class LolGameDetailsPlayerComponent {
 
   get kdaColorClass(): string {
     return kdaColorClass(this.kdaValue);
+  }
+
+  /** "Jinx · Bot · KP 74%" — the role drops out on modes without lanes. */
+  get subtitle(): string {
+    return [
+      this.player.championName ?? '',
+      this.roleLabel,
+      `KP ${this.killParticipation}%`,
+    ]
+      .filter((part) => part !== '')
+      .join(' · ');
   }
 
   get displayName(): string {

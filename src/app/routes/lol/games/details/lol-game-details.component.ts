@@ -1,6 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBorderAll,
+  faChartSimple,
+  faFilm,
+  faTableList,
+} from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { LoLGame } from '../../../../shared/classes/lol/LoLGame';
@@ -12,11 +17,25 @@ import {
   bestParticipant,
   closestDdragonVersion,
   compositeScore,
-  formatDuration,
+  formatCompact,
   gameDurationSeconds,
-  kda,
+  goldEarnedFor,
+  teamKillCount,
 } from '../../../../shared/classes/lol/lol-match.util';
 import { queueLabel } from '../../../../shared/classes/lol/lol-queue.util';
+import { GameTab } from '../../components/lol-game-tabs/lol-game-tabs.component';
+
+interface Scoreboard {
+  teamId: number;
+  label: string;
+  dotClass: string;
+  headerTintClass: string;
+  outcomeLabel: string;
+  outcomeTone: string;
+  kills: number;
+  goldLabel: string;
+  players: LoLGameParticipant[];
+}
 
 @Component({
   selector: 'app-lol-game-details',
@@ -33,6 +52,16 @@ export class LolGameDetailsComponent implements OnInit {
   team1: LoLGameParticipant[] = [];
   team2: LoLGameParticipant[] = [];
 
+  /**
+   * Held as a field rather than a getter: it's bound as an @Input on half a
+   * dozen children, and a fresh array on every change-detection pass would
+   * re-run their (timeline-wide) ngOnChanges work each time.
+   */
+  allPlayers: LoLGameParticipant[] = [];
+
+  /** Same reasoning as `allPlayers`: rebuilt on data change, not per CD pass. */
+  scoreboards: Scoreboard[] = [];
+
   timeline?: LoLGameTimelineFrame[];
   selectedPlayer?: LoLGameParticipant;
   currentFrameIndex = 0;
@@ -40,14 +69,19 @@ export class LolGameDetailsComponent implements OnInit {
 
   damageMode: 'dealt' | 'taken' = 'dealt';
 
-  patchTitle = 'Patch inconnu';
+  tabs: GameTab[] = [
+    { id: 'overview', label: "Vue d'ensemble", icon: faBorderAll },
+    { id: 'film', label: 'Film de la partie', icon: faFilm },
+    { id: 'performance', label: 'Performance', icon: faChartSimple },
+    { id: 'raw', label: 'Données brutes', icon: faTableList },
+  ];
+  activeTab = 'overview';
+
   gamePatch = '';
   lolQueues$: Observable<LoLQueue[]>;
   lolQueues: LoLQueue[] = [];
   lolVersions$: Observable<string[]>;
   lolVersions: string[] = [];
-
-  refreshIcon = faSync;
 
   isLoading = true;
   isSyncing = false;
@@ -86,11 +120,6 @@ export class LolGameDetailsComponent implements OnInit {
       (game) => {
         this.game = game;
 
-        if (this.game.gameVersion) {
-          const [major, minor] = this.game.gameVersion.split('.');
-          this.patchTitle = `Patch ${major}.${minor}`;
-        }
-
         this.updateGamePatch();
 
         const teams = game.leagueOfLegendsGameParticipants.reduce(
@@ -106,6 +135,8 @@ export class LolGameDetailsComponent implements OnInit {
 
         this.team1 = teams[100] ?? [];
         this.team2 = teams[200] ?? [];
+        this.allPlayers = [...this.team1, ...this.team2];
+        this.buildScoreboards();
 
         this.selectedPlayer =
           this.allPlayers.find((p) => p.puuid == previousPuuid) ??
@@ -154,6 +185,8 @@ export class LolGameDetailsComponent implements OnInit {
       (timeline) => {
         this.timeline = [...timeline].sort((a, b) => a.timestamp - b.timestamp);
         this.currentFrameIndex = Math.max(0, this.timeline.length - 1);
+        // Team gold only becomes available once the timeline is in.
+        this.buildScoreboards();
         this.isLoading = false;
         this.isSyncing = false;
       },
@@ -164,6 +197,60 @@ export class LolGameDetailsComponent implements OnInit {
         console.error(err);
       },
     );
+  }
+
+  buildScoreboards(): void {
+    this.scoreboards = [
+      {
+        teamId: 100,
+        label: 'Équipe bleue',
+        dotClass: 'bg-mpGreen',
+        // Same accent as the dot, washed across the header strip.
+        headerTintClass:
+          'bg-[linear-gradient(90deg,rgba(45,224,165,0.16),transparent_70%)]',
+        players: this.team1,
+      },
+      {
+        teamId: 200,
+        label: 'Équipe rouge',
+        dotClass: 'bg-mpRed',
+        headerTintClass:
+          'bg-[linear-gradient(90deg,rgba(255,92,116,0.16),transparent_70%)]',
+        players: this.team2,
+      },
+    ]
+      // Never-synced games carry no participants: an empty table with a column
+      // header reads as broken, so the whole card is dropped instead.
+      .filter((side) => side.players.length > 0)
+      .map((side) => ({
+        ...side,
+        outcomeLabel: this.outcomeLabel(side.teamId),
+        outcomeTone: this.outcomeTone(side.teamId),
+        kills: teamKillCount(side.players),
+        goldLabel: formatCompact(
+          side.players.reduce(
+            (sum, p) => sum + goldEarnedFor(p, this.timeline),
+            0,
+          ),
+        ),
+      }));
+  }
+
+  private outcomeLabel(teamId: number): string {
+    if (this.game.isRemake) return 'Remake';
+    if (this.game.winningTeamId == null) return '';
+
+    return this.game.winningTeamId === teamId ? 'Victoire' : 'Défaite';
+  }
+
+  private outcomeTone(teamId: number): string {
+    if (this.game.isRemake || this.game.winningTeamId == null) {
+      return 'text-mpTextSecondary';
+    }
+
+    return this.game.winningTeamId === teamId
+      ? 'text-mpGreenInk'
+      : 'text-mpRedInk';
   }
 
   onPlayerSelected(player: LoLGameParticipant) {
@@ -178,25 +265,8 @@ export class LolGameDetailsComponent implements OnInit {
     this.damageMode = mode;
   }
 
-  formatRetrievedOn(date?: Date | string): string {
-    const parsedDate =
-      date instanceof Date ? date : date ? new Date(date) : undefined;
-
-    if (parsedDate == null || Number.isNaN(parsedDate.getTime())) {
-      return 'Date inconnue';
-    }
-
-    const datePart = new Intl.DateTimeFormat('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-    }).format(parsedDate);
-
-    const timePart = new Intl.DateTimeFormat('fr-FR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }).format(parsedDate);
-
-    return `${datePart} à ${timePart}`;
+  setActiveTab(tabId: string) {
+    this.activeTab = tabId;
   }
 
   get heroPlayer(): LoLGameParticipant | undefined {
@@ -209,42 +279,12 @@ export class LolGameDetailsComponent implements OnInit {
     );
   }
 
-  get heroWon(): boolean | undefined {
-    if (this.game.isRemake) {
-      return undefined;
-    }
-
-    return this.heroPlayer?.win;
-  }
-
-  get heroKda(): string {
-    return this.heroPlayer
-      ? kda(this.heroPlayer).toFixed(2).replace('.', ',')
-      : '0,00';
-  }
-
-  get heroStatusLabel(): string {
-    if (this.game.isRemake) {
-      return 'Remake';
-    }
-
-    if (this.game.endOfGameResult == null || this.game.endOfGameResult === '') {
-      return 'Partie non synchronisée';
-    }
-
-    return this.heroWon ? 'Victoire' : 'Défaite';
-  }
-
   get queueLabel(): string {
     return queueLabel(this.lolQueues, this.game.queueId);
   }
 
   get durationSeconds(): number {
     return gameDurationSeconds(this.game);
-  }
-
-  get gameDurationLabel(): string {
-    return formatDuration(this.durationSeconds);
   }
 
   get winners(): LoLGameParticipant[] {
@@ -268,25 +308,5 @@ export class LolGameDetailsComponent implements OnInit {
   get acePuuid(): string | undefined {
     return bestParticipant(this.losers, (p) => compositeScore(p, this.timeline))
       ?.player.puuid;
-  }
-
-  get team1BaronKills(): number {
-    return this.team1.reduce((sum, p) => sum + p.baronKills, 0);
-  }
-
-  get team2BaronKills(): number {
-    return this.team2.reduce((sum, p) => sum + p.baronKills, 0);
-  }
-
-  get allPlayers(): LoLGameParticipant[] {
-    return [...this.team1, ...this.team2];
-  }
-
-  championIconUrl(player?: LoLGameParticipant): string {
-    if (player?.championName) {
-      return `https://ddragon.leagueoflegends.com/cdn/${this.gamePatch}/img/champion/${player.championName}.png`;
-    }
-
-    return 'assets/img/gameon-logo.webp';
   }
 }

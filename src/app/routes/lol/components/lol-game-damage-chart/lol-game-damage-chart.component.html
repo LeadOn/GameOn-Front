@@ -21,14 +21,34 @@
   <div class="space-y-2.5">
     @for (row of rows; track row.player.puuid) {
       <div
-        class="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 transition-colors"
+        class="group relative flex cursor-pointer items-center gap-3 rounded-lg p-1.5 transition-colors"
         [ngClass]="
           selectedPuuid == row.player.puuid
-            ? 'bg-white/10 light:bg-[rgba(23,30,54,0.06)]'
-            : 'hover:bg-white/5 light:hover:bg-[rgba(23,30,54,0.04)]'
+            ? 'light:bg-[rgba(23,30,54,0.06)] bg-white/10'
+            : 'light:hover:bg-[rgba(23,30,54,0.04)] hover:bg-white/5'
         "
         (click)="select(row.player)"
       >
+        <!-- The split behind each bar is only readable on hover. -->
+        <div
+          class="border-mpBorder bg-mpBg pointer-events-none absolute right-16 top-1/2 z-20 hidden -translate-y-1/2 whitespace-nowrap rounded-lg border px-2.5 py-1.5 text-[11px] shadow-lg group-hover:block"
+        >
+          @if (mode == "dealt") {
+            <p class="text-mpYellowInk">
+              Physique · {{ row.physical | number: "1.0-0" }}
+            </p>
+            <p class="text-mpBlueInk">
+              Magique · {{ row.magic | number: "1.0-0" }}
+            </p>
+            <p class="text-mpText">
+              Brut · {{ row.trueDamage | number: "1.0-0" }}
+            </p>
+          } @else {
+            <p class="text-mpRedInk">
+              Dégâts subis · {{ row.taken | number: "1.0-0" }}
+            </p>
+          }
+        </div>
         <div class="flex w-36 min-w-0 shrink-0 items-center gap-2">
           <span
             class="h-2 w-2 shrink-0 rounded-full"
