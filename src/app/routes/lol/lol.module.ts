@@ -15,6 +15,7 @@ import { LolGameEventTimelineComponent } from './components/lol-game-event-timel
 import { LolGameMinimapComponent } from './components/lol-game-minimap/lol-game-minimap.component';
 import { LolGameStatChartComponent } from './components/lol-game-stat-chart/lol-game-stat-chart.component';
 import { LolGameRankingChartComponent } from './components/lol-game-ranking-chart/lol-game-ranking-chart.component';
+import { LolGameRawStatsTableComponent } from './components/lol-game-raw-stats-table/lol-game-raw-stats-table.component';
 import { LolGameDetailsComponent } from './games/details/lol-game-details.component';
 import { LolPlayerDetailsComponent } from './player/lol-player-details.component';
 import { RankHistoryComponent } from './player/components/rank-history/rank-history.component';
@@ -45,6 +46,7 @@ import { LoLQueue } from '../../shared/classes/lol/LoLQueue';
     LolGameMinimapComponent,
     LolGameStatChartComponent,
     LolGameRankingChartComponent,
+    LolGameRawStatsTableComponent,
     RankHistoryComponent,
     WinRateChartComponent,
     LolFunStatsComponent,

@@ -450,4 +450,13 @@
       ></app-lol-game-ranking-chart>
     </div>
   </section>
+
+  <section class="font-body mx-auto mb-8 mt-4 w-full max-w-6xl px-4">
+    <div class="mp-card">
+      <app-lol-game-raw-stats-table
+        [players]="allPlayers"
+        [patch]="gamePatch"
+      ></app-lol-game-raw-stats-table>
+    </div>
+  </section>
 }

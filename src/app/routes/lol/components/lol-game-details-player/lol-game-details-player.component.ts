@@ -22,6 +22,10 @@ import {
   killParticipationFor,
   playerDisplayName,
 } from '../../../../shared/classes/lol/lol-match.util';
+import {
+  roleIconUrl,
+  roleLabel,
+} from '../../../../shared/classes/lol/lol-role.util';
 
 @Component({
   selector: 'app-lol-game-details-player',
@@ -60,6 +64,7 @@ export class LolGameDetailsPlayerComponent {
   expandIcon = faChevronDown;
 
   showAdvancedStats = false;
+  showMoreChallenges = false;
 
   selectPlayer() {
     this.playerSelected.emit(this.player);
@@ -68,6 +73,11 @@ export class LolGameDetailsPlayerComponent {
   toggleAdvancedStats(event: Event) {
     event.stopPropagation();
     this.showAdvancedStats = !this.showAdvancedStats;
+  }
+
+  toggleMoreChallenges(event: Event) {
+    event.stopPropagation();
+    this.showMoreChallenges = !this.showMoreChallenges;
   }
 
   get itemSlots(): number[] {
@@ -136,6 +146,203 @@ export class LolGameDetailsPlayerComponent {
 
   get isLinkedToGameOn(): boolean {
     return this.player.player != null;
+  }
+
+  get roleIconUrl(): string | undefined {
+    return roleIconUrl(this.player.teamPosition);
+  }
+
+  get roleLabel(): string {
+    return roleLabel(this.player.teamPosition);
+  }
+
+  get hasChallenges(): boolean {
+    return this.player.challenges != null;
+  }
+
+  get challengeKdaLabel(): string {
+    return decimalLabel(this.player.challenges?.kda ?? 0, 2);
+  }
+
+  get challengeKillParticipationPercent(): number {
+    return Math.round((this.player.challenges?.killParticipation ?? 0) * 100);
+  }
+
+  get challengeDamagePerMinuteLabel(): string {
+    return formatFull(this.player.challenges?.damagePerMinute ?? 0);
+  }
+
+  get challengeGoldPerMinuteLabel(): string {
+    return formatFull(this.player.challenges?.goldPerMinute ?? 0);
+  }
+
+  get challengeVisionScorePerMinuteLabel(): string {
+    return decimalLabel(this.player.challenges?.visionScorePerMinute ?? 0, 2);
+  }
+
+  get challengeTeamDamagePercent(): number {
+    return Math.round(
+      (this.player.challenges?.teamDamagePercentage ?? 0) * 100,
+    );
+  }
+
+  get challengeSoloKills(): number {
+    return this.player.challenges?.soloKills ?? 0;
+  }
+
+  get challengeWardTakedowns(): number {
+    return this.player.challenges?.wardTakedowns ?? 0;
+  }
+
+  get challengeSkillshotsHit(): number {
+    return this.player.challenges?.skillshotsHit ?? 0;
+  }
+
+  get challengeSkillshotsDodged(): number {
+    return this.player.challenges?.skillshotsDodged ?? 0;
+  }
+
+  get challengeMultikills(): number {
+    return this.player.challenges?.multikills ?? 0;
+  }
+
+  get challengeImmobilizeAndKillWithAlly(): number {
+    return this.player.challenges?.immobilizeAndKillWithAlly ?? 0;
+  }
+
+  get challengeEnemyChampionImmobilizations(): number {
+    return this.player.challenges?.enemyChampionImmobilizations ?? 0;
+  }
+
+  get challengeDragonTakedowns(): number {
+    return this.player.challenges?.dragonTakedowns ?? 0;
+  }
+
+  get challengeBaronTakedowns(): number {
+    return this.player.challenges?.baronTakedowns ?? 0;
+  }
+
+  get challengeTurretTakedowns(): number {
+    return this.player.challenges?.turretTakedowns ?? 0;
+  }
+
+  get challengeRiftHeraldTakedowns(): number {
+    return this.player.challenges?.riftHeraldTakedowns ?? 0;
+  }
+
+  get challengeLaneMinionsFirst10MinutesLabel(): string {
+    return formatFull(this.player.challenges?.laneMinionsFirst10Minutes ?? 0);
+  }
+
+  get challengeMaxCsAdvantageLabel(): string {
+    return decimalLabel(
+      this.player.challenges?.maxCsAdvantageOnLaneOpponent ?? 0,
+      1,
+    );
+  }
+
+  get challengeJungleCsBefore10MinutesLabel(): string {
+    return decimalLabel(
+      this.player.challenges?.jungleCsBefore10Minutes ?? 0,
+      1,
+    );
+  }
+
+  get challengeControlWardsPlaced(): number {
+    return this.player.challenges?.controlWardsPlaced ?? 0;
+  }
+
+  get challengeStealthWardsPlaced(): number {
+    return this.player.challenges?.stealthWardsPlaced ?? 0;
+  }
+
+  get challengeVisionScoreAdvantageLabel(): string {
+    return decimalLabel(
+      this.player.challenges?.visionScoreAdvantageLaneOpponent ?? 0,
+      2,
+    );
+  }
+
+  get challengeDamageTakenOnTeamPercent(): number {
+    return Math.round(
+      (this.player.challenges?.damageTakenOnTeamPercentage ?? 0) * 100,
+    );
+  }
+
+  get challengeEffectiveHealAndShieldingLabel(): string {
+    return formatFull(this.player.challenges?.effectiveHealAndShielding ?? 0);
+  }
+
+  get challengeSaveAllyFromDeath(): number {
+    return this.player.challenges?.saveAllyFromDeath ?? 0;
+  }
+
+  get challengeHighestChampionDamageLabel(): string {
+    return this.player.challenges?.highestChampionDamage ? 'Oui' : 'Non';
+  }
+
+  get challengeHighestCrowdControlScoreLabel(): string {
+    return this.player.challenges?.highestCrowdControlScore ? 'Oui' : 'Non';
+  }
+
+  get challengeHighestWardKillsLabel(): string {
+    return this.player.challenges?.highestWardKills ? 'Oui' : 'Non';
+  }
+
+  get challengePerfectGameLabel(): string {
+    return this.player.challenges?.perfectGame ? 'Oui' : 'Non';
+  }
+
+  get challengeKillsUnderOwnTurret(): number {
+    return this.player.challenges?.killsUnderOwnTurret ?? 0;
+  }
+
+  get challengeKillsNearEnemyTurret(): number {
+    return this.player.challenges?.killsNearEnemyTurret ?? 0;
+  }
+
+  get challengeOutnumberedKills(): number {
+    return this.player.challenges?.outnumberedKills ?? 0;
+  }
+
+  get challengeSurvivedThreeImmobilizesInFight(): number {
+    return this.player.challenges?.survivedThreeImmobilizesInFight ?? 0;
+  }
+
+  get challengePickKillWithAlly(): number {
+    return this.player.challenges?.pickKillWithAlly ?? 0;
+  }
+
+  get challengeTurretPlatesTaken(): number {
+    return this.player.challenges?.turretPlatesTaken ?? 0;
+  }
+
+  get challengeKTurretsDestroyedBeforePlatesFall(): number {
+    return this.player.challenges?.kTurretsDestroyedBeforePlatesFall ?? 0;
+  }
+
+  get challengeQuickFirstTurretLabel(): string {
+    return this.player.challenges?.quickFirstTurret ? 'Oui' : 'Non';
+  }
+
+  get challengeTurretsTakenWithRiftHerald(): number {
+    return this.player.challenges?.turretsTakenWithRiftHerald ?? 0;
+  }
+
+  get challengeScuttleCrabKills(): number {
+    return this.player.challenges?.scuttleCrabKills ?? 0;
+  }
+
+  get challengeAlliedJungleMonsterKills(): number {
+    return Math.round(this.player.challenges?.alliedJungleMonsterKills ?? 0);
+  }
+
+  get challengeEnemyJungleMonsterKills(): number {
+    return Math.round(this.player.challenges?.enemyJungleMonsterKills ?? 0);
+  }
+
+  get challengeJunglerKillsEarlyJungle(): number {
+    return this.player.challenges?.junglerKillsEarlyJungle ?? 0;
   }
 
   championIconUrl(): string {
