@@ -1,4 +1,6 @@
 import { Player } from '../common/Player';
+import { LoLGameParticipantChallenges } from './LoLGameParticipantChallenges';
+import { LoLGameParticipantStats } from './LoLGameParticipantStats';
 
 export class LoLGameParticipant {
   id: number = 0;
@@ -29,4 +31,9 @@ export class LoLGameParticipant {
   baronKills: number = 0;
   bountyLevel: number = 0;
   consumablesPurchased: number = 0;
+  teamPosition: string = '';
+  individualPosition: string = '';
+  visionScore: number = 0;
+  stats?: LoLGameParticipantStats;
+  challenges?: LoLGameParticipantChallenges;
 }

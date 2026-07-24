@@ -1,0 +1,86 @@
+<button
+  type="button"
+  class="flex w-full items-center justify-between px-5 py-4"
+  [attr.aria-expanded]="expanded"
+  (click)="toggleExpanded()"
+>
+  <div class="text-left">
+    <p class="font-heading text-mpText text-base font-semibold">
+      Statistiques brutes
+    </p>
+    <p class="text-mpTextMuted mt-0.5 text-[13px]">
+      Toutes les données Riot par joueur, telles que renvoyées par l'API (noms
+      techniques)
+    </p>
+  </div>
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 16 16"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.5"
+    class="text-mpTextSecondary h-4 w-4 shrink-0 transition-transform"
+    [ngClass]="expanded ? 'rotate-180' : ''"
+  >
+    <path d="M4 6l4 4 4-4" />
+  </svg>
+</button>
+
+@if (expanded) {
+  <div class="border-mpBorder overflow-x-auto border-t">
+    <table class="w-full border-collapse whitespace-nowrap text-xs">
+      <thead>
+        <tr class="border-mpBorder border-b">
+          <th
+            class="bg-mpBg border-mpBorder sticky left-0 z-10 border-r px-3 py-2 text-left font-semibold"
+          >
+            Statistique
+          </th>
+          @for (player of players; track player.id) {
+            <th class="px-3 py-2 text-left font-semibold">
+              <div class="flex items-center gap-2">
+                <div class="relative shrink-0">
+                  <img
+                    class="border-mpBorder h-6 w-6 rounded-full border object-cover"
+                    [src]="championIconUrl(player)"
+                  />
+                  @if (roleIconUrl(player)) {
+                    <img
+                      class="border-mpBorder bg-mpBg absolute -left-1 -top-1 h-3 w-3 rounded-full border p-px"
+                      [src]="roleIconUrl(player)"
+                      [title]="roleLabel(player)"
+                    />
+                  }
+                </div>
+                <span
+                  class="max-w-[7rem] truncate"
+                  [ngClass]="nameColorClass(player)"
+                >
+                  {{ playerDisplayName(player) }}
+                </span>
+              </div>
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (row of rows; track row.key) {
+          <tr class="border-mpBorder hover:bg-mpPanelBg border-b">
+            <td
+              class="bg-mpBg border-mpBorder text-mpTextMuted sticky left-0 z-10 border-r px-3 py-1.5"
+            >
+              {{ row.label }}
+            </td>
+            @for (player of players; track player.id) {
+              <td class="text-mpText px-3 py-1.5">
+                {{ cellValue(player, row.key) }}
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

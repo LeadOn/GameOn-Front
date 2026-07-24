@@ -91,23 +91,30 @@ export class GameOnLoLService {
     size: number = 10,
     rankedOnly: boolean = false,
     queueIds?: number[] | null,
+    startDate?: string | null,
+    endDate?: string | null,
   ): Observable<ListResultDto<LoLGame>> {
-    let url =
-      environment.gameOnApiUrl +
-      '/lol/match/player/' +
-      playerId +
-      '?page=' +
-      page +
-      '&size=' +
-      size +
-      '&rankedOnly=' +
-      rankedOnly;
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('rankedOnly', rankedOnly);
 
     if (queueIds != null && queueIds.length > 0) {
-      url += '&queues=' + queueIds.join(',');
+      params = params.set('queues', queueIds.join(','));
     }
 
-    return this.client.get<ListResultDto<LoLGame>>(url);
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+
+    return this.client.get<ListResultDto<LoLGame>>(
+      environment.gameOnApiUrl + '/lol/match/player/' + playerId,
+      { params },
+    );
   }
 
   getQueues(): Observable<LoLQueue[]> {
