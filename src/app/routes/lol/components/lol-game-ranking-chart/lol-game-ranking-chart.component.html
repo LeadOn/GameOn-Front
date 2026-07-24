@@ -1,0 +1,81 @@
+<div class="p-5">
+  @if (playersWithStats.length > 0) {
+    <div class="mb-4 flex flex-wrap items-center gap-1.5">
+      @for (stat of stats; track stat.key) {
+        <button
+          type="button"
+          class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+          [ngClass]="
+            stat.key == selectedStatKey
+              ? 'text-mpText light:bg-[rgba(23,30,54,0.08)] bg-white/10'
+              : 'text-mpTextMuted hover:text-mpText hover:bg-white/5'
+          "
+          [attr.title]="stat.description"
+          (click)="selectStat(stat.key)"
+        >
+          {{ stat.label }}
+        </button>
+      }
+    </div>
+
+    <div class="space-y-2.5">
+      @for (row of rows; track row.player.puuid) {
+        <div
+          class="flex cursor-pointer items-center gap-3 rounded-lg p-1.5 transition-colors"
+          [ngClass]="
+            selectedPuuid == row.player.puuid
+              ? 'light:bg-[rgba(23,30,54,0.06)] bg-white/10'
+              : 'light:hover:bg-[rgba(23,30,54,0.04)] hover:bg-white/5'
+          "
+          (click)="select(row.player)"
+        >
+          <div class="flex w-40 min-w-0 shrink-0 items-center gap-2">
+            <span
+              class="h-2 w-2 shrink-0 rounded-full"
+              [ngClass]="row.player.teamId == 100 ? 'bg-mpGreen' : 'bg-mpRed'"
+            ></span>
+            <img
+              [src]="championIconUrl(row.player)"
+              class="h-6 w-6 shrink-0 rounded-full border border-white/20 object-cover"
+            />
+            <span class="text-mpText truncate text-xs font-medium">
+              {{ row.player.riotIdGameName }}
+            </span>
+          </div>
+
+          <div
+            class="light:bg-[rgba(23,30,54,0.06)] h-4 flex-1 overflow-hidden rounded-full bg-white/5"
+          >
+            <div
+              class="h-full rounded-full transition-all duration-500"
+              [ngClass]="row.player.teamId == 100 ? 'bg-mpGreen' : 'bg-mpRed'"
+              [style.width.%]="widthPercent(row.value)"
+            ></div>
+          </div>
+
+          <span
+            class="text-mpTextSecondary w-16 shrink-0 text-right text-xs font-semibold"
+          >
+            {{ formatValue(row.value) }}
+          </span>
+        </div>
+      }
+    </div>
+
+    @if (excludedPlayerCount > 0) {
+      <p class="text-mpTextMuted mt-3 text-[11px]">
+        {{ excludedPlayerCount }} joueur{{
+          excludedPlayerCount > 1 ? "s" : ""
+        }}
+        exclu{{ excludedPlayerCount > 1 ? "s" : "" }} : statistiques avancées
+        indisponibles pour cette partie.
+      </p>
+    }
+  } @else {
+    <app-info-message
+      [type]="'info'"
+      [title]="'Statistiques avancées indisponibles pour cette partie (historique non recalculé).'"
+      [applyMargin]="false"
+    ></app-info-message>
+  }
+</div>

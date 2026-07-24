@@ -5,19 +5,21 @@ import {
   Output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { faList } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faList } from '@fortawesome/free-solid-svg-icons';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import {
   championIconUrl,
-  csFor,
+  creepScoreFor,
+  decimalLabel,
+  formatFull,
+  goldEarnedFor,
   itemIconUrl,
   itemSlots,
   kda,
   kdaColorClass,
   kdaLabel,
-  killParticipation,
-  latestStatsFor,
+  killParticipationFor,
   playerDisplayName,
 } from '../../../../shared/classes/lol/lol-match.util';
 
@@ -55,9 +57,17 @@ export class LolGameDetailsPlayerComponent {
   playerSelected = new EventEmitter<LoLGameParticipant>();
 
   detailsIcon = faList;
+  expandIcon = faChevronDown;
+
+  showAdvancedStats = false;
 
   selectPlayer() {
     this.playerSelected.emit(this.player);
+  }
+
+  toggleAdvancedStats(event: Event) {
+    event.stopPropagation();
+    this.showAdvancedStats = !this.showAdvancedStats;
   }
 
   get itemSlots(): number[] {
@@ -65,15 +75,47 @@ export class LolGameDetailsPlayerComponent {
   }
 
   get cs(): number {
-    return csFor(this.timeline, this.player.puuid);
+    return creepScoreFor(this.player, this.timeline);
   }
 
   get currentGold(): number {
-    return latestStatsFor(this.timeline, this.player.puuid)?.totalGold ?? 0;
+    return goldEarnedFor(this.player, this.timeline);
   }
 
   get killParticipation(): number {
-    return killParticipation(this.player, this.team);
+    return killParticipationFor(this.player, this.team);
+  }
+
+  get hasAdvancedStats(): boolean {
+    return this.player.stats != null;
+  }
+
+  get csPerMinuteLabel(): string {
+    return decimalLabel(this.player.stats?.csPerMinute ?? 0);
+  }
+
+  get damageDealtToChampionsLabel(): string {
+    return formatFull(this.player.stats?.damageDealtToChampions ?? 0);
+  }
+
+  get damagePerMinuteLabel(): string {
+    return formatFull(this.player.stats?.damagePerMinute ?? 0);
+  }
+
+  get goldPerMinuteLabel(): string {
+    return formatFull(this.player.stats?.goldPerMinute ?? 0);
+  }
+
+  get damageTakenLabel(): string {
+    return formatFull(this.player.stats?.damageTaken ?? 0);
+  }
+
+  get wardsPlaced(): number {
+    return this.player.stats?.wardsPlaced ?? 0;
+  }
+
+  get wardsKilled(): number {
+    return this.player.stats?.wardsKilled ?? 0;
   }
 
   get kdaValue(): number {

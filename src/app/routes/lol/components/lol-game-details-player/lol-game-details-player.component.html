@@ -2,8 +2,8 @@
   class="flex w-full cursor-pointer items-center gap-3 px-4 py-3 transition-colors"
   [ngClass]="
     isSelected
-      ? 'bg-white/10 light:bg-[rgba(23,30,54,0.06)]'
-      : 'hover:bg-white/5 light:hover:bg-[rgba(23,30,54,0.04)]'
+      ? 'light:bg-[rgba(23,30,54,0.06)] bg-white/10'
+      : 'light:hover:bg-[rgba(23,30,54,0.04)] hover:bg-white/5'
   "
   (click)="selectPlayer()"
 >
@@ -61,8 +61,11 @@
 
       <p class="text-mpTextMuted mt-0.5 truncate text-xs">
         {{ player.championName }} &middot; {{ cs }} CS &middot;
-        {{ currentGold | number: "1.0-0" }} or &middot; KP
-        {{ killParticipation }}%
+        {{ currentGold | number: "1.0-0" }} or &middot;
+        <span
+          title="Part des éliminations de l'équipe auxquelles le joueur a contribué : (kills + assists du joueur) ÷ (kills totaux de l'équipe) × 100"
+          >KP {{ killParticipation }}%</span
+        >
       </p>
     </div>
   </div>
@@ -87,4 +90,62 @@
       </div>
     }
   </div>
+
+  <button
+    type="button"
+    class="text-mpTextMuted hover:text-mpText light:hover:bg-[rgba(23,30,54,0.06)] shrink-0 rounded-full p-1.5 transition-colors hover:bg-white/10"
+    [attr.aria-expanded]="showAdvancedStats"
+    title="Statistiques avancées"
+    (click)="toggleAdvancedStats($event)"
+  >
+    <fa-icon
+      [icon]="expandIcon"
+      class="block text-xs transition-transform"
+      [ngClass]="showAdvancedStats ? 'rotate-180' : ''"
+    ></fa-icon>
+  </button>
 </div>
+
+@if (showAdvancedStats) {
+  <div
+    class="border-mpBorder light:bg-[rgba(23,30,54,0.02)] bg-white/2 border-t px-4 py-3"
+  >
+    @if (hasAdvancedStats) {
+      <div class="grid grid-cols-2 gap-x-4 gap-y-2.5 text-xs sm:grid-cols-3">
+        <div>
+          <p class="text-mpTextMuted">CS/min</p>
+          <p class="text-mpText font-semibold">{{ csPerMinuteLabel }}</p>
+        </div>
+        <div>
+          <p class="text-mpTextMuted">Dégâts/min</p>
+          <p class="text-mpText font-semibold">{{ damagePerMinuteLabel }}</p>
+        </div>
+        <div>
+          <p class="text-mpTextMuted">Or/min</p>
+          <p class="text-mpText font-semibold">{{ goldPerMinuteLabel }}</p>
+        </div>
+        <div>
+          <p class="text-mpTextMuted">Dégâts aux champions</p>
+          <p class="text-mpText font-semibold">
+            {{ damageDealtToChampionsLabel }}
+          </p>
+        </div>
+        <div>
+          <p class="text-mpTextMuted">Dégâts subis</p>
+          <p class="text-mpText font-semibold">{{ damageTakenLabel }}</p>
+        </div>
+        <div>
+          <p class="text-mpTextMuted">Wards posées / détruites</p>
+          <p class="text-mpText font-semibold">
+            {{ wardsPlaced }} / {{ wardsKilled }}
+          </p>
+        </div>
+      </div>
+    } @else {
+      <p class="text-mpTextMuted text-xs">
+        Statistiques avancées indisponibles pour cette partie (historique non
+        recalculé).
+      </p>
+    }
+  </div>
+}

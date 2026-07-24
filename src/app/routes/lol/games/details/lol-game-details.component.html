@@ -33,12 +33,10 @@
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
     <div
-      class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))]"
+      class="grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] gap-4"
     >
       @for (team of [1, 2]; track team) {
-        <div
-          class="border-mpBorder overflow-hidden rounded-[20px] border"
-        >
+        <div class="border-mpBorder overflow-hidden rounded-[20px] border">
           <div
             class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
           >
@@ -164,11 +162,9 @@
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
     <div
-      class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))]"
+      class="grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] gap-4"
     >
-      <div
-        class="mp-card"
-      >
+      <div class="mp-card">
         <div
           class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
         >
@@ -217,9 +213,7 @@
         </div>
       </div>
 
-      <div
-        class="mp-card"
-      >
+      <div class="mp-card">
         <div
           class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
         >
@@ -271,9 +265,7 @@
   </section>
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="mp-card"
-    >
+    <div class="mp-card">
       <div
         class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
       >
@@ -330,7 +322,7 @@
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
     <div
-      class="grid items-start gap-4 grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))]"
+      class="grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] items-start gap-4"
     >
       <div class="mp-card">
         <div class="border-mpBorder border-b px-5 py-4">
@@ -372,9 +364,7 @@
   </section>
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="mp-card"
-    >
+    <div class="mp-card">
       <div
         class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
       >
@@ -390,7 +380,7 @@
             class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
             [ngClass]="
               damageMode == 'dealt'
-                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
+                ? 'text-mpText light:bg-[rgba(23,30,54,0.08)] bg-white/10'
                 : 'text-mpTextMuted hover:text-mpText'
             "
             (click)="setDamageMode('dealt')"
@@ -402,7 +392,7 @@
             class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
             [ngClass]="
               damageMode == 'taken'
-                ? 'text-mpText bg-white/10 light:bg-[rgba(23,30,54,0.08)]'
+                ? 'text-mpText light:bg-[rgba(23,30,54,0.08)] bg-white/10'
                 : 'text-mpTextMuted hover:text-mpText'
             "
             (click)="setDamageMode('taken')"
@@ -424,9 +414,7 @@
   </section>
 
   <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="mp-card"
-    >
+    <div class="mp-card">
       <div class="border-mpBorder border-b px-5 py-4">
         <p class="font-heading text-mpText text-base font-semibold">
           Mentions spéciales
@@ -439,6 +427,27 @@
         [durationSeconds]="durationSeconds"
         [patch]="gamePatch"
       ></app-lol-game-highlights>
+    </div>
+  </section>
+
+  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+    <div class="mp-card">
+      <div class="border-mpBorder border-b px-5 py-4">
+        <p class="font-heading text-mpText text-base font-semibold">
+          Comparaison des joueurs
+        </p>
+        <p class="text-mpTextMuted mt-0.5 text-[13px]">
+          Classement des 10 joueurs sur une statistique &middot; cliquez un
+          joueur pour le mettre en avant
+        </p>
+      </div>
+
+      <app-lol-game-ranking-chart
+        [players]="allPlayers"
+        [selectedPuuid]="selectedPlayer?.puuid"
+        [patch]="gamePatch"
+        (playerSelected)="onPlayerSelected($event)"
+      ></app-lol-game-ranking-chart>
     </div>
   </section>
 }

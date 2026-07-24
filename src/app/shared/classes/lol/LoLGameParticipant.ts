@@ -1,4 +1,5 @@
 import { Player } from '../common/Player';
+import { LoLGameParticipantStats } from './LoLGameParticipantStats';
 
 export class LoLGameParticipant {
   id: number = 0;
@@ -29,4 +30,5 @@ export class LoLGameParticipant {
   baronKills: number = 0;
   bountyLevel: number = 0;
   consumablesPurchased: number = 0;
+  stats?: LoLGameParticipantStats;
 }
