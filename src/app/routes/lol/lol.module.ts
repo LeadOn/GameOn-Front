@@ -10,6 +10,14 @@ import { LolGameGoldRaceComponent } from './components/lol-game-gold-race/lol-ga
 import { LolGameDamageChartComponent } from './components/lol-game-damage-chart/lol-game-damage-chart.component';
 import { LolGameHighlightsComponent } from './components/lol-game-highlights/lol-game-highlights.component';
 import { LolGameCardComponent } from './components/lol-game-card/lol-game-card.component';
+import { LolGameHeaderComponent } from './components/lol-game-header/lol-game-header.component';
+import { LolGameKeyMomentsComponent } from './components/lol-game-key-moments/lol-game-key-moments.component';
+import { LolGameTabsComponent } from './components/lol-game-tabs/lol-game-tabs.component';
+import { LolGamePlayerPickerComponent } from './components/lol-game-player-picker/lol-game-player-picker.component';
+import { LolGamePlayerPerformanceComponent } from './components/lol-game-player-performance/lol-game-player-performance.component';
+import { LolGamePlayerRadarComponent } from './components/lol-game-player-radar/lol-game-player-radar.component';
+import { LolGamePlayerDamageProfileComponent } from './components/lol-game-player-damage-profile/lol-game-player-damage-profile.component';
+import { LolGamePlayerGoldComponent } from './components/lol-game-player-gold/lol-game-player-gold.component';
 import { LolGameKillFeedComponent } from './components/lol-game-kill-feed/lol-game-kill-feed.component';
 import { LolGameEventTimelineComponent } from './components/lol-game-event-timeline/lol-game-event-timeline.component';
 import { LolGameMinimapComponent } from './components/lol-game-minimap/lol-game-minimap.component';
@@ -41,6 +49,14 @@ import { LoLQueue } from '../../shared/classes/lol/LoLQueue';
     LolGameDamageChartComponent,
     LolGameHighlightsComponent,
     LolGameCardComponent,
+    LolGameHeaderComponent,
+    LolGameKeyMomentsComponent,
+    LolGameTabsComponent,
+    LolGamePlayerPickerComponent,
+    LolGamePlayerPerformanceComponent,
+    LolGamePlayerRadarComponent,
+    LolGamePlayerDamageProfileComponent,
+    LolGamePlayerGoldComponent,
     LolGameKillFeedComponent,
     LolGameEventTimelineComponent,
     LolGameMinimapComponent,

@@ -1,0 +1,33 @@
+@if (moments.length > 0) {
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    @for (moment of moments; track moment.key) {
+      <div class="mp-card flex items-center gap-2.5 p-2.5">
+        <span
+          class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border text-base"
+          [ngClass]="iconClass(moment.tone)"
+        >
+          {{ moment.icon }}
+        </span>
+
+        <div class="min-w-0 flex-1">
+          <p class="text-mpText truncate text-[13px] font-semibold">
+            {{ moment.title }}
+          </p>
+          <p
+            class="text-mpTextMuted truncate text-[11px]"
+            [title]="moment.detail"
+          >
+            {{ moment.detail }}
+          </p>
+        </div>
+
+        <span
+          class="font-heading shrink-0 text-xs font-bold"
+          [ngClass]="timeClass(moment.tone)"
+        >
+          {{ moment.timeLabel }}
+        </span>
+      </div>
+    }
+  </div>
+}

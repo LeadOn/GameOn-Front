@@ -1,0 +1,68 @@
+<div class="border-mpBorder border-b px-5 py-4">
+  <p class="font-heading text-mpText text-base font-semibold">
+    Profil de dégâts
+  </p>
+  <p class="text-mpTextMuted mt-0.5 text-[13px]">
+    Répartition des dégâts infligés aux champions
+  </p>
+</div>
+
+<div class="p-5">
+  <div class="space-y-4">
+    @for (row of rows; track row.label) {
+      <div>
+        <div class="flex items-center justify-between gap-3">
+          <span
+            class="text-mpTextSecondary flex items-center gap-2 text-[13px]"
+          >
+            <span
+              class="h-2.5 w-2.5 shrink-0 rounded-sm"
+              [ngClass]="row.dotClass"
+            ></span>
+            {{ row.label }}
+          </span>
+          <span class="text-mpText text-[13px] font-semibold">
+            {{ row.valueLabel }}
+          </span>
+        </div>
+
+        <div
+          class="light:bg-[rgba(23,30,54,0.06)] mt-1.5 h-2 w-full overflow-hidden rounded-full bg-white/10"
+        >
+          <div
+            class="h-full rounded-full"
+            [ngClass]="row.barClass"
+            [style.width.%]="row.percent"
+          ></div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="border-mpBorder mt-5 grid grid-cols-2 gap-4 border-t pt-4">
+    <div>
+      <p
+        class="text-mpTextMuted text-[10px] font-semibold uppercase tracking-wide"
+      >
+        Part des dégâts de l'équipe
+      </p>
+      <p class="font-heading text-mpYellowInk mt-1 text-2xl font-bold">
+        {{ teamDamageShare }}%
+      </p>
+    </div>
+
+    <div>
+      <p
+        class="text-mpTextMuted text-[10px] font-semibold uppercase tracking-wide"
+      >
+        Dégâts encaissés
+      </p>
+      <p class="font-heading text-mpRedInk mt-1 text-2xl font-bold">
+        {{ damageTakenLabel }}
+      </p>
+      <p class="text-mpTextMuted mt-1 text-[11px]">
+        {{ teamDamageTakenShare }}% des dégâts subis par l'équipe
+      </p>
+    </div>
+  </div>
+</div>

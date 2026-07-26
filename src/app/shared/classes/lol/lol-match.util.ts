@@ -189,6 +189,76 @@ export function killParticipationFor(
   );
 }
 
+export function damageToChampionsFor(
+  player: LoLGameParticipant,
+  timeline: LoLGameTimelineFrame[] | undefined,
+): number {
+  return (
+    player.stats?.damageDealtToChampions ??
+    latestStatsFor(timeline, player.puuid)?.totalDamageDoneToChampions ??
+    0
+  );
+}
+
+function clamp01(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.min(1, Math.max(0, value));
+}
+
+/**
+ * Post-game grade out of 10 for a single player. Deliberately absolute rather
+ * than ranked against the lobby, so the same performance always grades the
+ * same: each of the five metrics the scoreboard already surfaces is scored
+ * against a fixed "excellent game" reference (KDA 6, 65% kill participation,
+ * 30% of the team's damage, 500 gold/min, few deaths), then weighted, with a
+ * small bonus for actually winning. Riot's own `stats`/`challenges` blocks are
+ * used when the game has been synced, and recomputed from the timeline
+ * otherwise.
+ */
+export function playerRating(
+  player: LoLGameParticipant,
+  team: LoLGameParticipant[],
+  timeline: LoLGameTimelineFrame[] | undefined,
+  durationSeconds: number,
+): number {
+  const teamDamage = team.reduce(
+    (sum, p) => sum + damageToChampionsFor(p, timeline),
+    0,
+  );
+  const damageShare =
+    player.challenges?.teamDamagePercentage ??
+    (teamDamage > 0 ? damageToChampionsFor(player, timeline) / teamDamage : 0);
+
+  const minutes = durationSeconds > 0 ? durationSeconds / 60 : 0;
+  const goldPerMinute =
+    player.stats?.goldPerMinute ??
+    (minutes > 0 ? goldEarnedFor(player, timeline) / minutes : 0);
+
+  const kdaPart = clamp01(kda(player) / 6);
+  const kpPart = clamp01(killParticipationFor(player, team) / 65);
+  const damagePart = clamp01(damageShare / 0.3);
+  const goldPart = clamp01(goldPerMinute / 500);
+  const survivalPart = clamp01(1 - player.deaths / 12);
+
+  const rating =
+    10 *
+      (kdaPart * 0.25 +
+        kpPart * 0.2 +
+        damagePart * 0.25 +
+        goldPart * 0.15 +
+        survivalPart * 0.15) +
+    (player.win ? 0.4 : 0);
+
+  return Math.min(10, Math.max(0, rating));
+}
+
+export function ratingToneClass(rating: number): string {
+  if (rating >= 9) return 'text-mpYellowInk border-mpYellow/45 bg-mpYellow/15';
+  if (rating >= 6.5) return 'text-mpGreenInk border-mpGreen/45 bg-mpGreen/15';
+  if (rating >= 5) return 'text-mpBlueInk border-mpBlue/45 bg-mpBlue/15';
+  return 'text-mpTextSecondary border-mpBorder bg-white/5';
+}
+
 export function compositeScore(
   player: LoLGameParticipant,
   timeline: LoLGameTimelineFrame[] | undefined,
@@ -223,6 +293,20 @@ export function playerDisplayName(player: LoLGameParticipant): string {
   return player.player?.nickname || player.riotIdGameName || 'Joueur inconnu';
 }
 
+/**
+ * "Maxime (MaxLaMenace)" — the GameOn nickname followed by the Riot name, and
+ * the Riot name alone when the participant isn't linked to a GameOn account
+ * (or when both are the same string).
+ */
+export function playerFullName(player: LoLGameParticipant): string {
+  const riotName = player.riotIdGameName || 'Joueur inconnu';
+  const nickname = player.player?.nickname;
+
+  return nickname && nickname !== riotName
+    ? `${nickname} (${riotName})`
+    : riotName;
+}
+
 export function isLinkedToGameOn(player: LoLGameParticipant): boolean {
   return player.player != null;
 }
@@ -244,9 +328,10 @@ export function formatTimestamp(ms: number): string {
   return formatDuration(ms / 1000);
 }
 
+/** "28,4k" / "842" — French decimal separator, like every other label here. */
 export function formatCompact(value: number): string {
   if (Math.abs(value) >= 1000) {
-    return (value / 1000).toFixed(1) + 'k';
+    return decimalLabel(value / 1000, 1) + 'k';
   }
 
   return Math.round(value).toString();
@@ -279,6 +364,27 @@ export function formatDateTime(date: Date | string): string {
   const datePart = new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'long',
+  }).format(parsedDate);
+
+  const timePart = new Intl.DateTimeFormat('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(parsedDate);
+
+  return `${datePart} à ${timePart}`;
+}
+
+/** Same as {@link formatDateTime} with an abbreviated month ("8 juil. à 21:42"). */
+export function formatShortDateTime(date: Date | string): string {
+  const parsedDate = parseApiDate(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return 'Date inconnue';
+  }
+
+  const datePart = new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric',
+    month: 'short',
   }).format(parsedDate);
 
   const timePart = new Intl.DateTimeFormat('fr-FR', {

@@ -1,0 +1,19 @@
+<div class="flex flex-wrap gap-2">
+  @for (player of players; track player.puuid) {
+    <button
+      type="button"
+      [attr.aria-pressed]="player.puuid == selectedPuuid"
+      class="inline-flex items-center gap-2 rounded-full border py-1.5 pl-1.5 pr-3.5 text-sm font-semibold transition-colors"
+      [ngClass]="pillClass(player)"
+      (click)="select(player)"
+    >
+      <img
+        [src]="championIconUrl(player)"
+        [alt]="player.championName"
+        class="h-7 w-7 shrink-0 rounded-full object-cover ring-2"
+        [ngClass]="ringClass(player)"
+      />
+      {{ displayName(player) }}
+    </button>
+  }
+</div>
