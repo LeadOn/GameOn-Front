@@ -66,290 +66,278 @@
 
 @if (!isLoading && game != null) {
   <section class="font-body mx-auto mt-3 w-full max-w-6xl px-4">
-    <div class="relative">
-      <div
-        class="pointer-events-none absolute -inset-10 -z-10 rounded-[2.5rem] blur-3xl"
-        [ngClass]="
-          game.isRemake
-            ? 'bg-slate-500/15'
-            : heroWon == true
-              ? 'bg-mpGreen/20'
-              : heroWon == false
-                ? 'bg-mpRed/20'
-                : 'bg-mpBlue/10'
-        "
-      ></div>
-      <div
-        class="bg-mpBlue/20 pointer-events-none absolute -right-10 -top-6 -z-10 h-40 w-40 animate-pulse rounded-full blur-3xl [animation-delay:-2s]"
-      ></div>
+    <app-lol-game-header
+      [game]="game"
+      [heroPlayer]="heroPlayer"
+      [team1]="team1"
+      [team2]="team2"
+      [timeline]="timeline"
+      [patch]="gamePatch"
+      [queueLabel]="queueLabel"
+      [isMvp]="mvpPuuid != null && mvpPuuid == heroPlayer?.puuid"
+      [isAce]="acePuuid != null && acePuuid == heroPlayer?.puuid"
+      [isSyncing]="isSyncing"
+      (syncRequested)="syncGame()"
+    ></app-lol-game-header>
 
-      <div
-        class="mp-card flex flex-wrap items-center justify-between gap-4 p-5"
-        [ngClass]="
-          game.isRemake
-            ? ''
-            : heroWon == true
-              ? 'border-mpGreen/35 bg-[linear-gradient(180deg,rgba(45,224,165,0.14),rgba(255,255,255,0.02))]'
-              : heroWon == false
-                ? 'border-mpRed/35 bg-[linear-gradient(180deg,rgba(255,92,116,0.14),rgba(255,255,255,0.02))]'
-                : ''
-        "
-      >
-        <div class="flex min-w-0 items-center gap-4">
-          <div class="relative shrink-0">
-            <img
-              [src]="championIconUrl(heroPlayer)"
-              class="h-16 w-16 rounded-full border-2 border-white/25 object-cover"
-            />
-            <span
-              class="bg-mpBg text-mpText border-mpBorder absolute -bottom-1 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border px-2 text-[11px] font-semibold"
-            >
-              {{ heroPlayer?.champLevel || "??" }}
-            </span>
-          </div>
-
-          <div class="min-w-0">
-            <p
-              class="font-heading text-2xl font-bold"
-              [ngClass]="
-                game.isRemake
-                  ? 'text-mpTextSecondary'
-                  : heroWon == true
-                    ? 'text-mpGreenInk'
-                    : heroWon == false
-                      ? 'text-mpRedInk'
-                      : 'text-mpTextSecondary'
-              "
-            >
-              {{ heroStatusLabel }}
-            </p>
-            <p class="text-mpTextSecondary mt-0.5 truncate text-sm">
-              {{ heroPlayer?.riotIdGameName }} sur
-              {{ heroPlayer?.championName }} &middot;
-              {{ heroPlayer?.kills || 0 }} / {{ heroPlayer?.deaths || 0 }} /
-              {{ heroPlayer?.assists || 0 }} &middot; {{ heroKda }} KDA
-            </p>
-            <p class="text-mpTextMuted mt-0.5 truncate text-[13px]">
-              {{ queueLabel }} &middot; {{ gameDurationLabel }} &middot;
-              {{ formatRetrievedOn(game.retrievedOn) }}
-            </p>
-          </div>
-        </div>
-
-        <div class="flex shrink-0 items-center gap-2">
-          <span
-            class="border-mpBlue/40 bg-mpBlue/15 text-mpBlueInk whitespace-nowrap rounded-full border px-3.5 py-1.5 text-sm font-semibold"
-          >
-            {{ patchTitle }}
-          </span>
-
-          <button
-            type="button"
-            class="text-mpText border-mpBorder light:bg-[rgba(23,30,54,0.03)] light:hover:bg-[rgba(23,30,54,0.06)] flex items-center gap-2 rounded-full border bg-white/5 px-3.5 py-1.5 text-sm font-medium transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
-            [disabled]="isSyncing"
-            (click)="syncGame()"
-          >
-            <fa-icon
-              [icon]="refreshIcon"
-              [ngClass]="{ 'animate-spin': isSyncing }"
-            ></fa-icon>
-            Synchroniser
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] gap-4"
-    >
-      <div class="mp-card">
-        <div
-          class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
-        >
-          <div class="flex items-center gap-2">
-            <span class="bg-mpGreen h-2.5 w-2.5 shrink-0 rounded-full"></span>
-            <span class="text-mpText font-semibold">Équipe bleue</span>
-            @if (team1BaronKills > 0) {
-              <span
-                class="bg-mpBlue/15 text-mpBlueInk rounded-full px-2 py-0.5 text-[11px] font-semibold"
-              >
-                🔮 {{ team1BaronKills }} Baron{{
-                  team1BaronKills > 1 ? "s" : ""
-                }}
-              </span>
-            }
-          </div>
-          @if (game.isRemake) {
-            <span class="text-mpTextSecondary text-sm font-semibold">
-              Remake
-            </span>
-          } @else if (game.winningTeamId) {
-            <span
-              class="text-sm font-semibold"
-              [ngClass]="
-                game.winningTeamId == 100 ? 'text-mpGreenInk' : 'text-mpRedInk'
-              "
-            >
-              {{ game.winningTeamId == 100 ? "Victoire" : "Défaite" }}
-            </span>
-          }
-        </div>
-
-        <div class="divide-mpBorder divide-y">
-          @for (player of team1; track player.puuid) {
-            <app-lol-game-details-player
-              [player]="player"
-              [patch]="gamePatch"
-              [team]="team1"
-              [timeline]="timeline"
-              [isSelected]="selectedPlayer?.puuid == player.puuid"
-              [isMvp]="mvpPuuid == player.puuid"
-              [isAce]="acePuuid == player.puuid"
-              (playerSelected)="onPlayerSelected($event)"
-            ></app-lol-game-details-player>
-          }
-        </div>
-      </div>
-
-      <div class="mp-card">
-        <div
-          class="border-mpBorder flex items-center justify-between border-b px-4 py-3"
-        >
-          <div class="flex items-center gap-2">
-            <span class="bg-mpRed h-2.5 w-2.5 shrink-0 rounded-full"></span>
-            <span class="text-mpText font-semibold">Équipe rouge</span>
-            @if (team2BaronKills > 0) {
-              <span
-                class="bg-mpBlue/15 text-mpBlueInk rounded-full px-2 py-0.5 text-[11px] font-semibold"
-              >
-                🔮 {{ team2BaronKills }} Baron{{
-                  team2BaronKills > 1 ? "s" : ""
-                }}
-              </span>
-            }
-          </div>
-          @if (game.isRemake) {
-            <span class="text-mpTextSecondary text-sm font-semibold">
-              Remake
-            </span>
-          } @else if (game.winningTeamId) {
-            <span
-              class="text-sm font-semibold"
-              [ngClass]="
-                game.winningTeamId == 200 ? 'text-mpGreenInk' : 'text-mpRedInk'
-              "
-            >
-              {{ game.winningTeamId == 200 ? "Victoire" : "Défaite" }}
-            </span>
-          }
-        </div>
-
-        <div class="divide-mpBorder divide-y">
-          @for (player of team2; track player.puuid) {
-            <app-lol-game-details-player
-              [player]="player"
-              [patch]="gamePatch"
-              [team]="team2"
-              [timeline]="timeline"
-              [isSelected]="selectedPlayer?.puuid == player.puuid"
-              [isMvp]="mvpPuuid == player.puuid"
-              [isAce]="acePuuid == player.puuid"
-              (playerSelected)="onPlayerSelected($event)"
-            ></app-lol-game-details-player>
-          }
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div class="mp-card">
-      <div
-        class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
-      >
-        <div>
-          <p class="font-heading text-mpText text-base font-semibold">
-            Le film de la partie
-          </p>
-          <p class="text-mpTextMuted mt-0.5 text-[13px]">
-            Mini-carte, course à l'or et événements — pilotés par la même
-            timeline
-          </p>
-        </div>
-
-        <div class="text-mpTextMuted flex items-center gap-4 text-xs">
-          <span class="flex items-center gap-1.5">
-            <span class="bg-mpRed h-2 w-2 rounded-full"></span>
-            Éliminations
-          </span>
-          <span class="flex items-center gap-1.5">
-            <span class="bg-mpYellow h-2 w-2 rounded-full"></span>
-            Objectifs
-          </span>
-        </div>
-      </div>
-
-      <app-lol-game-event-timeline
-        [timeline]="timeline"
+    <div class="mt-3">
+      <app-lol-game-key-moments
         [players]="allPlayers"
-        [(currentFrameIndex)]="currentFrameIndex"
-        (playProgressChange)="onPlayProgressChange($event)"
-      ></app-lol-game-event-timeline>
+        [timeline]="timeline"
+        [winningTeamId]="game.winningTeamId"
+      ></app-lol-game-key-moments>
+    </div>
 
-      <div
-        class="border-mpBorder grid grid-cols-[repeat(auto-fit,minmax(min(380px,100%),1fr))] border-t"
-      >
-        <app-lol-game-minimap
-          [timeline]="timeline"
-          [players]="allPlayers"
-          [currentFrameIndex]="currentFrameIndex"
-          [patch]="gamePatch"
-        ></app-lol-game-minimap>
-
-        <app-lol-game-gold-race
-          [timeline]="timeline"
-          [team1]="team1"
-          [team2]="team2"
-          [patch]="gamePatch"
-          [currentFrameIndex]="currentFrameIndex"
-          [playProgress]="playProgress"
-        ></app-lol-game-gold-race>
-      </div>
+    <div class="mt-4">
+      <app-lol-game-tabs
+        [tabs]="tabs"
+        [activeId]="activeTab"
+        (tabSelected)="setActiveTab($event)"
+      ></app-lol-game-tabs>
     </div>
   </section>
 
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div
-      class="grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] items-start gap-4"
-    >
+  @if (activeTab == "overview") {
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+      <div class="space-y-4">
+        @for (side of scoreboards; track side.teamId) {
+          <div class="mp-card @container">
+            <div
+              class="border-mpBorder flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b px-4 py-3"
+              [ngClass]="side.headerTintClass"
+            >
+              <div class="flex items-center gap-2.5">
+                <span
+                  class="h-2.5 w-2.5 shrink-0 rounded-full"
+                  [ngClass]="side.dotClass"
+                ></span>
+                <span class="text-mpText font-semibold">{{ side.label }}</span>
+                <span
+                  class="text-sm font-semibold"
+                  [ngClass]="side.outcomeTone"
+                >
+                  {{ side.outcomeLabel }}
+                </span>
+              </div>
+
+              <div class="text-mpTextSecondary flex items-center gap-4 text-sm">
+                <span>{{ side.kills }} kills</span>
+                <span>{{ side.goldLabel }} or</span>
+              </div>
+            </div>
+
+            <!--
+              Column widths and `@min-[...]` breakpoints mirror the player row
+              in lol-game-details-player.component.html — keep them in sync.
+            -->
+            <div
+              class="border-mpBorder text-mpTextMuted flex items-center gap-2.5 border-b px-4 py-2 text-[10px] font-semibold uppercase tracking-wide"
+            >
+              <span class="min-w-0 flex-1">Joueur — cliquez pour analyser</span>
+              <span
+                class="w-[58px] shrink-0 text-center"
+                title="Note sur 10 calculée sur le KDA, la participation aux kills, la part de dégâts de l'équipe, l'or par minute et les morts"
+              >
+                Note ⓘ
+              </span>
+              <span class="w-[76px] shrink-0 text-center">K / D / A</span>
+              <span class="@min-[1024px]:block hidden w-40 shrink-0"
+                >Dégâts</span
+              >
+              <span class="@min-[520px]:block hidden w-[104px] shrink-0">
+                Économie
+              </span>
+              <span class="@min-[1100px]:block hidden w-[58px] shrink-0">
+                Vision
+              </span>
+              <!-- 7 slots of 24px + gaps + the trinket's extra margin. -->
+              <span class="@min-[660px]:block hidden w-[196px] shrink-0">
+                Objets
+              </span>
+              <span class="w-7 shrink-0"></span>
+            </div>
+
+            <div class="divide-mpBorder divide-y">
+              @for (player of side.players; track player.puuid) {
+                <app-lol-game-details-player
+                  [player]="player"
+                  [patch]="gamePatch"
+                  [team]="side.players"
+                  [timeline]="timeline"
+                  [durationSeconds]="durationSeconds"
+                  [isSelected]="selectedPlayer?.puuid == player.puuid"
+                  [isMvp]="mvpPuuid == player.puuid"
+                  [isAce]="acePuuid == player.puuid"
+                  (playerSelected)="onPlayerSelected($event)"
+                ></app-lol-game-details-player>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
       <div class="mp-card">
         <div class="border-mpBorder border-b px-5 py-4">
           <p class="font-heading text-mpText text-base font-semibold">
-            Kill feed
-          </p>
-          <p class="text-mpTextMuted mt-0.5 text-[13px]">
-            Cliquez un événement pour y déplacer le film
+            Mentions spéciales
           </p>
         </div>
 
-        <app-lol-game-kill-feed
+        <app-lol-game-highlights
           [players]="allPlayers"
           [timeline]="timeline"
+          [durationSeconds]="durationSeconds"
           [patch]="gamePatch"
-        ></app-lol-game-kill-feed>
+        ></app-lol-game-highlights>
       </div>
+    </section>
+  }
 
-      <div class="flex flex-col gap-4">
-        <div class="mp-card">
-          <app-lol-game-gold-chart
+  @if (activeTab == "film") {
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+      <div class="mp-card">
+        <div
+          class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
+        >
+          <div>
+            <p class="font-heading text-mpText text-base font-semibold">
+              Le film de la partie
+            </p>
+            <p class="text-mpTextMuted mt-0.5 text-[13px]">
+              Mini-carte, course à l'or et événements — pilotés par la même
+              timeline
+            </p>
+          </div>
+
+          <div class="text-mpTextMuted flex items-center gap-4 text-xs">
+            <span class="flex items-center gap-1.5">
+              <span class="bg-mpRed h-2 w-2 rounded-full"></span>
+              Éliminations
+            </span>
+            <span class="flex items-center gap-1.5">
+              <span class="bg-mpYellow h-2 w-2 rounded-full"></span>
+              Objectifs
+            </span>
+          </div>
+        </div>
+
+        <app-lol-game-event-timeline
+          [timeline]="timeline"
+          [players]="allPlayers"
+          [(currentFrameIndex)]="currentFrameIndex"
+          (playProgressChange)="onPlayProgressChange($event)"
+        ></app-lol-game-event-timeline>
+
+        <div
+          class="border-mpBorder grid grid-cols-[repeat(auto-fit,minmax(min(380px,100%),1fr))] border-t"
+        >
+          <app-lol-game-minimap
+            [timeline]="timeline"
+            [players]="allPlayers"
+            [currentFrameIndex]="currentFrameIndex"
+            [patch]="gamePatch"
+          ></app-lol-game-minimap>
+
+          <app-lol-game-gold-race
             [timeline]="timeline"
             [team1]="team1"
             [team2]="team2"
-            [selectedPlayer]="selectedPlayer"
+            [patch]="gamePatch"
             [currentFrameIndex]="currentFrameIndex"
-          ></app-lol-game-gold-chart>
+            [playProgress]="playProgress"
+          ></app-lol-game-gold-race>
+        </div>
+      </div>
+    </section>
+
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+      <div
+        class="grid grid-cols-[repeat(auto-fit,minmax(min(440px,100%),1fr))] items-start gap-4"
+      >
+        <div class="mp-card">
+          <div class="border-mpBorder border-b px-5 py-4">
+            <p class="font-heading text-mpText text-base font-semibold">
+              Kill feed
+            </p>
+            <p class="text-mpTextMuted mt-0.5 text-[13px]">
+              Cliquez un événement pour y déplacer le film
+            </p>
+          </div>
+
+          <app-lol-game-kill-feed
+            [players]="allPlayers"
+            [timeline]="timeline"
+            [patch]="gamePatch"
+          ></app-lol-game-kill-feed>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <div class="mp-card">
+            <app-lol-game-gold-chart
+              [timeline]="timeline"
+              [team1]="team1"
+              [team2]="team2"
+              [selectedPlayer]="selectedPlayer"
+              [currentFrameIndex]="currentFrameIndex"
+            ></app-lol-game-gold-chart>
+          </div>
+
+          <div class="mp-card">
+            <app-lol-game-stat-chart
+              [timeline]="timeline"
+              [selectedPlayer]="selectedPlayer"
+              [currentFrameIndex]="currentFrameIndex"
+            ></app-lol-game-stat-chart>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+
+  @if (activeTab == "performance") {
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+      <app-lol-game-player-picker
+        [players]="allPlayers"
+        [selectedPuuid]="selectedPlayer?.puuid"
+        [patch]="gamePatch"
+        (playerSelected)="onPlayerSelected($event)"
+      ></app-lol-game-player-picker>
+
+      <div class="mt-4">
+        <app-lol-game-player-performance
+          [player]="selectedPlayer"
+          [players]="allPlayers"
+          [timeline]="timeline"
+          [patch]="gamePatch"
+          [durationSeconds]="durationSeconds"
+        ></app-lol-game-player-performance>
+      </div>
+
+      <!-- Stretched, not items-start: paired cards keep a common height. -->
+      <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <div class="mp-card">
+          <app-lol-game-player-radar
+            [player]="selectedPlayer"
+            [players]="allPlayers"
+            [timeline]="timeline"
+          ></app-lol-game-player-radar>
+        </div>
+
+        <div class="mp-card">
+          <app-lol-game-player-damage-profile
+            [player]="selectedPlayer"
+            [players]="allPlayers"
+            [timeline]="timeline"
+          ></app-lol-game-player-damage-profile>
+        </div>
+
+        <div class="mp-card">
+          <app-lol-game-player-gold
+            [player]="selectedPlayer"
+            [timeline]="timeline"
+          ></app-lol-game-player-gold>
         </div>
 
         <div class="mp-card">
@@ -360,103 +348,91 @@
           ></app-lol-game-stat-chart>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div class="mp-card">
-      <div
-        class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
-      >
-        <p class="font-heading text-mpText text-base font-semibold">
-          Dégâts aux champions
-        </p>
-
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+      <div class="mp-card">
         <div
-          class="border-mpBorder inline-flex items-center gap-1 rounded-full border p-1"
+          class="border-mpBorder flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
         >
-          <button
-            type="button"
-            class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
-            [ngClass]="
-              damageMode == 'dealt'
-                ? 'text-mpText light:bg-[rgba(23,30,54,0.08)] bg-white/10'
-                : 'text-mpTextMuted hover:text-mpText'
-            "
-            (click)="setDamageMode('dealt')"
+          <p class="font-heading text-mpText text-base font-semibold">
+            Dégâts aux champions
+          </p>
+
+          <div
+            class="border-mpBorder inline-flex items-center gap-1 rounded-full border p-1"
           >
-            Infligés
-          </button>
-          <button
-            type="button"
-            class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
-            [ngClass]="
-              damageMode == 'taken'
-                ? 'text-mpText light:bg-[rgba(23,30,54,0.08)] bg-white/10'
-                : 'text-mpTextMuted hover:text-mpText'
-            "
-            (click)="setDamageMode('taken')"
-          >
-            Subis
-          </button>
+            <button
+              type="button"
+              class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+              [ngClass]="
+                damageMode == 'dealt'
+                  ? 'text-mpText light:bg-[rgba(23,30,54,0.08)] bg-white/10'
+                  : 'text-mpTextMuted hover:text-mpText'
+              "
+              (click)="setDamageMode('dealt')"
+            >
+              Infligés
+            </button>
+            <button
+              type="button"
+              class="rounded-full px-3 py-1.5 text-xs font-semibold transition-colors"
+              [ngClass]="
+                damageMode == 'taken'
+                  ? 'text-mpText light:bg-[rgba(23,30,54,0.08)] bg-white/10'
+                  : 'text-mpTextMuted hover:text-mpText'
+              "
+              (click)="setDamageMode('taken')"
+            >
+              Subis
+            </button>
+          </div>
         </div>
+
+        <app-lol-game-damage-chart
+          [players]="allPlayers"
+          [timeline]="timeline"
+          [patch]="gamePatch"
+          [mode]="damageMode"
+          [selectedPuuid]="selectedPlayer?.puuid"
+          (playerSelected)="onPlayerSelected($event)"
+        ></app-lol-game-damage-chart>
       </div>
+    </section>
 
-      <app-lol-game-damage-chart
-        [players]="allPlayers"
-        [timeline]="timeline"
-        [patch]="gamePatch"
-        [mode]="damageMode"
-        [selectedPuuid]="selectedPlayer?.puuid"
-        (playerSelected)="onPlayerSelected($event)"
-      ></app-lol-game-damage-chart>
-    </div>
-  </section>
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+      <div class="mp-card">
+        <div class="border-mpBorder border-b px-5 py-4">
+          <p class="font-heading text-mpText text-base font-semibold">
+            Comparaison des joueurs
+          </p>
+          <p class="text-mpTextMuted mt-0.5 text-[13px]">
+            Classement des 10 joueurs sur une statistique &middot; cliquez un
+            joueur pour le mettre en avant
+          </p>
+        </div>
 
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div class="mp-card">
-      <div class="border-mpBorder border-b px-5 py-4">
-        <p class="font-heading text-mpText text-base font-semibold">
-          Mentions spéciales
-        </p>
+        <app-lol-game-ranking-chart
+          [players]="allPlayers"
+          [selectedPuuid]="selectedPlayer?.puuid"
+          [patch]="gamePatch"
+          (playerSelected)="onPlayerSelected($event)"
+        ></app-lol-game-ranking-chart>
       </div>
+    </section>
+  }
 
-      <app-lol-game-highlights
-        [players]="allPlayers"
-        [timeline]="timeline"
-        [durationSeconds]="durationSeconds"
-        [patch]="gamePatch"
-      ></app-lol-game-highlights>
-    </div>
-  </section>
-
-  <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
-    <div class="mp-card">
-      <div class="border-mpBorder border-b px-5 py-4">
-        <p class="font-heading text-mpText text-base font-semibold">
-          Comparaison des joueurs
-        </p>
-        <p class="text-mpTextMuted mt-0.5 text-[13px]">
-          Classement des 10 joueurs sur une statistique &middot; cliquez un
-          joueur pour le mettre en avant
-        </p>
+  @if (activeTab == "raw") {
+    <section class="font-body mx-auto mt-4 w-full max-w-6xl px-4">
+      <div class="mp-card">
+        <app-lol-game-raw-stats-table
+          [players]="allPlayers"
+          [patch]="gamePatch"
+          [expanded]="true"
+        ></app-lol-game-raw-stats-table>
       </div>
+    </section>
+  }
 
-      <app-lol-game-ranking-chart
-        [players]="allPlayers"
-        [selectedPuuid]="selectedPlayer?.puuid"
-        [patch]="gamePatch"
-        (playerSelected)="onPlayerSelected($event)"
-      ></app-lol-game-ranking-chart>
-    </div>
-  </section>
-
-  <section class="font-body mx-auto mb-8 mt-4 w-full max-w-6xl px-4">
-    <div class="mp-card">
-      <app-lol-game-raw-stats-table
-        [players]="allPlayers"
-        [patch]="gamePatch"
-      ></app-lol-game-raw-stats-table>
-    </div>
-  </section>
+  <div class="mb-8"></div>
 }

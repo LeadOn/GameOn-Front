@@ -1,0 +1,130 @@
+<div class="border-mpBorder border-b px-5 py-4">
+  <p class="font-heading text-mpText text-base font-semibold">Profil de jeu</p>
+  <p class="text-mpTextMuted mt-0.5 text-[13px]">
+    6 axes normalisés sur les {{ players.length }} joueurs de la partie
+  </p>
+</div>
+
+<div class="p-5">
+  <svg
+    [attr.viewBox]="'0 0 ' + size + ' ' + size"
+    class="mx-auto block h-64 w-full max-w-[340px]"
+  >
+    @for (ring of gridPolygons; track $index) {
+      <polygon
+        [attr.points]="ring"
+        fill="none"
+        class="stroke-mpBorder"
+        stroke-width="1"
+      />
+    }
+
+    @for (spoke of spokes; track $index) {
+      <line
+        [attr.x1]="size / 2"
+        [attr.y1]="size / 2"
+        [attr.x2]="spoke.x"
+        [attr.y2]="spoke.y"
+        class="stroke-mpBorder"
+        stroke-width="1"
+      />
+    }
+
+    @if (averagePolygon) {
+      <polygon
+        [attr.points]="averagePolygon"
+        fill="none"
+        class="stroke-mpTextMuted"
+        stroke-width="1.5"
+        stroke-dasharray="4 4"
+      />
+    }
+
+    @if (playerPolygon) {
+      <polygon
+        [attr.points]="playerPolygon"
+        fill="rgba(240,190,78,0.18)"
+        class="stroke-mpYellowInk"
+        stroke-width="2"
+      />
+
+      @for (vertex of playerVertices; track $index) {
+        <circle
+          [attr.cx]="vertex.x"
+          [attr.cy]="vertex.y"
+          [attr.r]="hoverIndex == $index ? 5 : 3"
+          class="fill-mpYellowInk"
+        />
+        <!-- Invisible, generously sized hit area for the dot above. -->
+        <circle
+          [attr.cx]="vertex.x"
+          [attr.cy]="vertex.y"
+          r="14"
+          fill="transparent"
+          class="cursor-pointer"
+          (mouseenter)="onVertexEnter($index)"
+          (mouseleave)="onVertexLeave()"
+        />
+      }
+    }
+
+    @if (hoveredVertex != null) {
+      <g
+        class="pointer-events-none"
+        [attr.transform]="
+          'translate(' + hoveredVertex.x + ',' + hoveredVertex.y + ')'
+        "
+      >
+        <rect
+          [attr.x]="-hoveredVertex.tooltipWidth / 2"
+          y="-48"
+          [attr.width]="hoveredVertex.tooltipWidth"
+          height="38"
+          rx="6"
+          class="fill-mpBg stroke-mpBorder"
+          stroke-width="1"
+        />
+        <text
+          x="0"
+          y="-32"
+          text-anchor="middle"
+          class="fill-mpText text-[12px] font-semibold"
+        >
+          {{ hoveredVertex.label }} · {{ hoveredVertex.valueLabel }}
+        </text>
+        <text
+          x="0"
+          y="-18"
+          text-anchor="middle"
+          class="fill-mpTextMuted text-[10px]"
+        >
+          {{ hoveredVertex.averageLabel }}
+        </text>
+      </g>
+    }
+
+    @for (axis of axisPoints; track axis.label) {
+      <text
+        [attr.x]="axis.labelX"
+        [attr.y]="axis.labelY"
+        [attr.text-anchor]="axis.anchor"
+        class="fill-mpTextMuted text-[10px] font-semibold"
+      >
+        {{ axis.label }}
+      </text>
+    }
+  </svg>
+
+  <div
+    class="text-mpTextMuted mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs"
+  >
+    <span class="flex items-center gap-1.5">
+      <span class="bg-mpYellow h-2.5 w-2.5 rounded-sm"></span>
+      {{ playerLabel }}
+    </span>
+    <span class="flex items-center gap-1.5">
+      <span class="border-mpTextMuted w-4 border-t-2 border-dashed"></span>
+      Moyenne de la partie
+    </span>
+  </div>
+</div>

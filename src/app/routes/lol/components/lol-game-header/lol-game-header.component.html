@@ -1,0 +1,118 @@
+<div class="block">
+  <div class="relative">
+    <div
+      class="pointer-events-none absolute -inset-10 -z-10 rounded-[2.5rem] blur-3xl"
+      [ngClass]="glowClass"
+    ></div>
+
+    <div class="mp-card relative p-5" [ngClass]="frameClass">
+      @if (splashUrl) {
+        <img
+          [src]="splashUrl"
+          alt=""
+          aria-hidden="true"
+          class="light:opacity-30 pointer-events-none absolute inset-0 h-full w-full object-cover object-[60%_25%] opacity-80"
+        />
+        <div
+          class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--color-mpBg)_0%,var(--color-mpBg)_20%,color-mix(in_srgb,var(--color-mpBg)_60%,transparent)_46%,color-mix(in_srgb,var(--color-mpBg)_32%,transparent)_100%)]"
+        ></div>
+      }
+      <div
+        class="pointer-events-none absolute inset-0"
+        [ngClass]="tintClass"
+      ></div>
+
+      <div class="relative flex flex-wrap items-center gap-x-5 gap-y-4">
+        <div class="relative shrink-0">
+          <img
+            [src]="championIconUrl"
+            [alt]="heroPlayer?.championName"
+            class="h-[72px] w-[72px] rounded-2xl border-2 border-white/25 object-cover shadow-lg"
+          />
+          <span
+            class="bg-mpBg text-mpText border-mpBorder absolute -bottom-2 left-1/2 min-w-[26px] -translate-x-1/2 rounded-full border px-1.5 py-0.5 text-center text-[11px] font-semibold"
+          >
+            {{ heroPlayer?.champLevel || "??" }}
+          </span>
+        </div>
+
+        <div class="min-w-[15rem] flex-1">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+            <p
+              class="font-heading text-2xl font-bold"
+              [ngClass]="statusToneClass"
+            >
+              {{ statusLabel }}
+            </p>
+
+            @if (showRating) {
+              <span
+                class="whitespace-nowrap rounded-full border px-2.5 py-0.5 text-sm font-semibold"
+                [ngClass]="ratingTone"
+                title="Note calculée sur le KDA, la participation aux kills, la part de dégâts, l'or par minute et les morts"
+              >
+                Note {{ ratingLabel }}
+              </span>
+            }
+
+            @if (accoladeLabel) {
+              <span
+                class="border-mpYellow/45 bg-mpYellow/15 text-mpYellowInk inline-flex items-center whitespace-nowrap rounded-full border px-3 py-1 text-xs font-semibold"
+              >
+                {{ accoladeLabel }}
+              </span>
+            }
+          </div>
+
+          @if (heroLine) {
+            <p class="text-mpText mt-2 text-sm">{{ heroLine }}</p>
+          }
+          <p class="text-mpTextSecondary mt-0.5 text-[13px]">{{ metaLine }}</p>
+        </div>
+
+        <button
+          type="button"
+          class="text-mpText border-mpBorder light:bg-[rgba(23,30,54,0.03)] light:hover:bg-[rgba(23,30,54,0.06)] flex shrink-0 items-center gap-2 rounded-full border bg-white/5 px-3 py-1.5 text-[13px] font-medium transition-colors hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+          [disabled]="isSyncing"
+          (click)="onSync()"
+        >
+          <fa-icon
+            [icon]="refreshIcon"
+            [ngClass]="{ 'animate-spin': isSyncing }"
+          ></fa-icon>
+          Synchroniser
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (hasObjectives) {
+    <div
+      class="mp-card divide-mpBorder mt-3 grid grid-cols-1 divide-y sm:grid-cols-2 sm:divide-x sm:divide-y-0"
+    >
+      @for (row of objectiveRows; track row.teamId) {
+        <div
+          class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 p-4"
+        >
+          <span
+            class="h-2.5 w-2.5 shrink-0 rounded-full"
+            [ngClass]="row.dotClass"
+          ></span>
+          <span class="font-heading text-mpText text-xl font-bold">
+            {{ row.objectives.kills }}
+          </span>
+
+          @for (badge of row.badges; track badge.label) {
+            <span
+              [title]="badge.label"
+              class="border-mpBorder text-mpTextSecondary light:bg-[rgba(23,30,54,0.04)] inline-flex items-center gap-1 rounded-lg border bg-white/5 px-2 py-1 text-xs font-semibold"
+            >
+              <span class="text-[13px] leading-none">{{ badge.icon }}</span>
+              {{ badge.value }}
+            </span>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

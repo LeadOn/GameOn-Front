@@ -143,7 +143,10 @@ export function describeEvent(
   event: LoLGameTimelineEvent,
   players: LoLGameParticipant[],
 ): TimelineEventEntry {
-  const killer = findByPuuid(players, event.killerId ? event.killerPUUID : null);
+  const killer = findByPuuid(
+    players,
+    event.killerId ? event.killerPUUID : null,
+  );
 
   switch (event.eventType) {
     case 'CHAMPION_KILL': {
@@ -282,6 +285,109 @@ export function maxBountyOnHead(
         event.eventType === 'CHAMPION_KILL' && event.victimPUUID === puuid,
     )
     .reduce((max, event) => Math.max(max, event.bounty ?? 0), 0);
+}
+
+export interface TeamObjectives {
+  kills: number;
+  towers: number;
+  inhibitors: number;
+  dragons: number;
+  heralds: number;
+  grubs: number;
+  barons: number;
+  atakhans: number;
+}
+
+/**
+ * Resolves which team actually took an elite monster. `killerTeamId` is
+ * authoritative when it's a real side, but Riot also emits neutral values on
+ * it (300 on some Rift Herald kills, where `killerPUUID` is null too), so the
+ * killer's own team is used as a fallback and genuinely unattributable kills
+ * are dropped rather than credited to a side.
+ */
+function monsterKillTeamId(
+  event: LoLGameTimelineEvent,
+  players: LoLGameParticipant[],
+): number | undefined {
+  if (event.killerTeamId === 100 || event.killerTeamId === 200) {
+    return event.killerTeamId;
+  }
+
+  return findByPuuid(players, event.killerPUUID)?.teamId;
+}
+
+/**
+ * Objective tally for one side of the match. Buildings are counted from the
+ * *losing* side's perspective — Riot's `BUILDING_KILL.teamId` is the team that
+ * owned the destroyed structure, not the one that took it — so a team's tower
+ * count is the number of enemy-owned buildings that went down. Everything is
+ * timeline-derived and therefore zero on games that were never synced, except
+ * the Baron count which falls back to the participants' own `baronKills`.
+ */
+export function teamObjectives(
+  timeline: LoLGameTimelineFrame[] | undefined,
+  players: LoLGameParticipant[],
+  teamId: number,
+): TeamObjectives {
+  const roster = players.filter((p) => p.teamId === teamId);
+  const objectives: TeamObjectives = {
+    kills: roster.reduce((sum, p) => sum + p.kills, 0),
+    towers: 0,
+    inhibitors: 0,
+    dragons: 0,
+    heralds: 0,
+    grubs: 0,
+    barons: 0,
+    atakhans: 0,
+  };
+
+  for (const event of allTimelineEvents(timeline)) {
+    if (event.eventType === 'BUILDING_KILL') {
+      // `teamId` here is the owner of the building that fell.
+      if (event.teamId == null || event.teamId === teamId) {
+        continue;
+      }
+
+      if (event.buildingType === 'INHIBITOR_BUILDING') {
+        objectives.inhibitors++;
+      } else {
+        objectives.towers++;
+      }
+
+      continue;
+    }
+
+    if (
+      event.eventType !== 'ELITE_MONSTER_KILL' ||
+      monsterKillTeamId(event, players) !== teamId
+    ) {
+      continue;
+    }
+
+    switch (event.monsterType) {
+      case 'DRAGON':
+        objectives.dragons++;
+        break;
+      case 'RIFTHERALD':
+        objectives.heralds++;
+        break;
+      case 'HORDE':
+        objectives.grubs++;
+        break;
+      case 'BARON_NASHOR':
+        objectives.barons++;
+        break;
+      case 'ATAKHAN':
+        objectives.atakhans++;
+        break;
+    }
+  }
+
+  if (objectives.barons === 0) {
+    objectives.barons = roster.reduce((sum, p) => sum + p.baronKills, 0);
+  }
+
+  return objectives;
 }
 
 export function teamAccentTextClass(teamId?: number | null): string {

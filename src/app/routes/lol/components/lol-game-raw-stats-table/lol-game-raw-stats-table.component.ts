@@ -32,6 +32,11 @@ export class LolGameRawStatsTableComponent {
   @Input()
   patch = '';
 
+  /**
+   * Collapsed by default when the table sits at the bottom of a longer page;
+   * the "Données brutes" tab shows nothing but this table, so it opens itself.
+   */
+  @Input()
   expanded = false;
 
   rows: ChallengeRow[] = CHALLENGE_FIELD_KEYS.map((key) => ({
