@@ -1,6 +1,6 @@
 {
   "name": "gameon-front",
-  "version": "7.2.4",
+  "version": "7.3.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
