@@ -7,12 +7,65 @@ export type KillFeedCategory = 'kills' | 'objectives' | 'wards' | 'other';
 export interface TimelineEventEntry {
   event: LoLGameTimelineEvent;
   category: KillFeedCategory;
-  icon: string;
+  /** Emoji glyph — only set for kill-related entries (no real single-sprite asset exists for these). */
+  icon?: string;
+  /** Real game sprite — set for every objective/structure/ward entry. */
+  iconUrl?: string;
   label: string;
   killer?: LoLGameParticipant;
   victim?: LoLGameParticipant;
   assists: LoLGameParticipant[];
   teamId?: number | null;
+}
+
+/**
+ * Same CDN League's own client pulls its minimap icons from (CommunityDragon's
+ * mirror of the game's raw asset bundle) — used instead of emoji for every
+ * objective/structure/ward icon so they actually look like the game.
+ */
+const MINIMAP_ICONS = 'https://raw.communitydragon.org/latest/game/assets/ux/minimap/icons';
+
+export const TOWER_ICON_URL = `${MINIMAP_ICONS}/tower.png`;
+export const INHIBITOR_ICON_URL = `${MINIMAP_ICONS}/inhibitor.png`;
+export const NEXUS_ICON_URL = `${MINIMAP_ICONS}/nexus.png`;
+export const DRAGON_ICON_URL = `${MINIMAP_ICONS}/dragon.png`;
+export const HERALD_ICON_URL = `${MINIMAP_ICONS}/riftherald.png`;
+export const GRUB_ICON_URL = `${MINIMAP_ICONS}/grub.png`;
+export const BARON_ICON_URL = `${MINIMAP_ICONS}/baron.png`;
+export const ATAKHAN_ICON_URL = `${MINIMAP_ICONS}/atakhan_v.png`;
+export const TURRET_PLATE_ICON_URL = `${MINIMAP_ICONS}/turret_1plate.png`;
+export const WARD_ICON_URL = `${MINIMAP_ICONS}/minimap_ward_green_full.png`;
+export const CONTROL_WARD_ICON_URL = `${MINIMAP_ICONS}/minimap_ward_pink_friendly.png`;
+
+/** `monsterSubType` (ELITE_MONSTER_KILL) uses Riot's long enum names. */
+const DRAGON_SUBTYPE_ICON_FILES: Record<string, string> = {
+  AIR_DRAGON: 'dragon_cloud.png',
+  FIRE_DRAGON: 'dragon_infernal.png',
+  EARTH_DRAGON: 'dragon_mountain.png',
+  WATER_DRAGON: 'dragon_ocean.png',
+  CHEMTECH_DRAGON: 'dragon_chemtech.png',
+  HEXTECH_DRAGON: 'dragon_hextech.png',
+  ELDER_DRAGON: 'dragon_elder.png',
+};
+
+/** `dragonSoulType` (DRAGON_SOUL_GIVEN) uses Riot's short display names instead — bridge to the same enum used above. */
+const SOUL_TYPE_TO_SUBTYPE: Record<string, string> = {
+  Cloud: 'AIR_DRAGON',
+  Infernal: 'FIRE_DRAGON',
+  Mountain: 'EARTH_DRAGON',
+  Ocean: 'WATER_DRAGON',
+  Chemtech: 'CHEMTECH_DRAGON',
+  Hextech: 'HEXTECH_DRAGON',
+};
+
+export function dragonIconUrl(monsterSubType?: string | null): string {
+  const file = monsterSubType ? DRAGON_SUBTYPE_ICON_FILES[monsterSubType] : undefined;
+  return `${MINIMAP_ICONS}/${file ?? 'dragon.png'}`;
+}
+
+export function dragonSoulIconUrl(dragonSoulType?: string | null): string {
+  const subType = dragonSoulType ? SOUL_TYPE_TO_SUBTYPE[dragonSoulType] : undefined;
+  return dragonIconUrl(subType);
 }
 
 const DRAGON_SUBTYPE_LABELS: Record<string, string> = {
@@ -54,19 +107,29 @@ const WARD_TYPE_LABELS: Record<string, string> = {
   TEEMO_MUSHROOM: 'champignon',
 };
 
-export function monsterIcon(event: LoLGameTimelineEvent): string {
+export function monsterIconUrl(event: LoLGameTimelineEvent): string {
   switch (event.monsterType) {
     case 'BARON_NASHOR':
-      return '🔮';
+      return BARON_ICON_URL;
     case 'RIFTHERALD':
-      return '👁️';
+      return HERALD_ICON_URL;
     case 'HORDE':
-      return '🐛';
+      return GRUB_ICON_URL;
     case 'ATAKHAN':
-      return '👑';
+      return ATAKHAN_ICON_URL;
     default:
-      return '🐉';
+      return dragonIconUrl(event.monsterSubType);
   }
+}
+
+export function buildingIconUrl(event: LoLGameTimelineEvent): string {
+  return event.buildingType === 'INHIBITOR_BUILDING'
+    ? INHIBITOR_ICON_URL
+    : TOWER_ICON_URL;
+}
+
+export function wardIconUrl(event: LoLGameTimelineEvent): string {
+  return event.wardType === 'CONTROL_WARD' ? CONTROL_WARD_ICON_URL : WARD_ICON_URL;
 }
 
 export function monsterLabel(event: LoLGameTimelineEvent): string {
@@ -184,7 +247,7 @@ export function describeEvent(
       return {
         event,
         category: 'objectives',
-        icon: monsterIcon(event),
+        iconUrl: monsterIconUrl(event),
         label: `a pris ${monsterLabel(event)}`,
         killer: monsterKiller,
         assists,
@@ -199,7 +262,7 @@ export function describeEvent(
       return {
         event,
         category: 'objectives',
-        icon: event.buildingType === 'INHIBITOR_BUILDING' ? '💠' : '🏰',
+        iconUrl: buildingIconUrl(event),
         label: `a détruit : ${buildingLabel(event)}`,
         killer: buildingKiller,
         assists,
@@ -212,7 +275,7 @@ export function describeEvent(
       return {
         event,
         category: 'objectives',
-        icon: '🧱',
+        iconUrl: TURRET_PLATE_ICON_URL,
         label: `a fait tomber une plaque ${lane}`.trim(),
         killer: plateKiller,
         assists: [],
@@ -223,7 +286,7 @@ export function describeEvent(
       return {
         event,
         category: 'objectives',
-        icon: '👑',
+        iconUrl: dragonSoulIconUrl(event.dragonSoulType),
         label: `Âme de dragon obtenue${event.dragonSoulType ? ` (${DRAGON_SUBTYPE_LABELS[event.dragonSoulType] ?? event.dragonSoulType})` : ''}`,
         assists: [],
         teamId: event.teamId,
@@ -234,7 +297,7 @@ export function describeEvent(
       return {
         event,
         category: 'wards',
-        icon: '👁️',
+        iconUrl: wardIconUrl(event),
         label: `a posé une ${wardTypeLabel(event)}`,
         killer: creator,
         assists: [],
@@ -246,7 +309,7 @@ export function describeEvent(
       return {
         event,
         category: 'wards',
-        icon: '🚫',
+        iconUrl: wardIconUrl(event),
         label: `a détruit une ${wardTypeLabel(event)}`,
         killer: wardKiller,
         assists: [],

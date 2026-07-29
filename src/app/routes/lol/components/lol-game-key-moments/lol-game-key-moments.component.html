@@ -6,7 +6,11 @@
           class="grid h-9 w-9 shrink-0 place-items-center rounded-lg border text-base"
           [ngClass]="iconClass(moment.tone)"
         >
-          {{ moment.icon }}
+          @if (moment.iconUrl) {
+            <img [src]="moment.iconUrl" class="h-5 w-5 object-contain" />
+          } @else {
+            {{ moment.icon }}
+          }
         </span>
 
         <div class="min-w-0 flex-1">

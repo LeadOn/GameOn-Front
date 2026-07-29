@@ -30,7 +30,14 @@
             {{ timeLabel(entry) }}
           </span>
 
-          <span class="w-5 shrink-0 text-center text-sm">{{ entry.icon }}</span>
+          @if (entry.iconUrl) {
+            <img
+              [src]="entry.iconUrl"
+              class="h-5 w-5 shrink-0 object-contain drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]"
+            />
+          } @else {
+            <span class="w-5 shrink-0 text-center text-sm">{{ entry.icon }}</span>
+          }
 
           @if (entry.killer) {
             <img

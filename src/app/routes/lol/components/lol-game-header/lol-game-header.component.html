@@ -107,7 +107,7 @@
               [title]="badge.label"
               class="border-mpBorder text-mpTextSecondary light:bg-[rgba(23,30,54,0.04)] inline-flex items-center gap-1 rounded-lg border bg-white/5 px-2 py-1 text-xs font-semibold"
             >
-              <span class="text-[13px] leading-none">{{ badge.icon }}</span>
+              <img [src]="badge.iconUrl" class="h-4 w-4 object-contain" />
               {{ badge.value }}
             </span>
           }

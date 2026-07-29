@@ -21,12 +21,19 @@ import {
   ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import {
+  ATAKHAN_ICON_URL,
+  BARON_ICON_URL,
+  DRAGON_ICON_URL,
+  GRUB_ICON_URL,
+  HERALD_ICON_URL,
+  INHIBITOR_ICON_URL,
   TeamObjectives,
   teamObjectives,
+  TOWER_ICON_URL,
 } from '../../../../shared/classes/lol/lol-timeline-event.util';
 
 interface ObjectiveBadge {
-  icon: string;
+  iconUrl: string;
   label: string;
   value: number;
 }
@@ -116,13 +123,13 @@ export class LolGameHeaderComponent implements OnChanges {
 
   private badgesFor(objectives: TeamObjectives): ObjectiveBadge[] {
     return [
-      { icon: '🏰', label: 'Tourelles', value: objectives.towers },
-      { icon: '💠', label: 'Inhibiteurs', value: objectives.inhibitors },
-      { icon: '🐉', label: 'Dragons', value: objectives.dragons },
-      { icon: '👁️', label: 'Hérauts de la Faille', value: objectives.heralds },
-      { icon: '🐛', label: 'Voracraves', value: objectives.grubs },
-      { icon: '🔮', label: 'Barons Nashor', value: objectives.barons },
-      { icon: '👑', label: 'Atakhan', value: objectives.atakhans },
+      { iconUrl: TOWER_ICON_URL, label: 'Tourelles', value: objectives.towers },
+      { iconUrl: INHIBITOR_ICON_URL, label: 'Inhibiteurs', value: objectives.inhibitors },
+      { iconUrl: DRAGON_ICON_URL, label: 'Dragons', value: objectives.dragons },
+      { iconUrl: HERALD_ICON_URL, label: 'Hérauts de la Faille', value: objectives.heralds },
+      { iconUrl: GRUB_ICON_URL, label: 'Voracraves', value: objectives.grubs },
+      { iconUrl: BARON_ICON_URL, label: 'Barons Nashor', value: objectives.barons },
+      { iconUrl: ATAKHAN_ICON_URL, label: 'Atakhan', value: objectives.atakhans },
     ].filter((badge) => badge.value > 0);
   }
 
