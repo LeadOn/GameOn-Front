@@ -40,7 +40,7 @@ function playerName(
   players: LoLGameParticipant[],
   puuid?: string | null,
 ): string {
-  return findByPuuid(players, puuid)?.riotIdGameName ?? 'Inconnu';
+  return findByPuuid(players, puuid)?.championName ?? 'Inconnu';
 }
 
 function teamLabel(teamId?: number | null): string {
