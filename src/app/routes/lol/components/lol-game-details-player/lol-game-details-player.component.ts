@@ -11,6 +11,7 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   championIconUrl,
   creepScoreFor,
+  damageSplitFor,
   damageToChampionsFor,
   decimalLabel,
   formatCompact,
@@ -22,9 +23,8 @@ import {
   kdaColorClass,
   kdaLabel,
   killParticipationFor,
-  latestStatsFor,
   playerDisplayName,
-  playerRating,
+  ratingFor,
   ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import {
@@ -110,12 +110,7 @@ export class LolGameDetailsPlayerComponent {
   }
 
   get rating(): number {
-    return playerRating(
-      this.player,
-      this.team,
-      this.timeline,
-      this.durationSeconds,
-    );
+    return ratingFor(this.player, this.team, this.timeline, this.durationSeconds);
   }
 
   get ratingLabel(): string {
@@ -153,20 +148,17 @@ export class LolGameDetailsPlayerComponent {
     magic: number;
     trueDamage: number;
   } | null {
-    const stats = latestStatsFor(this.timeline, this.player.puuid);
-    const physical = stats?.physicalDamageDoneToChampions ?? 0;
-    const magic = stats?.magicDamageDoneToChampions ?? 0;
-    const trueDamage = stats?.trueDamageDoneToChampions ?? 0;
-    const total = physical + magic + trueDamage;
-
-    if (total <= 0) {
+    const split = damageSplitFor(this.player, this.timeline);
+    if (split == null) {
       return null;
     }
 
+    const total = split.physical + split.magic + split.trueDamage;
+
     return {
-      physical: (physical / total) * 100,
-      magic: (magic / total) * 100,
-      trueDamage: (trueDamage / total) * 100,
+      physical: (split.physical / total) * 100,
+      magic: (split.magic / total) * 100,
+      trueDamage: (split.trueDamage / total) * 100,
     };
   }
 
@@ -176,16 +168,16 @@ export class LolGameDetailsPlayerComponent {
 
   /** The bar only shows a total; the split lives in its native tooltip. */
   get damageTitle(): string {
-    const stats = latestStatsFor(this.timeline, this.player.puuid);
+    const split = damageSplitFor(this.player, this.timeline);
 
-    if (stats == null) {
+    if (split == null) {
       return 'Répartition physique / magique / brut indisponible (partie non synchronisée)';
     }
 
     return [
-      `Physique ${formatFull(stats.physicalDamageDoneToChampions)}`,
-      `Magique ${formatFull(stats.magicDamageDoneToChampions)}`,
-      `Brut ${formatFull(stats.trueDamageDoneToChampions)}`,
+      `Physique ${formatFull(split.physical)}`,
+      `Magique ${formatFull(split.magic)}`,
+      `Brut ${formatFull(split.trueDamage)}`,
     ].join(' · ');
   }
 

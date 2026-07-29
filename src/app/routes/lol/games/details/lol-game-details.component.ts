@@ -294,13 +294,28 @@ export class LolGameDetailsComponent implements OnInit {
     return [];
   }
 
+  /**
+   * Prefers the backend-computed `game.mvpParticipantId` (unambiguously null
+   * until the rating backfill has run for this match) over the client-side
+   * composite score, which stays as a fallback for games not yet resynced.
+   */
   get mvpPuuid(): string | undefined {
+    if (this.game.mvpParticipantId != null) {
+      return this.allPlayers.find((p) => p.id === this.game.mvpParticipantId)
+        ?.puuid;
+    }
+
     return bestParticipant(this.winners, (p) =>
       compositeScore(p, this.timeline),
     )?.player.puuid;
   }
 
   get acePuuid(): string | undefined {
+    if (this.game.aceParticipantId != null) {
+      return this.allPlayers.find((p) => p.id === this.game.aceParticipantId)
+        ?.puuid;
+    }
+
     return bestParticipant(this.losers, (p) => compositeScore(p, this.timeline))
       ?.player.puuid;
   }

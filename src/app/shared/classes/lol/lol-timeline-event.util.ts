@@ -1,4 +1,5 @@
 import { LoLGameParticipant } from './LoLGameParticipant';
+import { LoLGameTeam } from './LoLGameTeam';
 import { LoLGameTimelineEvent } from './LoLGameTimelineEvent';
 import { LoLGameTimelineFrame } from './LoLGameTimelineFrame';
 
@@ -451,6 +452,62 @@ export function teamObjectives(
   }
 
   return objectives;
+}
+
+/**
+ * Atakhan has no equivalent on the backend's `LoLGameTeam` (absent from
+ * Riot's `teams[].objectives` payload), so it stays timeline-derived even
+ * when the rest of a team's objectives come from the API.
+ */
+function atakhanKillsForTeam(
+  timeline: LoLGameTimelineFrame[] | undefined,
+  players: LoLGameParticipant[],
+  teamId: number,
+): number {
+  let count = 0;
+
+  for (const event of allTimelineEvents(timeline)) {
+    if (
+      event.eventType === 'ELITE_MONSTER_KILL' &&
+      event.monsterType === 'ATAKHAN' &&
+      monsterKillTeamId(event, players) === teamId
+    ) {
+      count++;
+    }
+  }
+
+  return count;
+}
+
+/**
+ * Team objective tally for the match header, preferring the backend-computed
+ * `LoLGame.leagueOfLegendsGameTeams` (single query, works even without a
+ * loaded timeline) over the {@link teamObjectives} timeline scan, which now
+ * only runs as a fallback for games not yet resynced with that field
+ * populated (empty array).
+ */
+export function teamObjectivesFor(
+  teams: LoLGameTeam[],
+  timeline: LoLGameTimelineFrame[] | undefined,
+  players: LoLGameParticipant[],
+  teamId: number,
+): TeamObjectives {
+  const apiTeam = teams.find((t) => t.teamId === teamId);
+
+  if (apiTeam == null) {
+    return teamObjectives(timeline, players, teamId);
+  }
+
+  return {
+    kills: apiTeam.championKills,
+    towers: apiTeam.towerKills,
+    inhibitors: apiTeam.inhibitorKills,
+    dragons: apiTeam.dragonKills,
+    heralds: apiTeam.riftHeraldKills,
+    grubs: apiTeam.hordeKills,
+    barons: apiTeam.baronKills,
+    atakhans: atakhanKillsForTeam(timeline, players, teamId),
+  };
 }
 
 export function teamAccentTextClass(teamId?: number | null): string {

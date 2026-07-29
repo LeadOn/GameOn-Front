@@ -9,6 +9,7 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   championIconUrl,
   creepScoreFor,
+  crowdControlSecondsFor,
   damageToChampionsFor,
   decimalLabel,
   formatCompact,
@@ -20,7 +21,7 @@ import {
   killParticipationFor,
   latestStatsFor,
   playerFullName,
-  playerRating,
+  ratingFor,
   ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import { roleLabel } from '../../../../shared/classes/lol/lol-role.util';
@@ -144,7 +145,7 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
   }
 
   private ratingOf(player: LoLGameParticipant): number {
-    return playerRating(
+    return ratingFor(
       player,
       this.teamOf(player),
       this.timeline,
@@ -191,12 +192,8 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
     );
   }
 
-  /** Riot reports it in milliseconds on the timeline frames, seconds read better. */
   private crowdControl(player: LoLGameParticipant): number {
-    return Math.round(
-      (latestStatsFor(this.timeline, player.puuid)?.timeEnemySpentControlled ??
-        0) / 1000,
-    );
+    return crowdControlSecondsFor(player, this.timeline);
   }
 
   private pings(player: LoLGameParticipant): number {

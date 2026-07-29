@@ -7,6 +7,7 @@ import {
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import {
+  damageSplitFor,
   damageToChampionsFor,
   formatCompact,
   latestStatsFor,
@@ -50,13 +51,13 @@ export class LolGamePlayerDamageProfileComponent implements OnChanges {
       return;
     }
 
-    const stats = latestStatsFor(this.timeline, this.player.puuid);
-    const physical = stats?.physicalDamageDoneToChampions ?? 0;
-    const magic = stats?.magicDamageDoneToChampions ?? 0;
-    const trueDamage = stats?.trueDamageDoneToChampions ?? 0;
+    const split = damageSplitFor(this.player, this.timeline);
+    const physical = split?.physical ?? 0;
+    const magic = split?.magic ?? 0;
+    const trueDamage = split?.trueDamage ?? 0;
     const total = physical + magic + trueDamage;
 
-    this.hasSplitData = total > 0;
+    this.hasSplitData = split != null;
 
     this.rows = [
       {

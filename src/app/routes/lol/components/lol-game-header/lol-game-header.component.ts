@@ -17,7 +17,7 @@ import {
   formatDuration,
   formatShortDateTime,
   kdaLabel,
-  playerRating,
+  ratingFor,
   ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import {
@@ -28,7 +28,7 @@ import {
   HERALD_ICON_URL,
   INHIBITOR_ICON_URL,
   TeamObjectives,
-  teamObjectives,
+  teamObjectivesFor,
   TOWER_ICON_URL,
 } from '../../../../shared/classes/lol/lol-timeline-event.util';
 
@@ -101,7 +101,12 @@ export class LolGameHeaderComponent implements OnChanges {
       { teamId: 100, dotClass: 'bg-mpGreen' },
       { teamId: 200, dotClass: 'bg-mpRed' },
     ].map(({ teamId, dotClass }) => {
-      const objectives = teamObjectives(this.timeline, players, teamId);
+      const objectives = teamObjectivesFor(
+        this.game.leagueOfLegendsGameTeams,
+        this.timeline,
+        players,
+        teamId,
+      );
 
       return {
         teamId,
@@ -112,7 +117,7 @@ export class LolGameHeaderComponent implements OnChanges {
     });
 
     this.rating = this.heroPlayer
-      ? playerRating(
+      ? ratingFor(
           this.heroPlayer,
           this.heroPlayer.teamId === 100 ? this.team1 : this.team2,
           this.timeline,
