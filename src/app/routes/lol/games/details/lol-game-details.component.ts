@@ -17,9 +17,9 @@ import {
   bestParticipant,
   closestDdragonVersion,
   compositeScore,
+  durationSecondsFor,
   formatCompact,
-  gameDurationSeconds,
-  goldEarnedFor,
+  teamGold,
   teamKillCount,
 } from '../../../../shared/classes/lol/lol-match.util';
 import { queueLabel } from '../../../../shared/classes/lol/lol-queue.util';
@@ -227,12 +227,7 @@ export class LolGameDetailsComponent implements OnInit {
         outcomeLabel: this.outcomeLabel(side.teamId),
         outcomeTone: this.outcomeTone(side.teamId),
         kills: teamKillCount(side.players),
-        goldLabel: formatCompact(
-          side.players.reduce(
-            (sum, p) => sum + goldEarnedFor(p, this.timeline),
-            0,
-          ),
-        ),
+        goldLabel: formatCompact(teamGold(side.players, this.timeline)),
       }));
   }
 
@@ -284,7 +279,7 @@ export class LolGameDetailsComponent implements OnInit {
   }
 
   get durationSeconds(): number {
-    return gameDurationSeconds(this.game);
+    return durationSecondsFor(this.game);
   }
 
   get winners(): LoLGameParticipant[] {

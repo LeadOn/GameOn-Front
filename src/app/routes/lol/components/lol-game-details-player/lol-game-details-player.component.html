@@ -102,15 +102,22 @@
       class="light:bg-[rgba(23,30,54,0.06)] h-2 flex-1 overflow-hidden rounded-full bg-white/10"
     >
       <div class="flex h-full" [style.width.%]="damageBarPercent">
-        <div
-          class="bg-mpYellow h-full"
-          [style.width.%]="damageSplit.physical"
-        ></div>
-        <div class="bg-mpBlue h-full" [style.width.%]="damageSplit.magic"></div>
-        <div
-          class="h-full bg-white/70"
-          [style.width.%]="damageSplit.trueDamage"
-        ></div>
+        @if (damageSplit; as split) {
+          <div
+            class="bg-mpYellow h-full"
+            [style.width.%]="split.physical"
+          ></div>
+          <div class="bg-mpBlue h-full" [style.width.%]="split.magic"></div>
+          <div
+            class="h-full bg-white/70"
+            [style.width.%]="split.trueDamage"
+          ></div>
+        } @else {
+          <!-- No timeline data: total only, no fabricated type split. -->
+          <div
+            class="light:bg-[rgba(23,30,54,0.35)] h-full w-full bg-white/40"
+          ></div>
+        }
       </div>
     </div>
     <span class="text-mpTextSecondary w-11 text-right text-[11px]">
@@ -126,7 +133,9 @@
   </div>
 
   <div class="@min-[1100px]:block hidden w-[58px] shrink-0">
-    <p class="text-mpText text-[13px] font-semibold">{{ player.visionScore }}</p>
+    <p class="text-mpText text-[13px] font-semibold">
+      {{ player.visionScore }}
+    </p>
     <p class="text-mpTextMuted text-[11px]">vision</p>
   </div>
 

@@ -37,6 +37,8 @@ export class LolGamePlayerDamageProfileComponent implements OnChanges {
   timeline?: LoLGameTimelineFrame[];
 
   rows: DamageRow[] = [];
+  /** False on never-synced games: the timeline carries no per-type damage. */
+  hasSplitData = false;
   teamDamageShare = 0;
   damageTakenLabel = '0';
   teamDamageTakenShare = 0;
@@ -44,6 +46,7 @@ export class LolGamePlayerDamageProfileComponent implements OnChanges {
   ngOnChanges(): void {
     if (this.player == null) {
       this.rows = [];
+      this.hasSplitData = false;
       return;
     }
 
@@ -52,6 +55,8 @@ export class LolGamePlayerDamageProfileComponent implements OnChanges {
     const magic = stats?.magicDamageDoneToChampions ?? 0;
     const trueDamage = stats?.trueDamageDoneToChampions ?? 0;
     const total = physical + magic + trueDamage;
+
+    this.hasSplitData = total > 0;
 
     this.rows = [
       {

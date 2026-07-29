@@ -134,10 +134,9 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
     return `${position === 1 ? '1er' : position + 'e'} / ${this.players.length}`;
   }
 
+  /** `durationSeconds` comes from the page's `durationSecondsFor`, which already prefers the backend value. */
   private get minutes(): number {
-    const seconds =
-      this.durationSeconds || (this.player?.stats?.gameDurationSeconds ?? 0);
-    return seconds > 0 ? seconds / 60 : 0;
+    return this.durationSeconds > 0 ? this.durationSeconds / 60 : 0;
   }
 
   private teamOf(player: LoLGameParticipant): LoLGameParticipant[] {
@@ -149,7 +148,7 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
       player,
       this.teamOf(player),
       this.timeline,
-      this.durationSeconds || (player.stats?.gameDurationSeconds ?? 0),
+      this.durationSeconds,
     );
   }
 

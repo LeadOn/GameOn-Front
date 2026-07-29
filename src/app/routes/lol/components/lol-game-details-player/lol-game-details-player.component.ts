@@ -114,7 +114,7 @@ export class LolGameDetailsPlayerComponent {
       this.player,
       this.team,
       this.timeline,
-      this.durationSeconds || (this.player.stats?.gameDurationSeconds ?? 0),
+      this.durationSeconds,
     );
   }
 
@@ -143,8 +143,16 @@ export class LolGameDetailsPlayerComponent {
     return max <= 0 ? 0 : Math.max(2, (this.damageDealt / max) * 100);
   }
 
-  /** Physical / magic / true split, as a share of this player's own damage. */
-  get damageSplit(): { physical: number; magic: number; trueDamage: number } {
+  /**
+   * Physical / magic / true split, as a share of this player's own damage.
+   * `null` when the timeline carries no data (never-synced games) — the bar
+   * then renders a neutral fill instead of a made-up "100% physical".
+   */
+  get damageSplit(): {
+    physical: number;
+    magic: number;
+    trueDamage: number;
+  } | null {
     const stats = latestStatsFor(this.timeline, this.player.puuid);
     const physical = stats?.physicalDamageDoneToChampions ?? 0;
     const magic = stats?.magicDamageDoneToChampions ?? 0;
@@ -152,7 +160,7 @@ export class LolGameDetailsPlayerComponent {
     const total = physical + magic + trueDamage;
 
     if (total <= 0) {
-      return { physical: 100, magic: 0, trueDamage: 0 };
+      return null;
     }
 
     return {
@@ -170,10 +178,14 @@ export class LolGameDetailsPlayerComponent {
   get damageTitle(): string {
     const stats = latestStatsFor(this.timeline, this.player.puuid);
 
+    if (stats == null) {
+      return 'Répartition physique / magique / brut indisponible (partie non synchronisée)';
+    }
+
     return [
-      `Physique ${formatFull(stats?.physicalDamageDoneToChampions ?? 0)}`,
-      `Magique ${formatFull(stats?.magicDamageDoneToChampions ?? 0)}`,
-      `Brut ${formatFull(stats?.trueDamageDoneToChampions ?? 0)}`,
+      `Physique ${formatFull(stats.physicalDamageDoneToChampions)}`,
+      `Magique ${formatFull(stats.magicDamageDoneToChampions)}`,
+      `Brut ${formatFull(stats.trueDamageDoneToChampions)}`,
     ].join(' · ');
   }
 

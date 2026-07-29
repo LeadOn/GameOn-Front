@@ -195,10 +195,47 @@ export function goldEarnedFor(
   );
 }
 
+/**
+ * Team gold total from a single source per side: every member's backend
+ * `stats.goldEarned` (exact end-of-game value) when the whole roster has been
+ * backfilled, otherwise everyone's last timeline frame — never a mix of the
+ * two, which would blend final gold with values from ~1 minute before the
+ * end. When neither covers the full roster, the partial `stats` sum is the
+ * only data left.
+ */
+export function teamGold(
+  team: LoLGameParticipant[],
+  timeline: LoLGameTimelineFrame[] | undefined,
+): number {
+  if (team.length > 0 && team.every((p) => p.stats != null)) {
+    return team.reduce((sum, p) => sum + (p.stats?.goldEarned ?? 0), 0);
+  }
+
+  const frame = latestFrame(timeline);
+  if (frame != null) {
+    return team.reduce(
+      (sum, p) => sum + (frameStatsFor(frame, p.puuid)?.totalGold ?? 0),
+      0,
+    );
+  }
+
+  return team.reduce((sum, p) => sum + (p.stats?.goldEarned ?? 0), 0);
+}
+
+/**
+ * Same source hierarchy as {@link kda}: Riot's own `challenges.killParticipation`
+ * first, then the backend-computed `stats.killParticipationPercent`, then a
+ * manual recount — so every consumer (scoreboard subtitle, rating, radar,
+ * performance tiles) shows the same number for the same player.
+ */
 export function killParticipationFor(
   player: LoLGameParticipant,
   team: LoLGameParticipant[],
 ): number {
+  if (player.challenges != null) {
+    return Math.round(player.challenges.killParticipation * 100);
+  }
+
   return Math.round(
     player.stats?.killParticipationPercent ?? killParticipation(player, team),
   );
@@ -278,16 +315,12 @@ export function compositeScore(
   player: LoLGameParticipant,
   timeline: LoLGameTimelineFrame[] | undefined,
 ): number {
-  const stats = latestStatsFor(timeline, player.puuid);
-  const damageToChampions = stats?.totalDamageDoneToChampions ?? 0;
-  const goldEarned = stats?.totalGold ?? 0;
-
   return (
     player.kills * 3 +
     player.assists * 1.5 -
     player.deaths +
-    damageToChampions / 1000 +
-    goldEarned / 1000
+    damageToChampionsFor(player, timeline) / 1000 +
+    goldEarnedFor(player, timeline) / 1000
   );
 }
 
@@ -331,6 +364,21 @@ export function gameDurationSeconds(game: LoLGame): number {
   const end = new Date(game.gameEnd).getTime();
   const seconds = (end - start) / 1000;
   return Number.isNaN(seconds) || seconds <= 0 ? 0 : seconds;
+}
+
+/**
+ * Single source of truth for a game's duration: the backend-computed
+ * `stats.gameDurationSeconds` (identical on every backfilled participant)
+ * when available, the `gameEnd - gameStart` difference otherwise — so
+ * per-minute fallbacks never disagree with the `stats` values shown next to
+ * them because of a slightly different duration.
+ */
+export function durationSecondsFor(game: LoLGame): number {
+  const fromStats = game.leagueOfLegendsGameParticipants.find(
+    (p) => (p.stats?.gameDurationSeconds ?? 0) > 0,
+  )?.stats?.gameDurationSeconds;
+
+  return fromStats ?? gameDurationSeconds(game);
 }
 
 export function formatDuration(seconds: number): string {

@@ -13,9 +13,9 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   championIconUrl,
   decimalLabel,
+  durationSecondsFor,
   formatDuration,
   formatShortDateTime,
-  gameDurationSeconds,
   kdaLabel,
   playerRating,
   ratingToneClass,
@@ -124,12 +124,28 @@ export class LolGameHeaderComponent implements OnChanges {
   private badgesFor(objectives: TeamObjectives): ObjectiveBadge[] {
     return [
       { iconUrl: TOWER_ICON_URL, label: 'Tourelles', value: objectives.towers },
-      { iconUrl: INHIBITOR_ICON_URL, label: 'Inhibiteurs', value: objectives.inhibitors },
+      {
+        iconUrl: INHIBITOR_ICON_URL,
+        label: 'Inhibiteurs',
+        value: objectives.inhibitors,
+      },
       { iconUrl: DRAGON_ICON_URL, label: 'Dragons', value: objectives.dragons },
-      { iconUrl: HERALD_ICON_URL, label: 'Hérauts de la Faille', value: objectives.heralds },
+      {
+        iconUrl: HERALD_ICON_URL,
+        label: 'Hérauts de la Faille',
+        value: objectives.heralds,
+      },
       { iconUrl: GRUB_ICON_URL, label: 'Voracraves', value: objectives.grubs },
-      { iconUrl: BARON_ICON_URL, label: 'Barons Nashor', value: objectives.barons },
-      { iconUrl: ATAKHAN_ICON_URL, label: 'Atakhan', value: objectives.atakhans },
+      {
+        iconUrl: BARON_ICON_URL,
+        label: 'Barons Nashor',
+        value: objectives.barons,
+      },
+      {
+        iconUrl: ATAKHAN_ICON_URL,
+        label: 'Atakhan',
+        value: objectives.atakhans,
+      },
     ].filter((badge) => badge.value > 0);
   }
 
@@ -264,7 +280,7 @@ export class LolGameHeaderComponent implements OnChanges {
   }
 
   get durationSeconds(): number {
-    return gameDurationSeconds(this.game);
+    return durationSecondsFor(this.game);
   }
 
   get patchTitle(): string {

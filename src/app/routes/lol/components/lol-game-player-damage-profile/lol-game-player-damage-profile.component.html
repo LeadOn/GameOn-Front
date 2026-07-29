@@ -8,36 +8,43 @@
 </div>
 
 <div class="p-5">
-  <div class="space-y-4">
-    @for (row of rows; track row.label) {
-      <div>
-        <div class="flex items-center justify-between gap-3">
-          <span
-            class="text-mpTextSecondary flex items-center gap-2 text-[13px]"
-          >
+  @if (hasSplitData) {
+    <div class="space-y-4">
+      @for (row of rows; track row.label) {
+        <div>
+          <div class="flex items-center justify-between gap-3">
             <span
-              class="h-2.5 w-2.5 shrink-0 rounded-sm"
-              [ngClass]="row.dotClass"
-            ></span>
-            {{ row.label }}
-          </span>
-          <span class="text-mpText text-[13px] font-semibold">
-            {{ row.valueLabel }}
-          </span>
-        </div>
+              class="text-mpTextSecondary flex items-center gap-2 text-[13px]"
+            >
+              <span
+                class="h-2.5 w-2.5 shrink-0 rounded-sm"
+                [ngClass]="row.dotClass"
+              ></span>
+              {{ row.label }}
+            </span>
+            <span class="text-mpText text-[13px] font-semibold">
+              {{ row.valueLabel }}
+            </span>
+          </div>
 
-        <div
-          class="light:bg-[rgba(23,30,54,0.06)] mt-1.5 h-2 w-full overflow-hidden rounded-full bg-white/10"
-        >
           <div
-            class="h-full rounded-full"
-            [ngClass]="row.barClass"
-            [style.width.%]="row.percent"
-          ></div>
+            class="light:bg-[rgba(23,30,54,0.06)] mt-1.5 h-2 w-full overflow-hidden rounded-full bg-white/10"
+          >
+            <div
+              class="h-full rounded-full"
+              [ngClass]="row.barClass"
+              [style.width.%]="row.percent"
+            ></div>
+          </div>
         </div>
-      </div>
-    }
-  </div>
+      }
+    </div>
+  } @else {
+    <p class="text-mpTextMuted text-[13px]">
+      Répartition physique / magique / brut indisponible pour cette partie
+      (timeline non synchronisée).
+    </p>
+  }
 
   <div class="border-mpBorder mt-5 grid grid-cols-2 gap-4 border-t pt-4">
     <div>
