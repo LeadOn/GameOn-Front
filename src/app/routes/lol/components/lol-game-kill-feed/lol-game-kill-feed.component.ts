@@ -69,6 +69,6 @@ export class LolGameKillFeedComponent {
   }
 
   displayName(player?: LoLGameParticipant): string {
-    return player?.riotIdGameName ?? 'Inconnu';
+    return player?.championName ?? 'Inconnu';
   }
 }
