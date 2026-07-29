@@ -3,7 +3,22 @@ import { LoLGameParticipant } from './LoLGameParticipant';
 import { LoLGameTimelineFrame } from './LoLGameTimelineFrame';
 import { LoLGameTimelineFrameParticipant } from './LoLGameTimelineFrameParticipant';
 
+/**
+ * Prefers Riot's own `challenges.kda` (raw, unrounded) over `stats.kda` — the
+ * same number pre-rounded server-side with C#'s banker's rounding, which can
+ * land a cent off from this file's own `toFixed`-based rounding on `.xx5`
+ * boundaries — and only falls back to a manual kills/deaths/assists ratio
+ * when neither API-provided value is available (games never (re)synced).
+ */
 export function kda(player: LoLGameParticipant): number {
+  if (player.challenges != null) {
+    return player.challenges.kda;
+  }
+
+  if (player.stats != null) {
+    return player.stats.kda;
+  }
+
   const denominator = player.deaths === 0 ? 1 : player.deaths;
   return (player.kills + player.assists) / denominator;
 }

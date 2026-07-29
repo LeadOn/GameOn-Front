@@ -213,14 +213,6 @@ export class LolGameDetailsPlayerComponent {
     return formatFull(this.player.stats?.damageTaken ?? 0);
   }
 
-  get wardsPlaced(): number {
-    return this.player.stats?.wardsPlaced ?? 0;
-  }
-
-  get wardsKilled(): number {
-    return this.player.stats?.wardsKilled ?? 0;
-  }
-
   get kdaValue(): number {
     return kda(this.player);
   }

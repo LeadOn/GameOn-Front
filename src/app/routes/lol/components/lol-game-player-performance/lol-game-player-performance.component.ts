@@ -103,9 +103,9 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
         detail: `${this.rankLabel(player, (p) => this.damageTaken(p))} le plus ciblé`,
       },
       {
-        label: 'Wards posées',
-        value: this.wardsPlaced(player).toString(),
-        detail: `vision ${player.visionScore} · ${this.rankLabel(player, (p) => this.wardsPlaced(p))}`,
+        label: 'Score de vision',
+        value: player.visionScore.toString(),
+        detail: this.rankLabel(player, (p) => p.visionScore),
       },
       {
         label: 'Contrôle infligé',
@@ -190,10 +190,6 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
       latestStatsFor(this.timeline, player.puuid)?.totalDamageTaken ??
       0
     );
-  }
-
-  private wardsPlaced(player: LoLGameParticipant): number {
-    return player.stats?.wardsPlaced ?? 0;
   }
 
   /** Riot reports it in milliseconds on the timeline frames, seconds read better. */

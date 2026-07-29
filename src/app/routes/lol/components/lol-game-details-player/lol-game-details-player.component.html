@@ -126,8 +126,8 @@
   </div>
 
   <div class="@min-[1100px]:block hidden w-[58px] shrink-0">
-    <p class="text-mpText text-[13px] font-semibold">{{ wardsPlaced }}</p>
-    <p class="text-mpTextMuted text-[11px]">wards</p>
+    <p class="text-mpText text-[13px] font-semibold">{{ player.visionScore }}</p>
+    <p class="text-mpTextMuted text-[11px]">vision</p>
   </div>
 
   <div class="@min-[660px]:flex hidden shrink-0 items-center gap-1">
@@ -187,10 +187,8 @@
           <p class="text-mpText font-semibold">{{ damageTakenLabel }}</p>
         </div>
         <div>
-          <p class="text-mpTextMuted">Wards posées / détruites</p>
-          <p class="text-mpText font-semibold">
-            {{ wardsPlaced }} / {{ wardsKilled }}
-          </p>
+          <p class="text-mpTextMuted">Score de vision</p>
+          <p class="text-mpText font-semibold">{{ player.visionScore }}</p>
         </div>
       </div>
     } @else {
