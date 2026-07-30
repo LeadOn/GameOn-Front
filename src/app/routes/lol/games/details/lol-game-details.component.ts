@@ -17,9 +17,9 @@ import {
   bestParticipant,
   closestDdragonVersion,
   compositeScore,
+  durationSecondsFor,
   formatCompact,
-  gameDurationSeconds,
-  goldEarnedFor,
+  teamGold,
   teamKillCount,
 } from '../../../../shared/classes/lol/lol-match.util';
 import { queueLabel } from '../../../../shared/classes/lol/lol-queue.util';
@@ -227,12 +227,7 @@ export class LolGameDetailsComponent implements OnInit {
         outcomeLabel: this.outcomeLabel(side.teamId),
         outcomeTone: this.outcomeTone(side.teamId),
         kills: teamKillCount(side.players),
-        goldLabel: formatCompact(
-          side.players.reduce(
-            (sum, p) => sum + goldEarnedFor(p, this.timeline),
-            0,
-          ),
-        ),
+        goldLabel: formatCompact(teamGold(side.players, this.timeline)),
       }));
   }
 
@@ -284,7 +279,7 @@ export class LolGameDetailsComponent implements OnInit {
   }
 
   get durationSeconds(): number {
-    return gameDurationSeconds(this.game);
+    return durationSecondsFor(this.game);
   }
 
   get winners(): LoLGameParticipant[] {
@@ -299,13 +294,28 @@ export class LolGameDetailsComponent implements OnInit {
     return [];
   }
 
+  /**
+   * Prefers the backend-computed `game.mvpParticipantId` (unambiguously null
+   * until the rating backfill has run for this match) over the client-side
+   * composite score, which stays as a fallback for games not yet resynced.
+   */
   get mvpPuuid(): string | undefined {
+    if (this.game.mvpParticipantId != null) {
+      return this.allPlayers.find((p) => p.id === this.game.mvpParticipantId)
+        ?.puuid;
+    }
+
     return bestParticipant(this.winners, (p) =>
       compositeScore(p, this.timeline),
     )?.player.puuid;
   }
 
   get acePuuid(): string | undefined {
+    if (this.game.aceParticipantId != null) {
+      return this.allPlayers.find((p) => p.id === this.game.aceParticipantId)
+        ?.puuid;
+    }
+
     return bestParticipant(this.losers, (p) => compositeScore(p, this.timeline))
       ?.player.puuid;
   }

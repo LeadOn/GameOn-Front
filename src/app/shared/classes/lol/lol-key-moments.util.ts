@@ -2,13 +2,24 @@ import { LoLGameParticipant } from './LoLGameParticipant';
 import { LoLGameTimelineEvent } from './LoLGameTimelineEvent';
 import { LoLGameTimelineFrame } from './LoLGameTimelineFrame';
 import { formatTimestamp } from './lol-match.util';
-import { allTimelineEvents, findByPuuid } from './lol-timeline-event.util';
+import {
+  allTimelineEvents,
+  BARON_ICON_URL,
+  dragonIconUrl,
+  dragonSoulIconUrl,
+  findByPuuid,
+  NEXUS_ICON_URL,
+  TOWER_ICON_URL,
+} from './lol-timeline-event.util';
 
 export type KeyMomentTone = 'red' | 'blue' | 'yellow' | 'green';
 
 export interface KeyMoment {
   key: string;
-  icon: string;
+  /** Emoji glyph — only set for kill-related moments (no real single-sprite asset exists for these). */
+  icon?: string;
+  /** Real game sprite — set for every objective/structure moment. */
+  iconUrl?: string;
   title: string;
   detail: string;
   timestamp: number;
@@ -40,7 +51,7 @@ function playerName(
   players: LoLGameParticipant[],
   puuid?: string | null,
 ): string {
-  return findByPuuid(players, puuid)?.riotIdGameName ?? 'Inconnu';
+  return findByPuuid(players, puuid)?.championName ?? 'Inconnu';
 }
 
 function teamLabel(teamId?: number | null): string {
@@ -51,7 +62,7 @@ function teamLabel(teamId?: number | null): string {
 
 function moment(
   key: string,
-  icon: string,
+  iconSpec: { icon: string } | { iconUrl: string },
   title: string,
   detail: string,
   timestamp: number,
@@ -59,7 +70,7 @@ function moment(
 ): KeyMoment {
   return {
     key,
-    icon,
+    ...iconSpec,
     title,
     detail,
     timestamp,
@@ -100,7 +111,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'first-blood',
-        '🩸',
+        { icon: '🩸' },
         'Premier sang',
         `${playerName(players, firstBlood.killerPUUID)} élimine ${playerName(players, firstBlood.victimPUUID)}`,
         firstBlood.timestamp,
@@ -120,7 +131,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'ace',
-        '💥',
+        { icon: '💥' },
         'Ace',
         `${playerName(players, ace.killerPUUID)} conclut, ${opponents} adversaires à terre`,
         ace.timestamp,
@@ -141,7 +152,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'baron',
-        '🔮',
+        { iconUrl: BARON_ICON_URL },
         'Baron Nashor',
         `Sécurisé par ${playerName(players, baron.killerPUUID)} — ${teamLabel(baronTeam)}`,
         baron.timestamp,
@@ -155,7 +166,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'game-end',
-        '🏰',
+        { iconUrl: NEXUS_ICON_URL },
         'Nexus détruit',
         `${teamLabel(winningTeamId)} l'emporte`,
         gameEnd.timestamp,
@@ -176,7 +187,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'dragon-soul',
-        '👑',
+        { iconUrl: dragonSoulIconUrl(soul.dragonSoulType) },
         `Âme ${soulLabel}`.trim(),
         `${teamLabel(soul.teamId)} obtient l'âme du dragon`,
         soul.timestamp,
@@ -198,7 +209,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'multi-kill',
-        '🔥',
+        { icon: '🔥' },
         MULTI_KILL_TITLES[length] ?? `${length}x kill`,
         `${playerName(players, bestMulti.killerPUUID)} enchaîne ${length} éliminations`,
         bestMulti.timestamp,
@@ -218,7 +229,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'first-dragon',
-        '🐉',
+        { iconUrl: dragonIconUrl(dragon.monsterSubType) },
         'Premier dragon',
         `Pris par ${playerName(players, dragon.killerPUUID)} — ${teamLabel(dragonTeam)}`,
         dragon.timestamp,
@@ -237,7 +248,7 @@ export function keyMoments(
     candidates.push(
       moment(
         'first-tower',
-        '🏰',
+        { iconUrl: TOWER_ICON_URL },
         'Première tourelle',
         `${teamLabel(takerTeam)} ouvre la carte`,
         tower.timestamp,

@@ -1,5 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
+import { LoLGameTimelineEvent } from '../../../../shared/classes/lol/LoLGameTimelineEvent';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import {
   championIconUrl,
@@ -12,8 +13,11 @@ import {
 import {
   allTimelineEvents,
   findByPuuid,
-  monsterIcon,
+  INHIBITOR_ICON_URL,
+  monsterIconUrl,
   monsterLabel,
+  TOWER_ICON_URL,
+  WARD_ICON_URL,
 } from '../../../../shared/classes/lol/lol-timeline-event.util';
 
 interface MapDot {
@@ -32,7 +36,7 @@ interface StructureDot {
 }
 
 interface ObjectiveMarker {
-  icon: string;
+  iconUrl: string;
   label: string;
   leftPercent: number;
   bottomPercent: number;
@@ -40,6 +44,26 @@ interface ObjectiveMarker {
 
 // Summoner's Rift world coordinates span roughly 0..14980 on both axes.
 const MAP_SIZE = 14980;
+
+/**
+ * Void Grubs, Rift Herald and Baron Nashor all spawn in the same river pit and
+ * are mutually exclusive over time (grubs vanish once the pit opens for
+ * Herald/Baron), and every drake take respawns at the same Dragon pit — so
+ * grouping by pit and keeping only the latest event per group reflects what's
+ * actually there at the current tick instead of a full historical stack.
+ */
+function objectiveZoneKey(monsterType: string | null): string {
+  switch (monsterType) {
+    case 'BARON_NASHOR':
+    case 'RIFTHERALD':
+    case 'HORDE':
+      return 'baron-pit';
+    case 'DRAGON':
+      return 'dragon-pit';
+    default:
+      return monsterType ?? 'unknown';
+  }
+}
 
 @Component({
   selector: 'app-lol-game-minimap',
@@ -60,6 +84,10 @@ export class LolGameMinimapComponent {
 
   @Input()
   patch = '';
+
+  readonly towerIconUrl = TOWER_ICON_URL;
+  readonly inhibitorIconUrl = INHIBITOR_ICON_URL;
+  readonly wardIconUrl = WARD_ICON_URL;
 
   get mapUrl(): string {
     return `https://ddragon.leagueoflegends.com/cdn/${this.patch}/img/map/map11.png`;
@@ -120,24 +148,33 @@ export class LolGameMinimapComponent {
     });
   }
 
-  /** Dragons/Baron/Herald/Voracraves taken so far, at their real recorded position. */
+  /** Whichever monster currently "owns" each pit (Baron/Herald/Grubs pit, Dragon pit), at its real recorded position. */
   get objectiveMarkers(): ObjectiveMarker[] {
     const time = this.currentTimestamp;
 
-    return allTimelineEvents(this.timeline)
-      .filter(
-        (event) =>
-          event.eventType === 'ELITE_MONSTER_KILL' &&
-          event.timestamp <= time &&
-          event.positionX != null &&
-          event.positionY != null,
-      )
-      .map((event) => ({
-        icon: monsterIcon(event),
-        label: monsterLabel(event),
-        leftPercent: this.toPercent(event.positionX!),
-        bottomPercent: this.toPercent(event.positionY!),
-      }));
+    const events = allTimelineEvents(this.timeline).filter(
+      (event) =>
+        event.eventType === 'ELITE_MONSTER_KILL' &&
+        event.timestamp <= time &&
+        event.positionX != null &&
+        event.positionY != null,
+    );
+
+    const latestByZone = new Map<string, LoLGameTimelineEvent>();
+    for (const event of events) {
+      const zone = objectiveZoneKey(event.monsterType);
+      const current = latestByZone.get(zone);
+      if (current == null || event.timestamp > current.timestamp) {
+        latestByZone.set(zone, event);
+      }
+    }
+
+    return Array.from(latestByZone.values()).map((event) => ({
+      iconUrl: monsterIconUrl(event),
+      label: monsterLabel(event),
+      leftPercent: this.toPercent(event.positionX!),
+      bottomPercent: this.toPercent(event.positionY!),
+    }));
   }
 
   /**

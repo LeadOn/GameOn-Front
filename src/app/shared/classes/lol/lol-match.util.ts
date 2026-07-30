@@ -3,7 +3,22 @@ import { LoLGameParticipant } from './LoLGameParticipant';
 import { LoLGameTimelineFrame } from './LoLGameTimelineFrame';
 import { LoLGameTimelineFrameParticipant } from './LoLGameTimelineFrameParticipant';
 
+/**
+ * Prefers Riot's own `challenges.kda` (raw, unrounded) over `stats.kda` — the
+ * same number pre-rounded server-side with C#'s banker's rounding, which can
+ * land a cent off from this file's own `toFixed`-based rounding on `.xx5`
+ * boundaries — and only falls back to a manual kills/deaths/assists ratio
+ * when neither API-provided value is available (games never (re)synced).
+ */
 export function kda(player: LoLGameParticipant): number {
+  if (player.challenges != null) {
+    return player.challenges.kda;
+  }
+
+  if (player.stats != null) {
+    return player.stats.kda;
+  }
+
   const denominator = player.deaths === 0 ? 1 : player.deaths;
   return (player.kills + player.assists) / denominator;
 }
@@ -180,10 +195,47 @@ export function goldEarnedFor(
   );
 }
 
+/**
+ * Team gold total from a single source per side: every member's backend
+ * `stats.goldEarned` (exact end-of-game value) when the whole roster has been
+ * backfilled, otherwise everyone's last timeline frame — never a mix of the
+ * two, which would blend final gold with values from ~1 minute before the
+ * end. When neither covers the full roster, the partial `stats` sum is the
+ * only data left.
+ */
+export function teamGold(
+  team: LoLGameParticipant[],
+  timeline: LoLGameTimelineFrame[] | undefined,
+): number {
+  if (team.length > 0 && team.every((p) => p.stats != null)) {
+    return team.reduce((sum, p) => sum + (p.stats?.goldEarned ?? 0), 0);
+  }
+
+  const frame = latestFrame(timeline);
+  if (frame != null) {
+    return team.reduce(
+      (sum, p) => sum + (frameStatsFor(frame, p.puuid)?.totalGold ?? 0),
+      0,
+    );
+  }
+
+  return team.reduce((sum, p) => sum + (p.stats?.goldEarned ?? 0), 0);
+}
+
+/**
+ * Same source hierarchy as {@link kda}: Riot's own `challenges.killParticipation`
+ * first, then the backend-computed `stats.killParticipationPercent`, then a
+ * manual recount — so every consumer (scoreboard subtitle, rating, radar,
+ * performance tiles) shows the same number for the same player.
+ */
 export function killParticipationFor(
   player: LoLGameParticipant,
   team: LoLGameParticipant[],
 ): number {
+  if (player.challenges != null) {
+    return Math.round(player.challenges.killParticipation * 100);
+  }
+
   return Math.round(
     player.stats?.killParticipationPercent ?? killParticipation(player, team),
   );
@@ -200,20 +252,89 @@ export function damageToChampionsFor(
   );
 }
 
+export interface DamageSplit {
+  physical: number;
+  magic: number;
+  trueDamage: number;
+}
+
+/**
+ * Physical/magic/true damage-to-champions split, single source of truth for
+ * the scoreboard row, damage profile panel, and damage chart. Prefers the
+ * backend-computed `stats.physical/magic/trueDamageToChampions` fields, but a
+ * sum of exactly 0 is treated as "not (re)backfilled yet" (see the NOT
+ * NULL/default-0 caveat on `LoLGameParticipantStats`) rather than a real
+ * all-zero split, falling back to the participant's last timeline frame.
+ * Returns `null` when neither source has any data (never-synced games).
+ */
+export function damageSplitFor(
+  player: LoLGameParticipant,
+  timeline: LoLGameTimelineFrame[] | undefined,
+): DamageSplit | null {
+  const apiPhysical = player.stats?.physicalDamageToChampions ?? 0;
+  const apiMagic = player.stats?.magicDamageToChampions ?? 0;
+  const apiTrue = player.stats?.trueDamageToChampions ?? 0;
+
+  if (apiPhysical + apiMagic + apiTrue > 0) {
+    return { physical: apiPhysical, magic: apiMagic, trueDamage: apiTrue };
+  }
+
+  const stats = latestStatsFor(timeline, player.puuid);
+  const physical = stats?.physicalDamageDoneToChampions ?? 0;
+  const magic = stats?.magicDamageDoneToChampions ?? 0;
+  const trueDamage = stats?.trueDamageDoneToChampions ?? 0;
+
+  return physical + magic + trueDamage > 0
+    ? { physical, magic, trueDamage }
+    : null;
+}
+
+/**
+ * Seconds of enemy crowd control inflicted, single source of truth for the
+ * "Contrôle infligé" stat tile and the "Maître du CC" highlight. Prefers the
+ * backend-computed `stats.timeCcOthersSeconds`, falling back to the
+ * timeline's `timeEnemySpentControlled` (milliseconds) when it's exactly 0 —
+ * same not-yet-backfilled ambiguity as {@link damageSplitFor}.
+ */
+export function crowdControlSecondsFor(
+  player: LoLGameParticipant,
+  timeline: LoLGameTimelineFrame[] | undefined,
+): number {
+  const apiValue = player.stats?.timeCcOthersSeconds ?? 0;
+  if (apiValue > 0) {
+    return Math.round(apiValue);
+  }
+
+  return Math.round(
+    (latestStatsFor(timeline, player.puuid)?.timeEnemySpentControlled ?? 0) /
+      1000,
+  );
+}
+
 function clamp01(value: number): number {
   if (!Number.isFinite(value)) return 0;
   return Math.min(1, Math.max(0, value));
 }
 
 /**
- * Post-game grade out of 10 for a single player. Deliberately absolute rather
- * than ranked against the lobby, so the same performance always grades the
- * same: each of the five metrics the scoreboard already surfaces is scored
- * against a fixed "excellent game" reference (KDA 6, 65% kill participation,
- * 30% of the team's damage, 500 gold/min, few deaths), then weighted, with a
- * small bonus for actually winning. Riot's own `stats`/`challenges` blocks are
- * used when the game has been synced, and recomputed from the timeline
- * otherwise.
+ * Fallback-only post-game grade, superseded by the backend's `stats.rating`
+ * (see {@link ratingFor}) — but deliberately kept as an exact mirror of the
+ * backend's own formula (`LoLGameParticipantStatCalculator.Compute` in
+ * GameOn-API, confirmed field-for-field with the backend team), so a
+ * never-resynced game still grades the same way a resynced one eventually
+ * will. Deliberately absolute rather than ranked against the lobby, so the
+ * same performance always grades the same: five components, each clamped to
+ * [0, 1] against a fixed "excellent game" reference, then weighted, plus a
+ * flat bonus for winning applied after weighting but before the final
+ * [0, 10] clamp (what lets a strong, winning performance reach the 10.0 cap):
+ *   - KDA / 6                          → 25%
+ *   - kill participation% / 65         → 20%
+ *   - share of the team's damage / 0.3 → 25%
+ *   - gold/min / 500                   → 15%
+ *   - 1 − deaths/12 (survival)         → 15%
+ *   - + 0.4 flat if the game was won
+ * Riot's own `stats`/`challenges` blocks are used when the game has been
+ * synced, and recomputed from the timeline otherwise.
  */
 export function playerRating(
   player: LoLGameParticipant,
@@ -252,6 +373,29 @@ export function playerRating(
   return Math.min(10, Math.max(0, rating));
 }
 
+/**
+ * Post-game grade out of 10 for a single player, single source of truth for
+ * the "Note" badge everywhere it's shown. Prefers the backend-computed
+ * `stats.rating` (see {@link playerRating}'s doc for the authoritative
+ * formula it mirrors), falling back to that client-side calculation when
+ * `stats.rating` is exactly 0 — same not-yet-backfilled ambiguity as
+ * `damageSplitFor`/`crowdControlSecondsFor` (NOT NULL, defaults to 0 until
+ * recomputed).
+ */
+export function ratingFor(
+  player: LoLGameParticipant,
+  team: LoLGameParticipant[],
+  timeline: LoLGameTimelineFrame[] | undefined,
+  durationSeconds: number,
+): number {
+  const apiRating = player.stats?.rating ?? 0;
+  if (apiRating > 0) {
+    return apiRating;
+  }
+
+  return playerRating(player, team, timeline, durationSeconds);
+}
+
 export function ratingToneClass(rating: number): string {
   if (rating >= 9) return 'text-mpYellowInk border-mpYellow/45 bg-mpYellow/15';
   if (rating >= 6.5) return 'text-mpGreenInk border-mpGreen/45 bg-mpGreen/15';
@@ -259,20 +403,23 @@ export function ratingToneClass(rating: number): string {
   return 'text-mpTextSecondary border-mpBorder bg-white/5';
 }
 
+/**
+ * Fallback-only MVP/ACE picker, superseded by the backend's `LoLGame.mvpParticipantId`
+ * / `aceParticipantId` (computed server-side from `stats.rating`). Only used
+ * by `lol-game-details.component.ts` when those are `null` — i.e. remakes, no
+ * winning team, or (most commonly today) games not yet resynced with the
+ * rating backfill.
+ */
 export function compositeScore(
   player: LoLGameParticipant,
   timeline: LoLGameTimelineFrame[] | undefined,
 ): number {
-  const stats = latestStatsFor(timeline, player.puuid);
-  const damageToChampions = stats?.totalDamageDoneToChampions ?? 0;
-  const goldEarned = stats?.totalGold ?? 0;
-
   return (
     player.kills * 3 +
     player.assists * 1.5 -
     player.deaths +
-    damageToChampions / 1000 +
-    goldEarned / 1000
+    damageToChampionsFor(player, timeline) / 1000 +
+    goldEarnedFor(player, timeline) / 1000
   );
 }
 
@@ -316,6 +463,21 @@ export function gameDurationSeconds(game: LoLGame): number {
   const end = new Date(game.gameEnd).getTime();
   const seconds = (end - start) / 1000;
   return Number.isNaN(seconds) || seconds <= 0 ? 0 : seconds;
+}
+
+/**
+ * Single source of truth for a game's duration: the backend-computed
+ * `stats.gameDurationSeconds` (identical on every backfilled participant)
+ * when available, the `gameEnd - gameStart` difference otherwise — so
+ * per-minute fallbacks never disagree with the `stats` values shown next to
+ * them because of a slightly different duration.
+ */
+export function durationSecondsFor(game: LoLGame): number {
+  const fromStats = game.leagueOfLegendsGameParticipants.find(
+    (p) => (p.stats?.gameDurationSeconds ?? 0) > 0,
+  )?.stats?.gameDurationSeconds;
+
+  return fromStats ?? gameDurationSeconds(game);
 }
 
 export function formatDuration(seconds: number): string {

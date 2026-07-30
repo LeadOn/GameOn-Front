@@ -9,6 +9,7 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   championIconUrl,
   creepScoreFor,
+  crowdControlSecondsFor,
   damageToChampionsFor,
   decimalLabel,
   formatCompact,
@@ -20,7 +21,7 @@ import {
   killParticipationFor,
   latestStatsFor,
   playerFullName,
-  playerRating,
+  ratingFor,
   ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import { roleLabel } from '../../../../shared/classes/lol/lol-role.util';
@@ -103,9 +104,9 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
         detail: `${this.rankLabel(player, (p) => this.damageTaken(p))} le plus ciblé`,
       },
       {
-        label: 'Wards posées',
-        value: this.wardsPlaced(player).toString(),
-        detail: `vision ${player.visionScore} · ${this.rankLabel(player, (p) => this.wardsPlaced(p))}`,
+        label: 'Score de vision',
+        value: player.visionScore.toString(),
+        detail: this.rankLabel(player, (p) => p.visionScore),
       },
       {
         label: 'Contrôle infligé',
@@ -134,10 +135,9 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
     return `${position === 1 ? '1er' : position + 'e'} / ${this.players.length}`;
   }
 
+  /** `durationSeconds` comes from the page's `durationSecondsFor`, which already prefers the backend value. */
   private get minutes(): number {
-    const seconds =
-      this.durationSeconds || (this.player?.stats?.gameDurationSeconds ?? 0);
-    return seconds > 0 ? seconds / 60 : 0;
+    return this.durationSeconds > 0 ? this.durationSeconds / 60 : 0;
   }
 
   private teamOf(player: LoLGameParticipant): LoLGameParticipant[] {
@@ -145,11 +145,11 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
   }
 
   private ratingOf(player: LoLGameParticipant): number {
-    return playerRating(
+    return ratingFor(
       player,
       this.teamOf(player),
       this.timeline,
-      this.durationSeconds || (player.stats?.gameDurationSeconds ?? 0),
+      this.durationSeconds,
     );
   }
 
@@ -192,16 +192,8 @@ export class LolGamePlayerPerformanceComponent implements OnChanges {
     );
   }
 
-  private wardsPlaced(player: LoLGameParticipant): number {
-    return player.stats?.wardsPlaced ?? 0;
-  }
-
-  /** Riot reports it in milliseconds on the timeline frames, seconds read better. */
   private crowdControl(player: LoLGameParticipant): number {
-    return Math.round(
-      (latestStatsFor(this.timeline, player.puuid)?.timeEnemySpentControlled ??
-        0) / 1000,
-    );
+    return crowdControlSecondsFor(player, this.timeline);
   }
 
   private pings(player: LoLGameParticipant): number {

@@ -9,6 +9,7 @@ import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGamePartic
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import {
   championIconUrl,
+  damageSplitFor,
   latestStatsFor,
 } from '../../../../shared/classes/lol/lol-match.util';
 
@@ -50,11 +51,12 @@ export class LolGameDamageChartComponent {
   get rows(): DamageRow[] {
     const rows = this.players.map((player) => {
       const stats = latestStatsFor(this.timeline, player.puuid);
+      const split = damageSplitFor(player, this.timeline);
       return {
         player,
-        physical: stats?.physicalDamageDoneToChampions ?? 0,
-        magic: stats?.magicDamageDoneToChampions ?? 0,
-        trueDamage: stats?.trueDamageDoneToChampions ?? 0,
+        physical: split?.physical ?? 0,
+        magic: split?.magic ?? 0,
+        trueDamage: split?.trueDamage ?? 0,
         taken: stats?.totalDamageTaken ?? 0,
         total: stats?.totalDamageDoneToChampions ?? 0,
       };

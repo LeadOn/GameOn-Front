@@ -7,6 +7,7 @@ import {
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
 import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTimelineFrame';
 import {
+  damageSplitFor,
   damageToChampionsFor,
   formatCompact,
   latestStatsFor,
@@ -37,6 +38,8 @@ export class LolGamePlayerDamageProfileComponent implements OnChanges {
   timeline?: LoLGameTimelineFrame[];
 
   rows: DamageRow[] = [];
+  /** False on never-synced games: the timeline carries no per-type damage. */
+  hasSplitData = false;
   teamDamageShare = 0;
   damageTakenLabel = '0';
   teamDamageTakenShare = 0;
@@ -44,14 +47,17 @@ export class LolGamePlayerDamageProfileComponent implements OnChanges {
   ngOnChanges(): void {
     if (this.player == null) {
       this.rows = [];
+      this.hasSplitData = false;
       return;
     }
 
-    const stats = latestStatsFor(this.timeline, this.player.puuid);
-    const physical = stats?.physicalDamageDoneToChampions ?? 0;
-    const magic = stats?.magicDamageDoneToChampions ?? 0;
-    const trueDamage = stats?.trueDamageDoneToChampions ?? 0;
+    const split = damageSplitFor(this.player, this.timeline);
+    const physical = split?.physical ?? 0;
+    const magic = split?.magic ?? 0;
+    const trueDamage = split?.trueDamage ?? 0;
     const total = physical + magic + trueDamage;
+
+    this.hasSplitData = split != null;
 
     this.rows = [
       {

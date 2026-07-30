@@ -6,7 +6,6 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { LoLGameParticipant } from '../../../../shared/classes/lol/LoLGameParticipant';
-import { LoLGameParticipantStats } from '../../../../shared/classes/lol/LoLGameParticipantStats';
 import {
   championIconUrl,
   decimalLabel,
@@ -16,7 +15,7 @@ import {
 interface RankingStat {
   key: string;
   label: string;
-  valueFn: (stats: LoLGameParticipantStats) => number;
+  valueFn: (player: LoLGameParticipant) => number;
   formatFn: (value: number) => string;
   description?: string;
 }
@@ -30,45 +29,45 @@ const STATS: RankingStat[] = [
   {
     key: 'kda',
     label: 'KDA',
-    valueFn: (s) => s.kda,
+    valueFn: (p) => p.stats!.kda,
     formatFn: (v) => decimalLabel(v, 2),
   },
   {
     key: 'csPerMinute',
     label: 'CS/min',
-    valueFn: (s) => s.csPerMinute,
+    valueFn: (p) => p.stats!.csPerMinute,
     formatFn: (v) => decimalLabel(v),
   },
   {
     key: 'goldPerMinute',
     label: 'Or/min',
-    valueFn: (s) => s.goldPerMinute,
+    valueFn: (p) => p.stats!.goldPerMinute,
     formatFn: (v) => formatFull(v),
   },
   {
     key: 'damagePerMinute',
     label: 'Dégâts/min',
-    valueFn: (s) => s.damagePerMinute,
+    valueFn: (p) => p.stats!.damagePerMinute,
     formatFn: (v) => formatFull(v),
   },
   {
     key: 'damageTaken',
     label: 'Dégâts subis',
-    valueFn: (s) => s.damageTaken,
+    valueFn: (p) => p.stats!.damageTaken,
     formatFn: (v) => formatFull(v),
   },
   {
     key: 'killParticipationPercent',
     label: 'Participation',
-    valueFn: (s) => s.killParticipationPercent,
+    valueFn: (p) => p.stats!.killParticipationPercent,
     formatFn: (v) => `${Math.round(v)}%`,
     description:
       "Part des éliminations de l'équipe auxquelles le joueur a contribué : (kills + assists du joueur) ÷ (kills totaux de l'équipe) × 100",
   },
   {
-    key: 'wardsPlaced',
-    label: 'Wards posées',
-    valueFn: (s) => s.wardsPlaced,
+    key: 'visionScore',
+    label: 'Score de vision',
+    valueFn: (p) => p.visionScore,
     formatFn: (v) => formatFull(v),
   },
 ];
@@ -113,7 +112,7 @@ export class LolGameRankingChartComponent {
   get rows(): RankingRow[] {
     const stat = this.selectedStat;
     return this.playersWithStats
-      .map((player) => ({ player, value: stat.valueFn(player.stats!) }))
+      .map((player) => ({ player, value: stat.valueFn(player) }))
       .sort((a, b) => b.value - a.value);
   }
 

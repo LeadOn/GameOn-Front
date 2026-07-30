@@ -11,6 +11,7 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   championIconUrl,
   creepScoreFor,
+  damageSplitFor,
   damageToChampionsFor,
   decimalLabel,
   formatCompact,
@@ -22,9 +23,8 @@ import {
   kdaColorClass,
   kdaLabel,
   killParticipationFor,
-  latestStatsFor,
   playerDisplayName,
-  playerRating,
+  ratingFor,
   ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import {
@@ -110,12 +110,7 @@ export class LolGameDetailsPlayerComponent {
   }
 
   get rating(): number {
-    return playerRating(
-      this.player,
-      this.team,
-      this.timeline,
-      this.durationSeconds || (this.player.stats?.gameDurationSeconds ?? 0),
-    );
+    return ratingFor(this.player, this.team, this.timeline, this.durationSeconds);
   }
 
   get ratingLabel(): string {
@@ -143,22 +138,27 @@ export class LolGameDetailsPlayerComponent {
     return max <= 0 ? 0 : Math.max(2, (this.damageDealt / max) * 100);
   }
 
-  /** Physical / magic / true split, as a share of this player's own damage. */
-  get damageSplit(): { physical: number; magic: number; trueDamage: number } {
-    const stats = latestStatsFor(this.timeline, this.player.puuid);
-    const physical = stats?.physicalDamageDoneToChampions ?? 0;
-    const magic = stats?.magicDamageDoneToChampions ?? 0;
-    const trueDamage = stats?.trueDamageDoneToChampions ?? 0;
-    const total = physical + magic + trueDamage;
-
-    if (total <= 0) {
-      return { physical: 100, magic: 0, trueDamage: 0 };
+  /**
+   * Physical / magic / true split, as a share of this player's own damage.
+   * `null` when the timeline carries no data (never-synced games) — the bar
+   * then renders a neutral fill instead of a made-up "100% physical".
+   */
+  get damageSplit(): {
+    physical: number;
+    magic: number;
+    trueDamage: number;
+  } | null {
+    const split = damageSplitFor(this.player, this.timeline);
+    if (split == null) {
+      return null;
     }
 
+    const total = split.physical + split.magic + split.trueDamage;
+
     return {
-      physical: (physical / total) * 100,
-      magic: (magic / total) * 100,
-      trueDamage: (trueDamage / total) * 100,
+      physical: (split.physical / total) * 100,
+      magic: (split.magic / total) * 100,
+      trueDamage: (split.trueDamage / total) * 100,
     };
   }
 
@@ -168,12 +168,16 @@ export class LolGameDetailsPlayerComponent {
 
   /** The bar only shows a total; the split lives in its native tooltip. */
   get damageTitle(): string {
-    const stats = latestStatsFor(this.timeline, this.player.puuid);
+    const split = damageSplitFor(this.player, this.timeline);
+
+    if (split == null) {
+      return 'Répartition physique / magique / brut indisponible (partie non synchronisée)';
+    }
 
     return [
-      `Physique ${formatFull(stats?.physicalDamageDoneToChampions ?? 0)}`,
-      `Magique ${formatFull(stats?.magicDamageDoneToChampions ?? 0)}`,
-      `Brut ${formatFull(stats?.trueDamageDoneToChampions ?? 0)}`,
+      `Physique ${formatFull(split.physical)}`,
+      `Magique ${formatFull(split.magic)}`,
+      `Brut ${formatFull(split.trueDamage)}`,
     ].join(' · ');
   }
 
@@ -211,14 +215,6 @@ export class LolGameDetailsPlayerComponent {
 
   get damageTakenLabel(): string {
     return formatFull(this.player.stats?.damageTaken ?? 0);
-  }
-
-  get wardsPlaced(): number {
-    return this.player.stats?.wardsPlaced ?? 0;
-  }
-
-  get wardsKilled(): number {
-    return this.player.stats?.wardsKilled ?? 0;
   }
 
   get kdaValue(): number {
