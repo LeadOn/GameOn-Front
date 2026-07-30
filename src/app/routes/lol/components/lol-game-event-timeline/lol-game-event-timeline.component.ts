@@ -124,8 +124,8 @@ export class LolGameEventTimelineComponent implements OnDestroy {
   }
 
   tooltipFor(marker: Marker): string {
-    const killerName = marker.entry.killer?.riotIdGameName ?? '';
-    const victimName = marker.entry.victim?.riotIdGameName ?? '';
+    const killerName = marker.entry.killer?.championName ?? '';
+    const victimName = marker.entry.victim?.championName ?? '';
     const time = formatTimestamp(marker.entry.event.timestamp);
     return victimName
       ? `${time} — ${killerName} ${marker.entry.label} ${victimName}`

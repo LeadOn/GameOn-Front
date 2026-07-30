@@ -13,20 +13,27 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   championIconUrl,
   decimalLabel,
+  durationSecondsFor,
   formatDuration,
   formatShortDateTime,
-  gameDurationSeconds,
   kdaLabel,
-  playerRating,
+  ratingFor,
   ratingToneClass,
 } from '../../../../shared/classes/lol/lol-match.util';
 import {
+  ATAKHAN_ICON_URL,
+  BARON_ICON_URL,
+  DRAGON_ICON_URL,
+  GRUB_ICON_URL,
+  HERALD_ICON_URL,
+  INHIBITOR_ICON_URL,
   TeamObjectives,
-  teamObjectives,
+  teamObjectivesFor,
+  TOWER_ICON_URL,
 } from '../../../../shared/classes/lol/lol-timeline-event.util';
 
 interface ObjectiveBadge {
-  icon: string;
+  iconUrl: string;
   label: string;
   value: number;
 }
@@ -94,7 +101,12 @@ export class LolGameHeaderComponent implements OnChanges {
       { teamId: 100, dotClass: 'bg-mpGreen' },
       { teamId: 200, dotClass: 'bg-mpRed' },
     ].map(({ teamId, dotClass }) => {
-      const objectives = teamObjectives(this.timeline, players, teamId);
+      const objectives = teamObjectivesFor(
+        this.game.leagueOfLegendsGameTeams,
+        this.timeline,
+        players,
+        teamId,
+      );
 
       return {
         teamId,
@@ -105,7 +117,7 @@ export class LolGameHeaderComponent implements OnChanges {
     });
 
     this.rating = this.heroPlayer
-      ? playerRating(
+      ? ratingFor(
           this.heroPlayer,
           this.heroPlayer.teamId === 100 ? this.team1 : this.team2,
           this.timeline,
@@ -116,13 +128,29 @@ export class LolGameHeaderComponent implements OnChanges {
 
   private badgesFor(objectives: TeamObjectives): ObjectiveBadge[] {
     return [
-      { icon: '🏰', label: 'Tourelles', value: objectives.towers },
-      { icon: '💠', label: 'Inhibiteurs', value: objectives.inhibitors },
-      { icon: '🐉', label: 'Dragons', value: objectives.dragons },
-      { icon: '👁️', label: 'Hérauts de la Faille', value: objectives.heralds },
-      { icon: '🐛', label: 'Voracraves', value: objectives.grubs },
-      { icon: '🔮', label: 'Barons Nashor', value: objectives.barons },
-      { icon: '👑', label: 'Atakhan', value: objectives.atakhans },
+      { iconUrl: TOWER_ICON_URL, label: 'Tourelles', value: objectives.towers },
+      {
+        iconUrl: INHIBITOR_ICON_URL,
+        label: 'Inhibiteurs',
+        value: objectives.inhibitors,
+      },
+      { iconUrl: DRAGON_ICON_URL, label: 'Dragons', value: objectives.dragons },
+      {
+        iconUrl: HERALD_ICON_URL,
+        label: 'Hérauts de la Faille',
+        value: objectives.heralds,
+      },
+      { iconUrl: GRUB_ICON_URL, label: 'Voracraves', value: objectives.grubs },
+      {
+        iconUrl: BARON_ICON_URL,
+        label: 'Barons Nashor',
+        value: objectives.barons,
+      },
+      {
+        iconUrl: ATAKHAN_ICON_URL,
+        label: 'Atakhan',
+        value: objectives.atakhans,
+      },
     ].filter((badge) => badge.value > 0);
   }
 
@@ -257,7 +285,7 @@ export class LolGameHeaderComponent implements OnChanges {
   }
 
   get durationSeconds(): number {
-    return gameDurationSeconds(this.game);
+    return durationSecondsFor(this.game);
   }
 
   get patchTitle(): string {

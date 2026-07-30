@@ -49,7 +49,7 @@
               <span
                 class="whitespace-nowrap rounded-full border px-2.5 py-0.5 text-sm font-semibold"
                 [ngClass]="ratingTone"
-                title="Note calculée sur le KDA, la participation aux kills, la part de dégâts, l'or par minute et les morts"
+                title="Note sur 10 : KDA (25%, plafond 6), participation aux kills (20%, plafond 65%), part des dégâts de l'équipe (25%, plafond 30%), or/min (15%, plafond 500), survie (15%, de 0 à 12 morts), + 0,4 bonus en cas de victoire. Fournie par l'API une fois la partie synchronisée, sinon estimée côté client avec la même formule."
               >
                 Note {{ ratingLabel }}
               </span>
@@ -107,7 +107,7 @@
               [title]="badge.label"
               class="border-mpBorder text-mpTextSecondary light:bg-[rgba(23,30,54,0.04)] inline-flex items-center gap-1 rounded-lg border bg-white/5 px-2 py-1 text-xs font-semibold"
             >
-              <span class="text-[13px] leading-none">{{ badge.icon }}</span>
+              <img [src]="badge.iconUrl" class="h-4 w-4 object-contain" />
               {{ badge.value }}
             </span>
           }

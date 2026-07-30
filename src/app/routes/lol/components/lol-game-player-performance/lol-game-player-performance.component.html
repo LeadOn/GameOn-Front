@@ -24,6 +24,7 @@
         <div
           class="rounded-2xl border px-6 py-3 text-center"
           [ngClass]="ratingTone"
+          title="Note sur 10 : KDA (25%, plafond 6), participation aux kills (20%, plafond 65%), part des dégâts de l'équipe (25%, plafond 30%), or/min (15%, plafond 500), survie (15%, de 0 à 12 morts), + 0,4 bonus en cas de victoire. Fournie par l'API une fois la partie synchronisée, sinon estimée côté client avec la même formule."
         >
           <p class="font-heading text-3xl font-bold">{{ ratingLabel }}</p>
           <p class="mt-0.5 text-[11px] font-semibold">

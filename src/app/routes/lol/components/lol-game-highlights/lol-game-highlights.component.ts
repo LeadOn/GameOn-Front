@@ -4,6 +4,7 @@ import { LoLGameTimelineFrame } from '../../../../shared/classes/lol/LoLGameTime
 import {
   bestParticipant,
   championIconUrl,
+  crowdControlSecondsFor,
   csFor,
   csPerMinute,
   isLinkedToGameOn,
@@ -54,11 +55,7 @@ const CONFIGS: HighlightConfig[] = [
     title: 'Maître du CC',
     subtitle: 'Temps de contrôle infligé',
     accent: 'blue',
-    valueFn: (p, timeline) =>
-      Math.round(
-        (latestStatsFor(timeline, p.puuid)?.timeEnemySpentControlled ?? 0) /
-          1000,
-      ),
+    valueFn: (p, timeline) => crowdControlSecondsFor(p, timeline),
     formatFn: (v) => v.toFixed(0) + 's',
   },
   {
