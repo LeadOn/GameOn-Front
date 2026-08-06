@@ -547,13 +547,24 @@
         [title]="'Aucune partie enregistrée.'"
       ></app-info-message>
     } @else {
-      @for (game of gamesPlayed; track game.matchId) {
-        <app-lol-game-card
-          [game]="game"
-          [playerId]="$safeNavigationMigration(player?.id)"
-          (gameRefreshStarted)="onGameRefreshStarted()"
-          (gameRefreshed)="getLastGamesPlayed()"
-        ></app-lol-game-card>
+      @for (group of gameGroups; track group.key) {
+        <div class="mb-2 mt-4 flex items-center gap-3 first:mt-0">
+          <span
+            class="text-primary dark:text-primaryDark text-xs font-semibold uppercase tracking-wide"
+            >{{ group.label }}</span
+          >
+          <span
+            class="bg-bgLightDarker dark:bg-bgDarkDarker h-px flex-1"
+          ></span>
+        </div>
+        @for (game of group.games; track game.matchId) {
+          <app-lol-game-card
+            [game]="game"
+            [playerId]="$safeNavigationMigration(player?.id)"
+            (gameRefreshStarted)="onGameRefreshStarted()"
+            (gameRefreshed)="getLastGamesPlayed()"
+          ></app-lol-game-card>
+        }
       }
     }
   }
