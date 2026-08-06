@@ -10,8 +10,13 @@ import { GameOnPlayerService } from './shared/services/common/gameon-player.serv
 import Keycloak from 'keycloak-js';
 import { setPlayer, setPlayerStats } from './core/store/actions/player.actions';
 import { RiotLoLService } from './shared/services/leagueoflegends/riot-lol.service';
-import { setLoLVersion, setLoLVersions } from './core/store/actions/lol.actions';
+import {
+  setLoLVersion,
+  setLoLVersions,
+} from './core/store/actions/lol.actions';
 import { KeycloakOfflinePersistenceService } from './core/keycloak/keycloak-offline-persistence.service';
+import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -27,16 +32,39 @@ export class AppComponent implements OnInit {
   private readonly keycloakOfflinePersistence = inject(
     KeycloakOfflinePersistenceService,
   );
+  private readonly swUpdate = inject(SwUpdate);
 
   isLoggedIn = false;
 
   constructor(
     private playerService: GameOnPlayerService,
     private riotLoLService: RiotLoLService,
-    private store: Store<{ player: Player; lolVersion: string; lolVersions: string[] }>,
+    private store: Store<{
+      player: Player;
+      lolVersion: string;
+      lolVersions: string[];
+    }>,
   ) {}
 
   ngOnInit(): void {
+    // Without this, the service worker keeps serving the cached build and an
+    // installed PWA would stay on an old version indefinitely.
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates
+        .pipe(
+          filter(
+            (event): event is VersionReadyEvent =>
+              event.type === 'VERSION_READY',
+          ),
+        )
+        .subscribe(() => {
+          this.swUpdate
+            .activateUpdate()
+            .then(() => document.location.reload())
+            .catch((err) => console.error('[AppComponent]', err));
+        });
+    }
+
     this.isLoggedIn =
       this.keycloak.authenticated != null && this.keycloak.authenticated
         ? true

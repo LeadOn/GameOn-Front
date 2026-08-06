@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, isDevMode } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { BrowserModule } from '@angular/platform-browser';
@@ -48,6 +48,7 @@ import {
   lolVersionsReducer,
 } from './core/store/reducers/lol.reducer';
 import { readStoredKeycloakTokens } from './core/keycloak/keycloak-offline-tokens';
+import { provideServiceWorker } from '@angular/service-worker';
 
 registerLocaleData(localeFr);
 
@@ -128,6 +129,14 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
       withXhr(),
       withInterceptors([includeBearerTokenInterceptor]),
     ),
+    // Chrome on Android only offers a real PWA install (WebAPK, standalone
+    // window) — rather than a plain browser shortcut — for sites that register
+    // a service worker with a fetch handler. Registration is deferred until the
+    // app is stable so it never competes with the initial Keycloak check-sso.
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   bootstrap: [AppComponent],
 })
