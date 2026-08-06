@@ -537,6 +537,7 @@ export function formatDateTime(date: Date | string): string {
   const datePart = new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'long',
+    year: 'numeric',
     timeZone: LOL_DISPLAY_TIMEZONE,
   }).format(parsedDate);
 
@@ -549,7 +550,7 @@ export function formatDateTime(date: Date | string): string {
   return `${datePart} à ${timePart}`;
 }
 
-/** Same as {@link formatDateTime} with an abbreviated month ("8 juil. à 21:42"). */
+/** Same as {@link formatDateTime} with an abbreviated month ("8 juil. 2026 à 21:42"). */
 export function formatShortDateTime(date: Date | string): string {
   const parsedDate = parseApiDate(date);
 
@@ -560,6 +561,7 @@ export function formatShortDateTime(date: Date | string): string {
   const datePart = new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'short',
+    year: 'numeric',
     timeZone: LOL_DISPLAY_TIMEZONE,
   }).format(parsedDate);
 
@@ -570,6 +572,59 @@ export function formatShortDateTime(date: Date | string): string {
   }).format(parsedDate);
 
   return `${datePart} à ${timePart}`;
+}
+
+/**
+ * Calendar-day key (e.g. "2026-08-08") in {@link LOL_DISPLAY_TIMEZONE}, single
+ * source of truth for grouping games by day — a plain `toISOString().slice(0, 10)`
+ * would group by UTC day instead, splitting/merging games near midnight Paris
+ * time incorrectly.
+ */
+export function gameDayKey(date: Date | string): string {
+  const parsedDate = parseApiDate(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return 'unknown';
+  }
+
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: LOL_DISPLAY_TIMEZONE,
+  }).format(parsedDate);
+}
+
+/**
+ * Day-separator label for grouped game history ("Aujourd'hui", "Hier", or
+ * "Vendredi 8 août 2026"), single source of truth so the ranking history and
+ * any other grouped-by-day view read the same way.
+ */
+export function formatDayLabel(date: Date | string): string {
+  const parsedDate = parseApiDate(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return 'Date inconnue';
+  }
+
+  const todayKey = gameDayKey(new Date());
+  const parsedKey = gameDayKey(parsedDate);
+
+  if (parsedKey === todayKey) {
+    return "Aujourd'hui";
+  }
+
+  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  if (parsedKey === gameDayKey(yesterday)) {
+    return 'Hier';
+  }
+
+  const label = new Intl.DateTimeFormat('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: LOL_DISPLAY_TIMEZONE,
+  }).format(parsedDate);
+
+  return label.charAt(0).toUpperCase() + label.slice(1);
 }
 
 export function formatRelativeDate(date: Date | string): string {

@@ -28,7 +28,9 @@ import {
   tierLabel,
 } from '../../../shared/classes/lol/lol-tier.util';
 import {
+  formatDayLabel,
   formatRelativeDate,
+  gameDayKey,
   parseApiDate,
 } from '../../../shared/classes/lol/lol-match.util';
 import { Observable } from 'rxjs';
@@ -625,6 +627,30 @@ export class LolPlayerDetailsComponent implements OnInit {
     }
 
     return items;
+  }
+
+  /**
+   * `gamesPlayed` grouped into consecutive same-day runs (Europe/Paris),
+   * with a display label per group — single pass over the already
+   * chronologically-sorted (most recent first) page of results, so games
+   * played on the same day sit under one "Aujourd'hui" / "Vendredi 8 août
+   * 2026" separator instead of repeating the date on every card.
+   */
+  get gameGroups(): { key: string; label: string; games: LoLGame[] }[] {
+    const groups: { key: string; label: string; games: LoLGame[] }[] = [];
+
+    for (const game of this.gamesPlayed) {
+      const key = gameDayKey(game.gameStart);
+      const lastGroup = groups[groups.length - 1];
+
+      if (lastGroup != null && lastGroup.key === key) {
+        lastGroup.games.push(game);
+      } else {
+        groups.push({ key, label: formatDayLabel(game.gameStart), games: [game] });
+      }
+    }
+
+    return groups;
   }
 
   refreshSummoner() {
