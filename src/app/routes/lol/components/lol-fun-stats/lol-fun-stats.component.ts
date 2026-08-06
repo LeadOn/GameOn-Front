@@ -8,6 +8,10 @@ import {
   LoLQueueFilter,
   LoLStatsPeriod,
 } from '../../../../shared/classes/lol/LoLGlobalStats';
+import {
+  LOL_DISPLAY_TIMEZONE,
+  parseApiDate,
+} from '../../../../shared/classes/lol/lol-match.util';
 import { environment } from '../../../../../environments/environment';
 
 type LoLFunStatAccent = 'blue' | 'red' | 'green' | 'gold' | 'purple' | 'pink';
@@ -46,8 +50,8 @@ const AWARDS: AwardConfig[] = [
     icon: '🏆',
     accent: 'gold',
     title: 'Highest Bounty',
-    description: 'Le plus haut niveau de prime atteint',
-    unit: 'niveau',
+    description: 'La plus grosse prime encaissée par un ennemi sur sa tête',
+    unit: 'golds de prime',
     decimals: 0,
   },
   {
@@ -208,6 +212,13 @@ function isStatsPeriod(value: string | null): value is LoLStatsPeriod {
   );
 }
 
+// Defaults are scoped to Solo/Duo over the last 7 days rather than the full
+// all-time/all-queues dataset: computing every award (biggest inter, cursed
+// patch, ...) across the whole history is by far the heaviest query this page
+// can trigger, so a fresh load stays cheap unless the user opts into more.
+const DEFAULT_QUEUE: LoLQueueFilter = 'Solo';
+const DEFAULT_PERIOD: LoLStatsPeriod = 'Week';
+
 @Component({
   selector: 'app-lol-fun-stats',
   templateUrl: './lol-fun-stats.component.html',
@@ -222,9 +233,10 @@ export class LolFunStatsComponent implements OnInit {
   periodOptions = PERIOD_OPTIONS;
   apiUrl = environment.gameOnApiUrl;
   currentLoLPatch = '';
+  displayTimezone = LOL_DISPLAY_TIMEZONE;
 
-  queue: LoLQueueFilter = 'All';
-  period: LoLStatsPeriod = 'AllTime';
+  queue: LoLQueueFilter = DEFAULT_QUEUE;
+  period: LoLStatsPeriod = DEFAULT_PERIOD;
   rankedOnly = false;
 
   summary: LoLGlobalStatsDto | null = null;
@@ -301,8 +313,8 @@ export class LolFunStatsComponent implements OnInit {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        queue: this.queue !== 'All' ? this.queue : null,
-        period: this.period !== 'AllTime' ? this.period : null,
+        queue: this.queue !== DEFAULT_QUEUE ? this.queue : null,
+        period: this.period !== DEFAULT_PERIOD ? this.period : null,
         rankedOnly: this.queue === 'All' && this.rankedOnly ? 'true' : null,
       },
       replaceUrl: true,
@@ -334,6 +346,11 @@ export class LolFunStatsComponent implements OnInit {
 
   statFor(award: AwardConfig): LoLGlobalStatsDto[LoLGlobalStatAwardKey] {
     return this.summary == null ? null : this.summary[award.key];
+  }
+
+  /** `gameDate` comes back as a naive (offset-less, actually UTC) string — see {@link parseApiDate}. */
+  gameDate(gameDate: string): Date {
+    return parseApiDate(gameDate);
   }
 
   iconClass(accent: LoLFunStatAccent): string {

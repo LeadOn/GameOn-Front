@@ -503,17 +503,28 @@ export function formatFull(value: number): string {
   return new Intl.NumberFormat('fr-FR').format(Math.round(value));
 }
 
+/** Wall-clock timezone every LoL date is displayed in, regardless of the viewer's own. */
+export const LOL_DISPLAY_TIMEZONE = 'Europe/Paris';
+
 /**
- * Most API DateTime fields (gameStart, gameEnd, retrievedOn, ...) are
- * serialized without a timezone offset, but — unlike what the field name
- * might suggest — they're already in server-local (Europe/Paris) time, not
- * UTC. `new Date(...)` on a date-time string with no offset already parses
- * it as local time per spec, which happens to match here since this app's
- * users are in the same timezone as the server. Fields that do carry an
- * explicit offset (e.g. lolRefreshedOn's "+02:00") parse correctly as-is.
+ * API DateTime fields (gameStart, gameEnd, retrievedOn, LoLFunStatDto's
+ * gameDate, ...) now carry an explicit 'Z' suffix: the backend forces every
+ * date of its model through a UTC round-trip, so `new Date(...)` parses them
+ * correctly on its own and they are passed through unchanged.
+ *
+ * The round-trip applies on read, so rows written before the fix are covered
+ * too. The normalization below is kept as a safety net: should an offset-less
+ * string ever come back, `new Date(...)` would read it as the *viewer's* local
+ * time and silently shift the displayed time by that viewer's UTC offset,
+ * whereas these dates are always UTC.
  */
 export function parseApiDate(date: Date | string): Date {
-  return date instanceof Date ? date : new Date(date);
+  if (date instanceof Date) {
+    return date;
+  }
+
+  const hasTimezone = /Z$|[+-]\d{2}:\d{2}$/.test(date);
+  return new Date(hasTimezone ? date : `${date}Z`);
 }
 
 export function formatDateTime(date: Date | string): string {
@@ -526,11 +537,13 @@ export function formatDateTime(date: Date | string): string {
   const datePart = new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'long',
+    timeZone: LOL_DISPLAY_TIMEZONE,
   }).format(parsedDate);
 
   const timePart = new Intl.DateTimeFormat('fr-FR', {
     hour: '2-digit',
     minute: '2-digit',
+    timeZone: LOL_DISPLAY_TIMEZONE,
   }).format(parsedDate);
 
   return `${datePart} à ${timePart}`;
@@ -547,11 +560,13 @@ export function formatShortDateTime(date: Date | string): string {
   const datePart = new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric',
     month: 'short',
+    timeZone: LOL_DISPLAY_TIMEZONE,
   }).format(parsedDate);
 
   const timePart = new Intl.DateTimeFormat('fr-FR', {
     hour: '2-digit',
     minute: '2-digit',
+    timeZone: LOL_DISPLAY_TIMEZONE,
   }).format(parsedDate);
 
   return `${datePart} à ${timePart}`;
