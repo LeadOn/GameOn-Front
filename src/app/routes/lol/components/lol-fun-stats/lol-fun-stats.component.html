@@ -22,11 +22,12 @@
 
     <select
       class="border-bgLightDarker dark:border-bgDarkDarker text-primary dark:text-primaryDark bg-bgLight/60 dark:bg-bgDark/60 rounded-lg border py-1 pl-3 pr-7 text-sm backdrop-blur-sm"
-      [value]="period"
       (change)="onPeriodChange($event)"
     >
       @for (option of periodOptions; track option.value) {
-        <option [value]="option.value">{{ option.label }}</option>
+        <option [value]="option.value" [selected]="option.value === period">
+          {{ option.label }}
+        </option>
       }
     </select>
 
@@ -83,7 +84,7 @@
       class="border-customRed/40 bg-customRed/10 text-customRed rounded-2xl border border-dashed px-4 py-10 text-center"
     >
       <p class="font-medium">
-        Impossible de charger les statistiques marrantes pour le moment.
+        Impossible de charger les statistiques globales pour le moment.
       </p>
       <button
         class="border-customRed/40 hover:bg-customRed/10 mt-4 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors"
@@ -221,7 +222,9 @@
                 @if (stat.gameDate != null) {
                   <span
                     class="shrink-0 text-xs text-gray-500 dark:text-gray-400"
-                    >{{ stat.gameDate | date: "d MMM y" }}</span
+                    >{{
+                      gameDate(stat.gameDate) | date: "d MMM y" : displayTimezone
+                    }}</span
                   >
                 }
               </div>
