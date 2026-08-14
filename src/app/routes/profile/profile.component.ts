@@ -24,7 +24,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { environment } from '../../../environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GameOnLoLService } from '../../shared/services/leagueoflegends/gameon-lol.service';
 import { GameOnPlayerService } from '../../shared/services/common/gameon-player.service';
 import { Player } from '../../shared/classes/common/Player';
 import { FifaPlayerStatsDto } from '../../shared/classes/fifa/FifaPlayerStatsDto';
@@ -75,31 +74,17 @@ export class ProfilePageComponent implements OnInit, OnChanges {
       Validators.maxLength(100),
       Validators.required,
     ]),
-    riotGamesNickname: new FormControl('', [Validators.maxLength(500)]),
-    riotGamesTagLine: new FormControl('', [Validators.maxLength(500)]),
   });
 
   constructor(
     private store: Store<{ player: Player }>,
     private playerService: GameOnPlayerService,
-    private lolService: GameOnLoLService,
   ) {
     this.player$ = store.select('player');
 
     this.player$.subscribe((x) => {
       this.updatePlayerForm.controls['fullName'].setValue(x.fullName);
       this.updatePlayerForm.controls['nickname'].setValue(x.nickname);
-      if (x.riotGamesNickname != null) {
-        this.updatePlayerForm.controls['riotGamesNickname'].setValue(
-          x.riotGamesNickname,
-        );
-      }
-
-      if (x.riotGamesTagLine != null) {
-        this.updatePlayerForm.controls['riotGamesTagLine'].setValue(
-          x.riotGamesTagLine,
-        );
-      }
     });
 
     this.isAdmin = this.keycloak.hasRealmRole('gameon_admin');
@@ -139,25 +124,6 @@ export class ProfilePageComponent implements OnInit, OnChanges {
 
   updateUser() {
     if (this.loading == false) {
-      let riotGamesNickname: string | undefined = undefined;
-      let riotGamesTagLine: string | undefined = undefined;
-
-      if (
-        this.updatePlayerForm.controls['riotGamesNickname'].value != null &&
-        this.updatePlayerForm.controls['riotGamesNickname'].value != ''
-      ) {
-        riotGamesNickname =
-          this.updatePlayerForm.controls['riotGamesNickname'].value;
-      }
-
-      if (
-        this.updatePlayerForm.controls['riotGamesTagLine'].value != null &&
-        this.updatePlayerForm.controls['riotGamesTagLine'].value != ''
-      ) {
-        riotGamesTagLine =
-          this.updatePlayerForm.controls['riotGamesTagLine'].value;
-      }
-
       this.loading = true;
 
       if (this.currentFile != null) {
@@ -177,8 +143,6 @@ export class ProfilePageComponent implements OnInit, OnChanges {
           .update(
             this.updatePlayerForm.controls['fullName'].value,
             this.updatePlayerForm.controls['nickname'].value,
-            riotGamesNickname,
-            riotGamesTagLine,
           )
           .subscribe(
             (data) => {
@@ -199,21 +163,4 @@ export class ProfilePageComponent implements OnInit, OnChanges {
     }
   }
 
-  refreshSummoner() {
-    if (this.loading == false) {
-      this.loading = true;
-      this.lolService.refreshCurrent().subscribe(
-        (data) => {
-          this.successMessage = true; // Getting its account, and setting it into store
-          this.successMessageChange.emit(true);
-          this.store.dispatch(setPlayer({ player: data }));
-          this.loading = false;
-        },
-        (err) => {
-          this.loading = false;
-          alert('Une erreur est survenue lors de la mise à jour du compte !');
-        },
-      );
-    }
-  }
 }

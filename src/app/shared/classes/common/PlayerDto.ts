@@ -1,5 +1,4 @@
 import { Tournament } from '../fifa/Tournament';
-import { LeagueOfLegendsRankHistory } from '../lol/LeagueOfLegendsRankHistory';
 
 export class PlayerDto {
   id: number = 0;
@@ -10,13 +9,4 @@ export class PlayerDto {
   createdOn: Date = new Date();
   archived: boolean = false;
   tournamentsWon?: Tournament[];
-  riotGamesNickname?: string;
-  riotGamesTagLine?: string;
-  riotGamesPUUID?: string;
-  lolSummonerId?: string;
-  lolSummonerLevel?: string;
-  lolRefreshedOn?: Date;
-  lolIconId?: number;
-  leagueOfLegendsSoloRank?: LeagueOfLegendsRankHistory;
-  leagueOfLegendsFlexRank?: LeagueOfLegendsRankHistory;
 }
