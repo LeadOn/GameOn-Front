@@ -148,38 +148,6 @@
   @if (loading == false && (player$ | async); as currentPlayer) {
     <div class="animate-fade mt-4 flex justify-between px-4">
       <span class="text-primary dark:text-primaryDark text-lg font-semibold"
-        >League of Legends</span
-      >
-    </div>
-  }
-
-  @if (loading == false && (player$ | async); as currentPlayer) {
-    <section id="player-lol" class="animate-fade mt-4">
-      @if (currentPlayer.riotGamesNickname == null) {
-        <app-info-message
-          [title]="'Vous pouvez renseigner votre compte Riot Games au niveau des préférences de votre profil !'"
-        ></app-info-message>
-      }
-      <div
-        class="bg-bgLight/40 dark:bg-bgDark/40 mx-4 rounded-lg p-4 text-sm backdrop-blur-sm backdrop-contrast-100 backdrop-saturate-100 backdrop-filter"
-      >
-        <div
-          class="text-primary dark:text-primaryDark flex cursor-pointer flex-row justify-between"
-          [routerLink]="['/lol/summoner', currentPlayer.id]"
-        >
-          <div class="flex items-center space-x-2">
-            <img src="assets/img/svg/lol.svg" class="w-8" />
-            <span>Voir mon profil</span>
-          </div>
-          <fa-icon [icon]="arrowRightIcon"></fa-icon>
-        </div>
-      </div>
-    </section>
-  }
-
-  @if (loading == false && (player$ | async); as currentPlayer) {
-    <div class="animate-fade mt-4 flex justify-between px-4">
-      <span class="text-primary dark:text-primaryDark text-lg font-semibold"
         >Préférences</span
       >
     </div>
@@ -221,36 +189,6 @@
             >
               Pseudo
               <span class="text-customRed">*</span>
-            </label>
-          </div>
-          <div class="group relative z-0 mb-6 w-full">
-            <input
-              type="text"
-              id="riotGamesNickname"
-              class="text-primary focus:border-secondary dark:text-primaryDark peer block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:outline-none focus:ring-0"
-              required
-              formControlName="riotGamesNickname"
-            />
-            <label
-              for="riotGamesNickname"
-              class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-            >
-              Nom de compte Riot Games
-            </label>
-          </div>
-          <div class="group relative z-0 mb-6 w-full">
-            <input
-              type="text"
-              id="riotGamesTagLine"
-              class="text-primary focus:border-secondary dark:text-primaryDark peer block w-full appearance-none border-0 border-b border-gray-300 bg-transparent px-0 py-2.5 text-sm focus:outline-none focus:ring-0"
-              required
-              formControlName="riotGamesTagLine"
-            />
-            <label
-              for="riotGamesTagLine"
-              class="peer-focus:text-secondary absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:font-medium"
-            >
-              Tag (exemple: EUW)
             </label>
           </div>
           <div class="group relative z-0 mb-6 w-full">

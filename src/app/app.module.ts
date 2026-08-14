@@ -1,4 +1,4 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, isDevMode } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { BrowserModule } from '@angular/platform-browser';
@@ -39,15 +39,10 @@ import { HomeTournamentBannerComponent } from './routes/home/components/tourname
 import { HomeFifaStatsComponent } from './routes/home/components/fifa-stats/home-fifa-stats.component';
 import { HomeMatchesListComponent } from './routes/home/components/matches-list/home-matches-list.component';
 import { HomeNewsPanelComponent } from './routes/home/components/news-panel/home-news-panel.component';
-import { HomeLolLeaderboardComponent } from './routes/home/components/lol-leaderboard/home-lol-leaderboard.component';
-import { HomeLolSeasonCardComponent } from './routes/home/components/lol-season-card/home-lol-season-card.component';
+import { HomeJungleDiffBannerComponent } from './routes/home/components/jungle-diff-banner/home-jungle-diff-banner.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
-import {
-  lolQueuesReducer,
-  lolVersionReducer,
-  lolVersionsReducer,
-} from './core/store/reducers/lol.reducer';
 import { readStoredKeycloakTokens } from './core/keycloak/keycloak-offline-tokens';
+import { provideServiceWorker } from '@angular/service-worker';
 
 registerLocaleData(localeFr);
 
@@ -75,8 +70,7 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     HomeFifaStatsComponent,
     HomeMatchesListComponent,
     HomeNewsPanelComponent,
-    HomeLolLeaderboardComponent,
-    HomeLolSeasonCardComponent,
+    HomeJungleDiffBannerComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,9 +81,6 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     StoreModule.forRoot({
       player: playerReducer,
       globalStats: playerStatsReducer,
-      lolVersion: lolVersionReducer,
-      lolVersions: lolVersionsReducer,
-      lolQueues: lolQueuesReducer,
     }),
     ClipboardModule,
     AdminModule,
@@ -128,6 +119,14 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
       withXhr(),
       withInterceptors([includeBearerTokenInterceptor]),
     ),
+    // Chrome on Android only offers a real PWA install (WebAPK, standalone
+    // window) — rather than a plain browser shortcut — for sites that register
+    // a service worker with a fetch handler. Registration is deferred until the
+    // app is stable so it never competes with the initial Keycloak check-sso.
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   bootstrap: [AppComponent],
 })

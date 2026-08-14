@@ -44,17 +44,10 @@ export class GameOnPlayerService {
     return this.client.get<FifaPlayerStatsDto>(url);
   }
 
-  update(
-    fullName: any,
-    nickname: any,
-    riotGamesNickname?: string,
-    riotGamesTagLine?: string,
-  ): Observable<Player> {
+  update(fullName: any, nickname: any): Observable<Player> {
     return this.client.patch<Player>(environment.gameOnApiUrl + '/player/me', {
       FullName: fullName,
       Nickname: nickname,
-      RiotGamesNickname: riotGamesNickname,
-      RiotGamesTagLine: riotGamesTagLine,
     });
   }
 
