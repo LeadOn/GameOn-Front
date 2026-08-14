@@ -39,14 +39,8 @@ import { HomeTournamentBannerComponent } from './routes/home/components/tourname
 import { HomeFifaStatsComponent } from './routes/home/components/fifa-stats/home-fifa-stats.component';
 import { HomeMatchesListComponent } from './routes/home/components/matches-list/home-matches-list.component';
 import { HomeNewsPanelComponent } from './routes/home/components/news-panel/home-news-panel.component';
-import { HomeLolLeaderboardComponent } from './routes/home/components/lol-leaderboard/home-lol-leaderboard.component';
-import { HomeLolSeasonCardComponent } from './routes/home/components/lol-season-card/home-lol-season-card.component';
+import { HomeJungleDiffBannerComponent } from './routes/home/components/jungle-diff-banner/home-jungle-diff-banner.component';
 import { ProfilePageComponent } from './routes/profile/profile.component';
-import {
-  lolQueuesReducer,
-  lolVersionReducer,
-  lolVersionsReducer,
-} from './core/store/reducers/lol.reducer';
 import { readStoredKeycloakTokens } from './core/keycloak/keycloak-offline-tokens';
 import { provideServiceWorker } from '@angular/service-worker';
 
@@ -76,8 +70,7 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     HomeFifaStatsComponent,
     HomeMatchesListComponent,
     HomeNewsPanelComponent,
-    HomeLolLeaderboardComponent,
-    HomeLolSeasonCardComponent,
+    HomeJungleDiffBannerComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,9 +81,6 @@ const prodCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
     StoreModule.forRoot({
       player: playerReducer,
       globalStats: playerStatsReducer,
-      lolVersion: lolVersionReducer,
-      lolVersions: lolVersionsReducer,
-      lolQueues: lolQueuesReducer,
     }),
     ClipboardModule,
     AdminModule,

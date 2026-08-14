@@ -37,11 +37,6 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'lol',
-    loadChildren: () =>
-      import('./routes/lol/lol.module').then((m) => m.LolModule),
-  },
-  {
     path: 'fifa',
     loadChildren: () =>
       import('./routes/fifa/fifa.module').then((m) => m.FifaModule),
