@@ -12,7 +12,7 @@ GameOn! is an Angular front-end for tracking cross-game (and IRL) player perform
 - `npm start` / `ng serve` — run locally (dev server, port 4200 by default).
 - `npm run build` / `ng build` — production build, output to `dist/gameon-front`.
 - `npm run watch` — incremental dev build (`--configuration development`).
-- `npm test` / `ng test` — run Karma/Jasmine unit tests. No `.spec.ts` files exist yet in `src/`; when adding tests, `tsconfig.spec.json` is already wired up.
+- `npm test` / `ng test` — run Vitest unit tests (`@angular/build:unit-test` builder, jsdom environment; Karma was removed because its transitive `braces` dependency has an unfixable `npm audit` vulnerability). No `.spec.ts` files exist yet in `src/`; when adding tests, `tsconfig.spec.json` is already wired up.
 - Node version is pinned via `.nvmrc` (v23.6.1).
 - Docker: `Dockerfile` builds with `npm ci --legacy-peer-deps` (required — plain `npm ci` may fail on peer deps) then serves `dist/gameon-front/browser` via nginx (`nginx.conf`, port 80).
 
